@@ -1,0 +1,6 @@
+pinecone-client
+openai
+pandas
+openpyxl
+tiktoken
+python-dotenv
