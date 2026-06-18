@@ -1,15 +1,12 @@
-pinecone-client
-openai
-pandas
-openpyxl
-tiktoken
-python-dotenv
 fastapi
 uvicorn
 httpx
 sentry-sdk
-pinecone-client
+pinecone
 anthropic
 supabase
+python-dotenv
 sentence-transformers
+--extra-index-url https://download.pytorch.org/whl/cpu
 torch
+
