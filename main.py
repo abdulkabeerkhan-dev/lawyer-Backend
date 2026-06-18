@@ -1,10 +1,13 @@
 import os
+import uuid
 from fastapi import FastAPI, HTTPException, status, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Dict, Any
+from typing import List, Dict, Any, cast
 import httpx
+import jwt
+from jwt.algorithms import RSAAlgorithm
 import sentry_sdk
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 from pinecone import Pinecone
@@ -12,10 +15,10 @@ from anthropic import AsyncAnthropic
 from supabase import create_client, Client
 from dotenv import load_dotenv
 
-# Load local testing variables
+# Load local environment testing overrides
 load_dotenv()
 
-# 🛡️ SENTRY ENGINE: Production exception diagnostics activation
+# 🛡️ SENTRY SYSTEM LOG ENGINE: Production exception diagnostics activation
 if os.environ.get("SENTRY_DSN"):
     sentry_sdk.init(
         dsn=os.environ.get("SENTRY_DSN"),
@@ -24,9 +27,9 @@ if os.environ.get("SENTRY_DSN"):
         profiles_sample_rate=1.0,
     )
 
-app = FastAPI(title="TO BE NAMED AI LAWYER - Serverless Simulation Production Backend Engine")
+app = FastAPI(title="TO BE NAMED AI LAWYER - Production Serverless Clerk-Secure Engine")
 
-# 🔒 SECURITY CORE: Configure CORS to accept connection requests securely
+# 🔒 SECURITY ACCESS CORE: Cross-Origin Resource Sharing gateway adjustments
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[os.environ.get("FRONTEND_URL", "*")],
@@ -54,7 +57,7 @@ pc = Pinecone(api_key=PINECONE_API_KEY)
 pinecone_index = pc.Index(PINECONE_INDEX_NAME)
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
-# Initialize Anthropic Client ONLY if the key is present
+# Initialize Anthropic Client conditionally to support fallback simulations
 async_anthropic_client = None
 if ANTHROPIC_API_KEY:
     async_anthropic_client = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
@@ -64,25 +67,90 @@ else:
 # Initialize Identity Token Extractor Agent
 security_agent = HTTPBearer()
 
+# Global cache memory to keep token authorization verification ultra-fast without repeating network roundtrips
+_clerk_jwks_keys_cache = None
+
 async def verify_clerk_session(credentials: HTTPAuthorizationCredentials = Depends(security_agent)) -> str:
     """
-    🔐 CLERK IDENTITY BOUNDARY: Intercepts connection frames,
-    cross-verifies keys with central authorization databases, and returns confirmed user tags.
+    🔐 DYNAMIC CLERK PRODUCTION BOUNDARY: Extracts the incoming bearer token,
+    authenticates signatures against Clerk's official secure JWKS public key cache layer,
+    and returns the unique verified User ID string ('sub').
     """
+    global _clerk_jwks_keys_cache
     token = credentials.credentials
+    
+    # Local fallback bypass for isolated local testing environments
     if os.environ.get("FRONTEND_URL", "*") == "*":
         return "mock_clerk_user_id_dev_run"
         
-    clerk_api_url = "https://api.clerk.dev/v1/tokens/verify"
-    async with httpx.AsyncClient() as client:
-        try:
-            headers = {"Authorization": f"Bearer {os.environ.get('CLERK_SECRET_KEY')}"}
-            response = await client.post(clerk_api_url, json={"token": token}, headers=headers)
-            if response.status_code != 200:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Clerk security session evaluation failed.")
-            return str(response.json().get("user_id", ""))
-        except Exception as error_context:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Authentication block: {str(error_context)}")
+    clerk_secret = os.environ.get("CLERK_SECRET_KEY")
+    if not clerk_secret:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Server configuration missing: 'CLERK_SECRET_KEY' environment variable is not defined on the host."
+        )
+        
+    try:
+        # Extract the Key ID ('kid') header element from the token unverified
+        unverified_header = jwt.get_unverified_header(token)
+        kid = unverified_header.get("kid")
+        if not kid:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token signature architecture layout.")
+            
+        # Sync verified signature sets from Clerk keyservers if our RAM cache container is clear
+        if not _clerk_jwks_keys_cache:
+            async with httpx.AsyncClient() as client:
+                headers = {"Authorization": f"Bearer {clerk_secret}"}
+                jwks_response = await client.get("https://api.clerk.com/v1/jwks", headers=headers)
+                if jwks_response.status_code != 200:
+                    raise HTTPException(
+                        status_code=status.HTTP_502_BAD_GATEWAY,
+                        detail="Failed to sync active authorization signature pairs from Clerk keyserver clusters."
+                    )
+                _clerk_jwks_keys_cache = jwks_response.json().get("keys", [])
+                
+        # Locate the public key structure matching the token signature reference
+        public_key = None
+        for key_data in _clerk_jwks_keys_cache:
+            if key_data.get("kid") == kid:
+                public_key = RSAAlgorithm.from_jwk(key_data)
+                break
+                
+        if not public_key:
+            # Clear local cache memory to force a refresh on the next query run in case keys rotated
+            _clerk_jwks_keys_cache = None
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Stale authentication signature validation parameters.")
+            
+        # 🛡️ PYLANCE TYPE GUARD: Cast the public_key to Any to resolve false positive asymmetric key complaints
+        decoded_payload = jwt.decode(
+            token,
+            key=cast(Any, public_key),
+            algorithms=["RS256"],
+            options={"verify_aud": False}
+        )
+        
+        user_id = decoded_payload.get("sub")
+        if not user_id:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User profile subject reference claim is missing from session payload.")
+            
+        return str(user_id)
+        
+    except jwt.exceptions.ExpiredSignatureError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication failed: The provided session token has expired.")
+    except Exception as error_context:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Access Denied: Token signature verification dropped: {str(error_context)}")
+
+# ----------------------------------------------------------------------
+# Data Transport Verification Forms (Pydantic Models)
+# ----------------------------------------------------------------------
+class UserSyncPayload(BaseModel):
+    email: str
+    full_name: str
+
+class AccessRegistration(BaseModel):
+    full_name: str
+    firm_name: str
+    email: str
 
 class QueryRequest(BaseModel):
     query_text: str
@@ -92,10 +160,85 @@ class FeedbackRequest(BaseModel):
     original_answer: str
     correct_answer: str
 
+# ----------------------------------------------------------------------
+# Operation Controller Endpoints
+# ----------------------------------------------------------------------
 @app.get("/health")
 def health_check():
     """Used by Railway lifecycle observers to verify cluster fitness status."""
     return {"status": "healthy"}
+
+@app.post("/request-access")
+async def register_access_request(request: AccessRegistration):
+    """
+    🔓 PUBLIC ACCESS ENTRY POINT: Captures incoming waitlist configurations
+    and saves requests securely inside the Supabase waitlist engine without auth constraints.
+    """
+    try:
+        duplicate_check = supabase.table("access_requests").select("id").eq("email", request.email).execute()
+        if duplicate_check.data and len(duplicate_check.data) > 0:
+            return {
+                "status": "duplicate", 
+                "message": "Thank you! An invitation request for this email address is already under review."
+            }
+            
+        supabase.table("access_requests").insert({
+            "full_name": request.full_name,
+            "firm_name": request.firm_name,
+            "email": request.email,
+            "status": "pending"
+        }).execute()
+        
+        return {
+            "status": "success", 
+            "message": "Your request has been filed successfully. The team will review your credentials shortly."
+        }
+    except Exception as e:
+        if os.environ.get("SENTRY_DSN"):
+            sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=f"Waitlist filing failed: {str(e)}")
+
+@app.post("/users/sync")
+async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_id: str = Depends(verify_clerk_session)):
+    """
+    🔐 PROTECTED PROFILE SYNC: Intercepts authenticated user entries,
+    and initializes their relational database profile maps inside your Supabase users tracking grid.
+    """
+    try:
+        profile_query = supabase.table("users").select("*").eq("id", authenticated_user_id).execute()
+        
+        if profile_query.data and len(profile_query.data) > 0:
+            return {
+                "status": "exists",
+                "user": profile_query.data[0]
+            }
+            
+        access_check = supabase.table("access_requests").select("status").eq("email", payload.email).execute()
+        assigned_role = "associate"
+        
+        if access_check.data and len(access_check.data) > 0:
+            first_row = access_check.data[0]
+            if isinstance(first_row, dict) and first_row.get("status") == "admin_approved":
+                assigned_role = "admin"
+
+        inserted_profile = supabase.table("users").insert({
+            "id": authenticated_user_id,
+            "email": payload.email,
+            "full_name": payload.full_name,
+            "role": assigned_role
+        }).execute()
+        
+        if not inserted_profile.data:
+            raise HTTPException(status_code=500, detail="Database write confirmed but profile generation failed.")
+            
+        return {
+            "status": "created",
+            "user": inserted_profile.data[0]
+        }
+    except Exception as e:
+        if os.environ.get("SENTRY_DSN"):
+            sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=f"User profile synchronization failed: {str(e)}")
 
 @app.post("/query")
 async def execute_legal_query(request: QueryRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
@@ -195,8 +338,6 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
             inserted_row_id = first_row.get("id") if isinstance(first_row, dict) else getattr(first_row, "id", None)
         
         if not inserted_row_id:
-            # Fallback UUID generated string if table triggers don't return row data instantly in sandbox modes
-            import uuid
             inserted_row_id = str(uuid.uuid4())
         
         return {

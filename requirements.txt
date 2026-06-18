@@ -6,3 +6,4 @@ pinecone
 anthropic
 supabase
 python-dotenv
+pyjwt[crypto]
