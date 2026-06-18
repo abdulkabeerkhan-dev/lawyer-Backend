@@ -4,3 +4,12 @@ pandas
 openpyxl
 tiktoken
 python-dotenv
+fastapi
+uvicorn
+httpx
+sentry-sdk
+pinecone-client
+anthropic
+supabase
+sentence-transformers
+torch
