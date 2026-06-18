@@ -6,7 +6,3 @@ pinecone
 anthropic
 supabase
 python-dotenv
-sentence-transformers
---extra-index-url https://download.pytorch.org/whl/cpu
-torch
-
