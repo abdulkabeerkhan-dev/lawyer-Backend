@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException, status, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Dict, Any, cast
+from typing import List, Dict, Any, Optional, cast
 import httpx
 import jwt
 from jwt.algorithms import RSAAlgorithm
@@ -27,7 +27,7 @@ if os.environ.get("SENTRY_DSN"):
         profiles_sample_rate=1.0,
     )
 
-app = FastAPI(title="TO BE NAMED AI LAWYER - Production Serverless Clerk-Secure Engine")
+app = FastAPI(title="AMICUS AI - Production Serverless Clerk-Secure Engine")
 
 # 🔒 SECURITY ACCESS CORE: Cross-Origin Resource Sharing gateway adjustments
 app.add_middleware(
@@ -64,65 +64,59 @@ if ANTHROPIC_API_KEY:
 else:
     print("⚠️ WARNING: ANTHROPIC_API_KEY is missing. Activating LLM Simulation Fallback Layer for testing.")
 
-# 🛠️ FORCED PASS SECURITY AGENT: Prevents FastAPI from auto-blocking empty headers before print diagnostics run
+# Security token interceptor (with auto_error=False to catch empty headers smoothly)
 security_agent = HTTPBearer(auto_error=False)
 
-# Global cache memory to keep token authorization verification ultra-fast without repeating network roundtrips
+# Global cache memory to keep token authorization verification ultra-fast
 _clerk_jwks_keys_cache = None
 
-async def verify_clerk_session(credentials: HTTPAuthorizationCredentials | None = Depends(security_agent)) -> str:
+# ----------------------------------------------------------------------
+# Authentication & Authorization Hook Dependencies
+# ----------------------------------------------------------------------
+async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_agent)) -> str:
     """
-    🔐 DYNAMIC CLERK PRODUCTION BOUNDARY: Extracts the incoming bearer token,
-    authenticates signatures against Clerk's official secure JWKS public key cache layer,
-    and returns the unique verified User ID string ('sub').
+    🔐 DYNAMIC CLERK PRODUCTION BOUNDARY: Extracts incoming bearer tokens,
+    authenticates signatures against Clerk's secure JWKS cache, and returns user ID.
     """
     global _clerk_jwks_keys_cache
     
-    # 🔍 CRITICAL DIAGNOSTIC CHECK: Catches empty incoming browser requests directly
     if not credentials:
-        print("❌ [AUTH MONITOR] Validation Failed: The Authorization header is completely MISSING or empty!")
+        print("❌ [AUTH MONITOR] Validation Failed: The Authorization header is completely MISSING!")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, 
-            detail="Access Denied: Your browser request did not include an Authorization header."
+            detail="Access Denied: Request missing Authorization bearer token."
         )
         
     token = credentials.credentials
-    print(f"🔑 [AUTH MONITOR] Header Found! Token String Length: {len(token) if token else 0} | Content: {str(token)[:25]}...")
 
-    # Local fallback bypass for isolated local testing environments
+    # Local fallback bypass for isolated testing environments
     if os.environ.get("FRONTEND_URL", "*") == "*":
         return "mock_clerk_user_id_dev_run"
         
     clerk_secret = os.environ.get("CLERK_SECRET_KEY")
     if not clerk_secret:
-        print("❌ [AUTH MONITOR] Deployment Error: CLERK_SECRET_KEY variable missing inside Railway parameters.")
+        print("❌ [AUTH MONITOR] Deployment Error: CLERK_SECRET_KEY variable missing inside parameters.")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Server configuration missing: 'CLERK_SECRET_KEY' environment variable is not defined on the host."
+            detail="Server configuration missing: 'CLERK_SECRET_KEY' environment variable is not defined."
         )
         
     try:
-        # Extract the Key ID ('kid') header element from the token unverified
         unverified_header = jwt.get_unverified_header(token)
         kid = unverified_header.get("kid")
         if not kid:
-            print("❌ [AUTH MONITOR] Validation Failed: The incoming token header is missing a Key ID ('kid').")
+            print("❌ [AUTH MONITOR] Validation Failed: Token header is missing a Key ID ('kid').")
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token signature architecture layout.")
             
-        # Sync verified signature sets from Clerk keyservers if our RAM cache container is clear
         if not _clerk_jwks_keys_cache:
             async with httpx.AsyncClient() as client:
                 headers = {"Authorization": f"Bearer {clerk_secret}"}
                 jwks_response = await client.get("https://api.clerk.com/v1/jwks", headers=headers)
                 if jwks_response.status_code != 200:
                     print(f"❌ [AUTH MONITOR] Keyserver Error: Clerk rejected handshake with code {jwks_response.status_code}")
-                    raise HTTPException(
-                        status_code=status.HTTP_502_BAD_GATEWAY,
-                        detail="Failed to sync active authorization signature pairs from Clerk keyserver clusters."
-                    )
+                    raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail="Failed to sync signature pairs from Clerk.")
                 _clerk_jwks_keys_cache = jwks_response.json().get("keys", [])
                 
-        # Locate the public key structure matching the token signature reference
         public_key = None
         for key_data in _clerk_jwks_keys_cache:
             if key_data.get("kid") == kid:
@@ -130,11 +124,10 @@ async def verify_clerk_session(credentials: HTTPAuthorizationCredentials | None 
                 break
                 
         if not public_key:
-            print("❌ [AUTH MONITOR] Validation Failed: The token 'kid' does not match any cached Clerk signature keys.")
-            _clerk_jwks_keys_cache = None  # Flush cache to force re-fetch on next query run
+            print("❌ [AUTH MONITOR] Validation Failed: The token 'kid' does not match cached Clerk keys.")
+            _clerk_jwks_keys_cache = None  # Flush cache to force re-fetch
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Stale authentication signature validation parameters.")
             
-        # 🛡️ DECODE WITH LEEWAY: Uses a 60-second time buffer to completely absorb server clock-skews
         decoded_payload = jwt.decode(
             token,
             key=cast(Any, public_key),
@@ -145,10 +138,9 @@ async def verify_clerk_session(credentials: HTTPAuthorizationCredentials | None 
         
         user_id = decoded_payload.get("sub")
         if not user_id:
-            print("❌ [AUTH MONITOR] Validation Failed: Token parsed successfully but lacks a subject ('sub') field.")
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User profile subject reference claim is missing from session payload.")
+            print("❌ [AUTH MONITOR] Validation Failed: Token parsed successfully but lacks a subject ('sub').")
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User profile subject reference claim is missing.")
             
-        print(f"✅ [AUTH MONITOR] Access Granted: User {user_id} successfully authenticated.")
         return str(user_id)
         
     except jwt.exceptions.ExpiredSignatureError as e:
@@ -158,6 +150,26 @@ async def verify_clerk_session(credentials: HTTPAuthorizationCredentials | None 
         print(f"❌ [AUTH MONITOR] Cryptographic Denial: Core verification dropped. Context: {str(error_context)}")
         raise HTTPException(status_code=401, detail=f"Access Denied: Token signature verification dropped: {str(error_context)}")
 
+async def verify_admin_role(authenticated_user_id: str = Depends(verify_clerk_session)) -> str:
+    """
+    🛡️ ADMIN ROLE GUARD: Cross-references the authenticated Clerk user ID against
+    the Supabase user database role configuration to confirm administrative clearance.
+    """
+    if authenticated_user_id == "mock_clerk_user_id_dev_run":
+        return authenticated_user_id
+        
+    profile_query = supabase.table("users").select("role").eq("id", authenticated_user_id).execute()
+    if profile_query.data and len(profile_query.data) > 0:
+        user_role = profile_query.data[0].get("role")
+        if user_role == "admin":
+            return authenticated_user_id
+            
+    print(f"🚫 [SECURITY ALERT] Unauthorized Access Attempt to Admin endpoint by user {authenticated_user_id}")
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="Access Denied: This operation requires administrative account permissions."
+    )
+
 # ----------------------------------------------------------------------
 # Data Transport Verification Forms (Pydantic Models)
 # ----------------------------------------------------------------------
@@ -165,10 +177,23 @@ class UserSyncPayload(BaseModel):
     email: str
     full_name: str
 
+class ProfileUpdatePayload(BaseModel):
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    full_name: str
+
 class AccessRegistration(BaseModel):
     full_name: str
     firm_name: str
     email: str
+
+class AssociateCreatePayload(BaseModel):
+    full_name: str
+    email: str
+    status: str = "admin_approved"
+
+class AssociateStatusPayload(BaseModel):
+    status: str
 
 class QueryRequest(BaseModel):
     query_text: str
@@ -179,11 +204,10 @@ class FeedbackRequest(BaseModel):
     correct_answer: str
 
 # ----------------------------------------------------------------------
-# Operation Controller Endpoints
+# Core Operation Controllers (Existing Workflows)
 # ----------------------------------------------------------------------
 @app.get("/health")
 def health_check():
-    """Used by Railway lifecycle observers to verify cluster fitness status."""
     return {"status": "healthy"}
 
 @app.post("/request-access")
@@ -191,10 +215,7 @@ async def register_access_request(request: AccessRegistration):
     try:
         duplicate_check = supabase.table("access_requests").select("id").eq("email", request.email).execute()
         if duplicate_check.data and len(duplicate_check.data) > 0:
-            return {
-                "status": "duplicate", 
-                "message": "Thank you! An invitation request for this email address is already under review."
-            }
+            return {"status": "duplicate", "message": "An invitation request for this email address is already under review."}
             
         supabase.table("access_requests").insert({
             "full_name": request.full_name,
@@ -202,33 +223,22 @@ async def register_access_request(request: AccessRegistration):
             "email": request.email,
             "status": "pending"
         }).execute()
-        
-        return {
-            "status": "success", 
-            "message": "Your request has been filed successfully. The team will review your credentials shortly."
-        }
+        return {"status": "success", "message": "Your request has been filed successfully."}
     except Exception as e:
-        if os.environ.get("SENTRY_DSN"):
-            sentry_sdk.capture_exception(e)
-        raise HTTPException(status_code=500, detail=f"Waitlist filing failed: {str(e)}")
+        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/users/sync")
 async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_id: str = Depends(verify_clerk_session)):
     try:
         profile_query = supabase.table("users").select("*").eq("id", authenticated_user_id).execute()
-        
         if profile_query.data and len(profile_query.data) > 0:
-            return {
-                "status": "exists",
-                "user": profile_query.data[0]
-            }
+            return {"status": "exists", "user": profile_query.data[0]}
             
         access_check = supabase.table("access_requests").select("status").eq("email", payload.email).execute()
         assigned_role = "associate"
-        
         if access_check.data and len(access_check.data) > 0:
-            first_row = access_check.data[0]
-            if isinstance(first_row, dict) and first_row.get("status") == "admin_approved":
+            if access_check.data[0].get("status") == "admin_approved":
                 assigned_role = "admin"
 
         inserted_profile = supabase.table("users").insert({
@@ -237,103 +247,47 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
             "full_name": payload.full_name,
             "role": assigned_role
         }).execute()
-        
-        if not inserted_profile.data:
-            raise HTTPException(status_code=500, detail="Database write confirmed but profile generation failed.")
-            
-        return {
-            "status": "created",
-            "user": inserted_profile.data[0]
-        }
+        return {"status": "created", "user": inserted_profile.data[0]}
     except Exception as e:
-        if os.environ.get("SENTRY_DSN"):
-            sentry_sdk.capture_exception(e)
-        raise HTTPException(status_code=500, detail=f"User profile synchronization failed: {str(e)}")
+        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/query")
 async def execute_legal_query(request: QueryRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
     try:
-        # 1. Compute incoming search coordinates via Hugging Face Serverless Inference API
         bge_query_text = f"Represent this sentence for searching relevant passages: {request.query_text}"
         hf_api_url = "https://api-inference.huggingface.co/pipeline/feature-extraction/BAAI/bge-large-en-v1.5"
         
         async with httpx.AsyncClient(timeout=30.0) as client:
             hf_response = await client.post(hf_api_url, json={"inputs": bge_query_text})
             if hf_response.status_code != 200:
-                raise HTTPException(
-                    status_code=502, 
-                    detail=f"Hugging Face Inference Engine returned an unexpected status block: {hf_response.text}"
-                )
+                raise HTTPException(status_code=502, detail="Hugging Face Inference Engine failure.")
             query_vector = hf_response.json()
 
-        # 2. Query matching records from the standard 1024-dimensional index deployment
-        raw_matches = pinecone_index.query(
-            namespace="judgments",
-            vector=query_vector,
-            top_k=8,
-            include_metadata=True
-        )
-        
+        raw_matches = pinecone_index.query(namespace="judgments", vector=query_vector, top_k=8, include_metadata=True)
         context_segments = []
         citations_payload = []
-        matches_list = getattr(raw_matches, "matches", []) if not isinstance(raw_matches, dict) else raw_matches.get("matches", [])
+        matches_list = raw_matches.get("matches", []) if isinstance(raw_matches, dict) else getattr(raw_matches, "matches", [])
         
         for match in matches_list:
-            meta = getattr(match, "metadata", {}) if not isinstance(match, dict) else match.get("metadata", {})
-            if not meta:
-                meta = {}
-            context_segments.append(
-                f"Source: {meta.get('court')} ({meta.get('year')}) | Identification Reference: {meta.get('case_id')}\nContent Data: {meta.get('text_preview')}"
-            )
-            citations_payload.append({
-                "case_id": meta.get("case_id"),
-                "court": meta.get("court"),
-                "year": meta.get("year"),
-                "preview": meta.get("text_preview")
-            })
+            meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {})
+            context_segments.append(f"Source: {meta.get('court')} ({meta.get('year')}) | Ref: {meta.get('case_id')}\nContent: {meta.get('text_preview')}")
+            citations_payload.append({"case_id": meta.get("case_id"), "court": meta.get("court"), "year": meta.get("year"), "preview": meta.get("text_preview")})
             
         combined_context = "\n\n---\n\n".join(context_segments)
         
-        # 3. Handle LLM Generation or Simulation Layer
         if async_anthropic_client and ANTHROPIC_API_KEY:
-            system_prompt = (
-                "You are an elite, highly precise Pakistani legal expert. Your job is to answer the user's inquiry "
-                "strictly based on the provided text context data blocks. For every legal argument, case citation, or "
-                "statutory rationale you provide, you must explicitly cite the corresponding case_id, court, and year from "
-                "the context metadata. If the context data blocks do not contain sufficient specific information to answer "
-                "the user's inquiry confidently and factually, clearly flag that the context does not contain enough "
-                "information to respond securely."
-            )
-            
+            system_prompt = "You are an elite, highly precise Pakistani legal expert. Answer strictly based on the context data blocks provided, citing explicitly."
             claude_message = await async_anthropic_client.messages.create(
                 model="claude-3-5-sonnet-20241022",
                 max_tokens=2500,
                 system=system_prompt,
-                messages=[
-                    {"role": "user", "content": f"Provided Context:\n{combined_context}\n\nUser Question: {request.query_text}"}
-                ]
+                messages=[{"role": "user", "content": f"Context:\n{combined_context}\n\nQuestion: {request.query_text}"}]
             )
-            
-            text_pieces = [
-                getattr(block, "text", "") 
-                for block in claude_message.content 
-                if getattr(block, "type", None) == "text" or hasattr(block, "text")
-            ]
-            generated_answer = "".join(text_pieces) if text_pieces else "No text response block generated."
+            generated_answer = "".join([block.text for block in claude_message.content if hasattr(block, "text")])
         else:
-            primary_citation = citations_payload[0]["case_id"] if citations_payload else "relevant case law"
-            primary_court = citations_payload[0]["court"] if citations_payload else "the courts"
-            
-            generated_answer = (
-                f"### Legal Evaluation (Simulated Production Environment Check)\n\n"
-                f"In regards to your question: *\"{request.query_text}\"*, a search was successfully completed against "
-                f"the vector index database. The primary returning precedent found is **{primary_citation}** handled by the **{primary_court}**.\n\n"
-                f"This response is simulated because the `ANTHROPIC_API_KEY` is not yet provisioned in the cloud environment dashboard. "
-                f"However, the entire data ingestion mapping, vector filtering coordinates, and database logging loops are fully functional.\n\n"
-                f"Please use the feedback button below to submit a correction if needed to test the self-learning pipeline storage structure."
-            )
+            generated_answer = f"### Legal Evaluation (Simulation mode)\n\nPrecedent found: **{citations_payload[0]['case_id'] if citations_payload else 'N/A'}**."
         
-        # 4. Push history logs straight down into Supabase tracking tables
         db_insert = supabase.table("queries").insert({
             "user_id": authenticated_user_id,
             "query_text": request.query_text,
@@ -341,23 +295,10 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
             "citations": citations_payload
         }).execute()
         
-        inserted_row_id = None
-        if db_insert.data and isinstance(db_insert.data, list) and len(db_insert.data) > 0:
-            first_row = db_insert.data[0]
-            inserted_row_id = first_row.get("id") if isinstance(first_row, dict) else getattr(first_row, "id", None)
-        
-        if not inserted_row_id:
-            inserted_row_id = str(uuid.uuid4())
-        
-        return {
-            "answer": generated_answer,
-            "citations": citations_payload,
-            "query_id": inserted_row_id
-        }
-        
+        inserted_row_id = db_insert.data[0].get("id") if db_insert.data else str(uuid.uuid4())
+        return {"answer": generated_answer, "citations": citations_payload, "query_id": inserted_row_id}
     except Exception as e:
-        if os.environ.get("SENTRY_DSN"):
-            sentry_sdk.capture_exception(e)
+        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/feedback")
@@ -369,60 +310,166 @@ async def submit_feedback(request: FeedbackRequest, authenticated_user_id: str =
             "original_answer": request.original_answer,
             "correct_answer": request.correct_answer
         }).execute()
-        return {"status": "feedback successfully saved for future training pipelines"}
+        return {"status": "feedback saved"}
     except Exception as e:
-        if os.environ.get("SENTRY_DSN"):
-            sentry_sdk.capture_exception(e)
+        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/history/{user_id}")
 async def get_user_history(user_id: str, authenticated_user_id: str = Depends(verify_clerk_session)):
     try:
         if user_id != authenticated_user_id and authenticated_user_id != "mock_clerk_user_id_dev_run":
-            raise HTTPException(status_code=403, detail="Access verification block: profile reference mismatch.")
+            raise HTTPException(status_code=403, detail="Profile reference mismatch.")
         res = supabase.table("queries").select("*").eq("user_id", user_id).order("created_at", desc=True).execute()
         return res.data
     except Exception as e:
-        if os.environ.get("SENTRY_DSN"):
-            sentry_sdk.capture_exception(e)
+        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
         raise HTTPException(status_code=500, detail=str(e))
 
+# ----------------------------------------------------------------------
+# Dynamic Onboarding & User Profile Customizations (New Contracts)
+# ----------------------------------------------------------------------
+@app.post("/users/update-profile")
+async def update_user_profile(payload: ProfileUpdatePayload, authenticated_user_id: str = Depends(verify_clerk_session)):
+    """
+    🖋️ USER PROFILE UPDATE GATE: Accepts name metadata from Lovable onboarding elements
+    and updates the master relational users profile index using active Clerk identity credentials.
+    """
+    try:
+        res = supabase.table("users").update({
+            "full_name": payload.full_name
+        }).eq("id", authenticated_user_id).execute()
+        
+        if not res.data:
+            raise HTTPException(status_code=404, detail="User database profile row not found.")
+        return {"status": "success", "user": res.data[0]}
+    except Exception as e:
+        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=f"Failed to update onboarding user name layout parameters: {str(e)}")
+
+# ----------------------------------------------------------------------
+# Administrative System Configurations & User Management (New Contracts)
+# ----------------------------------------------------------------------
+@app.get("/admin/associates")
+async def list_associates(admin_id: str = Depends(verify_admin_role)):
+    """
+    👥 ADMIN ASSOCIATE COMPILATION LIST: Compiles a data roster of all registered
+    users active inside the infrastructure database for admin viewing dashboards.
+    """
+    try:
+        res = supabase.table("users").select("*").order("full_name").execute()
+        return res.data
+    except Exception as e:
+        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=f"Failed to list system associates: {str(e)}")
+
+@app.post("/admin/associates")
+async def create_associate(payload: AssociateCreatePayload, admin_id: str = Depends(verify_admin_role)):
+    """
+    ➕ ADMIN PRE-APPROVAL HANDSHAKE: Injects a pre-approved invitation request straight
+    into the access table, setting up seamless pass-through registration tracking.
+    """
+    try:
+        duplicate_check = supabase.table("access_requests").select("id").eq("email", payload.email).execute()
+        if duplicate_check.data and len(duplicate_check.data) > 0:
+            res = supabase.table("access_requests").update({
+                "full_name": payload.full_name,
+                "status": payload.status
+            }).eq("email", payload.email).execute()
+        else:
+            res = supabase.table("access_requests").insert({
+                "full_name": payload.full_name,
+                "email": payload.email,
+                "firm_name": "Pre-Approved Associate Firm",
+                "status": payload.status
+            }).execute()
+            
+        return {"status": "success", "message": "Associate email invitation pre-approved successfully.", "data": res.data}
+    except Exception as e:
+        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=f"Failed to provision associate registration workspace allowance: {str(e)}")
+
+@app.post("/admin/associates/{associate_id}/status")
+async def set_associate_status(associate_id: str, payload: AssociateStatusPayload, admin_id: str = Depends(verify_admin_role)):
+    """
+    🔄 ADMIN PRIVILEGE CONTROLLER: Dynamically updates structural authorization parameters
+    or user workspace execution permissions straight from the master user table grid.
+    """
+    try:
+        # Map Lovable's UI role modifications straight into the database user record
+        res = supabase.table("users").update({
+            "role": payload.status
+        }).eq("id", associate_id).execute()
+        
+        if not res.data:
+            raise HTTPException(status_code=404, detail="Target associate user profile row was not discovered.")
+        return {"status": "success", "data": res.data[0]}
+    except Exception as e:
+        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=f"Failed to adjust associate clearance matrix parameters: {str(e)}")
+
+@app.delete("/admin/associates/{associate_id}")
+async def delete_associate(associate_id: str, admin_id: str = Depends(verify_admin_role)):
+    """
+    ❌ ADMIN SYSTEM EXPULSION: Wipes out profile mappings for an un-linked or terminated associate
+    completely across administrative database control blocks.
+    """
+    try:
+        res = supabase.table("users").delete().eq("id", associate_id).execute()
+        return {"status": "success", "message": f"Associate footprint '{associate_id}' purged cleanly from core memory fields."}
+    except Exception as e:
+        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=f"Failed to eliminate target associate entry frame: {str(e)}")
+
+@app.get("/admin/activity")
+async def list_all_activity(
+    associate_id: Optional[str] = None, 
+    from_date: Optional[str] = None, 
+    to_date: Optional[str] = None, 
+    admin_id: str = Depends(verify_admin_role)
+):
+    """
+    📊 GLOBAL AUDIT LOG LOGGER: Streams comprehensive tracking elements from centralized activity fields,
+    allowing advanced sorting by individual associate identities or historical timeframes.
+    """
+    try:
+        query = supabase.table("activity_log").select("*")
+        if associate_id:
+            query = query.eq("user_id", associate_id)
+        if from_date:
+            query = query.gte("created_at", from_date)
+        if to_date:
+            query = query.lte("created_at", to_date)
+            
+        res = query.order("created_at", desc=True).execute()
+        return res.data
+    except Exception as e:
+        # Fail gracefully back with an empty payload setup if structural log migrations are still deploying
+        print(f"⚠️ Activity Log Stream Warning: {str(e)}")
+        return []
+
 @app.get("/admin/export-training-data")
-async def export_training_data():
+async def export_training_data(admin_id: str = Depends(verify_admin_role)):
     try:
         feedback_res = supabase.table("feedback").select("*").execute()
         feedback_records = feedback_res.data if feedback_res else []
-        if not feedback_records or not isinstance(feedback_records, list):
-            return {"message": "Dataset compilation complete: 0 correction records found yet.", "jsonl_payload": []}
+        if not feedback_records:
+            return {"message": "Dataset compilation complete: 0 correction records found.", "jsonl_payload": []}
             
         jsonl_dataset = []
         for item in feedback_records:
-            if not isinstance(item, dict):
-                continue
             q_id = item.get("query_id")
-            if not q_id:
-                continue
             q_res = supabase.table("queries").select("query_text").eq("id", q_id).execute()
-            
-            if q_res and isinstance(q_res.data, list) and len(q_res.data) > 0:
-                first_row = q_res.data[0]
-                if isinstance(first_row, dict):
-                    original_prompt = first_row.get("query_text", "")
-                    corrected_output = item.get("correct_answer", "")
-                    training_line = {
-                        "messages": [
-                            {"role": "user", "content": str(original_prompt)},
-                            {"role": "assistant", "content": str(corrected_output)}
-                        ]
-                    }
-                    jsonl_dataset.append(training_line)
+            if q_res.data:
+                training_line = {
+                    "messages": [
+                        {"role": "user", "content": str(q_res.data[0].get("query_text", ""))},
+                        {"role": "assistant", "content": str(item.get("correct_answer", ""))}
+                    ]
+                }
+                jsonl_dataset.append(training_line)
                 
-        return {
-            "total_training_records": len(jsonl_dataset),
-            "format_specification": "JSON-Lines (Standard Message API mapping Layout)",
-            "jsonl_payload": jsonl_dataset
-        }
+        return {"total_training_records": len(jsonl_dataset), "jsonl_payload": jsonl_dataset}
     except Exception as e:
-        if os.environ.get("SENTRY_DSN"):
-            sentry_sdk.capture_exception(e)
-        raise HTTPException(status_code=500, detail=f"Failed to generate self-training dataset: {str(e)}")
+        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=str(e))
