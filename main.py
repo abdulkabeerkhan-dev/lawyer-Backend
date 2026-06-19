@@ -64,23 +64,30 @@ if ANTHROPIC_API_KEY:
 else:
     print("⚠️ WARNING: ANTHROPIC_API_KEY is missing. Activating LLM Simulation Fallback Layer for testing.")
 
-# Initialize Identity Token Extractor Agent
-security_agent = HTTPBearer()
+# 🛠️ FORCED PASS SECURITY AGENT: Prevents FastAPI from auto-blocking empty headers before print diagnostics run
+security_agent = HTTPBearer(auto_error=False)
 
 # Global cache memory to keep token authorization verification ultra-fast without repeating network roundtrips
 _clerk_jwks_keys_cache = None
 
-async def verify_clerk_session(credentials: HTTPAuthorizationCredentials = Depends(security_agent)) -> str:
+async def verify_clerk_session(credentials: HTTPAuthorizationCredentials | None = Depends(security_agent)) -> str:
     """
     🔐 DYNAMIC CLERK PRODUCTION BOUNDARY: Extracts the incoming bearer token,
     authenticates signatures against Clerk's official secure JWKS public key cache layer,
     and returns the unique verified User ID string ('sub').
     """
     global _clerk_jwks_keys_cache
-    token = credentials.credentials
     
-    # 🔍 SYSTEM DIAGNOSTIC PRINT: Instantly verifies what the backend is receiving
-    print(f"🔑 [AUTH MONITOR] Token Length: {len(token) if token else 0} | Content Snippet: {str(token)[:20]}...")
+    # 🔍 CRITICAL DIAGNOSTIC CHECK: Catches empty incoming browser requests directly
+    if not credentials:
+        print("❌ [AUTH MONITOR] Validation Failed: The Authorization header is completely MISSING or empty!")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, 
+            detail="Access Denied: Your browser request did not include an Authorization header."
+        )
+        
+    token = credentials.credentials
+    print(f"🔑 [AUTH MONITOR] Header Found! Token String Length: {len(token) if token else 0} | Content: {str(token)[:25]}...")
 
     # Local fallback bypass for isolated local testing environments
     if os.environ.get("FRONTEND_URL", "*") == "*":
@@ -181,10 +188,6 @@ def health_check():
 
 @app.post("/request-access")
 async def register_access_request(request: AccessRegistration):
-    """
-    🔓 PUBLIC ACCESS ENTRY POINT: Captures incoming waitlist configurations
-    and saves requests securely inside the Supabase waitlist engine without auth constraints.
-    """
     try:
         duplicate_check = supabase.table("access_requests").select("id").eq("email", request.email).execute()
         if duplicate_check.data and len(duplicate_check.data) > 0:
@@ -211,10 +214,6 @@ async def register_access_request(request: AccessRegistration):
 
 @app.post("/users/sync")
 async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_id: str = Depends(verify_clerk_session)):
-    """
-    🔐 PROTECTED PROFILE SYNC: Intercepts authenticated user entries,
-    and initializes their relational database profile maps inside your Supabase users tracking grid.
-    """
     try:
         profile_query = supabase.table("users").select("*").eq("id", authenticated_user_id).execute()
         
@@ -322,7 +321,6 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
             ]
             generated_answer = "".join(text_pieces) if text_pieces else "No text response block generated."
         else:
-            # 🔄 FALLBACK SIMULATION LAYER (Allows end-to-end testing without the key)
             primary_citation = citations_payload[0]["case_id"] if citations_payload else "relevant case law"
             primary_court = citations_payload[0]["court"] if citations_payload else "the courts"
             
@@ -391,7 +389,6 @@ async def get_user_history(user_id: str, authenticated_user_id: str = Depends(ve
 
 @app.get("/admin/export-training-data")
 async def export_training_data():
-    """🔄 SELF-LEARNING PIPELINE: Serializes manual human corrections into standard conversational JSONL data matrices."""
     try:
         feedback_res = supabase.table("feedback").select("*").execute()
         feedback_records = feedback_res.data if feedback_res else []
