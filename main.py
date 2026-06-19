@@ -478,8 +478,16 @@ async def list_all_activity(
         res = query.order("created_at", desc=True).execute()
         return res.data
     except Exception as e:
-        print(f"⚠️ Activity Log Stream Warning: {str(e)}")
-        return []
+
+# 👇 ADD THESE TWO LINES TO EXPOSE THE ERROR IN RAILWAY LOGS
+        import traceback
+        print("❌ [CRITICAL ENGINE CRASH INSIDE /QUERY]:")
+        traceback.print_exc() 
+        
+        if os.environ.get("SENTRY_DSN"): 
+            sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get("/admin/export-training-data")
 async def export_training_data(admin_id: str = Depends(verify_admin_role)):
