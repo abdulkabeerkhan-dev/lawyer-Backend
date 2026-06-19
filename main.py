@@ -103,6 +103,10 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
         
     try:
         unverified_header = jwt.get_unverified_header(token)
+        if not isinstance(unverified_header, dict):
+            print("❌ [AUTH MONITOR] Validation Failed: Token header layout is not a structured dictionary.")
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token signature layout shape.")
+            
         kid = unverified_header.get("kid")
         if not kid:
             print("❌ [AUTH MONITOR] Validation Failed: Token header is missing a Key ID ('kid').")
@@ -118,10 +122,11 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
                 _clerk_jwks_keys_cache = jwks_response.json().get("keys", [])
                 
         public_key = None
-        for key_data in _clerk_jwks_keys_cache:
-            if key_data.get("kid") == kid:
-                public_key = RSAAlgorithm.from_jwk(key_data)
-                break
+        if _clerk_jwks_keys_cache:
+            for key_data in _clerk_jwks_keys_cache:
+                if isinstance(key_data, dict) and key_data.get("kid") == kid:
+                    public_key = RSAAlgorithm.from_jwk(key_data)
+                    break
                 
         if not public_key:
             print("❌ [AUTH MONITOR] Validation Failed: The token 'kid' does not match cached Clerk keys.")
@@ -160,9 +165,11 @@ async def verify_admin_role(authenticated_user_id: str = Depends(verify_clerk_se
         
     profile_query = supabase.table("users").select("role").eq("id", authenticated_user_id).execute()
     if profile_query.data and len(profile_query.data) > 0:
-        user_role = profile_query.data[0].get("role")
-        if user_role == "admin":
-            return authenticated_user_id
+        first_row = profile_query.data[0]
+        if isinstance(first_row, dict):
+            user_role = first_row.get("role")
+            if user_role == "admin":
+                return authenticated_user_id
             
     print(f"🚫 [SECURITY ALERT] Unauthorized Access Attempt to Admin endpoint by user {authenticated_user_id}")
     raise HTTPException(
@@ -238,7 +245,8 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
         access_check = supabase.table("access_requests").select("status").eq("email", payload.email).execute()
         assigned_role = "associate"
         if access_check.data and len(access_check.data) > 0:
-            if access_check.data[0].get("status") == "admin_approved":
+            first_access = access_check.data[0]
+            if isinstance(first_access, dict) and first_access.get("status") == "admin_approved":
                 assigned_role = "admin"
 
         inserted_profile = supabase.table("users").insert({
@@ -267,12 +275,28 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
         raw_matches = pinecone_index.query(namespace="judgments", vector=query_vector, top_k=8, include_metadata=True)
         context_segments = []
         citations_payload = []
-        matches_list = raw_matches.get("matches", []) if isinstance(raw_matches, dict) else getattr(raw_matches, "matches", [])
+        
+        matches_list = []
+        if isinstance(raw_matches, dict):
+            matches_list = raw_matches.get("matches", [])
+        elif hasattr(raw_matches, "matches"):
+            matches_list = getattr(raw_matches, "matches", []) or []
         
         for match in matches_list:
-            meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {})
-            context_segments.append(f"Source: {meta.get('court')} ({meta.get('year')}) | Ref: {meta.get('case_id')}\nContent: {meta.get('text_preview')}")
-            citations_payload.append({"case_id": meta.get("case_id"), "court": meta.get("court"), "year": meta.get("year"), "preview": meta.get("text_preview")})
+            meta = {}
+            if isinstance(match, dict):
+                meta = match.get("metadata", {}) or {}
+            elif hasattr(match, "metadata"):
+                meta = getattr(match, "metadata", {}) or {}
+                
+            if isinstance(meta, dict):
+                court = str(meta.get('court', 'Unknown Court'))
+                year = str(meta.get('year', 'Unknown Year'))
+                case_id = str(meta.get('case_id', 'Unknown ID'))
+                text_preview = str(meta.get('text_preview', ''))
+                
+                context_segments.append(f"Source: {court} ({year}) | Ref: {case_id}\nContent: {text_preview}")
+                citations_payload.append({"case_id": case_id, "court": court, "year": year, "preview": text_preview})
             
         combined_context = "\n\n---\n\n".join(context_segments)
         
@@ -284,7 +308,13 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                 system=system_prompt,
                 messages=[{"role": "user", "content": f"Context:\n{combined_context}\n\nQuestion: {request.query_text}"}]
             )
-            generated_answer = "".join([block.text for block in claude_message.content if hasattr(block, "text")])
+            
+            # Using safe attribute unpacking loops to keep Pylance from flagging alternative thinking blocks
+            generated_answer = ""
+            for block in claude_message.content:
+                block_text = getattr(block, "text", "")
+                if block_text:
+                    generated_answer += block_text
         else:
             generated_answer = f"### Legal Evaluation (Simulation mode)\n\nPrecedent found: **{citations_payload[0]['case_id'] if citations_payload else 'N/A'}**."
         
@@ -295,7 +325,12 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
             "citations": citations_payload
         }).execute()
         
-        inserted_row_id = db_insert.data[0].get("id") if db_insert.data else str(uuid.uuid4())
+        inserted_row_id = str(uuid.uuid4())
+        if db_insert.data and len(db_insert.data) > 0:
+            first_insert = db_insert.data[0]
+            if isinstance(first_insert, dict):
+                inserted_row_id = str(first_insert.get("id", inserted_row_id))
+                
         return {"answer": generated_answer, "citations": citations_payload, "query_id": inserted_row_id}
     except Exception as e:
         if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
@@ -396,12 +431,11 @@ async def set_associate_status(associate_id: str, payload: AssociateStatusPayloa
     or user workspace execution permissions straight from the master user table grid.
     """
     try:
-        # Map Lovable's UI role modifications straight into the database user record
         res = supabase.table("users").update({
             "role": payload.status
         }).eq("id", associate_id).execute()
         
-        if not res.data:
+        if not res.data or len(res.data) == 0:
             raise HTTPException(status_code=404, detail="Target associate user profile row was not discovered.")
         return {"status": "success", "data": res.data[0]}
     except Exception as e:
@@ -415,7 +449,7 @@ async def delete_associate(associate_id: str, admin_id: str = Depends(verify_adm
     completely across administrative database control blocks.
     """
     try:
-        res = supabase.table("users").delete().eq("id", associate_id).execute()
+        supabase.table("users").delete().eq("id", associate_id).execute()
         return {"status": "success", "message": f"Associate footprint '{associate_id}' purged cleanly from core memory fields."}
     except Exception as e:
         if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
@@ -444,7 +478,6 @@ async def list_all_activity(
         res = query.order("created_at", desc=True).execute()
         return res.data
     except Exception as e:
-        # Fail gracefully back with an empty payload setup if structural log migrations are still deploying
         print(f"⚠️ Activity Log Stream Warning: {str(e)}")
         return []
 
@@ -458,16 +491,27 @@ async def export_training_data(admin_id: str = Depends(verify_admin_role)):
             
         jsonl_dataset = []
         for item in feedback_records:
+            if not isinstance(item, dict):
+                continue
+                
             q_id = item.get("query_id")
+            if not q_id:
+                continue
+                
             q_res = supabase.table("queries").select("query_text").eq("id", q_id).execute()
-            if q_res.data:
-                training_line = {
-                    "messages": [
-                        {"role": "user", "content": str(q_res.data[0].get("query_text", ""))},
-                        {"role": "assistant", "content": str(item.get("correct_answer", ""))}
-                    ]
-                }
-                jsonl_dataset.append(training_line)
+            if q_res.data and len(q_res.data) > 0:
+                first_q = q_res.data[0]
+                if isinstance(first_q, dict):
+                    query_text = first_q.get("query_text", "")
+                    correct_answer = item.get("correct_answer", "")
+                    
+                    training_line = {
+                        "messages": [
+                            {"role": "user", "content": str(query_text)},
+                            {"role": "assistant", "content": str(correct_answer)}
+                        ]
+                    }
+                    jsonl_dataset.append(training_line)
                 
         return {"total_training_records": len(jsonl_dataset), "jsonl_payload": jsonl_dataset}
     except Exception as e:
