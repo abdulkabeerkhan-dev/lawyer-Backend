@@ -263,16 +263,22 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
 @app.post("/query")
 async def execute_legal_query(request: QueryRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
     try:
+        import sys
+        print("🚀 [CHECKPOINT 1] Starting /query endpoint execution...", file=sys.stderr, flush=True)
+        
         bge_query_text = f"Represent this sentence for searching relevant passages: {request.query_text}"
         hf_api_url = "https://api-inference.huggingface.co/pipeline/feature-extraction/BAAI/bge-large-en-v1.5"
         
+        print("🌐 [CHECKPOINT 2] Attempting connection to Hugging Face Inference API...", file=sys.stderr, flush=True)
         async with httpx.AsyncClient(timeout=30.0) as client:
             hf_response = await client.post(hf_api_url, json={"inputs": bge_query_text})
             if hf_response.status_code != 200:
                 raise HTTPException(status_code=502, detail="Hugging Face Inference Engine failure.")
             query_vector = hf_response.json()
 
+        print("🌲 [CHECKPOINT 3] Attempting connection to Pinecone Vector Index...", file=sys.stderr, flush=True)
         raw_matches = pinecone_index.query(namespace="judgments", vector=query_vector, top_k=8, include_metadata=True)
+        
         context_segments = []
         citations_payload = []
         
@@ -300,6 +306,7 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
             
         combined_context = "\n\n---\n\n".join(context_segments)
         
+        print("🧠 [CHECKPOINT 4] Attempting connection to Anthropic Claude API...", file=sys.stderr, flush=True)
         if async_anthropic_client and ANTHROPIC_API_KEY:
             system_prompt = "You are an elite, highly precise Pakistani legal expert. Answer strictly based on the context data blocks provided, citing explicitly."
             claude_message = await async_anthropic_client.messages.create(
@@ -309,7 +316,6 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                 messages=[{"role": "user", "content": f"Context:\n{combined_context}\n\nQuestion: {request.query_text}"}]
             )
             
-            # Using safe attribute unpacking loops to keep Pylance from flagging alternative thinking blocks
             generated_answer = ""
             for block in claude_message.content:
                 block_text = getattr(block, "text", "")
@@ -318,6 +324,7 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
         else:
             generated_answer = f"### Legal Evaluation (Simulation mode)\n\nPrecedent found: **{citations_payload[0]['case_id'] if citations_payload else 'N/A'}**."
         
+        print("💾 [CHECKPOINT 5] Inserting query logging data into Supabase...", file=sys.stderr, flush=True)
         db_insert = supabase.table("queries").insert({
             "user_id": authenticated_user_id,
             "query_text": request.query_text,
@@ -331,9 +338,18 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
             if isinstance(first_insert, dict):
                 inserted_row_id = str(first_insert.get("id", inserted_row_id))
                 
+        print("✅ [CHECKPOINT 6] Query lifecycle resolved successfully!", file=sys.stderr, flush=True)
         return {"answer": generated_answer, "citations": citations_payload, "query_id": inserted_row_id}
+
     except Exception as e:
-        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
+        import traceback
+        import sys
+        print("❌ [CRITICAL ENGINE CRASH INSIDE /QUERY]:", file=sys.stderr, flush=True)
+        traceback.print_exc(file=sys.stderr)
+        sys.stderr.flush()
+        
+        if os.environ.get("SENTRY_DSN"): 
+            sentry_sdk.capture_exception(e)
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/feedback")
