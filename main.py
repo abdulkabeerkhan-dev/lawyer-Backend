@@ -1,4 +1,5 @@
 import os
+import sys
 import uuid
 from fastapi import FastAPI, HTTPException, status, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -263,17 +264,21 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
 @app.post("/query")
 async def execute_legal_query(request: QueryRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
     try:
-        import sys
         print("🚀 [CHECKPOINT 1] Starting /query endpoint execution...", file=sys.stderr, flush=True)
         
         bge_query_text = f"Represent this sentence for searching relevant passages: {request.query_text}"
-        hf_api_url = "https://api-inference.huggingface.co/pipeline/feature-extraction/BAAI/bge-large-en-v1.5"
+        hf_api_url = "https://router.huggingface.co/hf-inference/models/BAAI/bge-large-en-v1.5/pipeline/feature-extraction"
         
+        hf_headers = {}
+        hf_token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGINGFACE_API_KEY")
+        if hf_token:
+            hf_headers["Authorization"] = f"Bearer {hf_token}"
+
         print("🌐 [CHECKPOINT 2] Attempting connection to Hugging Face Inference API...", file=sys.stderr, flush=True)
         async with httpx.AsyncClient(timeout=30.0) as client:
-            hf_response = await client.post(hf_api_url, json={"inputs": bge_query_text})
+            hf_response = await client.post(hf_api_url, json={"inputs": bge_query_text}, headers=hf_headers)
             if hf_response.status_code != 200:
-                raise HTTPException(status_code=502, detail="Hugging Face Inference Engine failure.")
+                raise HTTPException(status_code=502, detail=f"Hugging Face Inference Engine failure: {hf_response.text}")
             query_vector = hf_response.json()
 
         print("🌲 [CHECKPOINT 3] Attempting connection to Pinecone Vector Index...", file=sys.stderr, flush=True)
@@ -343,38 +348,12 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
 
     except Exception as e:
         import traceback
-        import sys
         print("❌ [CRITICAL ENGINE CRASH INSIDE /QUERY]:", file=sys.stderr, flush=True)
         traceback.print_exc(file=sys.stderr)
         sys.stderr.flush()
         
         if os.environ.get("SENTRY_DSN"): 
             sentry_sdk.capture_exception(e)
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.post("/feedback")
-async def submit_feedback(request: FeedbackRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
-    try:
-        supabase.table("feedback").insert({
-            "query_id": request.query_id,
-            "user_id": authenticated_user_id,
-            "original_answer": request.original_answer,
-            "correct_answer": request.correct_answer
-        }).execute()
-        return {"status": "feedback saved"}
-    except Exception as e:
-        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/history/{user_id}")
-async def get_user_history(user_id: str, authenticated_user_id: str = Depends(verify_clerk_session)):
-    try:
-        if user_id != authenticated_user_id and authenticated_user_id != "mock_clerk_user_id_dev_run":
-            raise HTTPException(status_code=403, detail="Profile reference mismatch.")
-        res = supabase.table("queries").select("*").eq("user_id", user_id).order("created_at", desc=True).execute()
-        return res.data
-    except Exception as e:
-        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
         raise HTTPException(status_code=500, detail=str(e))
 
 # ----------------------------------------------------------------------
@@ -494,16 +473,8 @@ async def list_all_activity(
         res = query.order("created_at", desc=True).execute()
         return res.data
     except Exception as e:
-
-# 👇 ADD THESE TWO LINES TO EXPOSE THE ERROR IN RAILWAY LOGS
-        import traceback
-        print("❌ [CRITICAL ENGINE CRASH INSIDE /QUERY]:")
-        traceback.print_exc() 
-        
-        if os.environ.get("SENTRY_DSN"): 
-            sentry_sdk.capture_exception(e)
-        raise HTTPException(status_code=500, detail=str(e))
-
+        print(f"⚠️ Activity Log Stream Warning: {str(e)}")
+        return []
 
 @app.get("/admin/export-training-data")
 async def export_training_data(admin_id: str = Depends(verify_admin_role)):
