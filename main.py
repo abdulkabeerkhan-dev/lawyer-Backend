@@ -315,7 +315,7 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
         if async_anthropic_client and ANTHROPIC_API_KEY:
             system_prompt = "You are an elite, highly precise Pakistani legal expert. Answer strictly based on the context data blocks provided, citing explicitly."
             claude_message = await async_anthropic_client.messages.create(
-                model="claude-3-5-sonnet-20241022",
+                model="claude-sonnet-4-6",
                 max_tokens=2500,
                 system=system_prompt,
                 messages=[{"role": "user", "content": f"Context:\n{combined_context}\n\nQuestion: {request.query_text}"}]
