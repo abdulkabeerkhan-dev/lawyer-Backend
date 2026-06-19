@@ -79,12 +79,16 @@ async def verify_clerk_session(credentials: HTTPAuthorizationCredentials = Depen
     global _clerk_jwks_keys_cache
     token = credentials.credentials
     
+    # 🔍 SYSTEM DIAGNOSTIC PRINT: Instantly verifies what the backend is receiving
+    print(f"🔑 [AUTH MONITOR] Token Length: {len(token) if token else 0} | Content Snippet: {str(token)[:20]}...")
+
     # Local fallback bypass for isolated local testing environments
     if os.environ.get("FRONTEND_URL", "*") == "*":
         return "mock_clerk_user_id_dev_run"
         
     clerk_secret = os.environ.get("CLERK_SECRET_KEY")
     if not clerk_secret:
+        print("❌ [AUTH MONITOR] Deployment Error: CLERK_SECRET_KEY variable missing inside Railway parameters.")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Server configuration missing: 'CLERK_SECRET_KEY' environment variable is not defined on the host."
@@ -95,6 +99,7 @@ async def verify_clerk_session(credentials: HTTPAuthorizationCredentials = Depen
         unverified_header = jwt.get_unverified_header(token)
         kid = unverified_header.get("kid")
         if not kid:
+            print("❌ [AUTH MONITOR] Validation Failed: The incoming token header is missing a Key ID ('kid').")
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token signature architecture layout.")
             
         # Sync verified signature sets from Clerk keyservers if our RAM cache container is clear
@@ -103,6 +108,7 @@ async def verify_clerk_session(credentials: HTTPAuthorizationCredentials = Depen
                 headers = {"Authorization": f"Bearer {clerk_secret}"}
                 jwks_response = await client.get("https://api.clerk.com/v1/jwks", headers=headers)
                 if jwks_response.status_code != 200:
+                    print(f"❌ [AUTH MONITOR] Keyserver Error: Clerk rejected handshake with code {jwks_response.status_code}")
                     raise HTTPException(
                         status_code=status.HTTP_502_BAD_GATEWAY,
                         detail="Failed to sync active authorization signature pairs from Clerk keyserver clusters."
@@ -117,28 +123,33 @@ async def verify_clerk_session(credentials: HTTPAuthorizationCredentials = Depen
                 break
                 
         if not public_key:
-            # Clear local cache memory to force a refresh on the next query run in case keys rotated
-            _clerk_jwks_keys_cache = None
+            print("❌ [AUTH MONITOR] Validation Failed: The token 'kid' does not match any cached Clerk signature keys.")
+            _clerk_jwks_keys_cache = None  # Flush cache to force re-fetch on next query run
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Stale authentication signature validation parameters.")
             
-        # 🛡️ PYLANCE TYPE GUARD: Cast the public_key to Any to resolve false positive asymmetric key complaints
+        # 🛡️ DECODE WITH LEEWAY: Uses a 60-second time buffer to completely absorb server clock-skews
         decoded_payload = jwt.decode(
             token,
             key=cast(Any, public_key),
             algorithms=["RS256"],
-            options={"verify_aud": False}
+            options={"verify_aud": False},
+            leeway=60
         )
         
         user_id = decoded_payload.get("sub")
         if not user_id:
+            print("❌ [AUTH MONITOR] Validation Failed: Token parsed successfully but lacks a subject ('sub') field.")
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User profile subject reference claim is missing from session payload.")
             
+        print(f"✅ [AUTH MONITOR] Access Granted: User {user_id} successfully authenticated.")
         return str(user_id)
         
-    except jwt.exceptions.ExpiredSignatureError:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication failed: The provided session token has expired.")
+    except jwt.exceptions.ExpiredSignatureError as e:
+        print(f"❌ [AUTH MONITOR] Cryptographic Denial: Token is expired. Details: {str(e)}")
+        raise HTTPException(status_code=401, detail="Authentication failed: The provided session token has expired.")
     except Exception as error_context:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Access Denied: Token signature verification dropped: {str(error_context)}")
+        print(f"❌ [AUTH MONITOR] Cryptographic Denial: Core verification dropped. Context: {str(error_context)}")
+        raise HTTPException(status_code=401, detail=f"Access Denied: Token signature verification dropped: {str(error_context)}")
 
 # ----------------------------------------------------------------------
 # Data Transport Verification Forms (Pydantic Models)
