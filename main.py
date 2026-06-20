@@ -462,7 +462,7 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                 
                 vision_message = await async_anthropic_client.messages.create(
                     model="claude-sonnet-4-6",
-                    max_tokens=2500,
+                    max_tokens=4000,
                     messages=[
                         {
                             "role": "user",
@@ -567,7 +567,7 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
         if async_anthropic_client and ANTHROPIC_API_KEY:
             claude_message = await async_anthropic_client.messages.create(
                 model="claude-sonnet-4-6",
-                max_tokens=2500,
+                max_tokens=8000,
                 system=system_prompt,
                 messages=[{"role": "user", "content": user_query_payload}]
             )
