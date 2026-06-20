@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-TO BE NAMED AI LAWYER - Local Open-Source Production Ingestion Engine
+AMICUS AI - Local Open-Source Production Ingestion Engine
+Optimized for Idempotency State Tracking & Multi-Variant Schema Normalization.
 Uses BAAI/bge-large-en-v1.5 for local, high-precision vector generation (1024 Dim).
-Completely free from external API token caps or monthly subscription blocks.
 """
 
 import os
@@ -13,7 +13,8 @@ import time
 import logging
 import argparse
 import re
-from typing import List, Dict, Any, Tuple
+import hashlib
+from typing import List, Dict, Any, Tuple, Set, Optional
 import pandas as pd
 import tiktoken
 from dotenv import load_dotenv
@@ -21,19 +22,13 @@ from pinecone import Pinecone, PineconeException
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
-
-
 # ----------------------------------------------------------------------
 # Environment Configuration
 # ----------------------------------------------------------------------
-import os
-import sys
-
 # Force stable, single-threaded sequential streaming down from Hugging Face
 os.environ["HF_HUB_DISABLE_XET"] = "1"
 os.environ["HF_HUB_DOWNLOAD_TIMEOUT"] = "180"
 os.environ["HF_HUB_ETAG_TIMEOUT"] = "60"
-
 
 # ----------------------------------------------------------------------
 # Logging Setup
@@ -45,16 +40,13 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# ----------------------------------------------------------------------
-# Environment Configuration
-# ----------------------------------------------------------------------
+# Load configurations
 load_dotenv()
 
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 if not PINECONE_API_KEY:
     raise ValueError("PINECONE_API_KEY is missing from your environment configurations!")
 
-# Targets the newly created standard 1024-dim index space
 INDEX_NAME = os.getenv("PINECONE_INDEX_NAME", "legal-kb-pk-local")
 NAMESPACE = os.getenv("PINECONE_NAMESPACE", "judgments")
 
@@ -71,13 +63,26 @@ RETRY_BASE_DELAY = float(os.getenv("RETRY_BASE_DELAY", "5.0"))
 CONTENT_COLUMN = os.getenv("CONTENT_COLUMN")       
 INPUT_DIR = os.getenv("INPUT_DIR", "datasets")
 FAILURE_LOG = os.getenv("FAILURE_LOG", "failed_batches.jsonl")
+STATE_FILE = os.getenv("INGESTION_STATE_FILE", "ingestion_state.json")
+
+# ----------------------------------------------------------------------
+# Advanced Multi-Variant Schema Normalization Mappings
+# ----------------------------------------------------------------------
+COLUMN_ALIASES = {
+    "case_id": ["unique_id", "case_id", "case_no", "statute_id", "section_id", "id", "serial_no", "reference_id"],
+    "court": ["court", "category", "jurisdiction", "authority", "bench", "court_name", "tribunal"],
+    "year": ["year", "passed_year", "date", "session_year", "judgment_year", "decision_date"],
+    "subject_matter": ["subject_matter", "legal_domain", "topic", "tags", "subject", "summary", "headnotes", "keywords"],
+    "source_url": ["source_url", "link", "url", "source_link", "website"],
+    "title": ["case_title", "title", "subject_title", "topic_title"],
+    "citation": ["citation", "citation_no", "volume"]
+}
 
 # ----------------------------------------------------------------------
 # Local Embedding Model Initialization (BAAI/bge-large-en-v1.5)
 # ----------------------------------------------------------------------
 logger.info("Loading local embedding engine (BAAI/bge-large-en-v1.5)...")
 try:
-    # Automatically downloads on first run (~1.34 GB) and caches locally
     embedding_model = SentenceTransformer("BAAI/bge-large-en-v1.5")
     logger.info("Local embedding engine initialized successfully. Vector dimensions: 1024")
 except Exception as error:
@@ -97,6 +102,27 @@ def text_to_tokens(text: str) -> List[int]:
 
 def tokens_to_text(tokens: List[int]) -> str:
     return _encoder.decode(tokens)
+
+# ----------------------------------------------------------------------
+# Local Idempotency State Tracker Handlers
+# ----------------------------------------------------------------------
+def load_ingestion_state() -> Dict[str, Any]:
+    """Loads the local state track index file to monitor completed uploads."""
+    if os.path.exists(STATE_FILE):
+        try:
+            with open(STATE_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            logger.warning(f"Ingestion state ledger corrupted, constructing a clean state map. Details: {e}")
+    return {"processed_files": {}, "processed_record_hashes": []}
+
+def save_ingestion_state(state: Dict[str, Any]):
+    """Persists current operational metrics down into the state index file."""
+    try:
+        with open(STATE_FILE, "w", encoding="utf-8") as f:
+            json.dump(state, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        logger.error(f"Failed to record execution metrics to local tracking ledger: {e}")
 
 # ----------------------------------------------------------------------
 # Context-Preserving Structural Chunking
@@ -201,46 +227,71 @@ def upsert_vectors_with_retry(vectors: List[Dict[str, Any]],
                               namespace: str,
                               retries: int = MAX_RETRIES,
                               base_delay: float = RETRY_BASE_DELAY) -> bool:
-    """Upserts processed vector structures safely into the production Pinecone standard index."""
-    for attempt in range(retries):
-        try:
-            index.upsert(vectors=vectors, namespace=namespace)
-            return True
-        except Exception as e:
-            err_msg = str(e)
-            is_transient = any(code in err_msg for code in ["429", "5xx", "timeout", "connection", "unavailable"])
-            
-            if is_transient and attempt < retries - 1:
-                delay = base_delay * (2 ** attempt)
-                logger.warning(f"Pinecone API throttling hit: {err_msg}. Retrying in {delay:.1f}s...")
-                time.sleep(delay)
-                continue
-            else:
-                logger.error(f"Pinecone vector insertion transaction failed: {err_msg}")
-                return False
-    return False
+    """Upserts processed vector structures safely into the production Pinecone standard index using threads if possible."""
+    try:
+        # Use concurrent upsert capability of Pinecone index client if available (async_req=True)
+        # Note: Pinecone python client Index.upsert supports async_req parameter.
+        async_results = []
+        # Group into smaller pieces if needed, or send all in one call asynchronously
+        # We will split the payload to allow parallel upload request handling
+        chunk_size = min(len(vectors), 50)
+        for idx in range(0, len(vectors), chunk_size):
+            sub_batch = vectors[idx:idx + chunk_size]
+            res = index.upsert(vectors=sub_batch, namespace=namespace, async_req=True)
+            async_results.append(res)
+        
+        # Wait for all async requests to complete
+        for res in async_results:
+            res.get()
+        return True
+    except Exception as e:
+        # Fall back to synchronous retry flow if async execution fails
+        err_msg = str(e)
+        logger.warning(f"Async upsert fallback: {err_msg}. Running synchronous retry channel...")
+        for attempt in range(retries):
+            try:
+                index.upsert(vectors=vectors, namespace=namespace)
+                return True
+            except Exception as ex:
+                err_msg = str(ex)
+                is_transient = any(code in err_msg for code in ["429", "5xx", "timeout", "connection", "unavailable"])
+                if is_transient and attempt < retries - 1:
+                    delay = base_delay * (2 ** attempt)
+                    time.sleep(delay)
+                    continue
+                else:
+                    logger.error(f"Pinecone vector insertion transaction failed: {err_msg}")
+                    return False
+        return False
 
 def log_failed_vector_batch(vectors: List[Dict[str, Any]], error_msg: str, log_path: str = FAILURE_LOG):
-    """Caches generated vectors to a local fail log to prevent re-computation if an upsert drop occurs."""
     with open(log_path, "a", encoding="utf-8") as f:
         for vec in vectors:
             f.write(json.dumps({"error": error_msg, "vector_data": vec}, ensure_ascii=False) + "\n")
     logger.info(f"Successfully cached {len(vectors)} records into local tracking ledger: {log_path}")
 
 # ----------------------------------------------------------------------
-# Metadata Parsing Helpers
+# Metadata Parsing & Normalization Helpers
 # ----------------------------------------------------------------------
 def find_content_column(df: pd.DataFrame) -> str:
     if CONTENT_COLUMN and CONTENT_COLUMN in df.columns:
         return CONTENT_COLUMN
     common_names = ["content", "content_text", "judgment", "judgment_text", "statute_text",
-                    "text", "body", "case_description", "headnotes", "section_content", "maxim"]
+                    "text", "body", "case_description", "headnotes", "section_content", "maxim", "words", "maxims"]
     for col in common_names:
         if col in df.columns:
             return col
     str_df = df.astype(str)
     avg_lens = str_df.apply(lambda x: x.str.len().mean())
     return str(avg_lens.idxmax())
+
+def extract_mapped_column(df: pd.DataFrame, standard_key: str) -> Optional[str]:
+    """Resolves arbitrary schema layout column configurations based on alignment matrix rules."""
+    aliases = COLUMN_ALIASES.get(standard_key, [])
+    for col in df.columns:
+        if str(col).lower().strip() in aliases:
+            return str(col)
+    return None
 
 def safe_year(value: Any) -> int:
     if pd.isna(value):
@@ -259,7 +310,7 @@ def safe_year(value: Any) -> int:
 # ----------------------------------------------------------------------
 # Core Execution Engine
 # ----------------------------------------------------------------------
-def process_csv_files(dry_run: bool = False, resume: bool = False):
+def process_csv_files(dry_run: bool = False, resume: bool = False, force_reingest: bool = False):
     pc = Pinecone(api_key=PINECONE_API_KEY)
     try:
         index = pc.Index(INDEX_NAME)
@@ -269,7 +320,10 @@ def process_csv_files(dry_run: bool = False, resume: bool = False):
         logger.error(f"Failed to access the designated Pinecone index deployment: {e}")
         sys.exit(1)
 
-    # Ingestion Recovery Track
+    # Load local track index history ledger
+    state_ledger = load_ingestion_state()
+    processed_hashes = set(state_ledger.get("processed_record_hashes", []))
+
     if resume:
         if not os.path.exists(FAILURE_LOG):
             logger.info(f"No failure tracking file found at {FAILURE_LOG}. Aborting resume sequence.")
@@ -305,7 +359,17 @@ def process_csv_files(dry_run: bool = False, resume: bool = False):
     total_records_pushed = 0
 
     for file_path in csv_files:
-        category_name = os.path.basename(file_path).replace(".csv", "")
+        file_name = os.path.basename(file_path)
+        category_name = file_name.replace(".csv", "")
+        
+        # Calculate file modification signature profile to track adjustments
+        file_mtime = os.path.getmtime(file_path)
+        
+        if not force_reingest and file_name in state_ledger["processed_files"]:
+            if state_ledger["processed_files"][file_name] == file_mtime:
+                logger.info(f"⏩ [STATE MONITOR] File '{file_name}' has already been processed and remains unmodified. Skipping entirely.")
+                continue
+
         logger.info(f"\nProcessing active spreadsheet workspace: {category_name}")
 
         try:
@@ -321,33 +385,43 @@ def process_csv_files(dry_run: bool = False, resume: bool = False):
         content_col = find_content_column(df)
         logger.info(f"Selected primary text data extraction target channel: '{content_col}'")
 
-        # Extract structural tracking tags across varied legal forms
-        id_col = next((c for c in ["unique_id", "case_id", "case_no", "statute_id", "section_id"] if c in df.columns), None)
-        court_col = next((c for c in ["court", "category", "jurisdiction", "authority"] if c in df.columns), None)
-        year_col = next((c for c in ["year", "passed_year", "date", "session_year"] if c in df.columns), None)
-        subject_col = next((c for c in ["subject_matter", "legal_domain", "topic", "tags"] if c in df.columns), None)
-        source_col = next((c for c in ["source_url", "link", "url"] if c in df.columns), None)
+        # Resolve multi-variant column headings dynamically using mapping rules
+        id_col = extract_mapped_column(df, "case_id")
+        court_col = extract_mapped_column(df, "court")
+        year_col = extract_mapped_column(df, "year")
+        subject_col = extract_mapped_column(df, "subject_matter")
+        source_col = extract_mapped_column(df, "source_url")
+        title_col = extract_mapped_column(df, "title")
+        citation_col = extract_mapped_column(df, "citation")
 
         pending_batch_chunks = []
         pending_batch_metadata = []
+        pending_batch_hashes = []
 
         for idx, row in tqdm(df.iterrows(), total=len(df), desc=f"Parsing rows", unit="row"):
             main_text = str(row.get(content_col, "")).strip()
             if not main_text or main_text.lower() in ("nan", "none", ""):
                 continue
 
-            case_id = str(row.get(id_col, f"{category_name}-ROW-{idx}"))
-            safe_case_id = re.sub(r'[^a-zA-Z0-9_\-]', '_', case_id)
-            court = str(row.get(court_col, f"{category_name} Source"))
-            year = safe_year(row.get(year_col, 2026))
-            subject_matter = str(row.get(subject_col, category_name))[:400]
-            source_url = str(row.get(source_col, "https://pakistanlawsite.com/"))
+            # Deterministic record hashing implementation for strict data row tracking
+            row_fingerprint = hashlib.md5(f"{category_name}_{idx}_{main_text[:500]}".encode("utf-8")).hexdigest()
+            if not force_reingest and row_fingerprint in processed_hashes:
+                continue  # Content match discovered in tracking database, bypass processing layer
 
-            # --- DYNAMIC FIELD EXPANSION GENERATOR ---
+            case_id = str(row.get(id_col, f"{category_name}-ROW-{idx}")) if id_col else f"{category_name}-ROW-{idx}"
+            safe_case_id = re.sub(r'[^a-zA-Z0-9_\-]', '_', case_id)
+            court = str(row.get(court_col, f"{category_name} Source")) if court_col else f"{category_name} Source"
+            year = safe_year(row.get(year_col, 2026)) if year_col else 2026
+            subject_matter = str(row.get(subject_col, category_name))[:400] if subject_col else category_name
+            source_url = str(row.get(source_col, "https://pakistanlawsite.com/")) if source_col else "https://pakistanlawsite.com/"
+            title = str(row.get(title_col, "Untitled Case")) if title_col and not pd.isna(row.get(title_col)) else "Untitled Case"
+            citation = str(row.get(citation_col, "No Citation")) if citation_col and not pd.isna(row.get(citation_col)) else "No Citation"
+
+            # --- DYNAMIC EXTRA CORES RETRIEVAL FIELD EXPANSION ---
             extra_metadata = {}
             for col in df.columns:
-                if col in [content_col, id_col, court_col, year_col, subject_col, source_col]:
-                    continue  # Secure critical core references from being overridden
+                if col in [content_col, id_col, court_col, year_col, subject_col, source_col, title_col, citation_col]:
+                    continue  # Protect core attributes from being overwritten by dynamic loops
                 
                 val = row[col]
                 if pd.isna(val) or str(val).lower() in ("nan", "none", ""):
@@ -365,12 +439,15 @@ def process_csv_files(dry_run: bool = False, resume: bool = False):
 
             for chunk_idx, chunk_text in enumerate(chunks):
                 meta_block = {
-                    "text_preview": chunk_text[:200], # Mandated system citation snippet match layout
+                    "text_preview": chunk_text[:200],
+                    "text": chunk_text,  # Store the full chunk text inside Pinecone metadata
                     "case_id": case_id,
                     "court": court,
                     "year": year,
                     "subject_matter": subject_matter,
                     "source_url": source_url,
+                    "title": title,
+                    "citation": citation,
                     "chunk_index": chunk_idx,
                     "dataset_category": category_name,
                     **extra_metadata
@@ -378,12 +455,11 @@ def process_csv_files(dry_run: bool = False, resume: bool = False):
                 
                 pending_batch_chunks.append(chunk_text)
                 pending_batch_metadata.append((f"{safe_case_id}_chunk_{chunk_idx}", meta_block))
+                pending_batch_hashes.append(row_fingerprint)
 
                 if len(pending_batch_chunks) >= BATCH_SIZE:
                     if not dry_run:
-                        # Compute embeddings locally via sentence-transformers in one batch call
                         embeddings = embedding_model.encode(pending_batch_chunks, convert_to_numpy=True).tolist()
-                        
                         vectors_payload = []
                         for i, (vector_id, meta) in enumerate(pending_batch_metadata):
                             vectors_payload.append({
@@ -395,14 +471,19 @@ def process_csv_files(dry_run: bool = False, resume: bool = False):
                         success = upsert_vectors_with_retry(vectors_payload, index, NAMESPACE)
                         if success:
                             total_records_pushed += len(vectors_payload)
+                            processed_hashes.update(pending_batch_hashes)
+                            
+                            # Incrementally save ingestion state to support resume mid-file
+                            state_ledger["processed_record_hashes"] = list(processed_hashes)
+                            save_ingestion_state(state_ledger)
                         else:
                             log_failed_vector_batch(vectors_payload, "Batch transmission lifecycle failed.")
-                        time.sleep(BATCH_COOLDOWN_SECONDS)
                     else:
                         total_records_pushed += len(pending_batch_chunks)
 
                     pending_batch_chunks = []
                     pending_batch_metadata = []
+                    pending_batch_hashes = []
 
         if pending_batch_chunks:
             if not dry_run:
@@ -417,10 +498,17 @@ def process_csv_files(dry_run: bool = False, resume: bool = False):
                 success = upsert_vectors_with_retry(vectors_payload, index, NAMESPACE)
                 if success:
                     total_records_pushed += len(vectors_payload)
+                    processed_hashes.update(pending_batch_hashes)
                 else:
                     log_failed_vector_batch(vectors_payload, "Tail block transmission lifecycle failed.")
             else:
                 total_records_pushed += len(pending_batch_chunks)
+
+        # File processed successfully, cache parameters to state index matrix ledger
+        if not dry_run:
+            state_ledger["processed_files"][file_name] = file_mtime
+            state_ledger["processed_record_hashes"] = list(processed_hashes)
+            save_ingestion_state(state_ledger)
 
     logger.info(f"\nProcessing Complete. {total_chunks_created} pieces built, {total_records_pushed} coordinates successfully saved in Pinecone.")
 
@@ -428,16 +516,17 @@ def process_csv_files(dry_run: bool = False, resume: bool = False):
 # Driver Entry Verification
 # ----------------------------------------------------------------------
 def main():
-    parser = argparse.ArgumentParser(description="TO BE NAMED AI LAWYER - Local Open-Source Ingestion Engine Driver.")
+    parser = argparse.ArgumentParser(description="AMICUS AI - Local Open-Source Ingestion Engine Driver.")
     parser.add_argument("--dry-run", action="store_true", help="Preview calculations without writing records.")
     parser.add_argument("--resume", action="store_true", help="Restore records from failure tracking buffers.")
+    parser.add_argument("--force-reingest", action="store_true", help="Bypass state tracking ledger checks and re-upload everything.")
     parser.add_argument("--debug", action="store_true", help="Activate system diagnostic traces.")
     args = parser.parse_args()
 
     if args.debug:
         logger.setLevel(logging.DEBUG)
 
-    process_csv_files(dry_run=args.dry_run, resume=args.resume)
+    process_csv_files(dry_run=args.dry_run, resume=args.resume, force_reingest=args.force_reingest)
 
 if __name__ == "__main__":
     main()

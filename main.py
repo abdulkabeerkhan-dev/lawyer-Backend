@@ -48,20 +48,33 @@ ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
 
-if not PINECONE_API_KEY:
-    raise RuntimeError("CRITICAL LAUNCH ERROR: 'PINECONE_API_KEY' environment variable is missing!")
-if not SUPABASE_URL or not SUPABASE_SERVICE_KEY:
-    raise RuntimeError("CRITICAL LAUNCH ERROR: Supabase database connection tokens are missing!")
+# Initialize Cloud Infrastructures gracefully with fallback logging to prevent Railway build crashes
+pinecone_index = None
+if PINECONE_API_KEY:
+    try:
+        pc = Pinecone(api_key=PINECONE_API_KEY)
+        pinecone_index = pc.Index(PINECONE_INDEX_NAME)
+    except Exception as launch_err:
+        print(f"⚠️ Pinecone startup warning: {launch_err}")
+else:
+    print("⚠️ WARNING: PINECONE_API_KEY environment variable is missing!")
 
-# Initialize Production Cloud Infrastructures securely
-pc = Pinecone(api_key=PINECONE_API_KEY)
-pinecone_index = pc.Index(PINECONE_INDEX_NAME)
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+supabase = None
+if SUPABASE_URL and SUPABASE_SERVICE_KEY:
+    try:
+        supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+    except Exception as launch_err:
+        print(f"⚠️ Supabase startup warning: {launch_err}")
+else:
+    print("⚠️ WARNING: Supabase database connection tokens are missing!")
 
 # Initialize Anthropic Client conditionally to support fallback simulations
 async_anthropic_client = None
 if ANTHROPIC_API_KEY:
-    async_anthropic_client = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
+    try:
+        async_anthropic_client = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
+    except Exception as launch_err:
+        print(f"⚠️ Anthropic client startup warning: {launch_err}")
 else:
     print("⚠️ WARNING: ANTHROPIC_API_KEY is missing. Activating LLM Simulation Fallback Layer for testing.")
 
@@ -164,6 +177,8 @@ async def verify_admin_role(authenticated_user_id: str = Depends(verify_clerk_se
     if authenticated_user_id == "mock_clerk_user_id_dev_run":
         return authenticated_user_id
         
+    if not supabase:
+        raise HTTPException(status_code=500, detail="Database connection is currently offline.")
     profile_query = supabase.table("users").select("role").eq("id", authenticated_user_id).execute()
     if profile_query.data and len(profile_query.data) > 0:
         first_row = profile_query.data[0]
@@ -203,13 +218,79 @@ class AssociateCreatePayload(BaseModel):
 class AssociateStatusPayload(BaseModel):
     status: str
 
+class ImagePayload(BaseModel):
+    image_base64: str
+    image_mime_type: str
+
 class QueryRequest(BaseModel):
     query_text: str
+    images: Optional[List[ImagePayload]] = None
+    category: str = "general"
 
 class FeedbackRequest(BaseModel):
     query_id: str
     original_answer: str
     correct_answer: str
+
+# Category Specific Prompts for Pakistan Law
+SYSTEM_PROMPTS = {
+    "criminal": (
+        "You are an elite Pakistani criminal law specialist, holding deep expertise in the Pakistan Penal Code (PPC) "
+        "and Code of Criminal Procedure (CrPC). Answer the queries accurately citing specific sections, case precedents, "
+        "and legal provisions based on the provided context."
+    ),
+    "divorce_family": (
+        "You are a leading Pakistani family law expert, specializing in the Muslim Family Laws Ordinance, Dissolution "
+        "of Muslim Marriages Act, and related child custody, dower, maintenance, and divorce jurisprudence. "
+        "Answer strictly and cite appropriate Pakistani laws."
+    ),
+    "government_constitutional": (
+        "You are a senior Pakistani constitutional law expert, specializing in civil rights, writ petitions under Article 199, "
+        "civil service regulations, and administrative law. Cite Constitutional Articles and leading judgments."
+    ),
+    "corporate_tax": (
+        "You are a Pakistani corporate and tax law advisor, specializing in the Companies Act 2017, Contract Act, SECP regulations, "
+        "and income/sales tax ordinances. Provide clear, professional statutory citations."
+    ),
+    "land_property": (
+        "You are an expert on Pakistani land revenue, transfer of property, tenancy, and registration laws (including the "
+        "Land Revenue Act and Transfer of Property Act). Provide detail-oriented advice on registry, mutation, and ownership disputes."
+    ),
+    "general": (
+        "You are an elite, highly precise Pakistani legal expert. Answer strictly based on the context data blocks provided, citing explicitly."
+    )
+}
+
+# Helper to verify quotas from Supabase database logs
+def check_user_quota(user_id: str, num_images_requested: int):
+    if user_id == "mock_clerk_user_id_dev_run" or not supabase:
+        return  # Allow dev fallback
+        
+    try:
+        from datetime import datetime, timedelta, timezone
+        time_limit = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
+        
+        # Query matching records in last 24h
+        res = supabase.table("queries").select("id", "query_text").eq("user_id", user_id).gte("created_at", time_limit).execute()
+        records = res.data if res else []
+        
+        # Check overall daily limit (e.g., 100 queries)
+        if len(records) >= 100:
+            raise HTTPException(status_code=429, detail="Daily query quota limit exceeded (Max 100 queries/day).")
+            
+        if num_images_requested > 0:
+            # We look for queries containing attachments in their logs
+            vision_count = 0
+            for r in records:
+                # Count instances of [Vision Context] tags or query logs with attachments
+                if "[Vision Context]" in str(r.get("query_text", "")):
+                    vision_count += 1
+            if vision_count >= 15:
+                raise HTTPException(status_code=429, detail="Daily document upload/vision limit exceeded (Max 15 queries with images/day).")
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"⚠️ Quota verification error: {e}")
 
 # ----------------------------------------------------------------------
 # Core Operation Controllers (Existing Workflows)
@@ -220,6 +301,8 @@ def health_check():
 
 @app.post("/request-access")
 async def register_access_request(request: AccessRegistration):
+    if not supabase:
+        raise HTTPException(status_code=503, detail="Database service is currently offline.")
     try:
         duplicate_check = supabase.table("access_requests").select("id").eq("email", request.email).execute()
         if duplicate_check.data and len(duplicate_check.data) > 0:
@@ -238,6 +321,8 @@ async def register_access_request(request: AccessRegistration):
 
 @app.post("/users/sync")
 async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_id: str = Depends(verify_clerk_session)):
+    if not supabase:
+        raise HTTPException(status_code=503, detail="Database service is currently offline.")
     try:
         profile_query = supabase.table("users").select("*").eq("id", authenticated_user_id).execute()
         if profile_query.data and len(profile_query.data) > 0:
@@ -266,7 +351,84 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
     try:
         print("🚀 [CHECKPOINT 1] Starting /query endpoint execution...", file=sys.stderr, flush=True)
         
-        bge_query_text = f"Represent this sentence for searching relevant passages: {request.query_text}"
+        # 1. Enforce Quotas
+        images_list = request.images or []
+        num_images = len(images_list)
+        check_user_quota(authenticated_user_id, num_images_requested=num_images)
+
+        has_image = num_images > 0
+        extracted_doc_text = ""
+        search_keywords_query = request.query_text
+        
+        # 2. Process images with Claude Vision to extract text & English keywords if present
+        if has_image:
+            if not async_anthropic_client or not ANTHROPIC_API_KEY:
+                extracted_doc_text = f"[Simulated Urdu/English Transcript content for {num_images} attachments]"
+                search_keywords_query = f"transcribed case keywords {request.query_text}"
+                print("⚠️ Vision simulation triggered (missing API Key)")
+            else:
+                print(f"👁️ Processing {num_images} attached document pages with Claude Vision...", file=sys.stderr, flush=True)
+                
+                # Build content blocks for the vision call
+                vision_content = []
+                
+                # Add all image blocks
+                for img in images_list:
+                    vision_content.append({
+                        "type": "image",
+                        "source": {
+                            "type": "base64",
+                            "media_type": img.image_mime_type,
+                            "data": img.image_base64
+                        }
+                    })
+                
+                # Call Claude to transcribe and translate Urdu/English
+                vision_prompt = (
+                    "Extract and transcribe all text from these legal document page(s) (supporting Urdu and English). "
+                    "If the document is written in Urdu, translate its core points and content fully into English "
+                    "so they can be matched against an English-only legal database. "
+                    "Provide output in this JSON format:\n"
+                    '{\n  "transcription": "extracted and English-translated text content of all pages combined...",\n  "keywords": "3-5 search keywords in English separated by spaces"\n}'
+                )
+                vision_content.append({
+                    "type": "text",
+                    "text": vision_prompt
+                })
+                
+                vision_message = await async_anthropic_client.messages.create(
+                    model="claude-sonnet-4-6",
+                    max_tokens=2500,
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": vision_content
+                        }
+                    ]
+                )
+                
+                raw_response = ""
+                for block in vision_message.content:
+                    block_text = getattr(block, "text", "")
+                    if block_text:
+                        raw_response += block_text
+                        
+                # Parse structured transcription
+                try:
+                    # Clean markdown code blocks if generated
+                    cleaned_json = raw_response.strip()
+                    if cleaned_json.startswith("```"):
+                        cleaned_json = re.sub(r"^```json\s*|\s*```$", "", cleaned_json, flags=re.MULTILINE)
+                    parsed_res = json.loads(cleaned_json)
+                    extracted_doc_text = parsed_res.get("transcription", "")
+                    search_keywords_query = f"{parsed_res.get('keywords', '')} {request.query_text}".strip()
+                except Exception as parse_err:
+                    print(f"⚠️ Failed parsing JSON from vision call: {parse_err}. Using raw response.")
+                    extracted_doc_text = raw_response
+                    search_keywords_query = f"{raw_response[:200]} {request.query_text}"
+
+        # 3. Pinecone Vector Search
+        bge_query_text = f"Represent this sentence for searching relevant passages: {search_keywords_query}"
         hf_api_url = "https://router.huggingface.co/hf-inference/models/BAAI/bge-large-en-v1.5/pipeline/feature-extraction"
         
         hf_headers = {}
@@ -282,6 +444,9 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
             query_vector = hf_response.json()
 
         print("🌲 [CHECKPOINT 3] Attempting connection to Pinecone Vector Index...", file=sys.stderr, flush=True)
+        if not pinecone_index:
+            raise HTTPException(status_code=500, detail="Pinecone serverless engine index connection is inactive.")
+            
         raw_matches = pinecone_index.query(namespace="judgments", vector=query_vector, top_k=8, include_metadata=True)
         
         context_segments = []
@@ -304,21 +469,43 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                 court = str(meta.get('court', 'Unknown Court'))
                 year = str(meta.get('year', 'Unknown Year'))
                 case_id = str(meta.get('case_id', 'Unknown ID'))
-                text_preview = str(meta.get('text_preview', ''))
                 
-                context_segments.append(f"Source: {court} ({year}) | Ref: {case_id}\nContent: {text_preview}")
-                citations_payload.append({"case_id": case_id, "court": court, "year": year, "preview": text_preview})
+                # Fetch full text from index first, fall back to preview if older ingest format
+                text_content = str(meta.get('text', meta.get('text_preview', '')))
+                title = str(meta.get('title', 'Untitled Case'))
+                citation = str(meta.get('citation', 'No Citation'))
+                
+                context_segments.append(
+                    f"Source: {court} ({year}) | Citation: {citation} | Title: {title} | Ref: {case_id}\n"
+                    f"Content: {text_content}"
+                )
+                citations_payload.append({
+                    "case_id": case_id,
+                    "court": court,
+                    "year": year,
+                    "preview": text_content[:400],
+                    "title": title,
+                    "citation": citation
+                })
             
         combined_context = "\n\n---\n\n".join(context_segments)
         
+        # 4. Format Prompt and Call Anthropic
+        system_prompt = SYSTEM_PROMPTS.get(request.category, SYSTEM_PROMPTS["general"])
+        
+        user_query_payload = f"Context from Legal Database:\n{combined_context}\n\n"
+        if has_image:
+            user_query_payload += f"Transcribed/Translated User Attached Document(s) ({num_images} pages):\n{extracted_doc_text}\n\n[Vision Context] Please review the attached document data and reference database contents to answer the query.\n\n"
+            
+        user_query_payload += f"Question: {request.query_text}"
+
         print("🧠 [CHECKPOINT 4] Attempting connection to Anthropic Claude API...", file=sys.stderr, flush=True)
         if async_anthropic_client and ANTHROPIC_API_KEY:
-            system_prompt = "You are an elite, highly precise Pakistani legal expert. Answer strictly based on the context data blocks provided, citing explicitly."
             claude_message = await async_anthropic_client.messages.create(
                 model="claude-sonnet-4-6",
                 max_tokens=2500,
                 system=system_prompt,
-                messages=[{"role": "user", "content": f"Context:\n{combined_context}\n\nQuestion: {request.query_text}"}]
+                messages=[{"role": "user", "content": user_query_payload}]
             )
             
             generated_answer = ""
@@ -327,21 +514,25 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                 if block_text:
                     generated_answer += block_text
         else:
-            generated_answer = f"### Legal Evaluation (Simulation mode)\n\nPrecedent found: **{citations_payload[0]['case_id'] if citations_payload else 'N/A'}**."
+            generated_answer = f"### Legal Evaluation (Simulation mode - Category: {request.category})\n\nPrecedent found: **{citations_payload[0]['case_id'] if citations_payload else 'N/A'}**."
         
+        # 5. Log and Save
         print("💾 [CHECKPOINT 5] Inserting query logging data into Supabase...", file=sys.stderr, flush=True)
-        db_insert = supabase.table("queries").insert({
-            "user_id": authenticated_user_id,
-            "query_text": request.query_text,
-            "answer_text": generated_answer,
-            "citations": citations_payload
-        }).execute()
-        
         inserted_row_id = str(uuid.uuid4())
-        if db_insert.data and len(db_insert.data) > 0:
-            first_insert = db_insert.data[0]
-            if isinstance(first_insert, dict):
-                inserted_row_id = str(first_insert.get("id", inserted_row_id))
+        if supabase:
+            db_insert = supabase.table("queries").insert({
+                "user_id": authenticated_user_id,
+                "query_text": f"[Vision Context] {request.query_text}" if has_image else request.query_text,
+                "answer_text": generated_answer,
+                "citations": citations_payload
+            }).execute()
+            
+            if db_insert.data and len(db_insert.data) > 0:
+                first_insert = db_insert.data[0]
+                if isinstance(first_insert, dict):
+                    inserted_row_id = str(first_insert.get("id", inserted_row_id))
+        else:
+            print("⚠️ Skipped logging query to database (Supabase client offline)")
                 
         print("✅ [CHECKPOINT 6] Query lifecycle resolved successfully!", file=sys.stderr, flush=True)
         return {"answer": generated_answer, "citations": citations_payload, "query_id": inserted_row_id}
