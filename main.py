@@ -289,8 +289,8 @@ def check_user_quota(user_id: str, num_images_requested: int):
                     q_val = r.get("query_text", "")
                     if q_val and "[Vision Context]" in str(q_val):
                         vision_count += 1
-            if vision_count >= 15:
-                raise HTTPException(status_code=429, detail="Daily document upload/vision limit exceeded (Max 15 queries with images/day).")
+            if vision_count >= 30:
+                raise HTTPException(status_code=429, detail="Daily document upload/vision limit exceeded (Max 30 queries with images/day).")
     except HTTPException:
         raise
     except Exception as e:
@@ -362,8 +362,8 @@ async def get_user_quota_status(authenticated_user_id: str = Depends(verify_cler
             "text_queries_limit": 100,
             "text_queries_remaining": 100,
             "vision_queries_used": 0,
-            "vision_queries_limit": 15,
-            "vision_queries_remaining": 15,
+            "vision_queries_limit": 30,
+            "vision_queries_remaining": 30,
             "reset_time_iso": None
         }
     try:
@@ -402,8 +402,8 @@ async def get_user_quota_status(authenticated_user_id: str = Depends(verify_cler
             "text_queries_limit": 100,
             "text_queries_remaining": max(0, 100 - total_used),
             "vision_queries_used": vision_used,
-            "vision_queries_limit": 15,
-            "vision_queries_remaining": max(0, 15 - vision_used),
+            "vision_queries_limit": 30,
+            "vision_queries_remaining": max(0, 30 - vision_used),
             "reset_time_iso": reset_time
         }
     except Exception as e:
