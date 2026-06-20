@@ -350,6 +350,66 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
         if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/users/quota")
+async def get_user_quota_status(authenticated_user_id: str = Depends(verify_clerk_session)):
+    """
+    📊 USER QUOTA ENDPOINT: Computes usage statistics (remaining queries/images)
+    and quota reset time for the authenticated user.
+    """
+    if not supabase:
+        return {
+            "text_queries_used": 0,
+            "text_queries_limit": 100,
+            "text_queries_remaining": 100,
+            "vision_queries_used": 0,
+            "vision_queries_limit": 15,
+            "vision_queries_remaining": 15,
+            "reset_time_iso": None
+        }
+    try:
+        from datetime import datetime, timedelta, timezone
+        now = datetime.now(timezone.utc)
+        time_limit = (now - timedelta(hours=24)).isoformat()
+        
+        res = supabase.table("queries").select("created_at", "query_text").eq("user_id", authenticated_user_id).gte("created_at", time_limit).execute()
+        records = res.data if res else []
+        
+        total_used = len(records)
+        vision_used = 0
+        oldest_query_time = None
+        
+        for r in records:
+            if isinstance(r, dict):
+                q_val = r.get("query_text", "")
+                if q_val and "[Vision Context]" in str(q_val):
+                    vision_used += 1
+                
+                created_str = r.get("created_at")
+                if created_str:
+                    try:
+                        created_dt = datetime.fromisoformat(created_str.replace("Z", "+00:00"))
+                        if oldest_query_time is None or created_dt < oldest_query_time:
+                            oldest_query_time = created_dt
+                    except Exception:
+                        pass
+        
+        reset_time = None
+        if oldest_query_time:
+            reset_time = (oldest_query_time + timedelta(hours=24)).isoformat()
+            
+        return {
+            "text_queries_used": total_used,
+            "text_queries_limit": 100,
+            "text_queries_remaining": max(0, 100 - total_used),
+            "vision_queries_used": vision_used,
+            "vision_queries_limit": 15,
+            "vision_queries_remaining": max(0, 15 - vision_used),
+            "reset_time_iso": reset_time
+        }
+    except Exception as e:
+        print(f"⚠️ Error fetching user quota: {e}")
+        raise HTTPException(status_code=500, detail="Failed to retrieve quota status.")
+
 @app.post("/query")
 async def execute_legal_query(request: QueryRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
     try:
