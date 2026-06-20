@@ -611,6 +611,26 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
             sentry_sdk.capture_exception(e)
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/feedback")
+async def submit_feedback(request: FeedbackRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
+    """
+    📝 FEEDBACK LOGGER GATEWAY: Records corrections and user remarks into the 
+    Supabase relational training ledger for offline fine-tuning pipelines.
+    """
+    if not supabase:
+        raise HTTPException(status_code=503, detail="Database service is currently offline.")
+    try:
+        res = supabase.table("feedback").insert({
+            "query_id": request.query_id,
+            "original_answer": request.original_answer,
+            "correct_answer": request.correct_answer,
+            "user_id": authenticated_user_id
+        }).execute()
+        return {"status": "success", "message": "Feedback submitted successfully.", "data": res.data}
+    except Exception as e:
+        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=str(e))
+
 # ----------------------------------------------------------------------
 # Dynamic Onboarding & User Profile Customizations (New Contracts)
 # ----------------------------------------------------------------------
