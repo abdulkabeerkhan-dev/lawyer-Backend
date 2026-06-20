@@ -13,6 +13,8 @@ import sentry_sdk
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 from pinecone import Pinecone
 from anthropic import AsyncAnthropic
+import re
+import json
 from supabase import create_client, Client
 from dotenv import load_dotenv
 
@@ -59,7 +61,7 @@ if PINECONE_API_KEY:
 else:
     print("⚠️ WARNING: PINECONE_API_KEY environment variable is missing!")
 
-supabase = None
+supabase: Any = None
 if SUPABASE_URL and SUPABASE_SERVICE_KEY:
     try:
         supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
@@ -282,9 +284,11 @@ def check_user_quota(user_id: str, num_images_requested: int):
             # We look for queries containing attachments in their logs
             vision_count = 0
             for r in records:
-                # Count instances of [Vision Context] tags or query logs with attachments
-                if "[Vision Context]" in str(r.get("query_text", "")):
-                    vision_count += 1
+                # Count instances of [Vision Context] tags or query logs with attachments safely
+                if isinstance(r, dict):
+                    q_val = r.get("query_text", "")
+                    if q_val and "[Vision Context]" in str(q_val):
+                        vision_count += 1
             if vision_count >= 15:
                 raise HTTPException(status_code=429, detail="Daily document upload/vision limit exceeded (Max 15 queries with images/day).")
     except HTTPException:
