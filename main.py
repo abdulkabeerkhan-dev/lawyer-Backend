@@ -471,27 +471,40 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
             else:
                 print(f"👁️ Processing {num_images} attached document pages with Claude Vision...", file=sys.stderr, flush=True)
                 
-                # Build content blocks for the vision call
-                vision_content = []
-                
+                # Helper to strip data-url prefixes if sent by the frontend
+                def clean_base64_data(base64_str: str) -> str:
+                    if "," in base64_str:
+                        return base64_str.split(",", 1)[1]
+                    return base64_str.strip()
+
+                def sanitize_mime_type(mime: str) -> str:
+                    m = mime.lower().strip()
+                    if m == "image/jpg":
+                        return "image/jpeg"
+                    return m
+
                 # Add all image blocks
                 for img in images_list:
                     vision_content.append({
                         "type": "image",
                         "source": {
                             "type": "base64",
-                            "media_type": img.image_mime_type,
-                            "data": img.image_base64
+                            "media_type": sanitize_mime_type(img.image_mime_type),
+                            "data": clean_base64_data(img.image_base64)
                         }
                     })
                 
-                # Call Claude to transcribe and translate Urdu/English
+                # Call Claude to transcribe and translate Urdu/English naturally
                 vision_prompt = (
-                    "Extract and transcribe all text from these legal document page(s) (supporting Urdu and English). "
-                    "If the document is written in Urdu, translate its core points and content fully into English "
-                    "so they can be matched against an English-only legal database. "
-                    "Provide output in this JSON format:\n"
-                    '{\n  "transcription": "extracted and English-translated text content of all pages combined...",\n  "keywords": "3-5 search keywords in English separated by spaces"\n}'
+                    "Please analyze these legal document page(s). Perform the following tasks:\n"
+                    "1. Carefully read and extract all text from the images. The text may be in Urdu (Nastaliq script) or English. Transcribe Urdu text using Urdu script, and English text in English.\n"
+                    "2. If the text contains Urdu, translate it fully and accurately into English.\n"
+                    "3. Identify and list 3 to 5 key legal search terms/keywords in English to help retrieve similar legal cases.\n\n"
+                    "Format your response exactly like this:\n"
+                    "---TRANSCRIPTION---\n"
+                    "[Provide the full transcription of Urdu and English text, followed by the English translation of any Urdu parts]\n"
+                    "---KEYWORDS---\n"
+                    "[List the search keywords here, separated by spaces]"
                 )
                 vision_content.append({
                     "type": "text",
@@ -515,19 +528,21 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                     if block_text:
                         raw_response += block_text
                         
-                # Parse structured transcription
+                # Parse using regex markers
                 try:
-                    # Clean markdown code blocks if generated
-                    cleaned_json = raw_response.strip()
-                    if cleaned_json.startswith("```"):
-                        cleaned_json = re.sub(r"^```json\s*|\s*```$", "", cleaned_json, flags=re.MULTILINE)
-                    parsed_res = json.loads(cleaned_json)
-                    extracted_doc_text = parsed_res.get("transcription", "")
-                    search_keywords_query = f"{parsed_res.get('keywords', '')} {request.query_text}".strip()
+                    trans_match = re.search(r"---TRANSCRIPTION---(.*?)---KEYWORDS---", raw_response, re.DOTALL | re.IGNORECASE)
+                    key_match = re.search(r"---KEYWORDS---(.*)", raw_response, re.DOTALL | re.IGNORECASE)
+                    
+                    if trans_match and key_match:
+                        extracted_doc_text = trans_match.group(1).strip()
+                        search_keywords_query = f"{key_match.group(1).strip()} {request.query_text}".strip()
+                    else:
+                        extracted_doc_text = raw_response
+                        search_keywords_query = f"{raw_response[:300]} {request.query_text}"
                 except Exception as parse_err:
-                    print(f"⚠️ Failed parsing JSON from vision call: {parse_err}. Using raw response.")
+                    print(f"⚠️ Failed parsing vision response: {parse_err}. Using fallback.")
                     extracted_doc_text = raw_response
-                    search_keywords_query = f"{raw_response[:200]} {request.query_text}"
+                    search_keywords_query = f"{raw_response[:300]} {request.query_text}"
 
         # 3. Pinecone Vector Search
         bge_query_text = f"Represent this sentence for searching relevant passages: {search_keywords_query}"
