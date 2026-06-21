@@ -641,13 +641,21 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                 title = str(meta.get('title', 'Untitled Case'))
                 citation = str(meta.get('citation', 'No Citation'))
                 
+                # Format court name nicely for the frontend cards if it contains database ingestion names
+                display_court = court
+                if "pakistanlawsite" in court.lower():
+                    if citation and citation != "No Citation":
+                        display_court = citation
+                    elif title and title != "Untitled Case":
+                        display_court = title
+
                 context_segments.append(
-                    f"Source: {court} ({year}) | Citation: {citation} | Title: {title} | Ref: {case_id}\n"
+                    f"Source: {display_court} ({year}) | Citation: {citation} | Title: {title} | Ref: {case_id}\n"
                     f"Content: {text_content}"
                 )
                 citations_payload.append({
                     "case_id": case_id,
-                    "court": court,
+                    "court": display_court,
                     "year": year,
                     "preview": text_content[:400],
                     "title": title,
@@ -659,7 +667,7 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
         # 4. Format Prompt and Call Anthropic
         system_prompt = SYSTEM_PROMPTS.get(request.category, SYSTEM_PROMPTS["general"])
         
-        # Append strict reliability and verification constraints (Bugs #1, #2, #3)
+        # Append strict reliability and verification constraints (Bugs #1, #2, #3, #6)
         global_reliability_guard = (
             "\n\n=== STRICT ACCURACY & CITATION RESOLUTION RULES ===\n"
             "1. Citing Holdings (Precedent Gate): Before asserting a specific holding, ratio decidendi, or rule from a cited case precedent, "
@@ -671,7 +679,9 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
             "you MUST flag it by appending: \"(Note: Section number reconstructed from general knowledge, not retrieved from indexed text — confirm against the Gazette text before filing.)\"\n"
             "3. Complete Statutory Quotes: When citing or quoting statutory sections (such as Section 50 of the Registration Act 1908 or any other section), "
             "you MUST include the complete section and its relevant provisos (e.g., references to Section 53-A of the Transfer of Property Act or Section 27(b) of the Specific Relief Act) "
-            "rather than quoting only the lead subsection, to ensure a complete and accurate legal representation."
+            "rather than quoting only the lead subsection, to ensure a complete and accurate legal representation.\n"
+            "4. Superseded Narcotics Statutes (CNSA 1997): The Control of Narcotic Substances Act 1997 was significantly amended in 2022 and 2023, restructuring the Section 9 quantity-based sentencing thresholds. "
+            "Whenever you cite CNSA 1997 sentencing thresholds or quantities, you MUST state the 1997 limits but explicitly add: \"(Note: Sentencing thresholds and quantity tiers have changed under the 2022/2023 CNSA Amendments. Verify against the latest official Gazette text before filing.)\""
         )
         system_prompt += global_reliability_guard
         
