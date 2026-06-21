@@ -329,6 +329,22 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
         # 2. Check if user already exists by Email (handles legacy/mock accounts transition)
         email_query = supabase.table("users").select("*").eq("email", payload.email).execute()
         if email_query.data and len(email_query.data) > 0:
+            legacy_user = email_query.data[0]
+            if isinstance(legacy_user, dict):
+                legacy_id = legacy_user.get("id")
+                if legacy_id and legacy_id != authenticated_user_id:
+                    print(f"🔄 Migrating user references from '{legacy_id}' to '{authenticated_user_id}'...", file=sys.stderr)
+                    # Migrate dependent foreign key references first to avoid Postgres constraints crash
+                    try:
+                        supabase.table("queries").update({"user_id": authenticated_user_id}).eq("user_id", legacy_id).execute()
+                        supabase.table("feedback").update({"user_id": authenticated_user_id}).eq("user_id", legacy_id).execute()
+                        try:
+                            supabase.table("activity_log").update({"user_id": authenticated_user_id}).eq("user_id", legacy_id).execute()
+                        except Exception:
+                            pass
+                    except Exception as ref_err:
+                        print(f"⚠️ References migration warning: {ref_err}", file=sys.stderr)
+                    
             updated_profile = supabase.table("users").update({
                 "id": authenticated_user_id,
                 "full_name": payload.full_name
