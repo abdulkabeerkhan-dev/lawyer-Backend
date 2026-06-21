@@ -565,9 +565,9 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
         if not pinecone_index:
             raise HTTPException(status_code=500, detail="Pinecone serverless engine index connection is inactive.")
             
-        # Dynamically limit top_k to avoid massive payloads and proxy timeout disconnects on long pasted text inputs
-        resolved_top_k = 4 if len(request.query_text) > 3000 else 8
-        raw_matches = pinecone_index.query(namespace="judgments", vector=query_vector, top_k=resolved_top_k, include_metadata=True)
+        # Fetch a larger candidate pool to prioritize category-relevant matches
+        query_top_k = 25
+        raw_matches = pinecone_index.query(namespace="judgments", vector=query_vector, top_k=query_top_k, include_metadata=True)
         
         context_segments = []
         citations_payload = []
@@ -577,8 +577,55 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
             matches_list = raw_matches.get("matches", [])
         elif hasattr(raw_matches, "matches"):
             matches_list = getattr(raw_matches, "matches", []) or []
+            
+        # Differentiate bot outputs by prioritizing category-specific citations
+        def prioritize_matches_by_bot(matches: list, category: str) -> list:
+            if not category or category == "general":
+                return matches
+            
+            cat_lower = category.lower()
+            priority = []
+            others = []
+            
+            for m in matches:
+                meta = {}
+                if isinstance(m, dict):
+                    meta = m.get("metadata", {}) or {}
+                elif hasattr(m, "metadata"):
+                    meta = getattr(m, "metadata", {}) or {}
+                
+                citation = str(meta.get('citation', '')).lower()
+                court = str(meta.get('court', '')).lower()
+                subject = str(meta.get('subject_matter', '')).lower()
+                title = str(meta.get('title', '')).lower()
+                text = str(meta.get('text', '')).lower()
+                
+                is_match = False
+                if cat_lower == "criminal":
+                    if "pcrlj" in citation or "criminal" in subject or "criminal" in text or "cr." in citation or "murder" in text or "crpc" in text or "ppc" in text:
+                        is_match = True
+                elif cat_lower == "divorce_family":
+                    if "clc" in citation or "mld" in citation or any(k in subject or k in text or k in title for k in ["divorce", "family", "marriage", "dower", "maintenance", "custody"]):
+                        is_match = True
+                elif cat_lower == "corporate_tax":
+                    if "cld" in citation or "ptd" in citation or any(k in subject or k in text for k in ["tax", "corporate", "income tax", "companies act", "secp"]):
+                        is_match = True
+                elif cat_lower == "government_constitutional":
+                    if "pld" in citation or "scmr" in citation or any(k in subject or k in text for k in ["constitution", "writ petition", "article 199", "fundamental rights"]):
+                        is_match = True
+                
+                if is_match:
+                    priority.append(m)
+                else:
+                    others.append(m)
+            return priority + others
+
+        # Prioritize and slice to the resolved_top_k limits
+        resolved_top_k = 4 if len(request.query_text) > 3000 else 8
+        prioritized_matches = prioritize_matches_by_bot(matches_list, request.category)
+        sliced_matches = prioritized_matches[:resolved_top_k]
         
-        for match in matches_list:
+        for match in sliced_matches:
             meta = {}
             if isinstance(match, dict):
                 meta = match.get("metadata", {}) or {}
