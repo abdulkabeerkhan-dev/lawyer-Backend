@@ -332,9 +332,22 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
             legacy_user = email_query.data[0]
             if isinstance(legacy_user, dict):
                 legacy_id = legacy_user.get("id")
+                legacy_role = legacy_user.get("role", "associate")
                 if legacy_id and legacy_id != authenticated_user_id:
-                    print(f"🔄 Migrating user references from '{legacy_id}' to '{authenticated_user_id}'...", file=sys.stderr)
-                    # Migrate dependent foreign key references first to avoid Postgres constraints crash
+                    print(f"🔄 Resolving legacy account migration from '{legacy_id}' to '{authenticated_user_id}'...", file=sys.stderr)
+                    # A. Rename email on legacy mock user to free the unique constraint
+                    temp_email = f"legacy-{legacy_id}-{payload.email}"
+                    supabase.table("users").update({"email": temp_email}).eq("id", legacy_id).execute()
+                    
+                    # B. Insert new authenticated user record
+                    inserted_profile = supabase.table("users").insert({
+                        "id": authenticated_user_id,
+                        "email": payload.email,
+                        "full_name": payload.full_name,
+                        "role": legacy_role
+                    }).execute()
+                    
+                    # C. Migrate dependent foreign key references safely now that authenticated ID exists in users table
                     try:
                         supabase.table("queries").update({"user_id": authenticated_user_id}).eq("user_id", legacy_id).execute()
                         supabase.table("feedback").update({"user_id": authenticated_user_id}).eq("user_id", legacy_id).execute()
@@ -345,11 +358,13 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
                     except Exception as ref_err:
                         print(f"⚠️ References migration warning: {ref_err}", file=sys.stderr)
                     
-            updated_profile = supabase.table("users").update({
-                "id": authenticated_user_id,
-                "full_name": payload.full_name
-            }).eq("email", payload.email).execute()
-            return {"status": "updated", "user": updated_profile.data[0]}
+                    # D. Purge legacy mock user from users table
+                    try:
+                        supabase.table("users").delete().eq("id", legacy_id).execute()
+                    except Exception as del_err:
+                        print(f"⚠️ Could not delete legacy user record: {del_err}", file=sys.stderr)
+                        
+                    return {"status": "updated", "user": inserted_profile.data[0]}
             
         # 3. If new user, check access request approvals
         access_check = supabase.table("access_requests").select("status").eq("email", payload.email).execute()
