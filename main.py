@@ -484,6 +484,7 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                     return m
 
                 # Add all image blocks
+                vision_content = []
                 for img in images_list:
                     vision_content.append({
                         "type": "image",
