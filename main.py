@@ -321,10 +321,21 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
     if not supabase:
         raise HTTPException(status_code=503, detail="Database service is currently offline.")
     try:
+        # 1. Check if user already exists by authenticated Clerk ID
         profile_query = supabase.table("users").select("*").eq("id", authenticated_user_id).execute()
         if profile_query.data and len(profile_query.data) > 0:
             return {"status": "exists", "user": profile_query.data[0]}
             
+        # 2. Check if user already exists by Email (handles legacy/mock accounts transition)
+        email_query = supabase.table("users").select("*").eq("email", payload.email).execute()
+        if email_query.data and len(email_query.data) > 0:
+            updated_profile = supabase.table("users").update({
+                "id": authenticated_user_id,
+                "full_name": payload.full_name
+            }).eq("email", payload.email).execute()
+            return {"status": "updated", "user": updated_profile.data[0]}
+            
+        # 3. If new user, check access request approvals
         access_check = supabase.table("access_requests").select("status").eq("email", payload.email).execute()
         assigned_role = "associate"
         if access_check.data and len(access_check.data) > 0:
