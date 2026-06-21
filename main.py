@@ -33,10 +33,30 @@ if os.environ.get("SENTRY_DSN"):
 app = FastAPI(title="AMICUS AI - Production Serverless Clerk-Secure Engine")
 
 # 🔒 SECURITY ACCESS CORE: Cross-Origin Resource Sharing gateway adjustments
+allowed_origins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://localhost:8080"
+]
+frontend_env = os.environ.get("FRONTEND_URL")
+if frontend_env:
+    for o in frontend_env.split(","):
+        cleaned = o.strip().rstrip("/")
+        if cleaned:
+            allowed_origins.append(cleaned)
+else:
+    # If no FRONTEND_URL is set, allow wildcard requests via dynamic mapping helper
+    allowed_origins.append("*")
+
+# If * is in allowed_origins, we must disable credentials or remove * when regex is used
+if "*" in allowed_origins and len(allowed_origins) > 1:
+    allowed_origins.remove("*")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.environ.get("FRONTEND_URL", "*")],
-    allow_credentials=True,
+    allow_origins=allowed_origins if "*" not in allowed_origins else ["*"],
+    allow_origin_regex=r"https://.*\.lovable\.(app|project|dev|page)" if "*" not in allowed_origins else None,
+    allow_credentials=True if "*" not in allowed_origins else False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
