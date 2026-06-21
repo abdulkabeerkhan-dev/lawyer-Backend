@@ -471,6 +471,18 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
     try:
         print("🚀 [CHECKPOINT 1] Starting /query endpoint execution...", file=sys.stderr, flush=True)
         
+        # Helper to strip data-url prefixes if sent by the frontend
+        def clean_base64_data(base64_str: str) -> str:
+            if "," in base64_str:
+                return base64_str.split(",", 1)[1]
+            return base64_str.strip()
+
+        def sanitize_mime_type(mime: str) -> str:
+            m = mime.lower().strip()
+            if m == "image/jpg":
+                return "image/jpeg"
+            return m
+
         # 1. Enforce Quotas
         images_list = request.images or []
         num_images = len(images_list)
@@ -488,18 +500,6 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                 print("⚠️ Vision simulation triggered (missing API Key)")
             else:
                 print(f"👁️ Processing {num_images} attached document pages with Claude Vision...", file=sys.stderr, flush=True)
-                
-                # Helper to strip data-url prefixes if sent by the frontend
-                def clean_base64_data(base64_str: str) -> str:
-                    if "," in base64_str:
-                        return base64_str.split(",", 1)[1]
-                    return base64_str.strip()
-
-                def sanitize_mime_type(mime: str) -> str:
-                    m = mime.lower().strip()
-                    if m == "image/jpg":
-                        return "image/jpeg"
-                    return m
 
                 # Add all image blocks
                 vision_content = []
@@ -513,17 +513,11 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                         }
                     })
                 
-                # Call Claude to transcribe and translate Urdu/English naturally
+                # Call Claude to extract keywords only (extremely fast call)
                 vision_prompt = (
-                    "Please analyze these legal document page(s). Perform the following tasks:\n"
-                    "1. Carefully read and extract all text from the images. The text may be in Urdu (Nastaliq script) or English. Transcribe Urdu text using Urdu script, and English text in English.\n"
-                    "2. If the text contains Urdu, translate it fully and accurately into English.\n"
-                    "3. Identify and list 3 to 5 key legal search terms/keywords in English to help retrieve similar legal cases.\n\n"
-                    "Format your response exactly like this:\n"
-                    "---TRANSCRIPTION---\n"
-                    "[Provide the full transcription of Urdu and English text, followed by the English translation of any Urdu parts]\n"
-                    "---KEYWORDS---\n"
-                    "[List the search keywords here, separated by spaces]"
+                    "Identify and list 3 to 5 key legal search terms/keywords in English "
+                    "from these image(s) to help search a database. Return ONLY the keywords "
+                    "separated by spaces. Do not write any other text or explanation."
                 )
                 vision_content.append({
                     "type": "text",
@@ -532,7 +526,7 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                 
                 vision_message = await async_anthropic_client.messages.create(
                     model="claude-sonnet-4-6",
-                    max_tokens=4000,
+                    max_tokens=200, # Very small tokens for speed
                     messages=[
                         {
                             "role": "user",
@@ -547,21 +541,8 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                     if block_text:
                         raw_response += block_text
                         
-                # Parse using regex markers
-                try:
-                    trans_match = re.search(r"---TRANSCRIPTION---(.*?)---KEYWORDS---", raw_response, re.DOTALL | re.IGNORECASE)
-                    key_match = re.search(r"---KEYWORDS---(.*)", raw_response, re.DOTALL | re.IGNORECASE)
-                    
-                    if trans_match and key_match:
-                        extracted_doc_text = trans_match.group(1).strip()
-                        search_keywords_query = f"{key_match.group(1).strip()} {request.query_text}".strip()
-                    else:
-                        extracted_doc_text = raw_response
-                        search_keywords_query = f"{raw_response[:300]} {request.query_text}"
-                except Exception as parse_err:
-                    print(f"⚠️ Failed parsing vision response: {parse_err}. Using fallback.")
-                    extracted_doc_text = raw_response
-                    search_keywords_query = f"{raw_response[:300]} {request.query_text}"
+                search_keywords_query = f"{raw_response.strip()} {request.query_text}".strip()
+                extracted_doc_text = "[Full transcription and English translation generated dynamically in the final answer below]"
 
         # 3. Pinecone Vector Search
         bge_query_text = f"Represent this sentence for searching relevant passages: {search_keywords_query}"
@@ -694,11 +675,35 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
         )
         system_prompt += global_reliability_guard
         
-        user_query_payload = f"Context from Legal Database:\n{combined_context}\n\n"
+        # 5. Build final messages payload
+        claude_message_content = []
         if has_image:
-            user_query_payload += f"Transcribed/Translated User Attached Document(s) ({num_images} pages):\n{extracted_doc_text}\n\n[Vision Context] Please review the attached document data and reference database contents to answer the query.\n\n"
+            # Add all image blocks to the final payload
+            for img in images_list:
+                claude_message_content.append({
+                    "type": "image",
+                    "source": {
+                        "type": "base64",
+                        "media_type": sanitize_mime_type(img.image_mime_type),
+                        "data": clean_base64_data(img.image_base64)
+                    }
+                })
             
-        user_query_payload += f"Question: {request.query_text}"
+            # Instruct Claude to perform full OCR, translation, and answer in one pass
+            prompt_text = (
+                f"Context from Legal Database:\n{combined_context}\n\n"
+                "Please analyze the attached legal document page(s) and the reference database context to answer the query.\n"
+                "First, perform the following transcription and translation tasks:\n"
+                "1. Transcribe the full text from the attached images accurately. If the text is in Urdu (Nastaliq script), transcribe it using Urdu script, and English text in English.\n"
+                "2. If the text contains Urdu, provide a high-quality, complete English translation right below the transcription.\n\n"
+                f"Question: {request.query_text}"
+            )
+            claude_message_content.append({
+                "type": "text",
+                "text": prompt_text
+            })
+        else:
+            claude_message_content = f"Context from Legal Database:\n{combined_context}\n\nQuestion: {request.query_text}"
 
         print("🧠 [CHECKPOINT 4] Attempting connection to Anthropic Claude API...", file=sys.stderr, flush=True)
         if async_anthropic_client and ANTHROPIC_API_KEY:
@@ -706,7 +711,7 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                 model="claude-sonnet-4-6",
                 max_tokens=8000,
                 system=system_prompt,
-                messages=[{"role": "user", "content": user_query_payload}]
+                messages=[{"role": "user", "content": claude_message_content}]
             )
             
             generated_answer = ""
