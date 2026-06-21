@@ -660,6 +660,22 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
         # 4. Format Prompt and Call Anthropic
         system_prompt = SYSTEM_PROMPTS.get(request.category, SYSTEM_PROMPTS["general"])
         
+        # Append strict reliability and verification constraints (Bugs #1, #2, #3)
+        global_reliability_guard = (
+            "\n\n=== STRICT ACCURACY & CITATION RESOLUTION RULES ===\n"
+            "1. Citing Holdings (Precedent Gate): Before asserting a specific holding, ratio decidendi, or rule from a cited case precedent, "
+            "you MUST verify that the holding is explicitly detailed in the provided Context from Legal Database. "
+            "If the Context does not explicitly confirm that specific holding, you must hedge using this exact phrase: "
+            "\"A case of this name and citation exists in Pakistani jurisprudence on a related subject, but I cannot confirm this specific holding without further verification.\"\n"
+            "2. Unindexed Statutes: The Companies Act 2017 is currently unindexed in the vector database. "
+            "If you generate any section or article number for the Companies Act 2017 (or other statutes not present in the Context), "
+            "you MUST flag it by appending: \"(Note: Section number reconstructed from general knowledge, not retrieved from indexed text — confirm against the Gazette text before filing.)\"\n"
+            "3. Complete Statutory Quotes: When citing or quoting statutory sections (such as Section 50 of the Registration Act 1908 or any other section), "
+            "you MUST include the complete section and its relevant provisos (e.g., references to Section 53-A of the Transfer of Property Act or Section 27(b) of the Specific Relief Act) "
+            "rather than quoting only the lead subsection, to ensure a complete and accurate legal representation."
+        )
+        system_prompt += global_reliability_guard
+        
         user_query_payload = f"Context from Legal Database:\n{combined_context}\n\n"
         if has_image:
             user_query_payload += f"Transcribed/Translated User Attached Document(s) ({num_images} pages):\n{extracted_doc_text}\n\n[Vision Context] Please review the attached document data and reference database contents to answer the query.\n\n"
