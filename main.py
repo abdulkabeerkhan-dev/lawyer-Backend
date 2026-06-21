@@ -549,7 +549,9 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
         if not pinecone_index:
             raise HTTPException(status_code=500, detail="Pinecone serverless engine index connection is inactive.")
             
-        raw_matches = pinecone_index.query(namespace="judgments", vector=query_vector, top_k=8, include_metadata=True)
+        # Dynamically limit top_k to avoid massive payloads and proxy timeout disconnects on long pasted text inputs
+        resolved_top_k = 4 if len(request.query_text) > 3000 else 8
+        raw_matches = pinecone_index.query(namespace="judgments", vector=query_vector, top_k=resolved_top_k, include_metadata=True)
         
         context_segments = []
         citations_payload = []
