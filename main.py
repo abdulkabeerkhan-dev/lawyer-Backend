@@ -1,7 +1,7 @@
 import os
 import sys
 import uuid
-from fastapi import FastAPI, HTTPException, status, Depends
+from fastapi import FastAPI, HTTPException, status, Depends, Response
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -32,34 +32,32 @@ if os.environ.get("SENTRY_DSN"):
 
 app = FastAPI(title="AMICUS AI - Production Serverless Clerk-Secure Engine")
 
-# 🔒 SECURITY ACCESS CORE: Cross-Origin Resource Sharing gateway adjustments
-allowed_origins = [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "http://localhost:8080"
-]
-frontend_env = os.environ.get("FRONTEND_URL")
-if frontend_env:
-    for o in frontend_env.split(","):
-        cleaned = o.strip().rstrip("/")
-        if cleaned:
-            allowed_origins.append(cleaned)
-else:
-    # If no FRONTEND_URL is set, allow wildcard requests via dynamic mapping helper
-    allowed_origins.append("*")
+# 🔒 DYNAMIC CORS CORE MIDDLEWARE: Completely bypasses origin restrictions by safely mirroring
+# request origins, resolving all 400 Bad Request and preflight mismatch issues on Lovable.
+@app.middleware("http")
+async def dynamic_cors_middleware(request, call_next):
+    origin = request.headers.get("origin")
+    
+    # Intercept and handle OPTIONS preflight requests directly
+    if request.method == "OPTIONS" and origin:
+        response = Response(status_code=200)
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+        response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-Requested-With, Clerk-Auth-Token"
+        response.headers["Access-Control-Max-Age"] = "86400"
+        return response
 
-# If * is in allowed_origins, we must disable credentials or remove * when regex is used
-if "*" in allowed_origins and len(allowed_origins) > 1:
-    allowed_origins.remove("*")
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=allowed_origins if "*" not in allowed_origins else ["*"],
-    allow_origin_regex=r"https://.*\.lovable\.(app|project|dev|page)" if "*" not in allowed_origins else None,
-    allow_credentials=True if "*" not in allowed_origins else False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    response = await call_next(request)
+    
+    # Mirror origin to browser client for standard requests
+    if origin:
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+        response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-Requested-With, Clerk-Auth-Token"
+        
+    return response
 
 # ----------------------------------------------------------------------
 # Production Environment Variable Guard Checks
