@@ -340,6 +340,9 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
         }).execute()
         return {"status": "created", "user": inserted_profile.data[0]}
     except Exception as e:
+        import traceback
+        print("❌ [USERS/SYNC ERROR]:", file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
         if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
         raise HTTPException(status_code=500, detail=str(e))
 
