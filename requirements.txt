@@ -7,3 +7,4 @@ anthropic
 supabase
 python-dotenv
 pyjwt[crypto]
+langsmith

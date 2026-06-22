@@ -1,7 +1,7 @@
 import os
 import sys
 import uuid
-from fastapi import FastAPI, HTTPException, status, Depends, Response
+from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -92,7 +92,14 @@ else:
 async_anthropic_client = None
 if ANTHROPIC_API_KEY:
     try:
-        async_anthropic_client = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
+        raw_client = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
+        try:
+            from langsmith import wrappers
+            async_anthropic_client = wrappers.wrap_sdk(raw_client)
+            print("🚀 LangSmith wrapping initialized on Anthropic client.")
+        except ImportError:
+            async_anthropic_client = raw_client
+            print("💡 Running Anthropic client without LangSmith wrapper (library not installed)")
     except Exception as launch_err:
         print(f"⚠️ Anthropic client startup warning: {launch_err}")
 else:
@@ -386,11 +393,15 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
             
         # 3. If new user, check access request approvals
         access_check = supabase.table("access_requests").select("status").eq("email", payload.email).execute()
-        assigned_role = "associate"
+        assigned_role = "pending" # Default to pending to restrict unapproved users
         if access_check.data and len(access_check.data) > 0:
             first_access = access_check.data[0]
-            if isinstance(first_access, dict) and first_access.get("status") == "admin_approved":
-                assigned_role = "admin"
+            if isinstance(first_access, dict):
+                status_val = first_access.get("status")
+                if status_val == "admin_approved":
+                    assigned_role = "admin"
+                elif status_val in ("approved", "associate_approved"):
+                    assigned_role = "associate"
 
         inserted_profile = supabase.table("users").insert({
             "id": authenticated_user_id,
@@ -466,10 +477,26 @@ async def get_user_quota_status(authenticated_user_id: str = Depends(verify_cler
         print(f"⚠️ Error fetching user quota: {e}")
         raise HTTPException(status_code=500, detail="Failed to retrieve quota status.")
 
-@app.post("/query")
-async def execute_legal_query(request: QueryRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
+# ----------------------------------------------------------------------
+# Asynchronous Query Job Store and Runner
+# ----------------------------------------------------------------------
+jobs_store: Dict[str, Dict[str, Any]] = {}
+
+def cleanup_old_jobs():
     try:
-        print("🚀 [CHECKPOINT 1] Starting /query endpoint execution...", file=sys.stderr, flush=True)
+        from datetime import datetime, timezone, timedelta
+        now = datetime.now(timezone.utc)
+        expiry = timedelta(minutes=15)
+        to_delete = [jid for jid, job in jobs_store.items() if now - job.get("created_at", now) > expiry]
+        for jid in to_delete:
+            del jobs_store[jid]
+    except Exception as e:
+        print(f"⚠️ Error cleaning up old jobs: {e}", file=sys.stderr)
+
+async def process_query_job(job_id: str, request: QueryRequest, authenticated_user_id: str):
+    from datetime import datetime, timezone
+    try:
+        print(f"🚀 [JOB {job_id}] Starting query execution...", file=sys.stderr, flush=True)
         
         # Helper to strip data-url prefixes if sent by the frontend
         def clean_base64_data(base64_str: str) -> str:
@@ -524,16 +551,25 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                     "text": vision_prompt
                 })
                 
-                vision_message = await async_anthropic_client.messages.create(
-                    model="claude-sonnet-4-6",
-                    max_tokens=200, # Very small tokens for speed
-                    messages=[
+                vision_kwargs = {
+                    "model": "claude-sonnet-4-6",
+                    "max_tokens": 200, # Very small tokens for speed
+                    "messages": [
                         {
                             "role": "user",
                             "content": vision_content
                         }
                     ]
-                )
+                }
+                if os.environ.get("LANGCHAIN_API_KEY"):
+                    vision_kwargs["langsmith_extra"] = {
+                        "metadata": {
+                            "user_id": authenticated_user_id,
+                            "job_id": job_id,
+                            "task": "vision_keyword_extraction"
+                        }
+                    }
+                vision_message = await async_anthropic_client.messages.create(**vision_kwargs)
                 
                 raw_response = ""
                 for block in vision_message.content:
@@ -557,12 +593,12 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
         async with httpx.AsyncClient(timeout=30.0) as client:
             hf_response = await client.post(hf_api_url, json={"inputs": bge_query_text}, headers=hf_headers)
             if hf_response.status_code != 200:
-                raise HTTPException(status_code=502, detail=f"Hugging Face Inference Engine failure: {hf_response.text}")
+                raise Exception(f"Hugging Face Inference Engine failure: {hf_response.text}")
             query_vector = hf_response.json()
 
         print("🌲 [CHECKPOINT 3] Attempting connection to Pinecone Vector Index...", file=sys.stderr, flush=True)
         if not pinecone_index:
-            raise HTTPException(status_code=500, detail="Pinecone serverless engine index connection is inactive.")
+            raise Exception("Pinecone serverless engine index connection is inactive.")
             
         # Fetch a larger candidate pool to prioritize category-relevant matches
         query_top_k = 25
@@ -715,7 +751,7 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
         else:
             claude_message_content = f"Context from Legal Database:\n{combined_context}\n\nQuestion: {request.query_text}"
 
-        print("🧠 [CHECKPOINT 4] Attempting connection to Anthropic Claude API...", file=sys.stderr, flush=True)
+        print(f"🧠 [JOB {job_id}] Attempting connection to Anthropic Claude API...", file=sys.stderr, flush=True)
         if async_anthropic_client and ANTHROPIC_API_KEY:
             claude_message = await async_anthropic_client.messages.create(
                 model="claude-sonnet-4-6",
@@ -733,7 +769,7 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
             generated_answer = f"### Legal Evaluation (Simulation mode - Category: {request.category})\n\nPrecedent found: **{citations_payload[0]['case_id'] if citations_payload else 'N/A'}**."
         
         # 5. Log and Save
-        print("💾 [CHECKPOINT 5] Inserting query logging data into Supabase...", file=sys.stderr, flush=True)
+        print(f"💾 [JOB {job_id}] Inserting query logging data into Supabase...", file=sys.stderr, flush=True)
         inserted_row_id = str(uuid.uuid4())
         if supabase:
             db_insert = supabase.table("queries").insert({
@@ -748,20 +784,83 @@ async def execute_legal_query(request: QueryRequest, authenticated_user_id: str 
                 if isinstance(first_insert, dict):
                     inserted_row_id = str(first_insert.get("id", inserted_row_id))
         else:
-            print("⚠️ Skipped logging query to database (Supabase client offline)")
+            print(f"⚠️ [JOB {job_id}] Skipped logging query to database (Supabase client offline)")
                 
-        print("✅ [CHECKPOINT 6] Query lifecycle resolved successfully!", file=sys.stderr, flush=True)
-        return {"answer": generated_answer, "citations": citations_payload, "query_id": inserted_row_id}
+        print(f"✅ [JOB {job_id}] Query lifecycle resolved successfully!", file=sys.stderr, flush=True)
+        
+        # Save to jobs store
+        if job_id in jobs_store:
+            jobs_store[job_id].update({
+                "status": "done",
+                "result": {"answer": generated_answer, "citations": citations_payload, "query_id": inserted_row_id},
+                "completed_at": datetime.now(timezone.utc)
+            })
 
     except Exception as e:
         import traceback
-        print("❌ [CRITICAL ENGINE CRASH INSIDE /QUERY]:", file=sys.stderr, flush=True)
+        print(f"❌ [CRITICAL ENGINE CRASH INSIDE JOB {job_id}]:", file=sys.stderr, flush=True)
         traceback.print_exc(file=sys.stderr)
         sys.stderr.flush()
         
         if os.environ.get("SENTRY_DSN"): 
             sentry_sdk.capture_exception(e)
+            
+        if job_id in jobs_store:
+            jobs_store[job_id].update({
+                "status": "error",
+                "error": str(e),
+                "completed_at": datetime.now(timezone.utc)
+            })
+
+@app.post("/query")
+async def execute_legal_query(
+    request: QueryRequest, 
+    background_tasks: BackgroundTasks,
+    authenticated_user_id: str = Depends(verify_clerk_session)
+):
+    from datetime import datetime, timezone
+    cleanup_old_jobs()
+    
+    # 1. Quick initial quota check to fail fast before queueing the task
+    images_list = request.images or []
+    num_images = len(images_list)
+    try:
+        check_user_quota(authenticated_user_id, num_images_requested=num_images)
+    except HTTPException as he:
+        raise he
+    except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+        
+    job_id = str(uuid.uuid4())
+    jobs_store[job_id] = {
+        "status": "pending",
+        "created_at": datetime.now(timezone.utc),
+        "user_id": authenticated_user_id
+    }
+    
+    background_tasks.add_task(process_query_job, job_id, request, authenticated_user_id)
+    return {"job_id": job_id}
+
+@app.get("/query/{job_id}")
+async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends(verify_clerk_session)):
+    cleanup_old_jobs()
+    
+    if job_id not in jobs_store:
+        raise HTTPException(status_code=404, detail="Job not found")
+        
+    job = jobs_store[job_id]
+    if job["user_id"] != authenticated_user_id:
+        raise HTTPException(status_code=403, detail="Not authorized to access this job.")
+        
+    response = {
+        "status": job["status"]
+    }
+    if job["status"] == "done":
+        response["result"] = job.get("result")
+    elif job["status"] == "error":
+        response["error"] = job.get("error")
+        
+    return response
 
 @app.post("/feedback")
 async def submit_feedback(request: FeedbackRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
