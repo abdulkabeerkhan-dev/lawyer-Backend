@@ -709,13 +709,15 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     f"Source: {display_court} ({year}) | Citation: {citation} | Title: {title} | Ref: {case_id}\n"
                     f"Content: {text_content}"
                 )
+                match_score = float(match.get("score", 0.0) if isinstance(match, dict) else getattr(match, "score", 0.0))
                 citations_payload.append({
                     "case_id": case_id,
                     "court": display_court,
                     "year": year,
                     "preview": text_content[:400],
                     "title": title,
-                    "citation": citation
+                    "citation": citation,
+                    "score": match_score
                 })
             
         combined_context = "\n\n---\n\n".join(context_segments)
@@ -737,7 +739,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             "you MUST include the complete section and its relevant provisos (e.g., references to Section 53-A of the Transfer of Property Act or Section 27(b) of the Specific Relief Act) "
             "rather than quoting only the lead subsection, to ensure a complete and accurate legal representation.\n"
             "4. Superseded Narcotics Statutes (CNSA 1997): The Control of Narcotic Substances Act 1997 was significantly amended in 2022 and 2023, restructuring the Section 9 quantity-based sentencing thresholds. "
-            "Whenever you cite CNSA 1997 sentencing thresholds or quantities, you MUST state the 1997 limits but explicitly add: \"(Note: Sentencing thresholds and quantity tiers have changed under the 2022/2023 CNSA Amendments. Verify against the latest official Gazette text before filing.)\""
+            "Whenever you cite CNSA 1997 sentencing thresholds or quantities, you MUST state the 1997 limits but explicitly add: \"(Note: Sentencing thresholds and quantity tiers have changed under the 2022/2023 CNSA Amendments. Verify against the latest official Gazette text before filing.)\"\n"
+            "5. Prohibition on External Case Citations: Do NOT introduce, invent, or reference any specific case names, citation numbers, or precedents from your own general knowledge (such as Abdul Kareem, Jurial Shah, or others) unless they are explicitly present in the provided 'Context from Legal Database'. If you need to refer to a general legal concept or strategy, describe it conceptually without citing unverified external cases."
         )
         system_prompt += global_reliability_guard
         
