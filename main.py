@@ -44,7 +44,14 @@ async def dynamic_cors_middleware(request, call_next):
         response.headers["Access-Control-Allow-Origin"] = origin
         response.headers["Access-Control-Allow-Credentials"] = "true"
         response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
-        response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-Requested-With, Clerk-Auth-Token"
+        
+        # Dynamically mirror requested headers to ensure no preflight fails
+        req_headers = request.headers.get("access-control-request-headers")
+        if req_headers:
+            response.headers["Access-Control-Allow-Headers"] = req_headers
+        else:
+            response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-Requested-With, Clerk-Auth-Token"
+            
         response.headers["Access-Control-Max-Age"] = "86400"
         return response
 
@@ -55,7 +62,12 @@ async def dynamic_cors_middleware(request, call_next):
         response.headers["Access-Control-Allow-Origin"] = origin
         response.headers["Access-Control-Allow-Credentials"] = "true"
         response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
-        response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-Requested-With, Clerk-Auth-Token"
+        
+        req_headers = request.headers.get("access-control-request-headers")
+        if req_headers:
+            response.headers["Access-Control-Allow-Headers"] = req_headers
+        else:
+            response.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, Accept, X-Requested-With, Clerk-Auth-Token"
         
     return response
 
