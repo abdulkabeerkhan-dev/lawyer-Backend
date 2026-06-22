@@ -675,10 +675,34 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     others.append(m)
             return priority + others
 
-        # Prioritize and slice to the resolved_top_k limits (5 default, 3 for very long queries to optimize speed)
-        resolved_top_k = 3 if len(request.query_text) > 3000 else 5
+        # Prioritize matches
         prioritized_matches = prioritize_matches_by_bot(matches_list, request.category)
-        sliced_matches = prioritized_matches[:resolved_top_k]
+        
+        # Deduplicate matches by case_id and filter out unverified records
+        seen_case_ids = set()
+        filtered_matches = []
+        for m in prioritized_matches:
+            meta = {}
+            if isinstance(m, dict):
+                meta = m.get("metadata", {}) or {}
+            elif hasattr(m, "metadata"):
+                meta = getattr(m, "metadata", {}) or {}
+            
+            # Skip if explicitly marked unverified
+            if meta.get("unverified") is True:
+                continue
+                
+            cid = meta.get("case_id")
+            if cid:
+                if cid not in seen_case_ids:
+                    seen_case_ids.add(cid)
+                    filtered_matches.append(m)
+            else:
+                filtered_matches.append(m)
+
+        # Slice to the resolved_top_k limits (5 default, 3 for very long queries to optimize speed)
+        resolved_top_k = 3 if len(request.query_text) > 3000 else 5
+        sliced_matches = filtered_matches[:resolved_top_k]
         
         for match in sliced_matches:
             meta = {}
