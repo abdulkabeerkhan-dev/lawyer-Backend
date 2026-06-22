@@ -678,9 +678,20 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         # Prioritize matches
         prioritized_matches = prioritize_matches_by_bot(matches_list, request.category)
         
-        # Deduplicate matches by case_id and filter out unverified records
+        # Deduplicate matches by case_id, filter out unverified records, and apply generous category filtering
         seen_case_ids = set()
         filtered_matches = []
+        
+        cat_lower = request.category.lower() if request.category else "general"
+        
+        # Keywords to identify category relevance for generous filtering
+        category_keywords = {
+            "criminal": ["criminal", "cr.p.c", "ppc", "bail", "fir", "police", "offence", "accused", "trial", "sentence", "arrest", "suspect"],
+            "divorce_family": ["family", "divorce", "marriage", "dower", "maintenance", "custody", "guardian", "dissolution", "wife", "husband", "spouse", "nikah"],
+            "corporate_tax": ["tax", "corporate", "company", "income", "banking", "finance", "secp", "shares", "agreement", "contract", "business"],
+            "government_constitutional": ["constitution", "writ", "petition", "fundamental", "rights", "authority", "government", "officer", "service", "civil", "public"]
+        }
+        
         for m in prioritized_matches:
             meta = {}
             if isinstance(m, dict):
@@ -692,13 +703,39 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             if meta.get("unverified") is True:
                 continue
                 
+            # Deduplicate check
             cid = meta.get("case_id")
+            if cid and cid in seen_case_ids:
+                continue
+                
+            # Generous Category Filtering
+            if cat_lower != "general" and cat_lower in category_keywords:
+                citation = str(meta.get('citation', '')).lower()
+                subject = str(meta.get('subject_matter', '')).lower()
+                title = str(meta.get('title', '')).lower()
+                text = str(meta.get('text', meta.get('text_preview', ''))).lower()
+                
+                combined_text = f"{citation} {subject} {title} {text}"
+                
+                # Check if it has any keywords matching the current category
+                has_category_relevance = any(k in combined_text for k in category_keywords[cat_lower])
+                
+                # Check if it belongs exclusively to another category
+                belongs_to_other_category = False
+                for other_cat, keywords in category_keywords.items():
+                    if other_cat != cat_lower:
+                        if any(k in combined_text for k in keywords) and not has_category_relevance:
+                            belongs_to_other_category = True
+                            break
+                
+                # Filter out ONLY if it has zero relevance to the active category and belongs exclusively to another domain
+                if belongs_to_other_category and not has_category_relevance:
+                    print(f"Skipping out-of-category case: {meta.get('citation')} (Active category: {cat_lower})", file=sys.stderr)
+                    continue
+
             if cid:
-                if cid not in seen_case_ids:
-                    seen_case_ids.add(cid)
-                    filtered_matches.append(m)
-            else:
-                filtered_matches.append(m)
+                seen_case_ids.add(cid)
+            filtered_matches.append(m)
 
         # Slice to the resolved_top_k limits (5 default, 3 for very long queries to optimize speed)
         resolved_top_k = 3 if len(request.query_text) > 3000 else 5
@@ -751,20 +788,25 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         
         # Append strict reliability and verification constraints (Bugs #1, #2, #3, #6)
         global_reliability_guard = (
-            "\n\n=== STRICT ACCURACY & CITATION RESOLUTION RULES ===\n"
-            "1. Citing Holdings (Precedent Gate): Before asserting a specific holding, ratio decidendi, or rule from a cited case precedent, "
-            "you MUST verify that the holding is explicitly detailed in the provided Context from Legal Database. "
-            "If the Context does not explicitly confirm that specific holding, you must hedge using this exact phrase: "
-            "\"A case of this name and citation exists in Pakistani jurisprudence on a related subject, but I cannot confirm this specific holding without further verification.\"\n"
-            "2. Unindexed Statutes: The Companies Act 2017 is currently unindexed in the vector database. "
-            "If you generate any section or article number for the Companies Act 2017 (or other statutes not present in the Context), "
-            "you MUST flag it by appending: \"(Note: Section number reconstructed from general knowledge, not retrieved from indexed text — confirm against the Gazette text before filing.)\"\n"
-            "3. Complete Statutory Quotes: When citing or quoting statutory sections (such as Section 50 of the Registration Act 1908 or any other section), "
-            "you MUST include the complete section and its relevant provisos (e.g., references to Section 53-A of the Transfer of Property Act or Section 27(b) of the Specific Relief Act) "
-            "rather than quoting only the lead subsection, to ensure a complete and accurate legal representation.\n"
-            "4. Superseded Narcotics Statutes (CNSA 1997): The Control of Narcotic Substances Act 1997 was significantly amended in 2022 and 2023, restructuring the Section 9 quantity-based sentencing thresholds. "
-            "Whenever you cite CNSA 1997 sentencing thresholds or quantities, you MUST state the 1997 limits but explicitly add: \"(Note: Sentencing thresholds and quantity tiers have changed under the 2022/2023 CNSA Amendments. Verify against the latest official Gazette text before filing.)\"\n"
-            "5. Prohibition on External Case Citations: Do NOT introduce, invent, or reference any specific case names, citation numbers, or precedents from your own general knowledge (such as Abdul Kareem, Jurial Shah, or others) unless they are explicitly present in the provided 'Context from Legal Database'. If you need to refer to a general legal concept or strategy, describe it conceptually without citing unverified external cases."
+            f"\n\n=== STRICT ACCURACY & CITATION RESOLUTION RULES ===\n"
+            f"1. Citing Holdings (Precedent Gate): Before asserting a specific holding, ratio decidendi, or rule from a cited case precedent, "
+            f"you MUST verify that the holding is explicitly detailed in the provided Context from Legal Database. "
+            f"If the Context does not explicitly confirm that specific holding, you must hedge using this exact phrase: "
+            f"\"A case of this name and citation exists in Pakistani jurisprudence on a related subject, but I cannot confirm this specific holding without further verification.\"\n"
+            f"2. Unindexed Statutes: The Companies Act 2017 is currently unindexed in the vector database. "
+            f"If you generate any section or article number for the Companies Act 2017 (or other statutes not present in the Context), "
+            f"you MUST flag it by appending: \"(Note: Section number reconstructed from general knowledge, not retrieved from indexed text — confirm against the Gazette text before filing.)\"\n"
+            f"3. Complete Statutory Quotes: When citing or quoting statutory sections (such as Section 50 of the Registration Act 1908 or any other section), "
+            f"you MUST include the complete section and its relevant provisos (e.g., references to Section 53-A of the Transfer of Property Act or Section 27(b) of the Specific Relief Act) "
+            f"rather than quoting only the lead subsection, to ensure a complete and accurate legal representation.\n"
+            f"4. Superseded Narcotics Statutes (CNSA 1997): The Control of Narcotic Substances Act 1997 was significantly amended in 2022 and 2023, restructuring the Section 9 quantity-based sentencing thresholds. "
+            f"Whenever you cite CNSA 1997 sentencing thresholds or quantities, you MUST state the 1997 limits but explicitly add: \"(Note: Sentencing thresholds and quantity tiers have changed under the 2022/2023 CNSA Amendments. Verify against the latest official Gazette text before filing.)\"\n"
+            f"5. Prohibition on External Case Citations: Do NOT introduce, invent, or reference any specific case names, citation numbers, or precedents from your own general knowledge (such as Abdul Kareem, Jurial Shah, or others) unless they are explicitly present in the provided 'Context from Legal Database'. If you need to refer to a general legal concept or strategy, describe it conceptually without citing unverified external cases.\n"
+            f"6. Category Discipline & Contextual Relevance: The user is querying under the active category '{request.category}'. "
+            f"Prioritize legal principles, acts, and procedural rules relevant to this category. "
+            f"If the provided database context contains cases from other legal domains (e.g., a family dispute case retrieved during a criminal query), "
+            f"you must either ignore it or explicitly distinguish it in your response. Do not cite out-of-category precedents as substantive authorities "
+            f"unless they lay down a general procedural rule that directly applies to the matter."
         )
         system_prompt += global_reliability_guard
         
