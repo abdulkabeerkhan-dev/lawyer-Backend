@@ -349,7 +349,15 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
         # 1. Check if user already exists by authenticated Clerk ID
         profile_query = supabase.table("users").select("*").eq("id", authenticated_user_id).execute()
         if profile_query.data and len(profile_query.data) > 0:
-            return {"status": "exists", "user": profile_query.data[0]}
+            existing_user = profile_query.data[0]
+            # Auto-sync profile info if modified in Clerk/App
+            if existing_user.get("full_name") != payload.full_name or existing_user.get("email") != payload.email:
+                updated_profile = supabase.table("users").update({
+                    "full_name": payload.full_name,
+                    "email": payload.email
+                }).eq("id", authenticated_user_id).execute()
+                return {"status": "updated", "user": updated_profile.data[0]}
+            return {"status": "exists", "user": existing_user}
             
         # 2. Check if user already exists by Email (handles legacy/mock accounts transition)
         email_query = supabase.table("users").select("*").eq("email", payload.email).execute()
@@ -753,12 +761,22 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
         print(f"🧠 [JOB {job_id}] Attempting connection to Anthropic Claude API...", file=sys.stderr, flush=True)
         if async_anthropic_client and ANTHROPIC_API_KEY:
-            claude_message = await async_anthropic_client.messages.create(
-                model="claude-sonnet-4-6",
-                max_tokens=8000,
-                system=system_prompt,
-                messages=[{"role": "user", "content": claude_message_content}]
-            )
+            final_kwargs = {
+                "model": "claude-sonnet-4-6",
+                "max_tokens": 8000,
+                "system": system_prompt,
+                "messages": [{"role": "user", "content": claude_message_content}]
+            }
+            if os.environ.get("LANGCHAIN_API_KEY"):
+                final_kwargs["langsmith_extra"] = {
+                    "metadata": {
+                        "user_id": authenticated_user_id,
+                        "job_id": job_id,
+                        "category": request.category,
+                        "task": "final_legal_evaluation"
+                    }
+                }
+            claude_message = await async_anthropic_client.messages.create(**final_kwargs)
             
             generated_answer = ""
             for block in claude_message.content:
