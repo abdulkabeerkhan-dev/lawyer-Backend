@@ -95,13 +95,13 @@ if ANTHROPIC_API_KEY:
         raw_client = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
         try:
             from langsmith import wrappers
-            async_anthropic_client = wrappers.wrap_sdk(raw_client)
-            print("🚀 LangSmith wrapping initialized on Anthropic client.")
-        except ImportError:
+            async_anthropic_client = wrappers.wrap_anthropic(raw_client)
+            print("LangSmith wrapping initialized on Anthropic client.")
+        except Exception as e:
             async_anthropic_client = raw_client
-            print("💡 Running Anthropic client without LangSmith wrapper (library not installed)")
+            print(f"Running Anthropic client without LangSmith wrapper: {e}")
     except Exception as launch_err:
-        print(f"⚠️ Anthropic client startup warning: {launch_err}")
+        print(f"Anthropic client startup warning: {launch_err}")
 else:
     print("⚠️ WARNING: ANTHROPIC_API_KEY is missing. Activating LLM Simulation Fallback Layer for testing.")
 
@@ -663,8 +663,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     others.append(m)
             return priority + others
 
-        # Prioritize and slice to the resolved_top_k limits
-        resolved_top_k = 4 if len(request.query_text) > 3000 else 8
+        # Prioritize and slice to the resolved_top_k limits (5 default, 3 for very long queries to optimize speed)
+        resolved_top_k = 3 if len(request.query_text) > 3000 else 5
         prioritized_matches = prioritize_matches_by_bot(matches_list, request.category)
         sliced_matches = prioritized_matches[:resolved_top_k]
         
@@ -763,7 +763,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         if async_anthropic_client and ANTHROPIC_API_KEY:
             final_kwargs = {
                 "model": "claude-sonnet-4-6",
-                "max_tokens": 8000,
+                "max_tokens": 4000,
                 "system": system_prompt,
                 "messages": [{"role": "user", "content": claude_message_content}]
             }
