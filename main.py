@@ -1,7 +1,7 @@
 import os
 import sys
 import uuid
-from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks
+from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -1150,6 +1150,7 @@ async def delete_associate(associate_id: str, admin_id: str = Depends(verify_adm
 
 @app.get("/admin/activity")
 async def list_all_activity(
+    request: Request,
     associate_id: Optional[str] = None, 
     from_date: Optional[str] = None, 
     to_date: Optional[str] = None, 
@@ -1162,12 +1163,16 @@ async def list_all_activity(
     if not supabase:
         return []
     try:
-        query = supabase.table("queries").select("*, users(full_name, email)")
+        # Extract from and to parameters if sent by frontend as aliases
+        from_val = from_date or request.query_params.get("from")
+        to_val = to_date or request.query_params.get("to")
+        
+        query = supabase.table("queries").select("*")
         if associate_id:
             query = query.eq("user_id", associate_id)
         
-        parsed_from = parse_date_to_iso(from_date)
-        parsed_to = parse_date_to_iso(to_date)
+        parsed_from = parse_date_to_iso(from_val)
+        parsed_to = parse_date_to_iso(to_val)
         
         if parsed_from:
             query = query.gte("created_at", parsed_from)
@@ -1177,13 +1182,19 @@ async def list_all_activity(
         res = query.order("created_at", desc=True).limit(500).execute()
         raw_data = res.data if res else []
         
+        # Fetch users to map user_id -> name/email safely in Python memory
+        users_res = supabase.table("users").select("id", "full_name", "email").execute()
+        users_map = {u["id"]: u for u in users_res.data} if users_res and users_res.data else {}
+        
         formatted_activity = []
         for r in raw_data:
             if not isinstance(r, dict):
                 continue
-            user_info = r.get("users", {}) or {}
+            uid = r.get("user_id")
+            user_info = users_map.get(uid, {})
             full_name = user_info.get("full_name") or user_info.get("email") or "Unknown Associate"
             q_text = r.get("query_text", "")
+            ans_text = r.get("answer_text", "")
             
             # Determine type of query activity
             is_vision = q_text and "[Vision Context]" in str(q_text)
@@ -1192,7 +1203,7 @@ async def list_all_activity(
             
             formatted_activity.append({
                 "id": r.get("id"),
-                "user_id": r.get("user_id"),
+                "user_id": uid,
                 "associate": full_name,
                 "full_name": full_name,
                 "email": user_info.get("email"),
@@ -1201,7 +1212,9 @@ async def list_all_activity(
                 "type": action_type,
                 "action_type": action_type,
                 "question": clean_question,
-                "description": clean_question
+                "description": clean_question,
+                "response": ans_text,
+                "answer_text": ans_text
             })
             
         return formatted_activity
