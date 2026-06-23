@@ -540,6 +540,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         search_keywords_query = request.query_text
         
         # 2. Process images with Claude Vision to extract text & English keywords if present
+        vision_input_tokens = 0
+        vision_output_tokens = 0
         if has_image:
             if not async_anthropic_client or not ANTHROPIC_API_KEY:
                 extracted_doc_text = f"[Simulated Urdu/English Transcript content for {num_images} attachments]"
@@ -590,6 +592,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         }
                     }
                 vision_message = await async_anthropic_client.messages.create(**vision_kwargs)
+                
+                if hasattr(vision_message, "usage") and vision_message.usage:
+                    vision_input_tokens = getattr(vision_message.usage, "input_tokens", 0) or 0
+                    vision_output_tokens = getattr(vision_message.usage, "output_tokens", 0) or 0
                 
                 raw_response = ""
                 for block in vision_message.content:
@@ -841,6 +847,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             claude_message_content = f"Context from Legal Database:\n{combined_context}\n\nQuestion: {request.query_text}"
 
         print(f"🧠 [JOB {job_id}] Attempting connection to Anthropic Claude API...", file=sys.stderr, flush=True)
+        main_input_tokens = 0
+        main_output_tokens = 0
         if async_anthropic_client and ANTHROPIC_API_KEY:
             final_kwargs = {
                 "model": "claude-sonnet-4-6",
@@ -859,6 +867,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 }
             claude_message = await async_anthropic_client.messages.create(**final_kwargs)
             
+            if hasattr(claude_message, "usage") and claude_message.usage:
+                main_input_tokens = getattr(claude_message.usage, "input_tokens", 0) or 0
+                main_output_tokens = getattr(claude_message.usage, "output_tokens", 0) or 0
+            
             generated_answer = ""
             for block in claude_message.content:
                 block_text = getattr(block, "text", "")
@@ -867,6 +879,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         else:
             generated_answer = f"### Legal Evaluation (Simulation mode - Category: {request.category})\n\nPrecedent found: **{citations_payload[0]['case_id'] if citations_payload else 'N/A'}**."
         
+        # Aggregate total tokens
+        input_tokens = main_input_tokens + vision_input_tokens
+        output_tokens = main_output_tokens + vision_output_tokens
+
         # 5. Log and Save
         print(f"💾 [JOB {job_id}] Inserting query logging data into Supabase...", file=sys.stderr, flush=True)
         inserted_row_id = str(uuid.uuid4())
@@ -875,7 +891,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 "user_id": authenticated_user_id,
                 "query_text": f"[Vision Context] {request.query_text}" if has_image else request.query_text,
                 "answer_text": generated_answer,
-                "citations": citations_payload
+                "citations": citations_payload,
+                "input_tokens": input_tokens,
+                "output_tokens": output_tokens
             }).execute()
             
             if db_insert.data and len(db_insert.data) > 0:
@@ -1083,11 +1101,13 @@ async def list_all_activity(
     admin_id: str = Depends(verify_admin_role)
 ):
     """
-    📊 GLOBAL AUDIT LOG LOGGER: Streams comprehensive tracking elements from centralized activity fields,
-    allowing advanced sorting by individual associate identities or historical timeframes.
+    📊 GLOBAL AUDIT LOG LOGGER: Streams query activity logs from the queries table,
+    joining user details for clear administrator overview.
     """
+    if not supabase:
+        return []
     try:
-        query = supabase.table("activity_log").select("*")
+        query = supabase.table("queries").select("*, users(full_name, email)")
         if associate_id:
             query = query.eq("user_id", associate_id)
         if from_date:
@@ -1096,10 +1116,119 @@ async def list_all_activity(
             query = query.lte("created_at", to_date)
             
         res = query.order("created_at", desc=True).execute()
-        return res.data
+        raw_data = res.data if res else []
+        
+        formatted_activity = []
+        for r in raw_data:
+            if not isinstance(r, dict):
+                continue
+            user_info = r.get("users", {}) or {}
+            full_name = user_info.get("full_name") or user_info.get("email") or "Unknown Associate"
+            q_text = r.get("query_text", "")
+            
+            # Determine type of query activity
+            is_vision = q_text and "[Vision Context]" in str(q_text)
+            action_type = "Vision Query" if is_vision else "Text Query"
+            clean_question = str(q_text).replace("[Vision Context] ", "") if q_text else ""
+            
+            formatted_activity.append({
+                "id": r.get("id"),
+                "user_id": r.get("user_id"),
+                "associate": full_name,
+                "full_name": full_name,
+                "email": user_info.get("email"),
+                "created_at": r.get("created_at"),
+                "time": r.get("created_at"),
+                "type": action_type,
+                "action_type": action_type,
+                "question": clean_question,
+                "description": clean_question
+            })
+            
+        return formatted_activity
     except Exception as e:
         print(f"⚠️ Activity Log Stream Warning: {str(e)}")
         return []
+
+@app.get("/admin/associates/usage")
+async def list_associates_usage(admin_id: str = Depends(verify_admin_role)):
+    """
+    📊 ADMIN USAGE DASHBOARD: Fetches usage statistics (queries, vision uploads, tokens)
+    for all registered users.
+    """
+    if not supabase:
+        raise HTTPException(status_code=503, detail="Database service is offline.")
+    try:
+        from datetime import datetime, timezone, timedelta
+        
+        # 1. Fetch all users
+        users_res = supabase.table("users").select("id", "email", "full_name", "role").order("full_name").execute()
+        users_list = users_res.data if users_res else []
+        
+        # 2. Fetch queries from last 24h
+        time_limit = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
+        queries_res = supabase.table("queries").select("user_id", "query_text", "input_tokens", "output_tokens").gte("created_at", time_limit).execute()
+        queries_list = queries_res.data if queries_res else []
+        
+        # 3. Aggregate metrics by user_id
+        user_metrics = {}
+        for q in queries_list:
+            if not isinstance(q, dict):
+                continue
+            uid = q.get("user_id")
+            if not uid:
+                continue
+            if uid not in user_metrics:
+                user_metrics[uid] = {
+                    "text_queries_used": 0,
+                    "vision_queries_used": 0,
+                    "input_tokens_used": 0,
+                    "output_tokens_used": 0
+                }
+            
+            user_metrics[uid]["text_queries_used"] += 1
+            
+            q_text = q.get("query_text", "")
+            if q_text and "[Vision Context]" in str(q_text):
+                user_metrics[uid]["vision_queries_used"] += 1
+                
+            user_metrics[uid]["input_tokens_used"] += int(q.get("input_tokens") or 0)
+            user_metrics[uid]["output_tokens_used"] += int(q.get("output_tokens") or 0)
+            
+        # 4. Map back to users list
+        response_data = []
+        for user in users_list:
+            if not isinstance(user, dict):
+                continue
+            uid = user.get("id")
+            metrics = user_metrics.get(uid, {
+                "text_queries_used": 0,
+                "vision_queries_used": 0,
+                "input_tokens_used": 0,
+                "output_tokens_used": 0
+            })
+            
+            response_data.append({
+                "id": uid,
+                "email": user.get("email"),
+                "full_name": user.get("full_name"),
+                "role": user.get("role"),
+                "usage": {
+                    "text_queries_used": metrics["text_queries_used"],
+                    "text_queries_limit": 100,
+                    "vision_queries_used": metrics["vision_queries_used"],
+                    "vision_queries_limit": 30,
+                    "input_tokens_used": metrics["input_tokens_used"],
+                    "output_tokens_used": metrics["output_tokens_used"],
+                    "total_tokens_used": metrics["input_tokens_used"] + metrics["output_tokens_used"]
+                }
+            })
+            
+        return response_data
+    except Exception as e:
+        if os.environ.get("SENTRY_DSN"):
+            sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail=f"Failed to compile users usage status: {str(e)}")
 
 @app.get("/admin/export-training-data")
 async def export_training_data(admin_id: str = Depends(verify_admin_role)):
