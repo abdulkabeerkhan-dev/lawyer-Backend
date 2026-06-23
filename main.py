@@ -1023,15 +1023,70 @@ async def update_user_profile(payload: ProfileUpdatePayload, authenticated_user_
 # ----------------------------------------------------------------------
 # Administrative System Configurations & User Management (New Contracts)
 # ----------------------------------------------------------------------
+# Helper to normalize frontend date picker formats (e.g. DD/MM/YYYY) to PostgreSQL ISO format
+def parse_date_to_iso(date_str: Optional[str]) -> Optional[str]:
+    if not date_str:
+        return None
+    try:
+        # Check DD/MM/YYYY format
+        match = re.match(r"^(\d{1,2})/(\d{1,2})/(\d{4})$", date_str.strip())
+        if match:
+            day, month, year = match.groups()
+            return f"{year}-{int(month):02d}-{int(day):02d}"
+    except Exception:
+        pass
+    return date_str
+
+# ----------------------------------------------------------------------
+# Administrative System Configurations & User Management (New Contracts)
+# ----------------------------------------------------------------------
 @app.get("/admin/associates")
 async def list_associates(admin_id: str = Depends(verify_admin_role)):
     """
     👥 ADMIN ASSOCIATE COMPILATION LIST: Compiles a data roster of all registered
-    users active inside the infrastructure database for admin viewing dashboards.
+    users active inside the infrastructure database, adding query counts and last active timestamps.
     """
+    if not supabase:
+        raise HTTPException(status_code=503, detail="Database service is offline.")
     try:
+        # 1. Fetch all users
         res = supabase.table("users").select("*").order("full_name").execute()
-        return res.data
+        users_list = res.data if res else []
+        
+        # 2. Fetch query metrics to calculate total queries and last active times
+        queries_res = supabase.table("queries").select("user_id", "created_at").execute()
+        queries_list = queries_res.data if queries_res else []
+        
+        user_stats = {}
+        for q in queries_list:
+            if not isinstance(q, dict):
+                continue
+            uid = q.get("user_id")
+            if not uid:
+                continue
+            if uid not in user_stats:
+                user_stats[uid] = {
+                    "total_queries": 0,
+                    "last_active_at": None
+                }
+            user_stats[uid]["total_queries"] += 1
+            
+            created_str = q.get("created_at")
+            if created_str:
+                if not user_stats[uid]["last_active_at"] or created_str > user_stats[uid]["last_active_at"]:
+                    user_stats[uid]["last_active_at"] = created_str
+                    
+        # 3. Join stats into users list
+        for user in users_list:
+            if not isinstance(user, dict):
+                continue
+            uid = user.get("id")
+            stats = user_stats.get(uid, {"total_queries": 0, "last_active_at": None})
+            user["total_queries"] = stats["total_queries"]
+            user["last_active_at"] = stats["last_active_at"]
+            user["last_active"] = stats["last_active_at"] # Fallback key
+            
+        return users_list
     except Exception as e:
         if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
         raise HTTPException(status_code=500, detail=f"Failed to list system associates: {str(e)}")
@@ -1102,7 +1157,7 @@ async def list_all_activity(
 ):
     """
     📊 GLOBAL AUDIT LOG LOGGER: Streams query activity logs from the queries table,
-    joining user details for clear administrator overview.
+    joining user details for clear administrator overview. Supports date filters.
     """
     if not supabase:
         return []
@@ -1110,12 +1165,16 @@ async def list_all_activity(
         query = supabase.table("queries").select("*, users(full_name, email)")
         if associate_id:
             query = query.eq("user_id", associate_id)
-        if from_date:
-            query = query.gte("created_at", from_date)
-        if to_date:
-            query = query.lte("created_at", to_date)
+        
+        parsed_from = parse_date_to_iso(from_date)
+        parsed_to = parse_date_to_iso(to_date)
+        
+        if parsed_from:
+            query = query.gte("created_at", parsed_from)
+        if parsed_to:
+            query = query.lte("created_at", parsed_to)
             
-        res = query.order("created_at", desc=True).execute()
+        res = query.order("created_at", desc=True).limit(500).execute()
         raw_data = res.data if res else []
         
         formatted_activity = []
@@ -1151,10 +1210,14 @@ async def list_all_activity(
         return []
 
 @app.get("/admin/associates/usage")
-async def list_associates_usage(admin_id: str = Depends(verify_admin_role)):
+async def list_associates_usage(
+    from_date: Optional[str] = None, 
+    to_date: Optional[str] = None, 
+    admin_id: str = Depends(verify_admin_role)
+):
     """
     📊 ADMIN USAGE DASHBOARD: Fetches usage statistics (queries, vision uploads, tokens)
-    for all registered users.
+    for all registered users. Supports custom date filters (defaults to last 24 hours).
     """
     if not supabase:
         raise HTTPException(status_code=503, detail="Database service is offline.")
@@ -1165,9 +1228,23 @@ async def list_associates_usage(admin_id: str = Depends(verify_admin_role)):
         users_res = supabase.table("users").select("id", "email", "full_name", "role").order("full_name").execute()
         users_list = users_res.data if users_res else []
         
-        # 2. Fetch queries from last 24h
-        time_limit = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
-        queries_res = supabase.table("queries").select("user_id", "query_text", "input_tokens", "output_tokens").gte("created_at", time_limit).execute()
+        # 2. Build queries call
+        query = supabase.table("queries").select("user_id", "query_text", "input_tokens", "output_tokens")
+        
+        parsed_from = parse_date_to_iso(from_date)
+        parsed_to = parse_date_to_iso(to_date)
+        
+        if parsed_from:
+            query = query.gte("created_at", parsed_from)
+        if parsed_to:
+            query = query.lte("created_at", parsed_to)
+            
+        # Default to last 24h if no date filter is provided
+        if not parsed_from and not parsed_to:
+            time_limit = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
+            query = query.gte("created_at", time_limit)
+            
+        queries_res = query.execute()
         queries_list = queries_res.data if queries_res else []
         
         # 3. Aggregate metrics by user_id
