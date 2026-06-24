@@ -1214,7 +1214,9 @@ async def list_all_activity(
                 "question": clean_question,
                 "description": clean_question,
                 "response": ans_text,
-                "answer_text": ans_text
+                "answer_text": ans_text,
+                "result": ans_text,
+                "answer": ans_text
             })
             
         return formatted_activity
