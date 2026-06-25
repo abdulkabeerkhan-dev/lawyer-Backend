@@ -530,6 +530,44 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 return "image/jpeg"
             return m
 
+        def clean_repeated_phrases(text: str) -> str:
+            if not text:
+                return ""
+            text = re.sub(r'\s+', ' ', text).strip()
+            prev_text = None
+            while prev_text != text:
+                prev_text = text
+                text = re.sub(r'\b(\w+(?:\s+\w+){0,3})\s+\1\b', r'\1', text, flags=re.IGNORECASE)
+            return text
+
+        def clean_court_name(court_name: str) -> str:
+            if not court_name:
+                return "High Court"
+            court_name = court_name.strip()
+            c_lower = court_name.lower()
+            is_sc = any(x in c_lower for x in ("scmr", " pld sc ", " supreme "))
+            court_name = re.sub(r'\b\d{4}\s+[A-Za-z]+\s+\d+\b', '', court_name, flags=re.IGNORECASE)
+            court_name = re.sub(r'\b\d{4}\b', '', court_name)
+            court_name = court_name.replace('-', ' ')
+            court_name = re.sub(r'\s+', ' ', court_name).strip()
+            c_lower = court_name.lower()
+            if not court_name or c_lower in ("not specified", "unknown", "none"):
+                return "Supreme Court of Pakistan" if is_sc else "High Court"
+            if "supreme court" in c_lower or is_sc:
+                return "Supreme Court of Pakistan"
+            if "karachi high court sindh" in c_lower or "sindh high court" in c_lower or "high court sindh" in c_lower:
+                return "Sindh High Court"
+            if "lahore high court" in c_lower or "high court lahore" in c_lower:
+                return "Lahore High Court"
+            if "peshawar high court" in c_lower:
+                return "Peshawar High Court"
+            if "balochistan high court" in c_lower:
+                return "Balochistan High Court"
+            if "islamabad high court" in c_lower:
+                return "Islamabad High Court"
+            return court_name.title()
+
+
         # 1. Enforce Quotas
         images_list = request.images or []
         num_images = len(images_list)
@@ -805,6 +843,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         resolved_top_k = 3 if len(request.query_text) > 3000 else 5
         sliced_matches = filtered_matches[:resolved_top_k]
         
+        high_relevance_segments = []
+        medium_relevance_segments = []
+        low_relevance_segments = []
+
         for match in sliced_matches:
             meta = {}
             if isinstance(match, dict):
@@ -822,23 +864,39 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 title = str(meta.get('title', 'Untitled Case'))
                 citation = str(meta.get('citation', 'No Citation'))
                 
-                # Fix "Not Specified" court-name metadata fallback
-                if not court or court.strip().lower() in ("not specified", "unknown", "none"):
-                    court = citation if citation and citation != "No Citation" else "High Court"
+                # Clean title to prevent repeated names/phrases
+                title = clean_repeated_phrases(title)
 
-                # Format court name nicely for the frontend cards if it contains database ingestion names
-                display_court = court
-                if "pakistanlawsite" in court.lower():
+                # Resolve court and apply clean-up rules
+                court_val = court
+                if not court or court.strip().lower() in ("not specified", "unknown", "none", "pakistanlawsite"):
                     if citation and citation != "No Citation":
-                        display_court = citation
+                        court_val = citation
                     elif title and title != "Untitled Case":
-                        display_court = title
+                        court_val = title
+                    else:
+                        court_val = "High Court"
 
-                context_segments.append(
+                display_court = clean_court_name(court_val)
+
+                segment_text = (
                     f"Source: {display_court} ({year}) | Citation: {citation} | Title: {title} | Ref: {case_id}\n"
                     f"Content: {text_content}"
                 )
+                
                 match_score = float(match.get("score", 0.0) if isinstance(match, dict) else getattr(match, "score", 0.0))
+                
+                # Categorize into Relevance Tiers
+                relevance_label = "Low"
+                if match_score >= 0.80:
+                    relevance_label = "High"
+                    high_relevance_segments.append(segment_text)
+                elif match_score >= 0.75:
+                    relevance_label = "Medium"
+                    medium_relevance_segments.append(segment_text)
+                else:
+                    low_relevance_segments.append(segment_text)
+
                 citations_payload.append({
                     "case_id": case_id,
                     "court": display_court,
@@ -846,10 +904,20 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     "preview": text_content[:400],
                     "title": title,
                     "citation": citation,
-                    "score": match_score
+                    "score": match_score,
+                    "relevance": relevance_label
                 })
             
-        combined_context = "\n\n---\n\n".join(context_segments)
+        # Build structured context by relevance level to direct the AI's citation hierarchy
+        context_parts = []
+        if high_relevance_segments:
+            context_parts.append("=== HIGH RELEVANCE CASES (Score >= 0.80) ===\n" + "\n\n---\n\n".join(high_relevance_segments))
+        if medium_relevance_segments:
+            context_parts.append("=== MEDIUM RELEVANCE CASES (Score 0.75 - 0.80) ===\n" + "\n\n---\n\n".join(medium_relevance_segments))
+        if low_relevance_segments:
+            context_parts.append("=== LOW RELEVANCE CASES (Score 0.70 - 0.75) ===\n" + "\n\n---\n\n".join(low_relevance_segments))
+            
+        combined_context = "\n\n=========================================\n\n".join(context_parts)
         
         # 4. Format Prompt and Call Anthropic
         system_prompt = SYSTEM_PROMPTS.get(request.category, SYSTEM_PROMPTS["general"])
@@ -890,7 +958,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             f"Prioritize legal principles, acts, and procedural rules relevant to this category. "
             f"If the provided database context contains cases from other legal domains (e.g., a family dispute case retrieved during a criminal query), "
             f"you must either ignore it or explicitly distinguish it in your response. Do not cite out-of-category precedents as substantive authorities "
-            f"unless they lay down a general procedural rule that directly applies to the matter."
+            f"unless they lay down a general procedural rule that directly applies to the matter.\n"
+            f"11. Precedent Citation Hierarchy: The retrieved legal context blocks are separated by relevance: HIGH RELEVANCE (most relevant), MEDIUM RELEVANCE, and LOW RELEVANCE. "
+            f"When citing precedents to support your arguments or drafts, you MUST strictly follow this sequence: always cite the most relevant (HIGH RELEVANCE) cases first. If a legal point cannot be supported by any HIGH RELEVANCE cases, only then move/fallback to MEDIUM RELEVANCE cases. If the legal point is still not supported, only then move/fallback to LOW RELEVANCE cases. Do not reference lower relevance tiers if a higher relevance tier can support the legal point."
         )
         system_prompt += global_reliability_guard
         system_prompt += f"\n\n=== EXPLICIT ROUTING INSTRUCTION ===\nActive Mode: The AI is operating in '{mode.upper()}' mode. Adapt your writing register, style, and detail level to match this mode.\n"
