@@ -606,7 +606,31 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 search_keywords_query = f"{raw_response.strip()} {request.query_text}".strip()
                 extracted_doc_text = "[Full transcription and English translation generated dynamically in the final answer below]"
 
-        # 3. Pinecone Vector Search
+        # 3. Mode Classification & Precise Citation Extraction
+        mode = "simple_query"
+        query_lower = request.query_text.lower()
+        
+        # Check for citation matches (e.g. "pld 2016 sc 401")
+        citation_pattern = r"\b(pld|scmr|mld|ylr|pcrli|pcrlj)\b"
+        has_citation = re.search(citation_pattern, query_lower)
+        
+        target_citation = None
+        if has_citation:
+            mode = "judgment_lookup"
+            # Extract standard citation patterns: e.g. "PLD 2016 SC 401"
+            cit_match = re.search(r"\b((?:pld|scmr|mld|ylr|pcrli|pcrlj)\s+\d{4}\s+(?:sc|lahore|karachi|peshawar|sindh|islamabad|balochistan)?\s*\d+)\b", query_lower)
+            if cit_match:
+                target_citation = cit_match.group(1).upper()
+        elif any(k in query_lower for k in ["draft", "petition", "bail application", "plaint", "written statement", "suit for"]):
+            mode = "drafting"
+        elif has_image or any(k in query_lower for k in ["analyze", "contract", "fir", "agreement", "document"]):
+            mode = "document_analysis"
+        elif any(k in query_lower for k in ["case law", "precedent", "ruling", "judgment of", "ruling related to"]):
+            mode = "caselaw_search"
+            
+        print(f"⚙️ [JOB {job_id}] Query routed to: {mode}", file=sys.stderr, flush=True)
+
+        # 4. Pinecone Vector Search
         bge_query_text = f"Represent this sentence for searching relevant passages: {search_keywords_query}"
         hf_api_url = "https://router.huggingface.co/hf-inference/models/BAAI/bge-large-en-v1.5/pipeline/feature-extraction"
         
@@ -626,9 +650,26 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         if not pinecone_index:
             raise Exception("Pinecone serverless engine index connection is inactive.")
             
-        # Fetch a larger candidate pool to prioritize category-relevant matches
+        # Fetch candidate matches
         query_top_k = 25
-        raw_matches = pinecone_index.query(namespace="judgments", vector=query_vector, top_k=query_top_k, include_metadata=True)
+        pinecone_kwargs = {
+            "namespace": "judgments",
+            "vector": query_vector,
+            "top_k": query_top_k,
+            "include_metadata": True
+        }
+        
+        # If we have a precise target citation, filter by it directly in Pinecone
+        raw_matches = None
+        if target_citation:
+            try:
+                print(f"🔍 Performing precise metadata query for citation: {target_citation}", file=sys.stderr, flush=True)
+                raw_matches = pinecone_index.query(filter={"citation": {"$eq": target_citation}}, **pinecone_kwargs)
+            except Exception as filter_err:
+                print(f"⚠️ Pinecone metadata filter warning: {filter_err}", file=sys.stderr, flush=True)
+        
+        if not raw_matches or not raw_matches.get("matches"):
+            raw_matches = pinecone_index.query(**pinecone_kwargs)
         
         context_segments = []
         citations_payload = []
@@ -852,6 +893,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             f"unless they lay down a general procedural rule that directly applies to the matter."
         )
         system_prompt += global_reliability_guard
+        system_prompt += f"\n\n=== EXPLICIT ROUTING INSTRUCTION ===\nActive Mode: The AI is operating in '{mode.upper()}' mode. Adapt your writing register, style, and detail level to match this mode.\n"
+        if mode == "drafting":
+            system_prompt += "Drafting Instruction: Since the user is requesting a legal draft, you MUST strictly format the document using the caption structures and repeating 5-part grounds/narrative cycles defined in the Constitutional Writ template in Section 4.\n"
         
         # 5. Build final messages payload
         claude_message_content = []
@@ -946,7 +990,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         if job_id in jobs_store:
             jobs_store[job_id].update({
                 "status": "done",
-                "result": {"answer": generated_answer, "citations": citations_payload, "query_id": inserted_row_id},
+                "result": {"answer": generated_answer, "citations": citations_payload, "query_id": inserted_row_id, "mode": mode},
                 "completed_at": datetime.now(timezone.utc)
             })
 
