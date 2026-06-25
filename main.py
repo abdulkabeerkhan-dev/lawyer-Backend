@@ -684,8 +684,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         # Prioritize matches
         prioritized_matches = prioritize_matches_by_bot(matches_list, request.category)
         
-        # Deduplicate matches by case_id, filter out unverified records, and apply generous category filtering
+        # Deduplicate matches by case_id/citation, filter out unverified records, enforce 0.70 threshold, and apply generous category filtering
         seen_case_ids = set()
+        seen_citations = set()
         filtered_matches = []
         
         cat_lower = request.category.lower() if request.category else "general"
@@ -705,13 +706,27 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             elif hasattr(m, "metadata"):
                 meta = getattr(m, "metadata", {}) or {}
             
+            # Enforce Relevance Threshold of 0.70
+            score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
+            if score < 0.70:
+                continue
+
+            # Skip Qurban Ali unverified chunk
+            chunk_id = str(m.get("id", ""))
+            case_id_val = str(meta.get("case_id", ""))
+            if "2026L3032" in chunk_id or "2026L3032" in case_id_val:
+                continue
+
             # Skip if explicitly marked unverified
             if meta.get("unverified") is True:
                 continue
                 
-            # Deduplicate check
+            # Deduplicate check (by case_id and citation)
             cid = meta.get("case_id")
+            cit = meta.get("citation")
             if cid and cid in seen_case_ids:
+                continue
+            if cit and cit in seen_citations:
                 continue
                 
             # Generous Category Filtering
@@ -741,6 +756,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             if cid:
                 seen_case_ids.add(cid)
+            if cit:
+                seen_citations.add(cit)
             filtered_matches.append(m)
 
         # Slice to the resolved_top_k limits (5 default, 3 for very long queries to optimize speed)
@@ -764,6 +781,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 title = str(meta.get('title', 'Untitled Case'))
                 citation = str(meta.get('citation', 'No Citation'))
                 
+                # Fix "Not Specified" court-name metadata fallback
+                if not court or court.strip().lower() in ("not specified", "unknown", "none"):
+                    court = citation if citation and citation != "No Citation" else "High Court"
+
                 # Format court name nicely for the frontend cards if it contains database ingestion names
                 display_court = court
                 if "pakistanlawsite" in court.lower():
@@ -792,23 +813,39 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         # 4. Format Prompt and Call Anthropic
         system_prompt = SYSTEM_PROMPTS.get(request.category, SYSTEM_PROMPTS["general"])
         
-        # Append strict reliability and verification constraints (Bugs #1, #2, #3, #6)
+        # Append strict reliability and verification constraints (Bugs #1, #2, #3, #6, Formatting, Drafting)
         global_reliability_guard = (
-            f"\n\n=== STRICT ACCURACY & CITATION RESOLUTION RULES ===\n"
-            f"1. Citing Holdings (Precedent Gate): Before asserting a specific holding, ratio decidendi, or rule from a cited case precedent, "
+            f"\n\n=== STRICT ACCURACY, CITATION & DRAFTING FORMAT RULES ===\n"
+            f"1. Citation Format & Spacing: You must use the exact space-separated journal formatting rules (do NOT use arrows, dashes or other characters):\n"
+            f"   - PLD [Year] [Court Abbreviation] [Page] (e.g., PLD 2019 SC 524)\n"
+            f"   - [Year] SCMR [Page] (e.g., 2019 SCMR 524)\n"
+            f"   - [Year] [MLD/YLR/PCrLJ] [Page] [Court] (e.g., 2014 MLD 342 Karachi, 2026 YLR 226 Karachi, 2025 PCrLJ 112 Lahore)\n"
+            f"2. Inline Narrative Pattern: Citations must be placed inline, immediately after each legal point (never bunched at the end). For each ground/precedent, follow this 5-part cycle:\n"
+            f"   - Part 1: Bolded thesis statement (single bolded paragraph bullet stating the legal proposition).\n"
+            f"   - Part 2: Introductory sentence placing reliance: \"In this regard, reliance is [firstly/further/similarly] placed upon the judgment reported as **[Citation]**, wherein it was held:\"\n"
+            f"   - Part 3: Block quotation of the judgment (verbatim, italicized, paragraph-numbered like `***7.***` with key phrases bolded).\n"
+            f"   - Part 4: Annexure citation line: \"(*Copy of the Judgment reported as **[Citation]** is attached as **Annexure [Letter]***)\"\n"
+            f"   - Part 5: Application paragraph (plain text connecting facts, ending in conclusory submission like '...rendering the Petitioner entitled to...').\n"
+            f"3. Case Summary in Response: For every case you cite, you must include a short, 2-sentence summary of the case facts, judge, and main observation at the end of your response, formatted inside a clean markdown block with the header '### Case Summaries'.\n"
+            f"4. Drafting Mode Format: If the user requests a draft (petition, plaint, bail application, etc.), you MUST follow the exact template in the system rules:\n"
+            f"   - Start with Caption Block: IN THE HONOURABLE [COURT] HIGH COURT (bold, all caps, centered), WRIT PETITION NO. ___ / [YEAR] (bold), Petitioner/Respondents names italicized with right-aligned ellipsis and labels (e.g., '... Petitioner' / '… Respondents'), and 'Versus' centered and italicized.\n"
+            f"   - PETITION UNDER ARTICLE [X] ... READ WITH ... (bold, all caps).\n"
+            f"   - SUBMISSIONS ON BEHALF OF THE [PARTY] (bold, all caps).\n"
+            f"   - Transition grounds using formal transitional connectors (e.g., 'Moreover', 'Furthermore', 'Much in a similar vein'). Do not use first person.\n"
+            f"5. Citing Holdings (Precedent Gate): Before asserting a specific holding, ratio decidendi, or rule from a cited case precedent, "
             f"you MUST verify that the holding is explicitly detailed in the provided Context from Legal Database. "
             f"If the Context does not explicitly confirm that specific holding, you must hedge using this exact phrase: "
             f"\"A case of this name and citation exists in Pakistani jurisprudence on a related subject, but I cannot confirm this specific holding without further verification.\"\n"
-            f"2. Unindexed Statutes: The Companies Act 2017 is currently unindexed in the vector database. "
+            f"6. Unindexed Statutes: The Companies Act 2017 is currently unindexed in the vector database. "
             f"If you generate any section or article number for the Companies Act 2017 (or other statutes not present in the Context), "
             f"you MUST flag it by appending: \"(Note: Section number reconstructed from general knowledge, not retrieved from indexed text — confirm against the Gazette text before filing.)\"\n"
-            f"3. Complete Statutory Quotes: When citing or quoting statutory sections (such as Section 50 of the Registration Act 1908 or any other section), "
+            f"7. Complete Statutory Quotes: When citing or quoting statutory sections (such as Section 50 of the Registration Act 1908 or any other section), "
             f"you MUST include the complete section and its relevant provisos (e.g., references to Section 53-A of the Transfer of Property Act or Section 27(b) of the Specific Relief Act) "
             f"rather than quoting only the lead subsection, to ensure a complete and accurate legal representation.\n"
-            f"4. Superseded Narcotics Statutes (CNSA 1997): The Control of Narcotic Substances Act 1997 was significantly amended in 2022 and 2023, restructuring the Section 9 quantity-based sentencing thresholds. "
+            f"8. Superseded Narcotics Statutes (CNSA 1997): The Control of Narcotic Substances Act 1997 was significantly amended in 2022 and 2023, restructuring the Section 9 quantity-based sentencing thresholds. "
             f"Whenever you cite CNSA 1997 sentencing thresholds or quantities, you MUST state the 1997 limits but explicitly add: \"(Note: Sentencing thresholds and quantity tiers have changed under the 2022/2023 CNSA Amendments. Verify against the latest official Gazette text before filing.)\"\n"
-            f"5. Prohibition on External Case Citations: Do NOT introduce, invent, or reference any specific case names, citation numbers, or precedents from your own general knowledge (such as Abdul Kareem, Jurial Shah, or others) unless they are explicitly present in the provided 'Context from Legal Database'. This rule applies strictly to all follow-up responses and turns. Do not introduce new case names or citations in subsequent answers unless they are explicitly part of the retrieved context block for that turn. If you need to refer to a general legal concept or strategy, describe it conceptually without citing unverified external cases.\n"
-            f"6. Category Discipline & Contextual Relevance: The user is querying under the active category '{request.category}'. "
+            f"9. Prohibition on External Case Citations: Do NOT introduce, invent, or reference any specific case names, citation numbers, or precedents from your own general knowledge (such as Abdul Kareem, Jurial Shah, or others) unless they are explicitly present in the provided 'Context from Legal Database'. This rule applies strictly to all follow-up responses and turns. Do not introduce new case names or citations in subsequent answers unless they are explicitly part of the retrieved context block for that turn. If you need to refer to a general legal concept or strategy, describe it conceptually without citing unverified external cases.\n"
+            f"10. Category Discipline & Contextual Relevance: The user is querying under the active category '{request.category}'. "
             f"Prioritize legal principles, acts, and procedural rules relevant to this category. "
             f"If the provided database context contains cases from other legal domains (e.g., a family dispute case retrieved during a criminal query), "
             f"you must either ignore it or explicitly distinguish it in your response. Do not cite out-of-category precedents as substantive authorities "
