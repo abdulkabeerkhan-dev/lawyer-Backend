@@ -861,11 +861,20 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 
                 # Fetch full text from index first, fall back to preview if older ingest format
                 text_content = str(meta.get('text', meta.get('text_preview', '')))
-                title = str(meta.get('title', 'Untitled Case'))
+                title = str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case')
                 citation = str(meta.get('citation', 'No Citation'))
-                
+                source_url = str(meta.get('source_url', ''))
+
                 # Clean title to prevent repeated names/phrases
                 title = clean_repeated_phrases(title)
+
+                # Try to extract title from text if still untitled
+                if not title or title.strip().lower() in ("untitled case", "untitled", "none", ""):
+                    match_vs = re.search(r'\b([A-Z][A-Za-z0-9\s\.\(\)]+)\s+(?:VS|Versus|v\.)\s+([A-Z][A-Za-z0-9\s\.\(\)]+)\b', text_content[:400])
+                    if match_vs:
+                        title = clean_repeated_phrases(f"{match_vs.group(1).strip()} VS {match_vs.group(2).strip()}")
+                    else:
+                        title = citation if citation and citation != "No Citation" else "Untitled Case"
 
                 # Resolve court and apply clean-up rules
                 court_val = court
@@ -884,6 +893,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     f"Content: {text_content}"
                 )
                 
+                # Check for and append source URL to segment context for reference if available
+                if source_url:
+                    segment_text += f"\nSource URL: {source_url}"
+                
                 match_score = float(match.get("score", 0.0) if isinstance(match, dict) else getattr(match, "score", 0.0))
                 
                 # Categorize into Relevance Tiers
@@ -901,11 +914,12 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     "case_id": case_id,
                     "court": display_court,
                     "year": year,
-                    "preview": text_content[:400],
+                    "preview": text_content,
                     "title": title,
                     "citation": citation,
                     "score": match_score,
-                    "relevance": relevance_label
+                    "relevance": relevance_label,
+                    "source_url": source_url
                 })
             
         # Build structured context by relevance level to direct the AI's citation hierarchy
@@ -960,7 +974,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             f"you must either ignore it or explicitly distinguish it in your response. Do not cite out-of-category precedents as substantive authorities "
             f"unless they lay down a general procedural rule that directly applies to the matter.\n"
             f"11. Precedent Citation Hierarchy: The retrieved legal context blocks are separated by relevance: HIGH RELEVANCE (most relevant), MEDIUM RELEVANCE, and LOW RELEVANCE. "
-            f"When citing precedents to support your arguments or drafts, you MUST strictly follow this sequence: always cite the most relevant (HIGH RELEVANCE) cases first. If a legal point cannot be supported by any HIGH RELEVANCE cases, only then move/fallback to MEDIUM RELEVANCE cases. If the legal point is still not supported, only then move/fallback to LOW RELEVANCE cases. Do not reference lower relevance tiers if a higher relevance tier can support the legal point."
+            f"When citing precedents to support your arguments or drafts, you MUST strictly follow this sequence: always cite the most relevant (HIGH RELEVANCE) cases first. If a legal point cannot be supported by any HIGH RELEVANCE cases, only then move/fallback to MEDIUM RELEVANCE cases. If the legal point is still not supported, only then move/fallback to LOW RELEVANCE cases. Do not reference lower relevance tiers if a higher relevance tier can support the legal point.\n"
+            f"12. Absolute Prohibition on Consultation Disclaimers: Do NOT include any disclaimers, warnings, or notes telling the user to consult external sources (such as 'Pakistan Law Site', 'PCrLJ Volume', or other digests/sites) for complete details. Deliver your findings directly without telling the user to verify elsewhere or apologizing/disclaiming about incomplete database segments."
         )
         system_prompt += global_reliability_guard
         system_prompt += f"\n\n=== EXPLICIT ROUTING INSTRUCTION ===\nActive Mode: The AI is operating in '{mode.upper()}' mode. Adapt your writing register, style, and detail level to match this mode.\n"
