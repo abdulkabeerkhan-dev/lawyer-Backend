@@ -127,6 +127,79 @@ def clean_court_name(court_name: str) -> str:
         return "Islamabad High Court"
     return court_name.title()
 
+# Metadata Extraction Helpers
+def extract_statutes_and_sections(text: str) -> Tuple[List[str], List[str]]:
+    if not text:
+        return [], []
+    acts_map = {
+        "ppc": "PPC (Pakistan Penal Code)",
+        "crpc": "CrPC (Code of Criminal Procedure)",
+        "cnsa": "CNSA (Control of Narcotic Substances Act)",
+        "constitution": "Constitution of Pakistan",
+        "registration act": "Registration Act 1908",
+        "specific relief": "Specific Relief Act 1877",
+        "limitation act": "Limitation Act 1908",
+        "family laws": "Muslim Family Laws Ordinance 1961",
+        "companies act": "Companies Act 2017"
+    }
+    found_acts = set()
+    text_lower = text.lower()
+    for keyword, act_name in acts_map.items():
+        if keyword in text_lower:
+            found_acts.add(act_name)
+    sections = re.findall(r'\b(?:section|sec\.|s\.)\s*(\d+[A-Za-z]?)\b', text, flags=re.IGNORECASE)
+    unique_sections = list(set(sections))[:10]
+    return list(found_acts), unique_sections
+
+def extract_judges(text: str) -> List[str]:
+    if not text:
+        return []
+    judges = []
+    before_match = re.search(r'\bBefore\s+([A-Z][A-Za-z\s\.\,\&]+?)(?:\n|\b(?:JJ|J\.|Member|JJ\.)\b)', text)
+    if before_match:
+        raw_names = before_match.group(1)
+        names = re.split(r'\s*(?:and|\,|\&)\s*', raw_names)
+        for name in names:
+            cleaned_name = name.strip()
+            cleaned_name = re.sub(r'\b(?:Justice|Mr\.|Chief|Hon\'ble)\b', '', cleaned_name, flags=re.IGNORECASE)
+            cleaned_name = re.sub(r'\s+', ' ', cleaned_name).strip()
+            if len(cleaned_name) > 3 and cleaned_name.count(' ') >= 1:
+                judges.append(cleaned_name)
+    j_matches = re.findall(r'\b([A-Z][A-Za-z\s\.]+)\,\s*(?:J\.|JJ\.|CJ\.)', text)
+    for name in j_matches:
+        cleaned_name = re.sub(r'\b(?:Justice|Mr\.|Chief|Hon\'ble)\b', '', name, flags=re.IGNORECASE)
+        cleaned_name = re.sub(r'\s+', ' ', cleaned_name).strip()
+        if len(cleaned_name) > 3 and cleaned_name not in judges:
+            judges.append(cleaned_name)
+    return list(set(judges))[:5]
+
+def detect_bench(judges: List[str]) -> Tuple[str, int]:
+    count = len(judges)
+    if count == 1:
+        return "Single Bench", 1
+    elif count == 2:
+        return "Division Bench", 2
+    elif count >= 3:
+        return "Full Bench", count
+    return "Single Bench", 1
+
+def extract_outcome(text: str) -> str:
+    if not text:
+        return "Undetermined"
+    text_lower = text.lower()
+    excerpt = text_lower[:200] + " " + text_lower[-400:]
+    if any(x in excerpt for x in ("petition accepted", "appeal allowed", "suit decreed", "judgment set aside")):
+        return "Allowed / Accepted"
+    elif any(x in excerpt for x in ("acquitted", "acquittal")):
+        return "Acquitted"
+    elif any(x in excerpt for x in ("petition dismissed", "appeal dismissed", "suit dismissed", "dismissed")):
+        return "Dismissed"
+    elif any(x in excerpt for x in ("conviction maintained", "sentenced")):
+        return "Conviction Upheld"
+    elif any(x in excerpt for x in ("remanded", "case sent back")):
+        return "Remanded"
+    return "Undetermined"
+
 # Ingestion State Tracker
 def load_ingestion_state() -> Dict[str, Any]:
     if os.path.exists(STATE_FILE):
@@ -448,6 +521,12 @@ def run_ingestion(dry_run: bool = False, resume: bool = False, force_reingest: b
             title = clean_repeated_phrases(title)
             court = clean_court_name(court)
 
+            # Advanced Metadata Enrichment Extractor Calls
+            statutes, sections = extract_statutes_and_sections(main_text)
+            judges = extract_judges(main_text)
+            bench_type, bench_size = detect_bench(judges)
+            outcome = extract_outcome(main_text)
+
             # Dynamic extra fields expansion
             extra_metadata = {}
             for col, val in row.items():
@@ -478,6 +557,12 @@ def run_ingestion(dry_run: bool = False, resume: bool = False, force_reingest: b
                     "citation": citation,
                     "chunk_index": chunk_idx,
                     "dataset_category": category_name,
+                    "statutes": statutes,
+                    "sections": sections,
+                    "author_judges": judges,
+                    "bench_type": bench_type,
+                    "bench_size": bench_size,
+                    "outcome": outcome,
                     **extra_metadata
                 }
                 

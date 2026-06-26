@@ -707,7 +707,46 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 print(f"⚠️ Pinecone metadata filter warning: {filter_err}", file=sys.stderr, flush=True)
         
         if not raw_matches or not raw_matches.get("matches"):
-            raw_matches = pinecone_index.query(**pinecone_kwargs)
+            # Build dynamic metadata filters based on query keywords
+            filter_dict = {}
+            query_lower = request.query_text.lower()
+            
+            # Statutes mapping
+            statutes_to_filter = []
+            if "ppc" in query_lower:
+                statutes_to_filter.append("PPC (Pakistan Penal Code)")
+            if "crpc" in query_lower:
+                statutes_to_filter.append("CrPC (Code of Criminal Procedure)")
+            if "cnsa" in query_lower:
+                statutes_to_filter.append("CNSA (Control of Narcotic Substances Act)")
+            if "constitution" in query_lower:
+                statutes_to_filter.append("Constitution of Pakistan")
+                
+            # Sections
+            sections_found = re.findall(r'\b(?:section|sec\.|s\.)\s*(\d+[A-Za-z]?)\b', request.query_text, flags=re.IGNORECASE)
+            
+            if statutes_to_filter:
+                filter_dict["statutes"] = {"$in": statutes_to_filter}
+            if sections_found:
+                filter_dict["sections"] = {"$in": list(set(sections_found))}
+                
+            # Authoring Judge Name Extraction (e.g. Justice Athar Minallah)
+            judge_match = re.search(r'\b(?:justice|judge|mr\.)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)\b', request.query_text)
+            if judge_match:
+                j_name = judge_match.group(1).strip()
+                filter_dict["author_judges"] = {"$in": [j_name]}
+
+            # Execute query with metadata filters if any are matched
+            if filter_dict:
+                try:
+                    print(f"🔍 Performing enriched metadata query with filters: {filter_dict}", file=sys.stderr, flush=True)
+                    raw_matches = pinecone_index.query(filter=filter_dict, **pinecone_kwargs)
+                except Exception as filter_err:
+                    print(f"⚠️ Enriched Pinecone filter warning: {filter_err}", file=sys.stderr, flush=True)
+
+            # Fall back to pure semantic search if no matches found with filters (or if filters errored)
+            if not raw_matches or not raw_matches.get("matches"):
+                raw_matches = pinecone_index.query(**pinecone_kwargs)
         
         context_segments = []
         citations_payload = []
