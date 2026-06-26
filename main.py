@@ -612,7 +612,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 })
                 
                 vision_kwargs = {
-                    "model": "claude-sonnet-4-6",
+                    "model": "claude-opus-4-8",
                     "max_tokens": 200, # Very small tokens for speed
                     "messages": [
                         {
@@ -1017,7 +1017,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         main_output_tokens = 0
         if async_anthropic_client and ANTHROPIC_API_KEY:
             final_kwargs = {
-                "model": "claude-sonnet-4-6",
+                "model": "claude-opus-4-8",
                 "max_tokens": 4000,
                 "system": system_prompt,
                 "messages": [{"role": "user", "content": claude_message_content}]
