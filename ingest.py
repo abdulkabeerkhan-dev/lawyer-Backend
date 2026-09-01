@@ -47,6 +47,7 @@ from pinecone import Pinecone, PineconeException
 import voyageai
 
 from tqdm import tqdm
+from cleaner import legal_cleaner
 
 
 
@@ -1137,18 +1138,10 @@ def run_ingestion(dry_run: bool = False, resume: bool = False, force_reingest: b
 
         for idx, row in tqdm(enumerate(records), total=len(records), desc="Parsing rows", unit="row"):
 
-            main_text = str(row.get(content_col, "")).strip()
+            raw_main_text = str(row.get(content_col, "")).strip()
 
-            
-
-            # 3. Corrupted OCR Text & Ingestion Encoding Fix
-
-            # Strip mojibake, unreadable characters, and decode issues
-
-            clean_text = main_text.encode("utf-8", "ignore").decode("utf-8")
-
-            clean_text = re.sub(r'[^\x00-\x7F\u0600-\u06FF\u0100-\u024F\u2000-\u206F]+', ' ', clean_text)
-            clean_text = re.sub(r'\s+', ' ', clean_text).strip()
+            # Apply PakistaniLegalTextCleaner OCR Pipeline
+            clean_text = legal_cleaner.clean(raw_main_text)
 
             
 
