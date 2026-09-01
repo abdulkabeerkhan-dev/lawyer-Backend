@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+httpx
+sentry-sdk
+pinecone
+anthropic
+supabase
+python-dotenv
+pyjwt[crypto]
+langsmith
+voyageai
+pandas
+tiktoken
+tqdm

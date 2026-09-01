@@ -1,0 +1,110 @@
+[
+    {
+        "id": "easy-1",
+        "type": "factual",
+        "query": "What are the grounds for bail under CrPC?",
+        "expected": "Retrieve sections related to bail (Section 497/498 CrPC) and cases explaining non-bailable vs bailable offenses."
+    },
+    {
+        "id": "easy-2",
+        "type": "factual",
+        "query": "What is the limitation period for filing a civil appeal?",
+        "expected": "Mention Limitation Act, specific articles, typically 30 or 90 days depending on the court."
+    },
+    {
+        "id": "easy-3",
+        "type": "factual",
+        "query": "Can a High Court issue a writ of mandamus under Article 199?",
+        "expected": "Explain the scope of Article 199 of the Constitution regarding writs of mandamus."
+    },
+    {
+        "id": "hard-1",
+        "type": "compound",
+        "query": "Explain the powers of the High Court under Article 199 and how they differ from the Supreme Court's powers under Article 184(3), especially regarding suo motu notices.",
+        "expected": "Decompose into Article 199 powers, Article 184(3) powers, and compare suo motu jurisdiction."
+    },
+    {
+        "id": "hard-2",
+        "type": "compound",
+        "query": "Under the Legal Practitioners and Bar Councils Act, what constitutes professional misconduct, and how does the disciplinary committee process differ from regular civil litigation?",
+        "expected": "Find the Legal Practitioners Act, outline professional misconduct, and contrast disciplinary proceedings with CPC."
+    },
+    {
+        "id": "hard-3",
+        "type": "compound",
+        "query": "If an FIR is registered under Section 302 PPC and Section 7 ATA, what is the impact of a compromise between the parties on the anti-terrorism charges?",
+        "expected": "Decompose into 302 PPC (compoundable) vs 7 ATA (non-compoundable typically), showing precedent on compromise."
+    },
+    {
+        "id": "hard-4",
+        "type": "compound",
+        "query": "How did the 18th Amendment to the Constitution of Pakistan affect the appointment of judges to the superior judiciary under Article 175-A?",
+        "expected": "Must retrieve Article 175-A history, Judicial Commission vs Parliamentary Committee role post-18th Amendment."
+    },
+    {
+        "id": "fallback-1",
+        "type": "fallback",
+        "query": "How to bake a chocolate cake?",
+        "expected": "Honest fallback: Should recognize this is not a legal query and state the system only answers Pakistani legal questions."
+    },
+    {
+        "id": "fallback-2",
+        "type": "fallback",
+        "query": "What was the ruling in the US Supreme Court case Marbury v Madison?",
+        "expected": "Honest fallback: Should state the database covers Pakistani law, not US law, or explain based on general knowledge but caveat heavily."
+    },
+    {
+        "id": "fallback-3",
+        "type": "fallback",
+        "query": "Give me the specific sections of the Martian Space Mining Act 2045 regarding asteroid rights.",
+        "expected": "Honest fallback: Recognize the act does not exist and admit lack of knowledge."
+    },
+    {
+        "id": "chunk-1",
+        "type": "raw_retrieval",
+        "query": "What is the penalty for cyber terrorism under the PECA 2016?",
+        "expected": "PECA 2016 Section 10 should be in the top chunks explicitly."
+    },
+    {
+        "id": "chunk-2",
+        "type": "raw_retrieval",
+        "query": "Qisas and Diyat Ordinance provisions on Badal-i-Sulh",
+        "expected": "Should retrieve specific sections from PPC (Chapter XVI) discussing Badal-i-Sulh."
+    },
+    {
+        "id": "chunk-3",
+        "type": "raw_retrieval",
+        "query": "When is a confession before police admissible in evidence under Qanun-e-Shahadat?",
+        "expected": "Article 38 of QSO 1984 stating it's inadmissible, unless under Article 40 (discovery)."
+    },
+    {
+        "id": "chunk-4",
+        "type": "raw_retrieval",
+        "query": "Requirements for a valid hiba (gift) under Islamic law in Pakistan",
+        "expected": "Declaration, acceptance, delivery of possession should be in retrieved text."
+    },
+    {
+        "id": "chunk-5",
+        "type": "raw_retrieval",
+        "query": "Difference between Section 489-F PPC and civil liability for breach of contract",
+        "expected": "Case law establishing 489-F (dishonored cheque) requires dishonest intent, separate from mere civil breach."
+    },
+    {
+        "id": "compound-5",
+        "type": "compound",
+        "query": "What is the procedure for recording a confession under Section 164 CrPC, and how does it relate to Article 38 of the Qanun-e-Shahadat?",
+        "expected": "Retrieves both CrPC 164 and QSO 38, synthesizes the magistrate procedure vs police inadmissibility."
+    },
+    {
+        "id": "fallback-4",
+        "type": "fallback",
+        "query": "What is the penalty for using black magic under the Punjab Witchcraft Act 1899?",
+        "expected": "Recognize that there is no such act or law."
+    },
+    {
+        "id": "factual-4",
+        "type": "factual",
+        "query": "What are the rights of a divorced woman to maintenance under Muslim Family Laws Ordinance 1961?",
+        "expected": "Should pull sections regarding maintenance during Iddat and relevant case law on MFLO 1961."
+    }
+]
