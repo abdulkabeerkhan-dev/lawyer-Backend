@@ -859,19 +859,18 @@ def load_and_flatten_file(file_path: str) -> List[Dict[str, Any]]:
     records = []
 
     if ext == ".csv":
-
         try:
-
-            df = pd.read_csv(file_path).dropna(how="all")
-
-            # Convert NaN to None
-
-            df = df.where(pd.notnull(df), None)
-
-            records = df.to_dict(orient="records")
-
+            try:
+                df = pd.read_csv(file_path, on_bad_lines="skip", engine="python", encoding="utf-8-sig").dropna(how="all")
+                df = df.where(pd.notnull(df), None)
+                records = df.to_dict(orient="records")
+            except Exception:
+                import csv
+                csv.field_size_limit(10000000)
+                with open(file_path, "r", encoding="utf-8-sig", errors="ignore") as f:
+                    reader = csv.DictReader(f)
+                    records = [dict(row) for row in reader if row]
         except Exception as e:
-
             logger.error(f"Could not load CSV file {file_path}: {e}")
 
     elif ext == ".json":
