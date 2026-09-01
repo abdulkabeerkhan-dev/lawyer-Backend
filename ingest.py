@@ -142,21 +142,13 @@ STATE_FILE = os.getenv("INGESTION_STATE_FILE", "ingestion_state.json")
 # Metadata Schema Column Mapping Aliases
 
 COLUMN_ALIASES = {
-
     "case_id": ["unique_id", "case_id", "case_no", "statute_id", "section_id", "id", "serial_no", "reference_id"],
-
-    "court": ["court", "category", "jurisdiction", "authority", "bench", "court_name", "tribunal"],
-
+    "court": ["court", "category", "jurisdiction", "authority", "bench", "court_name", "tribunal", "journal"],
     "year": ["date_of_order", "decision_date", "date_of_hearing", "judgment_year", "year", "passed_year", "date", "session_year", "year_enacted", "date_issued"],
-
     "subject_matter": ["subject_matter", "legal_domain", "topic", "tags", "subject", "summary", "headnotes", "keywords"],
-
     "source_url": ["source_url", "link", "url", "source_link", "website"],
-
-    "title": ["case_title", "title", "subject_title", "topic_title"],
-
-    "citation": ["citation", "citation_no", "volume"]
-
+    "title": ["case_title", "title", "subject_title", "topic_title", "citation / title", "citation/title", "citation_title"],
+    "citation": ["citation", "citation_no", "volume", "citation / title", "citation/title", "citation_title"]
 }
 
 
@@ -1178,8 +1170,18 @@ def run_ingestion(dry_run: bool = False, resume: bool = False, force_reingest: b
 
 
             raw_id = row.get(id_col)
-            title = str(row.get(title_col, "Untitled Case")) if title_col and row.get(title_col) else "Untitled Case"
-            citation = str(row.get(citation_col, "No Citation")) if citation_col and row.get(citation_col) else "No Citation"
+            cit_title_val = str(row.get("Citation / Title") or row.get("citation / title") or row.get(title_col) or row.get(citation_col) or "").strip()
+            
+            if cit_title_val and " - " in cit_title_val:
+                parts = cit_title_val.split(" - ", 1)
+                citation = parts[0].strip()
+                title = parts[1].strip()
+            elif cit_title_val:
+                citation = cit_title_val
+                title = cit_title_val
+            else:
+                title = str(row.get(title_col, "Untitled Case")) if title_col and row.get(title_col) else "Untitled Case"
+                citation = str(row.get(citation_col, "No Citation")) if citation_col and row.get(citation_col) else "No Citation"
 
             if raw_id and not pd.isna(raw_id) and str(raw_id).lower() not in ("nan", "none", ""):
                 case_id = str(raw_id)
