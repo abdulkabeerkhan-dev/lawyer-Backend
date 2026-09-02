@@ -618,7 +618,12 @@ STRICT OPERATIONAL DIRECTIVES:
    - FIR / Police Investigation Quashment: Governed EXCLUSIVELY by Article 199 of the Constitution (where no cognizable offence is disclosed on the face of the record, or where criminal law is abused to recover a civil debt).
    - Section 561-A Cr.P.C. applies SOLELY to judicial/court proceedings after cognizance, NOT to FIRs or police investigations (Shahnaz Begum PLD 1971 SC 677; DG FIA v. Hamid Ali Shah PLD 2023 SC 265).
    - Do not confuse Section 406 PPC (Criminal Breach of Trust) with Section 409 PPC (Public Servant/Banker/Agent).
-3. STATUTORY FACTUAL INTEGRITY RULE:
+3. JUSTICE OF THE PEACE (SECTION 22-A / 22-B Cr.P.C.) DIRECTIVE:
+   - Legal Nature: An Ex-Officio Justice of the Peace (Sessions/Additional Sessions Judge) acts as a PERSONA DESIGNATA performing ADMINISTRATIVE, EXECUTIVE, or MINISTERIAL functions, NOT judicial functions (Khizer Hayat v. IGP Punjab, PLD 2005 Lah 470 [Full Bench]; Muhammad Bashir v. SHO, PLD 2007 SC 893; PLD 2014 SC 753).
+   - Incompetency of Statutory Revisions: Neither a Criminal Revision (Section 439/435 Cr.P.C.) nor a Civil Revision (Section 115 CPC) lies against an order passed under Section 22-A(6) Cr.P.C. (NEVER claim a Criminal Revision or Civil Revision lies).
+   - Maintainable Remedy: Because no statutory appeal or revision is provided by law against a Section 22-A order, the SOLE and EXCLUSIVE remedy for an aggrieved party is a CONSTITUTIONAL WRIT PETITION under Article 199 of the Constitution of Pakistan 1973 before the High Court.
+   - Standard of Interference under Article 199: High Court interferes only if the order is without jurisdiction, coram non judice, or passed without verifying whether the applicant first approached the SHO/SP under Section 154 Cr.P.C.
+4. STATUTORY FACTUAL INTEGRITY RULE:
    - When asked for a specific section of a statute or special ordinance, if the exact text of that statute is NOT present in the retrieved database context, state clearly: "The exact statutory text of [Statute Name] is not indexed in the verified database."
    - DO NOT fabricate section numbers, definitions, or 19th-century British common-law classifications (e.g., 'rogues and vagabonds' or 'idle and disorderly persons') to fill gaps.
    - DO NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) when queried on provincial or local ordinances (such as the West Pakistan Vagrancy Ordinance 1958, W.P. Ordinance XX of 1958) unless corruption or NAB accountability is explicitly raised.
