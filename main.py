@@ -517,6 +517,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             return "Sources Searched: High Courts & Supreme Court of Pakistan"
 
+        NON_JUDGMENT_MARKERS = ["annual report", "policy document", "press release", "annual review"]
+        _PAKISTANLAWSITE_RE = re.compile(r'pakistan\s*[-_]?\s*law\s*[-_]?\s*site', re.IGNORECASE)
+
         def _passes_source_filter(meta, target):
             normalized_court = clean_court_name(str(meta.get("court", "")), title=str(meta.get("title") or meta.get("case_title", "")), case_id=str(meta.get("case_id", "")))
             haystack = " ".join([normalized_court, str(meta.get("dataset_category", "")), str(meta.get("title", "")), str(meta.get("case_title", ""))]).lower()
