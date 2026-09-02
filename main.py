@@ -533,7 +533,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         CRIMINAL_NAB_MARKERS = ["olas khan", "national accountability ordinance", "banking companies"]
         
         is_commercial_or_criminal_query = any(k in query_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra"])
-        is_secp_or_corporate_query = any(k in query_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance", "12(2)", "section 12", "115 cpc", "civil revision", "42 sra", "specific relief", "fraudulent decree", "stranger"])
+        is_secp_or_corporate_query = any(k in query_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance", "12(2)", "section 12", "115 cpc", "civil revision", "42 sra", "specific relief", "fraudulent decree", "stranger", "order xxi", "order 21", "rule 97", "rule 101", "rule 103", "execution", "objection petition", "deemed decree"])
 
         seen_case_ids = set()
         filtered_matches = []
@@ -634,7 +634,11 @@ STRICT OPERATIONAL DIRECTIVES:
      (DO NOT use criminal revision terminology like 'illegal, unjust, or improper').
    - Interlocutory Discipline: Discretion exercised under Order XXXIX Rules 1 & 2 CPC cannot be disturbed in Civil Revision unless tainted by patent perversity, misreading/non-reading of material record, or jurisdictional defect (Muhammad Umar Beg v. Sultan Mahmood, PLD 1970 SC 139).
    - Conjunctive Triad: Prima facie case, balance of convenience, and irreparable loss are CONJUNCTIVE. If concurrent findings establish no prima facie case, relief is precluded; the High Court cannot grant an injunction or blanket status quo in revision without first setting aside the factual finding on grounds of material irregularity.
-6. STATUTORY FACTUAL INTEGRITY RULE:
+6. ORDER XXI RULES 97–103 CPC (EXECUTION & THIRD-PARTY OBJECTIONS) DIRECTIVE:
+   - Mandatory Inquiry: Under Order XXI Rule 97, an independent third party asserting bona fide title/possession CANNOT be summarily dispossessed by police force. The executing court must treat the objection as a lis, frame issues, and record evidence.
+   - Express Statutory Bar on Separate Suits (Rule 101): Under Order XXI Rule 101 CPC (as substituted by LRO 1972), all questions of title, right, or interest arising between the parties or third-party objectors SHALL be determined by the executing court and NOT BY A SEPARATE SUIT. An independent suit under Section 42 SRA is strictly barred.
+   - Deemed Decree & Appellate Remedy (Rule 103): Under Order XXI Rule 103 CPC (as substituted by LRO 1972), an order adjudicating an application under Rule 98, 99, or 101 HAS THE FORCE OF A DECREE and is subject to the same conditions as to appeal. It is APPEALABLE as a Regular First Appeal (RFA) under Section 96 CPC, NOT a mere revision or interlocutory order.
+7. STATUTORY FACTUAL INTEGRITY RULE:
    - When asked for a specific section of a statute or special ordinance, if the exact text of that statute is NOT present in the retrieved database context, state clearly: "The exact statutory text of [Statute Name] is not indexed in the verified database."
    - DO NOT fabricate section numbers, definitions, or 19th-century British common-law classifications (e.g., 'rogues and vagabonds' or 'idle and disorderly persons') to fill gaps.
    - DO NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) when queried on provincial or local ordinances (such as the West Pakistan Vagrancy Ordinance 1958, W.P. Ordinance XX of 1958) unless corruption or NAB accountability is explicitly raised.
