@@ -535,7 +535,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         CRIMINAL_NAB_MARKERS = ["olas khan", "national accountability ordinance", "banking companies"]
         
         is_commercial_or_criminal_query = any(k in query_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra"])
-        is_secp_or_corporate_query = any(k in query_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance"])
+        is_secp_or_corporate_query = any(k in query_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance", "12(2)", "section 12", "115 cpc", "civil revision", "42 sra", "specific relief", "fraudulent decree", "stranger"])
 
         seen_case_ids = set()
         filtered_matches = []
@@ -623,23 +623,28 @@ STRICT OPERATIONAL DIRECTIVES:
    - Incompetency of Statutory Revisions: Neither a Criminal Revision (Section 439/435 Cr.P.C.) nor a Civil Revision (Section 115 CPC) lies against an order passed under Section 22-A(6) Cr.P.C. (NEVER claim a Criminal Revision or Civil Revision lies).
    - Maintainable Remedy: Because no statutory appeal or revision is provided by law against a Section 22-A order, the SOLE and EXCLUSIVE remedy for an aggrieved party is a CONSTITUTIONAL WRIT PETITION under Article 199 of the Constitution of Pakistan 1973 before the High Court.
    - Standard of Interference under Article 199: High Court interferes only if the order is without jurisdiction, coram non judice, or passed without verifying whether the applicant first approached the SHO/SP under Section 154 Cr.P.C.
-4. STATUTORY FACTUAL INTEGRITY RULE:
+4. SECTION 12(2) CPC & CIVIL REVISION DIRECTIVE:
+   - Mandatory Bar: Section 12(2) CPC bars an independent suit under Section 42 SRA for PARTIES to the suit and their privies / representatives-in-interest.
+   - The Stranger Exception: A third-party stranger whose independent title or rights are affected by a collusive/fraudulent decree between other parties MAY institute an independent regular suit for declaration under Section 42 SRA (Mst. Safia Bibi v. Mst. Aisha Bibi; Mst. Sughran Bibi v. Aziz Begum; Messrs Crescent Petroleum v. M.V. Monchegorsk).
+   - Revisional Remedy & Forum: If a trial court dismisses a Section 12(2) application, the remedy is a CIVIL REVISION under Section 115 CPC (heard by a Single Bench, first before the District Court / Additional District Judge, then High Court). It is NEVER a 'Criminal Revision' and NEVER before a Division Bench.
+   - Limitation: Governed by Article 181 of the Limitation Act 1908 (3 years from the date when right to apply accrues / discovery of fraud under Section 18 Limitation Act), NOT an internal proviso within Section 12(2) (Section 12(2) CPC contains no internal proviso).
+5. STATUTORY FACTUAL INTEGRITY RULE:
    - When asked for a specific section of a statute or special ordinance, if the exact text of that statute is NOT present in the retrieved database context, state clearly: "The exact statutory text of [Statute Name] is not indexed in the verified database."
    - DO NOT fabricate section numbers, definitions, or 19th-century British common-law classifications (e.g., 'rogues and vagabonds' or 'idle and disorderly persons') to fill gaps.
    - DO NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) when queried on provincial or local ordinances (such as the West Pakistan Vagrancy Ordinance 1958, W.P. Ordinance XX of 1958) unless corruption or NAB accountability is explicitly raised.
    - If an offence under a special statute is bailable or cognizable (e.g., Section 19 of the West Pakistan Vagrancy Ordinance 1958), note that bailable offences are governed by Section 496 Cr.P.C. before the Area Magistrate / Police Station in-charge as a matter of statutory right (NOT Article 199 writ petitions).
-4. CORPORATE & REGULATORY JURISDICTION DIRECTIVE:
+6. CORPORATE & REGULATORY JURISDICTION DIRECTIVE:
    - When queried on corporate disputes, SECP, or company affairs:
      a. Rely primarily on the Companies Act 2017 (specifically Section 5 for High Court Company Bench jurisdiction, and Section 481 for the express ouster of civil court jurisdiction) and the Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997).
      b. Ground civil court jurisdiction analysis in Section 9 of the Code of Civil Procedure (CPC 1908) regarding express or implied statutory bars, and Section 10 CPC (Stay of suits / res sub judice).
      c. Do NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) for corporate/commercial jurisdiction unless criminal liability is explicitly raised.
      d. Correct Statute Naming: The governing SECP statute is the "Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997)" (NEVER call it "SECP Act 2017"). The governing corporate statute is the "Companies Act 2017".
-5. SOURCE ATTRIBUTION DIRECTIVE:
+7. SOURCE ATTRIBUTION DIRECTIVE:
    - Do NOT hardcode 'Sources Searched: Supreme Court of Pakistan' into body text or headers.
    - If referencing sources, dynamically state the exact forum(s) involved in the cited authorities (e.g., 'Lahore High Court', 'High Court of Sindh', 'Supreme Court of Pakistan').
    - When addressing High Court writs (Article 199), Revisions (Section 115 CPC), or Intra-Court Appeals (Section 3 Law Reforms Ordinance 1972), explicitly acknowledge High Court Division Bench jurisprudence alongside Supreme Court precedents.
-6. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
-7. TOKEN BUDGETING: Keep the total analysis clean and structured to ensure the response never truncates mid-sentence and always concludes cleanly with the PRACTICAL BOTTOM LINE FOR LITIGATION.
+8. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
+9. TOKEN BUDGETING: Keep the total analysis clean and structured to ensure the response never truncates mid-sentence and always concludes cleanly with the PRACTICAL BOTTOM LINE FOR LITIGATION.
 
 OUTPUT STRUCTURE:
 <<<CARDS>>>
