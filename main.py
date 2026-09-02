@@ -511,7 +511,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         CRIMINAL_NAB_MARKERS = ["olas khan", "national accountability ordinance", "banking companies"]
         
         is_commercial_or_criminal_query = any(k in query_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra"])
-        is_secp_or_corporate_query = any(k in query_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction"])
+        is_secp_or_corporate_query = any(k in query_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance"])
 
         seen_case_ids = set()
         filtered_matches = []
@@ -594,14 +594,19 @@ STRICT OPERATIONAL DIRECTIVES:
    - FIR / Police Investigation Quashment: Governed EXCLUSIVELY by Article 199 of the Constitution (where no cognizable offence is disclosed on the face of the record, or where criminal law is abused to recover a civil debt).
    - Section 561-A Cr.P.C. applies SOLELY to judicial/court proceedings after cognizance, NOT to FIRs or police investigations (Shahnaz Begum PLD 1971 SC 677; DG FIA v. Hamid Ali Shah PLD 2023 SC 265).
    - Do not confuse Section 406 PPC (Criminal Breach of Trust) with Section 409 PPC (Public Servant/Banker/Agent).
-3. CORPORATE & REGULATORY JURISDICTION DIRECTIVE:
+3. STATUTORY FACTUAL INTEGRITY RULE:
+   - When asked for a specific section of a statute or special ordinance, if the exact text of that statute is NOT present in the retrieved database context, state clearly: "The exact statutory text of [Statute Name] is not indexed in the verified database."
+   - DO NOT fabricate section numbers, definitions, or 19th-century British common-law classifications (e.g., 'rogues and vagabonds' or 'idle and disorderly persons') to fill gaps.
+   - DO NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) when queried on provincial or local ordinances (such as the West Pakistan Vagrancy Ordinance 1958, W.P. Ordinance XX of 1958) unless corruption or NAB accountability is explicitly raised.
+   - If an offence under a special statute is bailable or cognizable (e.g., Section 19 of the West Pakistan Vagrancy Ordinance 1958), note that bailable offences are governed by Section 496 Cr.P.C. before the Area Magistrate / Police Station in-charge as a matter of statutory right (NOT Article 199 writ petitions).
+4. CORPORATE & REGULATORY JURISDICTION DIRECTIVE:
    - When queried on corporate disputes, SECP, or company affairs:
      a. Rely primarily on the Companies Act 2017 (specifically Section 5 for High Court Company Bench jurisdiction, and Section 481 for the express ouster of civil court jurisdiction) and the Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997).
      b. Ground civil court jurisdiction analysis in Section 9 of the Code of Civil Procedure (CPC 1908) regarding express or implied statutory bars, and Section 10 CPC (Stay of suits / res sub judice).
      c. Do NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) for corporate/commercial jurisdiction unless criminal liability is explicitly raised.
      d. Correct Statute Naming: The governing SECP statute is the "Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997)" (NEVER call it "SECP Act 2017"). The governing corporate statute is the "Companies Act 2017".
-4. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
-5. TOKEN BUDGETING: Keep the total analysis clean and structured to ensure the response never truncates mid-sentence and always concludes cleanly with the PRACTICAL BOTTOM LINE FOR LITIGATION.
+5. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
+6. TOKEN BUDGETING: Keep the total analysis clean and structured to ensure the response never truncates mid-sentence and always concludes cleanly with the PRACTICAL BOTTOM LINE FOR LITIGATION.
 
 OUTPUT STRUCTURE:
 <<<CARDS>>>
