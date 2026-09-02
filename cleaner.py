@@ -25,6 +25,9 @@ class PakistaniLegalTextCleaner:
             r'(?i)downloaded\s+from\s+.*',
             r'(?i)pakistan\s*[-_]?\s*law\s*[-_]?\s*site',
             r'(?i)pls\s+citation\s+.*',
+            r'(?i)tajamul\s*\/[\s\w\*\.\|]*',
+            r'(?i)aftab\s+p\.s\s*\/[\s\w\*\.\|]*',
+            r'(?i)\(s\.b\.?\)\s*hon[\'’]?ble\s+mr\.\s+justice.*',
         ]
 
         # 3. Known OCR misreads of Pakistani legal terms & spaced abbreviations
@@ -51,6 +54,9 @@ class PakistaniLegalTextCleaner:
         text = unicodedata.normalize("NFKD", raw_text)
         text = text.replace('\r\n', '\n').replace('\r', '\n')
 
+        # Strip Urdu script blocks and non-Latin garbled OCR Mojibake
+        text = re.sub(r'[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]+', ' ', text)
+
         # 1. Remove stamps, registry markers, and banners
         for pat in self.stamp_patterns + self.banner_patterns:
             text = re.sub(pat, ' ', text)
@@ -69,6 +75,10 @@ class PakistaniLegalTextCleaner:
                 if buffer:
                     merged_lines.append(buffer)
                     buffer = ""
+                continue
+
+            # Skip party address list dumps (e.g. "12. 13. 14. Raja Sajid S/o... ID Card No...")
+            if re.search(r'(?i)\b(S\/o|D\/o|W\/o|R\/o|ID Card No\.?|P\.O\b|Tehsil|District)\b', line_str) and len(re.findall(r'\b\d+\.\b', line_str)) >= 2:
                 continue
 
             # Strip noisy edge artifacts (e.g. '| [Saye J', '[Annexure]', random symbols)
