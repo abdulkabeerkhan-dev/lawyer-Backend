@@ -618,23 +618,23 @@ You must structure your output using these exact tag blocks<<<CARDS>>>
 <<<END_CARDS>>>
 
 <<<ANSWER>>>
-Full comprehensive IRAC legal memorandum. MUST be written in the authoritative formal voice of a Senior Advocate of the Supreme Court of Pakistan (Harvey AI law-firm legal drafting standard). Avoid casual bullets; use formal numbered legal memorandum headers:
+Full comprehensive IRAC legal memorandum written in the formal, authoritative voice of a Senior Advocate of the Supreme Court of Pakistan (Harvey AI law-firm standard). You MUST include all four numbered headers exactly as written:
 
-1. EXECUTIVE SUMMARY & DIRECT LEGAL CONCLUSION
+1. EXECUTIVE SUMMARY & SHORT DIRECT ANSWER:
 (Formal concise executive holding and core legal position).
 
-2. STATUTORY MANDATE & EXACT PROVISIONS (QUOTED IN ITALICS)
-*Section 489-F PPC / Section 497 CrPC / Section 12 SRA / Article 199 verbatim text or precise legal mandate in italics here so lawyers do not need to open physical digests.*
+2. STATUTORY MANDATE & EXACT PROVISIONS (QUOTED IN ITALICS):
+*Section 9 & Section 10 of the Financial Institutions (Recovery of Finances) Ordinance 2001 / Section 489-F PPC / Section 497 CrPC / Article 199 verbatim text or precise legal mandate in italics here so lawyers do not need to open physical digests.*
 
-3. JUDICIAL PRECEDENT & CONTROLLING RATIOS
+3. STATUTORY & PRECEDENT ANALYSIS (NAME -> EXPLAIN -> APPLY):
 (Detailed judicial analysis following NAME -> EXPLAIN -> APPLY for every authority cited).
 
-4. STRATEGIC LITIGATION DIRECTIVES FOR ADVOCATES IN COURT
+4. PRACTICAL BOTTOM LINE & LITIGATION DIRECTIVES FOR ADVOCATES:
 (Numbered formal procedural strategy for court proceedings).
 <<<END_ANSWER>>>
 
 CONSTRAINTS:
-- YOU MUST include the italicized statutory block under section 2 (STATUTORY MANDATE & EXACT PROVISIONS).
+- YOU MUST include Section 2 (STATUTORY MANDATE & EXACT PROVISIONS) with the verbatim text or statutory ingredients in block italics (*...*).
 - Write in formal legal prose ("It is respectfully submitted...", "The controlling ratio established by the Supreme Court of Pakistan dictates...").
 - Provide exhaustive, book-level detail so advocates have complete statutory text and precedent facts at hand.
 - In <<<ANSWER>>>, NEVER use markdown bolding (**) or hashes (#). Use clean UPPERCASE headings and italicized statutory blocks (*...*).
