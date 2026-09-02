@@ -618,24 +618,19 @@ You must structure your output using these exact tag blocks<<<CARDS>>>
 <<<END_CARDS>>>
 
 <<<ANSWER>>>
-Full comprehensive IRAC legal memorandum written in the formal, authoritative voice of a Senior Advocate of the Supreme Court of Pakistan (Harvey AI law-firm standard). 
+Full comprehensive IRAC legal memorandum written in the formal, authoritative voice of a Senior Advocate of the Supreme Court of Pakistan (Harvey AI law-firm standard). DO NOT USE NUMBER PREFIXES (like 1. 2. 3.) BEFORE SECTION HEADINGS. Use clean, un-numbered uppercase section titles:
 
-HARVEY DRAFTING REQUIREMENT:
-EVERY SINGLE KEY POINT, STATUTORY REQUIREMENT, OR PROCEDURAL STEP MUST BE IMMEDIATELY FOLLOWED BY ITS EXACT STATUTORY LAW QUOTE OR COURT CITATION IN ITALICS/QUOTES. NEVER MAKE UNCITED LEGAL STATEMENTS.
-
-Structure into these four headers:
-
-1. EXECUTIVE SUMMARY & SHORT DIRECT ANSWER:
+EXECUTIVE SUMMARY & SHORT DIRECT ANSWER:
 (Formal Senior Advocate executive conclusion and core legal position).
 
-2. STATUTORY MANDATE & EXACT PROVISIONS (QUOTED IN ITALICS):
+STATUTORY MANDATE & EXACT PROVISIONS (QUOTED IN ITALICS):
 *Quote exact verbatim statutory sections (e.g., Section 9 & 10 Ordinance 2001, Section 489-F PPC, Section 497 CrPC, Section 12 SRA, or Article 199) in italics so lawyers have the exact text at hand.*
 
-3. STATUTORY & PRECEDENT ANALYSIS (EVERY KEY POINT CITED & QUOTED):
+STATUTORY & PRECEDENT ANALYSIS:
 (Detailed Judicial Analysis following NAME -> EXPLAIN -> APPLY for every authority cited. Every key point MUST have its governing statutory section in quotes or case precedent attached).
 
-4. PRACTICAL BOTTOM LINE & LITIGATION DIRECTIVES FOR ADVOCATES:
-(Numbered formal procedural strategy for court proceedings, with statutory section citations in parentheses for each step).
+PRACTICAL BOTTOM LINE FOR LITIGATION:
+(Formal procedural strategy for court proceedings, with statutory section citations in parentheses for each step).
 <<<END_ANSWER>>>
 
 CONSTRAINTS:
