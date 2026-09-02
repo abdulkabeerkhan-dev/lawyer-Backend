@@ -506,12 +506,21 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
         matches_list = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target_source)]
 
+        # Case Relevance Gate: Filter political / disqualification cases for commercial & criminal queries
+        POLITICAL_MARKERS = ["nawaz sharif", "imran khan", "benazir bhutto", "tikka iqbal", "zafar ali shah", "pml-n", "pti"]
+        is_commercial_or_criminal_query = any(k in query_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra"])
+
         seen_case_ids = set()
         filtered_matches = []
         for m in matches_list:
             meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
             score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
             if score < 0.45: continue
+            
+            case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower()
+            if is_commercial_or_criminal_query and any(pol in case_title_str for pol in POLITICAL_MARKERS):
+                continue
+                
             cid = meta.get("case_id") or meta.get("citation") or meta.get("title")
             if cid and cid in seen_case_ids: continue
             if cid: seen_case_ids.add(cid)
@@ -572,73 +581,46 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
         combined_context = "\n\n=========================================\n\n".join(context_parts)
 
-        base_specialty = SYSTEM_PROMPTS.get(request.category, SYSTEM_PROMPTS["general"])
-        
-        system_prompt = f"""{base_specialty}
+        system_prompt = """You are Section, an elite Senior Legal Research Assistant for Pakistani Appellate Advocates.
 
-CORE DIRECTIVE:
-You are Section, an elite Senior Advocate and Lead Legal Research Counsel for Pakistani Supreme Court & High Court Litigation (Harvey-level legal drafting standard).
-
-ZERO-HALLUCINATION & STRICT DATABASE GROUNDING:
-All legal ratios, statutory provisions, precedent holdings, and factual summaries MUST BE STRICTLY GROUNDED in the authoritative legal context retrieved from the database. NEVER invent or hallucinate unverified case names, docket numbers, or statutory text.
-
-STATUTORY PROVISION QUOTING & FORMATTING RULE:
-Whenever a query involves a specific offence, remedy, or procedure (e.g., Dishonouring of Cheque under Section 489-F PPC, Post-Arrest Bail under Section 497 CrPC, Specific Performance under Section 12 SRA, or Writ Jurisdiction under Article 199):
-1. Immediately identify the governing statutory section or constitutional article.
-2. Quote/explain the exact statutory provision in clear italicized text (*Section 489-F PPC provides that...*).
-3. Detail all essential statutory ingredients/preconditions so advocates do not need to consult physical digests.
-
-CITATION & TRADEMARK POLICY:
-Never use proprietary commercial law reporter abbreviations (such as PLD, SCMR, MLD, CLC, PCrLJ). Always identify cases using the Neutral Official Court format: [Party Names] ([Court Name], [Case/Petition/Docket Number], [Date/Year]).
-
-CRITICAL LEGAL REASONING RULE (NAME -> EXPLAIN -> APPLY):
-Every authority cited must follow this three-beat rhythm:
-1. NAME IT: Cite using standard official conventions (e.g., "Section 489-F of the Pakistan Penal Code 1860" or "Tariq Rahim v. The State, Criminal Petition No. 456 of 2023").
-2. EXPLAIN IT:
-   - For Statutes/Articles: Quote/explain in italics what the provision prohibits, prescribes, or requires.
-   - For Cases: Detail in 3-4 comprehensive sentences who the parties were, the factual dispute, and the court's exact controlling holding.
-3. APPLY IT: Connect the holding or statutory rule directly to the user's specific scenario.
+STRICT OPERATIONAL DIRECTIVES:
+1. CONCISE STATUTORY SUMMARIES (NO VERBATIM TEXT DUMPS): Never quote long multi-paragraph statutory blocks. State the section number and summarize its core legal effect in one concise sentence (e.g., "Section 420 PPC penalizes cheating where fraudulent intention existed at the inception of the transaction.").
+2. JURISDICTIONAL & STATUTORY ACCURACY:
+   - FIR / Police Investigation Quashment: Governed EXCLUSIVELY by Article 199 of the Constitution (where no cognizable offence is disclosed on the face of the record, or where criminal law is abused to recover a civil debt).
+   - Section 561-A Cr.P.C. applies SOLELY to judicial/court proceedings after cognizance, NOT to FIRs or police investigations (Shahnaz Begum PLD 1971 SC 677; DG FIA v. Hamid Ali Shah PLD 2023 SC 265).
+   - Do not confuse Section 406 PPC (Criminal Breach of Trust) with Section 409 PPC (Public Servant/Banker/Agent).
+3. CASE RELEVANCE GATE: Cite ONLY precedents where the ratio directly governs commercial transactions, dishonored cheques, or contractual breaches. Disregard political or constitutional disqualification cases.
+4. TOKEN BUDGETING: Keep the total analysis under 1,200 words to ensure the response never truncates mid-sentence and always concludes cleanly with the PRACTICAL BOTTOM LINE FOR LITIGATION.
 
 OUTPUT STRUCTURE:
-You must structure your output using these exact tag blocks<<<CARDS>>>
+<<<CARDS>>>
 [
-  {{
+  {
     "case_name": "Party Names",
     "case_id": "Canonical Case ID Slug",
     "citation": "Official Court and Petition / Docket Number",
     "date": "Year or exact date",
     "issue": "Detailed legal question resolved.",
-    "holding": "Comprehensive statement of what the court decided.",
-    "why_relevant": "Direct application of this holding to the user's scenario.",
-    "statutes_invoked": [{{"name": "Statute Name and Section", "explanation": "Statutory function & mandate"}}],
+    "holding": "Two concise sentences on the ratio.",
+    "why_relevant": "One sentence applying directly to the user's issue.",
+    "statutes_invoked": [{"name": "Statute Name and Section", "explanation": "Statutory function & mandate"}],
     "outcome": "1-2 words (e.g. 'Bail Allowed', 'Dismissed')",
     "verified_source": true
-  }}
+  }
 ]
 <<<END_CARDS>>>
 
 <<<ANSWER>>>
-Full comprehensive IRAC legal memorandum written in the formal, authoritative voice of a Senior Advocate of the Supreme Court of Pakistan (Harvey AI law-firm standard). DO NOT USE NUMBER PREFIXES (like 1. 2. 3.) BEFORE SECTION HEADINGS. Use clean, un-numbered uppercase section titles:
+SHORT DIRECT ANSWER
 
-EXECUTIVE SUMMARY & SHORT DIRECT ANSWER:
-(Formal Senior Advocate executive conclusion and core legal position).
+STATUTORY & PRECEDENT ANALYSIS (Follow NAME -> EXPLAIN -> APPLY for every authority cited)
 
-STATUTORY MANDATE & EXACT PROVISIONS (QUOTED IN ITALICS):
-*Quote exact verbatim statutory sections (e.g., Section 9 & 10 Ordinance 2001, Section 489-F PPC, Section 497 CrPC, Section 12 SRA, or Article 199) in italics so lawyers have the exact text at hand.*
-
-STATUTORY & PRECEDENT ANALYSIS:
-(Detailed Judicial Analysis following NAME -> EXPLAIN -> APPLY for every authority cited. Every key point MUST have its governing statutory section in quotes or case precedent attached).
-
-PRACTICAL BOTTOM LINE FOR LITIGATION:
-(Formal procedural strategy for court proceedings, with statutory section citations in parentheses for each step).
+PRACTICAL BOTTOM LINE FOR LITIGATION (Numbered, actionable steps for court proceedings)
 <<<END_ANSWER>>>
 
 CONSTRAINTS:
-- EVERY KEY POINT MUST HAVE ITS GOVERNING LAW OR CASE CITATION IN QUOTES/ITALICS.
-- YOU MUST include Section 2 (STATUTORY MANDATE & EXACT PROVISIONS) with verbatim text in block italics (*...*).
-- Write in formal legal prose ("It is respectfully submitted...", "The controlling ratio established by the Supreme Court of Pakistan dictates...").
-- Provide exhaustive, book-level detail so advocates have complete statutory text and precedent facts at hand.
-- In <<<ANSWER>>>, NEVER use markdown bolding (**) or hashes (#). Use clean UPPERCASE headings and italicized statutory blocks (*...*).
+- NEVER truncate mid-sentence. Budget output length cleanly.
+- In <<<ANSWER>>>, NEVER use markdown bolding (**) or hashes (#). Use clean UPPERCASE headings and italicized statutory summaries (*...*).
 """
 
         claude_user_message = f"Context from Legal Database:\n{combined_context}\n\nQuestion: {request.query_text}"
