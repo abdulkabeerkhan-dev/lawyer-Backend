@@ -783,9 +783,12 @@ async def get_full_judgment(
     # 1. Supabase check
     if supabase:
         try:
-            res = supabase.table("full_judgments").select("*").or_(
-                f"case_id.eq.{decoded_case_id},neutral_citation.eq.{decoded_case_id},case_title.eq.{decoded_case_id}"
-            ).execute()
+            res = supabase.table("full_judgments").select("*").eq("case_id", decoded_case_id).execute()
+            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
+                res = supabase.table("full_judgments").select("*").ilike("neutral_citation", f"%{decoded_case_id}%").execute()
+            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
+                res = supabase.table("full_judgments").select("*").ilike("case_title", f"%{decoded_case_id}%").execute()
+
             if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100:
                 return res.data[0]
         except Exception as e:
@@ -795,17 +798,22 @@ async def get_full_judgment(
     if pinecone_index:
         try:
             matches = []
+            dummy_vector = [0.0] * 1024
             for field in ["case_id", "citation", "title", "case_title"]:
-                chunk_matches = pinecone_index.query(
-                    namespace="judgments",
-                    filter={field: {"$eq": decoded_case_id}},
-                    top_k=100,
-                    include_metadata=True
-                )
-                m = chunk_matches.get("matches", []) if isinstance(chunk_matches, dict) else getattr(chunk_matches, "matches", []) or []
-                if m:
-                    matches = m
-                    break
+                try:
+                    chunk_matches = pinecone_index.query(
+                        namespace="judgments",
+                        vector=dummy_vector,
+                        filter={field: {"$eq": decoded_case_id}},
+                        top_k=100,
+                        include_metadata=True
+                    )
+                    m = chunk_matches.get("matches", []) if isinstance(chunk_matches, dict) else getattr(chunk_matches, "matches", []) or []
+                    if m:
+                        matches = m
+                        break
+                except Exception:
+                    pass
 
             if not matches and os.environ.get("VOYAGE_API_KEY"):
                 voyage_api_url = "https://api.voyageai.com/v1/embeddings"
