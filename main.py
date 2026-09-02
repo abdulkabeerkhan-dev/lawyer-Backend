@@ -618,13 +618,23 @@ You must structure your output using these exact tag blocks<<<CARDS>>>
 <<<END_CARDS>>>
 
 <<<ANSWER>>>
-Full comprehensive IRAC legal analysis. Structure into:
-SHORT DIRECT ANSWER: (Concise executive conclusion).
-STATUTORY & PRECEDENT ANALYSIS: (Detailed provisions in italics + NAME -> EXPLAIN -> APPLY for every authority).
-PRACTICAL BOTTOM LINE FOR LITIGATION: (Step-by-step litigation strategy for advocates).
+Full comprehensive IRAC legal analysis. MUST follow this exact section structure:
+
+SHORT DIRECT ANSWER:
+(Concise executive conclusion).
+
+STATUTORY PROVISIONS & EXACT TEXT (QUOTED IN ITALICS):
+*Section 489-F PPC / Section 497 CrPC / Section 12 SRA / Article 199 verbatim text or precise legal mandate in italics here so lawyers do not need to open physical digests.*
+
+STATUTORY & PRECEDENT ANALYSIS:
+(Follow NAME -> EXPLAIN -> APPLY for every authority cited).
+
+PRACTICAL BOTTOM LINE FOR LITIGATION:
+(Step-by-step litigation strategy for advocates in court).
 <<<END_ANSWER>>>
 
 CONSTRAINTS:
+- YOU MUST include the italicized statutory block under STATUTORY PROVISIONS & EXACT TEXT (QUOTED IN ITALICS).
 - Provide exhaustive, book-level detail so advocates have complete statutory text and precedent facts at hand.
 - In <<<ANSWER>>>, NEVER use markdown bolding (**) or hashes (#). Use clean UPPERCASE headings and italicized statutory blocks (*...*).
 """
