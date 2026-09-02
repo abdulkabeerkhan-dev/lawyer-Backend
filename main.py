@@ -508,7 +508,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
         # Case Relevance Gate: Filter political / disqualification cases for commercial & criminal queries
         POLITICAL_MARKERS = ["nawaz sharif", "imran khan", "benazir bhutto", "tikka iqbal", "zafar ali shah", "pml-n", "pti"]
+        CRIMINAL_NAB_MARKERS = ["olas khan", "national accountability ordinance", "banking companies"]
+        
         is_commercial_or_criminal_query = any(k in query_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra"])
+        is_secp_or_corporate_query = any(k in query_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction"])
 
         seen_case_ids = set()
         filtered_matches = []
@@ -520,14 +523,16 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower()
             if is_commercial_or_criminal_query and any(pol in case_title_str for pol in POLITICAL_MARKERS):
                 continue
+            if is_secp_or_corporate_query and any(cr in case_title_str for cr in CRIMINAL_NAB_MARKERS):
+                continue
                 
             cid = meta.get("case_id") or meta.get("citation") or meta.get("title")
             if cid and cid in seen_case_ids: continue
             if cid: seen_case_ids.add(cid)
             filtered_matches.append(m)
 
-        primary_matches = filtered_matches[:4]
-        secondary_matches = filtered_matches[4:8]
+        primary_matches = filtered_matches[:3]
+        secondary_matches = filtered_matches[3:6]
 
         citations_payload = []
         context_parts = []
@@ -589,8 +594,14 @@ STRICT OPERATIONAL DIRECTIVES:
    - FIR / Police Investigation Quashment: Governed EXCLUSIVELY by Article 199 of the Constitution (where no cognizable offence is disclosed on the face of the record, or where criminal law is abused to recover a civil debt).
    - Section 561-A Cr.P.C. applies SOLELY to judicial/court proceedings after cognizance, NOT to FIRs or police investigations (Shahnaz Begum PLD 1971 SC 677; DG FIA v. Hamid Ali Shah PLD 2023 SC 265).
    - Do not confuse Section 406 PPC (Criminal Breach of Trust) with Section 409 PPC (Public Servant/Banker/Agent).
-3. CASE RELEVANCE GATE: Cite ONLY precedents where the ratio directly governs commercial transactions, dishonored cheques, or contractual breaches. Disregard political or constitutional disqualification cases.
-4. TOKEN BUDGETING: Keep the total analysis under 1,200 words to ensure the response never truncates mid-sentence and always concludes cleanly with the PRACTICAL BOTTOM LINE FOR LITIGATION.
+3. CORPORATE & REGULATORY JURISDICTION DIRECTIVE:
+   - When queried on corporate disputes, SECP, or company affairs:
+     a. Rely primarily on the Companies Act 2017 (specifically Section 5 for High Court Company Bench jurisdiction, and Section 481 for the express ouster of civil court jurisdiction) and the Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997).
+     b. Ground civil court jurisdiction analysis in Section 9 of the Code of Civil Procedure (CPC 1908) regarding express or implied statutory bars, and Section 10 CPC (Stay of suits / res sub judice).
+     c. Do NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) for corporate/commercial jurisdiction unless criminal liability is explicitly raised.
+     d. Correct Statute Naming: The governing SECP statute is the "Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997)" (NEVER call it "SECP Act 2017"). The governing corporate statute is the "Companies Act 2017".
+4. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
+5. TOKEN BUDGETING: Keep the total analysis clean and structured to ensure the response never truncates mid-sentence and always concludes cleanly with the PRACTICAL BOTTOM LINE FOR LITIGATION.
 
 OUTPUT STRUCTURE:
 <<<CARDS>>>
@@ -627,7 +638,7 @@ CONSTRAINTS:
 
         final_kwargs = {
             "model": CLAUDE_MODEL,
-            "max_tokens": 4096,
+            "max_tokens": 8192,
             "system": system_prompt,
             "messages": [{"role": "user", "content": claude_user_message}]
         }
@@ -1197,7 +1208,7 @@ async def continue_query_answer(job_id: str, authenticated_user_id: str = Depend
 
     continuation_kwargs = {
         "model": CLAUDE_MODEL,
-        "max_tokens": 4096,
+        "max_tokens": 8192,
         "system": continue_state["system_prompt"],
         "messages": [
             {"role": "user", "content": continue_state["claude_message_content"]},
