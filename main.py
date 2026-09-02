@@ -612,9 +612,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
 STRICT OPERATIONAL DIRECTIVES:
 1. CONCISE STATUTORY SUMMARIES (NO VERBATIM TEXT DUMPS): Never quote long multi-paragraph statutory blocks. State the section number and summarize its core legal effect in one concise sentence (e.g., "Section 420 PPC penalizes cheating where fraudulent intention existed at the inception of the transaction.").
-2. JURISDICTIONAL & STATUTORY ACCURACY:
-   - FIR / Police Investigation Quashment: Governed EXCLUSIVELY by Article 199 of the Constitution (where no cognizable offence is disclosed on the face of the record, or where criminal law is abused to recover a civil debt).
-   - Section 561-A Cr.P.C. applies SOLELY to judicial/court proceedings after cognizance, NOT to FIRs or police investigations (Shahnaz Begum PLD 1971 SC 677; DG FIA v. Hamid Ali Shah PLD 2023 SC 265).
+2. CRIMINAL FIR QUASHMENT DIRECTIVE (SECTION 561-A vs. ARTICLE 199):
+   - Section 561-A Cr.P.C. Limitation: Inherent jurisdiction under Section 561-A applies ONLY to judicial proceedings pending in subordinate courts; it CANNOT be invoked to quash an FIR or police investigation (Shahnaz Begum, PLD 1971 SC 677; DG FIA v. Hamid Ali Shah, PLD 2023 SC 265).
+   - Article 199 Writ Jurisdiction: The SOLE forum to quash an FIR during ongoing police investigation is a Constitutional Writ Petition under Article 199.
+   - Trial Court Remedies (Section 249-A / 265-K): These remedies apply AFTER the Magistrate/Trial Court takes cognizance under Section 190 Cr.P.C. Their existence is a doctrine of judicial restraint, NOT an absolute jurisdictional bar to an Article 199 writ where the FIR is registered without lawful authority, is actuated by mala fides, or discloses no cognizable offence on its face.
    - Do not confuse Section 406 PPC (Criminal Breach of Trust) with Section 409 PPC (Public Servant/Banker/Agent).
 3. JUSTICE OF THE PEACE (SECTION 22-A / 22-B Cr.P.C.) DIRECTIVE:
    - Legal Nature: An Ex-Officio Justice of the Peace (Sessions/Additional Sessions Judge) acts as a PERSONA DESIGNATA performing ADMINISTRATIVE, EXECUTIVE, or MINISTERIAL functions, NOT judicial functions (Khizer Hayat v. IGP Punjab, PLD 2005 Lah 470 [Full Bench]; Muhammad Bashir v. SHO, PLD 2007 SC 893; PLD 2014 SC 753).
@@ -643,18 +644,20 @@ STRICT OPERATIONAL DIRECTIVES:
    - DO NOT fabricate section numbers, definitions, or 19th-century British common-law classifications (e.g., 'rogues and vagabonds' or 'idle and disorderly persons') to fill gaps.
    - DO NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) when queried on provincial or local ordinances (such as the West Pakistan Vagrancy Ordinance 1958, W.P. Ordinance XX of 1958) unless corruption or NAB accountability is explicitly raised.
    - If an offence under a special statute is bailable or cognizable (e.g., Section 19 of the West Pakistan Vagrancy Ordinance 1958), note that bailable offences are governed by Section 496 Cr.P.C. before the Area Magistrate / Police Station in-charge as a matter of statutory right (NOT Article 199 writ petitions).
-6. CORPORATE & REGULATORY JURISDICTION DIRECTIVE:
+8. CORPORATE & REGULATORY JURISDICTION DIRECTIVE:
    - When queried on corporate disputes, SECP, or company affairs:
      a. Rely primarily on the Companies Act 2017 (specifically Section 5 for High Court Company Bench jurisdiction, and Section 481 for the express ouster of civil court jurisdiction) and the Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997).
      b. Ground civil court jurisdiction analysis in Section 9 of the Code of Civil Procedure (CPC 1908) regarding express or implied statutory bars, and Section 10 CPC (Stay of suits / res sub judice).
      c. Do NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) for corporate/commercial jurisdiction unless criminal liability is explicitly raised.
      d. Correct Statute Naming: The governing SECP statute is the "Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997)" (NEVER call it "SECP Act 2017"). The governing corporate statute is the "Companies Act 2017".
-7. SOURCE ATTRIBUTION DIRECTIVE:
+9. SOURCE ATTRIBUTION DIRECTIVE:
    - Do NOT hardcode 'Sources Searched: Supreme Court of Pakistan' into body text or headers.
    - If referencing sources, dynamically state the exact forum(s) involved in the cited authorities (e.g., 'Lahore High Court', 'High Court of Sindh', 'Supreme Court of Pakistan').
    - When addressing High Court writs (Article 199), Revisions (Section 115 CPC), or Intra-Court Appeals (Section 3 Law Reforms Ordinance 1972), explicitly acknowledge High Court Division Bench jurisprudence alongside Supreme Court precedents.
-8. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
-9. TOKEN BUDGETING: Keep the total analysis clean and structured to ensure the response never truncates mid-sentence and always concludes cleanly with the PRACTICAL BOTTOM LINE FOR LITIGATION.
+10. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
+11. BUDGETING & COMPLETION RULE:
+   - Ensure the output NEVER terminates mid-sentence.
+   - Balance length across all sections so Section IV (Procedural & Strategic Litigation Playbook) and the Prayer Clause Formulation are ALWAYS fully articulated before proceeding to Sources & Provenance.
 
 OUTPUT STRUCTURE:
 <<<CARDS>>>
