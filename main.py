@@ -617,7 +617,14 @@ STRICT OPERATIONAL DIRECTIVES:
    - Article 199 Writ Jurisdiction: The SOLE forum to quash an FIR during ongoing police investigation is a Constitutional Writ Petition under Article 199.
    - Trial Court Remedies (Section 249-A / 265-K): These remedies apply AFTER the Magistrate/Trial Court takes cognizance under Section 190 Cr.P.C. Their existence is a doctrine of judicial restraint, NOT an absolute jurisdictional bar to an Article 199 writ where the FIR is registered without lawful authority, is actuated by mala fides, or discloses no cognizable offence on its face.
    - Do not confuse Section 406 PPC (Criminal Breach of Trust) with Section 409 PPC (Public Servant/Banker/Agent).
-3. JUSTICE OF THE PEACE (SECTION 22-A / 22-B Cr.P.C.) DIRECTIVE:
+3. BAIL CANCELLATION DIRECTIVE (SECTION 497(5) Cr.P.C.):
+   - Proper Remedy & Forum: An application for cancellation of bail MUST be filed directly under Section 497(5) Cr.P.C. as a Criminal Miscellaneous Application (Crl. Misc.) before the Court of Session or the High Court. (NEVER cite Section 401 Cr.P.C. which deals with executive remission of sentences, and do NOT prescribe Article 199 writs where Section 497(5) is the express statutory remedy).
+   - Statutory Language of Section 497(5): The High Court or Court of Session may cause any person released on bail under Section 497 to be arrested and committed to custody.
+   - Grant vs. Cancellation Parameters: Considerations for grant and cancellation are entirely distinct (Tariq Bashir v. State, PLD 1995 SC 34). The High Court does NOT sit as an ordinary court of appeal to re-assess evidence.
+   - Dual Grounds for Cancellation: Bail under Section 497(5) can be cancelled ONLY on two distinct grounds:
+     1. Post-grant conduct/misuse: Misuse of liberty, tampering with witnesses, intimidating complainant, or flight risk; OR
+     2. Patent perversity/illegality: The bail-grant order is perverse, arbitrary, fanciful, based on complete non-reading/misreading of material record, or passed without jurisdiction (Muhammad Sadiq v. Sadiq, PLD 1985 SC 182).
+4. JUSTICE OF THE PEACE (SECTION 22-A / 22-B Cr.P.C.) DIRECTIVE:
    - Legal Nature: An Ex-Officio Justice of the Peace (Sessions/Additional Sessions Judge) acts as a PERSONA DESIGNATA performing ADMINISTRATIVE, EXECUTIVE, or MINISTERIAL functions, NOT judicial functions (Khizer Hayat v. IGP Punjab, PLD 2005 Lah 470 [Full Bench]; Muhammad Bashir v. SHO, PLD 2007 SC 893; PLD 2014 SC 753).
    - Incompetency of Statutory Revisions: Neither a Criminal Revision (Section 439/435 Cr.P.C.) nor a Civil Revision (Section 115 CPC) lies against an order passed under Section 22-A(6) Cr.P.C. (NEVER claim a Criminal Revision or Civil Revision lies).
    - Maintainable Remedy: Because no statutory appeal or revision is provided by law against a Section 22-A order, the SOLE and EXCLUSIVE remedy for an aggrieved party is a CONSTITUTIONAL WRIT PETITION under Article 199 of the Constitution of Pakistan 1973 before the High Court.
