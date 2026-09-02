@@ -493,8 +493,29 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         raw_matches = pinecone_index.query(**pinecone_kwargs)
         matches_list = raw_matches.get("matches", []) if isinstance(raw_matches, dict) else getattr(raw_matches, "matches", []) or []
 
-        NON_JUDGMENT_MARKERS = ["annual report", "policy document", "press release", "annual review"]
-        _PAKISTANLAWSITE_RE = re.compile(r'pakistan\s*[-_]?\s*law\s*[-_]?\s*site', re.IGNORECASE)
+        def format_sources_searched(retrieved_matches: List[Dict[str, Any]]) -> str:
+            """
+            Dynamically extracts the courts represented in the retrieved vectors.
+            Prevents hardcoding 'Supreme Court of Pakistan' on High Court or provincial matters.
+            """
+            if not retrieved_matches:
+                return "Sources Searched: Superior Courts of Pakistan"
+
+            courts_found = set()
+            for match in retrieved_matches:
+                meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
+                court = meta.get("court") or meta.get("court_name")
+                title = meta.get("title") or meta.get("case_title") or ""
+                cid = meta.get("case_id") or ""
+                cleaned = clean_court_name(str(court or "Court of Record"), title=str(title), case_id=str(cid))
+                if cleaned and cleaned != "Unknown Court":
+                    courts_found.add(cleaned)
+
+            if courts_found:
+                sorted_courts = sorted(list(courts_found), reverse=True)
+                return "Sources Searched: " + ", ".join(sorted_courts)
+
+            return "Sources Searched: High Courts & Supreme Court of Pakistan"
 
         def _passes_source_filter(meta, target):
             normalized_court = clean_court_name(str(meta.get("court", "")), title=str(meta.get("title") or meta.get("case_title", "")), case_id=str(meta.get("case_id", "")))
@@ -605,8 +626,12 @@ STRICT OPERATIONAL DIRECTIVES:
      b. Ground civil court jurisdiction analysis in Section 9 of the Code of Civil Procedure (CPC 1908) regarding express or implied statutory bars, and Section 10 CPC (Stay of suits / res sub judice).
      c. Do NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) for corporate/commercial jurisdiction unless criminal liability is explicitly raised.
      d. Correct Statute Naming: The governing SECP statute is the "Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997)" (NEVER call it "SECP Act 2017"). The governing corporate statute is the "Companies Act 2017".
-5. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
-6. TOKEN BUDGETING: Keep the total analysis clean and structured to ensure the response never truncates mid-sentence and always concludes cleanly with the PRACTICAL BOTTOM LINE FOR LITIGATION.
+5. SOURCE ATTRIBUTION DIRECTIVE:
+   - Do NOT hardcode 'Sources Searched: Supreme Court of Pakistan' into body text or headers.
+   - If referencing sources, dynamically state the exact forum(s) involved in the cited authorities (e.g., 'Lahore High Court', 'High Court of Sindh', 'Supreme Court of Pakistan').
+   - When addressing High Court writs (Article 199), Revisions (Section 115 CPC), or Intra-Court Appeals (Section 3 Law Reforms Ordinance 1972), explicitly acknowledge High Court Division Bench jurisprudence alongside Supreme Court precedents.
+6. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
+7. TOKEN BUDGETING: Keep the total analysis clean and structured to ensure the response never truncates mid-sentence and always concludes cleanly with the PRACTICAL BOTTOM LINE FOR LITIGATION.
 
 OUTPUT STRUCTURE:
 <<<CARDS>>>
@@ -712,11 +737,8 @@ CONSTRAINTS:
                 add_authorities_lines.append(f"• {auth['title']} — {auth['citation']}")
             add_authorities_text = "\n".join(add_authorities_lines)
 
-        if citations_payload:
-            used_sources = sorted({str(c.get('court') or 'Supreme Court of Pakistan') for c in citations_payload})
-            display_answer = executive_answer + add_authorities_text + "\n\nSources Searched: " + ", ".join(used_sources)
-        else:
-            display_answer = executive_answer + add_authorities_text + "\n\nSources Searched: Primary Statutory Corpus"
+        dynamic_footer = format_sources_searched(primary_matches + secondary_matches)
+        display_answer = executive_answer + add_authorities_text + "\n\n" + dynamic_footer
 
         inserted_row_id = str(uuid.uuid4())
         if supabase:
