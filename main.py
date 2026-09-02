@@ -779,22 +779,36 @@ async def get_full_judgment(
     Handles URL-encoded identifiers, docket numbers with slashes, and titles.
     """
     decoded_case_id = urllib.parse.unquote(case_id).strip()
+    clean_search_id = re.sub(r'[^a-zA-Z0-9_\-\s]', ' ', decoded_case_id).strip()
     
-    # 1. Supabase check
+    # 1. Supabase Complete Judgment Search
     if supabase:
         try:
+            # Direct match
             res = supabase.table("full_judgments").select("*").eq("case_id", decoded_case_id).execute()
             if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
                 res = supabase.table("full_judgments").select("*").ilike("neutral_citation", f"%{decoded_case_id}%").execute()
             if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
                 res = supabase.table("full_judgments").select("*").ilike("case_title", f"%{decoded_case_id}%").execute()
+            
+            # Keyword/Party Name match if direct match missed
+            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
+                keywords = [w for w in clean_search_id.split() if len(w) > 3 and w.lower() not in ("versus", "state", "other", "others", "petition", "civil", "appeal")]
+                if keywords:
+                    main_kw = keywords[0]
+                    res = supabase.table("full_judgments").select("*").ilike("full_text", f"%{main_kw}%").limit(5).execute()
 
-            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100:
-                return res.data[0]
+            if res.data and len(res.data) > 0:
+                best_match = res.data[0]
+                for r in res.data:
+                    if len(r.get("full_text", "")) > len(best_match.get("full_text", "")):
+                        best_match = r
+                if len(best_match.get("full_text", "")) > 100:
+                    return best_match
         except Exception as e:
             print(f"⚠️ Supabase check notice: {e}")
 
-    # 2. Pinecone Multi-Strategy Chunk Retrieval
+    # 2. Pinecone Multi-Strategy Complete Sequence Chunk Retrieval
     if pinecone_index:
         try:
             matches = []
@@ -805,7 +819,7 @@ async def get_full_judgment(
                         namespace="judgments",
                         vector=dummy_vector,
                         filter={field: {"$eq": decoded_case_id}},
-                        top_k=100,
+                        top_k=200,
                         include_metadata=True
                     )
                     m = chunk_matches.get("matches", []) if isinstance(chunk_matches, dict) else getattr(chunk_matches, "matches", []) or []
@@ -828,17 +842,54 @@ async def get_full_judgment(
                         broad_matches = pinecone_index.query(
                             namespace="judgments",
                             vector=q_vec,
-                            top_k=40,
+                            top_k=50,
                             include_metadata=True
                         )
                         matches = broad_matches.get("matches", []) if isinstance(broad_matches, dict) else getattr(broad_matches, "matches", []) or []
 
             if matches:
+                # If matches found, find base_id and fetch complete sequence of chunks from 0 to N
+                sample_meta = matches[0].get("metadata", {}) if isinstance(matches[0], dict) else getattr(matches[0], "metadata", {}) or {}
+                canonical_base = sample_meta.get("case_id") or sample_meta.get("citation") or ""
+                
+                # Fetch all chunks for this canonical base ID
+                if canonical_base:
+                    try:
+                        base_ids = [f"{re.sub(r'[^a-zA-Z0-9_\-]', '_', canonical_base).lower()}_chunk_{i}" for i in range(100)]
+                        fetch_res = pinecone_index.fetch(ids=base_ids, namespace="judgments")
+                        fetched_vecs = fetch_res.get("vectors", {}) if isinstance(fetch_res, dict) else getattr(fetch_res, "vectors", {}) or {}
+                        if fetched_vecs:
+                            matches = list(fetched_vecs.values())
+                    except Exception:
+                        pass
+
+                # Sort by chunk_index
+                def get_chunk_idx(x):
+                    m = x.get("metadata", {}) if isinstance(x, dict) else getattr(x, "metadata", {})
+                    return m.get("chunk_index", 0)
+
+                sorted_chunks = sorted(matches, key=get_chunk_idx)
+                
                 seen_texts = set()
-                sorted_chunks = sorted(
-                    matches, 
-                    key=lambda x: (x.get("metadata", {}) if isinstance(x, dict) else getattr(x, "metadata", {})).get("chunk_index", 0)
-                )
+                full_reconstructed_parts = []
+                for c in sorted_chunks:
+                    c_meta = c.get("metadata", {}) if isinstance(c, dict) else getattr(c, "metadata", {}) or {}
+                    c_text = c_meta.get("text", "").strip()
+                    if c_text and c_text not in seen_texts:
+                        seen_texts.add(c_text)
+                        full_reconstructed_parts.append(c_text)
+                
+                if full_reconstructed_parts:
+                    first_meta = sorted_chunks[0].get("metadata", {}) if isinstance(sorted_chunks[0], dict) else getattr(sorted_chunks[0], "metadata", {}) or {}
+                    return {
+                        "case_id": decoded_case_id,
+                        "case_title": first_meta.get("title") or first_meta.get("case_title") or decoded_case_id,
+                        "neutral_citation": first_meta.get("citation") or decoded_case_id,
+                        "court": first_meta.get("court", "Supreme Court / High Court of Pakistan"),
+                        "judgment_year": first_meta.get("year", 2024),
+                        "full_text": "\n\n".join(full_reconstructed_parts),
+                        "reassembled_from_chunks": True
+                    }
                 
                 full_reconstructed_parts = []
                 for c in sorted_chunks:
