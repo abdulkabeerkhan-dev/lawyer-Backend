@@ -618,23 +618,24 @@ You must structure your output using these exact tag blocks<<<CARDS>>>
 <<<END_CARDS>>>
 
 <<<ANSWER>>>
-Full comprehensive IRAC legal analysis. MUST follow this exact section structure:
+Full comprehensive IRAC legal memorandum. MUST be written in the authoritative formal voice of a Senior Advocate of the Supreme Court of Pakistan (Harvey AI law-firm legal drafting standard). Avoid casual bullets; use formal numbered legal memorandum headers:
 
-SHORT DIRECT ANSWER:
-(Concise executive conclusion).
+1. EXECUTIVE SUMMARY & DIRECT LEGAL CONCLUSION
+(Formal concise executive holding and core legal position).
 
-STATUTORY PROVISIONS & EXACT TEXT (QUOTED IN ITALICS):
+2. STATUTORY MANDATE & EXACT PROVISIONS (QUOTED IN ITALICS)
 *Section 489-F PPC / Section 497 CrPC / Section 12 SRA / Article 199 verbatim text or precise legal mandate in italics here so lawyers do not need to open physical digests.*
 
-STATUTORY & PRECEDENT ANALYSIS:
-(Follow NAME -> EXPLAIN -> APPLY for every authority cited).
+3. JUDICIAL PRECEDENT & CONTROLLING RATIOS
+(Detailed judicial analysis following NAME -> EXPLAIN -> APPLY for every authority cited).
 
-PRACTICAL BOTTOM LINE FOR LITIGATION:
-(Step-by-step litigation strategy for advocates in court).
+4. STRATEGIC LITIGATION DIRECTIVES FOR ADVOCATES IN COURT
+(Numbered formal procedural strategy for court proceedings).
 <<<END_ANSWER>>>
 
 CONSTRAINTS:
-- YOU MUST include the italicized statutory block under STATUTORY PROVISIONS & EXACT TEXT (QUOTED IN ITALICS).
+- YOU MUST include the italicized statutory block under section 2 (STATUTORY MANDATE & EXACT PROVISIONS).
+- Write in formal legal prose ("It is respectfully submitted...", "The controlling ratio established by the Supreme Court of Pakistan dictates...").
 - Provide exhaustive, book-level detail so advocates have complete statutory text and precedent facts at hand.
 - In <<<ANSWER>>>, NEVER use markdown bolding (**) or hashes (#). Use clean UPPERCASE headings and italicized statutory blocks (*...*).
 """
