@@ -167,6 +167,7 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
 def clean_markdown_formatting(text: str) -> str:
     if not text:
         return ""
+    text = re.sub(r'\*{2}(.*?)\*{2}', r'\1', text)
     text = re.sub(r'\[Annexure.*?\]', '', text)
     return text.strip()
 
@@ -692,30 +693,30 @@ OUTPUT STRUCTURE:
 
 ### II. CONTROLLING STATUTORY ARCHITECTURE
 
-**[Statute Name & Section]**
+[Statute Name & Section]
 > *"[Verbatim exact statutory provision or precise statutory quote in italics]"*
 
-* **Legislative Intent & Doctrinal Scope:** [Explanation of legislative intent and statutory scope]
-* **Procedural Application to Instant Case:** [Direct application to the user's scenario]
+* Legislative Intent & Doctrinal Scope: [Explanation of legislative intent and statutory scope]
+* Procedural Application to Instant Case: [Direct application to the user's scenario]
 
 ---
 
 ### III. CONTROLLING JUDICIAL PRECEDENTS & APPELLATE RATIO
 
-**[Party Names] ([Citation]) — [Court Name]**
+[Party Names] ([Citation]) — [Court Name]
 > *"[Verbatim core holding or key ratio quote from judgment]"*
 
-* **Factum & Doctrinal Controversy:** [Factual dispute and controversy]
-* **Appellate Holding & Principle:** [Appellate holding and governing principle]
-* **Direct Applicability & Distinguishing Factors:** [Direct application to the instant dispute]
+* Factum & Doctrinal Controversy: [Factual dispute and controversy]
+* Appellate Holding & Principle: [Appellate holding and governing principle]
+* Direct Applicability & Distinguishing Factors: [Direct application to the instant dispute]
 
 ---
 
 ### IV. PROCEDURAL & STRATEGIC LITIGATION PLAYBOOK
 
-* **Form of Pleading & Proper Forum:** [Proper forum, bench, and pleading form]
-* **Jurisdictional Threshold & Gatekeeping:** [Threshold requirements and gatekeeping standards]
-* **Limitation & Pre-Condition for Relief:** [Limitation periods and conditional stay requirements]
+* Form of Pleading & Proper Forum: [Proper forum, bench, and pleading form]
+* Jurisdictional Threshold & Gatekeeping: [Threshold requirements and gatekeeping standards]
+* Limitation & Pre-Condition for Relief: [Limitation periods and conditional stay requirements]
 <<<END_ANSWER>>>
 
 CONSTRAINTS:
@@ -727,7 +728,7 @@ CONSTRAINTS:
   `### III. CONTROLLING JUDICIAL PRECEDENTS & APPELLATE RATIO`
   `---`
   `### IV. PROCEDURAL & STRATEGIC LITIGATION PLAYBOOK`
-- Ensure every section includes the exact bold headers (`**...**`), blockquotes (`> *"..."*`), and bullet points (`* **...**`) shown in the template.
+- ABSOLUTELY NO DOUBLE ASTERISKS (**): NEVER use ** (markdown bold asterisks) anywhere in your answer text. Write titles, headings, and bullet prefixes cleanly without **.
 - NEVER truncate mid-sentence. Budget output length cleanly.
 """
 
