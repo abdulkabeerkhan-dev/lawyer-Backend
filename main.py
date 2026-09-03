@@ -529,11 +529,40 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
         matches_list = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target_source)]
 
-        # Case Relevance Gate: Filter political / disqualification cases for commercial & criminal queries
-        POLITICAL_MARKERS = ["nawaz sharif", "imran khan", "benazir bhutto", "tikka iqbal", "zafar ali shah", "pml-n", "pti"]
+        def is_garbled_text(text: str) -> bool:
+            if not text or len(text.strip()) < 10:
+                return True
+            if '\ufffd' in text or '\x00' in text:
+                return True
+            if re.search(r'\b[A-Za-z$%\\]{2,}\d+[A-Za-z$%\\]{2,}\b', text) or re.search(r'\b\d+[A-Z]{5,}\b', text):
+                return True
+            words = [re.sub(r'[^a-zA-Z0-9]', '', w) for w in text.split() if w.strip()]
+            if not words:
+                return True
+            garbled_count = 0
+            for w in words:
+                if len(w) > 4 and sum(1 for c in w if c.isdigit()) >= 1 and sum(1 for c in w if c.isalpha()) >= 3:
+                    garbled_count += 1
+            if len(words) > 3 and (garbled_count / len(words)) > 0.1:
+                return True
+            if len(words) >= 8:
+                valid_shorts = {
+                    "a", "an", "the", "and", "or", "in", "on", "at", "to", "for", "of", "off", "by", "is", "it", 
+                    "be", "as", "no", "not", "has", "had", "was", "per", "vs", "v", "sub", "art", "sec", "pld", 
+                    "clc", "ylr", "mld", "ptd", "plc", "cld", "sc", "hc", "lhc", "shc", "phc", "bhc", "ihc", "rs", "nos",
+                    "if", "do", "we", "he", "she", "me", "my", "us", "so", "up", "out", "our", "its", "may", "can", "law",
+                    "act", "set", "out", "due", "any", "all", "few", "two", "one", "three", "four", "five", "six", "day"
+                }
+                unknown_shorts = [w for w in words if 1 <= len(w) <= 3 and w.lower() not in valid_shorts and not w.isdigit()]
+                if len(unknown_shorts) / len(words) > 0.3:
+                    return True
+            return False
+
+        # Case Relevance Gate: Filter political / disqualification / bar council cases for commercial & criminal queries
+        POLITICAL_MARKERS = ["nawaz sharif", "imran khan", "benazir bhutto", "tikka iqbal", "zafar ali shah", "pml-n", "pti", "pakistan bar council", "bar council", "disqualification", "election petition"]
         CRIMINAL_NAB_MARKERS = ["olas khan", "national accountability ordinance", "banking companies"]
         
-        is_commercial_or_criminal_query = any(k in query_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra"])
+        is_commercial_or_criminal_query = any(k in query_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra", "banking", "recovery", "fio 2001", "leave to defend", "security deposit"])
         is_secp_or_corporate_query = any(k in query_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance", "12(2)", "section 12", "115 cpc", "civil revision", "42 sra", "specific relief", "fraudulent decree", "stranger", "order xxi", "order 21", "rule 97", "rule 101", "rule 103", "execution", "objection petition", "deemed decree"])
 
         seen_case_ids = set()
@@ -542,9 +571,13 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
             score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
             if score < 0.45: continue
+
+            text_content = str(meta.get("text") or meta.get("text_preview") or "").strip()
+            if is_garbled_text(text_content):
+                continue
             
             case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower()
-            if is_commercial_or_criminal_query and any(pol in case_title_str for pol in POLITICAL_MARKERS):
+            if (is_commercial_or_criminal_query or is_secp_or_corporate_query) and any(pol in case_title_str for pol in POLITICAL_MARKERS):
                 continue
             if is_secp_or_corporate_query and any(cr in case_title_str for cr in CRIMINAL_NAB_MARKERS):
                 continue
