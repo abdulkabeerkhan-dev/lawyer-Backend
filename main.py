@@ -764,9 +764,7 @@ OUTPUT STRUCTURE:
 <<<END_ANSWER>>>
 
 CONSTRAINTS:
-- ABSOLUTELY NO DOUBLE ASTERISKS (**): DO NOT write double asterisks (**) anywhere in the response text under any circumstances. All titles, statute names, and bullet headers MUST be written as plain text without any ** asterisks.
-- Follow the NAME -> EXPLAIN -> APPLY legal reasoning structure for every statutory provision and judicial precedent.
-- YOU MUST FOLLOW THIS EXACT 4-PART FORMAT FOR EVERY SINGLE RESPONSE:
+- MANDATORY 4-PART FORMAT: YOU MUST FOLLOW THIS EXACT 4-PART FORMAT FOR EVERY SINGLE RESPONSE NO MATTER WHAT:
   `### I. EXECUTIVE SUMMARY & LEGAL OPINION`
   `---`
   `### II. CONTROLLING STATUTORY ARCHITECTURE`
@@ -774,6 +772,10 @@ CONSTRAINTS:
   `### III. CONTROLLING JUDICIAL PRECEDENTS & APPELLATE RATIO`
   `---`
   `### IV. PROCEDURAL & STRATEGIC LITIGATION PLAYBOOK`
+- NEVER write custom section titles like "### BANK ACCOUNT FREEZE/BLOCK JURISPRUDENCE".
+- NEVER state "I cannot synthesize case law" or "I must advise that the database context does not contain reported judgments". Formulate a complete Senior Advocate legal opinion using Section 550 Cr.P.C., Section 516-A/523 Cr.P.C., AMLA 2010, NAO 1999, and Article 199 writ jurisdiction authoritatively inside the 4-part legal opinion layout.
+- ABSOLUTELY NO DOUBLE ASTERISKS (**): DO NOT write double asterisks (**) anywhere in the response text under any circumstances. All titles, statute names, and bullet headers MUST be written as plain text without any ** asterisks.
+- Follow the NAME -> EXPLAIN -> APPLY legal reasoning structure for every statutory provision and judicial precedent.
 - NEVER truncate mid-sentence. Budget output length cleanly.
 """
 
@@ -817,13 +819,17 @@ CONSTRAINTS:
             executive_answer = re.sub(r'<<<CARDS>>>.*?<<<END_CARDS>>>', '', raw_model_output, flags=re.DOTALL)
             executive_answer = executive_answer.replace('<<<ANSWER>>>', '').replace('<<<END_ANSWER>>>', '').strip()
 
-        executive_answer = clean_markdown_formatting(executive_answer)
+        def strip_control_characters(text: str) -> str:
+            if not text:
+                return ""
+            text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\ufffd]', ' ', str(text))
+            return re.sub(r'\s+', ' ', text).strip()
 
         def sanitize_holding_text(text: str) -> str:
             if not text:
                 return "Legal principle extracted from judgment record."
-            clean_t = re.sub(r'^\s*[\d\,\s\-\.\;\/\\]{5,}', '', str(text)).strip()
-            clean_t = re.sub(r'\s+', ' ', clean_t)
+            clean_t = strip_control_characters(text)
+            clean_t = re.sub(r'^\s*[\d\,\s\-\.\;\/\\]{5,}', '', clean_t).strip()
             if not clean_t or len(clean_t) < 15:
                 return "Legal principle extracted from judgment record."
             digits_and_commas = len(re.findall(r'[\d\,\s]', clean_t))
@@ -833,7 +839,7 @@ CONSTRAINTS:
 
         for idx, card in enumerate(precedent_cards):
             if idx < len(citations_payload):
-                card["raw_judgment_text"] = citations_payload[idx].get("preview", "")
+                card["raw_judgment_text"] = strip_control_characters(citations_payload[idx].get("preview", ""))
                 card["citation"] = citations_payload[idx].get("citation", card.get("citation"))
                 card["case_id"] = citations_payload[idx].get("case_id")
             card["holding"] = sanitize_holding_text(card.get("holding", ""))
@@ -851,7 +857,7 @@ CONSTRAINTS:
                     "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in c.get("statutes", [])],
                     "outcome": c.get("outcome", "Undetermined"),
                     "verified_source": True,
-                    "raw_judgment_text": c.get("preview", "")
+                    "raw_judgment_text": strip_control_characters(c.get("preview", ""))
                 }
                 for c in citations_payload
             ]
