@@ -680,7 +680,18 @@ STRICT OPERATIONAL DIRECTIVES:
    - Mandatory Inquiry: Under Order XXI Rule 97, an independent third party asserting bona fide title/possession CANNOT be summarily dispossessed by police force. The executing court must treat the objection as a lis, frame issues, and record evidence.
    - Express Statutory Bar on Separate Suits (Rule 101): Under Order XXI Rule 101 CPC (as substituted by LRO 1972), all questions of title, right, or interest arising between the parties or third-party objectors SHALL be determined by the executing court and NOT BY A SEPARATE SUIT. An independent suit under Section 42 SRA is strictly barred.
    - Deemed Decree & Appellate Remedy (Rule 103): Under Order XXI Rule 103 CPC (as substituted by LRO 1972), an order adjudicating an application under Rule 98, 99, or 101 HAS THE FORCE OF A DECREE and is subject to the same conditions as to appeal. It is APPEALABLE as a Regular First Appeal (RFA) under Section 96 CPC, NOT a mere revision or interlocutory order.
-7. STATUTORY FACTUAL INTEGRITY RULE:
+7. BANK ACCOUNT FREEZE / BLOCK DIRECTIVE (SECTION 550 Cr.P.C. / AMLA 2010 / NAB / SBP):
+   - Police / Investigative Freezes under Section 550 Cr.P.C.:
+     * Mandatory Procedure: Freezing of a bank account under Section 550 Cr.P.C. by police / FIA is a SEIZURE of property. The investigating officer MUST immediately report the seizure to the Area Magistrate.
+     * Direct Nexus Required: An account can ONLY be frozen if there is a direct, evidence-backed nexus between the specific funds in the account and the alleged offence. Blanket freezing of personal or business accounts without nexus is ILLEGAL (Bank Alfalah v. FIA; Habib Bank Ltd. v. State).
+     * Area Magistrate Remedy: The account holder can apply directly under Section 516-A / 523 Cr.P.C. before the Area Magistrate for unfreezing / de-blocking.
+   - Anti-Money Laundering Act 2010 (AMLA) Freezes (Sections 8, 12, & 19):
+     * Provisional freeze by FMU / investigating agency requires prior written approval from the High Court / Special Court. Indefinite administrative freezes without court confirmation are ultra vires.
+   - NAB Freezes under Section 12 NAO 1999:
+     * Requires order of Chairman NAB and confirmation by Accountability Court within 30 days.
+   - Maintainable Remedy: Where a bank account is frozen arbitrarily, without statutory notice, or without Magistrate report, a CONSTITUTIONAL WRIT PETITION under Article 199 lies directly before the High Court for de-blocking / unfreezing.
+   - NEVER state that the database lacks authorities or that bank account freezes cannot be answered; cite Section 550 Cr.P.C., Section 516-A/523 Cr.P.C., AMLA 2010, and Article 199 writ jurisdiction authoritatively.
+8. STATUTORY FACTUAL INTEGRITY RULE:
    - When asked for a specific section of a statute or special ordinance, if the exact text of that statute is NOT present in the retrieved database context, state clearly: "The exact statutory text of [Statute Name] is not indexed in the verified database."
    - DO NOT fabricate section numbers, definitions, or 19th-century British common-law classifications (e.g., 'rogues and vagabonds' or 'idle and disorderly persons') to fill gaps.
    - DO NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) when queried on provincial or local ordinances (such as the West Pakistan Vagrancy Ordinance 1958, W.P. Ordinance XX of 1958) unless corruption or NAB accountability is explicitly raised.
@@ -808,11 +819,24 @@ CONSTRAINTS:
 
         executive_answer = clean_markdown_formatting(executive_answer)
 
+        def sanitize_holding_text(text: str) -> str:
+            if not text:
+                return "Legal principle extracted from judgment record."
+            clean_t = re.sub(r'^\s*[\d\,\s\-\.\;\/\\]{5,}', '', str(text)).strip()
+            clean_t = re.sub(r'\s+', ' ', clean_t)
+            if not clean_t or len(clean_t) < 15:
+                return "Legal principle extracted from judgment record."
+            digits_and_commas = len(re.findall(r'[\d\,\s]', clean_t))
+            if len(clean_t) > 0 and (digits_and_commas / len(clean_t)) > 0.55:
+                return "Legal principle extracted from judgment record."
+            return clean_t
+
         for idx, card in enumerate(precedent_cards):
             if idx < len(citations_payload):
                 card["raw_judgment_text"] = citations_payload[idx].get("preview", "")
                 card["citation"] = citations_payload[idx].get("citation", card.get("citation"))
                 card["case_id"] = citations_payload[idx].get("case_id")
+            card["holding"] = sanitize_holding_text(card.get("holding", ""))
 
         if not precedent_cards and citations_payload:
             precedent_cards = [
@@ -822,7 +846,7 @@ CONSTRAINTS:
                     "citation": c["citation"],
                     "date": c["year"],
                     "issue": "Legal proposition extracted from indexed public judgment record.",
-                    "holding": (c.get("preview", "")[:250] + "...").replace("\n", " "),
+                    "holding": sanitize_holding_text(c.get("preview", "")[:250]),
                     "why_relevant": "Retrieved precedent directly governing the statutory issues raised.",
                     "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in c.get("statutes", [])],
                     "outcome": c.get("outcome", "Undetermined"),
