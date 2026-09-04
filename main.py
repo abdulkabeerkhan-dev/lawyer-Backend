@@ -171,6 +171,24 @@ def clean_markdown_formatting(text: str) -> str:
     text = re.sub(r'\[Annexure.*?\]', '', text)
     return text.strip()
 
+def strip_control_characters(text: str) -> str:
+    if not text:
+        return ""
+    text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\ufffd]', ' ', str(text))
+    return re.sub(r'\s+', ' ', text).strip()
+
+def sanitize_holding_text(text: str) -> str:
+    if not text:
+        return "Legal principle extracted from judgment record."
+    clean_t = strip_control_characters(text)
+    clean_t = re.sub(r'^\s*[\d\,\s\-\.\;\/\\]{5,}', '', clean_t).strip()
+    if not clean_t or len(clean_t) < 15:
+        return "Legal principle extracted from judgment record."
+    digits_and_commas = len(re.findall(r'[\d\,\s]', clean_t))
+    if len(clean_t) > 0 and (digits_and_commas / len(clean_t)) > 0.55:
+        return "Legal principle extracted from judgment record."
+    return clean_t
+
 # AUTHENTICATION HOOKS
 async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_agent)) -> str:
     global _clerk_jwks_keys_cache
@@ -817,25 +835,7 @@ CONSTRAINTS:
             executive_answer = answer_match.group(1).strip()
         else:
             executive_answer = re.sub(r'<<<CARDS>>>.*?<<<END_CARDS>>>', '', raw_model_output, flags=re.DOTALL)
-            executive_answer = executive_answer.replace('<<<ANSWER>>>', '').replace('<<<END_ANSWER>>>', '').strip()
-
-        def strip_control_characters(text: str) -> str:
-            if not text:
-                return ""
-            text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\ufffd]', ' ', str(text))
-            return re.sub(r'\s+', ' ', text).strip()
-
-        def sanitize_holding_text(text: str) -> str:
-            if not text:
-                return "Legal principle extracted from judgment record."
-            clean_t = strip_control_characters(text)
-            clean_t = re.sub(r'^\s*[\d\,\s\-\.\;\/\\]{5,}', '', clean_t).strip()
-            if not clean_t or len(clean_t) < 15:
-                return "Legal principle extracted from judgment record."
-            digits_and_commas = len(re.findall(r'[\d\,\s]', clean_t))
-            if len(clean_t) > 0 and (digits_and_commas / len(clean_t)) > 0.55:
-                return "Legal principle extracted from judgment record."
-            return clean_t
+        executive_answer = clean_markdown_formatting(executive_answer)
 
         for idx, card in enumerate(precedent_cards):
             if idx < len(citations_payload):
