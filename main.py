@@ -181,11 +181,14 @@ def sanitize_holding_text(text: str) -> str:
     if not text:
         return "Legal principle extracted from judgment record."
     clean_t = strip_control_characters(text)
+    cit_matches = len(re.findall(r'\b(PLD|SCMR|MLD|CLC|PCRLJ|PTD|PLC|CLD|YLR)\s+\d{4}\b', clean_t, re.IGNORECASE))
+    if cit_matches >= 2 and len(clean_t) < 400:
+        return "Legal principle extracted from judgment record."
     clean_t = re.sub(r'^\s*[\d\,\s\-\.\;\/\\]{5,}', '', clean_t).strip()
     if not clean_t or len(clean_t) < 15:
         return "Legal principle extracted from judgment record."
     digits_and_commas = len(re.findall(r'[\d\,\s]', clean_t))
-    if len(clean_t) > 0 and (digits_and_commas / len(clean_t)) > 0.55:
+    if len(clean_t) > 0 and (digits_and_commas / len(clean_t)) > 0.4:
         return "Legal principle extracted from judgment record."
     return clean_t
 
@@ -547,6 +550,24 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
         matches_list = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target_source)]
 
+        def is_junk_citation_dump(text: str) -> bool:
+            if not text or len(text.strip()) < 15:
+                return True
+            t = strip_control_characters(text)
+            cit_matches = len(re.findall(r'\b(PLD|SCMR|MLD|CLC|PCRLJ|PTD|PLC|CLD|YLR)\s+\d{4}\b', t, re.IGNORECASE))
+            if cit_matches >= 2 and len(t) < 400:
+                return True
+            num_tokens = len(re.findall(r'\b\d+\b', t))
+            total_tokens = len(t.split())
+            if total_tokens > 0 and (num_tokens / total_tokens) > 0.25:
+                return True
+            narrative_words = {"held", "observed", "court", "petitioner", "respondent", "appellant", "judgment", "order", "section", "article", "rule", "dismissed", "allowed", "found", "per"}
+            words = [w.lower() for w in t.split()]
+            narrative_count = sum(1 for w in words if w in narrative_words)
+            if total_tokens >= 10 and narrative_count == 0 and cit_matches >= 1:
+                return True
+            return False
+
         def is_garbled_text(text: str) -> bool:
             if not text or len(text.strip()) < 10:
                 return True
@@ -590,8 +611,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
             if score < 0.45: continue
 
-            text_content = str(meta.get("text") or meta.get("text_preview") or "").strip()
-            if is_garbled_text(text_content):
+            text_content = strip_control_characters(str(meta.get("text") or meta.get("text_preview") or ""))
+            if is_garbled_text(text_content) or is_junk_citation_dump(text_content):
                 continue
             
             case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower()
