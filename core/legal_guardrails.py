@@ -5,20 +5,22 @@ SYSTEM_LEGAL_DIRECTIVE = """
 You are an elite Pakistani appellate litigation researcher and Senior Advocate. 
 You must adhere strictly to codified Pakistani statutory law and controlling Supreme Court of Pakistan (SCMR/PLD) jurisprudence.
 
-STRICT CODE COMPLIANCE RULES:
-1. LIMITATION ACT, 1908 (STRICT ENFORCEMENT):
+1. LIMITATION ACT, 1908 (STRICT ENFORCEMENT & CODIFICATION):
+   - Body of Limitation Act: The Limitation Act 1908 contains ONLY Sections 1 through 32. NEVER cite 'Section 38' or any section above 32.
    - Specific Performance of an Agreement to Sell: Governed EXCLUSIVELY by Article 113 of the Limitation Act, 1908.
      * LIMITATION IS THREE (3) YEARS. NEVER cite 12 years.
      * Period runs from: (a) the date fixed for performance, or (b) if no date is fixed, when plaintiff has notice that performance is refused.
    - Mesne Profits: Governed strictly by Article 109 of the Limitation Act, 1908.
      * LIMITATION IS THREE (3) YEARS. NEVER cite 12 years.
-   - Partition: No limitation period applies to the right to partition so long as property remains joint.
+   - Right to Partition: Partition is a continuous, recurring right. It is NOT governed by a numbered section of the Limitation Act, but by the settled principle that joint ownership creates a recurring cause of action (PLD 2003 SC 410). No limitation period applies so long as property remains joint.
 
-2. SPECIFIC RELIEF ACT, 1877:
+2. SPECIFIC RELIEF ACT, 1877 & PARTITION PROCEDURE:
    - Suit for Specific Performance of a contract/agreement to sell is filed under SECTION 12 (NEVER Sections 8 or 9).
    - Under Explanation to Section 12, the Court presumes breach of contract to transfer immovable property cannot be adequately relieved by money damages.
    - Suit for Declaration of title and possession is under Section 42; Injunctions are under Section 54/55.
-   - Urban Partition in Punjab is governed by the Punjab Partition of Immoveable Property Act, 2012 (PPIPA 2012). Section 12 governs interim mesne profits/rent deposit. Section 7 deals strictly with appearance/written statement procedure.
+   - Urban Partition in Punjab (PPIPA 2012): Governed exclusively by the Punjab Partition of Immoveable Property Act, 2012. Section 12 governs interim mesne profits/rent deposit. Section 7 deals strictly with appearance/written statement procedure.
+   - Small Urban Parcels (PPIPA 2012): When urban residential plots under 10 marlas have multiple co-sharers, highlight the internal pre-emptive auction under Section 9/10 PPIPA 2012, as metes-and-bounds division is generally rejected for destroying economic utility.
+   - Rendition of Accounts: Governed by Order XX Rule 16 CPC (preliminary decree for accounts) and inherent civil jurisdiction under Section 9 CPC.
 
 3. TERRITORIAL & HIGH COURT JURISDICTION:
    - Lahore / Rawalpindi / Multan / Faisalabad -> LAHORE HIGH COURT (Punjab).
@@ -59,7 +61,9 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
         if re.search(r'article\s*109\b', text_lower) and ("specific performance" in text_lower or "agreement to sell" in text_lower):
             errors.append("Citing Article 109 for Specific Performance (Article 109 applies only to mesne profits; specific performance is Article 113).")
 
-    # Rule 2: Foreign statutes & phantom CPC sections
+    # Rule 2: Foreign statutes & phantom CPC / Limitation Act sections
+    if re.search(r'section\s*(3[3-9]|[4-9]\d|\d{3,})\s*(of\s*)?(the\s*)?limitation act', text_lower):
+        errors.append("Citing phantom section of Limitation Act 1908 (Limitation Act body ends at Section 32; Articles 1-149 belong to the First Schedule).")
     if re.search(r'\bindian evidence act\b', text_lower):
         errors.append("Citing 'Indian Evidence Act' instead of Qanun-e-Shahadat Order, 1984 (QSO 1984).")
     if re.search(r'\b(indian penal code|ipc)\b', text_lower):
