@@ -1223,7 +1223,8 @@ async def handle_backend_login(payload: LoginPayload):
 
 @app.post("/users/sync")
 async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_id: str = Depends(verify_clerk_session)):
-    if not supabase: raise HTTPException(status_code=503, detail="Database service is currently offline.")
+    if not supabase: 
+        return {"status": "offline", "user": {"id": authenticated_user_id, "email": payload.email, "full_name": payload.full_name, "role": "associate"}}
     try:
         profile_query = supabase.table("users").select("*").eq("id", authenticated_user_id).execute()
         if profile_query.data and len(profile_query.data) > 0:
@@ -1233,51 +1234,47 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
                     "full_name": payload.full_name,
                     "email": payload.email
                 }).eq("id", authenticated_user_id).execute()
-                return {"status": "updated", "user": updated_profile.data[0]}
+                res_data = updated_profile.data[0] if (updated_profile.data and len(updated_profile.data) > 0) else existing_user
+                return {"status": "updated", "user": res_data}
             return {"status": "exists", "user": existing_user}
             
         email_query = supabase.table("users").select("*").eq("email", payload.email).execute()
         if email_query.data and len(email_query.data) > 0:
             legacy_user = email_query.data[0]
-            if isinstance(legacy_user, dict):
-                legacy_id = legacy_user.get("id")
-                legacy_role = legacy_user.get("role", "associate")
-                if legacy_id and legacy_id != authenticated_user_id:
-                    temp_email = f"legacy-{legacy_id}-{payload.email}"
-                    supabase.table("users").update({"email": temp_email}).eq("id", legacy_id).execute()
-                    inserted_profile = supabase.table("users").insert({
-                        "id": authenticated_user_id,
-                        "email": payload.email,
-                        "full_name": payload.full_name,
-                        "role": legacy_role
-                    }).execute()
-                    try:
-                        supabase.table("queries").update({"user_id": authenticated_user_id}).eq("user_id", legacy_id).execute()
-                        supabase.table("feedback").update({"user_id": authenticated_user_id}).eq("user_id", legacy_id).execute()
-                        supabase.table("users").delete().eq("id", legacy_id).execute()
-                    except Exception:
-                        pass
-                    return {"status": "updated", "user": inserted_profile.data[0]}
+            legacy_role = legacy_user.get("role", "associate")
+            try:
+                upd = supabase.table("users").update({
+                    "id": authenticated_user_id,
+                    "full_name": payload.full_name,
+                    "role": legacy_role
+                }).eq("email", payload.email).execute()
+                if upd.data and len(upd.data) > 0:
+                    return {"status": "updated", "user": upd.data[0]}
+            except Exception:
+                pass
 
-        access_check = supabase.table("access_requests").select("status").eq("email", payload.email).execute()
         assigned_role = "associate"
-        if access_check.data and len(access_check.data) > 0:
-            status_val = access_check.data[0].get("status")
-            if status_val == "admin_approved":
-                assigned_role = "admin"
-            elif status_val in ("approved", "associate_approved"):
-                assigned_role = "associate"
+        try:
+            access_check = supabase.table("access_requests").select("status").eq("email", payload.email).execute()
+            if access_check.data and len(access_check.data) > 0:
+                status_val = access_check.data[0].get("status")
+                if status_val == "admin_approved":
+                    assigned_role = "admin"
+        except Exception:
+            pass
 
-        inserted_profile = supabase.table("users").insert({
+        new_row = {
             "id": authenticated_user_id,
             "email": payload.email,
             "full_name": payload.full_name,
             "role": assigned_role
-        }).execute()
-        return {"status": "created", "user": inserted_profile.data[0]}
+        }
+        inserted_profile = supabase.table("users").upsert(new_row).execute()
+        user_res = inserted_profile.data[0] if (inserted_profile.data and len(inserted_profile.data) > 0) else new_row
+        return {"status": "created", "user": user_res}
     except Exception as e:
-        if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"⚠️ User sync notice: {e}", file=sys.stderr)
+        return {"status": "fallback", "user": {"id": authenticated_user_id, "email": payload.email, "full_name": payload.full_name, "role": "associate"}}
 
 @app.get("/users/quota")
 async def get_user_quota_status(authenticated_user_id: str = Depends(verify_clerk_session)):
