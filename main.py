@@ -796,12 +796,22 @@ STRICT OPERATIONAL DIRECTIVES:
      b. Ground civil court jurisdiction analysis in Section 9 of the Code of Civil Procedure (CPC 1908) regarding express or implied statutory bars, and Section 10 CPC (Stay of suits / res sub judice).
      c. Do NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) for corporate/commercial jurisdiction unless criminal liability is explicitly raised.
      d. Correct Statute Naming: The governing SECP statute is the "Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997)" (NEVER call it "SECP Act 2017"). The governing corporate statute is the "Companies Act 2017".
-9. SOURCE ATTRIBUTION DIRECTIVE:
+10. PUNJAB PARTITION & PROPERTY DIRECTIVE (PPIPA 2012 & CPC):
+   - Urban Partition in Punjab: Partition of urban immovable property in Punjab is governed exclusively by the Punjab Partition of Immoveable Property Act, 2012 (PPIPA 2012). NEVER cite Sections 8 or 9 of the Specific Relief Act 1877 for partition.
+   - Interim Relief & Mesne Profits: Under Section 12 of PPIPA 2012, the court can determine and direct payment/deposit of interim mesne profits/rent by the co-sharer in possession. Section 7 of PPIPA 2012 deals strictly with appearance/written statement procedure.
+   - Commission for Partition: A local commission for partition/demarcation is appointed under Order XXVI Rule 13/14 CPC and Section 9 PPIPA 2012 (NEVER Order XXXIII which is for indigent persons).
+   - Limitation on Partition & Profits: 
+     * Right to partition is continuous and never barred by limitation so long as property remains joint.
+     * Past mesne profits are governed strictly by Article 109 of the Limitation Act, 1908 (LIMITATION IS 3 YEARS, NOT 12 YEARS). Claims beyond 3 years prior to suit are time-barred.
+   - Evidence & Enforcement: 
+     * Always cite the Qanun-e-Shahadat Order, 1984 (QSO 1984), NEVER the Indian Evidence Act.
+     * Decrees are executed under Order XXI CPC, NEVER via "suits under Section 271 CPC".
+11. SOURCE ATTRIBUTION DIRECTIVE:
    - Do NOT hardcode 'Sources Searched: Supreme Court of Pakistan' into body text or headers.
    - If referencing sources, dynamically state the exact forum(s) involved in the cited authorities (e.g., 'Lahore High Court', 'High Court of Sindh', 'Supreme Court of Pakistan').
    - When addressing High Court writs (Article 199), Revisions (Section 115 CPC), or Intra-Court Appeals (Section 3 Law Reforms Ordinance 1972), explicitly acknowledge High Court Division Bench jurisprudence alongside Supreme Court precedents.
-10. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
-11. BUDGETING & COMPLETION RULE:
+12. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
+13. BUDGETING & COMPLETION RULE:
    - Ensure the output NEVER terminates mid-sentence.
    - Balance length across all sections so Section IV (Procedural & Strategic Litigation Playbook) and the Prayer Clause Formulation are ALWAYS fully articulated before proceeding to Sources & Provenance.
 
