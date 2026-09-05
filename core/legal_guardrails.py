@@ -35,15 +35,16 @@ You must adhere strictly to codified Pakistani statutory law and controlling Sup
    - Article 79 QSO 1984 requires proving financial and property contracts by calling at least two attesting witnesses.
    - Section 271 of CPC DOES NOT EXIST (CPC ends at Section 158). Decrees are executed under Order XXI CPC.
 
-6. SINDH RENTED PREMISES ORDINANCE, 1979 (SRPO 1979) DIRECTIVE:
-   - Master Eviction Section: All eviction applications by a landlord in Sindh/Karachi are filed under SECTION 15 (never Section 13).
-     * Section 15(2)(ii): Default in payment of rent.
-     * Section 15(2)(iii)(a): Subletting without the written consent of the landlord.
-7. HIGH COURT DRAFTING & SUBMISSION STYLE (DR. SHIREEN MAZARI BENCHMARK):
-   - When drafting court submissions or petitions, emulate the appellate drafting style of Senior Advocates (as seen in Dr. Shireen M. Mazari v. Federation of Pakistan, IHC Writ Petition):
-     a. Explicitly cite verbatim holdings under blockquotes (`> "..."`) followed by Annexure cross-references `(Copy of Judgment reported as [Citation] is attached as Annexure A/B/C)`.
-     b. Ground administrative and executive relief in Section 24A of the General Clauses Act 1897 (requiring statutory powers to be exercised reasonably, fairly, justly, and with written reasons).
-     c. Follow the 3-sub-bullet ratio format: Factum & Doctrinal Controversy, Appellate Holding & Principle, and Direct Applicability & Distinguishing Factors.
+8. FIA, BANKING & CONSTITUTIONAL WRIT DIRECTIVE (ART 199, BCO 1962 & FIA ACT):
+   - FIA Account Freezes: Substantive freeze power of the FIA is governed strictly by Section 5(5) of the Federal Investigation Agency Act, 1974 (FIA Act 1974).
+     * Requires a formal order in writing by an authorized officer.
+     * Strict 30-day statutory expiry unless confirmed by the competent Court (2014 SCMR 1617; 2020 CLD 1104).
+     * Commercial banks cannot freeze accounts on informal letters/emails without judicial sanction.
+   - Governing Banking Statute: Commercial banks in Pakistan are regulated under the Banking Companies Ordinance, 1962 (BCO 1962) and SBP Directives (NEVER cite the "Banking Regulation Act 1956" or "Banking Regulation Act 1949").
+   - AMLA 2010 Codification: Under the Anti-Money Laundering Act 2010 (AMLA 2010), the FMU is an intelligence disseminator under Section 6. Provisional attachment/freezing is governed by Section 8 (attachment by investigating agency) and Section 9 (court adjudication/confirmation).
+   - Scope of Article 199 Writ Jurisdiction & NO DAMAGES:
+     * Proper remedies: Quashing ultra vires administrative orders, certiorari, mandamus to unfreeze, and prohibition.
+     * NO DAMAGES IN WRIT PETITIONS: Unliquidated contentious commercial/tortious damages CANNOT be granted in a Constitutional Writ Petition under Article 199 (PLD 2005 SC 530). Advise filing an ordinary civil suit for tortious conversion/damages before the civil court. Including a prayer for damages in an Article 199 petition is a fatal procedural defect.
 """
 
 def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
@@ -62,15 +63,21 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
         if re.search(r'article\s*109\b', text_lower) and ("specific performance" in text_lower or "agreement to sell" in text_lower):
             errors.append("Citing Article 109 for Specific Performance (Article 109 applies only to mesne profits; specific performance is Article 113).")
 
-    # Rule 2: Foreign statutes & phantom CPC / Limitation Act sections
+    # Rule 2: Foreign statutes & phantom CPC / Limitation Act / Banking sections
     if re.search(r'section\s*(3[3-9]|[4-9]\d|\d{3,})\s*(of\s*)?(the\s*)?limitation act', text_lower):
         errors.append("Citing phantom section of Limitation Act 1908 (Limitation Act body ends at Section 32; Articles 1-149 belong to the First Schedule).")
+    if re.search(r'\b(banking regulation act)\b', text_lower):
+        errors.append("Citing foreign 'Banking Regulation Act' (Pakistani banks are governed under Banking Companies Ordinance 1962 - BCO 1962).")
     if re.search(r'\bindian evidence act\b', text_lower):
         errors.append("Citing 'Indian Evidence Act' instead of Qanun-e-Shahadat Order, 1984 (QSO 1984).")
     if re.search(r'\b(indian penal code|ipc)\b', text_lower):
         errors.append("Citing 'IPC' / 'Indian Penal Code' instead of Pakistan Penal Code (PPC).")
     if re.search(r'\bsection\s*271\s*cpc\b', text_lower):
         errors.append("Citing non-existent 'Section 271 CPC' (CPC ends at Section 158; decrees execute under Order XXI CPC).")
+
+    # Rule 3: Article 199 Writ Damages & Procedural hygiene
+    if ("article 199" in text_lower or "writ petition" in text_lower) and re.search(r'\b(award|grant|decree)\s+damages\b', text_lower):
+        errors.append("Praying for unliquidated commercial/tortious damages in an Article 199 Writ Petition (damages cannot be awarded in writ jurisdiction under PLD 2005 SC 530; requires an ordinary civil suit).")
 
     # Rule 3: Specific Relief Act / Partition / SRPO Eviction misclassifications
     if re.search(r'section\s*[89]\s*(of\s*)?(the\s*)?specific relief act', text_lower) and "partition" in text_lower:
