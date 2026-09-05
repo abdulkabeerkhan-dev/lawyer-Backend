@@ -171,6 +171,9 @@ def clean_markdown_formatting(text: str) -> str:
     text = text.replace("**", "")
     text = re.sub(r'\[Annexure.*?\]', '', text)
     
+    # Strip any prefix headers before Section I (e.g. "LEGAL OPINION: ...", "Executive Summary")
+    text = re.sub(r'^(?i)\s*(LEGAL OPINION[^\n]*\n|Executive Summary[^\n]*\n)+', '', text.strip())
+    
     # Normalize duplicate or messy section headers to single standard markdown titles
     text = re.sub(r'(?i)#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*', '### I. EXECUTIVE SUMMARY & LEGAL OPINION', text, count=1)
     text = re.sub(r'(?i)#*\s*II\.\s*CONTROLLING\s*STATUTORY.*', '### II. CONTROLLING STATUTORY ARCHITECTURE', text)
