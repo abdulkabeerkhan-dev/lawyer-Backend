@@ -1,0 +1,80 @@
+import re
+from typing import List
+
+SYSTEM_LEGAL_DIRECTIVE = """
+You are an elite Pakistani appellate litigation researcher and Senior Advocate. 
+You must adhere strictly to codified Pakistani statutory law and controlling Supreme Court of Pakistan (SCMR/PLD) jurisprudence.
+
+STRICT CODE COMPLIANCE RULES:
+1. LIMITATION ACT, 1908 (STRICT ENFORCEMENT):
+   - Specific Performance of an Agreement to Sell: Governed EXCLUSIVELY by Article 113 of the Limitation Act, 1908.
+     * LIMITATION IS THREE (3) YEARS. NEVER cite 12 years.
+     * Period runs from: (a) the date fixed for performance, or (b) if no date is fixed, when plaintiff has notice that performance is refused.
+   - Mesne Profits: Governed strictly by Article 109 of the Limitation Act, 1908.
+     * LIMITATION IS THREE (3) YEARS. NEVER cite 12 years.
+   - Partition: No limitation period applies to the right to partition so long as property remains joint.
+
+2. SPECIFIC RELIEF ACT, 1877:
+   - Suit for Specific Performance of a contract/agreement to sell is filed under SECTION 12 (NEVER Sections 8 or 9).
+   - Under Explanation to Section 12, the Court presumes breach of contract to transfer immovable property cannot be adequately relieved by money damages.
+   - Suit for Declaration of title and possession is under Section 42; Injunctions are under Section 54/55.
+   - Urban Partition in Punjab is governed by the Punjab Partition of Immoveable Property Act, 2012 (PPIPA 2012). Section 12 governs interim mesne profits/rent deposit. Section 7 deals strictly with appearance/written statement procedure.
+
+3. TERRITORIAL & HIGH COURT JURISDICTION:
+   - Lahore / Rawalpindi / Multan / Faisalabad -> LAHORE HIGH COURT (Punjab).
+   - Karachi / Sukkur / Hyderabad -> SINDH HIGH COURT.
+   - Peshawar / Abbottabad -> PESHAWAR HIGH COURT.
+   - Quetta -> HIGH COURT OF BALOCHISTAN.
+   - NEVER suggest a High Court of another province (e.g., never cite Balochistan High Court for Lahore or Rawalpindi disputes).
+
+4. EVIDENTIARY RULES & NOMENCLATURE:
+   - Always cite the Qanun-e-Shahadat Order, 1984 (QSO 1984). Citing the "Indian Evidence Act" or "IPC" is strictly prohibited.
+   - QSO 1984 is divided into ARTICLES, not "Sections".
+   - Article 79 QSO 1984 requires proving financial and property contracts by calling at least two attesting witnesses.
+   - Section 271 of CPC DOES NOT EXIST (CPC ends at Section 158). Decrees are executed under Order XXI CPC.
+
+5. HOUSING AUTHORITIES (DHA / LDA / CDA):
+   - Housing authority internal rules/by-laws DO NOT oust the plenary jurisdiction of the Civil Court under Section 9 CPC.
+   - A suit for specific performance concerning DHA plots lies directly before the Senior Civil Judge having territorial jurisdiction.
+"""
+
+def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
+    """
+    Deterministically scans generated legal drafts for severe statutory hallucinations,
+    limitation misstatements, foreign acts, phantom CPC sections, and territorial mismatches.
+    """
+    errors = []
+    text_lower = draft_text.lower()
+    query_lower = query_context.lower()
+
+    # Rule 1: Specific performance limitation checks
+    if any(k in query_lower or k in text_lower for k in ["specific performance", "agreement to sell", "sale agreement"]):
+        if re.search(r'\b12\s*years?\b', text_lower) and ("specific performance" in text_lower or "agreement to sell" in text_lower):
+            errors.append("Citing 12 years limitation for Specific Performance (Article 113 strictly dictates 3 years).")
+        if re.search(r'article\s*109\b', text_lower) and ("specific performance" in text_lower or "agreement to sell" in text_lower):
+            errors.append("Citing Article 109 for Specific Performance (Article 109 applies only to mesne profits; specific performance is Article 113).")
+
+    # Rule 2: Foreign statutes & phantom CPC sections
+    if re.search(r'\bindian evidence act\b', text_lower):
+        errors.append("Citing 'Indian Evidence Act' instead of Qanun-e-Shahadat Order, 1984 (QSO 1984).")
+    if re.search(r'\b(indian penal code|ipc)\b', text_lower):
+        errors.append("Citing 'IPC' / 'Indian Penal Code' instead of Pakistan Penal Code (PPC).")
+    if re.search(r'\bsection\s*271\s*cpc\b', text_lower):
+        errors.append("Citing non-existent 'Section 271 CPC' (CPC ends at Section 158; decrees execute under Order XXI CPC).")
+
+    # Rule 3: Specific Relief Act / Partition misclassifications
+    if re.search(r'section\s*[89]\s*(of\s*)?(the\s*)?specific relief act', text_lower) and "partition" in text_lower:
+        errors.append("Citing Sections 8 or 9 of SRA 1877 for partition (urban partition in Punjab is governed by PPIPA 2012).")
+    if re.search(r'section\s*7\s*(of\s*)?(the\s*)?(punjab partition|ppipa)', text_lower) and ("interim" in text_lower or "mesne profit" in text_lower or "rent deposit" in text_lower):
+        errors.append("Citing Section 7 PPIPA 2012 for interim rent deposit (Section 12 PPIPA 2012 governs interim mesne profits/rent deposit).")
+
+    # Rule 4: Provincial forum mismatches
+    punjab_cities = ["lahore", "rawalpindi", "multan", "faisalabad", "dha lahore", "dha phase"]
+    has_punjab_query = any(city in query_lower for city in punjab_cities)
+    if has_punjab_query or "lahore" in text_lower or "rawalpindi" in text_lower:
+        if "high court of balochistan" in text_lower or "balochistan high court" in text_lower:
+            errors.append("Territorial Mismatch: Recommending High Court of Balochistan for a Punjab/Lahore/Rawalpindi dispute.")
+        if "peshawar high court" in text_lower:
+            errors.append("Territorial Mismatch: Recommending Peshawar High Court for a Punjab dispute.")
+
+    return errors

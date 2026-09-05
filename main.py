@@ -588,11 +588,34 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         NON_JUDGMENT_MARKERS = ["annual report", "policy document", "press release", "annual review"]
         _PAKISTANLAWSITE_RE = re.compile(r'pakistan\s*[-_]?\s*law\s*[-_]?\s*site', re.IGNORECASE)
 
+        # Deterministic Query Parser for Provincial Forum Filtering
+        provincial_target = None
+        if any(city in query_lower for city in ["lahore", "rawalpindi", "multan", "faisalabad", "punjab", "dha lahore"]):
+            provincial_target = "punjab"
+        elif any(city in query_lower for city in ["karachi", "sukkur", "hyderabad", "sindh"]):
+            provincial_target = "sindh"
+        elif any(city in query_lower for city in ["peshawar", "abbottabad", "khyber"]):
+            provincial_target = "kpk"
+        elif any(city in query_lower for city in ["quetta", "balochistan"]):
+            provincial_target = "balochistan"
+
         def _passes_source_filter(meta, target):
             normalized_court = clean_court_name(str(meta.get("court", "")), title=str(meta.get("title") or meta.get("case_title", "")), case_id=str(meta.get("case_id", "")))
             haystack = " ".join([normalized_court, str(meta.get("dataset_category", "")), str(meta.get("title", "")), str(meta.get("case_title", ""))]).lower()
             if any(marker in haystack for marker in NON_JUDGMENT_MARKERS): return False
             if any(_PAKISTANLAWSITE_RE.search(str(meta.get(k, ""))) for k in ("court", "dataset_category", "title", "case_title")): return False
+
+            # Strict provincial boundary filter
+            if provincial_target == "punjab":
+                if "high court of balochistan" in haystack or "peshawar high court" in haystack or "high court of sindh" in haystack:
+                    return False
+            elif provincial_target == "sindh":
+                if "lahore high court" in haystack or "high court of balochistan" in haystack or "peshawar high court" in haystack:
+                    return False
+            elif provincial_target == "balochistan":
+                if "lahore high court" in haystack or "high court of sindh" in haystack or "peshawar high court" in haystack:
+                    return False
+
             if not target: return True
             return any(alias in haystack for alias in COURT_ALIASES.get(target, [target.lower()]))
 
@@ -909,16 +932,37 @@ CONSTRAINTS:
             claude_user_message = f"Context from Legal Database:\n{combined_context}\n\nQuestion: {effective_user_query}"
             final_messages = [{"role": "user", "content": claude_user_message}]
 
+        from core.legal_guardrails import lint_legal_output, SYSTEM_LEGAL_DIRECTIVE
+
         final_kwargs = {
             "model": CLAUDE_MODEL,
             "max_tokens": 8192,
-            "system": system_prompt,
+            "system": f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{system_prompt}",
             "messages": final_messages
         }
 
         claude_message = await async_anthropic_client.messages.create(**final_kwargs)
         raw_model_output = "".join(getattr(b, "text", "") for b in claude_message.content).strip()
         is_token_truncated = (getattr(claude_message, "stop_reason", None) == "max_tokens")
+
+        # Deterministic Legal Output Verification & Reflection Loop
+        lint_errors = lint_legal_output(raw_model_output, query_context=effective_user_query)
+        if lint_errors:
+            print(f"⚠️ Legal Guardrails Lint Errors detected: {lint_errors}. Triggering reflection loop...", file=sys.stderr)
+            reflection_prompt = f"Your draft contains critical legal errors: {'; '.join(lint_errors)}. Correct these errors immediately and regenerate the opinion."
+            reflection_messages = list(final_messages)
+            reflection_messages.append({"role": "assistant", "content": raw_model_output})
+            reflection_messages.append({"role": "user", "content": reflection_prompt})
+            
+            reflection_kwargs = {
+                "model": CLAUDE_MODEL,
+                "max_tokens": 8192,
+                "system": f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{system_prompt}",
+                "messages": reflection_messages
+            }
+            claude_message_ref = await async_anthropic_client.messages.create(**reflection_kwargs)
+            raw_model_output = "".join(getattr(b, "text", "") for b in claude_message_ref.content).strip()
+            is_token_truncated = (getattr(claude_message_ref, "stop_reason", None) == "max_tokens")
 
         executive_answer = ""
         precedent_cards = []
