@@ -170,6 +170,13 @@ def clean_markdown_formatting(text: str) -> str:
         return ""
     text = text.replace("**", "")
     text = re.sub(r'\[Annexure.*?\]', '', text)
+    
+    # Normalize duplicate or messy section headers to single standard markdown titles
+    text = re.sub(r'(?i)#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*', '### I. EXECUTIVE SUMMARY & LEGAL OPINION', text, count=1)
+    text = re.sub(r'(?i)#*\s*II\.\s*CONTROLLING\s*STATUTORY.*', '### II. CONTROLLING STATUTORY ARCHITECTURE', text)
+    text = re.sub(r'(?i)#*\s*III\.\s*CONTROLLING\s*JUDICIAL.*', '### III. CONTROLLING JUDICIAL PRECEDENTS & APPELLATE RATIO', text)
+    text = re.sub(r'(?i)#*\s*IV\.\s*PROCEDURAL.*', '### IV. PROCEDURAL & STRATEGIC LITIGATION PLAYBOOK', text)
+    
     return text.strip()
 
 def strip_control_characters(text: str) -> str:
@@ -859,6 +866,7 @@ CONSTRAINTS:
   `### III. CONTROLLING JUDICIAL PRECEDENTS & APPELLATE RATIO`
   `---`
   `### IV. PROCEDURAL & STRATEGIC LITIGATION PLAYBOOK`
+- NEVER output duplicate section headers (e.g. NEVER write "Executive Summary" twice, nor write "LEGAL OPINION: ..." before Section I).
 - NEVER write custom section titles like "### BANK ACCOUNT FREEZE/BLOCK JURISPRUDENCE".
 - NEVER state "I cannot synthesize case law" or "I must advise that the database context does not contain reported judgments". Formulate a complete Senior Advocate legal opinion using Section 550 Cr.P.C., Section 516-A/523 Cr.P.C., AMLA 2010, NAO 1999, and Article 199 writ jurisdiction authoritatively inside the 4-part legal opinion layout.
 - ABSOLUTELY NO DOUBLE ASTERISKS (**): DO NOT write double asterisks (**) anywhere in the response text under any circumstances. All titles, statute names, and bullet headers MUST be written as plain text without any ** asterisks.
