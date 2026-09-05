@@ -172,13 +172,13 @@ def clean_markdown_formatting(text: str) -> str:
     text = re.sub(r'\[Annexure.*?\]', '', text)
     
     # Strip any prefix headers before Section I (e.g. "LEGAL OPINION: ...", "Executive Summary")
-    text = re.sub(r'^(?i)\s*(LEGAL OPINION[^\n]*\n|Executive Summary[^\n]*\n)+', '', text.strip())
+    text = re.sub(r'^\s*(LEGAL OPINION[^\n]*\n|Executive Summary[^\n]*\n)+', '', text.strip(), flags=re.IGNORECASE)
     
     # Normalize duplicate or messy section headers to single standard markdown titles
-    text = re.sub(r'(?i)#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*', '### I. EXECUTIVE SUMMARY & LEGAL OPINION', text, count=1)
-    text = re.sub(r'(?i)#*\s*II\.\s*CONTROLLING\s*STATUTORY.*', '### II. CONTROLLING STATUTORY ARCHITECTURE', text)
-    text = re.sub(r'(?i)#*\s*III\.\s*CONTROLLING\s*JUDICIAL.*', '### III. CONTROLLING JUDICIAL PRECEDENTS & APPELLATE RATIO', text)
-    text = re.sub(r'(?i)#*\s*IV\.\s*PROCEDURAL.*', '### IV. PROCEDURAL & STRATEGIC LITIGATION PLAYBOOK', text)
+    text = re.sub(r'#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*', '### I. EXECUTIVE SUMMARY & LEGAL OPINION', text, count=1, flags=re.IGNORECASE)
+    text = re.sub(r'#*\s*II\.\s*CONTROLLING\s*STATUTORY.*', '### II. CONTROLLING STATUTORY ARCHITECTURE', text, flags=re.IGNORECASE)
+    text = re.sub(r'#*\s*III\.\s*CONTROLLING\s*JUDICIAL.*', '### III. CONTROLLING JUDICIAL PRECEDENTS & APPELLATE RATIO', text, flags=re.IGNORECASE)
+    text = re.sub(r'#*\s*IV\.\s*PROCEDURAL.*', '### IV. PROCEDURAL & STRATEGIC LITIGATION PLAYBOOK', text, flags=re.IGNORECASE)
     
     return text.strip()
 
