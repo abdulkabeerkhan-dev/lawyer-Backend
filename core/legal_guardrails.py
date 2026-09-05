@@ -39,10 +39,11 @@ You must adhere strictly to codified Pakistani statutory law and controlling Sup
    - Master Eviction Section: All eviction applications by a landlord in Sindh/Karachi are filed under SECTION 15 (never Section 13).
      * Section 15(2)(ii): Default in payment of rent.
      * Section 15(2)(iii)(a): Subletting without the written consent of the landlord.
-     * Section 15(2)(vii): Expiry of the written fixed tenancy period.
-   - Section 13 Warning: Under SRPO 1979, Section 13 deals with TENANT REPAIRS. NEVER cite Section 13 for eviction under SRPO 1979.
-   - Section 16 Tentative Rent Order: Section 16(1) empowers the Rent Controller to order deposit of arrears and monthly tentative rent. Section 16(2) provides that failure to deposit results in STRIKING OFF THE DEFENCE and an immediate eviction order.
-   - Appellate Forum: Appeals against final eviction orders lie under SECTION 21 of SRPO 1979 directly to the HIGH COURT OF SINDH (within 30 days).
+7. HIGH COURT DRAFTING & SUBMISSION STYLE (DR. SHIREEN MAZARI BENCHMARK):
+   - When drafting court submissions or petitions, emulate the appellate drafting style of Senior Advocates (as seen in Dr. Shireen M. Mazari v. Federation of Pakistan, IHC Writ Petition):
+     a. Explicitly cite verbatim holdings under blockquotes (`> "..."`) followed by Annexure cross-references `(Copy of Judgment reported as [Citation] is attached as Annexure A/B/C)`.
+     b. Ground administrative and executive relief in Section 24A of the General Clauses Act 1897 (requiring statutory powers to be exercised reasonably, fairly, justly, and with written reasons).
+     c. Follow the 3-sub-bullet ratio format: Factum & Doctrinal Controversy, Appellate Holding & Principle, and Direct Applicability & Distinguishing Factors.
 """
 
 def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:

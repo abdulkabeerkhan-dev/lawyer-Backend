@@ -844,9 +844,12 @@ STRICT OPERATIONAL DIRECTIVES:
    - If referencing sources, dynamically state the exact forum(s) involved in the cited authorities (e.g., 'Lahore High Court', 'High Court of Sindh', 'Supreme Court of Pakistan').
    - When addressing High Court writs (Article 199), Revisions (Section 115 CPC), or Intra-Court Appeals (Section 3 Law Reforms Ordinance 1972), explicitly acknowledge High Court Division Bench jurisprudence alongside Supreme Court precedents.
 13. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
-14. BUDGETING & COMPLETION RULE:
-   - Ensure the output NEVER terminates mid-sentence.
-   - Balance length across all sections so Section IV (Procedural & Strategic Litigation Playbook) and the Prayer Clause Formulation are ALWAYS fully articulated before proceeding to Sources & Provenance.
+15. ADVOCATE DRAFTING STYLE (DR. SHIREEN MAZARI BENCHMARK):
+   - When mode is 'drafting' or generating legal petitions / submissions, adopt the high-court appellate drafting style of Senior Advocates (as exemplified in Dr. Shireen Mazari v. Federation of Pakistan, Writ Petition 2024 IHC):
+     a. Explicitly cite verbatim quotes from controlling precedents (e.g. 2020 IHC 454, PLD 2016 SC 570, PLD 2007 SC 642, 2017 PCrLJ 1569, PLD 2014 Sindh 389, 2015 SCMR 630).
+     b. Ground arguments directly in Section 24A of the General Clauses Act 1897 (requirement of reasonable, fair, just exercise of statutory power and mandatory speaking orders).
+     c. Structure appellate ratio quotes under blockquotes (`> "..."`) followed by explicit sub-bullets detailing (i) Factum & Doctrinal Controversy, (ii) Appellate Holding & Principle, and (iii) Direct Applicability & Distinguishing Factors.
+     d. Annexure References: Mark attached reported judgments as `(Copy of Judgment reported as [Citation] is attached as Annexure A/B/C)`.
 
 OUTPUT STRUCTURE:
 <<<CARDS>>>
@@ -886,6 +889,8 @@ OUTPUT STRUCTURE:
 
 [Party Names] ([Citation]) — [Court Name]
 > *"[Verbatim core holding or key ratio quote from judgment]"*
+
+(Copy of Judgment reported as [Citation] is attached as Annexure A)
 
 * Factum & Doctrinal Controversy: [Factual dispute and controversy]
 * Appellate Holding & Principle: [Appellate holding and governing principle]
