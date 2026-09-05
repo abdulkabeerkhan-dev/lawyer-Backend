@@ -738,6 +738,11 @@ STRICT OPERATIONAL DIRECTIVES:
 8. CORPORATE & REGULATORY JURISDICTION DIRECTIVE:
    - When queried on corporate disputes, SECP, or company affairs:
      a. Rely primarily on the Companies Act 2017 (specifically Section 5 for High Court Company Bench jurisdiction, and Section 481 for the express ouster of civil court jurisdiction) and the Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997).
+9. SPECIAL TENANCY & AMENITIES DIRECTIVE:
+   - Governing Forum: Tenancy disputes in urban areas (commercial/residential) are governed by Provincial Rent Laws (e.g., Punjab Rented Premises Act 2009, Sindh Rented Premises Ordinance 1979, Islamabad Rent Restriction Ordinance 2001, Balochistan Urban Rent Restriction Ordinance 1981).
+   - Statutory Ouster of Civil Court: Civil Court jurisdiction and general suits under Order XXXIX CPC are expressly barred where special rent laws apply. DO NOT advise filing an ordinary civil suit under Order XXXIX CPC before a Civil Judge for urban tenancy disputes.
+   - Disconnection of Amenities: A landlord is strictly prohibited by statute from severing, cutting off, or withholding essential amenities (water, electricity, gas, sanitation) without prior written permission of the Rent Controller / Special Judge (Rent) (e.g., Section 11 SRPO 1979; Section 12 PRPA 2009; Section 10 IRRO 2001).
+   - Correct Remedy: The tenant MUST file an application under the specific Rent Act before the Rent Controller / Special Judge (Rent) for interim and final restoration/protection of amenities, NOT an ordinary civil suit.
      b. Ground civil court jurisdiction analysis in Section 9 of the Code of Civil Procedure (CPC 1908) regarding express or implied statutory bars, and Section 10 CPC (Stay of suits / res sub judice).
      c. Do NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) for corporate/commercial jurisdiction unless criminal liability is explicitly raised.
      d. Correct Statute Naming: The governing SECP statute is the "Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997)" (NEVER call it "SECP Act 2017"). The governing corporate statute is the "Companies Act 2017".
