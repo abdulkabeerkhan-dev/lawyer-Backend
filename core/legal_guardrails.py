@@ -35,18 +35,17 @@ You must adhere strictly to codified Pakistani statutory law and controlling Sup
    - Article 79 QSO 1984 requires proving financial and property contracts by calling at least two attesting witnesses.
    - Section 271 of CPC DOES NOT EXIST (CPC ends at Section 158). Decrees are executed under Order XXI CPC.
 
-9. BANKING RECOVERY & MORTGAGE FORECLOSURE DIRECTIVE (FIO 2001 & 2016 AMENDMENTS):
-   - Status of Section 15 FIO 2001: 
-     * Section 15 was struck down in PLD 2014 SC 283 (Saf Textile Mills), but was subsequently RE-ENACTED and amended with strict procedural safeguards via the Financial Institutions (Recovery of Finances) (Amendment) Act, 2016.
-     * Banks CAN exercise private sale under amended Section 15 ONLY IF they strictly fulfill ALL mandatory statutory conditions.
-   - Mandatory Statutory Prerequisites under Amended Section 15:
-     1. Three (3) separate statutory demand notices under Section 15(2) (failure to issue all three notices renders the sale void).
-     2. Mandatory valuation by a PBA-approved valuer under Section 15(4)(a).
-     3. Mandatory reserve price fixation and publication under Section 15(4)(b).
-     4. Publication in at least two daily newspapers of wide circulation (one Urdu, one English).
-   - Forum & Civil Court Bar:
-     * Plenary Bar: Section 7 FIO 2001 expressly bars the jurisdiction of the Civil Court (Senior Civil Judge). An ordinary civil suit with an Order 39 application is barred and subject to rejection under Order VII Rule 11 CPC.
-     * Correct Forums: (1) An objection application / customer suit before the special BANKING COURT under Section 9 / 15(11) of FIO 2001, OR (2) A Constitutional Writ Petition under Article 199 before the relevant provincial High Court challenging unlawful administrative auction for non-compliance with statutory preconditions.
+10. BANK GUARANTEE & INJUNCTION DIRECTIVE (ORDER XXXIX CPC & AUTONOMY DOCTRINE):
+   - Core Autonomy Doctrine: An unconditional bank guarantee is an autonomous contract independent of the underlying agreement. Breaches of the underlying contract (e.g., delayed site handover, design approvals, alleged wrongful termination) do NOT ground an interim injunction under Order XXXIX Rules 1 & 2 CPC (2021 SCMR 1446 / 2021 SCP 3209; PLD 2003 SC 191).
+   - The Two Exclusive Exceptions:
+     1. Fraud of an egregious nature known to the bank (vitiating the very foundation of the transaction, such as encashment demand when underlying obligation is fully satisfied to beneficiary's own knowledge).
+     2. Irretrievable injustice / special equities (e.g., beneficiary is an insolvent entity or foreign entity with no assets within Pakistani court jurisdiction, precluding recovery by subsequent damages decree).
+   - Forum Selection (Contractual Procurement):
+     * Constitutional Writ Petitions under Article 199 DO NOT lie to enforce non-statutory commercial procurement contracts or restrain bank guarantee encashment (1998 SCMR 2268; 2021 SCMR 1271). Recommending Article 199 writ for commercial guarantee disputes is a fatal procedural error.
+     * Proper Forum: 
+       - Plenary Civil Suit before the Senior Civil Judge under Section 9 CPC, OR
+       - Application under Section 41 read with Second Schedule of the Arbitration Act 1940 (or Section 11 Recognition & Enforcement Act 2011 if international) before the designated civil court having jurisdiction if contract contains an arbitration clause.
+   - Civil Court Subject-Matter Jurisdiction: The Civil Court HAS Section 9 subject-matter jurisdiction over bank guarantee suits, but must refuse Order XXXIX interim injunctions on substantive legal grounds unless the strict fraud / irretrievable injustice exceptions are proven with unimpeachable evidence.
 """
 
 def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
@@ -77,7 +76,9 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
     if re.search(r'\bsection\s*271\s*cpc\b', text_lower):
         errors.append("Citing non-existent 'Section 271 CPC' (CPC ends at Section 158; decrees execute under Order XXI CPC).")
 
-    # Rule 3: Article 199 Writ Damages & Procedural hygiene
+    # Rule 3: Article 199 Writ Damages, Commercial Guarantee Writs & Procedural hygiene
+    if ("bank guarantee" in text_lower or "performance guarantee" in text_lower or "encashment" in text_lower) and ("article 199" in text_lower or "writ petition" in text_lower):
+        errors.append("Recommending Article 199 Writ Petition for commercial bank guarantee encashment disputes (Article 199 writ does not lie for non-statutory commercial contracts under 1998 SCMR 2268; proper forum is Section 9 CPC civil suit or Section 41 Arbitration Act 1940).")
     if ("article 199" in text_lower or "writ petition" in text_lower) and re.search(r'\b(award|grant|decree)\s+damages\b', text_lower):
         errors.append("Praying for unliquidated commercial/tortious damages in an Article 199 Writ Petition (damages cannot be awarded in writ jurisdiction under PLD 2005 SC 530; requires an ordinary civil suit).")
 
