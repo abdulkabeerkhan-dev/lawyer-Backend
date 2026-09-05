@@ -35,16 +35,18 @@ You must adhere strictly to codified Pakistani statutory law and controlling Sup
    - Article 79 QSO 1984 requires proving financial and property contracts by calling at least two attesting witnesses.
    - Section 271 of CPC DOES NOT EXIST (CPC ends at Section 158). Decrees are executed under Order XXI CPC.
 
-8. FIA, BANKING & CONSTITUTIONAL WRIT DIRECTIVE (ART 199, BCO 1962 & FIA ACT):
-   - FIA Account Freezes: Substantive freeze power of the FIA is governed strictly by Section 5(5) of the Federal Investigation Agency Act, 1974 (FIA Act 1974).
-     * Requires a formal order in writing by an authorized officer.
-     * Strict 30-day statutory expiry unless confirmed by the competent Court (2014 SCMR 1617; 2020 CLD 1104).
-     * Commercial banks cannot freeze accounts on informal letters/emails without judicial sanction.
-   - Governing Banking Statute: Commercial banks in Pakistan are regulated under the Banking Companies Ordinance, 1962 (BCO 1962) and SBP Directives (NEVER cite the "Banking Regulation Act 1956" or "Banking Regulation Act 1949").
-   - AMLA 2010 Codification: Under the Anti-Money Laundering Act 2010 (AMLA 2010), the FMU is an intelligence disseminator under Section 6. Provisional attachment/freezing is governed by Section 8 (attachment by investigating agency) and Section 9 (court adjudication/confirmation).
-   - Scope of Article 199 Writ Jurisdiction & NO DAMAGES:
-     * Proper remedies: Quashing ultra vires administrative orders, certiorari, mandamus to unfreeze, and prohibition.
-     * NO DAMAGES IN WRIT PETITIONS: Unliquidated contentious commercial/tortious damages CANNOT be granted in a Constitutional Writ Petition under Article 199 (PLD 2005 SC 530). Advise filing an ordinary civil suit for tortious conversion/damages before the civil court. Including a prayer for damages in an Article 199 petition is a fatal procedural defect.
+9. BANKING RECOVERY & MORTGAGE FORECLOSURE DIRECTIVE (FIO 2001 & 2016 AMENDMENTS):
+   - Status of Section 15 FIO 2001: 
+     * Section 15 was struck down in PLD 2014 SC 283 (Saf Textile Mills), but was subsequently RE-ENACTED and amended with strict procedural safeguards via the Financial Institutions (Recovery of Finances) (Amendment) Act, 2016.
+     * Banks CAN exercise private sale under amended Section 15 ONLY IF they strictly fulfill ALL mandatory statutory conditions.
+   - Mandatory Statutory Prerequisites under Amended Section 15:
+     1. Three (3) separate statutory demand notices under Section 15(2) (failure to issue all three notices renders the sale void).
+     2. Mandatory valuation by a PBA-approved valuer under Section 15(4)(a).
+     3. Mandatory reserve price fixation and publication under Section 15(4)(b).
+     4. Publication in at least two daily newspapers of wide circulation (one Urdu, one English).
+   - Forum & Civil Court Bar:
+     * Plenary Bar: Section 7 FIO 2001 expressly bars the jurisdiction of the Civil Court (Senior Civil Judge). An ordinary civil suit with an Order 39 application is barred and subject to rejection under Order VII Rule 11 CPC.
+     * Correct Forums: (1) An objection application / customer suit before the special BANKING COURT under Section 9 / 15(11) of FIO 2001, OR (2) A Constitutional Writ Petition under Article 199 before the relevant provincial High Court challenging unlawful administrative auction for non-compliance with statutory preconditions.
 """
 
 def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
@@ -79,7 +81,9 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
     if ("article 199" in text_lower or "writ petition" in text_lower) and re.search(r'\b(award|grant|decree)\s+damages\b', text_lower):
         errors.append("Praying for unliquidated commercial/tortious damages in an Article 199 Writ Petition (damages cannot be awarded in writ jurisdiction under PLD 2005 SC 530; requires an ordinary civil suit).")
 
-    # Rule 3: Specific Relief Act / Partition / SRPO Eviction misclassifications
+    # Rule 3: Specific Relief Act / Partition / SRPO Eviction / FIO 2001 Civil Court Bar misclassifications
+    if ("financial institution" in text_lower or "fio 2001" in text_lower or "mortgage auction" in text_lower or "section 15" in text_lower) and re.search(r'\b(civil court|senior civil judge)\b', text_lower) and ("order 39" in text_lower or "civil suit" in text_lower):
+        errors.append("Recommending an ordinary civil suit / Order XXXIX CPC before Civil Judge for Banking Mortgage/FIO 2001 disputes (Section 7 FIO 2001 expressly bars Civil Court jurisdiction; remedy lies before Banking Court or Article 199 High Court Writ).")
     if re.search(r'section\s*[89]\s*(of\s*)?(the\s*)?specific relief act', text_lower) and "partition" in text_lower:
         errors.append("Citing Sections 8 or 9 of SRA 1877 for partition (urban partition in Punjab is governed by PPIPA 2012).")
     if re.search(r'section\s*7\s*(of\s*)?(the\s*)?(punjab partition|ppipa)', text_lower) and ("interim" in text_lower or "mesne profit" in text_lower or "rent deposit" in text_lower):
