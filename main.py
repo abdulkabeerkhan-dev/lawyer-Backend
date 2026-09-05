@@ -345,17 +345,90 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 text = re.sub(r'\b(\w+(?:\s+\w+){0,3})\s+\1\b', r'\1', text, flags=re.IGNORECASE)
             return text
 
+        def extract_text_from_document_base64(b64_str: str, mime_type: str) -> str:
+            if not b64_str:
+                return ""
+            raw_bytes = base64.b64decode(clean_base64_data(b64_str))
+            m = (mime_type or "").lower().strip()
+            extracted_text = ""
+            
+            # 1. Check if DOCX
+            if "wordprocessingml" in m or "docx" in m or raw_bytes.startswith(b'PK\x03\x04'):
+                try:
+                    import docx
+                    doc_obj = docx.Document(io.BytesIO(raw_bytes))
+                    full_p = [p.text for p in doc_obj.paragraphs if p.text.strip()]
+                    for table in doc_obj.tables:
+                        for row in table.rows:
+                            full_p.append(" | ".join(cell.text.strip() for cell in row.cells if cell.text.strip()))
+                    extracted_text = "\n".join(full_p).strip()
+                except Exception as docx_err:
+                    print(f"⚠️ python-docx parsing failed: {docx_err}", file=sys.stderr)
+                    try:
+                        # Fallback simple XML string extraction for docx without python-docx
+                        import zipfile
+                        with zipfile.ZipFile(io.BytesIO(raw_bytes)) as z:
+                            if "word/document.xml" in z.namelist():
+                                xml_content = z.read("word/document.xml").decode("utf-8", errors="ignore")
+                                text_bits = re.findall(r'<w:t[^>]*>(.*?)</w:t>', xml_content)
+                                extracted_text = " ".join(text_bits).strip()
+                    except Exception as fallback_err:
+                        print(f"⚠️ XML docx fallback extraction failed: {fallback_err}", file=sys.stderr)
+
+            # 2. Check if PDF
+            elif "pdf" in m or raw_bytes.startswith(b'%PDF'):
+                try:
+                    import pypdf
+                    reader = pypdf.PdfReader(io.BytesIO(raw_bytes))
+                    pdf_pages = [page.extract_text() for page in reader.pages if page.extract_text()]
+                    extracted_text = "\n".join(pdf_pages).strip()
+                except Exception:
+                    pass
+
+            # 3. Check plain text
+            if not extracted_text:
+                try:
+                    decoded = raw_bytes.decode("utf-8", errors="ignore").strip()
+                    if decoded and len(decoded) > 10 and not any(c in decoded[:50] for c in ['\x00', '\x01', '\x02']):
+                        extracted_text = decoded
+                except Exception:
+                    pass
+
+            return extracted_text
+
         images_list = request.images or []
         check_user_quota(authenticated_user_id, num_images_requested=len(images_list))
 
-        has_image = len(images_list) > 0
-        search_keywords_query = request.query_text
+        valid_vision_images = []
+        extracted_doc_texts = []
+
+        for img in images_list:
+            m = (img.image_mime_type or "").lower().strip()
+            if m.startswith("image/") and m not in ["image/vnd.openxmlformats-officedocument.wordprocessingml.document", "image/pdf"]:
+                valid_vision_images.append(img)
+            else:
+                doc_t = extract_text_from_document_base64(img.image_base64, img.image_mime_type)
+                if doc_t:
+                    extracted_doc_texts.append(doc_t)
+                else:
+                    # Treat as image fallback if unknown mime
+                    valid_vision_images.append(img)
+
+        has_image = len(valid_vision_images) > 0
+        has_doc_text = len(extracted_doc_texts) > 0
+        combined_uploaded_doc_text = "\n\n=== UPLOADED DOCUMENT ATTACHMENT ===\n\n" + "\n\n".join(extracted_doc_texts) if has_doc_text else ""
+
+        effective_user_query = request.query_text
+        if combined_uploaded_doc_text:
+            effective_user_query = f"{request.query_text}\n\n{combined_uploaded_doc_text}".strip()
+
+        search_keywords_query = effective_user_query
         vision_input_tokens = 0
         vision_output_tokens = 0
 
         if has_image and async_anthropic_client and ANTHROPIC_API_KEY:
             vision_content = []
-            for img in images_list:
+            for img in valid_vision_images:
                 vision_content.append({
                     "type": "image",
                     "source": {
@@ -377,7 +450,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 vision_output_tokens = getattr(vision_message.usage, "output_tokens", 0) or 0
                 
             raw_kws = "".join(getattr(b, "text", "") for b in vision_message.content).strip()
-            search_keywords_query = f"{raw_kws} {request.query_text}".strip()
+            search_keywords_query = f"{raw_kws} {effective_user_query}".strip()
 
         mode = "simple_query"
         query_lower = request.query_text.lower()
@@ -541,6 +614,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             if '\ufffd' in text or '\x00' in text:
                 return True
             if re.search(r'\b[A-Za-z$%\\]{2,}\d+[A-Za-z$%\\]{2,}\b', text) or re.search(r'\b\d+[A-Z]{5,}\b', text):
+                return True
+            if re.search(r'[\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]', text):
                 return True
             words = [re.sub(r'[^a-zA-Z0-9]', '', w) for w in text.split() if w.strip()]
             if not words:
@@ -792,7 +867,7 @@ CONSTRAINTS:
 
         if has_image:
             user_msg_content = []
-            for img in images_list:
+            for img in valid_vision_images:
                 user_msg_content.append({
                     "type": "image",
                     "source": {
@@ -801,11 +876,11 @@ CONSTRAINTS:
                         "data": clean_base64_data(img.image_base64)
                     }
                 })
-            doc_prompt_text = f"Context from Legal Database:\n{combined_context}\n\nUser Question / Document Instruction: {request.query_text or 'Thoroughly analyze the attached legal document and provide a complete Senior Advocate opinion.'}"
+            doc_prompt_text = f"Context from Legal Database:\n{combined_context}\n\nUser Question / Document Instruction: {effective_user_query or 'Thoroughly analyze the attached legal document and provide a complete Senior Advocate opinion.'}"
             user_msg_content.append({"type": "text", "text": doc_prompt_text})
             final_messages = [{"role": "user", "content": user_msg_content}]
         else:
-            claude_user_message = f"Context from Legal Database:\n{combined_context}\n\nQuestion: {request.query_text}"
+            claude_user_message = f"Context from Legal Database:\n{combined_context}\n\nQuestion: {effective_user_query}"
             final_messages = [{"role": "user", "content": claude_user_message}]
 
         final_kwargs = {
