@@ -790,13 +790,29 @@ CONSTRAINTS:
 - NEVER truncate mid-sentence. Budget output length cleanly.
 """
 
-        claude_user_message = f"Context from Legal Database:\n{combined_context}\n\nQuestion: {request.query_text}"
+        if has_image:
+            user_msg_content = []
+            for img in images_list:
+                user_msg_content.append({
+                    "type": "image",
+                    "source": {
+                        "type": "base64",
+                        "media_type": sanitize_mime_type(img.image_mime_type),
+                        "data": clean_base64_data(img.image_base64)
+                    }
+                })
+            doc_prompt_text = f"Context from Legal Database:\n{combined_context}\n\nUser Question / Document Instruction: {request.query_text or 'Thoroughly analyze the attached legal document and provide a complete Senior Advocate opinion.'}"
+            user_msg_content.append({"type": "text", "text": doc_prompt_text})
+            final_messages = [{"role": "user", "content": user_msg_content}]
+        else:
+            claude_user_message = f"Context from Legal Database:\n{combined_context}\n\nQuestion: {request.query_text}"
+            final_messages = [{"role": "user", "content": claude_user_message}]
 
         final_kwargs = {
             "model": CLAUDE_MODEL,
             "max_tokens": 8192,
             "system": system_prompt,
-            "messages": [{"role": "user", "content": claude_user_message}]
+            "messages": final_messages
         }
 
         claude_message = await async_anthropic_client.messages.create(**final_kwargs)
