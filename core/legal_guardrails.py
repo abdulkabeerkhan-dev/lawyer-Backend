@@ -33,9 +33,14 @@ STRICT CODE COMPLIANCE RULES:
    - Article 79 QSO 1984 requires proving financial and property contracts by calling at least two attesting witnesses.
    - Section 271 of CPC DOES NOT EXIST (CPC ends at Section 158). Decrees are executed under Order XXI CPC.
 
-5. HOUSING AUTHORITIES (DHA / LDA / CDA):
-   - Housing authority internal rules/by-laws DO NOT oust the plenary jurisdiction of the Civil Court under Section 9 CPC.
-   - A suit for specific performance concerning DHA plots lies directly before the Senior Civil Judge having territorial jurisdiction.
+6. SINDH RENTED PREMISES ORDINANCE, 1979 (SRPO 1979) DIRECTIVE:
+   - Master Eviction Section: All eviction applications by a landlord in Sindh/Karachi are filed under SECTION 15 (never Section 13).
+     * Section 15(2)(ii): Default in payment of rent.
+     * Section 15(2)(iii)(a): Subletting without the written consent of the landlord.
+     * Section 15(2)(vii): Expiry of the written fixed tenancy period.
+   - Section 13 Warning: Under SRPO 1979, Section 13 deals with TENANT REPAIRS. NEVER cite Section 13 for eviction under SRPO 1979.
+   - Section 16 Tentative Rent Order: Section 16(1) empowers the Rent Controller to order deposit of arrears and monthly tentative rent. Section 16(2) provides that failure to deposit results in STRIKING OFF THE DEFENCE and an immediate eviction order.
+   - Appellate Forum: Appeals against final eviction orders lie under SECTION 21 of SRPO 1979 directly to the HIGH COURT OF SINDH (within 30 days).
 """
 
 def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
@@ -62,11 +67,13 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
     if re.search(r'\bsection\s*271\s*cpc\b', text_lower):
         errors.append("Citing non-existent 'Section 271 CPC' (CPC ends at Section 158; decrees execute under Order XXI CPC).")
 
-    # Rule 3: Specific Relief Act / Partition misclassifications
+    # Rule 3: Specific Relief Act / Partition / SRPO Eviction misclassifications
     if re.search(r'section\s*[89]\s*(of\s*)?(the\s*)?specific relief act', text_lower) and "partition" in text_lower:
         errors.append("Citing Sections 8 or 9 of SRA 1877 for partition (urban partition in Punjab is governed by PPIPA 2012).")
     if re.search(r'section\s*7\s*(of\s*)?(the\s*)?(punjab partition|ppipa)', text_lower) and ("interim" in text_lower or "mesne profit" in text_lower or "rent deposit" in text_lower):
         errors.append("Citing Section 7 PPIPA 2012 for interim rent deposit (Section 12 PPIPA 2012 governs interim mesne profits/rent deposit).")
+    if re.search(r'section\s*13\s*(of\s*)?(the\s*)?(sindh rented premises|srpo)', text_lower) and ("eviction" in text_lower or "ejectment" in text_lower or "default" in text_lower):
+        errors.append("Citing Section 13 SRPO 1979 for eviction (Section 15 SRPO 1979 governs eviction; Section 13 is for tenant repairs).")
 
     # Rule 4: Provincial forum mismatches
     punjab_cities = ["lahore", "rawalpindi", "multan", "faisalabad", "dha lahore", "dha phase"]
