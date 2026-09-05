@@ -2,6 +2,7 @@ import os
 import sys
 import uuid
 import io
+import base64
 import urllib.parse
 from datetime import datetime, timezone, timedelta
 from typing import List, Dict, Any, Optional, cast
