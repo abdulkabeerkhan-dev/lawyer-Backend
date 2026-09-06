@@ -157,13 +157,32 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
     ident_clean = str(case_identifier).strip() if case_identifier else "Matter on Record"
     date_clean = str(year_or_date).strip() if year_or_date else ""
     
-    ident_clean = re.sub(r'\b(PLD|SCMR|MLD|YLR|PCRLJ|PCrLJ|CLC|CLD|PTD)\s+\d{4}\s+[A-Za-z\s]*\d+\b', '', ident_clean, flags=re.IGNORECASE).strip()
+    # 1. Check if case_identifier is an official law report citation (e.g., 2021 SCMR 1446, PLD 2016 SC 570, 2020 CLD 1104)
+    reporter_match = re.search(r'\b(\d{4})?\s*(PLD|SCMR|MLD|YLR|PCRLJ|PCrLJ|CLC|CLD|PTD|PTCL|PLC|PLC\s*\(CS\))\s+(\d{4}\s+)?([A-Za-z\s]+)?(\d+)\b', ident_clean, re.IGNORECASE)
+    if reporter_match:
+        year_part = reporter_match.group(1) or reporter_match.group(3) or date_clean
+        year_str = re.search(r'\b(19\d{2}|20\d{2})\b', str(year_part or ""))
+        yr = year_str.group(1) if year_str else (date_clean if date_clean.isdigit() else "")
+        journal = reporter_match.group(2).upper()
+        page = reporter_match.group(5)
+        bench = reporter_match.group(4).strip() if reporter_match.group(4) else ""
+        if bench:
+            return f"{yr} {journal} {bench} {page}".strip()
+        elif yr:
+            return f"{yr} {journal} {page}".strip()
+        else:
+            return f"{journal} {page}".strip()
+
+    # 2. Format docket number with court and year (e.g., Supreme Court of Pakistan — Civil Appeal No. 16 of 2020 (2023))
+    ident_clean = re.sub(r'\s+', ' ', ident_clean).strip()
     if not ident_clean:
         ident_clean = "Appellate Petition"
 
-    if date_clean and date_clean not in ident_clean:
-        return f"{court_clean} — {ident_clean} ({date_clean})"
-    return f"{court_clean} — {ident_clean}"
+    # Extract 4-digit year from date_clean
+    year_match = re.search(r'\b(19\d{2}|20\d{2})\b', date_clean)
+    year_fmt = f" ({year_match.group(1)})" if year_match and year_match.group(1) not in ident_clean else ""
+
+    return f"{court_clean} — {ident_clean}{year_fmt}"
 
 def clean_markdown_formatting(text: str) -> str:
     if not text:
