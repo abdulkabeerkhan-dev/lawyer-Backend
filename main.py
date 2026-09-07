@@ -785,7 +785,7 @@ STRICT INTAKE DIRECTIVES:
 
         async with httpx.AsyncClient(timeout=30.0) as client:
             voyage_response = await client.post(
-                voyage_api_url,
+                VOYAGE_API_URL,
                 json={"input": search_keywords_query, "model": voyage_model, "input_type": "query"},
                 headers={"Authorization": f"Bearer {voyage_api_key}", "Content-Type": "application/json"}
             )
@@ -1403,10 +1403,9 @@ async def get_full_judgment(
                     pass
 
             if not matches and os.environ.get("VOYAGE_API_KEY"):
-                voyage_api_url = "https://api.voyageai.com/v1/embeddings"
                 async with httpx.AsyncClient(timeout=15.0) as client:
                     v_res = await client.post(
-                        voyage_api_url,
+                        VOYAGE_API_URL,
                         json={"input": decoded_case_id, "model": os.environ.get("VOYAGE_MODEL", "voyage-law-2"), "input_type": "query"},
                         headers={"Authorization": f"Bearer {os.environ.get('VOYAGE_API_KEY')}", "Content-Type": "application/json"}
                     )
