@@ -190,8 +190,12 @@ def clean_markdown_formatting(text: str) -> str:
     text = text.replace("**", "")
     text = re.sub(r'\[Annexure.*?\]', '', text)
     
-    # Strip any meta-apologies, self-defense commentary, or reflection leakage
-    text = re.sub(r'^\s*(I appreciate[^\n]*\n|My Section[^\n]*\n|If you are alleging[^\n]*\n|Alternatively, if[^\n]*\n|LEGAL OPINION[^\n]*\n|Executive Summary[^\n]*\n)+', '', text.strip(), flags=re.IGNORECASE)
+    # Strip any meta-apologies, self-defense commentary, or reflection leakage before Section I
+    sec1_match = re.search(r'(#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*)', text, flags=re.IGNORECASE)
+    if sec1_match:
+        text = text[sec1_match.start():]
+    else:
+        text = re.sub(r'^\s*(I appreciate[^\n]*\n|However, I require[^\n]*\n|My prior draft[^\n]*\n|To regenerate[^\n]*\n|If you are alleging[^\n]*\n|LEGAL OPINION[^\n]*\n)+', '', text.strip(), flags=re.IGNORECASE)
     
     # Normalize duplicate or messy section headers to single standard markdown titles
     text = re.sub(r'#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*', '### I. EXECUTIVE SUMMARY & LEGAL OPINION', text, count=1, flags=re.IGNORECASE)
@@ -636,6 +640,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         query_text_raw = request.query_text.strip()
         query_words = query_text_raw.split()
         q_lower = query_text_raw.lower()
+        print(f"📥 [JOB {job_id}] DEBUG REQUEST: query_text={repr(request.query_text[:150])}, category={request.category}, messages_count={len(request.messages or [])}", file=sys.stderr, flush=True)
 
         def is_underspecified_query(text: str, history: list, has_doc: bool, has_img: bool) -> bool:
             # 1. Clean pasted UI metadata, precedent cards, or previous assistant reflection text
@@ -685,6 +690,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             return not (has_forum and has_city)
 
         is_intake_stage = is_underspecified_query(request.query_text, history_msgs, has_doc_text, has_image)
+        print(f"🔍 [JOB {job_id}] DEBUG INTAKE EVALUATION: is_intake_stage={is_intake_stage}, has_doc_text={has_doc_text}, has_image={has_image}", file=sys.stderr, flush=True)
 
         if is_intake_stage and async_anthropic_client and ANTHROPIC_API_KEY:
             print(f"📋 [JOB {job_id}] Executing STAGE 1 (Conversational Intake / Scoping)...", file=sys.stderr, flush=True)
