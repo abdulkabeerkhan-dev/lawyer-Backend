@@ -570,12 +570,12 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         mode = "simple_query"
         query_lower = request.query_text.lower()
         
-        if any(k in query_lower for k in ["draft", "petition", "bail application", "plaint", "written statement", "suit for"]):
-            mode = "drafting"
-        elif has_image or any(k in query_lower for k in ["analyze", "contract", "fir", "agreement", "document"]):
+        if has_image or any(k in query_lower for k in ["analyze", "contract", "fir", "agreement", "document"]):
             mode = "document_analysis"
         elif any(k in query_lower for k in ["case law", "precedent", "ruling", "judgment", "authority"]):
             mode = "caselaw_search"
+        elif any(k in query_lower for k in ["draft petition", "draft bail application", "draft plaint", "draft written statement"]):
+            mode = "drafting"
 
         _CHITCHAT_EXACT = {
             "hi", "hello", "hey", "salam", "assalam o alaikum", "thanks", "thank you", "ok", "okay", "test", "help", "good morning", "good evening"
