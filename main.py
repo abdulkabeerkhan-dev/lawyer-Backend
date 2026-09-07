@@ -83,10 +83,30 @@ async def dynamic_cors_middleware(request, call_next):
 PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
 PINECONE_INDEX_NAME = os.environ.get("PINECONE_INDEX_NAME", "legal-kb-pk-local")
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
+VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY")
+VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
 DEV_AUTH_BYPASS_ENABLED = os.environ.get("ENABLE_DEV_AUTH_BYPASS", "false").strip().lower() == "true"
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5")
+
+async def get_voyage_embedding(text: str) -> List[float]:
+    if not VOYAGE_API_KEY:
+        raise HTTPException(status_code=500, detail="VOYAGE_API_KEY is missing from environment.")
+    headers = {
+        "Authorization": f"Bearer {VOYAGE_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "input": [text],
+        "model": "voyage-law-2"
+    }
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        res = await client.post(VOYAGE_API_URL, headers=headers, json=payload)
+        if res.status_code != 200:
+            raise HTTPException(status_code=500, detail=f"Voyage AI embedding error: {res.text}")
+        data = res.json()
+        return data["data"][0]["embedding"]
 
 # INITIALIZE INFRASTRUCTURE CLIENTS
 pinecone_index = None
