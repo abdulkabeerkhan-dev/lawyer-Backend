@@ -638,7 +638,33 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         q_lower = query_text_raw.lower()
 
         def is_underspecified_query(text: str, history: list, has_doc: bool, has_img: bool) -> bool:
-            q = text.lower()
+            # 1. Clean pasted UI metadata, precedent cards, or previous assistant reflection text
+            lines = text.split("\n")
+            clean_lines = []
+            for line in lines:
+                l_lower = line.strip().lower()
+                # Skip pasted UI labels & precedent card artifacts
+                if any(l_lower.startswith(p) for p in [
+                    "mode:", "precedents found", "verified source", "issue", "holding", "why it's relevant",
+                    "statutes invoked", "view full judgment text", "legal memorandum", "copy legal memorandum",
+                    "export court pleading", "executive summary", "statutory text", "case precedents",
+                    "litigation strategy", "the legal landscape", "correct answer", "general", "criminal",
+                    "divorce & family", "govt & constitution", "corpora", "additionally relevant authorities",
+                    "sources searched:", "i appreciate the correction", "however, i require clarification"
+                ]):
+                    continue
+                # Skip known stock precedent titles pasted from UI
+                if any(title in l_lower for title in [
+                    "maulana abdul haque baloch", "iqbal zafar jhagra", "reference by the president", "aftekhab khan"
+                ]):
+                    continue
+                if line.strip():
+                    clean_lines.append(line.strip())
+
+            # Primary core query text
+            core_query = clean_lines[0] if clean_lines else text.strip()
+            q = core_query.lower()
+
             # Explicit execution override
             if any(cmd in q for cmd in ["draft now", "search now", "proceed with draft", "generate pleading", "run search"]):
                 return False
