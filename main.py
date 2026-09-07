@@ -634,6 +634,13 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 r_raw = m_dict.get("role") or getattr(m, "role", "user")
                 c_raw = str(m_dict.get("content") or getattr(m, "content", "") or "").strip()
                 if c_raw and c_raw != request.query_text:
+                    c_lower = c_raw.lower()
+                    # Skip history turns containing meta-reflections, self-defensive explanations, or card dumps
+                    if any(ref in c_lower for ref in [
+                        "i appreciate the correction", "however, i require clarification", "my prior draft was generic",
+                        "territorial mismatch", "precedents found", "maulana abdul haque baloch", "rashid baig", "reference by the president"
+                    ]):
+                        continue
                     r = "assistant" if str(r_raw).lower() in ("assistant", "system", "bot") else "user"
                     history_msgs.append({"role": r, "content": c_raw})
 
@@ -660,7 +667,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     continue
                 # Skip known stock precedent titles pasted from UI
                 if any(title in l_lower for title in [
-                    "maulana abdul haque baloch", "iqbal zafar jhagra", "reference by the president", "aftekhab khan"
+                    "maulana abdul haque baloch", "iqbal zafar jhagra", "reference by the president", "aftekhab khan", "rashid baig"
                 ]):
                     continue
                 if line.strip():
@@ -700,13 +707,19 @@ Your goal is to converse naturally and extract essential factual & jurisdictiona
 STRICT INTAKE DIRECTIVES:
 1. NO DRAFTING, NO SECTION HEADERS & NO CITATIONS: Do NOT output markdown section headers like '### I. EXECUTIVE SUMMARY' or 'CONTROLLING STATUTORY ARCHITECTURE'. Do NOT draft petitions, legal opinions, or prayers yet. Do NOT quote law reports (PLD, SCMR, CLD) or cite case law citations.
 2. CONVERSATIONAL SCOPING: Respond as a sharp, professional colleague. Briefly acknowledge the advocate's core premise in 1 sentence, then ask 2 to 4 direct, professional scoping questions:
+   - For Ex-Parte Decree Execution / Attachment: Ask (i) City & District of trial court; (ii) Forum (Civil Judge, Banking Court, Rent Controller, Family Court); (iii) Execution stage (warrant of attachment/possession issued); (iv) Application status (Order IX Rule 13 CPC filed along with Order XXI Rule 26 stay).
    - For Home Auction / Bank Attachment: Ask (i) City/Province of property; (ii) Stage of auction (Execution under Section 19 FIO 2001 after Banking Court decree vs. private sale under Section 15 FIO 2001 without court intervention); (iii) Property ownership (principal borrower vs. third-party mortgagor/guarantor); (iv) Immediate relief sought (Banking Court Order XXI CPC / Section 19 stay vs. High Court Article 199 writ).
    - For Demolition / Municipal Notice: Ask (i) City & Issuing Authority (LDA in Lahore, SBCA/KMC in Karachi, CDA in Islamabad); (ii) Alleged building violation; (iii) Notice timeline; (iv) Intended forum.
    - For Tax Freeze / Revenue Action: Ask (i) Issuing Authority (FBR Sec 140 vs Provincial SRB/PRA/KPRA); (ii) City/Province; (iii) Prior assessment notice status; (iv) Forum.
    - For General Writs / Petitions: Ask (i) Target High Court / District; (ii) Impugned action/order; (iii) Factual timeline; (iv) Urgent interim stay vs. final quashment.
 3. TONE: Direct, colleague-to-colleague, highly professional. Avoid boilerplate filler. End by inviting the advocate to provide these details or reply 'draft now' to proceed immediately."""
 
-            intake_messages = history_msgs + [{"role": "user", "content": request.query_text}]
+            # Clean query text for intake prompt
+            lines_clean = [l.strip() for l in request.query_text.split("\n") if l.strip()]
+            clean_user_q = lines_clean[0] if lines_clean else request.query_text.strip()
+            
+            # Send clean intake user message without old memory leaks
+            intake_messages = [{"role": "user", "content": clean_user_q}]
             
             intake_response = await async_anthropic_client.messages.create(
                 model=CLAUDE_MODEL,
