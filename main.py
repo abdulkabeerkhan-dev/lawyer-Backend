@@ -190,8 +190,8 @@ def clean_markdown_formatting(text: str) -> str:
     text = text.replace("**", "")
     text = re.sub(r'\[Annexure.*?\]', '', text)
     
-    # Strip any prefix headers before Section I (e.g. "LEGAL OPINION: ...", "Executive Summary")
-    text = re.sub(r'^\s*(LEGAL OPINION[^\n]*\n|Executive Summary[^\n]*\n)+', '', text.strip(), flags=re.IGNORECASE)
+    # Strip any meta-apologies, self-defense commentary, or reflection leakage
+    text = re.sub(r'^\s*(I appreciate[^\n]*\n|My Section[^\n]*\n|If you are alleging[^\n]*\n|Alternatively, if[^\n]*\n|LEGAL OPINION[^\n]*\n|Executive Summary[^\n]*\n)+', '', text.strip(), flags=re.IGNORECASE)
     
     # Normalize duplicate or messy section headers to single standard markdown titles
     text = re.sub(r'#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*', '### I. EXECUTIVE SUMMARY & LEGAL OPINION', text, count=1, flags=re.IGNORECASE)
@@ -589,7 +589,98 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
         search_keywords_query = _expand_legal_shorthand(search_keywords_query)
 
-        voyage_api_url = "https://api.voyageai.com/v1/embeddings"
+        # ==============================================================================
+        # TWO-STAGE CONVERSATIONAL LEGAL INTAKE STATE MACHINE
+        # ==============================================================================
+        history_msgs = []
+        if request.messages and isinstance(request.messages, list):
+            for m in request.messages:
+                m_dict = m.dict() if hasattr(m, "dict") else (m if isinstance(m, dict) else {})
+                r_raw = m_dict.get("role") or getattr(m, "role", "user")
+                c_raw = str(m_dict.get("content") or getattr(m, "content", "") or "").strip()
+                if c_raw and c_raw != request.query_text:
+                    r = "assistant" if str(r_raw).lower() in ("assistant", "system", "bot") else "user"
+                    history_msgs.append({"role": r, "content": c_raw})
+
+        query_text_raw = request.query_text.strip()
+        query_words = query_text_raw.split()
+        q_lower = query_text_raw.lower()
+
+        # Direct override keywords to force Stage 2 (Targeted Retrieval & Execution)
+        has_override_command = any(kw in q_lower for kw in [
+            "draft now", "search now", "proceed", "run search", "generate draft",
+            "draft petition", "draft suit", "draft memo", "draft application",
+            "give me section", "what is section", "text of section", "cite section"
+        ])
+
+        # Active conversation history (at least 2 previous turns) transitions to Execution
+        has_history_context = (len(history_msgs) >= 2)
+
+        # Check if key forum & statutory/factual parameters are already present in query
+        has_forum_specified = any(f in q_lower for f in [
+            "lahore high court", "lhc", "sindh high court", "shc", "peshawar high court", "phc",
+            "balochistan high court", "bhc", "islamabad high court", "ihc", "supreme court",
+            "banking court", "rent controller", "sessions court", "senior civil judge"
+        ])
+
+        has_detailed_context = len(query_words) >= 35 or has_doc_text or has_image or has_forum_specified
+
+        # Stage 1: Conversational Intake (Active when prompt is brief/underspecified without override/history)
+        is_intake_stage = (not has_override_command) and (not has_history_context) and (not has_detailed_context)
+
+        if is_intake_stage and async_anthropic_client and ANTHROPIC_API_KEY:
+            print(f"📋 [JOB {job_id}] Executing STAGE 1 (Conversational Intake / Scoping)...", file=sys.stderr, flush=True)
+            intake_system_prompt = """You are an appellate legal associate at a premier Pakistani law firm assisting a litigation partner.
+Your goal is to converse naturally and extract essential factual & jurisdictional parameters before researching or drafting.
+
+STRICT INTAKE DIRECTIVES:
+1. NO DRAFTING & NO CITATIONS: Do NOT draft petitions, legal opinions, prayers, or formal legal sections yet. Do NOT quote law reports (PLD, SCMR, CLD) or cite case law citations.
+2. CONVERSATIONAL SCOPING: Respond as a sharp, professional colleague. Briefly acknowledge the advocate's core premise (1-2 sentences), then ask 2 to 4 concise, targeted questions to clarify:
+   - Target Forum / High Court / District jurisdiction (e.g., Lahore High Court, High Court of Sindh at Karachi, Islamabad High Court, Special Banking Court).
+   - Nature of the impugned action/order & issuing body (e.g., informal FIA debit freeze, SBP circular, Section 15 auction notice, police inquiry).
+   - Key factual triggers & timeline (e.g., is there an FIR? has formal statutory notice been served?).
+   - Immediate tactical objective (e.g., urgent ex-parte stay, final quashment, memo).
+3. TONE: Direct, colleague-to-colleague, highly professional. Avoid boilerplate filler. End by inviting the advocate to provide these details or reply 'draft now' to proceed immediately."""
+
+            intake_messages = history_msgs + [{"role": "user", "content": request.query_text}]
+            
+            intake_response = await async_anthropic_client.messages.create(
+                model=CLAUDE_MODEL,
+                max_tokens=1000,
+                system=intake_system_prompt,
+                messages=intake_messages
+            )
+            intake_answer = "".join(getattr(b, "text", "") for b in intake_response.content).strip()
+            
+            inserted_row_id = str(uuid.uuid4())
+            if supabase:
+                db_insert = supabase.table("queries").insert({
+                    "user_id": authenticated_user_id,
+                    "query_text": request.query_text,
+                    "answer_text": intake_answer,
+                    "citations": [],
+                    "input_tokens": getattr(intake_response.usage, "input_tokens", 0),
+                    "output_tokens": getattr(intake_response.usage, "output_tokens", 0)
+                }).execute()
+                if db_insert.data and len(db_insert.data) > 0:
+                    inserted_row_id = str(db_insert.data[0].get("id", inserted_row_id))
+
+            if job_id in jobs_store:
+                jobs_store[job_id].update({
+                    "status": "done",
+                    "result": {
+                        "answer": intake_answer,
+                        "citations": [],
+                        "precedent_cards": [],
+                        "additional_authorities": [],
+                        "query_id": inserted_row_id,
+                        "mode": "intake",
+                        "truncated": False
+                    },
+                    "completed_at": datetime.now(timezone.utc),
+                    "continue_state": None,
+                })
+            return
         voyage_model = os.environ.get("VOYAGE_MODEL", "voyage-law-2")
         voyage_api_key = os.environ.get("VOYAGE_API_KEY")
         if not voyage_api_key:
