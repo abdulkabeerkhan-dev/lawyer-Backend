@@ -637,25 +637,31 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         query_words = query_text_raw.split()
         q_lower = query_text_raw.lower()
 
-        # Direct override keywords to force Stage 2 (Targeted Retrieval & Execution)
-        has_override_command = any(kw in q_lower for kw in [
-            "draft now", "search now", "proceed", "run search", "generate draft",
-            "draft petition", "draft suit", "draft memo", "draft application",
-            "give me section", "what is section", "text of section", "cite section"
-        ])
+        def is_underspecified_query(text: str, history: list, has_doc: bool, has_img: bool) -> bool:
+            q = text.lower()
+            # Explicit override to draft/search now
+            if any(cmd in q for cmd in ["draft now", "search now", "proceed with draft", "generate pleading", "give me section", "what is section", "text of section", "cite section"]):
+                return False
+            
+            if has_doc or has_img:
+                return False
+                
+            has_forum = any(f in q for f in [
+                "high court", "civil judge", "rent controller", "banking court", "tribunal", 
+                "lhc", "shc", "ihc", "phc", "bhc", "supreme court", "sessions court", "fbr"
+            ])
+            has_location = any(c in q for c in [
+                "lahore", "karachi", "islamabad", "rawalpindi", "faisalabad", "multan", 
+                "peshawar", "quetta", "sindh", "punjab", "balochistan", "kpk", "hyderabad", "sukkur"
+            ])
+            has_statute = any(s in q for s in [
+                "act", "ordinance", "section", "article", "order", "rule", "cpc", "crpc", "ppc", "sra", "qso"
+            ])
 
-        # Check if key forum & statutory/factual parameters are specified in current query
-        has_forum_specified = any(f in q_lower for f in [
-            "lahore high court", "lhc", "sindh high court", "shc", "peshawar high court", "phc",
-            "balochistan high court", "bhc", "islamabad high court", "ihc", "supreme court",
-            "banking court", "rent controller", "sessions court", "senior civil judge"
-        ])
+            # If missing critical parameters (forum AND (location OR statute)), it is underspecified!
+            return not (has_forum and (has_location or has_statute))
 
-        # A query is brief/underspecified if it has < 35 words, no attached docs/images, and no specific forum/statute specified
-        is_brief_query = (len(query_words) < 35) and (not has_doc_text) and (not has_image) and (not has_forum_specified)
-
-        # Stage 1: Conversational Intake (Active when current prompt is brief/underspecified without override command)
-        is_intake_stage = is_brief_query and (not has_override_command)
+        is_intake_stage = is_underspecified_query(request.query_text, history_msgs, has_doc_text, has_image)
 
         if is_intake_stage and async_anthropic_client and ANTHROPIC_API_KEY:
             print(f"📋 [JOB {job_id}] Executing STAGE 1 (Conversational Intake / Scoping)...", file=sys.stderr, flush=True)
@@ -663,13 +669,13 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 Your goal is to converse naturally and extract essential factual & jurisdictional parameters before researching or drafting.
 
 STRICT INTAKE DIRECTIVES:
-1. NO DRAFTING & NO CITATIONS: Do NOT draft petitions, legal opinions, prayers, or formal legal sections yet. Do NOT quote law reports (PLD, SCMR, CLD) or cite case law citations.
-2. CONVERSATIONAL SCOPING: Respond as a sharp, professional colleague. Briefly acknowledge the advocate's core premise (1-2 sentences), then ask 2 to 4 concise, targeted questions to clarify:
-   - Target Forum / High Court / District jurisdiction (e.g., Lahore High Court, High Court of Sindh at Karachi, Islamabad High Court, Special Banking Court).
-   - Nature of the impugned action/order & issuing body (e.g., informal FIA debit freeze, SBP circular, Section 15 auction notice, police inquiry).
-   - Key factual triggers & timeline (e.g., is there an FIR? has formal statutory notice been served?).
-   - Immediate tactical objective (e.g., urgent ex-parte stay, final quashment, memo).
-3. TONE: Direct, colleague-to-colleague, highly professional. Avoid boilerplate filler. End by inviting the advocate to provide these details or reply 'draft now' to proceed immediately."""
+1. NO DRAFTING, NO SECTION HEADERS & NO CITATIONS: Do NOT output markdown section headers like '### I. EXECUTIVE SUMMARY' or 'CONTROLLING STATUTORY ARCHITECTURE'. Do NOT draft petitions, legal opinions, or prayers yet. Do NOT quote law reports (PLD, SCMR, CLD) or cite case law.
+2. CONVERSATIONAL SCOPING: Respond as a sharp, professional colleague. Briefly acknowledge the advocate's core premise in 1-2 lines, then ask 2 to 4 direct, professional scoping questions:
+   - Authority & City (e.g., LDA in Lahore, SBCA in Karachi, CDA in Islamabad, or local corporation).
+   - Specific violation alleged in notice (setback, unauthorized commercialization, unapproved plan, or encroachment).
+   - Notice timeline (immediate 24-hour demolition threat vs. statutory show-cause window).
+   - Desired immediate relief (Article 199 High Court stay vs. Civil Court injunction before Senior Civil Judge).
+3. TONE: Direct, colleague-to-colleague, professional. Never output boilerplate filler. End by inviting the advocate to provide these details or reply 'draft now' to proceed immediately."""
 
             intake_messages = history_msgs + [{"role": "user", "content": request.query_text}]
             
