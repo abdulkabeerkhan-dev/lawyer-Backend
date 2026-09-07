@@ -386,11 +386,16 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         def extract_text_from_document_base64(b64_str: str, mime_type: str) -> str:
             if not b64_str:
                 return ""
-            raw_bytes = base64.b64decode(clean_base64_data(b64_str))
+            try:
+                raw_bytes = base64.b64decode(clean_base64_data(b64_str))
+            except Exception as b64_err:
+                print(f"⚠️ Base64 decode error: {b64_err}", file=sys.stderr)
+                return ""
+
             m = (mime_type or "").lower().strip()
             extracted_text = ""
             
-            # 1. Check if DOCX
+            # 1. Check if DOCX (by MIME or Zip PK header magic bytes)
             if "wordprocessingml" in m or "docx" in m or raw_bytes.startswith(b'PK\x03\x04'):
                 try:
                     import docx
@@ -403,7 +408,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 except Exception as docx_err:
                     print(f"⚠️ python-docx parsing failed: {docx_err}", file=sys.stderr)
                     try:
-                        # Fallback simple XML string extraction for docx without python-docx
                         import zipfile
                         with zipfile.ZipFile(io.BytesIO(raw_bytes)) as z:
                             if "word/document.xml" in z.namelist():
@@ -413,17 +417,17 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     except Exception as fallback_err:
                         print(f"⚠️ XML docx fallback extraction failed: {fallback_err}", file=sys.stderr)
 
-            # 2. Check if PDF
-            elif "pdf" in m or raw_bytes.startswith(b'%PDF'):
+            # 2. Check if PDF (by MIME or %PDF magic bytes)
+            if not extracted_text and ("pdf" in m or raw_bytes.startswith(b'%PDF')):
                 try:
                     import pypdf
                     reader = pypdf.PdfReader(io.BytesIO(raw_bytes))
                     pdf_pages = [page.extract_text() for page in reader.pages if page.extract_text()]
                     extracted_text = "\n".join(pdf_pages).strip()
-                except Exception:
-                    pass
+                except Exception as pdf_err:
+                    print(f"⚠️ pypdf extraction failed: {pdf_err}", file=sys.stderr)
 
-            # 3. Check plain text
+            # 3. Plain text fallback
             if not extracted_text:
                 try:
                     decoded = raw_bytes.decode("utf-8", errors="ignore").strip()
