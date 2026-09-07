@@ -639,8 +639,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
         def is_underspecified_query(text: str, history: list, has_doc: bool, has_img: bool) -> bool:
             q = text.lower()
-            # Explicit override to draft/search now
-            if any(cmd in q for cmd in ["draft now", "search now", "proceed with draft", "generate pleading", "give me section", "what is section", "text of section", "cite section"]):
+            # Explicit execution override
+            if any(cmd in q for cmd in ["draft now", "search now", "proceed with draft", "generate pleading", "run search"]):
                 return False
             
             if has_doc or has_img:
@@ -648,18 +648,15 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 
             has_forum = any(f in q for f in [
                 "high court", "civil judge", "rent controller", "banking court", "tribunal", 
-                "lhc", "shc", "ihc", "phc", "bhc", "supreme court", "sessions court", "fbr"
+                "lhc", "shc", "ihc", "phc", "bhc", "supreme court", "sessions court", "senior civil judge"
             ])
-            has_location = any(c in q for c in [
+            has_city = any(c in q for c in [
                 "lahore", "karachi", "islamabad", "rawalpindi", "faisalabad", "multan", 
                 "peshawar", "quetta", "sindh", "punjab", "balochistan", "kpk", "hyderabad", "sukkur"
             ])
-            has_statute = any(s in q for s in [
-                "act", "ordinance", "section", "article", "order", "rule", "cpc", "crpc", "ppc", "sra", "qso"
-            ])
 
-            # If missing critical parameters (forum AND (location OR statute)), it is underspecified!
-            return not (has_forum and (has_location or has_statute))
+            # To bypass intake, query MUST have BOTH a forum AND a city/location (or explicit override / attached doc)
+            return not (has_forum and has_city)
 
         is_intake_stage = is_underspecified_query(request.query_text, history_msgs, has_doc_text, has_image)
 
@@ -671,8 +668,8 @@ Your goal is to converse naturally and extract essential factual & jurisdictiona
 STRICT INTAKE DIRECTIVES:
 1. NO DRAFTING, NO SECTION HEADERS & NO CITATIONS: Do NOT output markdown section headers like '### I. EXECUTIVE SUMMARY' or 'CONTROLLING STATUTORY ARCHITECTURE'. Do NOT draft petitions, legal opinions, or prayers yet. Do NOT quote law reports (PLD, SCMR, CLD) or cite case law.
 2. CONVERSATIONAL SCOPING: Respond as a sharp, professional colleague. Briefly acknowledge the advocate's core premise in 1-2 lines, then ask 2 to 4 direct, professional scoping questions:
-   - Authority & City (e.g., LDA in Lahore, SBCA in Karachi, CDA in Islamabad, or local corporation).
-   - Specific violation alleged in notice (setback, unauthorized commercialization, unapproved plan, or encroachment).
+   - Authority & City (e.g., LDA in Lahore, SBCA/KMC in Karachi, CDA in Islamabad, or local corporation).
+   - Specific violation alleged in notice (setback violation, unauthorized commercial conversion, lack of approved plan, or encroachment).
    - Notice timeline (immediate 24-hour demolition threat vs. statutory show-cause window).
    - Desired immediate relief (Article 199 High Court stay vs. Civil Court injunction before Senior Civil Judge).
 3. TONE: Direct, colleague-to-colleague, professional. Never output boilerplate filler. End by inviting the advocate to provide these details or reply 'draft now' to proceed immediately."""
