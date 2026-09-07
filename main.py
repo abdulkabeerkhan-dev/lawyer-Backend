@@ -689,10 +689,14 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             core_query = clean_lines[0] if clean_lines else text.strip()
             q = core_query.lower()
 
-            if any(cmd in q for cmd in ["draft now", "search now", "proceed with draft", "generate pleading", "run search", "draft opinion", "find precedents", "legal memorandum"]):
+            # Only explicit user commands trigger Stage 2 drafting search immediately
+            if any(cmd in q for cmd in ["draft now", "search now", "proceed with draft", "generate pleading", "run search", "draft opinion"]):
                 return False
 
-            # Check ONLY the current prompt text (q) for specific forum AND city
+            # Fewer than 3 turns in conversation -> Intake mode
+            if len(history) < 3:
+                return True
+
             has_forum = any(f in q for f in [
                 "high court", "civil judge", "rent controller", "banking court", "tribunal", 
                 "lhc", "shc", "ihc", "phc", "bhc", "supreme court", "sessions court", "senior civil judge"
@@ -701,28 +705,29 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 "lahore", "karachi", "islamabad", "rawalpindi", "faisalabad", "multan", 
                 "peshawar", "quetta", "sindh", "punjab", "balochistan", "kpk", "hyderabad", "sukkur"
             ])
+            has_authority = any(a in q for a in [
+                "nepra", "lesco", "kelectric", "k-electric", "gepco", "fbr", "cda", "lda", "sbca", "kmc", "wapda", "bank", "pesco", "hesco", "mepco"
+            ])
 
-            return not (has_forum and has_city)
+            return not (has_forum and has_city and has_authority)
 
         is_intake_stage = is_underspecified_query(request.query_text, history_msgs, has_doc_text, has_image)
         print(f"🔍 [JOB {job_id}] DEBUG INTAKE EVALUATION: is_intake_stage={is_intake_stage}, has_doc_text={has_doc_text}, has_image={has_image}", file=sys.stderr, flush=True)
 
         if is_intake_stage:
             print(f"📋 [JOB {job_id}] Executing HARVEY-STYLE STAGE 1 Conversational Intake...", file=sys.stderr, flush=True)
-            intake_answer = "I understand your client is facing an urgent matter. To assist you effectively with the right legal strategy and forum, could you clarify: (1) Which city/jurisdiction is this matter in, and (2) What is the current procedural stage?"
+            intake_answer = "I understand how challenging and urgent this legal issue is for your client. To assist you effectively with the right legal strategy and forum, could you clarify: (1) Which city/province is the matter located in, (2) Which specific issuing authority or entity passed the order, and (3) What is the current enforcement status?"
             
             if async_anthropic_client and ANTHROPIC_API_KEY:
                 try:
-                    intake_system_prompt = """You are an elite Senior Legal Associate at a top-tier Pakistani law firm (Harvey AI standard).
-Your role is to engage in a natural, highly professional dialogue with the advocate to extract key factual and jurisdictional parameters before conducting vector searches or generating a legal memorandum.
+                    intake_system_prompt = """You are a Senior Partner at a premier Pakistani law firm in chambers (Harvey AI standard).
+Your role is to engage in a warm, highly professional dialogue with the advocate to extract key factual and jurisdictional parameters before conducting vector searches or generating a legal memorandum.
 
-CONVERSATIONAL INTAKE DIRECTIVES:
-1. NATURAL & PROFESSIONAL DIALOGUE: Speak as a sharp, empathetic colleague. Warmly acknowledge their premise in 1 sentence.
-2. CONCISE INQUIRY (1 TO 2 QUESTIONS MAX): Do NOT overwhelm the advocate with bulleted lists or 5 questions at once. Ask only 1 or 2 clear, direct scoping questions necessary to pin down the forum and jurisdiction.
-   - Example (Bank Auction / Home): "I can certainly help you draft an urgent stay application for that. To ensure we target the exact forum, could you tell me: (1) Which city is the property located in, and (2) Is the bank executing a Banking Court decree or proceeding privately under Section 15 of FIO 2001?"
-   - Example (Ex-Parte Decree): "I understand you need to suspend execution of an ex-parte decree. Could you confirm: (1) Which city/court passed the order, and (2) Has an application under Order IX Rule 13 CPC already been filed?"
-3. NO SECTION HEADERS, NO CITATIONS, NO CARDS: Do NOT output markdown headers like '### I. EXECUTIVE SUMMARY'. Do NOT cite law reports (PLD, SCMR) yet. Do NOT output precedent cards. Keep it strictly conversational prose.
-4. EASY OVERRIDE: End naturally by letting the advocate know they can answer your questions or type 'draft now' to proceed immediately."""
+STRICT INTAKE DIRECTIVES:
+1. EMPATHIC FIRST SENTENCE: Always begin your first sentence by warmly acknowledging and empathizing with the advocate's or client's specific legal issue (e.g., "I understand how urgent and challenging an arbitrary electricity tariff surcharge notice is for your client.").
+2. NO CITATIONS, NO LAW REPORTS, NO STATUTE QUOTES: Do NOT cite law reports (PLD, SCMR, CLD, YLR). Do NOT cite section numbers or statutory provisions (e.g., do NOT mention CrPC, CPC, PPC, NEPRA Act). Do NOT output markdown section headers like '### I. EXECUTIVE SUMMARY'. Keep it strictly conversational prose.
+3. PARTNER-IN-CHAMBERS CLARIFYING QUESTIONS: Ask 2 to 3 concise, highly practical scoping questions to extract missing factual & jurisdictional details (e.g. issuing authority/DISCO, target High Court city/province, current enforcement status).
+4. EASY OVERRIDE: End naturally by letting the advocate know they can answer your questions or type 'draft now' to proceed with drafting immediately."""
 
                     lines_clean = [l.strip() for l in request.query_text.split("\n") if l.strip()]
                     clean_user_q = lines_clean[0] if lines_clean else request.query_text.strip()
@@ -761,6 +766,7 @@ CONVERSATIONAL INTAKE DIRECTIVES:
                     "result": {
                         "answer": intake_answer,
                         "citations": [],
+                        "precedents": [],
                         "precedent_cards": [],
                         "additional_authorities": [],
                         "query_id": inserted_row_id,
