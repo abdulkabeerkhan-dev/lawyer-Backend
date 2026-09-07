@@ -1025,7 +1025,7 @@ CONSTRAINTS:
         lint_errors = lint_legal_output(raw_model_output, query_context=effective_user_query)
         if lint_errors:
             print(f"⚠️ Legal Guardrails Lint Errors detected: {lint_errors}. Triggering reflection loop...", file=sys.stderr)
-            reflection_prompt = f"Your draft contains critical legal errors: {'; '.join(lint_errors)}. Correct these errors immediately and regenerate the opinion."
+            reflection_prompt = f"CRITICAL INSTRUCTION: Do NOT output conversational text, self-defense, or meta-arguments explaining your draft. Automatically correct these legal feedback items: {'; '.join(lint_errors)}. You MUST immediately output the complete corrected opinion formatted strictly inside <<<CARDS>>> [...] <<<END_CARDS>>> and <<<ANSWER>>> [...] <<<END_ANSWER>>> tags using the 4-part legal format."
             reflection_messages = list(final_messages)
             reflection_messages.append({"role": "assistant", "content": raw_model_output})
             reflection_messages.append({"role": "user", "content": reflection_prompt})

@@ -95,10 +95,10 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
     # Rule 4: Provincial forum mismatches
     punjab_cities = ["lahore", "rawalpindi", "multan", "faisalabad", "dha lahore", "dha phase"]
     has_punjab_query = any(city in query_lower for city in punjab_cities)
-    if has_punjab_query or "lahore" in text_lower or "rawalpindi" in text_lower:
-        if "high court of balochistan" in text_lower or "balochistan high court" in text_lower:
+    if has_punjab_query:
+        if ("high court of balochistan" in text_lower or "balochistan high court" in text_lower) and not any(k in query_lower for k in ["balochistan", "quetta"]):
             errors.append("Territorial Mismatch: Recommending High Court of Balochistan for a Punjab/Lahore/Rawalpindi dispute.")
-        if "peshawar high court" in text_lower:
+        if ("peshawar high court" in text_lower) and not any(k in query_lower for k in ["peshawar", "khyber", "kp", "kpk"]):
             errors.append("Territorial Mismatch: Recommending Peshawar High Court for a Punjab dispute.")
 
     return errors
