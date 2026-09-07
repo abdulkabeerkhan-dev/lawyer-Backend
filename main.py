@@ -578,11 +578,11 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             mode = "caselaw_search"
 
         _CHITCHAT_EXACT = {
-            "hi", "hello", "hey", "salam", "assalam o alaikum", "thanks", "thank you", "ok", "okay", "test", "help"
+            "hi", "hello", "hey", "salam", "assalam o alaikum", "thanks", "thank you", "ok", "okay", "test", "help", "good morning", "good evening"
         }
         _norm_q = re.sub(r'[^\w\s]', '', request.query_text.strip().lower()).strip()
         if (not has_image) and _norm_q in _CHITCHAT_EXACT:
-            chitchat_answer = "Welcome to Section AI. Ask a specific Pakistani legal proposition, cite a court petition or statute (e.g., Section 42 Specific Relief Act), or describe a case fact pattern to begin."
+            chitchat_answer = "Hello! I am Section AI, your legal research and appellate drafting associate. How can I assist you with your matter or case today?"
             if job_id in jobs_store:
                 jobs_store[job_id].update({
                     "status": "done",
@@ -639,7 +639,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         search_keywords_query = _expand_legal_shorthand(search_keywords_query)
 
         # ==============================================================================
-        # TWO-STAGE CONVERSATIONAL LEGAL INTAKE STATE MACHINE
+        # TWO-STAGE CONVERSATIONAL LEGAL INTAKE STATE MACHINE (HARVEY AI SPECIFICATION)
         # ==============================================================================
         history_msgs = []
         if request.messages and isinstance(request.messages, list):
@@ -649,7 +649,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 c_raw = str(m_dict.get("content") or getattr(m, "content", "") or "").strip()
                 if c_raw and c_raw != request.query_text:
                     c_lower = c_raw.lower()
-                    # Skip history turns containing meta-reflections, self-defensive explanations, or card dumps
                     if any(ref in c_lower for ref in [
                         "i appreciate the correction", "however, i require clarification", "my prior draft was generic",
                         "territorial mismatch", "precedents found", "maulana abdul haque baloch", "rashid baig", "reference by the president"
@@ -664,12 +663,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         print(f"📥 [JOB {job_id}] DEBUG REQUEST: query_text={repr(request.query_text[:150])}, category={request.category}, messages_count={len(request.messages or [])}", file=sys.stderr, flush=True)
 
         def is_underspecified_query(text: str, history: list, has_doc: bool, has_img: bool) -> bool:
-            # 1. Clean pasted UI metadata, precedent cards, or previous assistant reflection text
             lines = text.split("\n")
             clean_lines = []
             for line in lines:
                 l_lower = line.strip().lower()
-                # Skip pasted UI labels & precedent card artifacts
                 if any(l_lower.startswith(p) for p in [
                     "mode:", "precedents found", "verified source", "issue", "holding", "why it's relevant",
                     "statutes invoked", "view full judgment text", "legal memorandum", "copy legal memorandum",
@@ -679,7 +676,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     "sources searched:", "i appreciate the correction", "however, i require clarification"
                 ]):
                     continue
-                # Skip known stock precedent titles pasted from UI
                 if any(title in l_lower for title in [
                     "maulana abdul haque baloch", "iqbal zafar jhagra", "reference by the president", "aftekhab khan", "rashid baig"
                 ]):
@@ -687,57 +683,57 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if line.strip():
                     clean_lines.append(line.strip())
 
-            # Primary core query text
             core_query = clean_lines[0] if clean_lines else text.strip()
             q = core_query.lower()
 
-            # Explicit execution override
-            if any(cmd in q for cmd in ["draft now", "search now", "proceed with draft", "generate pleading", "run search"]):
+            if any(cmd in q for cmd in ["draft now", "search now", "proceed with draft", "generate pleading", "run search", "draft opinion"]):
                 return False
             
             if has_doc or has_img:
                 return False
-                
-            has_forum = any(f in q for f in [
+
+            # If user has already exchanged turns in intake conversation (has history), we evaluate history combined
+            combined_context = q
+            if history:
+                combined_context += " " + " ".join([h.get("content", "").lower() for h in history if h.get("role") == "user"])
+
+            has_forum = any(f in combined_context for f in [
                 "high court", "civil judge", "rent controller", "banking court", "tribunal", 
                 "lhc", "shc", "ihc", "phc", "bhc", "supreme court", "sessions court", "senior civil judge"
             ])
-            has_city = any(c in q for c in [
+            has_city = any(c in combined_context for c in [
                 "lahore", "karachi", "islamabad", "rawalpindi", "faisalabad", "multan", 
                 "peshawar", "quetta", "sindh", "punjab", "balochistan", "kpk", "hyderabad", "sukkur"
             ])
 
-            # To bypass intake, query MUST have BOTH a forum AND a city/location (or explicit override / attached doc)
             return not (has_forum and has_city)
 
         is_intake_stage = is_underspecified_query(request.query_text, history_msgs, has_doc_text, has_image)
         print(f"🔍 [JOB {job_id}] DEBUG INTAKE EVALUATION: is_intake_stage={is_intake_stage}, has_doc_text={has_doc_text}, has_image={has_image}", file=sys.stderr, flush=True)
 
         if is_intake_stage and async_anthropic_client and ANTHROPIC_API_KEY:
-            print(f"📋 [JOB {job_id}] Executing STAGE 1 (Conversational Intake / Scoping)...", file=sys.stderr, flush=True)
-            intake_system_prompt = """You are an appellate legal associate at a premier Pakistani law firm assisting a litigation partner.
-Your goal is to converse naturally and extract essential factual & jurisdictional parameters before researching or drafting.
+            print(f"📋 [JOB {job_id}] Executing HARVEY-STYLE STAGE 1 Conversational Intake...", file=sys.stderr, flush=True)
+            intake_system_prompt = """You are an elite Senior Legal Associate at a top-tier Pakistani law firm (Harvey AI standard).
+Your role is to engage in a natural, highly professional dialogue with the advocate to extract key factual and jurisdictional parameters before conducting vector searches or generating a legal memorandum.
 
-STRICT INTAKE DIRECTIVES:
-1. NO DRAFTING, NO SECTION HEADERS & NO CITATIONS: Do NOT output markdown section headers like '### I. EXECUTIVE SUMMARY' or 'CONTROLLING STATUTORY ARCHITECTURE'. Do NOT draft petitions, legal opinions, or prayers yet. Do NOT quote law reports (PLD, SCMR, CLD) or cite case law citations.
-2. CONVERSATIONAL SCOPING: Respond as a sharp, professional colleague. Briefly acknowledge the advocate's core premise in 1 sentence, then ask 2 to 4 direct, professional scoping questions:
-   - For Ex-Parte Decree Execution / Attachment: Ask (i) City & District of trial court; (ii) Forum (Civil Judge, Banking Court, Rent Controller, Family Court); (iii) Execution stage (warrant of attachment/possession issued); (iv) Application status (Order IX Rule 13 CPC filed along with Order XXI Rule 26 stay).
-   - For Home Auction / Bank Attachment: Ask (i) City/Province of property; (ii) Stage of auction (Execution under Section 19 FIO 2001 after Banking Court decree vs. private sale under Section 15 FIO 2001 without court intervention); (iii) Property ownership (principal borrower vs. third-party mortgagor/guarantor); (iv) Immediate relief sought (Banking Court Order XXI CPC / Section 19 stay vs. High Court Article 199 writ).
-   - For Demolition / Municipal Notice: Ask (i) City & Issuing Authority (LDA in Lahore, SBCA/KMC in Karachi, CDA in Islamabad); (ii) Alleged building violation; (iii) Notice timeline; (iv) Intended forum.
-   - For Tax Freeze / Revenue Action: Ask (i) Issuing Authority (FBR Sec 140 vs Provincial SRB/PRA/KPRA); (ii) City/Province; (iii) Prior assessment notice status; (iv) Forum.
-   - For General Writs / Petitions: Ask (i) Target High Court / District; (ii) Impugned action/order; (iii) Factual timeline; (iv) Urgent interim stay vs. final quashment.
-3. TONE: Direct, colleague-to-colleague, highly professional. Avoid boilerplate filler. End by inviting the advocate to provide these details or reply 'draft now' to proceed immediately."""
+CONVERSATIONAL INTAKE DIRECTIVES:
+1. NATURAL & PROFESSIONAL DIALOGUE: Speak as a sharp, empathetic colleague. Warmly acknowledge their premise in 1 sentence.
+2. CONCISE INQUIRY (1 TO 2 QUESTIONS MAX): Do NOT overwhelm the advocate with bulleted lists or 5 questions at once. Ask only 1 or 2 clear, direct scoping questions necessary to pin down the forum and jurisdiction.
+   - Example (Bank Auction / Home): "I can certainly help you draft an urgent stay application for that. To ensure we target the exact forum, could you tell me: (1) Which city is the property located in, and (2) Is the bank executing a Banking Court decree or proceeding privately under Section 15 of FIO 2001?"
+   - Example (Ex-Parte Decree): "I understand you need to suspend execution of an ex-parte decree. Could you confirm: (1) Which city/court passed the order, and (2) Has an application under Order IX Rule 13 CPC already been filed?"
+3. NO SECTION HEADERS, NO CITATIONS, NO CARDS: Do NOT output markdown headers like '### I. EXECUTIVE SUMMARY'. Do NOT cite law reports (PLD, SCMR) yet. Do NOT output precedent cards. Keep it strictly conversational prose.
+4. EASY OVERRIDE: End naturally by letting the advocate know they can answer your questions or type 'draft now' to proceed immediately."""
 
             # Clean query text for intake prompt
             lines_clean = [l.strip() for l in request.query_text.split("\n") if l.strip()]
             clean_user_q = lines_clean[0] if lines_clean else request.query_text.strip()
             
-            # Send clean intake user message without old memory leaks
-            intake_messages = [{"role": "user", "content": clean_user_q}]
+            # Preserve history for multi-turn intake conversations
+            intake_messages = list(history_msgs) + [{"role": "user", "content": clean_user_q}]
             
             intake_response = await async_anthropic_client.messages.create(
                 model=CLAUDE_MODEL,
-                max_tokens=1000,
+                max_tokens=800,
                 system=intake_system_prompt,
                 messages=intake_messages
             )
