@@ -658,36 +658,20 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     history_msgs.append({"role": r, "content": c_raw})
 
         query_text_raw = request.query_text.strip()
-        query_words = query_text_raw.split()
-        q_lower = query_text_raw.lower()
-        print(f"📥 [JOB {job_id}] DEBUG REQUEST: query_text={repr(request.query_text[:150])}, category={request.category}, messages_count={len(request.messages or [])}", file=sys.stderr, flush=True)
+        # Strip frontend system bracket annotations [What you know...], [Earlier in this conversation:...], [Answer style:...]
+        cleaned_user_prompt = re.sub(r'\[.*?\]', '', query_text_raw, flags=re.DOTALL).strip()
+        if not cleaned_user_prompt:
+            cleaned_user_prompt = query_text_raw
+
+        query_words = cleaned_user_prompt.split()
+        q_lower = cleaned_user_prompt.lower()
+        print(f"📥 [JOB {job_id}] DEBUG REQUEST: query_text={repr(cleaned_user_prompt[:150])}, category={request.category}, messages_count={len(request.messages or [])}", file=sys.stderr, flush=True)
 
         def is_underspecified_query(text: str, history: list, has_doc: bool, has_img: bool) -> bool:
             if has_doc or has_img:
                 return False
 
-            lines = text.split("\n")
-            clean_lines = []
-            for line in lines:
-                l_lower = line.strip().lower()
-                if any(l_lower.startswith(p) for p in [
-                    "mode:", "precedents found", "verified source", "issue", "holding", "why it's relevant",
-                    "statutes invoked", "view full judgment text", "legal memorandum", "copy legal memorandum",
-                    "export court pleading", "executive summary", "statutory text", "case precedents",
-                    "litigation strategy", "the legal landscape", "correct answer", "general", "criminal",
-                    "divorce & family", "govt & constitution", "corpora", "additionally relevant authorities",
-                    "sources searched:", "i appreciate the correction", "however, i require clarification"
-                ]):
-                    continue
-                if any(title in l_lower for title in [
-                    "maulana abdul haque baloch", "iqbal zafar jhagra", "reference by the president", "aftekhab khan", "rashid baig", "muhammad mubeen-us-salam"
-                ]):
-                    continue
-                if line.strip():
-                    clean_lines.append(line.strip())
-
-            core_query = clean_lines[0] if clean_lines else text.strip()
-            q = core_query.lower()
+            q = text.lower().strip()
 
             # Only explicit user commands trigger Stage 2 drafting search immediately
             if any(cmd in q for cmd in ["draft now", "search now", "proceed with draft", "generate pleading", "run search", "draft opinion"]):
@@ -711,7 +695,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             return not (has_forum and has_city and has_authority)
 
-        is_intake_stage = is_underspecified_query(request.query_text, history_msgs, has_doc_text, has_image)
+        is_intake_stage = is_underspecified_query(cleaned_user_prompt, history_msgs, has_doc_text, has_image)
         print(f"🔍 [JOB {job_id}] DEBUG INTAKE EVALUATION: is_intake_stage={is_intake_stage}, has_doc_text={has_doc_text}, has_image={has_image}", file=sys.stderr, flush=True)
 
         if is_intake_stage:
@@ -729,10 +713,7 @@ STRICT INTAKE DIRECTIVES:
 3. PARTNER-IN-CHAMBERS CLARIFYING QUESTIONS: Ask 2 to 3 concise, highly practical scoping questions to extract missing factual & jurisdictional details (e.g. issuing authority/DISCO, target High Court city/province, current enforcement status).
 4. EASY OVERRIDE: End naturally by letting the advocate know they can answer your questions or type 'draft now' to proceed with drafting immediately."""
 
-                    lines_clean = [l.strip() for l in request.query_text.split("\n") if l.strip()]
-                    clean_user_q = lines_clean[0] if lines_clean else request.query_text.strip()
-                    
-                    intake_messages = [{"role": "user", "content": clean_user_q}]
+                    intake_messages = [{"role": "user", "content": cleaned_user_prompt}]
                     
                     intake_response = await async_anthropic_client.messages.create(
                         model=CLAUDE_MODEL,
