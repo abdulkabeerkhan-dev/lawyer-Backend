@@ -201,6 +201,37 @@ def clean_markdown_formatting(text: str) -> str:
     
     return text.strip()
 
+def format_clean_judgment_paragraphs(text: str) -> str:
+    if not text:
+        return ""
+    
+    t = text.replace("\r\n", "\n").replace("\r", "\n")
+    t = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\ufffd]', '', t)
+    
+    lines = [line.strip() for line in t.split("\n")]
+    cleaned_lines = []
+    
+    for line in lines:
+        if not line:
+            if cleaned_lines and cleaned_lines[-1] != "":
+                cleaned_lines.append("")
+            continue
+        
+        if cleaned_lines and cleaned_lines[-1] != "":
+            prev = cleaned_lines[-1]
+            is_new_para = bool(re.match(r'^\s*(\d+[\.\)]|\([0-9a-zA-Z]+\)|\[\d+\]|[A-Z\s]{4,}:|\bJUDGMENT\b|\bORDER\b|\bPRESENT\b)', line))
+            if not prev.endswith(('.', ':', '?', '!', ';')) and not is_new_para:
+                cleaned_lines[-1] = f"{prev} {line}"
+                continue
+                
+        cleaned_lines.append(line)
+        
+    res = "\n".join(cleaned_lines)
+    res = re.sub(r'\n{3,}', '\n\n', res)
+    res = re.sub(r'\n(\d+[\.\)]\s+)', r'\n\n\1', res)
+    res = re.sub(r'[ \t]{2,}', ' ', res)
+    return res.strip()
+
 def strip_control_characters(text: str) -> str:
     if not text:
         return ""
@@ -1277,6 +1308,7 @@ async def get_full_judgment(
                     if len(r.get("full_text", "")) > len(best_match.get("full_text", "")):
                         best_match = r
                 if len(best_match.get("full_text", "")) > 100:
+                    best_match["full_text"] = format_clean_judgment_paragraphs(best_match.get("full_text", ""))
                     return best_match
         except Exception as e:
             print(f"⚠️ Supabase check notice: {e}")
@@ -1354,13 +1386,14 @@ async def get_full_judgment(
                 
                 if full_reconstructed_parts:
                     first_meta = sorted_chunks[0].get("metadata", {}) if isinstance(sorted_chunks[0], dict) else getattr(sorted_chunks[0], "metadata", {}) or {}
+                    assembled_raw = "\n\n".join(full_reconstructed_parts)
                     return {
                         "case_id": decoded_case_id,
                         "case_title": first_meta.get("title") or first_meta.get("case_title") or decoded_case_id,
                         "neutral_citation": first_meta.get("citation") or decoded_case_id,
                         "court": first_meta.get("court", "Supreme Court / High Court of Pakistan"),
                         "judgment_year": first_meta.get("year", 2024),
-                        "full_text": "\n\n".join(full_reconstructed_parts),
+                        "full_text": format_clean_judgment_paragraphs(assembled_raw),
                         "reassembled_from_chunks": True
                     }
                 
@@ -1376,6 +1409,7 @@ async def get_full_judgment(
                 court_val = clean_court_name(str(first_meta.get("court", "")))
                 title_val = str(first_meta.get("title") or first_meta.get("case_title", decoded_case_id))
                 citation_val = format_neutral_citation(court_val, decoded_case_id, str(first_meta.get("date") or first_meta.get("year") or ""))
+                assembled_raw = "\n\n".join(full_reconstructed_parts)
 
                 return {
                     "case_id": decoded_case_id,
@@ -1383,7 +1417,7 @@ async def get_full_judgment(
                     "neutral_citation": citation_val,
                     "court_name": court_val,
                     "decision_date": str(first_meta.get("date") or first_meta.get("year") or ""),
-                    "full_text": "\n\n".join(full_reconstructed_parts)
+                    "full_text": format_clean_judgment_paragraphs(assembled_raw)
                 }
         except Exception as e:
             print(f"⚠️ Pinecone retrieval error: {e}")
