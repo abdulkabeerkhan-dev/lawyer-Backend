@@ -613,20 +613,18 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             "give me section", "what is section", "text of section", "cite section"
         ])
 
-        # Active conversation history (at least 2 previous turns) transitions to Execution
-        has_history_context = (len(history_msgs) >= 2)
-
-        # Check if key forum & statutory/factual parameters are already present in query
+        # Check if key forum & statutory/factual parameters are specified in current query
         has_forum_specified = any(f in q_lower for f in [
             "lahore high court", "lhc", "sindh high court", "shc", "peshawar high court", "phc",
             "balochistan high court", "bhc", "islamabad high court", "ihc", "supreme court",
             "banking court", "rent controller", "sessions court", "senior civil judge"
         ])
 
-        has_detailed_context = len(query_words) >= 35 or has_doc_text or has_image or has_forum_specified
+        # A query is brief/underspecified if it has < 35 words, no attached docs/images, and no specific forum/statute specified
+        is_brief_query = (len(query_words) < 35) and (not has_doc_text) and (not has_image) and (not has_forum_specified)
 
-        # Stage 1: Conversational Intake (Active when prompt is brief/underspecified without override/history)
-        is_intake_stage = (not has_override_command) and (not has_history_context) and (not has_detailed_context)
+        # Stage 1: Conversational Intake (Active when current prompt is brief/underspecified without override command)
+        is_intake_stage = is_brief_query and (not has_override_command)
 
         if is_intake_stage and async_anthropic_client and ANTHROPIC_API_KEY:
             print(f"📋 [JOB {job_id}] Executing STAGE 1 (Conversational Intake / Scoping)...", file=sys.stderr, flush=True)
