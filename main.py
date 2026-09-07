@@ -733,7 +733,7 @@ CONVERSATIONAL INTAKE DIRECTIVES:
             
             intake_response = await async_anthropic_client.messages.create(
                 model=CLAUDE_MODEL,
-                max_tokens=800,
+                max_tokens=300,
                 system=intake_system_prompt,
                 messages=intake_messages
             )
