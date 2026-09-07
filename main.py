@@ -288,12 +288,20 @@ class AssociateStatusPayload(BaseModel):
     status: str
 
 class ImagePayload(BaseModel):
-    image_base64: str
-    image_mime_type: str
+    image_base64: Optional[str] = None
+    image_mime_type: Optional[str] = None
+    base64: Optional[str] = None
+    file_base64: Optional[str] = None
+    data: Optional[str] = None
+    mime_type: Optional[str] = None
+    type: Optional[str] = None
+    name: Optional[str] = None
 
 class QueryRequest(BaseModel):
     query_text: str
     images: Optional[List[ImagePayload]] = None
+    documents: Optional[List[ImagePayload]] = None
+    files: Optional[List[ImagePayload]] = None
     category: str = "general"
 
 class FeedbackRequest(BaseModel):
@@ -426,23 +434,42 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             return extracted_text
 
-        images_list = request.images or []
-        check_user_quota(authenticated_user_id, num_images_requested=len(images_list))
+        all_uploads = (request.images or []) + (request.documents or []) + (request.files or [])
+        check_user_quota(authenticated_user_id, num_images_requested=len(all_uploads))
 
         valid_vision_images = []
         extracted_doc_texts = []
 
-        for img in images_list:
-            m = (img.image_mime_type or "").lower().strip()
-            if m.startswith("image/") and m not in ["image/vnd.openxmlformats-officedocument.wordprocessingml.document", "image/pdf"]:
-                valid_vision_images.append(img)
-            else:
-                doc_t = extract_text_from_document_base64(img.image_base64, img.image_mime_type)
-                if doc_t:
-                    extracted_doc_texts.append(doc_t)
-                else:
-                    # Treat as image fallback if unknown mime
-                    valid_vision_images.append(img)
+        for item in all_uploads:
+            # Flexible resolution of base64 string & mime type regardless of key names sent by frontend
+            raw_b64 = item.image_base64 or item.base64 or item.file_base64 or item.data or ""
+            raw_mime = item.image_mime_type or item.mime_type or item.type or ""
+            name_lower = (item.name or "").lower()
+
+            if not raw_mime and name_lower:
+                if name_lower.endswith(".docx"): raw_mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                elif name_lower.endswith(".pdf"): raw_mime = "application/pdf"
+                elif name_lower.endswith(".png"): raw_mime = "image/png"
+                elif name_lower.endswith((".jpg", ".jpeg")): raw_mime = "image/jpeg"
+
+            m = raw_mime.lower().strip()
+            
+            # Extract doc text if docx / pdf / text
+            doc_t = extract_text_from_document_base64(raw_b64, m)
+            if doc_t:
+                extracted_doc_texts.append(doc_t)
+            elif m.startswith("image/"):
+                # Create a standardized item for vision payload
+                norm_item = ImagePayload(
+                    image_base64=raw_b64,
+                    image_mime_type=m if m != "image/jpg" else "image/jpeg"
+                )
+                valid_vision_images.append(norm_item)
+            elif raw_b64:
+                # Fallback: attempt extraction without mime
+                doc_t_fallback = extract_text_from_document_base64(raw_b64, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                if doc_t_fallback:
+                    extracted_doc_texts.append(doc_t_fallback)
 
         has_image = len(valid_vision_images) > 0
         has_doc_text = len(extracted_doc_texts) > 0
