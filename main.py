@@ -297,12 +297,17 @@ class ImagePayload(BaseModel):
     type: Optional[str] = None
     name: Optional[str] = None
 
+class ChatMessagePayload(BaseModel):
+    role: Optional[str] = "user"
+    content: Optional[str] = ""
+
 class QueryRequest(BaseModel):
     query_text: str
     images: Optional[List[ImagePayload]] = None
     documents: Optional[List[ImagePayload]] = None
     files: Optional[List[ImagePayload]] = None
     category: str = "general"
+    messages: Optional[List[ChatMessagePayload]] = None
 
 class FeedbackRequest(BaseModel):
     query_id: str
@@ -968,9 +973,22 @@ CONSTRAINTS:
 - NEVER write custom section titles like "### BANK ACCOUNT FREEZE/BLOCK JURISPRUDENCE".
 - NEVER state "I cannot synthesize case law" or "I must advise that the database context does not contain reported judgments". Formulate a complete Senior Advocate legal opinion using Section 550 Cr.P.C., Section 516-A/523 Cr.P.C., AMLA 2010, NAO 1999, and Article 199 writ jurisdiction authoritatively inside the 4-part legal opinion layout.
 - ABSOLUTELY NO DOUBLE ASTERISKS (**): DO NOT write double asterisks (**) anywhere in the response text under any circumstances. All titles, statute names, and bullet headers MUST be written as plain text without any ** asterisks.
+- CONVERSATIONAL CLARIFICATION DIRECTIVE: If the user query is broad, open-ended, or under-specified (e.g. 'filing a writ application in high court', 'how to file a petition'), provide an authoritative legal baseline AND ALWAYS add a sub-heading in Section I titled 'CLARIFYING QUESTIONS FOR PRECISE ADVICE' containing 2 to 3 concise, targeted questions (e.g., subject matter of writ, specific administrative order challenged, target High Court territory) to interactively guide the advocate.
+- STATUTORY SECTION LOOKUP DIRECTIVE: If the user asks for a specific section or article (e.g., 'give me section 491 CrPC', 'text of section 12(2) CPC'), state/quote the exact statutory provision in Section II, explain its legal scope, maintainable forum, and key judicial principles cleanly within the 4-part layout.
 - Follow the NAME -> EXPLAIN -> APPLY legal reasoning structure for every statutory provision and judicial precedent.
 - NEVER truncate mid-sentence. Budget output length cleanly.
 """
+
+        # Assemble conversation history turns if provided by frontend
+        history_msgs = []
+        if request.messages and isinstance(request.messages, list):
+            for m in request.messages:
+                m_dict = m.dict() if hasattr(m, "dict") else (m if isinstance(m, dict) else {})
+                r_raw = m_dict.get("role") or getattr(m, "role", "user")
+                c_raw = str(m_dict.get("content") or getattr(m, "content", "") or "").strip()
+                if c_raw and c_raw != request.query_text:
+                    r = "assistant" if str(r_raw).lower() in ("assistant", "system", "bot") else "user"
+                    history_msgs.append({"role": r, "content": c_raw})
 
         if has_image:
             user_msg_content = []
@@ -985,10 +1003,10 @@ CONSTRAINTS:
                 })
             doc_prompt_text = f"Context from Legal Database:\n{combined_context}\n\nUser Question / Document Instruction: {effective_user_query or 'Thoroughly analyze the attached legal document and provide a complete Senior Advocate opinion.'}"
             user_msg_content.append({"type": "text", "text": doc_prompt_text})
-            final_messages = [{"role": "user", "content": user_msg_content}]
+            final_messages = history_msgs + [{"role": "user", "content": user_msg_content}]
         else:
             claude_user_message = f"Context from Legal Database:\n{combined_context}\n\nQuestion: {effective_user_query}"
-            final_messages = [{"role": "user", "content": claude_user_message}]
+            final_messages = history_msgs + [{"role": "user", "content": claude_user_message}]
 
         from core.legal_guardrails import lint_legal_output, SYSTEM_LEGAL_DIRECTIVE
 
