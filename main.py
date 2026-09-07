@@ -663,6 +663,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         print(f"📥 [JOB {job_id}] DEBUG REQUEST: query_text={repr(request.query_text[:150])}, category={request.category}, messages_count={len(request.messages or [])}", file=sys.stderr, flush=True)
 
         def is_underspecified_query(text: str, history: list, has_doc: bool, has_img: bool) -> bool:
+            if has_doc or has_img:
+                return False
+
             lines = text.split("\n")
             clean_lines = []
             for line in lines:
@@ -677,7 +680,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 ]):
                     continue
                 if any(title in l_lower for title in [
-                    "maulana abdul haque baloch", "iqbal zafar jhagra", "reference by the president", "aftekhab khan", "rashid baig"
+                    "maulana abdul haque baloch", "iqbal zafar jhagra", "reference by the president", "aftekhab khan", "rashid baig", "muhammad mubeen-us-salam"
                 ]):
                     continue
                 if line.strip():
@@ -686,22 +689,15 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             core_query = clean_lines[0] if clean_lines else text.strip()
             q = core_query.lower()
 
-            if any(cmd in q for cmd in ["draft now", "search now", "proceed with draft", "generate pleading", "run search", "draft opinion"]):
-                return False
-            
-            if has_doc or has_img:
+            if any(cmd in q for cmd in ["draft now", "search now", "proceed with draft", "generate pleading", "run search", "draft opinion", "find precedents", "legal memorandum"]):
                 return False
 
-            # If user has already exchanged turns in intake conversation (has history), we evaluate history combined
-            combined_context = q
-            if history:
-                combined_context += " " + " ".join([h.get("content", "").lower() for h in history if h.get("role") == "user"])
-
-            has_forum = any(f in combined_context for f in [
+            # Check ONLY the current prompt text (q) for specific forum AND city
+            has_forum = any(f in q for f in [
                 "high court", "civil judge", "rent controller", "banking court", "tribunal", 
                 "lhc", "shc", "ihc", "phc", "bhc", "supreme court", "sessions court", "senior civil judge"
             ])
-            has_city = any(c in combined_context for c in [
+            has_city = any(c in q for c in [
                 "lahore", "karachi", "islamabad", "rawalpindi", "faisalabad", "multan", 
                 "peshawar", "quetta", "sindh", "punjab", "balochistan", "kpk", "hyderabad", "sukkur"
             ])
