@@ -204,18 +204,91 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
 
     return f"{court_clean} — {ident_clean}{year_fmt}"
 
+def sanitize_chat_history(raw_messages: Optional[List[Any]], current_user_query: str) -> List[Dict[str, Any]]:
+    """
+    Sanitizes the chat history turns before passing them to the LLM:
+    - Only includes user prompts and assistant answers from the CURRENT session.
+    - Strips out system/developer turns (system instructions must reside purely in the system message parameter).
+    - Purges any injected developer feedback, benchmark rules, guardrail logs, internal monologues, or metadata blocks.
+    """
+    if not raw_messages or not isinstance(raw_messages, list):
+        return []
+    
+    sanitized = []
+    current_q_clean = current_user_query.strip().lower()
+    
+    contamination_markers = [
+        "critical instruction", "guardrail evaluation", "benchmark rule", 
+        "lint errors detected", "system directive", "developer note", 
+        "internal verification", "validation checklist", "forum selection: ✓",
+        "shall i now re-output", "i need to review", "article 199 forum selection: ✓",
+        "shall i proceed to output", "i acknowledge the critical instruction"
+    ]
+    
+    for m in raw_messages:
+        m_dict = m.dict() if hasattr(m, "dict") else (m if isinstance(m, dict) else {})
+        r_raw = str(m_dict.get("role") or getattr(m, "role", "user")).lower().strip()
+        
+        # System instructions must reside purely in the system message parameter
+        if r_raw in ("system", "developer"):
+            continue
+            
+        c_raw = str(m_dict.get("content") or getattr(m, "content", "") or "").strip()
+        if not c_raw:
+            continue
+            
+        # Purge any turns containing cross-test contamination or internal reflection monologues
+        if any(marker in c_raw.lower() for marker in contamination_markers):
+            continue
+            
+        # Clean out UI bracket annotations, cards tags, sources searched footers
+        c_clean = re.sub(r'\[(Vision Context|Earlier in this conversation|What you know|System).*?\]', '', c_raw, flags=re.DOTALL).strip()
+        c_clean = re.sub(r'<<<CARDS>>>.*?<<<END_CARDS>>>', '', c_clean, flags=re.DOTALL).strip()
+        c_clean = re.sub(r'Sources Searched:.*', '', c_clean, flags=re.DOTALL).strip()
+        c_clean = re.sub(r'ADDITIONAL RELEVANT AUTHORITIES:.*', '', c_clean, flags=re.DOTALL).strip()
+        c_clean = c_clean.strip()
+        
+        if not c_clean or c_clean.lower() == current_q_clean:
+            continue
+            
+        role = "assistant" if r_raw in ("assistant", "bot") else "user"
+        sanitized.append({"role": role, "content": c_clean})
+        
+    return sanitized
+
 def clean_markdown_formatting(text: str) -> str:
     if not text:
         return ""
     text = text.replace("**", "")
     text = re.sub(r'\[Annexure.*?\]', '', text)
     
-    # Strip any meta-apologies, self-defense commentary, or reflection leakage before Section I
-    sec1_match = re.search(r'(#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*)', text, flags=re.IGNORECASE)
-    if sec1_match:
-        text = text[sec1_match.start():]
+    # 1. Strip any internal verification monologue or checklist before Court Heading
+    court_match = re.search(r'(IN THE (HIGH COURT|COURT OF|SUPREME COURT|DISTRICT COURT|BANKING COURT|SENIOR CIVIL)[^\n]*)', text, flags=re.IGNORECASE)
+    if court_match:
+        prefix = text[:court_match.start()]
+        if any(kw in prefix.lower() for kw in ["i need to review", "validation checklist", "article 199", "forum selection", "✓", "shall i now", "internal thinking", "i have reviewed", "i acknowledge"]):
+            text = text[court_match.start():]
     else:
-        text = re.sub(r'^\s*(I acknowledge[^\n]*\n|I appreciate[^\n]*\n|However, I require[^\n]*\n|My prior draft[^\n]*\n|To regenerate[^\n]*\n|If you are alleging[^\n]*\n|LEGAL OPINION[^\n]*\n|The opinion I provided[^\n]*\n|Please provide[^\n]*\n)+', '', text.strip(), flags=re.IGNORECASE)
+        # Strip any meta-apologies, self-defense commentary, or reflection leakage before Section I
+        sec1_match = re.search(r'(#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*)', text, flags=re.IGNORECASE)
+        if sec1_match:
+            text = text[sec1_match.start():]
+        else:
+            text = re.sub(r'^\s*(I acknowledge[^\n]*\n|I appreciate[^\n]*\n|However, I require[^\n]*\n|My prior draft[^\n]*\n|To regenerate[^\n]*\n|If you are alleging[^\n]*\n|LEGAL OPINION[^\n]*\n|The opinion I provided[^\n]*\n|Please provide[^\n]*\n|I need to review[^\n]*\n|Article 199 Forum Selection[^\n]*\n)+', '', text.strip(), flags=re.IGNORECASE)
+    
+    # Filter out individual lines matching self-audit monologues
+    lines = text.split("\n")
+    cleaned_lines = []
+    for line in lines:
+        l_lower = line.strip().lower()
+        if any(l_lower.startswith(pat) for pat in [
+            "i need to review the draft", "shall i now re-output", "forum selection: ✓", 
+            "validation checklist:", "internal verification:", "shall i proceed to output",
+            "article 199 forum selection: ✓", "i will now output the corrected petition"
+        ]):
+            continue
+        cleaned_lines.append(line)
+    text = "\n".join(cleaned_lines)
     
     # Normalize duplicate or messy section headers to single standard markdown titles
     text = re.sub(r'#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*', '### I. EXECUTIVE SUMMARY & LEGAL OPINION', text, count=1, flags=re.IGNORECASE)
@@ -831,16 +904,17 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
 HOW YOU WORK:
 1. BE CONVERSATIONAL BY DEFAULT. Most replies should read like a colleague talking, in plain prose. Do NOT impose section headers, numbered parts, or a fixed template on casual questions, clarifying exchanges, or short factual answers. Reserve formal structure (headers, numbered sections) for when you are actually delivering a finished legal opinion, memo, or draft the advocate asked for.
-2. ASK BEFORE YOU ASSUME, BUT DON'T INTERROGATE. When a request is genuinely underspecified for what's being asked -- e.g. "help me write a writ petition" without knowing what order is being challenged, in which forum, on what grounds -- ask 1-2 sharp, specific follow-up questions before doing the work, the way a senior associate would before starting a draft. Don't ask questions whose answers don't change what you'd do. If you can give a useful provisional answer while also asking what would sharpen it, do both in one reply rather than blocking on the question.
-3. USE THE search_case_law TOOL DELIBERATELY, NOT REFLEXIVELY. Call it when the answer genuinely benefits from grounding in actual Pakistani judgments or you need to verify a specific citation -- not for every message, and not before you understand what the advocate actually needs. Skip it for casual conversation, definitions you already know confidently, or when you're still gathering facts via clarifying questions. When you do call it, make the query specific (legal issue + jurisdiction + known statute), because vague searches return junk.
-4. NEVER FABRICATE. Only cite cases, citations, or courts that the search tool actually returned. If the tool returns nothing on point, say so plainly and reason from statute and settled principle instead -- do not invent a precedent to sound authoritative.
-5. STAY IN YOUR LANE. You discuss anything within Pakistani law -- procedure, strategy, drafting, doctrine, practical advice for advocates -- conversationally and thoroughly. If asked something with nothing to do with law or legal practice, say so and redirect.
-6. WHEN YOU DO PRODUCE A FORMAL OPINION OR DRAFT, and only then, you may append a machine-readable citation block for the UI, using this exact format, containing ONLY precedents the search tool actually returned:
+2. CRITICAL DRAFTING DIRECTIVE: Do NOT output your internal thinking, validation checklists, or meta-commentary. Do NOT ask for permission to output the draft. If the user commands drafting or the intake context is complete, output the full, court-ready pleading immediately, beginning directly with the Court Heading.
+3. ASK BEFORE YOU ASSUME, BUT DON'T INTERROGATE. When a request is genuinely underspecified for what's being asked -- e.g. "help me write a writ petition" without knowing what order is being challenged, in which forum, on what grounds -- ask 1-2 sharp, specific follow-up questions before doing the work, the way a senior associate would before starting a draft. Don't ask questions whose answers don't change what you'd do. If you can give a useful provisional answer while also asking what would sharpen it, do both in one reply rather than blocking on the question.
+4. USE THE search_case_law TOOL DELIBERATELY, NOT REFLEXIVELY. Call it when the answer genuinely benefits from grounding in actual Pakistani judgments or you need to verify a specific citation -- not for every message, and not before you understand what the advocate actually needs. Skip it for casual conversation, definitions you already know confidently, or when you're still gathering facts via clarifying questions. When you do call it, make the query specific (legal issue + jurisdiction + known statute), because vague searches return junk.
+5. NEVER FABRICATE. Only cite cases, citations, or courts that the search tool actually returned. If the tool returns nothing on point, say so plainly and reason from statute and settled principle instead -- do not invent a precedent to sound authoritative.
+6. STAY IN YOUR LANE. You discuss anything within Pakistani law -- procedure, strategy, drafting, doctrine, practical advice for advocates -- conversationally and thoroughly. If asked something with nothing to do with law or legal practice, say so and redirect.
+7. WHEN YOU DO PRODUCE A FORMAL OPINION OR DRAFT, and only then, you may append a machine-readable citation block for the UI, using this exact format, containing ONLY precedents the search tool actually returned:
 <<<CARDS>>>
 [{"case_name": "...", "citation": "...", "date": "...", "outcome": "...", "issue": "...", "holding": "...", "why_relevant": "...", "statutes_invoked": [{"name": "...", "explanation": "..."}]}]
 <<<END_CARDS>>>
    Omit this block entirely for conversational replies, clarifying questions, or answers that didn't rely on retrieved precedent.
-7. Never use double asterisks (**) for emphasis; write plain text.
+8. Never use double asterisks (**) for emphasis; write plain text.
 """
 
         combined_system_prompt = f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{conversational_persona}"
@@ -858,17 +932,8 @@ HOW YOU WORK:
             }
         }
 
-        # Assemble conversation history turns provided by frontend
-        history_msgs = []
-        if request.messages and isinstance(request.messages, list):
-            for m in request.messages:
-                m_dict = m.dict() if hasattr(m, "dict") else (m if isinstance(m, dict) else {})
-                r_raw = m_dict.get("role") or getattr(m, "role", "user")
-                c_raw = str(m_dict.get("content") or getattr(m, "content", "") or "").strip()
-                c_clean = re.sub(r'\[.*?\]', '', c_raw, flags=re.DOTALL).strip()
-                if c_clean and c_clean != user_prompt_clean:
-                    r = "assistant" if str(r_raw).lower() in ("assistant", "system", "bot") else "user"
-                    history_msgs.append({"role": r, "content": c_clean})
+        # Assemble sanitized conversation history turns provided by frontend (Issue 2)
+        history_msgs = sanitize_chat_history(request.messages, user_prompt_clean)
 
         if has_image:
             user_msg_content = []
@@ -883,6 +948,19 @@ HOW YOU WORK:
             current_user_message = {"role": "user", "content": effective_user_query}
 
         messages = history_msgs + [current_user_message]
+
+        # Check for explicit drafting commands or drafting intent (Issue 3)
+        query_lower_all = user_prompt_clean.lower()
+        is_drafting_requested = any(k in query_lower_all for k in [
+            "draft now", "proceed with draft", "draft petition", "draft writ", 
+            "draft application", "draft plaint", "draft written statement",
+            "generate pleading", "prepare draft", "draft court petition", "court draft"
+        ])
+
+        # Issue 3: If user commands drafting or mode is drafting, ensure top vector chunks are retrieved from Pinecone immediately
+        if is_drafting_requested and search_call_count["n"] == 0:
+            print(f"📌 [JOB {job_id}] Drafting command detected ('{user_prompt_clean}'). Pre-fetching Pinecone vector chunks...", file=sys.stderr)
+            await run_case_law_search(effective_user_query)
 
         total_input_tokens = 0
         total_output_tokens = 0
@@ -936,13 +1014,12 @@ HOW YOU WORK:
         citations_payload = aggregate_citations_payload
         additional_authorities = aggregate_additional_authorities
 
-        # Deterministic Legal Output Verification & Reflection Loop (only when we actually
-        # grounded the answer in retrieved case law -- casual replies skip this entirely)
+        # Deterministic Legal Output Verification & Reflection Loop (Issue 1)
         if citations_payload:
             lint_errors = lint_legal_output(raw_model_output, query_context=effective_user_query)
             if lint_errors:
                 print(f"⚠️ Legal Guardrails Lint Errors detected: {lint_errors}. Triggering reflection loop...", file=sys.stderr)
-                reflection_prompt = f"CRITICAL INSTRUCTION: Do NOT output conversational meta-commentary about the correction. Silently correct these legal issues in your answer and re-output the full corrected response in the same style: {'; '.join(lint_errors)}"
+                reflection_prompt = f"CRITICAL: Do NOT output your internal thinking, validation checklists, or meta-commentary. Do NOT ask for permission to output the draft. If the user commands drafting or the intake context is complete, output the full, court-ready pleading immediately, beginning directly with the Court Heading. Silently correct these legal issues in your answer and re-output the full corrected response: {'; '.join(lint_errors)}"
                 reflection_messages = list(messages) + [
                     {"role": "assistant", "content": raw_model_output},
                     {"role": "user", "content": reflection_prompt},
@@ -1005,14 +1082,14 @@ HOW YOU WORK:
                 display_answer += "\n".join(add_lines)
             display_answer += "\n\n" + format_sources_searched(aggregate_sources_matches)
 
-        # Mode label for the frontend UI (metadata only -- no longer drives response shape)
+        # Mode label for the frontend UI (Issue 3)
         query_lower = request.query_text.lower()
-        if has_image or has_doc_text:
+        if is_drafting_requested or any(k in query_lower for k in ["draft petition", "draft bail application", "draft plaint", "draft written statement"]):
+            mode = "drafting"
+        elif has_image or has_doc_text:
             mode = "document_analysis"
         elif search_call_count["n"] > 0:
             mode = "caselaw_search"
-        elif any(k in query_lower for k in ["draft petition", "draft bail application", "draft plaint", "draft written statement"]):
-            mode = "drafting"
         else:
             mode = "intake"
 
@@ -1034,7 +1111,9 @@ HOW YOU WORK:
                 "status": "done",
                 "result": {
                     "answer": display_answer,
+                    "response": display_answer,
                     "precedent_cards": precedent_cards,
+                    "precedents": precedent_cards,
                     "additional_authorities": additional_authorities,
                     "citations": citations_payload,
                     "query_id": inserted_row_id,
