@@ -533,9 +533,13 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         has_doc_text = len(extracted_doc_texts) > 0
         combined_uploaded_doc_text = "\n\n=== UPLOADED DOCUMENT ATTACHMENT ===\n\n" + "\n\n".join(extracted_doc_texts) if has_doc_text else ""
 
-        effective_user_query = request.query_text
+        user_prompt_clean = re.sub(r'\[.*?\]', '', request.query_text, flags=re.DOTALL).strip()
+        if not user_prompt_clean:
+            user_prompt_clean = request.query_text.strip()
+
+        effective_user_query = user_prompt_clean
         if combined_uploaded_doc_text:
-            effective_user_query = f"{request.query_text}\n\n{combined_uploaded_doc_text}".strip()
+            effective_user_query = f"{user_prompt_clean}\n\n{combined_uploaded_doc_text}".strip()
 
         # ==============================================================================
         # FAST PATH: pure greetings / small talk never need to hit Claude+tools at all
