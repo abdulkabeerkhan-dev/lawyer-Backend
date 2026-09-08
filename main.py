@@ -420,7 +420,7 @@ def cleanup_old_jobs():
 async def process_query_job(job_id: str, request: QueryRequest, authenticated_user_id: str):
     try:
         print(f"🚀 [JOB {job_id}] Starting query execution...", file=sys.stderr, flush=True)
-        
+
         def clean_base64_data(base64_str: str) -> str:
             return base64_str.split(",", 1)[1] if "," in base64_str else base64_str.strip()
 
@@ -448,7 +448,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             m = (mime_type or "").lower().strip()
             extracted_text = ""
-            
+
             # 1. Check if DOCX (by MIME or Zip PK header magic bytes)
             if "wordprocessingml" in m or "docx" in m or raw_bytes.startswith(b'PK\x03\x04'):
                 try:
@@ -511,7 +511,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 elif name_lower.endswith((".jpg", ".jpeg")): raw_mime = "image/jpeg"
 
             m = raw_mime.lower().strip()
-            
+
             # Extract doc text if docx / pdf / text
             doc_t = extract_text_from_document_base64(raw_b64, m)
             if doc_t:
@@ -537,52 +537,15 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         if combined_uploaded_doc_text:
             effective_user_query = f"{request.query_text}\n\n{combined_uploaded_doc_text}".strip()
 
-        search_keywords_query = effective_user_query
-        vision_input_tokens = 0
-        vision_output_tokens = 0
-
-        if has_image and async_anthropic_client and ANTHROPIC_API_KEY:
-            vision_content = []
-            for img in valid_vision_images:
-                vision_content.append({
-                    "type": "image",
-                    "source": {
-                        "type": "base64",
-                        "media_type": sanitize_mime_type(img.image_mime_type),
-                        "data": clean_base64_data(img.image_base64)
-                    }
-                })
-            vision_prompt = "Identify and list 3 to 5 key legal search terms in English. Return ONLY keywords separated by spaces."
-            vision_content.append({"type": "text", "text": vision_prompt})
-            
-            vision_message = await async_anthropic_client.messages.create(
-                model=CLAUDE_MODEL,
-                max_tokens=200,
-                messages=[{"role": "user", "content": vision_content}]
-            )
-            if hasattr(vision_message, "usage") and vision_message.usage:
-                vision_input_tokens = getattr(vision_message.usage, "input_tokens", 0) or 0
-                vision_output_tokens = getattr(vision_message.usage, "output_tokens", 0) or 0
-                
-            raw_kws = "".join(getattr(b, "text", "") for b in vision_message.content).strip()
-            search_keywords_query = f"{raw_kws} {effective_user_query}".strip()
-
-        mode = "simple_query"
-        query_lower = request.query_text.lower()
-        
-        if has_image or any(k in query_lower for k in ["analyze", "contract", "fir", "agreement", "document"]):
-            mode = "document_analysis"
-        elif any(k in query_lower for k in ["case law", "precedent", "ruling", "judgment", "authority"]):
-            mode = "caselaw_search"
-        elif any(k in query_lower for k in ["draft petition", "draft bail application", "draft plaint", "draft written statement"]):
-            mode = "drafting"
-
+        # ==============================================================================
+        # FAST PATH: pure greetings / small talk never need to hit Claude+tools at all
+        # ==============================================================================
         _CHITCHAT_EXACT = {
-            "hi", "hello", "hey", "salam", "assalam o alaikum", "thanks", "thank you", "ok", "okay", "test", "help", "good morning", "good evening"
+            "hi", "hello", "hey", "salam", "assalam o alaikum", "thanks", "thank you", "ok", "okay", "test"
         }
         _norm_q = re.sub(r'[^\w\s]', '', request.query_text.strip().lower()).strip()
-        if (not has_image) and _norm_q in _CHITCHAT_EXACT:
-            chitchat_answer = "Hello! I am Section AI, your legal research and appellate drafting associate. How can I assist you with your matter or case today?"
+        if (not has_image) and (not has_doc_text) and _norm_q in _CHITCHAT_EXACT:
+            chitchat_answer = "Hello! I'm Section, your legal research and drafting assistant for Pakistani law. What are you working on?"
             if job_id in jobs_store:
                 jobs_store[job_id].update({
                     "status": "done",
@@ -609,13 +572,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             "High Court of Balochistan": ["balochistan high court", "bhc", "quetta high court", "high court of balochistan"],
             "Federal Shariat Court": ["federal shariat court", "fsc"],
         }
-        target_source = None
-        for canonical, aliases in COURT_ALIASES.items():
-            for alias in aliases:
-                if (re.search(rf"\b{re.escape(alias)}\b", query_lower) if len(alias) <= 4 else alias in query_lower):
-                    target_source = canonical
-                    break
-            if target_source: break
 
         def _expand_legal_shorthand(text: str) -> str:
             lower_text = text.lower()
@@ -636,165 +592,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 expanded = f"{expanded} ({'; '.join(expansions)})"
             return expanded
 
-        search_keywords_query = _expand_legal_shorthand(search_keywords_query)
-
-        # ==============================================================================
-        # TWO-STAGE CONVERSATIONAL LEGAL INTAKE STATE MACHINE (HARVEY AI SPECIFICATION)
-        # ==============================================================================
-        history_msgs = []
-        if request.messages and isinstance(request.messages, list):
-            for m in request.messages:
-                m_dict = m.dict() if hasattr(m, "dict") else (m if isinstance(m, dict) else {})
-                r_raw = m_dict.get("role") or getattr(m, "role", "user")
-                c_raw = str(m_dict.get("content") or getattr(m, "content", "") or "").strip()
-                if c_raw and c_raw != request.query_text:
-                    c_lower = c_raw.lower()
-                    if any(ref in c_lower for ref in [
-                        "i appreciate the correction", "however, i require clarification", "my prior draft was generic",
-                        "territorial mismatch", "precedents found", "maulana abdul haque baloch", "rashid baig", "reference by the president"
-                    ]):
-                        continue
-                    r = "assistant" if str(r_raw).lower() in ("assistant", "system", "bot") else "user"
-                    history_msgs.append({"role": r, "content": c_raw})
-
-        query_text_raw = request.query_text.strip()
-        # Strip frontend system bracket annotations [What you know...], [Earlier in this conversation:...], [Answer style:...]
-        cleaned_user_prompt = re.sub(r'\[.*?\]', '', query_text_raw, flags=re.DOTALL).strip()
-        if not cleaned_user_prompt:
-            cleaned_user_prompt = query_text_raw
-
-        query_words = cleaned_user_prompt.split()
-        q_lower = cleaned_user_prompt.lower()
-        print(f"📥 [JOB {job_id}] DEBUG REQUEST: query_text={repr(cleaned_user_prompt[:150])}, category={request.category}, messages_count={len(request.messages or [])}", file=sys.stderr, flush=True)
-
-        def is_underspecified_query(text: str, history: list, has_doc: bool, has_img: bool) -> bool:
-            if has_doc or has_img:
-                return False
-
-            q = text.lower().strip()
-
-            # Only explicit user commands trigger Stage 2 drafting search immediately
-            if any(cmd in q for cmd in ["draft now", "search now", "proceed with draft", "generate pleading", "run search", "draft opinion"]):
-                return False
-
-            # Fewer than 3 turns in conversation -> Intake mode
-            if len(history) < 3:
-                return True
-
-            has_forum = any(f in q for f in [
-                "high court", "civil judge", "rent controller", "banking court", "tribunal", 
-                "lhc", "shc", "ihc", "phc", "bhc", "supreme court", "sessions court", "senior civil judge"
-            ])
-            has_city = any(c in q for c in [
-                "lahore", "karachi", "islamabad", "rawalpindi", "faisalabad", "multan", 
-                "peshawar", "quetta", "sindh", "punjab", "balochistan", "kpk", "hyderabad", "sukkur"
-            ])
-            has_authority = any(a in q for a in [
-                "nepra", "lesco", "kelectric", "k-electric", "gepco", "fbr", "cda", "lda", "sbca", "kmc", "wapda", "bank", "pesco", "hesco", "mepco"
-            ])
-
-            return not (has_forum and has_city and has_authority)
-
-        is_intake_stage = is_underspecified_query(cleaned_user_prompt, history_msgs, has_doc_text, has_image)
-        print(f"🔍 [JOB {job_id}] DEBUG INTAKE EVALUATION: is_intake_stage={is_intake_stage}, has_doc_text={has_doc_text}, has_image={has_image}", file=sys.stderr, flush=True)
-
-        if is_intake_stage:
-            print(f"📋 [JOB {job_id}] Executing HARVEY-STYLE STAGE 1 Conversational Intake...", file=sys.stderr, flush=True)
-            intake_answer = "I understand how challenging and urgent this legal issue is for your client. To assist you effectively with the right legal strategy and forum, could you clarify: (1) Which city/province is the matter located in, (2) Which specific issuing authority or entity passed the order, and (3) What is the current enforcement status?"
-            
-            if async_anthropic_client and ANTHROPIC_API_KEY:
-                try:
-                    intake_system_prompt = """You are a Senior Partner at a premier Pakistani law firm in chambers (Harvey AI standard).
-Your role is to engage in a warm, highly professional dialogue with the advocate to extract key factual and jurisdictional parameters before conducting vector searches or generating a legal memorandum.
-
-STRICT INTAKE DIRECTIVES:
-1. EMPATHIC FIRST SENTENCE: Always begin your first sentence by warmly acknowledging and empathizing with the advocate's or client's specific legal issue (e.g., "I understand how urgent and challenging an arbitrary electricity tariff surcharge notice is for your client.").
-2. NO CITATIONS, NO LAW REPORTS, NO STATUTE QUOTES: Do NOT cite law reports (PLD, SCMR, CLD, YLR). Do NOT cite section numbers or statutory provisions (e.g., do NOT mention CrPC, CPC, PPC, NEPRA Act). Do NOT output markdown section headers like '### I. EXECUTIVE SUMMARY'. Keep it strictly conversational prose.
-3. PARTNER-IN-CHAMBERS CLARIFYING QUESTIONS: Ask 2 to 3 concise, highly practical scoping questions to extract missing factual & jurisdictional details (e.g. issuing authority/DISCO, target High Court city/province, current enforcement status).
-4. EASY OVERRIDE: End naturally by letting the advocate know they can answer your questions or type 'draft now' to proceed with drafting immediately."""
-
-                    intake_messages = [{"role": "user", "content": cleaned_user_prompt}]
-                    
-                    intake_response = await async_anthropic_client.messages.create(
-                        model=CLAUDE_MODEL,
-                        max_tokens=300,
-                        system=intake_system_prompt,
-                        messages=intake_messages
-                    )
-                    intake_answer = "".join(getattr(b, "text", "") for b in intake_response.content).strip()
-                except Exception as intake_err:
-                    print(f"⚠️ Intake Claude exception: {intake_err}", file=sys.stderr, flush=True)
-
-            inserted_row_id = str(uuid.uuid4())
-            if supabase:
-                try:
-                    db_insert = supabase.table("queries").insert({
-                        "user_id": authenticated_user_id,
-                        "query_text": request.query_text,
-                        "answer_text": intake_answer,
-                        "citations": [],
-                        "input_tokens": 100,
-                        "output_tokens": 100
-                    }).execute()
-                    if db_insert.data and len(db_insert.data) > 0:
-                        inserted_row_id = str(db_insert.data[0].get("id", inserted_row_id))
-                except Exception:
-                    pass
-
-            if job_id in jobs_store:
-                jobs_store[job_id].update({
-                    "status": "done",
-                    "result": {
-                        "answer": intake_answer,
-                        "citations": [],
-                        "precedents": [],
-                        "precedent_cards": [],
-                        "additional_authorities": [],
-                        "query_id": inserted_row_id,
-                        "mode": "intake",
-                        "truncated": False
-                    },
-                    "completed_at": datetime.now(timezone.utc),
-                    "continue_state": None,
-                })
-            return
-        voyage_model = os.environ.get("VOYAGE_MODEL", "voyage-law-2")
-        voyage_api_key = os.environ.get("VOYAGE_API_KEY")
-        if not voyage_api_key:
-            raise Exception("VOYAGE_API_KEY is missing from environment configurations!")
-
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            voyage_response = await client.post(
-                VOYAGE_API_URL,
-                json={"input": search_keywords_query, "model": voyage_model, "input_type": "query"},
-                headers={"Authorization": f"Bearer {voyage_api_key}", "Content-Type": "application/json"}
-            )
-            if voyage_response.status_code != 200:
-                raise Exception(f"Voyage AI Embeddings API failure: {voyage_response.text}")
-            query_vector = voyage_response.json()["data"][0]["embedding"]
-
-        if not pinecone_index:
-            raise Exception("Pinecone serverless engine index connection is inactive.")
-
-        query_top_k = 60 if target_source else 30
-        pinecone_kwargs = {
-            "namespace": "judgments",
-            "vector": query_vector,
-            "top_k": query_top_k,
-            "include_metadata": True
-        }
-
-        raw_matches = pinecone_index.query(**pinecone_kwargs)
-        matches_list = raw_matches.get("matches", []) if isinstance(raw_matches, dict) else getattr(raw_matches, "matches", []) or []
-
         def format_sources_searched(retrieved_matches: List[Dict[str, Any]]) -> str:
-            """
-            Dynamically extracts the courts represented in the retrieved vectors.
-            Prevents hardcoding 'Supreme Court of Pakistan' on High Court or provincial matters.
-            """
             if not retrieved_matches:
                 return "Sources Searched: Superior Courts of Pakistan"
-
             courts_found = set()
             for match in retrieved_matches:
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
@@ -804,48 +604,14 @@ STRICT INTAKE DIRECTIVES:
                 cleaned = clean_court_name(str(court or "Court of Record"), title=str(title), case_id=str(cid))
                 if cleaned and cleaned != "Unknown Court":
                     courts_found.add(cleaned)
-
             if courts_found:
-                sorted_courts = sorted(list(courts_found), reverse=True)
-                return "Sources Searched: " + ", ".join(sorted_courts)
-
+                return "Sources Searched: " + ", ".join(sorted(list(courts_found), reverse=True))
             return "Sources Searched: High Courts & Supreme Court of Pakistan"
 
         NON_JUDGMENT_MARKERS = ["annual report", "policy document", "press release", "annual review"]
         _PAKISTANLAWSITE_RE = re.compile(r'pakistan\s*[-_]?\s*law\s*[-_]?\s*site', re.IGNORECASE)
-
-        # Deterministic Query Parser for Provincial Forum Filtering
-        provincial_target = None
-        if any(city in query_lower for city in ["lahore", "rawalpindi", "multan", "faisalabad", "punjab", "dha lahore"]):
-            provincial_target = "punjab"
-        elif any(city in query_lower for city in ["karachi", "sukkur", "hyderabad", "sindh"]):
-            provincial_target = "sindh"
-        elif any(city in query_lower for city in ["peshawar", "abbottabad", "khyber"]):
-            provincial_target = "kpk"
-        elif any(city in query_lower for city in ["quetta", "balochistan"]):
-            provincial_target = "balochistan"
-
-        def _passes_source_filter(meta, target):
-            normalized_court = clean_court_name(str(meta.get("court", "")), title=str(meta.get("title") or meta.get("case_title", "")), case_id=str(meta.get("case_id", "")))
-            haystack = " ".join([normalized_court, str(meta.get("dataset_category", "")), str(meta.get("title", "")), str(meta.get("case_title", ""))]).lower()
-            if any(marker in haystack for marker in NON_JUDGMENT_MARKERS): return False
-            if any(_PAKISTANLAWSITE_RE.search(str(meta.get(k, ""))) for k in ("court", "dataset_category", "title", "case_title")): return False
-
-            # Strict provincial boundary filter
-            if provincial_target == "punjab":
-                if "high court of balochistan" in haystack or "peshawar high court" in haystack or "high court of sindh" in haystack:
-                    return False
-            elif provincial_target == "sindh":
-                if "lahore high court" in haystack or "high court of balochistan" in haystack or "peshawar high court" in haystack:
-                    return False
-            elif provincial_target == "balochistan":
-                if "lahore high court" in haystack or "high court of sindh" in haystack or "peshawar high court" in haystack:
-                    return False
-
-            if not target: return True
-            return any(alias in haystack for alias in COURT_ALIASES.get(target, [target.lower()]))
-
-        matches_list = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target_source)]
+        POLITICAL_MARKERS = ["nawaz sharif", "imran khan", "benazir bhutto", "tikka iqbal", "zafar ali shah", "pml-n", "pti", "pakistan bar council", "bar council", "disqualification", "election petition"]
+        CRIMINAL_NAB_MARKERS = ["olas khan", "national accountability ordinance", "banking companies"]
 
         def is_junk_citation_dump(text: str) -> bool:
             if not text or len(text.strip()) < 15:
@@ -885,8 +651,8 @@ STRICT INTAKE DIRECTIVES:
                 return True
             if len(words) >= 8:
                 valid_shorts = {
-                    "a", "an", "the", "and", "or", "in", "on", "at", "to", "for", "of", "off", "by", "is", "it", 
-                    "be", "as", "no", "not", "has", "had", "was", "per", "vs", "v", "sub", "art", "sec", "pld", 
+                    "a", "an", "the", "and", "or", "in", "on", "at", "to", "for", "of", "off", "by", "is", "it",
+                    "be", "as", "no", "not", "has", "had", "was", "per", "vs", "v", "sub", "art", "sec", "pld",
                     "clc", "ylr", "mld", "ptd", "plc", "cld", "sc", "hc", "lhc", "shc", "phc", "bhc", "ihc", "rs", "nos",
                     "if", "do", "we", "he", "she", "me", "my", "us", "so", "up", "out", "our", "its", "may", "can", "law",
                     "act", "set", "out", "due", "any", "all", "few", "two", "one", "three", "four", "five", "six", "day"
@@ -896,258 +662,199 @@ STRICT INTAKE DIRECTIVES:
                     return True
             return False
 
-        # Case Relevance Gate: Filter political / disqualification / bar council cases for commercial & criminal queries
-        POLITICAL_MARKERS = ["nawaz sharif", "imran khan", "benazir bhutto", "tikka iqbal", "zafar ali shah", "pml-n", "pti", "pakistan bar council", "bar council", "disqualification", "election petition"]
-        CRIMINAL_NAB_MARKERS = ["olas khan", "national accountability ordinance", "banking companies"]
-        
-        is_commercial_or_criminal_query = any(k in query_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra", "banking", "recovery", "fio 2001", "leave to defend", "security deposit"])
-        is_secp_or_corporate_query = any(k in query_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance", "12(2)", "section 12", "115 cpc", "civil revision", "42 sra", "specific relief", "fraudulent decree", "stranger", "order xxi", "order 21", "rule 97", "rule 101", "rule 103", "execution", "objection petition", "deemed decree"])
+        # ==============================================================================
+        # CASE-LAW RETRIEVAL AS A TOOL -- Claude decides IF and WHEN to call this.
+        # It is no longer a pipeline stage that runs unconditionally before every reply.
+        # ==============================================================================
+        aggregate_citations_payload: List[Dict[str, Any]] = []
+        aggregate_additional_authorities: List[Dict[str, Any]] = []
+        aggregate_sources_matches: List[Dict[str, Any]] = []
+        _seen_case_ids_global = set()
+        search_call_count = {"n": 0}
 
-        seen_case_ids = set()
-        filtered_matches = []
-        for m in matches_list:
-            meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
-            score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
-            if score < 0.45: continue
+        async def run_case_law_search(raw_search_query: str, court_filter: Optional[str] = None) -> str:
+            search_call_count["n"] += 1
+            search_query = _expand_legal_shorthand(raw_search_query or effective_user_query)
+            sq_lower = search_query.lower()
 
-            text_content = strip_control_characters(str(meta.get("text") or meta.get("text_preview") or ""))
-            if is_garbled_text(text_content) or is_junk_citation_dump(text_content):
-                continue
-            
-            case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower()
-            if (is_commercial_or_criminal_query or is_secp_or_corporate_query) and any(pol in case_title_str for pol in POLITICAL_MARKERS):
-                continue
-            if is_secp_or_corporate_query and any(cr in case_title_str for cr in CRIMINAL_NAB_MARKERS):
-                continue
-                
-            cid = meta.get("case_id") or meta.get("citation") or meta.get("title")
-            if cid and cid in seen_case_ids: continue
-            if cid: seen_case_ids.add(cid)
-            filtered_matches.append(m)
+            target_source = None
+            filter_hint = (court_filter or "").lower().strip()
+            for canonical, aliases in COURT_ALIASES.items():
+                if filter_hint and (filter_hint in canonical.lower() or any(a in filter_hint for a in aliases)):
+                    target_source = canonical
+                    break
+            if not target_source:
+                for canonical, aliases in COURT_ALIASES.items():
+                    for alias in aliases:
+                        if (re.search(rf"\b{re.escape(alias)}\b", sq_lower) if len(alias) <= 4 else alias in sq_lower):
+                            target_source = canonical
+                            break
+                    if target_source:
+                        break
 
-        primary_matches = filtered_matches[:3]
-        secondary_matches = filtered_matches[3:6]
+            provincial_target = None
+            if any(city in sq_lower for city in ["lahore", "rawalpindi", "multan", "faisalabad", "punjab", "dha lahore"]):
+                provincial_target = "punjab"
+            elif any(city in sq_lower for city in ["karachi", "sukkur", "hyderabad", "sindh"]):
+                provincial_target = "sindh"
+            elif any(city in sq_lower for city in ["peshawar", "abbottabad", "khyber"]):
+                provincial_target = "kpk"
+            elif any(city in sq_lower for city in ["quetta", "balochistan"]):
+                provincial_target = "balochistan"
 
-        citations_payload = []
-        context_parts = []
+            try:
+                voyage_model = os.environ.get("VOYAGE_MODEL", "voyage-law-2")
+                if not VOYAGE_API_KEY:
+                    return "Search tool unavailable: embedding service is not configured."
+                async with httpx.AsyncClient(timeout=30.0) as client:
+                    voyage_response = await client.post(
+                        VOYAGE_API_URL,
+                        json={"input": search_query, "model": voyage_model, "input_type": "query"},
+                        headers={"Authorization": f"Bearer {VOYAGE_API_KEY}", "Content-Type": "application/json"}
+                    )
+                    if voyage_response.status_code != 200:
+                        return f"Search tool error: embedding request failed ({voyage_response.status_code})."
+                    query_vector = voyage_response.json()["data"][0]["embedding"]
 
-        for match in primary_matches:
-            meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
-            court = clean_court_name(str(meta.get('court', 'Unknown Court')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')))
-            year_or_date = str(meta.get('date', '') or meta.get('year', '') or 'Recent')
-            case_id = str(meta.get('case_id', 'Unknown Docket'))
-            text_content = str(meta.get('text', meta.get('text_preview', ''))).strip()
-            title = clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case'))
-            
-            neutral_cit = format_neutral_citation(court, case_id, year_or_date)
-            outcome_val = str(meta.get("outcome", "")) or "Undetermined"
-            statutes_val = meta.get("statutes") or []
-            sections_val = meta.get("sections") or []
-            match_score = float(match.get("score", 0.0) if isinstance(match, dict) else getattr(match, "score", 0.0))
+                if not pinecone_index:
+                    return "Search tool unavailable: the judgment database is not connected."
 
-            segment_text = f"CASE TITLE: {title}\nNEUTRAL CITATION: {neutral_cit}\nCOURT: {court}\nOUTCOME: {outcome_val}\nSTATUTES: {', '.join(statutes_val)}\nCONTENT: {text_content}"
-            context_parts.append(segment_text)
+                query_top_k = 60 if target_source else 30
+                raw_matches = pinecone_index.query(
+                    namespace="judgments", vector=query_vector, top_k=query_top_k, include_metadata=True
+                )
+                matches_list = raw_matches.get("matches", []) if isinstance(raw_matches, dict) else getattr(raw_matches, "matches", []) or []
+            except Exception as search_err:
+                print(f"⚠️ [JOB {job_id}] case-law search failed: {search_err}", file=sys.stderr)
+                return "Search tool error: the judgment database could not be reached. Answer using your own knowledge of Pakistani statute and settled principles, and tell the advocate that live case-law verification was unavailable."
 
-            citations_payload.append({
-                "case_id": case_id,
-                "court": court,
-                "year": year_or_date,
-                "preview": text_content,
-                "title": title,
-                "citation": neutral_cit,
-                "score": match_score,
-                "outcome": outcome_val,
-                "statutes": statutes_val,
-                "sections": sections_val,
-                "relevance": "High" if match_score >= 0.65 else ("Medium" if match_score >= 0.52 else "Low")
-            })
+            def _passes_source_filter(meta, target):
+                normalized_court = clean_court_name(str(meta.get("court", "")), title=str(meta.get("title") or meta.get("case_title", "")), case_id=str(meta.get("case_id", "")))
+                haystack = " ".join([normalized_court, str(meta.get("dataset_category", "")), str(meta.get("title", "")), str(meta.get("case_title", ""))]).lower()
+                if any(marker in haystack for marker in NON_JUDGMENT_MARKERS): return False
+                if any(_PAKISTANLAWSITE_RE.search(str(meta.get(k, ""))) for k in ("court", "dataset_category", "title", "case_title")): return False
+                if provincial_target == "punjab":
+                    if "high court of balochistan" in haystack or "peshawar high court" in haystack or "high court of sindh" in haystack:
+                        return False
+                elif provincial_target == "sindh":
+                    if "lahore high court" in haystack or "high court of balochistan" in haystack or "peshawar high court" in haystack:
+                        return False
+                elif provincial_target == "balochistan":
+                    if "lahore high court" in haystack or "high court of sindh" in haystack or "peshawar high court" in haystack:
+                        return False
+                if not target: return True
+                return any(alias in haystack for alias in COURT_ALIASES.get(target, [target.lower()]))
 
-        additional_authorities = []
-        for match in secondary_matches:
-            meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
-            court = clean_court_name(str(meta.get('court', 'Court of Record')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')))
-            year_or_date = str(meta.get('date', '') or meta.get('year', '') or '')
-            case_id = str(meta.get('case_id', ''))
-            title = clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Precedent on Record')) or 'Precedent on Record'))
-            neutral_cit = format_neutral_citation(court, case_id, year_or_date)
-            preview_snippet = str(meta.get('text', meta.get('text_preview', ''))).strip()[:180] + "..."
-            
-            additional_authorities.append({
-                "title": title,
-                "citation": neutral_cit,
-                "summary": preview_snippet
-            })
+            matches_list = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target_source)]
 
-        combined_context = "\n\n=========================================\n\n".join(context_parts)
+            is_commercial_or_criminal_query = any(k in sq_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra", "banking", "recovery", "fio 2001", "leave to defend", "security deposit"])
+            is_secp_or_corporate_query = any(k in sq_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance", "12(2)", "section 12", "115 cpc", "civil revision", "42 sra", "specific relief", "fraudulent decree", "stranger", "order xxi", "order 21", "rule 97", "rule 101", "rule 103", "execution", "objection petition", "deemed decree"])
 
-        system_prompt = """You are Section, an elite Senior Legal Research Assistant for Pakistani Appellate Advocates.
+            filtered_matches = []
+            for m in matches_list:
+                meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
+                score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
+                if score < 0.45: continue
+                text_content = strip_control_characters(str(meta.get("text") or meta.get("text_preview") or ""))
+                if is_garbled_text(text_content) or is_junk_citation_dump(text_content):
+                    continue
+                case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower()
+                if (is_commercial_or_criminal_query or is_secp_or_corporate_query) and any(pol in case_title_str for pol in POLITICAL_MARKERS):
+                    continue
+                if is_secp_or_corporate_query and any(cr in case_title_str for cr in CRIMINAL_NAB_MARKERS):
+                    continue
+                cid = meta.get("case_id") or meta.get("citation") or meta.get("title")
+                if cid and cid in _seen_case_ids_global:
+                    continue
+                filtered_matches.append(m)
 
-STRICT OPERATIONAL DIRECTIVES:
-1. CONCISE STATUTORY SUMMARIES (NO VERBATIM TEXT DUMPS): Never quote long multi-paragraph statutory blocks. State the section number and summarize its core legal effect in one concise sentence (e.g., "Section 420 PPC penalizes cheating where fraudulent intention existed at the inception of the transaction.").
-2. CRIMINAL FIR QUASHMENT DIRECTIVE (SECTION 561-A vs. ARTICLE 199):
-   - Section 561-A Cr.P.C. Limitation: Inherent jurisdiction under Section 561-A applies ONLY to judicial proceedings pending in subordinate courts; it CANNOT be invoked to quash an FIR or police investigation (Shahnaz Begum, PLD 1971 SC 677; DG FIA v. Hamid Ali Shah, PLD 2023 SC 265).
-   - Article 199 Writ Jurisdiction: The SOLE forum to quash an FIR during ongoing police investigation is a Constitutional Writ Petition under Article 199.
-   - Trial Court Remedies (Section 249-A / 265-K): These remedies apply AFTER the Magistrate/Trial Court takes cognizance under Section 190 Cr.P.C. Their existence is a doctrine of judicial restraint, NOT an absolute jurisdictional bar to an Article 199 writ where the FIR is registered without lawful authority, is actuated by mala fides, or discloses no cognizable offence on its face.
-   - Do not confuse Section 406 PPC (Criminal Breach of Trust) with Section 409 PPC (Public Servant/Banker/Agent).
-3. BAIL CANCELLATION DIRECTIVE (SECTION 497(5) Cr.P.C.):
-   - Proper Remedy & Forum: An application for cancellation of bail MUST be filed directly under Section 497(5) Cr.P.C. as a Criminal Miscellaneous Application (Crl. Misc.) before the Court of Session or the High Court. (NEVER cite Section 401 Cr.P.C. which deals with executive remission of sentences, and do NOT prescribe Article 199 writs where Section 497(5) is the express statutory remedy).
-   - Statutory Language of Section 497(5): The High Court or Court of Session may cause any person released on bail under Section 497 to be arrested and committed to custody.
-   - Grant vs. Cancellation Parameters: Considerations for grant and cancellation are entirely distinct (Tariq Bashir v. State, PLD 1995 SC 34). The High Court does NOT sit as an ordinary court of appeal to re-assess evidence.
-   - Dual Grounds for Cancellation: Bail under Section 497(5) can be cancelled ONLY on two distinct grounds:
-     1. Post-grant conduct/misuse: Misuse of liberty, tampering with witnesses, intimidating complainant, or flight risk; OR
-     2. Patent perversity/illegality: The bail-grant order is perverse, arbitrary, fanciful, based on complete non-reading/misreading of material record, or passed without jurisdiction (Muhammad Sadiq v. Sadiq, PLD 1985 SC 182).
-4. JUSTICE OF THE PEACE (SECTION 22-A / 22-B Cr.P.C.) DIRECTIVE:
-   - Legal Nature: An Ex-Officio Justice of the Peace (Sessions/Additional Sessions Judge) acts as a PERSONA DESIGNATA performing ADMINISTRATIVE, EXECUTIVE, or MINISTERIAL functions, NOT judicial functions (Khizer Hayat v. IGP Punjab, PLD 2005 Lah 470 [Full Bench]; Muhammad Bashir v. SHO, PLD 2007 SC 893; PLD 2014 SC 753).
-   - Incompetency of Statutory Revisions: Neither a Criminal Revision (Section 439/435 Cr.P.C.) nor a Civil Revision (Section 115 CPC) lies against an order passed under Section 22-A(6) Cr.P.C. (NEVER claim a Criminal Revision or Civil Revision lies).
-   - Maintainable Remedy: Because no statutory appeal or revision is provided by law against a Section 22-A order, the SOLE and EXCLUSIVE remedy for an aggrieved party is a CONSTITUTIONAL WRIT PETITION under Article 199 of the Constitution of Pakistan 1973 before the High Court.
-   - Standard of Interference under Article 199: High Court interferes only if the order is without jurisdiction, coram non judice, or passed without verifying whether the applicant first approached the SHO/SP under Section 154 Cr.P.C.
-4. SECTION 12(2) CPC & CIVIL REVISION DIRECTIVE:
-   - Mandatory Bar: Section 12(2) CPC bars an independent suit under Section 42 SRA for PARTIES to the suit and their privies / representatives-in-interest.
-   - The Stranger Exception: A third-party stranger whose independent title or rights are affected by a collusive/fraudulent decree between other parties MAY institute an independent regular suit for declaration under Section 42 SRA (Mst. Safia Bibi v. Mst. Aisha Bibi; Mst. Sughran Bibi v. Aziz Begum; Messrs Crescent Petroleum v. M.V. Monchegorsk).
-   - Revisional Remedy & Forum: If a trial court dismisses a Section 12(2) application, the remedy is a CIVIL REVISION under Section 115 CPC (heard by a Single Bench, first before the District Court / Additional District Judge, then High Court). It is NEVER a 'Criminal Revision' and NEVER before a Division Bench.
-   - Limitation: Governed by Article 181 of the Limitation Act 1908 (3 years from the date when right to apply accrues / discovery of fraud under Section 18 Limitation Act), NOT an internal proviso within Section 12(2) (Section 12(2) CPC contains no internal proviso).
-5. SECTION 115 CPC & ORDER XXXIX INJUNCTION DIRECTIVE:
-   - Statutory Standard: Revisional interference under Section 115 CPC is strictly confined to Clauses (a), (b), and (c):
-     (a) exercise of jurisdiction not vested;
-     (b) failure to exercise jurisdiction vested;
-     (c) acting in the exercise of jurisdiction ILLEGALLY or with MATERIAL IRREGULARITY.
-     (DO NOT use criminal revision terminology like 'illegal, unjust, or improper').
-   - Interlocutory Discipline: Discretion exercised under Order XXXIX Rules 1 & 2 CPC cannot be disturbed in Civil Revision unless tainted by patent perversity, misreading/non-reading of material record, or jurisdictional defect (Muhammad Umar Beg v. Sultan Mahmood, PLD 1970 SC 139).
-   - Conjunctive Triad: Prima facie case, balance of convenience, and irreparable loss are CONJUNCTIVE. If concurrent findings establish no prima facie case, relief is precluded; the High Court cannot grant an injunction or blanket status quo in revision without first setting aside the factual finding on grounds of material irregularity.
-6. ORDER XXI RULES 97–103 CPC (EXECUTION & THIRD-PARTY OBJECTIONS) DIRECTIVE:
-   - Mandatory Inquiry: Under Order XXI Rule 97, an independent third party asserting bona fide title/possession CANNOT be summarily dispossessed by police force. The executing court must treat the objection as a lis, frame issues, and record evidence.
-   - Express Statutory Bar on Separate Suits (Rule 101): Under Order XXI Rule 101 CPC (as substituted by LRO 1972), all questions of title, right, or interest arising between the parties or third-party objectors SHALL be determined by the executing court and NOT BY A SEPARATE SUIT. An independent suit under Section 42 SRA is strictly barred.
-   - Deemed Decree & Appellate Remedy (Rule 103): Under Order XXI Rule 103 CPC (as substituted by LRO 1972), an order adjudicating an application under Rule 98, 99, or 101 HAS THE FORCE OF A DECREE and is subject to the same conditions as to appeal. It is APPEALABLE as a Regular First Appeal (RFA) under Section 96 CPC, NOT a mere revision or interlocutory order.
-7. BANK ACCOUNT FREEZE / BLOCK DIRECTIVE (SECTION 550 Cr.P.C. / AMLA 2010 / NAB / SBP):
-   - Police / Investigative Freezes under Section 550 Cr.P.C.:
-     * Mandatory Procedure: Freezing of a bank account under Section 550 Cr.P.C. by police / FIA is a SEIZURE of property. The investigating officer MUST immediately report the seizure to the Area Magistrate.
-     * Direct Nexus Required: An account can ONLY be frozen if there is a direct, evidence-backed nexus between the specific funds in the account and the alleged offence. Blanket freezing of personal or business accounts without nexus is ILLEGAL (Bank Alfalah v. FIA; Habib Bank Ltd. v. State).
-     * Area Magistrate Remedy: The account holder can apply directly under Section 516-A / 523 Cr.P.C. before the Area Magistrate for unfreezing / de-blocking.
-   - Anti-Money Laundering Act 2010 (AMLA) Freezes (Sections 8, 12, & 19):
-     * Provisional freeze by FMU / investigating agency requires prior written approval from the High Court / Special Court. Indefinite administrative freezes without court confirmation are ultra vires.
-   - NAB Freezes under Section 12 NAO 1999:
-     * Requires order of Chairman NAB and confirmation by Accountability Court within 30 days.
-   - Maintainable Remedy: Where a bank account is frozen arbitrarily, without statutory notice, or without Magistrate report, a CONSTITUTIONAL WRIT PETITION under Article 199 lies directly before the High Court for de-blocking / unfreezing.
-   - NEVER state that the database lacks authorities or that bank account freezes cannot be answered; cite Section 550 Cr.P.C., Section 516-A/523 Cr.P.C., AMLA 2010, and Article 199 writ jurisdiction authoritatively.
-8. STATUTORY FACTUAL INTEGRITY RULE:
-   - When asked for a specific section of a statute or special ordinance, if the exact text of that statute is NOT present in the retrieved database context, state clearly: "The exact statutory text of [Statute Name] is not indexed in the verified database."
-   - DO NOT fabricate section numbers, definitions, or 19th-century British common-law classifications (e.g., 'rogues and vagabonds' or 'idle and disorderly persons') to fill gaps.
-   - DO NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) when queried on provincial or local ordinances (such as the West Pakistan Vagrancy Ordinance 1958, W.P. Ordinance XX of 1958) unless corruption or NAB accountability is explicitly raised.
-   - If an offence under a special statute is bailable or cognizable (e.g., Section 19 of the West Pakistan Vagrancy Ordinance 1958), note that bailable offences are governed by Section 496 Cr.P.C. before the Area Magistrate / Police Station in-charge as a matter of statutory right (NOT Article 199 writ petitions).
-8. CORPORATE & REGULATORY JURISDICTION DIRECTIVE:
-   - When queried on corporate disputes, SECP, or company affairs:
-     a. Rely primarily on the Companies Act 2017 (specifically Section 5 for High Court Company Bench jurisdiction, and Section 481 for the express ouster of civil court jurisdiction) and the Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997).
-9. SPECIAL TENANCY & AMENITIES DIRECTIVE:
-   - Governing Forum: Tenancy disputes in urban areas (commercial/residential) are governed by Provincial Rent Laws (e.g., Punjab Rented Premises Act 2009, Sindh Rented Premises Ordinance 1979, Islamabad Rent Restriction Ordinance 2001, Balochistan Urban Rent Restriction Ordinance 1981).
-   - Statutory Ouster of Civil Court: Civil Court jurisdiction and general suits under Order XXXIX CPC are expressly barred where special rent laws apply. DO NOT advise filing an ordinary civil suit under Order XXXIX CPC before a Civil Judge for urban tenancy disputes.
-   - Disconnection of Amenities: A landlord is strictly prohibited by statute from severing, cutting off, or withholding essential amenities (water, electricity, gas, sanitation) without prior written permission of the Rent Controller / Special Judge (Rent) (e.g., Section 11 SRPO 1979; Section 12 PRPA 2009; Section 10 IRRO 2001).
-   - Correct Remedy: The tenant MUST file an application under the specific Rent Act before the Rent Controller / Special Judge (Rent) for interim and final restoration/protection of amenities, NOT an ordinary civil suit.
-     b. Ground civil court jurisdiction analysis in Section 9 of the Code of Civil Procedure (CPC 1908) regarding express or implied statutory bars, and Section 10 CPC (Stay of suits / res sub judice).
-     c. Do NOT substitute specialized criminal statutes (e.g., NAB Ordinance 1999 or Banking Companies Ordinance 2001) for corporate/commercial jurisdiction unless criminal liability is explicitly raised.
-     d. Correct Statute Naming: The governing SECP statute is the "Securities and Exchange Commission of Pakistan Act 1997 (Act XLII of 1997)" (NEVER call it "SECP Act 2017"). The governing corporate statute is the "Companies Act 2017".
-10. PUNJAB PARTITION & PROPERTY DIRECTIVE (PPIPA 2012 & CPC):
-   - Urban Partition in Punjab: Partition of urban immovable property in Punjab is governed exclusively by the Punjab Partition of Immoveable Property Act, 2012 (PPIPA 2012). NEVER cite Sections 8 or 9 of the Specific Relief Act 1877 for partition.
-   - Interim Relief & Mesne Profits: Under Section 12 of PPIPA 2012, the court can determine and direct payment/deposit of interim mesne profits/rent by the co-sharer in possession. Section 7 of PPIPA 2012 deals strictly with appearance/written statement procedure.
-   - Commission for Partition: A local commission for partition/demarcation is appointed under Order XXVI Rule 13/14 CPC and Section 9 PPIPA 2012 (NEVER Order XXXIII which is for indigent persons).
-   - Limitation on Partition & Profits: 
-     * Right to partition is continuous and never barred by limitation so long as property remains joint.
-     * Past mesne profits are governed strictly by Article 109 of the Limitation Act, 1908 (LIMITATION IS 3 YEARS, NOT 12 YEARS). Claims beyond 3 years prior to suit are time-barred.
-   - Evidence & Enforcement: 
-     * Always cite the Qanun-e-Shahadat Order, 1984 (QSO 1984), NEVER the Indian Evidence Act.
-     * Decrees are executed under Order XXI CPC, NEVER via "suits under Section 271 CPC".
-11. SPECIFIC PERFORMANCE & PROPERTY AGREEMENTS DIRECTIVE:
-   - Agreement to Sell Specific Performance: Filed under SECTION 12 of the Specific Relief Act, 1877 (NEVER Sections 8 or 9 SRA).
-   - Under Explanation to Section 12 SRA 1877, the Court presumes breach of contract to transfer immovable property cannot be adequately relieved by monetary compensation.
-   - Limitation for Specific Performance: Governed EXCLUSIVELY by Article 113 of the Limitation Act, 1908. LIMITATION IS THREE (3) YEARS (NEVER 12 years). Runs from: (a) date fixed for performance, or (b) if no date fixed, when plaintiff has notice that performance is refused. Always warn if claim is nearing 3-year expiry.
-   - Evidence Nomenclature: QSO 1984 is divided into ARTICLES, not "Sections". Article 79 QSO 1984 requires calling at least two attesting witnesses for financial and property contracts.
-   - Territorial Alignment: Lahore / Rawalpindi / Multan / Faisalabad -> LAHORE HIGH COURT. Karachi / Sukkur -> SINDH HIGH COURT. Peshawar / Abbottabad -> PESHAWAR HIGH COURT. Quetta -> HIGH COURT OF BALOCHISTAN. Never cross-cite wrong High Court jurisdictions.
-   - Housing Authorities (DHA / LDA / CDA): Internal rules do not oust Civil Court jurisdiction under Section 9 CPC. Suits for specific performance or title regarding DHA plots lie directly before the Senior Civil Judge having territorial jurisdiction.
-12. SOURCE ATTRIBUTION DIRECTIVE:
-   - Do NOT hardcode 'Sources Searched: Supreme Court of Pakistan' into body text or headers.
-   - If referencing sources, dynamically state the exact forum(s) involved in the cited authorities (e.g., 'Lahore High Court', 'High Court of Sindh', 'Supreme Court of Pakistan').
-   - When addressing High Court writs (Article 199), Revisions (Section 115 CPC), or Intra-Court Appeals (Section 3 Law Reforms Ordinance 1972), explicitly acknowledge High Court Division Bench jurisprudence alongside Supreme Court precedents.
-13. CASE RELEVANCE GATE: Cite ONLY top 2-3 precedents where the ratio directly governs the subject matter. Disregard political or constitutional disqualification cases.
-15. ADVOCATE DRAFTING STYLE (DR. SHIREEN MAZARI BENCHMARK):
-   - When mode is 'drafting' or generating legal petitions / submissions, adopt the high-court appellate drafting style of Senior Advocates (as exemplified in Dr. Shireen Mazari v. Federation of Pakistan, Writ Petition 2024 IHC):
-     a. Explicitly cite verbatim quotes from controlling precedents (e.g. 2020 IHC 454, PLD 2016 SC 570, PLD 2007 SC 642, 2017 PCrLJ 1569, PLD 2014 Sindh 389, 2015 SCMR 630).
-     b. Ground arguments directly in Section 24A of the General Clauses Act 1897 (requirement of reasonable, fair, just exercise of statutory power and mandatory speaking orders).
-     c. Structure appellate ratio quotes under blockquotes (`> "..."`) followed by explicit sub-bullets detailing (i) Factum & Doctrinal Controversy, (ii) Appellate Holding & Principle, and (iii) Direct Applicability & Distinguishing Factors.
-     d. Annexure References: Mark attached reported judgments as `(Copy of Judgment reported as [Citation] is attached as Annexure A/B/C)`.
+            primary_matches = filtered_matches[:3]
+            secondary_matches = filtered_matches[3:6]
+            aggregate_sources_matches.extend(primary_matches + secondary_matches)
 
-OUTPUT STRUCTURE:
+            context_parts = []
+            for match in primary_matches:
+                meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
+                court = clean_court_name(str(meta.get('court', 'Unknown Court')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')))
+                year_or_date = str(meta.get('date', '') or meta.get('year', '') or 'Recent')
+                case_id = str(meta.get('case_id', 'Unknown Docket'))
+                text_content = str(meta.get('text', meta.get('text_preview', ''))).strip()
+                title = clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case'))
+                neutral_cit = format_neutral_citation(court, case_id, year_or_date)
+                outcome_val = str(meta.get("outcome", "")) or "Undetermined"
+                statutes_val = meta.get("statutes") or []
+                sections_val = meta.get("sections") or []
+                match_score = float(match.get("score", 0.0) if isinstance(match, dict) else getattr(match, "score", 0.0))
+
+                context_parts.append(f"CASE TITLE: {title}\nNEUTRAL CITATION: {neutral_cit}\nCOURT: {court}\nOUTCOME: {outcome_val}\nSTATUTES: {', '.join(statutes_val)}\nCONTENT: {text_content}")
+
+                cid_key = meta.get("case_id") or meta.get("citation") or meta.get("title")
+                if cid_key:
+                    _seen_case_ids_global.add(cid_key)
+                aggregate_citations_payload.append({
+                    "case_id": case_id, "court": court, "year": year_or_date, "preview": text_content,
+                    "title": title, "citation": neutral_cit, "score": match_score, "outcome": outcome_val,
+                    "statutes": statutes_val, "sections": sections_val,
+                    "relevance": "High" if match_score >= 0.65 else ("Medium" if match_score >= 0.52 else "Low")
+                })
+
+            for match in secondary_matches:
+                meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
+                court = clean_court_name(str(meta.get('court', 'Court of Record')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')))
+                year_or_date = str(meta.get('date', '') or meta.get('year', '') or '')
+                case_id = str(meta.get('case_id', ''))
+                title = clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Precedent on Record')) or 'Precedent on Record'))
+                neutral_cit = format_neutral_citation(court, case_id, year_or_date)
+                preview_snippet = str(meta.get('text', meta.get('text_preview', ''))).strip()[:180] + "..."
+                cid_key = meta.get("case_id") or meta.get("citation") or meta.get("title")
+                if cid_key:
+                    _seen_case_ids_global.add(cid_key)
+                aggregate_additional_authorities.append({"title": title, "citation": neutral_cit, "summary": preview_snippet})
+
+            if not context_parts:
+                return "No matching judgments were found in the database for this search. Do not fabricate citations -- answer from settled statutory principles and say the database returned no precedent on point."
+
+            return "\n\n=========================================\n\n".join(context_parts)
+
+        # ==============================================================================
+        # ONE FLEXIBLE, CONVERSATIONAL SYSTEM PROMPT
+        # Claude decides: ask a clarifying question, answer directly, or call the search
+        # tool -- instead of a hardcoded state machine forcing one path.
+        # ==============================================================================
+        from core.legal_guardrails import lint_legal_output, SYSTEM_LEGAL_DIRECTIVE
+
+        conversational_persona = """You are Section, a senior legal research and drafting associate embedded in a Pakistani advocate's practice. You speak like a sharp, experienced colleague in a real conversation -- not like a document generator.
+
+HOW YOU WORK:
+1. BE CONVERSATIONAL BY DEFAULT. Most replies should read like a colleague talking, in plain prose. Do NOT impose section headers, numbered parts, or a fixed template on casual questions, clarifying exchanges, or short factual answers. Reserve formal structure (headers, numbered sections) for when you are actually delivering a finished legal opinion, memo, or draft the advocate asked for.
+2. ASK BEFORE YOU ASSUME, BUT DON'T INTERROGATE. When a request is genuinely underspecified for what's being asked -- e.g. "help me write a writ petition" without knowing what order is being challenged, in which forum, on what grounds -- ask 1-2 sharp, specific follow-up questions before doing the work, the way a senior associate would before starting a draft. Don't ask questions whose answers don't change what you'd do. If you can give a useful provisional answer while also asking what would sharpen it, do both in one reply rather than blocking on the question.
+3. USE THE search_case_law TOOL DELIBERATELY, NOT REFLEXIVELY. Call it when the answer genuinely benefits from grounding in actual Pakistani judgments or you need to verify a specific citation -- not for every message, and not before you understand what the advocate actually needs. Skip it for casual conversation, definitions you already know confidently, or when you're still gathering facts via clarifying questions. When you do call it, make the query specific (legal issue + jurisdiction + known statute), because vague searches return junk.
+4. NEVER FABRICATE. Only cite cases, citations, or courts that the search tool actually returned. If the tool returns nothing on point, say so plainly and reason from statute and settled principle instead -- do not invent a precedent to sound authoritative.
+5. STAY IN YOUR LANE. You discuss anything within Pakistani law -- procedure, strategy, drafting, doctrine, practical advice for advocates -- conversationally and thoroughly. If asked something with nothing to do with law or legal practice, say so and redirect.
+6. WHEN YOU DO PRODUCE A FORMAL OPINION OR DRAFT, and only then, you may append a machine-readable citation block for the UI, using this exact format, containing ONLY precedents the search tool actually returned:
 <<<CARDS>>>
-[
-  {
-    "case_name": "Party Names",
-    "case_id": "Canonical Case ID Slug",
-    "citation": "Official Court and Petition / Docket Number",
-    "date": "Year or exact date",
-    "issue": "Detailed legal question resolved.",
-    "holding": "Two concise sentences on the ratio.",
-    "why_relevant": "One sentence applying directly to the user's issue.",
-    "statutes_invoked": [{"name": "Statute Name and Section", "explanation": "Statutory function & mandate"}],
-    "outcome": "1-2 words (e.g. 'Bail Allowed', 'Dismissed')",
-    "verified_source": true
-  }
-]
+[{"case_name": "...", "citation": "...", "date": "...", "outcome": "...", "issue": "...", "holding": "...", "why_relevant": "...", "statutes_invoked": [{"name": "...", "explanation": "..."}]}]
 <<<END_CARDS>>>
-
-<<<ANSWER>>>
-### I. EXECUTIVE SUMMARY & LEGAL OPINION
-[Formal Senior Advocate executive conclusion and core legal opinion].
-
----
-
-### II. CONTROLLING STATUTORY ARCHITECTURE
-
-[Statute Name & Section]
-> *"[Verbatim exact statutory provision or precise statutory quote in italics]"*
-
-* Legislative Intent & Doctrinal Scope: [Explanation of legislative intent and statutory scope]
-* Procedural Application to Instant Case: [Direct application to the user's scenario]
-
----
-
-### III. CONTROLLING JUDICIAL PRECEDENTS & APPELLATE RATIO
-
-[Party Names] ([Citation]) — [Court Name]
-> *"[Verbatim core holding or key ratio quote from judgment]"*
-
-(Copy of Judgment reported as [Citation] is attached as Annexure A)
-
-* Factum & Doctrinal Controversy: [Factual dispute and controversy]
-* Appellate Holding & Principle: [Appellate holding and governing principle]
-* Direct Applicability & Distinguishing Factors: [Direct application to the instant dispute]
-
----
-
-### IV. PROCEDURAL & STRATEGIC LITIGATION PLAYBOOK
-
-* Form of Pleading & Proper Forum: [Proper forum, bench, and pleading form]
-* Jurisdictional Threshold & Gatekeeping: [Threshold requirements and gatekeeping standards]
-* Limitation & Pre-Condition for Relief: [Limitation periods and conditional stay requirements]
-<<<END_ANSWER>>>
-
-CONSTRAINTS:
-- MANDATORY 4-PART FORMAT: YOU MUST FOLLOW THIS EXACT 4-PART FORMAT FOR EVERY SINGLE RESPONSE NO MATTER WHAT:
-  `### I. EXECUTIVE SUMMARY & LEGAL OPINION`
-  `---`
-  `### II. CONTROLLING STATUTORY ARCHITECTURE`
-  `---`
-  `### III. CONTROLLING JUDICIAL PRECEDENTS & APPELLATE RATIO`
-  `---`
-  `### IV. PROCEDURAL & STRATEGIC LITIGATION PLAYBOOK`
-- NEVER output duplicate section headers (e.g. NEVER write "Executive Summary" twice, nor write "LEGAL OPINION: ..." before Section I).
-- NEVER write custom section titles like "### BANK ACCOUNT FREEZE/BLOCK JURISPRUDENCE".
-- NEVER state "I cannot synthesize case law" or "I must advise that the database context does not contain reported judgments". Formulate a complete Senior Advocate legal opinion using Section 550 Cr.P.C., Section 516-A/523 Cr.P.C., AMLA 2010, NAO 1999, and Article 199 writ jurisdiction authoritatively inside the 4-part legal opinion layout.
-- ABSOLUTELY NO DOUBLE ASTERISKS (**): DO NOT write double asterisks (**) anywhere in the response text under any circumstances. All titles, statute names, and bullet headers MUST be written as plain text without any ** asterisks.
-- CONVERSATIONAL CLARIFICATION DIRECTIVE: If the user query is broad, open-ended, or under-specified (e.g. 'filing a writ application in high court', 'how to file a petition'), provide an authoritative legal baseline AND ALWAYS add a sub-heading in Section I titled 'CLARIFYING QUESTIONS FOR PRECISE ADVICE' containing 2 to 3 concise, targeted questions (e.g., subject matter of writ, specific administrative order challenged, target High Court territory) to interactively guide the advocate.
-- STATUTORY SECTION LOOKUP DIRECTIVE: If the user asks for a specific section or article (e.g., 'give me section 491 CrPC', 'text of section 12(2) CPC'), state/quote the exact statutory provision in Section II, explain its legal scope, maintainable forum, and key judicial principles cleanly within the 4-part layout.
-- Follow the NAME -> EXPLAIN -> APPLY legal reasoning structure for every statutory provision and judicial precedent.
-- NEVER truncate mid-sentence. Budget output length cleanly.
+   Omit this block entirely for conversational replies, clarifying questions, or answers that didn't rely on retrieved precedent.
+7. Never use double asterisks (**) for emphasis; write plain text.
 """
 
-        # Assemble conversation history turns if provided by frontend
+        combined_system_prompt = f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{conversational_persona}"
+
+        CASE_LAW_TOOL = {
+            "name": "search_case_law",
+            "description": "Search the firm's indexed database of Pakistani superior court judgments (Supreme Court, High Courts, Federal Shariat Court) for precedents, holdings and statutory citations relevant to a specific legal question. Call this only once you have enough facts (subject matter and, ideally, jurisdiction) to run a precise search -- premature or vague searches return poor results. Do not call this for casual conversation or for facts you're still gathering via clarifying questions.",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "A precise legal research query: the legal issue, relevant statute/section if known, and jurisdiction (e.g. 'quashment of FIR under Article 199 Lahore High Court fraud allegations')."},
+                    "court_filter": {"type": "string", "description": "Optional: restrict to one court, e.g. 'Lahore High Court', 'Supreme Court of Pakistan'. Leave blank to search broadly (still subject to provincial jurisdiction rules)."}
+                },
+                "required": ["query"]
+            }
+        }
+
+        # Assemble conversation history turns provided by frontend
         history_msgs = []
         if request.messages and isinstance(request.messages, list):
             for m in request.messages:
@@ -1163,50 +870,83 @@ CONSTRAINTS:
             for img in valid_vision_images:
                 user_msg_content.append({
                     "type": "image",
-                    "source": {
-                        "type": "base64",
-                        "media_type": sanitize_mime_type(img.image_mime_type),
-                        "data": clean_base64_data(img.image_base64)
-                    }
+                    "source": {"type": "base64", "media_type": sanitize_mime_type(img.image_mime_type), "data": clean_base64_data(img.image_base64)}
                 })
-            doc_prompt_text = f"Context from Legal Database:\n{combined_context}\n\nUser Question / Document Instruction: {effective_user_query or 'Thoroughly analyze the attached legal document and provide a complete Senior Advocate opinion.'}"
-            user_msg_content.append({"type": "text", "text": doc_prompt_text})
-            final_messages = history_msgs + [{"role": "user", "content": user_msg_content}]
+            user_msg_content.append({"type": "text", "text": effective_user_query or "Thoroughly analyze the attached legal document and advise."})
+            current_user_message = {"role": "user", "content": user_msg_content}
         else:
-            claude_user_message = f"Context from Legal Database:\n{combined_context}\n\nQuestion: {effective_user_query}"
-            final_messages = history_msgs + [{"role": "user", "content": claude_user_message}]
+            current_user_message = {"role": "user", "content": effective_user_query}
 
-        from core.legal_guardrails import lint_legal_output, SYSTEM_LEGAL_DIRECTIVE
+        messages = history_msgs + [current_user_message]
 
-        final_kwargs = {
-            "model": CLAUDE_MODEL,
-            "max_tokens": 8192,
-            "system": f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{system_prompt}",
-            "messages": final_messages
-        }
+        total_input_tokens = 0
+        total_output_tokens = 0
+        raw_model_output = ""
+        is_token_truncated = False
+        MAX_TOOL_ROUNDS = 3
 
-        claude_message = await async_anthropic_client.messages.create(**final_kwargs)
-        raw_model_output = "".join(getattr(b, "text", "") for b in claude_message.content).strip()
-        is_token_truncated = (getattr(claude_message, "stop_reason", None) == "max_tokens")
+        for round_idx in range(MAX_TOOL_ROUNDS + 1):
+            claude_message = await async_anthropic_client.messages.create(
+                model=CLAUDE_MODEL,
+                max_tokens=8192,
+                system=combined_system_prompt,
+                messages=messages,
+                tools=[CASE_LAW_TOOL],
+            )
+            if hasattr(claude_message, "usage") and claude_message.usage:
+                total_input_tokens += getattr(claude_message.usage, "input_tokens", 0) or 0
+                total_output_tokens += getattr(claude_message.usage, "output_tokens", 0) or 0
 
-        # Deterministic Legal Output Verification & Reflection Loop
-        lint_errors = lint_legal_output(raw_model_output, query_context=effective_user_query)
-        if lint_errors:
-            print(f"⚠️ Legal Guardrails Lint Errors detected: {lint_errors}. Triggering reflection loop...", file=sys.stderr)
-            reflection_prompt = f"CRITICAL INSTRUCTION: Do NOT output conversational text, self-defense, or meta-arguments explaining your draft. Automatically correct these legal feedback items: {'; '.join(lint_errors)}. You MUST immediately output the complete corrected opinion formatted strictly inside <<<CARDS>>> [...] <<<END_CARDS>>> and <<<ANSWER>>> [...] <<<END_ANSWER>>> tags using the 4-part legal format."
-            reflection_messages = list(final_messages)
-            reflection_messages.append({"role": "assistant", "content": raw_model_output})
-            reflection_messages.append({"role": "user", "content": reflection_prompt})
-            
-            reflection_kwargs = {
-                "model": CLAUDE_MODEL,
-                "max_tokens": 8192,
-                "system": f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{system_prompt}",
-                "messages": reflection_messages
-            }
-            claude_message_ref = await async_anthropic_client.messages.create(**reflection_kwargs)
-            raw_model_output = "".join(getattr(b, "text", "") for b in claude_message_ref.content).strip()
-            is_token_truncated = (getattr(claude_message_ref, "stop_reason", None) == "max_tokens")
+            stop_reason = getattr(claude_message, "stop_reason", None)
+
+            if stop_reason == "tool_use" and round_idx < MAX_TOOL_ROUNDS:
+                assistant_blocks = []
+                tool_calls = []
+                for b in claude_message.content:
+                    b_type = getattr(b, "type", None)
+                    if b_type == "text":
+                        assistant_blocks.append({"type": "text", "text": b.text})
+                    elif b_type == "tool_use":
+                        assistant_blocks.append({"type": "tool_use", "id": b.id, "name": b.name, "input": b.input})
+                        tool_calls.append(b)
+
+                messages.append({"role": "assistant", "content": assistant_blocks})
+
+                tool_result_blocks = []
+                for tc in tool_calls:
+                    if tc.name == "search_case_law":
+                        tool_input = tc.input or {}
+                        result_text = await run_case_law_search(tool_input.get("query", ""), tool_input.get("court_filter"))
+                    else:
+                        result_text = "Unknown tool."
+                    tool_result_blocks.append({"type": "tool_result", "tool_use_id": tc.id, "content": result_text})
+
+                messages.append({"role": "user", "content": tool_result_blocks})
+                continue
+
+            raw_model_output = "".join(getattr(b, "text", "") for b in claude_message.content if getattr(b, "type", None) == "text").strip()
+            is_token_truncated = (stop_reason == "max_tokens")
+            break
+
+        citations_payload = aggregate_citations_payload
+        additional_authorities = aggregate_additional_authorities
+
+        # Deterministic Legal Output Verification & Reflection Loop (only when we actually
+        # grounded the answer in retrieved case law -- casual replies skip this entirely)
+        if citations_payload:
+            lint_errors = lint_legal_output(raw_model_output, query_context=effective_user_query)
+            if lint_errors:
+                print(f"⚠️ Legal Guardrails Lint Errors detected: {lint_errors}. Triggering reflection loop...", file=sys.stderr)
+                reflection_prompt = f"CRITICAL INSTRUCTION: Do NOT output conversational meta-commentary about the correction. Silently correct these legal issues in your answer and re-output the full corrected response in the same style: {'; '.join(lint_errors)}"
+                reflection_messages = list(messages) + [
+                    {"role": "assistant", "content": raw_model_output},
+                    {"role": "user", "content": reflection_prompt},
+                ]
+                claude_message_ref = await async_anthropic_client.messages.create(
+                    model=CLAUDE_MODEL, max_tokens=8192, system=combined_system_prompt, messages=reflection_messages
+                )
+                raw_model_output = "".join(getattr(b, "text", "") for b in claude_message_ref.content if getattr(b, "type", None) == "text").strip()
+                is_token_truncated = (getattr(claude_message_ref, "stop_reason", None) == "max_tokens")
 
         executive_answer = ""
         precedent_cards = []
@@ -1214,8 +954,7 @@ CONSTRAINTS:
         cards_match = re.search(r'<<<CARDS>>>(.*?)<<<END_CARDS>>>', raw_model_output, re.DOTALL)
         if cards_match:
             try:
-                cards_str = cards_match.group(1).strip()
-                parsed_cards = json.loads(cards_str)
+                parsed_cards = json.loads(cards_match.group(1).strip())
                 if isinstance(parsed_cards, list):
                     precedent_cards = parsed_cards
             except Exception:
@@ -1227,12 +966,10 @@ CONSTRAINTS:
                             precedent_cards.append(c_json)
                     except Exception:
                         pass
-
-        answer_match = re.search(r'<<<ANSWER>>>(.*?)<<<END_ANSWER>>>', raw_model_output, re.DOTALL)
-        if answer_match:
-            executive_answer = answer_match.group(1).strip()
+            executive_answer = re.sub(r'<<<CARDS>>>.*?<<<END_CARDS>>>', '', raw_model_output, flags=re.DOTALL).strip()
         else:
-            executive_answer = re.sub(r'<<<CARDS>>>.*?<<<END_CARDS>>>', '', raw_model_output, flags=re.DOTALL)
+            executive_answer = raw_model_output
+
         executive_answer = clean_markdown_formatting(executive_answer)
 
         for idx, card in enumerate(precedent_cards):
@@ -1245,30 +982,34 @@ CONSTRAINTS:
         if not precedent_cards and citations_payload:
             precedent_cards = [
                 {
-                    "case_name": c["title"],
-                    "case_id": c["case_id"],
-                    "citation": c["citation"],
-                    "date": c["year"],
+                    "case_name": c["title"], "case_id": c["case_id"], "citation": c["citation"], "date": c["year"],
                     "issue": "Legal proposition extracted from indexed public judgment record.",
                     "holding": sanitize_holding_text(c.get("preview", "")[:250]),
                     "why_relevant": "Retrieved precedent directly governing the statutory issues raised.",
                     "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in c.get("statutes", [])],
-                    "outcome": c.get("outcome", "Undetermined"),
-                    "verified_source": True,
+                    "outcome": c.get("outcome", "Undetermined"), "verified_source": True,
                     "raw_judgment_text": strip_control_characters(c.get("preview", ""))
                 }
                 for c in citations_payload
             ]
 
-        add_authorities_text = ""
-        if additional_authorities:
-            add_authorities_lines = ["\n\nADDITIONAL RELEVANT AUTHORITIES:"]
-            for auth in additional_authorities:
-                add_authorities_lines.append(f"• {auth['title']} — {auth['citation']}")
-            add_authorities_text = "\n".join(add_authorities_lines)
+        display_answer = executive_answer
+        if citations_payload or additional_authorities:
+            if additional_authorities:
+                add_lines = ["\n\nADDITIONAL RELEVANT AUTHORITIES:"] + [f"• {a['title']} — {a['citation']}" for a in additional_authorities]
+                display_answer += "\n".join(add_lines)
+            display_answer += "\n\n" + format_sources_searched(aggregate_sources_matches)
 
-        dynamic_footer = format_sources_searched(primary_matches + secondary_matches)
-        display_answer = executive_answer + add_authorities_text + "\n\n" + dynamic_footer
+        # Mode label for the frontend UI (metadata only -- no longer drives response shape)
+        query_lower = request.query_text.lower()
+        if has_image or has_doc_text:
+            mode = "document_analysis"
+        elif search_call_count["n"] > 0:
+            mode = "caselaw_search"
+        elif any(k in query_lower for k in ["draft petition", "draft bail application", "draft plaint", "draft written statement"]):
+            mode = "drafting"
+        else:
+            mode = "intake"
 
         inserted_row_id = str(uuid.uuid4())
         if supabase:
@@ -1277,8 +1018,8 @@ CONSTRAINTS:
                 "query_text": f"[Vision Context] {request.query_text}" if has_image else request.query_text,
                 "answer_text": display_answer,
                 "citations": citations_payload,
-                "input_tokens": getattr(claude_message.usage, "input_tokens", 0) + vision_input_tokens,
-                "output_tokens": getattr(claude_message.usage, "output_tokens", 0) + vision_output_tokens
+                "input_tokens": total_input_tokens,
+                "output_tokens": total_output_tokens
             }).execute()
             if db_insert.data and len(db_insert.data) > 0:
                 inserted_row_id = str(db_insert.data[0].get("id", inserted_row_id))
@@ -1297,14 +1038,13 @@ CONSTRAINTS:
                 },
                 "completed_at": datetime.now(timezone.utc),
                 "continue_state": {
-                    "system_prompt": system_prompt,
-                    "claude_message_content": claude_user_message,
+                    "system_prompt": combined_system_prompt,
+                    "claude_message_content": effective_user_query,
                     "raw_model_answer": display_answer,
                     "precedent_cards": precedent_cards,
                     "citations_payload": citations_payload,
                     "mode": mode,
                     "category": request.category,
-                    "target_source": target_source,
                     "inserted_row_id": inserted_row_id,
                     "continuation_rounds": 0,
                 }
