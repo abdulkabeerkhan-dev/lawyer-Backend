@@ -957,6 +957,14 @@ HOW YOU WORK:
             "generate pleading", "prepare draft", "draft court petition", "court draft"
         ])
 
+        if is_drafting_requested:
+            combined_system_prompt += (
+                "\n\nCRITICAL DRAFTING MANDATE: The user has explicitly commanded drafting ('Draft now' / 'proceed with draft'). "
+                "You MUST generate the complete, court-ready pleading immediately. Do NOT ask follow-up questions, do NOT ask for clarification, "
+                "do NOT output internal thinking, validation checklists, or meta-commentary, and do NOT ask for permission. "
+                "Begin your response DIRECTLY with the Court Heading (e.g. 'IN THE HIGH COURT OF...')."
+            )
+
         # Issue 3: If user commands drafting or mode is drafting, ensure top vector chunks are retrieved from Pinecone immediately
         if is_drafting_requested and search_call_count["n"] == 0:
             print(f"📌 [JOB {job_id}] Drafting command detected ('{user_prompt_clean}'). Pre-fetching Pinecone vector chunks...", file=sys.stderr)
