@@ -865,9 +865,10 @@ HOW YOU WORK:
                 m_dict = m.dict() if hasattr(m, "dict") else (m if isinstance(m, dict) else {})
                 r_raw = m_dict.get("role") or getattr(m, "role", "user")
                 c_raw = str(m_dict.get("content") or getattr(m, "content", "") or "").strip()
-                if c_raw and c_raw != request.query_text:
+                c_clean = re.sub(r'\[.*?\]', '', c_raw, flags=re.DOTALL).strip()
+                if c_clean and c_clean != user_prompt_clean:
                     r = "assistant" if str(r_raw).lower() in ("assistant", "system", "bot") else "user"
-                    history_msgs.append({"role": r, "content": c_raw})
+                    history_msgs.append({"role": r, "content": c_clean})
 
         if has_image:
             user_msg_content = []
