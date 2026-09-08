@@ -559,7 +559,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         "precedent_cards": [],
                         "additional_authorities": [],
                         "query_id": None,
-                        "mode": "chitchat",
+                        "mode": "intake",
                         "truncated": False
                     },
                     "completed_at": datetime.now(timezone.utc),
