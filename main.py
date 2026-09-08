@@ -215,7 +215,7 @@ def clean_markdown_formatting(text: str) -> str:
     if sec1_match:
         text = text[sec1_match.start():]
     else:
-        text = re.sub(r'^\s*(I appreciate[^\n]*\n|However, I require[^\n]*\n|My prior draft[^\n]*\n|To regenerate[^\n]*\n|If you are alleging[^\n]*\n|LEGAL OPINION[^\n]*\n)+', '', text.strip(), flags=re.IGNORECASE)
+        text = re.sub(r'^\s*(I acknowledge[^\n]*\n|I appreciate[^\n]*\n|However, I require[^\n]*\n|My prior draft[^\n]*\n|To regenerate[^\n]*\n|If you are alleging[^\n]*\n|LEGAL OPINION[^\n]*\n|The opinion I provided[^\n]*\n|Please provide[^\n]*\n)+', '', text.strip(), flags=re.IGNORECASE)
     
     # Normalize duplicate or messy section headers to single standard markdown titles
     text = re.sub(r'#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*', '### I. EXECUTIVE SUMMARY & LEGAL OPINION', text, count=1, flags=re.IGNORECASE)
@@ -545,9 +545,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         # FAST PATH: pure greetings / small talk never need to hit Claude+tools at all
         # ==============================================================================
         _CHITCHAT_EXACT = {
-            "hi", "hello", "hey", "salam", "assalam o alaikum", "thanks", "thank you", "ok", "okay", "test"
+            "hi", "hello", "hey", "salam", "assalam o alaikum", "thanks", "thank you", "ok", "okay", "test", "help", "good morning", "good afternoon", "good evening", "greetings"
         }
-        _norm_q = re.sub(r'[^\w\s]', '', request.query_text.strip().lower()).strip()
+        _norm_q = re.sub(r'[^\w\s]', '', user_prompt_clean.strip().lower()).strip()
         if (not has_image) and (not has_doc_text) and _norm_q in _CHITCHAT_EXACT:
             chitchat_answer = "Hello! I'm Section, your legal research and drafting assistant for Pakistani law. What are you working on?"
             if job_id in jobs_store:
