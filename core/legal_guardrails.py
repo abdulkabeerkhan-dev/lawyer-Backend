@@ -17,10 +17,11 @@ You must adhere strictly to codified Pakistani statutory law and controlling Sup
      * LIMITATION IS THREE (3) YEARS. NEVER cite 12 years.
    - Right to Partition: Partition is a continuous, recurring right. It is NOT governed by a numbered section of the Limitation Act, but by the settled principle that joint ownership creates a recurring cause of action (PLD 2003 SC 410). No limitation period applies so long as property remains joint.
 
-2. SPECIFIC RELIEF ACT, 1877 & PARTITION PROCEDURE:
+2. SPECIFIC RELIEF ACT, 1877, PUNJAB RENTED PREMISES ACT 2009 & PARTITION PROCEDURE:
    - Suit for Specific Performance of a contract/agreement to sell is filed under SECTION 12 (NEVER Sections 8 or 9).
    - Under Explanation to Section 12, the Court presumes breach of contract to transfer immovable property cannot be adequately relieved by money damages.
    - Suit for Declaration of title and possession is under Section 42; Injunctions are under Section 54/55.
+   - Commercial & Residential Eviction in Punjab (PRPA 2009): Eviction of commercial or residential rented premises in Punjab (Lahore, Faisalabad, Rawalpindi, Multan) is governed EXCLUSIVELY by the Punjab Rented Premises Act 2009 (PRPA 2009). The proper forum is the Rent Tribunal / Special Judge Rent under Section 16/19 PRPA 2009. Recommending an ordinary civil suit under Section 9 CPC or Senior Civil Judge for tenancy eviction in Punjab is a fatal procedural error. Tentative rent order is governed by Section 13 PRPA 2009.
    - Urban Partition in Punjab (PPIPA 2012): Governed exclusively by the Punjab Partition of Immoveable Property Act, 2012. Section 12 governs interim mesne profits/rent deposit. Section 7 deals strictly with appearance/written statement procedure.
    - Small Urban Parcels (PPIPA 2012): When urban residential plots under 10 marlas have multiple co-sharers, highlight the internal pre-emptive auction under Section 9/10 PPIPA 2012, as metes-and-bounds division is generally rejected for destroying economic utility.
    - Rendition of Accounts: Governed by Order XX Rule 16 CPC (preliminary decree for accounts) and inherent civil jurisdiction under Section 9 CPC.
@@ -32,8 +33,9 @@ You must adhere strictly to codified Pakistani statutory law and controlling Sup
    - Quetta -> HIGH COURT OF BALOCHISTAN.
    - NEVER suggest a High Court of another province (e.g., never cite Balochistan High Court for Lahore or Rawalpindi disputes).
 
-4. EVIDENTIARY RULES & NOMENCLATURE:
-   - Always cite the Qanun-e-Shahadat Order, 1984 (QSO 1984). Citing the "Indian Evidence Act" or "IPC" is strictly prohibited.
+4. EVIDENTIARY RULES, TAX & NOMENCLATURE:
+   - Always cite the Qanun-e-Shahadat Order, 1984 (QSO 1984). Citing the "Indian Evidence Act", "Indian Income-tax Act", or "IPC" is strictly prohibited.
+   - Income tax assessment/reassessment in Pakistan is governed exclusively by the Income Tax Ordinance, 2001 (ITO 2001) and Customs Act, 1969.
    - QSO 1984 is divided into ARTICLES, not "Sections".
    - Article 79 QSO 1984 requires proving financial and property contracts by calling at least two attesting witnesses.
    - Section 271 of CPC DOES NOT EXIST (CPC ends at Section 158). Decrees are executed under Order XXI CPC.
@@ -74,6 +76,8 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
         errors.append("Citing foreign 'Banking Regulation Act' (Pakistani banks are governed under Banking Companies Ordinance 1962 - BCO 1962).")
     if re.search(r'\bindian evidence act\b', text_lower):
         errors.append("Citing 'Indian Evidence Act' instead of Qanun-e-Shahadat Order, 1984 (QSO 1984).")
+    if re.search(r'\b(indian income-?\s*tax act|income tax act 1961)\b', text_lower):
+        errors.append("Citing foreign 'Indian Income-tax Act' instead of Income Tax Ordinance 2001 (ITO 2001).")
     if re.search(r'\b(indian penal code|ipc)\b', text_lower):
         errors.append("Citing 'IPC' / 'Indian Penal Code' instead of Pakistan Penal Code (PPC).")
     if re.search(r'\bsection\s*271\s*cpc\b', text_lower):
@@ -88,6 +92,8 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
     # Rule 3: Specific Relief Act / Partition / SRPO Eviction / FIO 2001 Civil Court Bar misclassifications
     if ("financial institution" in text_lower or "fio 2001" in text_lower or "mortgage auction" in text_lower or "section 15" in text_lower) and re.search(r'\b(civil court|senior civil judge)\b', text_lower) and ("order 39" in text_lower or "civil suit" in text_lower):
         errors.append("Recommending an ordinary civil suit / Order XXXIX CPC before Civil Judge for Banking Mortgage/FIO 2001 disputes (Section 7 FIO 2001 expressly bars Civil Court jurisdiction; remedy lies before Banking Court or Article 199 High Court Writ).")
+    if ("eviction" in query_lower or "tenancy" in query_lower or "rented premises" in query_lower) and any(city in query_lower for city in ["lahore", "faisalabad", "rawalpindi", "multan", "punjab"]) and re.search(r'\b(senior civil judge|civil court|section 9 cpc)\b', text_lower) and "rent tribunal" not in text_lower:
+        errors.append("Recommending ordinary Civil Court / Section 9 CPC for Punjab commercial/residential tenancy eviction (eviction in Punjab is governed exclusively by the Punjab Rented Premises Act 2009 - PRPA 2009 before the Rent Tribunal / Special Judge Rent).")
     if re.search(r'section\s*[89]\s*(of\s*)?(the\s*)?specific relief act', text_lower) and "partition" in text_lower:
         errors.append("Citing Sections 8 or 9 of SRA 1877 for partition (urban partition in Punjab is governed by PPIPA 2012).")
     if re.search(r'section\s*7\s*(of\s*)?(the\s*)?(punjab partition|ppipa)', text_lower) and ("interim" in text_lower or "mesne profit" in text_lower or "rent deposit" in text_lower):
