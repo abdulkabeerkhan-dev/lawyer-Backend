@@ -1107,9 +1107,13 @@ HOW YOU WORK:
             if idx < len(citations_payload):
                 card["raw_judgment_text"] = strip_control_characters(citations_payload[idx].get("preview", ""))
                 card["citation"] = citations_payload[idx].get("citation", card.get("citation"))
-                card["case_id"] = citations_payload[idx].get("case_id")
-                card["pdf_url"] = citations_payload[idx].get("pdf_url")
+                card["case_id"] = citations_payload[idx].get("case_id") or card.get("case_id")
+                card["pdf_url"] = citations_payload[idx].get("pdf_url") or card.get("pdf_url")
             card["holding"] = sanitize_holding_text(card.get("holding", ""))
+            cid = card.get("case_id") or card.get("citation") or card.get("case_name") or ""
+            if not card.get("pdf_url") and cid and SUPABASE_URL:
+                safe_pdf_key = re.sub(r'[^a-zA-Z0-9_\-]', '_', str(cid)).strip('_') + ".pdf"
+                card["pdf_url"] = f"{SUPABASE_URL}/storage/v1/object/public/judgments-pdf/{safe_pdf_key}"
 
         if not precedent_cards and citations_payload:
             precedent_cards = [
@@ -1121,7 +1125,7 @@ HOW YOU WORK:
                     "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in c.get("statutes", [])],
                     "outcome": c.get("outcome", "Undetermined"), "verified_source": True,
                     "raw_judgment_text": strip_control_characters(c.get("preview", "")),
-                    "pdf_url": c.get("pdf_url")
+                    "pdf_url": c.get("pdf_url") or (f"{SUPABASE_URL}/storage/v1/object/public/judgments-pdf/{re.sub(r'[^a-zA-Z0-9_\-]', '_', str(c.get('case_id') or c.get('citation'))).strip('_')}.pdf" if SUPABASE_URL else None)
                 }
                 for c in citations_payload
             ]
