@@ -298,10 +298,33 @@ def clean_markdown_formatting(text: str) -> str:
     
     return text.strip()
 
+def strip_copyright_and_branding(text: str) -> str:
+    if not text:
+        return ""
+    patterns = [
+        r'Copyrights?\s*©?\s*\d*\s*by\s*Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
+        r'This\s*site\s*is\s*developed\s*&\s*maintained\s*(by\s*)?Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
+        r'Help\s*FAQ\'?s?\s*Sitemap',
+        r'Page\s*\d+\s*of\s*\d+',
+        r'Confidential\s*&\s*Official\s*Record\s*-\s*Pakistan\s*Legal\s*Corpus',
+        r'Source:\s*pakistan\s*law\s*site',
+        r'pakistan\s*law\s*site',
+        r'pakistanlawsite(?:\.com)?',
+        r'Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
+        r'Bookmark\s*this\s*Case'
+    ]
+    cleaned = text
+    for pat in patterns:
+        cleaned = re.sub(pat, '', cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r'^\s*Source:\s*$', '', cleaned, flags=re.MULTILINE | re.IGNORECASE)
+    cleaned = re.sub(r'\n{3,}', '\n\n', cleaned)
+    return cleaned.strip()
+
 def format_clean_judgment_paragraphs(text: str) -> str:
     if not text:
         return ""
     
+    text = strip_copyright_and_branding(text)
     t = text.replace("\r\n", "\n").replace("\r", "\n")
     t = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\ufffd]', '', t)
     
