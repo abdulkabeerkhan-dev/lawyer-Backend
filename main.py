@@ -4,6 +4,7 @@ import uuid
 import io
 import base64
 import urllib.parse
+import html
 from datetime import datetime, timezone, timedelta
 from typing import List, Dict, Any, Optional, cast
 import re
@@ -18,6 +19,14 @@ from pinecone import Pinecone
 from anthropic import AsyncAnthropic
 from supabase import create_client, Client
 from dotenv import load_dotenv
+
+try:
+    from reportlab.lib.pagesizes import letter
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    REPORTLAB_AVAILABLE = True
+except ImportError:
+    REPORTLAB_AVAILABLE = False
 
 from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks, Request
 from fastapi.responses import StreamingResponse
@@ -893,9 +902,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     _seen_case_ids_global.add(cid_key)
                 
                 pdf_url_val = meta.get("pdf_url") or meta.get("pdf_link")
-                if not pdf_url_val and SUPABASE_URL:
-                    safe_pdf_key = re.sub(r'[^a-zA-Z0-9_\-]', '_', str(case_id or neutral_cit)).strip('_') + ".pdf"
-                    pdf_url_val = f"{SUPABASE_URL}/storage/v1/object/public/judgments-pdf/{safe_pdf_key}"
+                if not pdf_url_val:
+                    target_cid = case_id or neutral_cit or title
+                    pdf_url_val = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
 
                 aggregate_citations_payload.append({
                     "case_id": case_id, "court": court, "year": year_or_date, "preview": text_content,
@@ -1111,9 +1120,8 @@ HOW YOU WORK:
                 card["pdf_url"] = citations_payload[idx].get("pdf_url") or card.get("pdf_url")
             card["holding"] = sanitize_holding_text(card.get("holding", ""))
             cid = card.get("case_id") or card.get("citation") or card.get("case_name") or ""
-            if not card.get("pdf_url") and cid and SUPABASE_URL:
-                safe_pdf_key = re.sub(r'[^a-zA-Z0-9_\-]', '_', str(cid)).strip('_') + ".pdf"
-                card["pdf_url"] = f"{SUPABASE_URL}/storage/v1/object/public/judgments-pdf/{safe_pdf_key}"
+            if cid:
+                card["pdf_url"] = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(cid))}"
 
         if not precedent_cards and citations_payload:
             precedent_cards = [
@@ -1125,7 +1133,7 @@ HOW YOU WORK:
                     "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in c.get("statutes", [])],
                     "outcome": c.get("outcome", "Undetermined"), "verified_source": True,
                     "raw_judgment_text": strip_control_characters(c.get("preview", "")),
-                    "pdf_url": c.get("pdf_url") or (f"{SUPABASE_URL}/storage/v1/object/public/judgments-pdf/{re.sub(r'[^a-zA-Z0-9_\-]', '_', str(c.get('case_id') or c.get('citation'))).strip('_')}.pdf" if SUPABASE_URL else None)
+                    "pdf_url": c.get("pdf_url") or f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(c.get('case_id') or c.get('citation') or c.get('title')))}"
                 }
                 for c in citations_payload
             ]
@@ -1199,6 +1207,97 @@ HOW YOU WORK:
                 "completed_at": datetime.now(timezone.utc)
             })
 
+def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -> bytes:
+    if not REPORTLAB_AVAILABLE:
+        return b"%PDF-1.4\n% PDF Generation Unavailable"
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(
+        buffer,
+        pagesize=letter,
+        leftMargin=54, rightMargin=54, topMargin=54, bottomMargin=54
+    )
+    styles = getSampleStyleSheet()
+
+    court_style = ParagraphStyle(
+        'CourtHeader', parent=styles['Heading1'],
+        fontName='Helvetica-Bold', fontSize=14, leading=18, alignment=1, spaceAfter=8
+    )
+    title_style = ParagraphStyle(
+        'CaseTitle', parent=styles['Heading2'],
+        fontName='Helvetica-Bold', fontSize=11, leading=15, alignment=1, spaceAfter=8
+    )
+    cit_style = ParagraphStyle(
+        'CaseCit', parent=styles['Normal'],
+        fontName='Helvetica-Oblique', fontSize=10, leading=13, alignment=1, spaceAfter=14
+    )
+    body_style = ParagraphStyle(
+        'CaseBody', parent=styles['Normal'],
+        fontName='Helvetica', fontSize=9.5, leading=13.5, spaceAfter=8
+    )
+
+    clean_text = strip_copyright_and_branding(text or "")
+    paragraphs_list = [p.strip() for p in re.split(r'\n\s*\n+', clean_text) if p.strip()]
+
+    story = []
+    story.append(Paragraph(html.escape(court or "SUPERIOR COURTS OF PAKISTAN"), court_style))
+    story.append(Paragraph(html.escape(title or "JUDGMENT RECORD"), title_style))
+    if citation:
+        story.append(Paragraph(html.escape(f"Citation: {citation}"), cit_style))
+    story.append(Spacer(1, 10))
+
+    if not paragraphs_list:
+        story.append(Paragraph("Full judgment text is being synchronized for this record.", body_style))
+    else:
+        for idx, p in enumerate(paragraphs_list):
+            safe_p = html.escape(p).replace('\n', '<br/>')
+            story.append(Paragraph(f"<b>[{idx+1}]</b> {safe_p}", body_style))
+
+    doc.build(story)
+    return buffer.getvalue()
+
+@app.get("/judgment-pdf/{case_id:path}")
+async def get_judgment_pdf_endpoint(case_id: str):
+    decoded_case_id = urllib.parse.unquote(case_id).strip()
+    clean_search_id = re.sub(r'[^a-zA-Z0-9_\-\s]', ' ', decoded_case_id).strip()
+
+    match_record = None
+    if supabase:
+        try:
+            res = supabase.table("full_judgments").select("*").eq("case_id", decoded_case_id).execute()
+            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50):
+                res = supabase.table("full_judgments").select("*").ilike("neutral_citation", f"%{decoded_case_id}%").execute()
+            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50):
+                res = supabase.table("full_judgments").select("*").ilike("case_title", f"%{decoded_case_id}%").execute()
+            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50):
+                keywords = [w for w in clean_search_id.split() if len(w) > 3 and w.lower() not in ("versus", "state", "other", "others", "petition", "civil", "appeal")]
+                if keywords:
+                    res = supabase.table("full_judgments").select("*").ilike("full_text", f"%{keywords[0]}%").limit(5).execute()
+
+            if res.data and len(res.data) > 0:
+                match_record = res.data[0]
+                for r in res.data:
+                    if len(r.get("full_text", "")) > len(match_record.get("full_text", "")):
+                        match_record = r
+        except Exception as e:
+            print(f"⚠️ Supabase check notice: {e}")
+
+    title = (match_record.get("case_title") if match_record else decoded_case_id) or decoded_case_id
+    citation = (match_record.get("neutral_citation") if match_record else "") or ""
+    court = (match_record.get("court_name") if match_record else "Supreme Court of Pakistan") or "Supreme Court of Pakistan"
+    text = (match_record.get("full_text") if match_record else f"Full judgment record for {decoded_case_id}") or ""
+
+    pdf_bytes = build_judgment_pdf_bytes(title, citation, court, text)
+    safe_filename = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_case_id).strip('_') + ".pdf"
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f'inline; filename="{safe_filename}"',
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/pdf"
+        }
+    )
+
 # FULL JUDGMENT RETRIEVAL WITH PATH-SAFE DOCKET/CITATION PARSING & REASSEMBLY
 @app.get("/judgment/{case_id:path}")
 async def get_full_judgment(
@@ -1236,9 +1335,8 @@ async def get_full_judgment(
                         best_match = r
                 if len(best_match.get("full_text", "")) > 100:
                     best_match["full_text"] = format_clean_judgment_paragraphs(best_match.get("full_text", ""))
-                    if not best_match.get("pdf_url") and SUPABASE_URL:
-                        safe_key = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_case_id).strip('_') + ".pdf"
-                        best_match["pdf_url"] = f"{SUPABASE_URL}/storage/v1/object/public/judgments-pdf/{safe_key}"
+                    safe_key = urllib.parse.quote(decoded_case_id)
+                    best_match["pdf_url"] = f"https://web-production-53d0.up.railway.app/judgment-pdf/{safe_key}"
                     return best_match
         except Exception as e:
             print(f"⚠️ Supabase check notice: {e}")
