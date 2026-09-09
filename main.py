@@ -310,6 +310,13 @@ def clean_markdown_formatting(text: str) -> str:
 def strip_copyright_and_branding(text: str) -> str:
     if not text:
         return ""
+    
+    # 1. If text contains website navigation header before 'Citation Name:' or 'Citation:', strip everything before it
+    cit_match = re.search(r'(\bCitation\s*(Name)?\s*:.*)', text, flags=re.IGNORECASE | re.DOTALL)
+    if cit_match and any(noise in text[:cit_match.start()].lower() for noise in ["my account", "pld publishers", "customer care", "saved citations", "case law search", "innertemple"]):
+        text = cit_match.group(1)
+
+    # 2. Comprehensive Regex patterns for site branding, copyright, contact info, and navigation menus
     patterns = [
         r'Copyrights?\s*©?\s*\d*\s*by\s*Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
         r'This\s*site\s*is\s*developed\s*&\s*maintained\s*(by\s*)?Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
@@ -320,11 +327,38 @@ def strip_copyright_and_branding(text: str) -> str:
         r'pakistan\s*law\s*site',
         r'pakistanlawsite(?:\.com)?',
         r'Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
-        r'Bookmark\s*this\s*Case'
+        r'Bookmark\s*this\s*Case',
+        r'My\s*Account',
+        r'Customer\s*Care\s*Office',
+        r'PLD\s*Publishers',
+        r'35-Nabha\s*Road[^\n]*',
+        r'Phone:\s*\+?\d+[^\n]*',
+        r'Whatsapp:\s*\+?\d+[^\n]*',
+        r'Fax:\s*\+?\d+[^\n]*',
+        r'Email:\s*[^\n]+',
+        r'Saved\s*Citations',
+        r'innertemple',
+        r'Head\s*Notes\s*on\s*Cases\s*With\s*Complete\s*Judgements?',
+        r'(CLC|YLR|PCrLJ|PCRLJ|PLC|PLC\(CS\))\s*Notes',
+        r'Monthly\s*Journals',
+        r'Case\s*Law\s*Search',
+        r'Last\s*\d+\s*Years?',
+        r'New\s*Statutes',
+        r'Word\s*&\s*Phrases',
+        r'Legal\s*Terms',
+        r'Maxims',
+        r'Articles',
+        r'Topics',
+        r'Dictionary',
+        r'General\s*Orders',
+        r'Circulars',
+        r'Notifications'
     ]
+    
     cleaned = text
     for pat in patterns:
         cleaned = re.sub(pat, '', cleaned, flags=re.IGNORECASE)
+        
     cleaned = re.sub(r'^\s*Source:\s*$', '', cleaned, flags=re.MULTILINE | re.IGNORECASE)
     cleaned = re.sub(r'\n{3,}', '\n\n', cleaned)
     return cleaned.strip()
