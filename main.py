@@ -334,6 +334,7 @@ def format_clean_judgment_paragraphs(text: str) -> str:
         return ""
     
     text = strip_copyright_and_branding(text)
+    text = re.sub(r'^\s*\[\d+\]\s*', '', text, flags=re.MULTILINE)
     t = text.replace("\r\n", "\n").replace("\r", "\n")
     t = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\ufffd]', '', t)
     
@@ -1230,12 +1231,18 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
         'CaseCit', parent=styles['Normal'],
         fontName='Helvetica-Oblique', fontSize=10, leading=13, alignment=1, spaceAfter=14
     )
+    heading_style = ParagraphStyle(
+        'DocHeading', parent=styles['Heading3'],
+        fontName='Helvetica-Bold', fontSize=10, leading=14, spaceBefore=8, spaceAfter=6
+    )
     body_style = ParagraphStyle(
         'CaseBody', parent=styles['Normal'],
         fontName='Helvetica', fontSize=9.5, leading=13.5, spaceAfter=8
     )
 
     clean_text = strip_copyright_and_branding(text or "")
+    clean_text = re.sub(r'^\s*\[\d+\]\s*', '', clean_text, flags=re.MULTILINE)
+
     paragraphs_list = [p.strip() for p in re.split(r'\n\s*\n+', clean_text) if p.strip()]
 
     story = []
@@ -1248,9 +1255,12 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
     if not paragraphs_list:
         story.append(Paragraph("Full judgment text is being synchronized for this record.", body_style))
     else:
-        for idx, p in enumerate(paragraphs_list):
+        for p in paragraphs_list:
             safe_p = html.escape(p).replace('\n', '<br/>')
-            story.append(Paragraph(f"<b>[{idx+1}]</b> {safe_p}", body_style))
+            if re.match(r'^\s*(JUDGMENT|ORDER|PRESENT|BEFORE|JUSTICE)\b', p, re.IGNORECASE):
+                story.append(Paragraph(f"<b>{safe_p}</b>", heading_style))
+            else:
+                story.append(Paragraph(safe_p, body_style))
 
     doc.build(story)
     return buffer.getvalue()
