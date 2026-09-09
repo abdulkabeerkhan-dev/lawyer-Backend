@@ -1147,16 +1147,32 @@ HOW YOU WORK:
 
         executive_answer = clean_markdown_formatting(executive_answer)
 
-        for idx, card in enumerate(precedent_cards):
-            if idx < len(citations_payload):
-                card["raw_judgment_text"] = strip_control_characters(citations_payload[idx].get("preview", ""))
-                card["citation"] = citations_payload[idx].get("citation", card.get("citation"))
-                card["case_id"] = citations_payload[idx].get("case_id") or card.get("case_id")
-                card["pdf_url"] = citations_payload[idx].get("pdf_url") or card.get("pdf_url")
+        for card in precedent_cards:
+            card_name_lower = str(card.get("case_name") or "").lower().strip()
+            card_cit_lower = str(card.get("citation") or "").lower().strip()
+
+            best_payload_match = None
+            for cp in citations_payload:
+                cp_title_lower = str(cp.get("title") or "").lower().strip()
+                cp_cit_lower = str(cp.get("citation") or "").lower().strip()
+
+                if (card_name_lower and (card_name_lower in cp_title_lower or cp_title_lower in card_name_lower)) or \
+                   (card_cit_lower and (card_cit_lower in cp_cit_lower or cp_cit_lower in card_cit_lower)):
+                    best_payload_match = cp
+                    break
+
+            if best_payload_match:
+                card["raw_judgment_text"] = strip_control_characters(best_payload_match.get("preview", ""))
+                card["citation"] = best_payload_match.get("citation") or card.get("citation")
+                card["case_id"] = best_payload_match.get("case_id") or card.get("case_id")
+            else:
+                cid = card.get("case_id") or card.get("citation") or card.get("case_name") or ""
+                card["case_id"] = cid
+
             card["holding"] = sanitize_holding_text(card.get("holding", ""))
-            cid = card.get("case_id") or card.get("citation") or card.get("case_name") or ""
-            if cid:
-                card["pdf_url"] = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(cid))}"
+            target_cid = card.get("case_id") or card.get("citation") or card.get("case_name") or ""
+            if target_cid:
+                card["pdf_url"] = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
 
         if not precedent_cards and citations_payload:
             precedent_cards = [
@@ -1168,7 +1184,7 @@ HOW YOU WORK:
                     "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in c.get("statutes", [])],
                     "outcome": c.get("outcome", "Undetermined"), "verified_source": True,
                     "raw_judgment_text": strip_control_characters(c.get("preview", "")),
-                    "pdf_url": c.get("pdf_url") or f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(c.get('case_id') or c.get('citation') or c.get('title')))}"
+                    "pdf_url": f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(c.get('case_id') or c.get('citation') or c.get('title')))}"
                 }
                 for c in citations_payload
             ]
