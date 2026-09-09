@@ -179,19 +179,52 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
     if "high court" in combined:
         return "High Court"
 
+    non_court_terms = ["penal code", "act", "ordinance", "section", "rules", "term", "activity", "pecuniary", "nan", "null", "statute", "code (xlv"]
+    if any(term in court_raw_lower for term in non_court_terms):
+        return "Supreme Court of Pakistan"
+
     return str(court_name).strip().title() if court_name else "Supreme Court of Pakistan"
+
+def is_junk_slug_record(meta: dict) -> bool:
+    if not isinstance(meta, dict):
+        return False
+    cid = str(meta.get("case_id") or "").strip()
+    title = str(meta.get("title") or meta.get("case_title") or "").strip()
+    cit = str(meta.get("citation") or "").strip()
+    court = str(meta.get("court") or "").strip()
+
+    if re.search(r'-[0-9a-f]{12,}\b', cid, re.I) or re.search(r'-[0-9a-f]{12,}\b', cit, re.I) or re.search(r'-[0-9a-f]{12,}\b', title, re.I):
+        return True
+
+    if cid and "-" in cid:
+        parts = cid.split("-")
+        if len(parts) >= 2 and parts[0].lower() == parts[1].lower() and len(parts[0]) > 3:
+            return True
+
+    if len(title) > 90 or re.match(r'^(as well as|unfairness or|it was further|but because of|whereas|therefore|provided that)\b', title, re.I):
+        return True
+
+    if re.search(r'^[a-z0-9]+(-[a-z0-9]+){3,}', cid, re.I) or re.search(r'^[a-z0-9]+(-[a-z0-9]+){3,}', cit, re.I):
+        return True
+
+    bogus_court_keywords = ["term", "interest in the cause", "transaction or activity", "pecuniary", "acquittal from", "nan", "null"]
+    if any(kw in court.lower() for kw in bogus_court_keywords):
+        return True
+
+    return False
 
 def format_neutral_citation(court: str, case_identifier: str, year_or_date: str) -> str:
     court_clean = clean_court_name(court)
     ident_clean = str(case_identifier).strip() if case_identifier else "Matter on Record"
     date_clean = str(year_or_date).strip() if year_or_date else ""
-    
-    # 1. Check if case_identifier is an official law report citation (e.g., 2021 SCMR 1446, PLD 2016 SC 570, 2020 CLD 1104)
+
+    ident_clean = re.sub(r'-[0-9a-f]{12,}\b', '', ident_clean, flags=re.IGNORECASE).strip(' -_')
+
     reporter_match = re.search(r'\b(\d{4})?\s*(PLD|SCMR|MLD|YLR|PCRLJ|PCrLJ|CLC|CLD|PTD|PTCL|PLC|PLC\s*\(CS\))\s+(\d{4}\s+)?([A-Za-z\s]+)?(\d+)\b', ident_clean, re.IGNORECASE)
     if reporter_match:
         year_part = reporter_match.group(1) or reporter_match.group(3) or date_clean
         year_str = re.search(r'\b(19\d{2}|20\d{2})\b', str(year_part or ""))
-        yr = year_str.group(1) if year_str else (date_clean if date_clean.isdigit() else "")
+        yr = year_str.group(1) if year_str else (date_clean if (date_clean.isdigit() and date_clean != "2026") else "")
         journal = reporter_match.group(2).upper()
         page = reporter_match.group(5)
         bench = reporter_match.group(4).strip() if reporter_match.group(4) else ""
@@ -202,16 +235,61 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
         else:
             return f"{journal} {page}".strip()
 
-    # 2. Format docket number with court and year (e.g., Supreme Court of Pakistan — Civil Appeal No. 16 of 2020 (2023))
     ident_clean = re.sub(r'\s+', ' ', ident_clean).strip()
-    if not ident_clean:
+    if not ident_clean or is_junk_slug_record({"case_id": ident_clean, "title": ident_clean, "citation": ident_clean}):
         ident_clean = "Appellate Petition"
 
-    # Extract 4-digit year from date_clean
     year_match = re.search(r'\b(19\d{2}|20\d{2})\b', date_clean)
-    year_fmt = f" ({year_match.group(1)})" if year_match and year_match.group(1) not in ident_clean else ""
+    if year_match and year_match.group(1) != "2026" and year_match.group(1) not in ident_clean:
+        year_fmt = f" ({year_match.group(1)})"
+    else:
+        year_fmt = ""
 
-    return f"{court_clean} — {ident_clean}{year_fmt}"
+    res = f"{court_clean} — {ident_clean}{year_fmt}"
+    res = re.sub(r'(\(\d{4}\))\s*\1+', r'\1', res)
+    return res
+
+def sanitize_case_title_and_citation(title: str, citation: str, case_id: str, text: str) -> tuple:
+    clean_t = str(title or "").strip()
+    clean_c = str(citation or "").strip()
+    clean_id = str(case_id or "").strip()
+
+    clean_id = re.sub(r'-[0-9a-f]{12,}\b', '', clean_id, flags=re.IGNORECASE).strip(' -_')
+    clean_c = re.sub(r'-[0-9a-f]{12,}\b', '', clean_c, flags=re.IGNORECASE).strip(' -_')
+    clean_t = re.sub(r'-[0-9a-f]{12,}\b', '', clean_t, flags=re.IGNORECASE).strip(' -_')
+
+    is_sentence_title = (len(clean_t) > 70) or bool(re.match(r'^(as well as|unfairness or|it was further|but because of|whereas|therefore|provided that)\b', clean_t, re.IGNORECASE)) or re.search(r'^[a-z0-9]+(-[a-z0-9]+){3,}', clean_t, re.IGNORECASE)
+
+    journal_match = re.search(r'\b(PLD|SCMR|MLD|YLR|PCRLJ|PCrLJ|CLC|CLD|PTD|PTCL|PLC|PLC\s*\(CS\))\s+\d{4}\b(?:\s+[A-Za-z]+)?\s+\d+\b', text or clean_c or clean_t, re.IGNORECASE)
+    party_match = re.search(r'\b([A-Z][A-Za-z\.\s]{2,30}\s+(?:VS\.?|VERSUS|V\.)\s+[A-Z][A-Za-z\.\s]{2,35})\b', text or clean_t, re.IGNORECASE)
+
+    if is_sentence_title:
+        if party_match:
+            clean_t = party_match.group(1).strip()
+        elif journal_match:
+            clean_t = f"Precedent Authority — {journal_match.group(0).upper()}"
+        else:
+            clean_t = re.sub(r'\s+', ' ', clean_t[:55]).strip() + "..."
+
+    if not clean_c or is_junk_slug_record({"case_id": clean_id, "title": clean_t, "citation": clean_c}):
+        if journal_match:
+            clean_c = journal_match.group(0).upper()
+        elif party_match:
+            clean_c = party_match.group(1).strip()
+        else:
+            clean_c = clean_id if (clean_id and len(clean_id) < 40 and not re.search(r'-[0-9a-f]{8,}', clean_id)) else "Judgment Record"
+
+    return clean_t, clean_c, clean_id
+
+def generate_descriptive_issue(statutes: List[str], court: str, holding: str) -> str:
+    if statutes and len(statutes) > 0:
+        clean_s = ", ".join(statutes[:2])
+        return f"Legal proposition governing statutory provisions under {clean_s}."
+    elif holding and len(holding) > 30:
+        snippet = holding[:70].strip()
+        snippet = re.sub(r'\s+[^\s]*$', '', snippet)
+        return f"Legal ratio on: '{snippet}...'"
+    return "Legal principle and ratio extracted from judicial precedent record."
 
 def sanitize_chat_history(raw_messages: Optional[List[Any]], current_user_query: str) -> List[Dict[str, Any]]:
     """
@@ -900,7 +978,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
                 if score < 0.45: continue
                 text_content = strip_control_characters(str(meta.get("text") or meta.get("text_preview") or ""))
-                if is_garbled_text(text_content) or is_junk_citation_dump(text_content):
+                if is_garbled_text(text_content) or is_junk_citation_dump(text_content) or is_junk_slug_record(meta):
                     continue
                 case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower()
                 if (is_commercial_or_criminal_query or is_secp_or_corporate_query) and any(pol in case_title_str for pol in POLITICAL_MARKERS):
@@ -919,12 +997,18 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             context_parts = []
             for match in primary_matches:
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
-                court = clean_court_name(str(meta.get('court', 'Unknown Court')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')))
-                year_or_date = str(meta.get('date', '') or meta.get('year', '') or 'Recent')
-                case_id = str(meta.get('case_id', 'Unknown Docket'))
+                raw_title = str(meta.get('title') or meta.get('case_title') or 'Precedent Authority')
+                raw_cit = str(meta.get('citation') or '')
+                raw_cid = str(meta.get('case_id') or '')
                 text_content = str(meta.get('text', meta.get('text_preview', ''))).strip()
-                title = clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case'))
-                neutral_cit = format_neutral_citation(court, case_id, year_or_date)
+
+                title, citation, case_id = sanitize_case_title_and_citation(raw_title, raw_cit, raw_cid, text_content)
+                court = clean_court_name(str(meta.get('court', 'Court of Record')), title=title, case_id=case_id, text=text_content)
+                year_or_date = str(meta.get('date', '') or meta.get('year', '') or '')
+                if year_or_date == "2026":
+                    year_or_date = ""
+
+                neutral_cit = format_neutral_citation(court, case_id if case_id else citation, year_or_date)
                 outcome_val = str(meta.get("outcome", "")) or "Undetermined"
                 statutes_val = meta.get("statutes") or []
                 sections_val = meta.get("sections") or []
@@ -932,7 +1016,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
                 context_parts.append(f"CASE TITLE: {title}\nNEUTRAL CITATION: {neutral_cit}\nCOURT: {court}\nOUTCOME: {outcome_val}\nSTATUTES: {', '.join(statutes_val)}\nCONTENT: {text_content}")
 
-                cid_key = meta.get("case_id") or meta.get("citation") or meta.get("title")
+                cid_key = case_id or neutral_cit or title
                 if cid_key:
                     _seen_case_ids_global.add(cid_key)
                 
@@ -942,7 +1026,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     pdf_url_val = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
 
                 aggregate_citations_payload.append({
-                    "case_id": case_id, "court": court, "year": year_or_date, "preview": text_content,
+                    "case_id": case_id or target_cid, "court": court, "year": year_or_date or "Recent", "preview": text_content,
                     "title": title, "citation": neutral_cit, "score": match_score, "outcome": outcome_val,
                     "statutes": statutes_val, "sections": sections_val, "pdf_url": pdf_url_val,
                     "relevance": "High" if match_score >= 0.65 else ("Medium" if match_score >= 0.52 else "Low")
@@ -950,13 +1034,20 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             for match in secondary_matches:
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
-                court = clean_court_name(str(meta.get('court', 'Court of Record')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')))
+                raw_title = str(meta.get('title') or meta.get('case_title') or 'Precedent Authority')
+                raw_cit = str(meta.get('citation') or '')
+                raw_cid = str(meta.get('case_id') or '')
+                text_content = str(meta.get('text', meta.get('text_preview', ''))).strip()
+
+                title, citation, case_id = sanitize_case_title_and_citation(raw_title, raw_cit, raw_cid, text_content)
+                court = clean_court_name(str(meta.get('court', 'Court of Record')), title=title, case_id=case_id, text=text_content)
                 year_or_date = str(meta.get('date', '') or meta.get('year', '') or '')
-                case_id = str(meta.get('case_id', ''))
-                title = clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Precedent on Record')) or 'Precedent on Record'))
-                neutral_cit = format_neutral_citation(court, case_id, year_or_date)
-                preview_snippet = str(meta.get('text', meta.get('text_preview', ''))).strip()[:180] + "..."
-                cid_key = meta.get("case_id") or meta.get("citation") or meta.get("title")
+                if year_or_date == "2026":
+                    year_or_date = ""
+
+                neutral_cit = format_neutral_citation(court, case_id if case_id else citation, year_or_date)
+                preview_snippet = text_content[:180] + "..."
+                cid_key = case_id or neutral_cit or title
                 if cid_key:
                     _seen_case_ids_global.add(cid_key)
                 aggregate_additional_authorities.append({"title": title, "citation": neutral_cit, "summary": preview_snippet})
@@ -1202,19 +1293,27 @@ HOW YOU WORK:
                     card["pdf_url"] = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
 
                 card["holding"] = sanitize_holding_text(card.get("holding", ""))
+                if not card.get("issue") or card.get("issue") == "Legal proposition extracted from indexed public judgment record.":
+                    card["issue"] = generate_descriptive_issue(
+                        [s.get("name") if isinstance(s, dict) else str(s) for s in card.get("statutes_invoked", [])],
+                        card.get("court", ""),
+                        card.get("holding", "")
+                    )
                 bound_precedent_cards.append(card)
 
             # If there are payload items that were never bound to any card, append them as cards
             for cp_idx, cp in enumerate(citations_payload):
                 if cp_idx not in used_payload_indices:
+                    holding_text = sanitize_holding_text(cp.get("preview", "")[:250])
+                    issue_text = generate_descriptive_issue(cp.get("statutes", []), cp.get("court", ""), holding_text)
                     bound_precedent_cards.append({
                         "case_name": cp["title"],
                         "case_id": cp["case_id"],
                         "citation": cp["citation"],
                         "date": cp.get("year", ""),
                         "court": cp.get("court", ""),
-                        "issue": "Legal proposition extracted from indexed public judgment record.",
-                        "holding": sanitize_holding_text(cp.get("preview", "")[:250]),
+                        "issue": issue_text,
+                        "holding": holding_text,
                         "why_relevant": "Retrieved precedent directly governing the statutory issues raised.",
                         "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in cp.get("statutes", [])],
                         "outcome": cp.get("outcome", "Undetermined"),
