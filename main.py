@@ -1147,50 +1147,88 @@ HOW YOU WORK:
 
         executive_answer = clean_markdown_formatting(executive_answer)
 
-        for card in precedent_cards:
-            card_id_lower = str(card.get("case_id") or "").lower().strip()
-            card_name_lower = str(card.get("case_name") or "").lower().strip()
-            card_cit_lower = str(card.get("citation") or "").lower().strip()
+        bound_precedent_cards = []
+        used_payload_indices = set()
 
-            best_payload_match = None
-            for cp in citations_payload:
-                cp_id_lower = str(cp.get("case_id") or "").lower().strip()
-                cp_title_lower = str(cp.get("title") or "").lower().strip()
-                cp_cit_lower = str(cp.get("citation") or "").lower().strip()
+        if citations_payload:
+            for idx, card in enumerate(precedent_cards):
+                card_id_lower = str(card.get("case_id") or "").lower().strip()
+                card_name_lower = str(card.get("case_name") or "").lower().strip()
+                card_cit_lower = str(card.get("citation") or "").lower().strip()
 
-                if (card_id_lower and (card_id_lower == cp_id_lower or card_id_lower in cp_id_lower)) or \
-                   (card_name_lower and (card_name_lower in cp_title_lower or cp_title_lower in card_name_lower)) or \
-                   (card_cit_lower and (card_cit_lower in cp_cit_lower or cp_cit_lower in card_cit_lower)):
-                    best_payload_match = cp
-                    break
+                best_payload_match = None
+                matched_cp_idx = None
 
-            if best_payload_match:
-                card["raw_judgment_text"] = strip_control_characters(best_payload_match.get("preview", ""))
-                card["citation"] = best_payload_match.get("citation") or card.get("citation")
-                card["case_id"] = best_payload_match.get("case_id") or card.get("case_id")
-            else:
-                cid = card.get("case_id") or card.get("citation") or card.get("case_name") or ""
-                card["case_id"] = cid
+                # 1. Match by case_id / citation / title or word token overlap
+                for cp_idx, cp in enumerate(citations_payload):
+                    if cp_idx in used_payload_indices:
+                        continue
+                    cp_id_lower = str(cp.get("case_id") or "").lower().strip()
+                    cp_title_lower = str(cp.get("title") or "").lower().strip()
+                    cp_cit_lower = str(cp.get("citation") or "").lower().strip()
 
-            card["holding"] = sanitize_holding_text(card.get("holding", ""))
-            target_cid = card.get("case_id") or card.get("citation") or card.get("case_name") or ""
-            if target_cid:
+                    card_words = set(w for w in re.split(r'\W+', card_name_lower + " " + card_cit_lower + " " + card_id_lower) if len(w) > 3)
+                    cp_words = set(w for w in re.split(r'\W+', cp_title_lower + " " + cp_cit_lower + " " + cp_id_lower) if len(w) > 3)
+                    overlap = card_words.intersection(cp_words)
+
+                    if (card_id_lower and (card_id_lower == cp_id_lower or card_id_lower in cp_id_lower)) or \
+                       (card_cit_lower and (card_cit_lower in cp_cit_lower or cp_cit_lower in card_cit_lower)) or \
+                       (card_name_lower and (card_name_lower in cp_title_lower or cp_title_lower in card_name_lower)) or \
+                       len(overlap) >= 2:
+                        best_payload_match = cp
+                        matched_cp_idx = cp_idx
+                        break
+
+                # 2. Fallback to next unassigned payload item by index
+                if not best_payload_match:
+                    for cp_idx, cp in enumerate(citations_payload):
+                        if cp_idx not in used_payload_indices:
+                            best_payload_match = cp
+                            matched_cp_idx = cp_idx
+                            break
+
+                if best_payload_match:
+                    used_payload_indices.add(matched_cp_idx)
+                    card["case_name"] = best_payload_match.get("title") or card.get("case_name")
+                    card["case_id"] = best_payload_match.get("case_id") or card.get("case_id")
+                    card["citation"] = best_payload_match.get("citation") or card.get("citation")
+                    card["pdf_url"] = best_payload_match.get("pdf_url") or f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(card['case_id']))}"
+                    card["raw_judgment_text"] = strip_control_characters(best_payload_match.get("preview", ""))
+                    card["date"] = best_payload_match.get("year") or card.get("date", "")
+                    card["court"] = best_payload_match.get("court") or card.get("court", "")
+                    card["outcome"] = best_payload_match.get("outcome") or card.get("outcome", "Undetermined")
+                else:
+                    target_cid = card.get("case_id") or card.get("citation") or card.get("case_name") or ""
+                    card["pdf_url"] = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
+
+                card["holding"] = sanitize_holding_text(card.get("holding", ""))
+                bound_precedent_cards.append(card)
+
+            # If there are payload items that were never bound to any card, append them as cards
+            for cp_idx, cp in enumerate(citations_payload):
+                if cp_idx not in used_payload_indices:
+                    bound_precedent_cards.append({
+                        "case_name": cp["title"],
+                        "case_id": cp["case_id"],
+                        "citation": cp["citation"],
+                        "date": cp.get("year", ""),
+                        "court": cp.get("court", ""),
+                        "issue": "Legal proposition extracted from indexed public judgment record.",
+                        "holding": sanitize_holding_text(cp.get("preview", "")[:250]),
+                        "why_relevant": "Retrieved precedent directly governing the statutory issues raised.",
+                        "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in cp.get("statutes", [])],
+                        "outcome": cp.get("outcome", "Undetermined"),
+                        "verified_source": True,
+                        "raw_judgment_text": strip_control_characters(cp.get("preview", "")),
+                        "pdf_url": cp.get("pdf_url") or f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(cp['case_id']))}"
+                    })
+
+            precedent_cards = bound_precedent_cards
+        else:
+            for card in precedent_cards:
+                card["holding"] = sanitize_holding_text(card.get("holding", ""))
+                target_cid = card.get("case_id") or card.get("citation") or card.get("case_name") or ""
                 card["pdf_url"] = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
-
-        if not precedent_cards and citations_payload:
-            precedent_cards = [
-                {
-                    "case_name": c["title"], "case_id": c["case_id"], "citation": c["citation"], "date": c["year"],
-                    "issue": "Legal proposition extracted from indexed public judgment record.",
-                    "holding": sanitize_holding_text(c.get("preview", "")[:250]),
-                    "why_relevant": "Retrieved precedent directly governing the statutory issues raised.",
-                    "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in c.get("statutes", [])],
-                    "outcome": c.get("outcome", "Undetermined"), "verified_source": True,
-                    "raw_judgment_text": strip_control_characters(c.get("preview", "")),
-                    "pdf_url": f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(c.get('case_id') or c.get('citation') or c.get('title')))}"
-                }
-                for c in citations_payload
-            ]
 
         display_answer = executive_answer
         if citations_payload or additional_authorities:
@@ -1328,13 +1366,19 @@ async def get_judgment_pdf_endpoint(case_id: str):
         try:
             res = supabase.table("full_judgments").select("*").eq("case_id", decoded_case_id).execute()
             if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50):
+                norm_id = re.sub(r'\s+', '_', decoded_case_id)
+                res = supabase.table("full_judgments").select("*").eq("case_id", norm_id).execute()
+            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50):
                 res = supabase.table("full_judgments").select("*").ilike("neutral_citation", f"%{decoded_case_id}%").execute()
             if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50):
                 res = supabase.table("full_judgments").select("*").ilike("case_title", f"%{decoded_case_id}%").execute()
             if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50):
-                keywords = [w for w in clean_search_id.split() if len(w) > 3 and w.lower() not in ("versus", "state", "other", "others", "petition", "civil", "appeal")]
-                if keywords:
-                    res = supabase.table("full_judgments").select("*").ilike("full_text", f"%{keywords[0]}%").limit(5).execute()
+                keywords = [w for w in clean_search_id.split() if len(w) > 3 and w.lower() not in ("versus", "state", "other", "others", "petition", "civil", "appeal", "limited", "company")]
+                if len(keywords) >= 2:
+                    query = supabase.table("full_judgments").select("*")
+                    for kw in keywords[:3]:
+                        query = query.ilike("case_title", f"%{kw}%")
+                    res = query.limit(5).execute()
 
             if res.data and len(res.data) > 0:
                 match_record = res.data[0]
@@ -1347,7 +1391,7 @@ async def get_judgment_pdf_endpoint(case_id: str):
     title = (match_record.get("case_title") if match_record else decoded_case_id) or decoded_case_id
     citation = (match_record.get("neutral_citation") if match_record else "") or ""
     court = (match_record.get("court_name") if match_record else "Supreme Court of Pakistan") or "Supreme Court of Pakistan"
-    text = (match_record.get("full_text") if match_record else f"Full judgment record for {decoded_case_id}") or ""
+    text = (match_record.get("full_text") if match_record else f"Full judgment record for {decoded_case_id} is currently undergoing index synchronization.") or ""
 
     pdf_bytes = build_judgment_pdf_bytes(title, citation, court, text)
     safe_filename = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_case_id).strip('_') + ".pdf"
@@ -1380,16 +1424,21 @@ async def get_full_judgment(
             # Direct match
             res = supabase.table("full_judgments").select("*").eq("case_id", decoded_case_id).execute()
             if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
+                norm_id = re.sub(r'\s+', '_', decoded_case_id)
+                res = supabase.table("full_judgments").select("*").eq("case_id", norm_id).execute()
+            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
                 res = supabase.table("full_judgments").select("*").ilike("neutral_citation", f"%{decoded_case_id}%").execute()
             if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
                 res = supabase.table("full_judgments").select("*").ilike("case_title", f"%{decoded_case_id}%").execute()
             
-            # Keyword/Party Name match if direct match missed
+            # Keyword/Party Name match requiring at least 2 keywords in case_title if direct match missed
             if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
-                keywords = [w for w in clean_search_id.split() if len(w) > 3 and w.lower() not in ("versus", "state", "other", "others", "petition", "civil", "appeal")]
-                if keywords:
-                    main_kw = keywords[0]
-                    res = supabase.table("full_judgments").select("*").ilike("full_text", f"%{main_kw}%").limit(5).execute()
+                keywords = [w for w in clean_search_id.split() if len(w) > 3 and w.lower() not in ("versus", "state", "other", "others", "petition", "civil", "appeal", "limited", "company")]
+                if len(keywords) >= 2:
+                    query = supabase.table("full_judgments").select("*")
+                    for kw in keywords[:3]:
+                        query = query.ilike("case_title", f"%{kw}%")
+                    res = query.limit(5).execute()
 
             if res.data and len(res.data) > 0:
                 best_match = res.data[0]
