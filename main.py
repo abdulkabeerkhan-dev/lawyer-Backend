@@ -935,7 +935,7 @@ HOW YOU WORK:
 1. BE CONVERSATIONAL BY DEFAULT. Most replies should read like a colleague talking, in plain prose. Do NOT impose section headers, numbered parts, or a fixed template on casual questions, clarifying exchanges, or short factual answers. Reserve formal structure (headers, numbered sections) for when you are actually delivering a finished legal opinion, memo, or draft the advocate asked for.
 2. CRITICAL DRAFTING DIRECTIVE: Do NOT output your internal thinking, validation checklists, or meta-commentary. Do NOT ask for permission to output the draft. If the user commands drafting or the intake context is complete, output the full, court-ready pleading immediately, beginning directly with the Court Heading.
 3. ASK BEFORE YOU ASSUME, BUT DON'T INTERROGATE. When a request is genuinely underspecified for what's being asked -- e.g. "help me write a writ petition" without knowing what order is being challenged, in which forum, on what grounds -- ask 1-2 sharp, specific follow-up questions before doing the work, the way a senior associate would before starting a draft. Don't ask questions whose answers don't change what you'd do. If you can give a useful provisional answer while also asking what would sharpen it, do both in one reply rather than blocking on the question.
-4. USE THE search_case_law TOOL DELIBERATELY, NOT REFLEXIVELY. Call it when the answer genuinely benefits from grounding in actual Pakistani judgments or you need to verify a specific citation -- not for every message, and not before you understand what the advocate actually needs. Skip it for casual conversation, definitions you already know confidently, or when you're still gathering facts via clarifying questions. When you do call it, make the query specific (legal issue + jurisdiction + known statute), because vague searches return junk.
+4. USE THE search_case_law TOOL for legal research and citation lookups. Whenever the user asks for a specific citation (e.g., PLD, SCMR, YLR, PCRLJ, CLC, MLD, PLC, CLD, PTD, GBLR), precedent, or statutory question, YOU MUST CALL the search_case_law tool to query the indexed database. NEVER claim that you lack a tool to retrieve judgments or citations.
 5. NEVER FABRICATE. Only cite cases, citations, or courts that the search tool actually returned. If the tool returns nothing on point, say so plainly and reason from statute and settled principle instead -- do not invent a precedent to sound authoritative.
 6. STAY IN YOUR LANE. You discuss anything within Pakistani law -- procedure, strategy, drafting, doctrine, practical advice for advocates -- conversationally and thoroughly. If asked something with nothing to do with law or legal practice, say so and redirect.
 7. WHEN YOU DO PRODUCE A FORMAL OPINION OR DRAFT, and only then, you may append a machine-readable citation block for the UI, using this exact format, containing ONLY precedents the search tool actually returned:
@@ -950,12 +950,12 @@ HOW YOU WORK:
 
         CASE_LAW_TOOL = {
             "name": "search_case_law",
-            "description": "Search the firm's indexed database of Pakistani superior court judgments (Supreme Court, High Courts, Federal Shariat Court) for precedents, holdings and statutory citations relevant to a specific legal question. Call this only once you have enough facts (subject matter and, ideally, jurisdiction) to run a precise search -- premature or vague searches return poor results. Do not call this for casual conversation or for facts you're still gathering via clarifying questions.",
+            "description": "Search the firm's indexed database of Pakistani superior court judgments (Supreme Court, High Courts, Federal Shariat Court) for precedents, holdings, and specific law journal citations (e.g. 'PLD 2020 Supreme Court 1', '2022 SCMR 1446', '2021 YLR 500'). Call this whenever the user asks for a citation lookup or legal precedent search.",
             "input_schema": {
                 "type": "object",
                 "properties": {
-                    "query": {"type": "string", "description": "A precise legal research query: the legal issue, relevant statute/section if known, and jurisdiction (e.g. 'quashment of FIR under Article 199 Lahore High Court fraud allegations')."},
-                    "court_filter": {"type": "string", "description": "Optional: restrict to one court, e.g. 'Lahore High Court', 'Supreme Court of Pakistan'. Leave blank to search broadly (still subject to provincial jurisdiction rules)."}
+                    "query": {"type": "string", "description": "A precise legal research or citation query (e.g. 'PLD 2020 Supreme Court 1' or 'quashment of FIR under Article 199 Lahore High Court')."},
+                    "court_filter": {"type": "string", "description": "Optional: restrict to one court, e.g. 'Lahore High Court', 'Supreme Court of Pakistan'."}
                 },
                 "required": ["query"]
             }
@@ -978,13 +978,14 @@ HOW YOU WORK:
 
         messages = history_msgs + [current_user_message]
 
-        # Check for explicit drafting commands or drafting intent (Issue 3)
+        # Check for explicit drafting commands or citation lookup intent
         query_lower_all = user_prompt_clean.lower()
         is_drafting_requested = any(k in query_lower_all for k in [
             "draft now", "proceed with draft", "draft petition", "draft writ", 
             "draft application", "draft plaint", "draft written statement",
             "generate pleading", "prepare draft", "draft court petition", "court draft"
         ])
+        is_citation_lookup = bool(re.search(r'\b(pld|scmr|ylr|pcrlj|clc|mld|plc|cld|ptd|gblr)\b', query_lower_all))
 
         if is_drafting_requested:
             combined_system_prompt += (
@@ -994,9 +995,9 @@ HOW YOU WORK:
                 "Begin your response DIRECTLY with the Court Heading (e.g. 'IN THE HIGH COURT OF...')."
             )
 
-        # Issue 3: If user commands drafting or mode is drafting, ensure top vector chunks are retrieved from Pinecone immediately
-        if is_drafting_requested and search_call_count["n"] == 0:
-            print(f"📌 [JOB {job_id}] Drafting command detected ('{user_prompt_clean}'). Pre-fetching Pinecone vector chunks...", file=sys.stderr)
+        # Issue 3: If user commands drafting or citation lookup, pre-fetch vector chunks immediately
+        if (is_drafting_requested or is_citation_lookup) and search_call_count["n"] == 0:
+            print(f"📌 [JOB {job_id}] Drafting or Citation command detected ('{user_prompt_clean}'). Pre-fetching Pinecone vector chunks...", file=sys.stderr)
             await run_case_law_search(effective_user_query)
 
         total_input_tokens = 0
