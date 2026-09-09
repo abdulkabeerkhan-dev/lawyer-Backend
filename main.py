@@ -982,11 +982,11 @@ HOW YOU WORK:
 4. IMMEDIATE TOOL EXECUTION MANDATE. Whenever the user requests case law, precedents, statutory sections (e.g. 498-F PPC, 489-F PPC, Section 12 SRA, Section 148 ITO), or journal citations (PLD, SCMR, YLR, PCRLJ, CLC, MLD, PLC, CLD, PTD, GBLR), YOU MUST CALL search_case_law immediately on the very first turn. Never refuse, stall, or ask questions before invoking search_case_law.
 5. NEVER FABRICATE. Only cite cases, citations, or courts that the search tool actually returned. If the tool returns nothing on point, say so plainly and reason from statute and settled principle instead -- do not invent a precedent to sound authoritative.
 6. STAY IN YOUR LANE. You discuss anything within Pakistani law -- procedure, strategy, drafting, doctrine, practical advice for advocates -- conversationally and thoroughly. If asked something with nothing to do with law or legal practice, say so and redirect.
-7. WHEN YOU DO PRODUCE A FORMAL OPINION OR DRAFT, and only then, you may append a machine-readable citation block for the UI, using this exact format, containing ONLY precedents the search tool actually returned:
+7. WHEN YOU DO PRODUCE A FORMAL OPINION OR DRAFT, and only then, you may append a machine-readable citation block for the UI, using this exact schema, copying the exact case_name, case_id, and citation fields directly from the retrieved database search results:
 <<<CARDS>>>
-[{"case_name": "...", "citation": "...", "date": "...", "outcome": "...", "issue": "...", "holding": "...", "why_relevant": "...", "statutes_invoked": [{"name": "...", "explanation": "..."}]}]
+[{"case_name": "...", "case_id": "...", "citation": "...", "date": "...", "outcome": "...", "issue": "...", "holding": "...", "why_relevant": "...", "statutes_invoked": [{"name": "...", "explanation": "..."}]}]
 <<<END_CARDS>>>
-   Omit this block entirely for conversational replies, clarifying questions, or answers that didn't rely on retrieved precedent.
+   CRITICAL: You MUST copy the exact case_name, case_id, and citation values provided in the database search results context. NEVER invent or alter case_ids, citations, or titles.
 8. Never use double asterisks (**) for emphasis; write plain text.
 """
 
@@ -1148,15 +1148,18 @@ HOW YOU WORK:
         executive_answer = clean_markdown_formatting(executive_answer)
 
         for card in precedent_cards:
+            card_id_lower = str(card.get("case_id") or "").lower().strip()
             card_name_lower = str(card.get("case_name") or "").lower().strip()
             card_cit_lower = str(card.get("citation") or "").lower().strip()
 
             best_payload_match = None
             for cp in citations_payload:
+                cp_id_lower = str(cp.get("case_id") or "").lower().strip()
                 cp_title_lower = str(cp.get("title") or "").lower().strip()
                 cp_cit_lower = str(cp.get("citation") or "").lower().strip()
 
-                if (card_name_lower and (card_name_lower in cp_title_lower or cp_title_lower in card_name_lower)) or \
+                if (card_id_lower and (card_id_lower == cp_id_lower or card_id_lower in cp_id_lower)) or \
+                   (card_name_lower and (card_name_lower in cp_title_lower or cp_title_lower in card_name_lower)) or \
                    (card_cit_lower and (card_cit_lower in cp_cit_lower or cp_cit_lower in card_cit_lower)):
                     best_payload_match = cp
                     break
