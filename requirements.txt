@@ -12,3 +12,5 @@ voyageai
 pandas
 tiktoken
 tqdm
+reportlab
+python-docx
