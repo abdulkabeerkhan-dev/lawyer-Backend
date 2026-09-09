@@ -999,7 +999,17 @@ HOW YOU WORK:
         # Issue 3: If user commands drafting, citation lookup, or research, pre-fetch vector chunks immediately
         if (is_drafting_requested or is_citation_lookup or is_research_query) and search_call_count["n"] == 0:
             print(f"📌 [JOB {job_id}] Research, Citation or Drafting command detected ('{user_prompt_clean}'). Pre-fetching Pinecone vector chunks...", file=sys.stderr)
-            await run_case_law_search(effective_user_query)
+            fetched_context = await run_case_law_search(effective_user_query)
+            if fetched_context and isinstance(fetched_context, str) and len(fetched_context) > 40:
+                combined_system_prompt += (
+                    f"\n\n=========================================\n"
+                    f"DATABASE SEARCH RESULTS PRE-FETCHED FOR THIS QUERY:\n{fetched_context}\n"
+                    f"=========================================\n"
+                    f"INSTRUCTION: Ground your response in these retrieved precedents and statutory principles. "
+                    f"Answer the query directly and thoroughly on the first turn. If the user query contains a slight section typo "
+                    f"(e.g., Section 498-F vs 489-F PPC or 498-A PPC), address the intended provision (cheque dishonour 489-F PPC or marital cruelty 498-A PPC) "
+                    f"and deliver the precedents immediately. Append the <<<CARDS>>> block for all retrieved precedents so the UI renders the PDF links."
+                )
 
         total_input_tokens = 0
         total_output_tokens = 0
