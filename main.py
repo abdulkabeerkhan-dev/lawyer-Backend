@@ -868,10 +868,16 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 cid_key = meta.get("case_id") or meta.get("citation") or meta.get("title")
                 if cid_key:
                     _seen_case_ids_global.add(cid_key)
+                
+                pdf_url_val = meta.get("pdf_url") or meta.get("pdf_link")
+                if not pdf_url_val and SUPABASE_URL:
+                    safe_pdf_key = re.sub(r'[^a-zA-Z0-9_\-]', '_', str(case_id or neutral_cit)).strip('_') + ".pdf"
+                    pdf_url_val = f"{SUPABASE_URL}/storage/v1/object/public/judgments-pdf/{safe_pdf_key}"
+
                 aggregate_citations_payload.append({
                     "case_id": case_id, "court": court, "year": year_or_date, "preview": text_content,
                     "title": title, "citation": neutral_cit, "score": match_score, "outcome": outcome_val,
-                    "statutes": statutes_val, "sections": sections_val,
+                    "statutes": statutes_val, "sections": sections_val, "pdf_url": pdf_url_val,
                     "relevance": "High" if match_score >= 0.65 else ("Medium" if match_score >= 0.52 else "Low")
                 })
 
@@ -1067,6 +1073,7 @@ HOW YOU WORK:
                 card["raw_judgment_text"] = strip_control_characters(citations_payload[idx].get("preview", ""))
                 card["citation"] = citations_payload[idx].get("citation", card.get("citation"))
                 card["case_id"] = citations_payload[idx].get("case_id")
+                card["pdf_url"] = citations_payload[idx].get("pdf_url")
             card["holding"] = sanitize_holding_text(card.get("holding", ""))
 
         if not precedent_cards and citations_payload:
@@ -1078,7 +1085,8 @@ HOW YOU WORK:
                     "why_relevant": "Retrieved precedent directly governing the statutory issues raised.",
                     "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in c.get("statutes", [])],
                     "outcome": c.get("outcome", "Undetermined"), "verified_source": True,
-                    "raw_judgment_text": strip_control_characters(c.get("preview", ""))
+                    "raw_judgment_text": strip_control_characters(c.get("preview", "")),
+                    "pdf_url": c.get("pdf_url")
                 }
                 for c in citations_payload
             ]
@@ -1189,6 +1197,9 @@ async def get_full_judgment(
                         best_match = r
                 if len(best_match.get("full_text", "")) > 100:
                     best_match["full_text"] = format_clean_judgment_paragraphs(best_match.get("full_text", ""))
+                    if not best_match.get("pdf_url") and SUPABASE_URL:
+                        safe_key = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_case_id).strip('_') + ".pdf"
+                        best_match["pdf_url"] = f"{SUPABASE_URL}/storage/v1/object/public/judgments-pdf/{safe_key}"
                     return best_match
         except Exception as e:
             print(f"⚠️ Supabase check notice: {e}")
@@ -1263,8 +1274,13 @@ async def get_full_judgment(
                         seen_texts.add(c_text)
                         full_reconstructed_parts.append(c_text)
                 
+                first_meta = sorted_chunks[0].get("metadata", {}) if isinstance(sorted_chunks[0], dict) else getattr(sorted_chunks[0], "metadata", {}) or {}
+                pdf_url_meta = first_meta.get("pdf_url") or first_meta.get("pdf_link")
+                if not pdf_url_meta and SUPABASE_URL:
+                    safe_key = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_case_id).strip('_') + ".pdf"
+                    pdf_url_meta = f"{SUPABASE_URL}/storage/v1/object/public/judgments-pdf/{safe_key}"
+
                 if full_reconstructed_parts:
-                    first_meta = sorted_chunks[0].get("metadata", {}) if isinstance(sorted_chunks[0], dict) else getattr(sorted_chunks[0], "metadata", {}) or {}
                     assembled_raw = "\n\n".join(full_reconstructed_parts)
                     return {
                         "case_id": decoded_case_id,
@@ -1273,6 +1289,7 @@ async def get_full_judgment(
                         "court": first_meta.get("court", "Supreme Court / High Court of Pakistan"),
                         "judgment_year": first_meta.get("year", 2024),
                         "full_text": format_clean_judgment_paragraphs(assembled_raw),
+                        "pdf_url": pdf_url_meta,
                         "reassembled_from_chunks": True
                     }
                 
@@ -1284,7 +1301,6 @@ async def get_full_judgment(
                         seen_texts.add(chunk_str)
                         full_reconstructed_parts.append(chunk_str)
 
-                first_meta = matches[0].get("metadata", {}) if isinstance(matches[0], dict) else getattr(matches[0], "metadata", {}) or {}
                 court_val = clean_court_name(str(first_meta.get("court", "")))
                 title_val = str(first_meta.get("title") or first_meta.get("case_title", decoded_case_id))
                 citation_val = format_neutral_citation(court_val, decoded_case_id, str(first_meta.get("date") or first_meta.get("year") or ""))
@@ -1296,7 +1312,8 @@ async def get_full_judgment(
                     "neutral_citation": citation_val,
                     "court_name": court_val,
                     "decision_date": str(first_meta.get("date") or first_meta.get("year") or ""),
-                    "full_text": format_clean_judgment_paragraphs(assembled_raw)
+                    "full_text": format_clean_judgment_paragraphs(assembled_raw),
+                    "pdf_url": pdf_url_meta
                 }
         except Exception as e:
             print(f"⚠️ Pinecone retrieval error: {e}")
