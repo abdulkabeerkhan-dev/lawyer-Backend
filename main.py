@@ -4,7 +4,6 @@ import uuid
 import io
 import base64
 import urllib.parse
-import html
 from datetime import datetime, timezone, timedelta
 from typing import List, Dict, Any, Optional, cast
 import re
@@ -20,14 +19,6 @@ from anthropic import AsyncAnthropic
 from supabase import create_client, Client
 from dotenv import load_dotenv
 
-try:
-    from reportlab.lib.pagesizes import letter
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    REPORTLAB_AVAILABLE = True
-except ImportError:
-    REPORTLAB_AVAILABLE = False
-
 from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks, Request
 from fastapi.responses import StreamingResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -41,6 +32,15 @@ try:
     DOCX_AVAILABLE = True
 except ImportError:
     DOCX_AVAILABLE = False
+
+try:
+    from reportlab.lib.pagesizes import letter
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    import html
+    REPORTLAB_AVAILABLE = True
+except ImportError:
+    REPORTLAB_AVAILABLE = False
 
 load_dotenv()
 
@@ -179,52 +179,19 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
     if "high court" in combined:
         return "High Court"
 
-    non_court_terms = ["penal code", "act", "ordinance", "section", "rules", "term", "activity", "pecuniary", "nan", "null", "statute", "code (xlv"]
-    if any(term in court_raw_lower for term in non_court_terms):
-        return "Supreme Court of Pakistan"
-
     return str(court_name).strip().title() if court_name else "Supreme Court of Pakistan"
-
-def is_junk_slug_record(meta: dict) -> bool:
-    if not isinstance(meta, dict):
-        return False
-    cid = str(meta.get("case_id") or "").strip()
-    title = str(meta.get("title") or meta.get("case_title") or "").strip()
-    cit = str(meta.get("citation") or "").strip()
-    court = str(meta.get("court") or "").strip()
-
-    if re.search(r'-[0-9a-f]{12,}\b', cid, re.I) or re.search(r'-[0-9a-f]{12,}\b', cit, re.I) or re.search(r'-[0-9a-f]{12,}\b', title, re.I):
-        return True
-
-    if cid and "-" in cid:
-        parts = cid.split("-")
-        if len(parts) >= 2 and parts[0].lower() == parts[1].lower() and len(parts[0]) > 3:
-            return True
-
-    if len(title) > 90 or re.match(r'^(as well as|unfairness or|it was further|but because of|whereas|therefore|provided that)\b', title, re.I):
-        return True
-
-    if re.search(r'^[a-z0-9]+(-[a-z0-9]+){3,}', cid, re.I) or re.search(r'^[a-z0-9]+(-[a-z0-9]+){3,}', cit, re.I):
-        return True
-
-    bogus_court_keywords = ["term", "interest in the cause", "transaction or activity", "pecuniary", "acquittal from", "nan", "null"]
-    if any(kw in court.lower() for kw in bogus_court_keywords):
-        return True
-
-    return False
 
 def format_neutral_citation(court: str, case_identifier: str, year_or_date: str) -> str:
     court_clean = clean_court_name(court)
     ident_clean = str(case_identifier).strip() if case_identifier else "Matter on Record"
     date_clean = str(year_or_date).strip() if year_or_date else ""
-
-    ident_clean = re.sub(r'-[0-9a-f]{12,}\b', '', ident_clean, flags=re.IGNORECASE).strip(' -_')
-
+    
+    # 1. Check if case_identifier is an official law report citation (e.g., 2021 SCMR 1446, PLD 2016 SC 570, 2020 CLD 1104)
     reporter_match = re.search(r'\b(\d{4})?\s*(PLD|SCMR|MLD|YLR|PCRLJ|PCrLJ|CLC|CLD|PTD|PTCL|PLC|PLC\s*\(CS\))\s+(\d{4}\s+)?([A-Za-z\s]+)?(\d+)\b', ident_clean, re.IGNORECASE)
     if reporter_match:
         year_part = reporter_match.group(1) or reporter_match.group(3) or date_clean
         year_str = re.search(r'\b(19\d{2}|20\d{2})\b', str(year_part or ""))
-        yr = year_str.group(1) if year_str else (date_clean if (date_clean.isdigit() and date_clean != "2026") else "")
+        yr = year_str.group(1) if year_str else (date_clean if date_clean.isdigit() else "")
         journal = reporter_match.group(2).upper()
         page = reporter_match.group(5)
         bench = reporter_match.group(4).strip() if reporter_match.group(4) else ""
@@ -235,113 +202,16 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
         else:
             return f"{journal} {page}".strip()
 
+    # 2. Format docket number with court and year (e.g., Supreme Court of Pakistan — Civil Appeal No. 16 of 2020 (2023))
     ident_clean = re.sub(r'\s+', ' ', ident_clean).strip()
-    if not ident_clean or is_junk_slug_record({"case_id": ident_clean, "title": ident_clean, "citation": ident_clean}):
+    if not ident_clean:
         ident_clean = "Appellate Petition"
 
+    # Extract 4-digit year from date_clean
     year_match = re.search(r'\b(19\d{2}|20\d{2})\b', date_clean)
-    if year_match and year_match.group(1) != "2026" and year_match.group(1) not in ident_clean:
-        year_fmt = f" ({year_match.group(1)})"
-    else:
-        year_fmt = ""
+    year_fmt = f" ({year_match.group(1)})" if year_match and year_match.group(1) not in ident_clean else ""
 
-    res = f"{court_clean} — {ident_clean}{year_fmt}"
-    res = re.sub(r'(\(\d{4}\))\s*\1+', r'\1', res)
-    return res
-
-def sanitize_case_title_and_citation(title: str, citation: str, case_id: str, text: str) -> tuple:
-    clean_t = str(title or "").strip()
-    clean_c = str(citation or "").strip()
-    clean_id = str(case_id or "").strip()
-
-    clean_id = re.sub(r'-[0-9a-f]{12,}\b', '', clean_id, flags=re.IGNORECASE).strip(' -_')
-    clean_c = re.sub(r'-[0-9a-f]{12,}\b', '', clean_c, flags=re.IGNORECASE).strip(' -_')
-    clean_t = re.sub(r'-[0-9a-f]{12,}\b', '', clean_t, flags=re.IGNORECASE).strip(' -_')
-
-    is_sentence_title = (len(clean_t) > 70) or bool(re.match(r'^(as well as|unfairness or|it was further|but because of|whereas|therefore|provided that)\b', clean_t, re.IGNORECASE)) or re.search(r'^[a-z0-9]+(-[a-z0-9]+){3,}', clean_t, re.IGNORECASE)
-
-    journal_match = re.search(r'\b(PLD|SCMR|MLD|YLR|PCRLJ|PCrLJ|CLC|CLD|PTD|PTCL|PLC|PLC\s*\(CS\))\s+\d{4}\b(?:\s+[A-Za-z]+)?\s+\d+\b', text or clean_c or clean_t, re.IGNORECASE)
-    party_match = re.search(r'\b([A-Z][A-Za-z\.\s]{2,30}\s+(?:VS\.?|VERSUS|V\.)\s+[A-Z][A-Za-z\.\s]{2,35})\b', text or clean_t, re.IGNORECASE)
-
-    if is_sentence_title:
-        if party_match:
-            clean_t = party_match.group(1).strip()
-        elif journal_match:
-            clean_t = f"Precedent Authority — {journal_match.group(0).upper()}"
-        else:
-            clean_t = re.sub(r'\s+', ' ', clean_t[:55]).strip() + "..."
-
-    if not clean_c or is_junk_slug_record({"case_id": clean_id, "title": clean_t, "citation": clean_c}):
-        if journal_match:
-            clean_c = journal_match.group(0).upper()
-        elif party_match:
-            clean_c = party_match.group(1).strip()
-        else:
-            clean_c = clean_id if (clean_id and len(clean_id) < 40 and not re.search(r'-[0-9a-f]{8,}', clean_id)) else "Judgment Record"
-
-    return clean_t, clean_c, clean_id
-
-def generate_descriptive_issue(statutes: List[str], court: str, holding: str) -> str:
-    if statutes and len(statutes) > 0:
-        clean_s = ", ".join(statutes[:2])
-        return f"Legal proposition governing statutory provisions under {clean_s}."
-    elif holding and len(holding) > 30:
-        snippet = holding[:70].strip()
-        snippet = re.sub(r'\s+[^\s]*$', '', snippet)
-        return f"Legal ratio on: '{snippet}...'"
-    return "Legal principle and ratio extracted from judicial precedent record."
-
-def sanitize_chat_history(raw_messages: Optional[List[Any]], current_user_query: str) -> List[Dict[str, Any]]:
-    """
-    Sanitizes the chat history turns before passing them to the LLM:
-    - Only includes user prompts and assistant answers from the CURRENT session.
-    - Strips out system/developer turns (system instructions must reside purely in the system message parameter).
-    - Purges any injected developer feedback, benchmark rules, guardrail logs, internal monologues, or metadata blocks.
-    """
-    if not raw_messages or not isinstance(raw_messages, list):
-        return []
-    
-    sanitized = []
-    current_q_clean = current_user_query.strip().lower()
-    
-    contamination_markers = [
-        "critical instruction", "guardrail evaluation", "benchmark rule", 
-        "lint errors detected", "system directive", "developer note", 
-        "internal verification", "validation checklist", "forum selection: ✓",
-        "shall i now re-output", "i need to review", "article 199 forum selection: ✓",
-        "shall i proceed to output", "i acknowledge the critical instruction"
-    ]
-    
-    for m in raw_messages:
-        m_dict = m.dict() if hasattr(m, "dict") else (m if isinstance(m, dict) else {})
-        r_raw = str(m_dict.get("role") or getattr(m, "role", "user")).lower().strip()
-        
-        # System instructions must reside purely in the system message parameter
-        if r_raw in ("system", "developer"):
-            continue
-            
-        c_raw = str(m_dict.get("content") or getattr(m, "content", "") or "").strip()
-        if not c_raw:
-            continue
-            
-        # Purge any turns containing cross-test contamination or internal reflection monologues
-        if any(marker in c_raw.lower() for marker in contamination_markers):
-            continue
-            
-        # Clean out UI bracket annotations, cards tags, sources searched footers
-        c_clean = re.sub(r'\[(Vision Context|Earlier in this conversation|What you know|System).*?\]', '', c_raw, flags=re.DOTALL).strip()
-        c_clean = re.sub(r'<<<CARDS>>>.*?<<<END_CARDS>>>', '', c_clean, flags=re.DOTALL).strip()
-        c_clean = re.sub(r'Sources Searched:.*', '', c_clean, flags=re.DOTALL).strip()
-        c_clean = re.sub(r'ADDITIONAL RELEVANT AUTHORITIES:.*', '', c_clean, flags=re.DOTALL).strip()
-        c_clean = c_clean.strip()
-        
-        if not c_clean or c_clean.lower() == current_q_clean:
-            continue
-            
-        role = "assistant" if r_raw in ("assistant", "bot") else "user"
-        sanitized.append({"role": role, "content": c_clean})
-        
-    return sanitized
+    return f"{court_clean} — {ident_clean}{year_fmt}"
 
 def clean_markdown_formatting(text: str) -> str:
     if not text:
@@ -349,33 +219,12 @@ def clean_markdown_formatting(text: str) -> str:
     text = text.replace("**", "")
     text = re.sub(r'\[Annexure.*?\]', '', text)
     
-    # 1. Strip any internal verification monologue or checklist before Court Heading
-    court_match = re.search(r'(IN THE (HIGH COURT|COURT OF|SUPREME COURT|DISTRICT COURT|BANKING COURT|SENIOR CIVIL)[^\n]*)', text, flags=re.IGNORECASE)
-    if court_match:
-        prefix = text[:court_match.start()]
-        if any(kw in prefix.lower() for kw in ["i need to review", "validation checklist", "article 199", "forum selection", "✓", "shall i now", "internal thinking", "i have reviewed", "i acknowledge"]):
-            text = text[court_match.start():]
+    # Strip any meta-apologies, self-defense commentary, or reflection leakage before Section I
+    sec1_match = re.search(r'(#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*)', text, flags=re.IGNORECASE)
+    if sec1_match:
+        text = text[sec1_match.start():]
     else:
-        # Strip any meta-apologies, self-defense commentary, or reflection leakage before Section I
-        sec1_match = re.search(r'(#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*)', text, flags=re.IGNORECASE)
-        if sec1_match:
-            text = text[sec1_match.start():]
-        else:
-            text = re.sub(r'^\s*(I acknowledge[^\n]*\n|I appreciate[^\n]*\n|However, I require[^\n]*\n|My prior draft[^\n]*\n|To regenerate[^\n]*\n|If you are alleging[^\n]*\n|LEGAL OPINION[^\n]*\n|The opinion I provided[^\n]*\n|Please provide[^\n]*\n|I need to review[^\n]*\n|Article 199 Forum Selection[^\n]*\n)+', '', text.strip(), flags=re.IGNORECASE)
-    
-    # Filter out individual lines matching self-audit monologues
-    lines = text.split("\n")
-    cleaned_lines = []
-    for line in lines:
-        l_lower = line.strip().lower()
-        if any(l_lower.startswith(pat) for pat in [
-            "i need to review the draft", "shall i now re-output", "forum selection: ✓", 
-            "validation checklist:", "internal verification:", "shall i proceed to output",
-            "article 199 forum selection: ✓", "i will now output the corrected petition"
-        ]):
-            continue
-        cleaned_lines.append(line)
-    text = "\n".join(cleaned_lines)
+        text = re.sub(r'^\s*(I appreciate[^\n]*\n|However, I require[^\n]*\n|My prior draft[^\n]*\n|To regenerate[^\n]*\n|If you are alleging[^\n]*\n|LEGAL OPINION[^\n]*\n)+', '', text.strip(), flags=re.IGNORECASE)
     
     # Normalize duplicate or messy section headers to single standard markdown titles
     text = re.sub(r'#*\s*I\.\s*EXECUTIVE\s*SUMMARY.*', '### I. EXECUTIVE SUMMARY & LEGAL OPINION', text, count=1, flags=re.IGNORECASE)
@@ -388,13 +237,10 @@ def clean_markdown_formatting(text: str) -> str:
 def strip_copyright_and_branding(text: str) -> str:
     if not text:
         return ""
-    
-    # 1. If text contains website navigation header before 'Citation Name:' or 'Citation:', strip everything before it
     cit_match = re.search(r'(\bCitation\s*(Name)?\s*:.*)', text, flags=re.IGNORECASE | re.DOTALL)
     if cit_match and any(noise in text[:cit_match.start()].lower() for noise in ["my account", "pld publishers", "customer care", "saved citations", "case law search", "innertemple"]):
         text = cit_match.group(1)
 
-    # 2. Comprehensive Regex patterns for site branding, copyright, contact info, and navigation menus
     patterns = [
         r'Copyrights?\s*©?\s*\d*\s*by\s*Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
         r'This\s*site\s*is\s*developed\s*&\s*maintained\s*(by\s*)?Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
@@ -432,21 +278,18 @@ def strip_copyright_and_branding(text: str) -> str:
         r'Circulars',
         r'Notifications'
     ]
-    
     cleaned = text
     for pat in patterns:
         cleaned = re.sub(pat, '', cleaned, flags=re.IGNORECASE)
-        
     cleaned = re.sub(r'^\s*Source:\s*$', '', cleaned, flags=re.MULTILINE | re.IGNORECASE)
     cleaned = re.sub(r'\n{3,}', '\n\n', cleaned)
     return cleaned.strip()
+
 
 def format_clean_judgment_paragraphs(text: str) -> str:
     if not text:
         return ""
     
-    text = strip_copyright_and_branding(text)
-    text = re.sub(r'^\s*\[\d+\]\s*', '', text, flags=re.MULTILINE)
     t = text.replace("\r\n", "\n").replace("\r", "\n")
     t = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\ufffd]', '', t)
     
@@ -751,21 +594,17 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         has_doc_text = len(extracted_doc_texts) > 0
         combined_uploaded_doc_text = "\n\n=== UPLOADED DOCUMENT ATTACHMENT ===\n\n" + "\n\n".join(extracted_doc_texts) if has_doc_text else ""
 
-        user_prompt_clean = re.sub(r'\[.*?\]', '', request.query_text, flags=re.DOTALL).strip()
-        if not user_prompt_clean:
-            user_prompt_clean = request.query_text.strip()
-
-        effective_user_query = user_prompt_clean
+        effective_user_query = request.query_text
         if combined_uploaded_doc_text:
-            effective_user_query = f"{user_prompt_clean}\n\n{combined_uploaded_doc_text}".strip()
+            effective_user_query = f"{request.query_text}\n\n{combined_uploaded_doc_text}".strip()
 
         # ==============================================================================
         # FAST PATH: pure greetings / small talk never need to hit Claude+tools at all
         # ==============================================================================
         _CHITCHAT_EXACT = {
-            "hi", "hello", "hey", "salam", "assalam o alaikum", "thanks", "thank you", "ok", "okay", "test", "help", "good morning", "good afternoon", "good evening", "greetings"
+            "hi", "hello", "hey", "salam", "assalam o alaikum", "thanks", "thank you", "ok", "okay", "test"
         }
-        _norm_q = re.sub(r'[^\w\s]', '', user_prompt_clean.strip().lower()).strip()
+        _norm_q = re.sub(r'[^\w\s]', '', request.query_text.strip().lower()).strip()
         if (not has_image) and (not has_doc_text) and _norm_q in _CHITCHAT_EXACT:
             chitchat_answer = "Hello! I'm Section, your legal research and drafting assistant for Pakistani law. What are you working on?"
             if job_id in jobs_store:
@@ -777,7 +616,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         "precedent_cards": [],
                         "additional_authorities": [],
                         "query_id": None,
-                        "mode": "intake",
+                        "mode": "chitchat",
                         "truncated": False
                     },
                     "completed_at": datetime.now(timezone.utc),
@@ -978,7 +817,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
                 if score < 0.45: continue
                 text_content = strip_control_characters(str(meta.get("text") or meta.get("text_preview") or ""))
-                if is_garbled_text(text_content) or is_junk_citation_dump(text_content) or is_junk_slug_record(meta):
+                if is_garbled_text(text_content) or is_junk_citation_dump(text_content):
                     continue
                 case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower()
                 if (is_commercial_or_criminal_query or is_secp_or_corporate_query) and any(pol in case_title_str for pol in POLITICAL_MARKERS):
@@ -997,36 +836,32 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             context_parts = []
             for match in primary_matches:
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
-                raw_title = str(meta.get('title') or meta.get('case_title') or 'Precedent Authority')
-                raw_cit = str(meta.get('citation') or '')
-                raw_cid = str(meta.get('case_id') or '')
+                court = clean_court_name(str(meta.get('court', 'Unknown Court')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')))
+                year_or_date = str(meta.get('date', '') or meta.get('year', '') or 'Recent')
+                case_id = str(meta.get('case_id', 'Unknown Docket'))
                 text_content = str(meta.get('text', meta.get('text_preview', ''))).strip()
-
-                title, citation, case_id = sanitize_case_title_and_citation(raw_title, raw_cit, raw_cid, text_content)
-                court = clean_court_name(str(meta.get('court', 'Court of Record')), title=title, case_id=case_id, text=text_content)
-                year_or_date = str(meta.get('date', '') or meta.get('year', '') or '')
-                if year_or_date == "2026":
-                    year_or_date = ""
-
-                neutral_cit = format_neutral_citation(court, case_id if case_id else citation, year_or_date)
+                title = clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case'))
+                # Prefer the actual official law-report citation stored in metadata (e.g. "2021 SCMR 500")
+                # over the internal docket/case_id -- case_id is often just an ingestion key, not a real citation.
+                official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
+                neutral_cit = format_neutral_citation(court, official_citation or case_id, year_or_date)
                 outcome_val = str(meta.get("outcome", "")) or "Undetermined"
                 statutes_val = meta.get("statutes") or []
                 sections_val = meta.get("sections") or []
                 match_score = float(match.get("score", 0.0) if isinstance(match, dict) else getattr(match, "score", 0.0))
 
-                context_parts.append(f"CASE TITLE: {title}\nNEUTRAL CITATION: {neutral_cit}\nCOURT: {court}\nOUTCOME: {outcome_val}\nSTATUTES: {', '.join(statutes_val)}\nCONTENT: {text_content}")
+                context_parts.append(f"CASE_ID: {case_id}\nCASE TITLE: {title}\nNEUTRAL CITATION: {neutral_cit}\nCOURT: {court}\nOUTCOME: {outcome_val}\nSTATUTES: {', '.join(statutes_val)}\nCONTENT: {text_content}")
 
-                cid_key = case_id or neutral_cit or title
+                cid_key = meta.get("case_id") or meta.get("citation") or meta.get("title")
                 if cid_key:
                     _seen_case_ids_global.add(cid_key)
-                
                 pdf_url_val = meta.get("pdf_url") or meta.get("pdf_link")
                 if not pdf_url_val:
                     target_cid = case_id or neutral_cit or title
                     pdf_url_val = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
 
                 aggregate_citations_payload.append({
-                    "case_id": case_id or target_cid, "court": court, "year": year_or_date or "Recent", "preview": text_content,
+                    "case_id": case_id, "court": court, "year": year_or_date, "preview": text_content,
                     "title": title, "citation": neutral_cit, "score": match_score, "outcome": outcome_val,
                     "statutes": statutes_val, "sections": sections_val, "pdf_url": pdf_url_val,
                     "relevance": "High" if match_score >= 0.65 else ("Medium" if match_score >= 0.52 else "Low")
@@ -1034,20 +869,14 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             for match in secondary_matches:
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
-                raw_title = str(meta.get('title') or meta.get('case_title') or 'Precedent Authority')
-                raw_cit = str(meta.get('citation') or '')
-                raw_cid = str(meta.get('case_id') or '')
-                text_content = str(meta.get('text', meta.get('text_preview', ''))).strip()
-
-                title, citation, case_id = sanitize_case_title_and_citation(raw_title, raw_cit, raw_cid, text_content)
-                court = clean_court_name(str(meta.get('court', 'Court of Record')), title=title, case_id=case_id, text=text_content)
+                court = clean_court_name(str(meta.get('court', 'Court of Record')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')))
                 year_or_date = str(meta.get('date', '') or meta.get('year', '') or '')
-                if year_or_date == "2026":
-                    year_or_date = ""
-
-                neutral_cit = format_neutral_citation(court, case_id if case_id else citation, year_or_date)
-                preview_snippet = text_content[:180] + "..."
-                cid_key = case_id or neutral_cit or title
+                case_id = str(meta.get('case_id', ''))
+                title = clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Precedent on Record')) or 'Precedent on Record'))
+                official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
+                neutral_cit = format_neutral_citation(court, official_citation or case_id, year_or_date)
+                preview_snippet = str(meta.get('text', meta.get('text_preview', ''))).strip()[:180] + "..."
+                cid_key = meta.get("case_id") or meta.get("citation") or meta.get("title")
                 if cid_key:
                     _seen_case_ids_global.add(cid_key)
                 aggregate_additional_authorities.append({"title": title, "citation": neutral_cit, "summary": preview_snippet})
@@ -1068,36 +897,44 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
 HOW YOU WORK:
 1. BE CONVERSATIONAL BY DEFAULT. Most replies should read like a colleague talking, in plain prose. Do NOT impose section headers, numbered parts, or a fixed template on casual questions, clarifying exchanges, or short factual answers. Reserve formal structure (headers, numbered sections) for when you are actually delivering a finished legal opinion, memo, or draft the advocate asked for.
-2. CRITICAL DRAFTING DIRECTIVE: Do NOT output your internal thinking, validation checklists, or meta-commentary. Do NOT ask for permission to output the draft. If the user commands drafting or the intake context is complete, output the full, court-ready pleading immediately, beginning directly with the Court Heading.
-3. SEARCH FIRST, CLARIFY SECOND. Do NOT block execution or pause to ask clarifying questions when a legal research, precedent, section, or citation query is received. ALWAYS call search_case_law immediately to retrieve available judgments and answer with whatever on-point case law or statutory principles exist. If helpful, you may suggest optional follow-ups at the end of your answer, but NEVER pause or withhold search results to ask questions first.
-4. IMMEDIATE TOOL EXECUTION MANDATE. Whenever the user requests case law, precedents, statutory sections (e.g. 498-F PPC, 489-F PPC, Section 12 SRA, Section 148 ITO), or journal citations (PLD, SCMR, YLR, PCRLJ, CLC, MLD, PLC, CLD, PTD, GBLR), YOU MUST CALL search_case_law immediately on the very first turn. Never refuse, stall, or ask questions before invoking search_case_law.
-5. NEVER FABRICATE. Only cite cases, citations, or courts that the search tool actually returned. If the tool returns nothing on point, say so plainly and reason from statute and settled principle instead -- do not invent a precedent to sound authoritative.
-6. STAY IN YOUR LANE. You discuss anything within Pakistani law -- procedure, strategy, drafting, doctrine, practical advice for advocates -- conversationally and thoroughly. If asked something with nothing to do with law or legal practice, say so and redirect.
-7. WHEN YOU DO PRODUCE A FORMAL OPINION OR DRAFT, and only then, you may append a machine-readable citation block for the UI, using this exact schema, copying the exact case_name, case_id, and citation fields directly from the retrieved database search results:
+2. ASK BEFORE YOU ASSUME, BUT DON'T INTERROGATE. When a request is genuinely underspecified for what's being asked -- e.g. "help me write a writ petition" without knowing what order is being challenged, in which forum, on what grounds -- ask 1-2 sharp, specific follow-up questions before doing the work, the way a senior associate would before starting a draft. Don't ask questions whose answers don't change what you'd do. If you can give a useful provisional answer while also asking what would sharpen it, do both in one reply rather than blocking on the question.
+3. USE THE search_case_law TOOL DELIBERATELY, NOT REFLEXIVELY. Call it when the answer genuinely benefits from grounding in actual Pakistani judgments or you need to verify a specific citation -- not for every message, and not before you understand what the advocate actually needs. Skip it for casual conversation, definitions you already know confidently, or when you're still gathering facts via clarifying questions. When you do call it, make the query specific (legal issue + jurisdiction + known statute), because vague searches return junk.
+4. NEVER FABRICATE. Only cite cases, citations, or courts that the search tool actually returned. If the tool returns nothing on point, say so plainly and reason from statute and settled principle instead -- do not invent a precedent to sound authoritative.
+5. STAY IN YOUR LANE. You discuss anything within Pakistani law -- procedure, strategy, drafting, doctrine, practical advice for advocates -- conversationally and thoroughly. If asked something with nothing to do with law or legal practice, say so and redirect.
+6. WHEN YOU DO PRODUCE A FORMAL OPINION OR DRAFT, and only then, you may append a machine-readable citation block for the UI, using this exact format, containing ONLY precedents the search tool actually returned:
 <<<CARDS>>>
-[{"case_name": "...", "case_id": "...", "citation": "...", "date": "...", "outcome": "...", "issue": "...", "holding": "...", "why_relevant": "...", "statutes_invoked": [{"name": "...", "explanation": "..."}]}]
+[{"case_id": "...", "case_name": "...", "citation": "...", "date": "...", "outcome": "...", "issue": "...", "holding": "...", "why_relevant": "...", "statutes_invoked": [{"name": "...", "explanation": "..."}]}]
 <<<END_CARDS>>>
-   CRITICAL: You MUST copy the exact case_name, case_id, and citation values provided in the database search results context. NEVER invent or alter case_ids, citations, or titles.
-8. Never use double asterisks (**) for emphasis; write plain text.
+   CRITICAL: "case_id" MUST be copied verbatim, character-for-character, from the "CASE_ID:" line of the matching case in the search tool's results. Never invent, alter, or guess a case_id. Every card's case_id must correspond to the exact case you are discussing in that card -- do not mix up cases or reorder them relative to the CASE_ID each fact came from. If you are unsure which retrieved case a point came from, do not include a card for it.
+   Omit this block entirely for conversational replies, clarifying questions, or answers that didn't rely on retrieved precedent.
+7. Never use double asterisks (**) for emphasis; write plain text.
 """
 
         combined_system_prompt = f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{conversational_persona}"
 
         CASE_LAW_TOOL = {
             "name": "search_case_law",
-            "description": "Search the firm's indexed database of Pakistani superior court judgments (Supreme Court, High Courts, Federal Shariat Court) for precedents, holdings, and specific law journal citations (e.g. 'PLD 2020 Supreme Court 1', '2022 SCMR 1446', '2021 YLR 500'). Call this immediately whenever the user asks for a citation lookup, statutory section interpretation, or legal precedent search.",
+            "description": "Search the firm's indexed database of Pakistani superior court judgments (Supreme Court, High Courts, Federal Shariat Court) for precedents, holdings and statutory citations relevant to a specific legal question. Call this only once you have enough facts (subject matter and, ideally, jurisdiction) to run a precise search -- premature or vague searches return poor results. Do not call this for casual conversation or for facts you're still gathering via clarifying questions.",
             "input_schema": {
                 "type": "object",
                 "properties": {
-                    "query": {"type": "string", "description": "A precise legal research or citation query (e.g. 'PLD 2020 Supreme Court 1' or '498-F PPC cruelty precedent Supreme Court')."},
-                    "court_filter": {"type": "string", "description": "Optional: restrict to one court, e.g. 'Lahore High Court', 'Supreme Court of Pakistan'."}
+                    "query": {"type": "string", "description": "A precise legal research query: the legal issue, relevant statute/section if known, and jurisdiction (e.g. 'quashment of FIR under Article 199 Lahore High Court fraud allegations')."},
+                    "court_filter": {"type": "string", "description": "Optional: restrict to one court, e.g. 'Lahore High Court', 'Supreme Court of Pakistan'. Leave blank to search broadly (still subject to provincial jurisdiction rules)."}
                 },
                 "required": ["query"]
             }
         }
 
-        # Assemble sanitized conversation history turns provided by frontend (Issue 2)
-        history_msgs = sanitize_chat_history(request.messages, user_prompt_clean)
+        # Assemble conversation history turns provided by frontend
+        history_msgs = []
+        if request.messages and isinstance(request.messages, list):
+            for m in request.messages:
+                m_dict = m.dict() if hasattr(m, "dict") else (m if isinstance(m, dict) else {})
+                r_raw = m_dict.get("role") or getattr(m, "role", "user")
+                c_raw = str(m_dict.get("content") or getattr(m, "content", "") or "").strip()
+                if c_raw and c_raw != request.query_text:
+                    r = "assistant" if str(r_raw).lower() in ("assistant", "system", "bot") else "user"
+                    history_msgs.append({"role": r, "content": c_raw})
 
         if has_image:
             user_msg_content = []
@@ -1112,39 +949,6 @@ HOW YOU WORK:
             current_user_message = {"role": "user", "content": effective_user_query}
 
         messages = history_msgs + [current_user_message]
-
-        # Check for explicit drafting commands, citation lookups, or research intent
-        query_lower_all = user_prompt_clean.lower()
-        is_drafting_requested = any(k in query_lower_all for k in [
-            "draft now", "proceed with draft", "draft petition", "draft writ", 
-            "draft application", "draft plaint", "draft written statement",
-            "generate pleading", "prepare draft", "draft court petition", "court draft"
-        ])
-        is_citation_lookup = bool(re.search(r'\b(pld|scmr|ylr|pcrlj|clc|mld|plc|cld|ptd|gblr)\b', query_lower_all))
-        is_research_query = any(k in query_lower_all for k in ["find", "search", "precedent", "precedents", "judgment", "case law", "section", "article", "holding", "ratio", "cite", "ppc", "cpc", "crpc", "qso", "sra"])
-
-        if is_drafting_requested:
-            combined_system_prompt += (
-                "\n\nCRITICAL DRAFTING MANDATE: The user has explicitly commanded drafting ('Draft now' / 'proceed with draft'). "
-                "You MUST generate the complete, court-ready pleading immediately. Do NOT ask follow-up questions, do NOT ask for clarification, "
-                "do NOT output internal thinking, validation checklists, or meta-commentary, and do NOT ask for permission. "
-                "Begin your response DIRECTLY with the Court Heading (e.g. 'IN THE HIGH COURT OF...')."
-            )
-
-        # Issue 3: If user commands drafting, citation lookup, or research, pre-fetch vector chunks immediately
-        if (is_drafting_requested or is_citation_lookup or is_research_query) and search_call_count["n"] == 0:
-            print(f"📌 [JOB {job_id}] Research, Citation or Drafting command detected ('{user_prompt_clean}'). Pre-fetching Pinecone vector chunks...", file=sys.stderr)
-            fetched_context = await run_case_law_search(effective_user_query)
-            if fetched_context and isinstance(fetched_context, str) and len(fetched_context) > 40:
-                combined_system_prompt += (
-                    f"\n\n=========================================\n"
-                    f"DATABASE SEARCH RESULTS PRE-FETCHED FOR THIS QUERY:\n{fetched_context}\n"
-                    f"=========================================\n"
-                    f"INSTRUCTION: Ground your response in these retrieved precedents and statutory principles. "
-                    f"Answer the query directly and thoroughly on the first turn. If the user query contains a slight section typo "
-                    f"(e.g., Section 498-F vs 489-F PPC or 498-A PPC), address the intended provision (cheque dishonour 489-F PPC or marital cruelty 498-A PPC) "
-                    f"and deliver the precedents immediately. Append the <<<CARDS>>> block for all retrieved precedents so the UI renders the PDF links."
-                )
 
         total_input_tokens = 0
         total_output_tokens = 0
@@ -1198,12 +1002,13 @@ HOW YOU WORK:
         citations_payload = aggregate_citations_payload
         additional_authorities = aggregate_additional_authorities
 
-        # Deterministic Legal Output Verification & Reflection Loop (Issue 1)
+        # Deterministic Legal Output Verification & Reflection Loop (only when we actually
+        # grounded the answer in retrieved case law -- casual replies skip this entirely)
         if citations_payload:
             lint_errors = lint_legal_output(raw_model_output, query_context=effective_user_query)
             if lint_errors:
                 print(f"⚠️ Legal Guardrails Lint Errors detected: {lint_errors}. Triggering reflection loop...", file=sys.stderr)
-                reflection_prompt = f"CRITICAL: Do NOT output your internal thinking, validation checklists, or meta-commentary. Do NOT ask for permission to output the draft. If the user commands drafting or the intake context is complete, output the full, court-ready pleading immediately, beginning directly with the Court Heading. Silently correct these legal issues in your answer and re-output the full corrected response: {'; '.join(lint_errors)}"
+                reflection_prompt = f"CRITICAL INSTRUCTION: Do NOT output conversational meta-commentary about the correction. Silently correct these legal issues in your answer and re-output the full corrected response in the same style: {'; '.join(lint_errors)}"
                 reflection_messages = list(messages) + [
                     {"role": "assistant", "content": raw_model_output},
                     {"role": "user", "content": reflection_prompt},
@@ -1238,96 +1043,51 @@ HOW YOU WORK:
 
         executive_answer = clean_markdown_formatting(executive_answer)
 
-        bound_precedent_cards = []
-        used_payload_indices = set()
+        def _norm_key(s: str) -> str:
+            return re.sub(r'[^a-z0-9]+', '', str(s or '').lower())
 
-        if citations_payload:
-            for idx, card in enumerate(precedent_cards):
-                card_id_lower = str(card.get("case_id") or "").lower().strip()
-                card_name_lower = str(card.get("case_name") or "").lower().strip()
-                card_cit_lower = str(card.get("citation") or "").lower().strip()
+        citations_by_id = {c["case_id"]: c for c in citations_payload if c.get("case_id")}
+        citations_by_citation = {_norm_key(c["citation"]): c for c in citations_payload if c.get("citation")}
 
-                best_payload_match = None
-                matched_cp_idx = None
+        verified_cards = []
+        for card in precedent_cards:
+            matched = None
+            claimed_id = card.get("case_id")
+            if claimed_id and claimed_id in citations_by_id:
+                matched = citations_by_id[claimed_id]
+            elif card.get("citation") and _norm_key(card["citation"]) in citations_by_citation:
+                matched = citations_by_citation[_norm_key(card["citation"])]
 
-                # 1. Match by case_id / citation / title or word token overlap
-                for cp_idx, cp in enumerate(citations_payload):
-                    if cp_idx in used_payload_indices:
-                        continue
-                    cp_id_lower = str(cp.get("case_id") or "").lower().strip()
-                    cp_title_lower = str(cp.get("title") or "").lower().strip()
-                    cp_cit_lower = str(cp.get("citation") or "").lower().strip()
-
-                    card_words = set(w for w in re.split(r'\W+', card_name_lower + " " + card_cit_lower + " " + card_id_lower) if len(w) > 3)
-                    cp_words = set(w for w in re.split(r'\W+', cp_title_lower + " " + cp_cit_lower + " " + cp_id_lower) if len(w) > 3)
-                    overlap = card_words.intersection(cp_words)
-
-                    if (card_id_lower and (card_id_lower == cp_id_lower or card_id_lower in cp_id_lower)) or \
-                       (card_cit_lower and (card_cit_lower in cp_cit_lower or cp_cit_lower in card_cit_lower)) or \
-                       (card_name_lower and (card_name_lower in cp_title_lower or cp_title_lower in card_name_lower)) or \
-                       len(overlap) >= 2:
-                        best_payload_match = cp
-                        matched_cp_idx = cp_idx
-                        break
-
-                # 2. Fallback to next unassigned payload item by index
-                if not best_payload_match:
-                    for cp_idx, cp in enumerate(citations_payload):
-                        if cp_idx not in used_payload_indices:
-                            best_payload_match = cp
-                            matched_cp_idx = cp_idx
-                            break
-
-                if best_payload_match:
-                    used_payload_indices.add(matched_cp_idx)
-                    card["case_name"] = best_payload_match.get("title") or card.get("case_name")
-                    card["case_id"] = best_payload_match.get("case_id") or card.get("case_id")
-                    card["citation"] = best_payload_match.get("citation") or card.get("citation")
-                    card["pdf_url"] = best_payload_match.get("pdf_url") or f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(card['case_id']))}"
-                    card["raw_judgment_text"] = strip_control_characters(best_payload_match.get("preview", ""))
-                    card["date"] = best_payload_match.get("year") or card.get("date", "")
-                    card["court"] = best_payload_match.get("court") or card.get("court", "")
-                    card["outcome"] = best_payload_match.get("outcome") or card.get("outcome", "Undetermined")
-                else:
-                    target_cid = card.get("case_id") or card.get("citation") or card.get("case_name") or ""
-                    card["pdf_url"] = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
-
+            if matched:
+                # Trust ONLY the backend's own retrieved data for identity/text fields --
+                # never the model's restated case_id/citation, even if it happened to match.
+                card["raw_judgment_text"] = strip_control_characters(matched.get("preview", ""))
+                card["citation"] = matched.get("citation")
+                card["case_id"] = matched.get("case_id")
+                card["case_name"] = matched.get("title") or card.get("case_name")
+                card["pdf_url"] = matched.get("pdf_url") or f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(card['case_id']))}"
                 card["holding"] = sanitize_holding_text(card.get("holding", ""))
-                if not card.get("issue") or card.get("issue") == "Legal proposition extracted from indexed public judgment record.":
-                    card["issue"] = generate_descriptive_issue(
-                        [s.get("name") if isinstance(s, dict) else str(s) for s in card.get("statutes_invoked", [])],
-                        card.get("court", ""),
-                        card.get("holding", "")
-                    )
-                bound_precedent_cards.append(card)
+                verified_cards.append(card)
+            else:
+                # Could not confidently tie this card back to a specific retrieved judgment --
+                # drop the case_id/link rather than risk pointing to the wrong judgment's text/PDF.
+                print(f"⚠️ [JOB {job_id}] Dropping unverifiable precedent card (no case_id match): {card.get('case_name')} / {card.get('citation')}", file=sys.stderr)
 
-            # If there are payload items that were never bound to any card, append them as cards
-            for cp_idx, cp in enumerate(citations_payload):
-                if cp_idx not in used_payload_indices:
-                    holding_text = sanitize_holding_text(cp.get("preview", "")[:250])
-                    issue_text = generate_descriptive_issue(cp.get("statutes", []), cp.get("court", ""), holding_text)
-                    bound_precedent_cards.append({
-                        "case_name": cp["title"],
-                        "case_id": cp["case_id"],
-                        "citation": cp["citation"],
-                        "date": cp.get("year", ""),
-                        "court": cp.get("court", ""),
-                        "issue": issue_text,
-                        "holding": holding_text,
-                        "why_relevant": "Retrieved precedent directly governing the statutory issues raised.",
-                        "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in cp.get("statutes", [])],
-                        "outcome": cp.get("outcome", "Undetermined"),
-                        "verified_source": True,
-                        "raw_judgment_text": strip_control_characters(cp.get("preview", "")),
-                        "pdf_url": cp.get("pdf_url") or f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(cp['case_id']))}"
-                    })
+        precedent_cards = verified_cards
 
-            precedent_cards = bound_precedent_cards
-        else:
-            for card in precedent_cards:
-                card["holding"] = sanitize_holding_text(card.get("holding", ""))
-                target_cid = card.get("case_id") or card.get("citation") or card.get("case_name") or ""
-                card["pdf_url"] = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
+        if not precedent_cards and citations_payload:
+            precedent_cards = [
+                {
+                    "case_name": c["title"], "case_id": c["case_id"], "citation": c["citation"], "date": c["year"],
+                    "issue": "Legal proposition extracted from indexed public judgment record.",
+                    "holding": sanitize_holding_text(c.get("preview", "")[:250]),
+                    "why_relevant": "Retrieved precedent directly governing the statutory issues raised.",
+                    "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in c.get("statutes", [])],
+                    "outcome": c.get("outcome", "Undetermined"), "verified_source": True,
+                    "raw_judgment_text": strip_control_characters(c.get("preview", ""))
+                }
+                for c in citations_payload
+            ]
 
         display_answer = executive_answer
         if citations_payload or additional_authorities:
@@ -1336,16 +1096,16 @@ HOW YOU WORK:
                 display_answer += "\n".join(add_lines)
             display_answer += "\n\n" + format_sources_searched(aggregate_sources_matches)
 
-        # Mode label for the frontend UI (Issue 3)
+        # Mode label for the frontend UI (metadata only -- no longer drives response shape)
         query_lower = request.query_text.lower()
-        if is_drafting_requested or any(k in query_lower for k in ["draft petition", "draft bail application", "draft plaint", "draft written statement"]):
-            mode = "drafting"
-        elif has_image or has_doc_text:
+        if has_image or has_doc_text:
             mode = "document_analysis"
         elif search_call_count["n"] > 0:
             mode = "caselaw_search"
+        elif any(k in query_lower for k in ["draft petition", "draft bail application", "draft plaint", "draft written statement"]):
+            mode = "drafting"
         else:
-            mode = "intake"
+            mode = "simple_query"
 
         inserted_row_id = str(uuid.uuid4())
         if supabase:
@@ -1365,9 +1125,7 @@ HOW YOU WORK:
                 "status": "done",
                 "result": {
                     "answer": display_answer,
-                    "response": display_answer,
                     "precedent_cards": precedent_cards,
-                    "precedents": precedent_cards,
                     "additional_authorities": additional_authorities,
                     "citations": citations_payload,
                     "query_id": inserted_row_id,
@@ -1397,6 +1155,8 @@ HOW YOU WORK:
                 "error": str(e),
                 "completed_at": datetime.now(timezone.utc)
             })
+
+# FULL JUDGMENT RETRIEVAL WITH PATH-SAFE DOCKET/CITATION PARSING & REASSEMBLY
 
 def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -> bytes:
     if not REPORTLAB_AVAILABLE:
@@ -1443,7 +1203,7 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
     story.append(Spacer(1, 10))
 
     if not paragraphs_list:
-        story.append(Paragraph("Full judgment text is being synchronized for this record.", body_style))
+        story.append(Paragraph("Full judgment text is currently undergoing index synchronization.", body_style))
     else:
         for p in paragraphs_list:
             safe_p = html.escape(p).replace('\n', '<br/>')
@@ -1504,7 +1264,7 @@ async def get_judgment_pdf_endpoint(case_id: str):
         }
     )
 
-# FULL JUDGMENT RETRIEVAL WITH PATH-SAFE DOCKET/CITATION PARSING & REASSEMBLY
+
 @app.get("/judgment/{case_id:path}")
 async def get_full_judgment(
     case_id: str, 
@@ -1517,38 +1277,17 @@ async def get_full_judgment(
     decoded_case_id = urllib.parse.unquote(case_id).strip()
     clean_search_id = re.sub(r'[^a-zA-Z0-9_\-\s]', ' ', decoded_case_id).strip()
     
-    # 1. Supabase Complete Judgment Search
+    # 1. Supabase Complete Judgment Search -- EXACT case_id match only.
+    # No fuzzy/keyword fallback here: a substring or keyword match can silently return a
+    # completely different judgment (e.g. matching on a common party name), which is
+    # unacceptable for a legal citation lookup. If the exact id isn't found, we say so.
     if supabase:
         try:
-            # Direct match
             res = supabase.table("full_judgments").select("*").eq("case_id", decoded_case_id).execute()
-            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
-                norm_id = re.sub(r'\s+', '_', decoded_case_id)
-                res = supabase.table("full_judgments").select("*").eq("case_id", norm_id).execute()
-            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
-                res = supabase.table("full_judgments").select("*").ilike("neutral_citation", f"%{decoded_case_id}%").execute()
-            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
-                res = supabase.table("full_judgments").select("*").ilike("case_title", f"%{decoded_case_id}%").execute()
-            
-            # Keyword/Party Name match requiring at least 2 keywords in case_title if direct match missed
-            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100):
-                keywords = [w for w in clean_search_id.split() if len(w) > 3 and w.lower() not in ("versus", "state", "other", "others", "petition", "civil", "appeal", "limited", "company")]
-                if len(keywords) >= 2:
-                    query = supabase.table("full_judgments").select("*")
-                    for kw in keywords[:3]:
-                        query = query.ilike("case_title", f"%{kw}%")
-                    res = query.limit(5).execute()
-
-            if res.data and len(res.data) > 0:
+            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100:
                 best_match = res.data[0]
-                for r in res.data:
-                    if len(r.get("full_text", "")) > len(best_match.get("full_text", "")):
-                        best_match = r
-                if len(best_match.get("full_text", "")) > 100:
-                    best_match["full_text"] = format_clean_judgment_paragraphs(best_match.get("full_text", ""))
-                    safe_key = urllib.parse.quote(decoded_case_id)
-                    best_match["pdf_url"] = f"https://web-production-53d0.up.railway.app/judgment-pdf/{safe_key}"
-                    return best_match
+                best_match["full_text"] = format_clean_judgment_paragraphs(best_match.get("full_text", ""))
+                return best_match
         except Exception as e:
             print(f"⚠️ Supabase check notice: {e}")
 
@@ -1557,7 +1296,7 @@ async def get_full_judgment(
         try:
             matches = []
             dummy_vector = [0.0] * 1024
-            for field in ["case_id", "citation", "title", "case_title"]:
+            for field in ["case_id", "citation"]:
                 try:
                     chunk_matches = pinecone_index.query(
                         namespace="judgments",
@@ -1573,22 +1312,11 @@ async def get_full_judgment(
                 except Exception:
                     pass
 
-            if not matches and os.environ.get("VOYAGE_API_KEY"):
-                async with httpx.AsyncClient(timeout=15.0) as client:
-                    v_res = await client.post(
-                        VOYAGE_API_URL,
-                        json={"input": decoded_case_id, "model": os.environ.get("VOYAGE_MODEL", "voyage-law-2"), "input_type": "query"},
-                        headers={"Authorization": f"Bearer {os.environ.get('VOYAGE_API_KEY')}", "Content-Type": "application/json"}
-                    )
-                    if v_res.status_code == 200:
-                        q_vec = v_res.json()["data"][0]["embedding"]
-                        broad_matches = pinecone_index.query(
-                            namespace="judgments",
-                            vector=q_vec,
-                            top_k=50,
-                            include_metadata=True
-                        )
-                        matches = broad_matches.get("matches", []) if isinstance(broad_matches, dict) else getattr(broad_matches, "matches", []) or []
+            # NOTE: we intentionally do NOT fall back to a broad semantic vector search here.
+            # Vector search always returns *a* nearest neighbour even when there's no real match,
+            # which for a "give me this exact judgment" lookup means silently returning the wrong
+            # case. If neither Supabase nor an exact Pinecone case_id/citation match found this
+            # judgment, we say so honestly rather than guess.
 
             if matches:
                 # If matches found, find base_id and fetch complete sequence of chunks from 0 to N
@@ -1622,13 +1350,8 @@ async def get_full_judgment(
                         seen_texts.add(c_text)
                         full_reconstructed_parts.append(c_text)
                 
-                first_meta = sorted_chunks[0].get("metadata", {}) if isinstance(sorted_chunks[0], dict) else getattr(sorted_chunks[0], "metadata", {}) or {}
-                pdf_url_meta = first_meta.get("pdf_url") or first_meta.get("pdf_link")
-                if not pdf_url_meta and SUPABASE_URL:
-                    safe_key = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_case_id).strip('_') + ".pdf"
-                    pdf_url_meta = f"{SUPABASE_URL}/storage/v1/object/public/judgments-pdf/{safe_key}"
-
                 if full_reconstructed_parts:
+                    first_meta = sorted_chunks[0].get("metadata", {}) if isinstance(sorted_chunks[0], dict) else getattr(sorted_chunks[0], "metadata", {}) or {}
                     assembled_raw = "\n\n".join(full_reconstructed_parts)
                     return {
                         "case_id": decoded_case_id,
@@ -1637,7 +1360,6 @@ async def get_full_judgment(
                         "court": first_meta.get("court", "Supreme Court / High Court of Pakistan"),
                         "judgment_year": first_meta.get("year", 2024),
                         "full_text": format_clean_judgment_paragraphs(assembled_raw),
-                        "pdf_url": pdf_url_meta,
                         "reassembled_from_chunks": True
                     }
                 
@@ -1649,9 +1371,11 @@ async def get_full_judgment(
                         seen_texts.add(chunk_str)
                         full_reconstructed_parts.append(chunk_str)
 
+                first_meta = matches[0].get("metadata", {}) if isinstance(matches[0], dict) else getattr(matches[0], "metadata", {}) or {}
                 court_val = clean_court_name(str(first_meta.get("court", "")))
                 title_val = str(first_meta.get("title") or first_meta.get("case_title", decoded_case_id))
-                citation_val = format_neutral_citation(court_val, decoded_case_id, str(first_meta.get("date") or first_meta.get("year") or ""))
+                official_citation = str(first_meta.get("citation") or first_meta.get("neutral_citation") or "").strip()
+                citation_val = format_neutral_citation(court_val, official_citation or decoded_case_id, str(first_meta.get("date") or first_meta.get("year") or ""))
                 assembled_raw = "\n\n".join(full_reconstructed_parts)
 
                 return {
@@ -1660,8 +1384,7 @@ async def get_full_judgment(
                     "neutral_citation": citation_val,
                     "court_name": court_val,
                     "decision_date": str(first_meta.get("date") or first_meta.get("year") or ""),
-                    "full_text": format_clean_judgment_paragraphs(assembled_raw),
-                    "pdf_url": pdf_url_meta
+                    "full_text": format_clean_judgment_paragraphs(assembled_raw)
                 }
         except Exception as e:
             print(f"⚠️ Pinecone retrieval error: {e}")
