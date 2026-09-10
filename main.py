@@ -1223,21 +1223,14 @@ async def get_judgment_pdf_endpoint(case_id: str):
     match_record = None
     if supabase:
         try:
+            # EXACT case_id match only (plus one safe normalization: spaces -> underscores,
+            # since ingestion sometimes stores the same id both ways). No fuzzy ilike/keyword
+            # fallback -- that risks silently returning a completely different judgment
+            # (e.g. matching on a common party name), which is unacceptable for a citation lookup.
             res = supabase.table("full_judgments").select("*").eq("case_id", decoded_case_id).execute()
             if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50):
                 norm_id = re.sub(r'\s+', '_', decoded_case_id)
                 res = supabase.table("full_judgments").select("*").eq("case_id", norm_id).execute()
-            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50):
-                res = supabase.table("full_judgments").select("*").ilike("neutral_citation", f"%{decoded_case_id}%").execute()
-            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50):
-                res = supabase.table("full_judgments").select("*").ilike("case_title", f"%{decoded_case_id}%").execute()
-            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50):
-                keywords = [w for w in clean_search_id.split() if len(w) > 3 and w.lower() not in ("versus", "state", "other", "others", "petition", "civil", "appeal", "limited", "company")]
-                if len(keywords) >= 2:
-                    query = supabase.table("full_judgments").select("*")
-                    for kw in keywords[:3]:
-                        query = query.ilike("case_title", f"%{kw}%")
-                    res = query.limit(5).execute()
 
             if res.data and len(res.data) > 0:
                 match_record = res.data[0]
