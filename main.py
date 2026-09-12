@@ -1368,14 +1368,16 @@ HOW YOU WORK:
             grounding_message = f"""
 CRITICAL GROUNDING CONTEXT:
 A precedent was successfully retrieved from the database:
-Citation: {c_cit}
-Case Title: {c_title}
-Court: {c_name}
-Full Text / Ratio: {c_text}
+- Neutral Citation: {c_cit}
+- Case Title: {c_title}
+- Deciding Court: {c_name}
+- Decision Date: {c_date}
+- Full Text / Headnote: {c_text}
 
-TASK: Provide a precise legal analysis of this judgment. 
-DO NOT say "No record under that citation in the database". 
-The precedent was found and verified.
+MANDATORY INSTRUCTIONS:
+1. The deciding forum is: {c_name}. Do NOT misidentify this as the "Supreme Court of Pakistan" unless court_name explicitly states that.
+2. In the "Cases discussed" section and heading, use the exact forum from above.
+3. In "Sources Searched", reflect the actual source forum ({c_name}).
 """
             combined_system_prompt = f"{combined_system_prompt}\n\n{grounding_message}"
 
