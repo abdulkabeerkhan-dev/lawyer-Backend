@@ -894,6 +894,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             search_call_count["n"] += 1
             search_query = _expand_legal_shorthand(raw_search_query or effective_user_query)
             sq_lower = search_query.lower()
+            target_source = None
 
             # Direct Reporter Citation Pattern Extract & Supreme Court Target Enforcement
             cit_match = re.search(

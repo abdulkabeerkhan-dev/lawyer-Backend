@@ -82,7 +82,15 @@ This is paragraph 2 of the judgment text.
         self.assertIn("This is paragraph 1 of the judgment text.", cleaned)
         self.assertIn("This is paragraph 2 of the judgment text.", cleaned)
 
+    def test_target_source_unbound_error_fix(self):
+        """Test non-Supreme Court citation query does not throw target_source UnboundLocalError."""
+        from main import extract_and_intercept_citation
+        # Non-SCMR citation query
+        row, clean_topic = extract_and_intercept_citation("2008 PCrLJ 858")
+        self.assertEqual(clean_topic, "")
+
 if __name__ == "__main__":
     unittest.main()
+
 
 
