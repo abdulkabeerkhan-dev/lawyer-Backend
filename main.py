@@ -868,103 +868,96 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 norm_cit_underscore = re.sub(r'[\s_\-]+', '_', extracted_cit)
                 try:
                     if supabase:
-                        # 1. Try citation_crosswalk table
-                        try:
-                            res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{norm_cit_space}%").limit(3).execute()
-                            if res_cw.data:
-                                for cw_row in res_cw.data:
-                                    fj = cw_row.get("full_judgments") or {}
-                                    if fj:
-                                        boosted_matches.append({
-                                            "score": 0.99,
-                                            "is_boosted": True,
-                                            "metadata": {
-                                                "is_boosted": True,
-                                                "case_id": fj.get("case_id") or fj.get("id") or extracted_cit,
-                                                "canonical_id": fj.get("case_id") or extracted_cit,
-                                                "title": fj.get("case_title") or cw_row.get("case_title") or "Reported Precedent",
-                                                "court": fj.get("court_name") or cw_row.get("court") or "Supreme Court of Pakistan",
-                                                "citation": extracted_cit,
-                                                "date": str(fj.get("decision_date") or ""),
-                                                "text": (fj.get("full_text") or "")[:3500],
-                                                "pdf_url": fj.get("pdf_url"),
-                                                "outcome": "Verified Precedent",
-                                                "statutes": []
-                                            }
-                                        })
-                        except Exception:
-                            pass
-
-                        # 2. Try full_judgments direct lookup
-                        if not boosted_matches:
+                        # 1. Try fast indexed case_id lookup FIRST (0.5s execution time)
+                        res_supa = supabase.table("full_judgments").select("*").eq("case_id", norm_cit_underscore).limit(3).execute()
+                        if not res_supa.data:
                             res_supa = supabase.table("full_judgments").select("*").eq("neutral_citation", norm_cit_space).limit(3).execute()
-                            if not res_supa.data:
-                                res_supa = supabase.table("full_judgments").select("*").ilike("case_id", f"%{norm_cit_underscore}%").limit(3).execute()
-                            if not res_supa.data:
-                                res_supa = supabase.table("full_judgments").select("*").ilike("case_title", f"%{norm_cit_space}%").limit(3).execute()
-                            
-                            if res_supa.data:
-                                for row in res_supa.data:
-                                    c_name = row.get("court_name") or row.get("court")
-                                    if not c_name or c_name == "Court of Record":
-                                        c_name = "Supreme Court of Pakistan" if "SCMR" in extracted_cit.upper() else "High Court"
-                                    boosted_matches.append({
-                                        "score": 0.99,
+                        if not res_supa.data:
+                            res_supa = supabase.table("full_judgments").select("*").ilike("case_id", f"%{norm_cit_underscore}%").limit(3).execute()
+                        if not res_supa.data:
+                            res_supa = supabase.table("full_judgments").select("*").ilike("case_title", f"%{norm_cit_space}%").limit(3).execute()
+
+                        rows = res_supa.data if res_supa and res_supa.data else []
+
+                        # 2. Try citation_crosswalk table safely if full_judgments had no direct hits
+                        if not rows:
+                            try:
+                                res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{norm_cit_space}%").limit(3).execute()
+                                if res_cw and res_cw.data:
+                                    for cw_row in res_cw.data:
+                                        fj = cw_row.get("full_judgments") or {}
+                                        if fj:
+                                            rows.append(fj)
+                            except Exception:
+                                pass
+
+                        if rows:
+                            for row in rows:
+                                c_name = row.get("court_name") or row.get("court")
+                                if not c_name or c_name == "Court of Record":
+                                    c_name = "Supreme Court of Pakistan" if "SCMR" in extracted_cit.upper() else "High Court"
+                                boosted_matches.append({
+                                    "score": 0.99,
+                                    "is_boosted": True,
+                                    "metadata": {
                                         "is_boosted": True,
-                                        "metadata": {
-                                            "is_boosted": True,
-                                            "case_id": row.get("case_id") or row.get("id") or extracted_cit,
-                                            "canonical_id": row.get("case_id") or extracted_cit,
-                                            "title": row.get("case_title") or row.get("title") or "Reported Precedent",
-                                            "court": c_name,
-                                            "citation": row.get("neutral_citation") or extracted_cit,
-                                            "date": str(row.get("decision_date") or row.get("year") or ""),
-                                            "text": (row.get("full_text") or "")[:3500],
-                                            "pdf_url": row.get("pdf_url"),
-                                            "outcome": "Verified Precedent",
-                                            "statutes": []
-                                        }
-                                    })
+                                        "case_id": row.get("case_id") or row.get("id") or extracted_cit,
+                                        "canonical_id": row.get("case_id") or extracted_cit,
+                                        "title": row.get("case_title") or row.get("title") or "Reported Precedent",
+                                        "court": c_name,
+                                        "citation": row.get("neutral_citation") or extracted_cit,
+                                        "date": str(row.get("decision_date") or row.get("year") or ""),
+                                        "text": (row.get("full_text") or "")[:3500],
+                                        "pdf_url": row.get("pdf_url"),
+                                        "outcome": "Verified Precedent",
+                                        "statutes": []
+                                    }
+                                })
                 except Exception as cit_db_err:
                     print(f"⚠️ Direct citation DB lookup notice: {cit_db_err}")
 
             # Prepare clean legal topic query for Voyage embedding (strip citation numbers if present)
             embedding_query = search_query
+            topic_query_clean = ""
             if cit_match:
                 topic_query = re.sub(r'\b(?:19|20)\d{2}\s+(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+\b', '', search_query, flags=re.IGNORECASE).strip()
+                topic_query_clean = re.sub(r'^(?:search database for|find|lookup|case law search|precedents? found)\s*', '', topic_query, flags=re.IGNORECASE).strip()
                 if len(topic_query) >= 10:
                     embedding_query = topic_query
 
-            try:
-                voyage_model = os.environ.get("VOYAGE_MODEL", "voyage-law-2")
-                if not VOYAGE_API_KEY:
-                    return "Search tool unavailable: embedding service is not configured."
-                async with httpx.AsyncClient(timeout=30.0) as client:
-                    voyage_response = await client.post(
-                        VOYAGE_API_URL,
-                        json={"input": embedding_query, "model": voyage_model, "input_type": "query"},
-                        headers={"Authorization": f"Bearer {VOYAGE_API_KEY}", "Content-Type": "application/json"}
+            if boosted_matches and len(topic_query_clean) < 5:
+                matches_list = boosted_matches
+            else:
+                try:
+                    voyage_model = os.environ.get("VOYAGE_MODEL", "voyage-law-2")
+                    if not VOYAGE_API_KEY:
+                        return "Search tool unavailable: embedding service is not configured."
+                    async with httpx.AsyncClient(timeout=30.0) as client:
+                        voyage_response = await client.post(
+                            VOYAGE_API_URL,
+                            json={"input": embedding_query, "model": voyage_model, "input_type": "query"},
+                            headers={"Authorization": f"Bearer {VOYAGE_API_KEY}", "Content-Type": "application/json"}
+                        )
+                        if voyage_response.status_code != 200:
+                            return f"Search tool error: embedding request failed ({voyage_response.status_code})."
+                        query_vector = voyage_response.json()["data"][0]["embedding"]
+
+                    if not pinecone_index:
+                        return "Search tool unavailable: the judgment database is not connected."
+
+                    query_top_k = 60 if target_source else 30
+                    raw_matches = pinecone_index.query(
+                        namespace="judgments", vector=query_vector, top_k=query_top_k, include_metadata=True
                     )
-                    if voyage_response.status_code != 200:
-                        return f"Search tool error: embedding request failed ({voyage_response.status_code})."
-                    query_vector = voyage_response.json()["data"][0]["embedding"]
-
-                if not pinecone_index:
-                    return "Search tool unavailable: the judgment database is not connected."
-
-                query_top_k = 60 if target_source else 30
-                raw_matches = pinecone_index.query(
-                    namespace="judgments", vector=query_vector, top_k=query_top_k, include_metadata=True
-                )
-                matches_list = raw_matches.get("matches", []) if isinstance(raw_matches, dict) else getattr(raw_matches, "matches", []) or []
-                if boosted_matches:
-                    matches_list = boosted_matches + matches_list
-            except Exception as search_err:
-                print(f"⚠️ [JOB {job_id}] case-law search failed: {search_err}", file=sys.stderr)
-                if boosted_matches:
-                    matches_list = boosted_matches
-                else:
-                    return "Search tool error: the judgment database could not be reached. Answer using your own knowledge of Pakistani statute and settled principles, and tell the advocate that live case-law verification was unavailable."
+                    matches_list = raw_matches.get("matches", []) if isinstance(raw_matches, dict) else getattr(raw_matches, "matches", []) or []
+                    if boosted_matches:
+                        matches_list = boosted_matches + matches_list
+                except Exception as search_err:
+                    print(f"⚠️ [JOB {job_id}] case-law search failed: {search_err}", file=sys.stderr)
+                    if boosted_matches:
+                        matches_list = boosted_matches
+                    else:
+                        return "Search tool error: the judgment database could not be reached. Answer using your own knowledge of Pakistani statute and settled principles, and tell the advocate that live case-law verification was unavailable."
 
             def _passes_source_filter(meta, target):
                 if meta.get("is_boosted"):
