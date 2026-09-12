@@ -234,6 +234,28 @@ def tokens_to_text(tokens: List[int]) -> str:
 
 
 # Canonical Case ID Generator for Deterministic In-Place Upserts
+def generate_canonical_id(court: str, case_type: str, case_number: str, year: str) -> str:
+    norm_court = str(court or "").strip().upper()
+    if "SUPREME" in norm_court or "SC" in norm_court:
+        c_code = "SC"
+    elif "LAHORE" in norm_court or "LHC" in norm_court:
+        c_code = "LHC"
+    elif "SINDH" in norm_court or "SHC" in norm_court:
+        c_code = "SHC"
+    elif "PESHAWAR" in norm_court or "PHC" in norm_court:
+        c_code = "PHC"
+    elif "BALOCHISTAN" in norm_court or "BHC" in norm_court:
+        c_code = "BHC"
+    else:
+        c_code = re.sub(r'[^A-Z0-9]', '', norm_court) or "CT"
+
+    t_code = re.sub(r'[^A-Z0-9]', '', str(case_type or "").upper()) or "GEN"
+    num_code = str(case_number or "").strip().replace("/", "-").replace(" ", "")
+    num_code = re.sub(r'[^A-Z0-9\-]', '', num_code.upper()) or "0"
+    yr_code = str(year or "").strip()
+
+    return f"{c_code}_{t_code}_{num_code}_{yr_code}".strip("_")
+
 def generate_case_id(citation: str, title: str) -> str:
     """
     Generates a canonical, deterministic case_id slug/hash based on citation and title.
@@ -1249,59 +1271,40 @@ def run_ingestion(dry_run: bool = False, resume: bool = False, force_reingest: b
 
 
 
+            canonical_id = generate_canonical_id(court, category_name, case_id, year)
             for chunk_idx, chunk_text in enumerate(chunks):
-
                 meta_block = {
-
-                    "text_preview": chunk_text[:200],
-
-                    "text": chunk_text,
-
-                    "case_id": case_id,
-
+                    "judgment_id": case_id,
+                    "canonical_id": canonical_id,
+                    "citation": citation if citation != "No Citation" else "",
+                    "case_title": title,
                     "court": court,
-
+                    "docket_number": case_id,
+                    "decision_date": str(year),
+                    "pdf_url": source_url,
+                    "is_reported": bool(citation and citation != "No Citation"),
+                    "text_preview": chunk_text[:200],
+                    "text": chunk_text,
+                    "case_id": case_id,
                     "year": year,
-
                     "subject_matter": subject_matter,
-
                     "source_url": source_url,
-
                     "title": title,
-
-                    "citation": citation,
-
                     "chunk_index": chunk_idx,
-
                     "dataset_category": category_name,
-
                     "statutes": statutes,
-
                     "sections": sections,
-
                     "author_judges": judges,
-
                     "bench_type": bench_type,
-
                     "bench_size": bench_size,
-
                     "outcome": outcome,
-
                     **extra_metadata
-
                 }
 
-                
-
-                if len(safe_case_id) > 450:
-
-                    hash_suffix = hashlib.md5(safe_case_id.encode("utf-8")).hexdigest()
-
-                    vector_id = f"{safe_case_id[:410]}_{hash_suffix}_chunk_{chunk_idx}"
-
-                else:
-
-                    vector_id = f"{safe_case_id}_chunk_{chunk_idx}"
+                vector_id = f"{canonical_id}_chunk_{chunk_idx}"
+                if len(vector_id) > 500:
+                    hash_suffix = hashlib.md5(canonical_id.encode("utf-8")).hexdigest()
+                    vector_id = f"{canonical_id[:400]}_{hash_suffix}_chunk_{chunk_idx}"
 
                 candidates.append((vector_id, chunk_text, meta_block, row_fingerprint))
 

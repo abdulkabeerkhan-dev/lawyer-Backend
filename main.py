@@ -1272,38 +1272,84 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
     doc.build(story)
     return buffer.getvalue()
 
-@app.get("/judgment-pdf/{case_id:path}")
-async def get_judgment_pdf_endpoint(case_id: str):
-    decoded_case_id = urllib.parse.unquote(case_id).strip()
-    clean_search_id = re.sub(r'[^a-zA-Z0-9_\-\s]', ' ', decoded_case_id).strip()
-
-    match_record = None
+def find_judgment_by_id_or_canonical(target_id: str) -> Optional[Dict[str, Any]]:
+    decoded_id = urllib.parse.unquote(target_id).strip()
+    norm_id = re.sub(r'\s+', '_', decoded_id)
+    
     if supabase:
         try:
-            # EXACT case_id match only (plus one safe normalization: spaces -> underscores,
-            # since ingestion sometimes stores the same id both ways). No fuzzy ilike/keyword
-            # fallback -- that risks silently returning a completely different judgment
-            # (e.g. matching on a common party name), which is unacceptable for a citation lookup.
-            res = supabase.table("full_judgments").select("*").eq("case_id", decoded_case_id).execute()
-            if not (res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50):
-                norm_id = re.sub(r'\s+', '_', decoded_case_id)
-                res = supabase.table("full_judgments").select("*").eq("case_id", norm_id).execute()
-
-            if res.data and len(res.data) > 0:
-                match_record = res.data[0]
-                for r in res.data:
-                    if len(r.get("full_text", "")) > len(match_record.get("full_text", "")):
-                        match_record = r
+            # 1. Try UUID / primary id column
+            res = supabase.table("full_judgments").select("*").eq("id", decoded_id).execute()
+            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
+                return res.data[0]
+            
+            # 2. Try canonical_id column
+            res = supabase.table("full_judgments").select("*").eq("canonical_id", decoded_id).execute()
+            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
+                return res.data[0]
+            
+            # 3. Try case_id column
+            res = supabase.table("full_judgments").select("*").eq("case_id", decoded_id).execute()
+            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
+                return res.data[0]
+                
+            # 4. Try norm_id (spaces to underscores)
+            res = supabase.table("full_judgments").select("*").eq("case_id", norm_id).execute()
+            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
+                return res.data[0]
         except Exception as e:
-            print(f"⚠️ Supabase check notice: {e}")
+            print(f"⚠️ Supabase judgment lookup notice: {e}")
 
-    title = (match_record.get("case_title") if match_record else decoded_case_id) or decoded_case_id
+    # Pinecone fallback lookup by exact metadata field match
+    if pinecone_index:
+        try:
+            dummy_vector = [0.0] * 1024
+            for field in ["judgment_id", "canonical_id", "case_id", "citation"]:
+                res = pinecone_index.query(
+                    namespace="judgments",
+                    vector=dummy_vector,
+                    filter={field: {"$eq": decoded_id}},
+                    top_k=10,
+                    include_metadata=True
+                )
+                if res and res.get("matches"):
+                    matches = sorted(res["matches"], key=lambda m: m.get("metadata", {}).get("chunk_index", 0))
+                    full_text = "\n\n".join([m.get("metadata", {}).get("text", "") for m in matches if m.get("metadata", {}).get("text")])
+                    if full_text:
+                        meta0 = matches[0].get("metadata", {})
+                        return {
+                            "id": meta0.get("judgment_id") or decoded_id,
+                            "canonical_id": meta0.get("canonical_id") or decoded_id,
+                            "case_id": meta0.get("case_id") or decoded_id,
+                            "case_title": meta0.get("title") or meta0.get("case_title") or decoded_id,
+                            "neutral_citation": meta0.get("citation") or "",
+                            "court_name": meta0.get("court") or "Supreme Court of Pakistan",
+                            "full_text": full_text,
+                            "pdf_url": meta0.get("pdf_url") or ""
+                        }
+        except Exception as e:
+            print(f"⚠️ Pinecone lookup notice: {e}")
+
+    return None
+
+@app.get("/api/judgments/{judgment_id:path}/pdf")
+async def get_api_judgment_pdf_endpoint(judgment_id: str):
+    decoded_id = urllib.parse.unquote(judgment_id).strip()
+    match_record = find_judgment_by_id_or_canonical(decoded_id)
+
+    # Check if stored pdf_url is a valid external URL (and not the broken supabase bucket path)
+    if match_record and match_record.get("pdf_url") and "supabase.co/storage/v1/object/public/judgments-pdf" not in str(match_record.get("pdf_url")):
+        stored_pdf = str(match_record.get("pdf_url"))
+        if stored_pdf.startswith("http://") or stored_pdf.startswith("https://"):
+            return Response(status_code=307, headers={"Location": stored_pdf})
+
+    title = (match_record.get("case_title") if match_record else decoded_id) or decoded_id
     citation = (match_record.get("neutral_citation") if match_record else "") or ""
     court = (match_record.get("court_name") if match_record else "Supreme Court of Pakistan") or "Supreme Court of Pakistan"
-    text = (match_record.get("full_text") if match_record else f"Full judgment record for {decoded_case_id} is currently undergoing index synchronization.") or ""
+    text = (match_record.get("full_text") if match_record else f"Full judgment record for {decoded_id} is currently undergoing index synchronization.") or ""
 
     pdf_bytes = build_judgment_pdf_bytes(title, citation, court, text)
-    safe_filename = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_case_id).strip('_') + ".pdf"
+    safe_filename = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_id).strip('_') + ".pdf"
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
@@ -1314,6 +1360,17 @@ async def get_judgment_pdf_endpoint(case_id: str):
         }
     )
 
+@app.get("/api/judgments/{judgment_id:path}")
+async def get_api_judgment_endpoint(judgment_id: str):
+    match_record = find_judgment_by_id_or_canonical(judgment_id)
+    if not match_record:
+        raise HTTPException(status_code=404, detail=f"Judgment '{judgment_id}' not found.")
+    match_record["full_text"] = format_clean_judgment_paragraphs(match_record.get("full_text", ""))
+    return match_record
+
+@app.get("/judgment-pdf/{case_id:path}")
+async def get_judgment_pdf_endpoint(case_id: str):
+    return await get_api_judgment_pdf_endpoint(case_id)
 
 @app.get("/judgment/{case_id:path}")
 async def get_full_judgment(
@@ -1321,25 +1378,13 @@ async def get_full_judgment(
     authenticated_user_id: str = Depends(verify_clerk_session)
 ):
     """
-    Retrieves and reassembles full judgment text.
-    Handles URL-encoded identifiers, docket numbers with slashes, and titles.
+    Retrieves and reassembles full judgment text by exact UUID or canonical identifier.
     """
-    decoded_case_id = urllib.parse.unquote(case_id).strip()
-    clean_search_id = re.sub(r'[^a-zA-Z0-9_\-\s]', ' ', decoded_case_id).strip()
-    
-    # 1. Supabase Complete Judgment Search -- EXACT case_id match only.
-    # No fuzzy/keyword fallback here: a substring or keyword match can silently return a
-    # completely different judgment (e.g. matching on a common party name), which is
-    # unacceptable for a legal citation lookup. If the exact id isn't found, we say so.
-    if supabase:
-        try:
-            res = supabase.table("full_judgments").select("*").eq("case_id", decoded_case_id).execute()
-            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 100:
-                best_match = res.data[0]
-                best_match["full_text"] = format_clean_judgment_paragraphs(best_match.get("full_text", ""))
-                return best_match
-        except Exception as e:
-            print(f"⚠️ Supabase check notice: {e}")
+    match_record = find_judgment_by_id_or_canonical(case_id)
+    if not match_record:
+        raise HTTPException(status_code=404, detail=f"Judgment '{case_id}' not found.")
+    match_record["full_text"] = format_clean_judgment_paragraphs(match_record.get("full_text", ""))
+    return match_record
 
     # 2. Pinecone Multi-Strategy Complete Sequence Chunk Retrieval
     if pinecone_index:
