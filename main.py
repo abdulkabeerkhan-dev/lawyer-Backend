@@ -418,58 +418,65 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
 
     return f"{court_clean} — {ident_clean}{year_fmt}"
 
+def clean_case_title(raw_title: str) -> str:
+    t = (raw_title or "").strip()
+    if not t:
+        return ""
+    
+    # Strip leading reporter / bench / portal junk
+    t = re.sub(r'^(?:Latest Caselaws\s+)?', '', t, flags=re.IGNORECASE).strip()
+    t = re.sub(r'^(?:\d+\s+)?(?:\d{4}\s+)?(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC|PLJ|NLR|ALD)\s+\d+\s+', '', t, flags=re.IGNORECASE).strip()
+    t = re.sub(r'^(?:S\s*C\s*M\s*R|Y\s*L\s*R|P\s*L\s*D).*?(?:Bench\s+Present\s+|Before\s+)?[A-Za-z\.\s]+,\s*(?:J|CJ)\.?\s*', '', t, flags=re.IGNORECASE)
+    
+    # Cut off advocate / judge / procedural delimiters after " - "
+    if " - " in t:
+        t = t.split(" - ")[0].strip()
+    t = re.sub(r'(?:Criminal\s+Misc.*?|Writ\s+Petition.*?|Civil\s+Revision.*)$', '', t, flags=re.IGNORECASE).strip()
+
+    # Isolate strictly standalone "v." or "vs." with word boundaries (avoids breaking "Tanvir")
+    t = re.sub(r'(?<=[a-zA-Z0-9])v\.(?:S\s+|s\s+)?(?=[A-Za-z])', ' v. ', t, flags=re.IGNORECASE)
+    t = re.sub(r'\s*\b(?:v|vs|versus)\.?(?=\s|$)\s*', ' v. ', t, flags=re.IGNORECASE)
+    
+    # Fix "v. S State" -> "v. The State"
+    t = re.sub(r'\bv\.\s*S\s+State\b', 'v. The State', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bv\.\s*State\b', 'v. The State', t, flags=re.IGNORECASE)
+
+    # Standardize casing and spaces
+    parts = t.split(" v. ")
+    if len(parts) == 2:
+        p1 = " ".join(parts[0].split()).strip().title()
+        p2 = " ".join(parts[1].split()).strip().title()
+        p1 = re.sub(r'\b(?:Lahore|Karachi|Peshawar|High|Court)\b.*', '', p1, flags=re.IGNORECASE).strip()
+        if p2.lower() in ("state", "the state") or p2.lower().startswith("state"):
+            p2 = "The State"
+        return f"{p1} v. {p2}"
+        
+    return " ".join(t.split()).strip()
+
 def clean_precedent_title(title: str, fallback_citation: str = "", full_text: str = "", neutral_cit: str = "") -> str:
     fallback = fallback_citation or neutral_cit or ""
     raw = (title or "").strip()
-    if not raw:
-        if full_text:
-            head = full_text[:600]
-            m = re.search(r'([A-Z\s\.\,\(\)]{3,40}?)\s+(?:Versus|VS\.?|V\.)\s+([A-Z\s\.\,\(\)]{3,40}?)(?=\r?\n|\.|;|$)', head, re.IGNORECASE)
-            if m:
-                p1 = " ".join(m.group(1).split()).strip().title()
-                p2 = " ".join(m.group(2).split()).strip().title()
-                if p2.lower() in ("state", "the state") or p2.lower().startswith("state"):
-                    p2 = "The State"
-                return f"{p1} v. {p2}"
-        return f"Precedent {fallback}".strip() or "Untitled Case"
+    cleaned = clean_case_title(raw)
+    if cleaned and cleaned != "v." and not cleaned.startswith("v. ") and len(cleaned) >= 5:
+        return cleaned
 
-    t = raw
+    if full_text:
+        head = full_text[:600]
+        m = re.search(r'([A-Z\s\.\,\(\)]{3,40}?)\s+(?:Versus|VS\.?|V\.)\s+([A-Z\s\.\,\(\)]{3,40}?)(?=\r?\n|\.|;|$)', head, re.IGNORECASE)
+        if m:
+            p1 = " ".join(m.group(1).split()).strip().title()
+            p2 = " ".join(m.group(2).split()).strip().title()
+            if p2.lower() in ("state", "the state") or p2.lower().startswith("state"):
+                p2 = "The State"
+            return f"{p1} v. {p2}"
 
-    # Step 1: Strip leading portal junk ("Latest Caselaws", page numbers, citations)
-    t = re.sub(r'^(?:Latest Caselaws\s+)?', '', t, flags=re.IGNORECASE).strip()
-    t = re.sub(r'^(?:\d+\s+)?(?:\d{4}\s+)?(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC|PLJ|NLR|ALD)\s+\d+\s+', '', t, flags=re.IGNORECASE).strip()
-    t = re.sub(r'^(?:\d+\s+)?(?:\d{4}\s+[A-Za-z\s]+\s+\d+\s+)?', '', t, flags=re.IGNORECASE).strip()
-    t = re.sub(r'^(?:\d{4}\s+)?[A-Z\s]{2,8}(?:\[\w+\])?\s*(?:Karachi|Lahore|Peshawar|Quetta)?\s*(?:Before\s+)?(?:Mrs?\.\s+|Justice\s+|Mr\.\s+Justice\s+)?[A-Za-z\.\s]+,\s*J\.?\s*', '', t, flags=re.IGNORECASE).strip()
+    if cleaned:
+        t = re.sub(r'^[0-9\s]+', '', cleaned).strip()
+        if t.startswith("v.") or t.startswith("v. "):
+            t = t.replace("v.", "").replace("v. ", "").strip()
+            return f"State v. {t}"
 
-    # Step 2: Cut off everything after the first dash or advocate delimiter (" - Honorable Justice...", " - Before...", " - Advocate...")
-    if " - " in t:
-        t = t.split(" - ")[0].strip()
-
-    t = re.sub(r'(?:Criminal\s+Misc.*?|Writ\s+Petition.*?|Civil\s+Revision.*)$', '', t, flags=re.IGNORECASE).strip()
-
-    # Step 3: Handle mashed "v." separators ("Muhammad Jamilv.S State" -> "Muhammad Jamil v. State")
-    t = re.sub(r'\s*(?:v\.?s?|versus)\s*(?:S\s+)?', ' v. ', t, flags=re.IGNORECASE)
-
-    # Step 4: Clean up "The State"
-    t = re.sub(r'\bv\.\s*State\b', 'v. The State', t, flags=re.IGNORECASE)
-
-    # Step 5: If title was mangled into just "v." or "1006 2007 Ylr...v.Ictor Masih"
-    t = re.sub(r'^[0-9\s]+', '', t).strip()
-    if t.startswith("v.") or t.startswith("v. "):
-        t = t.replace("v.", "").replace("v. ", "").strip()
-        t = f"State v. {t}"
-
-    # Step 6: Title Case cleaning
-    parts = t.split(" v. ")
-    if len(parts) == 2:
-        init = parts[0].strip().title()
-        resp = parts[1].strip().title()
-        init = re.sub(r'\b(?:Lahore|Karachi|Peshawar|High|Court)\b.*', '', init, flags=re.IGNORECASE).strip()
-        if resp.lower() in ("state", "the state") or resp.lower().startswith("state"):
-            resp = "The State"
-        return f"{init} v. {resp}"
-
-    return t.strip()[:60] or "Untitled Case"
+    return f"Precedent {fallback}".strip() or "Untitled Case"
 
 def sanitize_case_title(raw_title: str, full_text: str = "", neutral_cit: str = "") -> str:
     return clean_precedent_title(title=raw_title, fallback_citation=neutral_cit, full_text=full_text, neutral_cit=neutral_cit)
@@ -867,45 +874,41 @@ def extract_case_roles(raw_text: str, fallback_title: str = "") -> dict:
 
 def extract_operative_order(raw_text: str) -> str:
     if not raw_text:
-        return "Disposed of on merits."
+        return "Decided on merits."
+        
+    tail = raw_text[-1200:] if len(raw_text) > 1200 else raw_text
+    tail = re.sub(r'[\?]{2,}', '', tail)
+    tail = re.sub(r'[A-Z]\.[A-Z]\.[A-Z]\.[\w\/\-]+', '', tail)
 
-    # Split into clean paragraphs
-    paragraphs = [p.strip() for p in raw_text.split('\n') if len(p.strip()) > 30]
-    if not paragraphs:
-        return "Disposed of on merits."
-
-    # Look exclusively at the last 3 paragraphs
-    closing_slice = " ".join(paragraphs[-3:])
-    
-    # Strip editor stamps and trailing OCR markers
-    closing_slice = re.sub(r'[\?]{2,}', '', closing_slice)
-    closing_slice = re.sub(r'[A-Z]\.[A-Z]\.[A-Z]\.[\w\/\-]+', '', closing_slice)
-
-    # Search for decisive appellate disposition verbs
+    # Search for decisive operative ending
     m = re.search(
-        r'((?:For the (?:foregoing )?reasons|In view of the above|Under these circumstances|Consequently|As a result|As a sequel).*?\b(?:acquitted|dismissed|allowed|accepted|quashed|reduced|set aside)\b.*?\.)',
-        closing_slice,
+        r'((?:For the (?:foregoing )?reasons|In view of the above|Under these circumstances|Consequently|As a result|In the result|As a sequel).*?\b(?:acquitted|dismissed|allowed|accepted|quashed|reduced|set aside)\b.*?\.)',
+        tail,
         flags=re.IGNORECASE | re.DOTALL
     )
     if m:
-        clean = " ".join(m.group(1).split())
-        return clean[:220].rsplit(' ', 1)[0] + "..." if len(clean) > 220 else clean
+        sent = " ".join(m.group(1).split())
+        if len(sent) > 180:
+            sent = sent[:180].rsplit(' ', 1)[0] + "..."
+        return sent.strip()
 
-    # Direct order matchers
+    # Search for explicit direct order
     m2 = re.search(
-        r'(\b(?:appeal\s+is\s+(?:hereby\s+)?(?:allowed|dismissed|accepted)|appellant\s+is\s+acquitted|conviction\s+is\s+set\s+aside|sentence\s+is\s+reduced|petition\s+is\s+(?:hereby\s+)?(?:dismissed|allowed|accepted|quashed)|F\.?I\.?R\.?\s+is\s+quashed|bail\s+is\s+(?:granted|refused))\b.*?\.)',
-        closing_slice,
+        r'(\b(?:appellant\s+is\s+acquitted\s+of\s+the\s+charge|appeal\s+is\s+(?:hereby\s+)?(?:allowed|dismissed|accepted)|sentence\s+is\s+reduced|conviction\s+is\s+set\s+aside|petition\s+is\s+(?:hereby\s+)?(?:dismissed|allowed|accepted|quashed)|F\.?I\.?R\.?\s+is\s+quashed|bail\s+is\s+(?:granted|refused))\b.*?\.)',
+        tail,
         flags=re.IGNORECASE
     )
     if m2:
         return m2.group(1).strip()
 
-    # Fallback to the very last complete sentence of the judgment
-    last_para = paragraphs[-1]
-    sentences = [s.strip() for s in last_para.split('.') if len(s.strip()) > 15 and '---' not in s]
+    # Fallback to the last complete sentence with clean word cutoff
+    clean_tail = tail.strip()
+    sentences = [s.strip() for s in clean_tail.split('.') if len(s.strip()) > 20 and not s.strip().startswith(('PW', 'P.W', 'Exh')) and '---' not in s]
     if sentences:
-        candidate = sentences[-1] + "."
-        return candidate[:220].rsplit(' ', 1)[0] + "..." if len(candidate) > 220 else candidate
+        cand = sentences[-1] + "."
+        if len(cand) > 180:
+            cand = cand[:180].rsplit(' ', 1)[0] + "..."
+        return cand
 
     return "Decided on merits."
 
@@ -1656,10 +1659,13 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if score < 0.40 and not is_boosted: continue
                 text_content = strip_control_characters(str(meta.get("text") or meta.get("text_preview") or ""))
                 full_text_val = str(meta.get("full_text") or meta.get("text") or "")
+                case_tit_clean = str(meta.get("title") or meta.get("case_title") or "").strip()
                 if not is_boosted:
-                    if len(full_text_val) < 150 and len(text_content) < 60:
+                    if len(full_text_val) < 120 and len(text_content) < 50:
                         continue
-                    if str(meta.get("title") or meta.get("case_title") or "").strip().lower() in ["v.", "vs.", "", "v", "vs"]:
+                    if "Precedent Record" in case_tit_clean or text_content.strip() == "Control of Narcotic Substances Act 1997--9":
+                        continue
+                    if case_tit_clean.lower() in ["v.", "vs.", "", "v", "vs"]:
                         continue
                     if is_garbled_text(text_content) or is_junk_citation_dump(text_content) or is_scraped_portal_junk(text_content):
                         continue
