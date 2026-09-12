@@ -419,19 +419,30 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
     return f"{court_clean} — {ident_clean}{year_fmt}"
 
 def clean_case_title(raw_title: str) -> str:
-    t = (raw_title or "").strip()
-    if not t:
-        return ""
-    
-    # 1. Use word boundaries so "Province" or "Tanvir" are NEVER split
-    # Only match isolated "v" or "vs" or "versus"
-    t = re.sub(r'\b(?:versus|vs\.?|v\.)\b', ' v. ', t, flags=re.IGNORECASE)
-    
-    # 2. In case "v" was already glued to a word boundary without space: e.g. "Zulfiqarv.Mst"
-    t = re.sub(r'([a-zA-Z0-9])v\.(?=[A-Za-z0-9])', r'\1 v. ', t)
+    if not raw_title:
+        return "Reported Precedent"
+        
+    t = raw_title.strip()
 
-    # 3. Collapse multiple spaces
-    t = " ".join(t.split()).strip()
+    # 1. Truncate at bench/judge or advocate separator
+    if " - " in t:
+        t = t.split(" - ")[0].strip()
+
+    # 2. Strip leading reporter preambles (e.g. "Y L R Lahore Muhammad Khalid Alvi, J ")
+    t = re.sub(r'^(?:Y\s*L\s*R|P\s*L\s*D|S\s*C\s*M\s*R).*?(?:J\b|CJ\b)\s*', '', t, flags=re.IGNORECASE).strip()
+
+    # 3. Strip leading scraper page numbers and citations (e.g. "587 2006 Ylr 1728 ")
+    t = re.sub(r'^\d+\s+\d{4}\s+[A-Za-z\s]+\d+\s+', '', t).strip()
+
+    # 4. FIX "v." SPACING SAFELY WITHOUT BREAKING "Javaid", "Naqvi", "Maulvi"
+    # ONLY insert spaces when lowercase letter is glued to uppercase letter via 'v.' (e.g. "Zulfiqarv.Mst")
+    t = re.sub(r'([a-z\)])v\.(?=[A-Z])', r'\1 v. ', t)
+    
+    # Standardize already spaced or standalone " v. " / " vs. " / " versus "
+    t = re.sub(r'\s+(?:versus|vs\.?|v\.)\s+', ' v. ', t, flags=re.IGNORECASE)
+
+    # 5. Clean up duplicate spaces
+    t = " ".join(t.split()).strip(" ,.-")
     return t
 
 def clean_precedent_title(title: str, fallback_citation: str = "", full_text: str = "", neutral_cit: str = "") -> str:
