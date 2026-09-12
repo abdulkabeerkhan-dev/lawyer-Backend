@@ -99,7 +99,7 @@ VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY")
 VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
-CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-3-5-sonnet-20241022")
+CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-5-20250929")
 
 async def get_voyage_embedding(text: str) -> List[float]:
     if not VOYAGE_API_KEY:
@@ -173,6 +173,16 @@ async def safe_create_anthropic_message(**kwargs):
         raise HTTPException(status_code=503, detail="Anthropic API client is not initialized.")
     model_candidates = [
         kwargs.get("model") or CLAUDE_MODEL,
+        "claude-sonnet-4-5-20250929",
+        "claude-sonnet-4-6",
+        "claude-haiku-4-5-20251001",
+        "claude-sonnet-5",
+        "claude-opus-4-5-20251101",
+        "claude-opus-4-6",
+        "claude-opus-4-7",
+        "claude-opus-4-8",
+        "claude-fable-5",
+        "claude-fable-5-1",
         "claude-3-5-sonnet-20241022",
         "claude-3-5-sonnet-latest",
         "claude-3-5-sonnet-20240620",
@@ -199,6 +209,36 @@ async def safe_create_anthropic_message(**kwargs):
                 last_exc = e
                 continue
             raise e
+
+    # Dynamic Fallback: query Anthropic /v1/models endpoint to discover active models on this key/workspace
+    if ANTHROPIC_API_KEY:
+        try:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                headers = {
+                    "x-api-key": ANTHROPIC_API_KEY,
+                    "anthropic-version": "2023-06-01",
+                    "content-type": "application/json"
+                }
+                resp = await client.get("https://api.anthropic.com/v1/models?limit=100", headers=headers)
+                if resp.status_code == 200:
+                    fetched_data = resp.json()
+                    dynamic_models = [m["id"] for m in fetched_data.get("data", []) if isinstance(m, dict) and "id" in m]
+                    for m_id in dynamic_models:
+                        if m_id in seen:
+                            continue
+                        seen.add(m_id)
+                        try:
+                            call_kwargs = dict(kwargs)
+                            call_kwargs["model"] = m_id
+                            print(f"🔄 Trying dynamically discovered Anthropic model '{m_id}'...", file=sys.stderr, flush=True)
+                            return await async_anthropic_client.messages.create(**call_kwargs)
+                        except Exception as dyn_err:
+                            print(f"⚠️ Dynamic model '{m_id}' failed: {dyn_err}", file=sys.stderr, flush=True)
+                            last_exc = dyn_err
+                            continue
+        except Exception as fetch_err:
+            print(f"⚠️ Could not fetch dynamic model list: {fetch_err}", file=sys.stderr, flush=True)
+
     if last_exc:
         models_str = ", ".join(models_to_try)
         raise RuntimeError(
