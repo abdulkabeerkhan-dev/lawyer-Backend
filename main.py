@@ -125,14 +125,35 @@ if PINECONE_API_KEY:
         pc = Pinecone(api_key=PINECONE_API_KEY)
         pinecone_index = pc.Index(PINECONE_INDEX_NAME)
     except Exception as launch_err:
-        print(f"⚠️ Pinecone startup warning: {launch_err}")
+        print(f"⚠️ Pinecone startup warning: {launch_err}", file=sys.stderr, flush=True)
 
 supabase: Any = None
-if SUPABASE_URL and SUPABASE_SERVICE_KEY:
-    try:
-        supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
-    except Exception as launch_err:
-        print(f"⚠️ Supabase startup warning: {launch_err}")
+def init_supabase_client():
+    global supabase
+    if SUPABASE_URL and SUPABASE_SERVICE_KEY:
+        try:
+            supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+        except Exception as launch_err:
+            print(f"⚠️ Supabase init warning: {launch_err}", file=sys.stderr, flush=True)
+    return supabase
+
+init_supabase_client()
+
+def safe_supabase_query(query_fn, retries=2):
+    """
+    Executes a Supabase query with automatic client re-initialization and retry
+    if a stale connection (ConnectionTerminated, connection reset, etc.) is encountered.
+    """
+    for attempt in range(retries):
+        try:
+            return query_fn()
+        except Exception as e:
+            err_str = str(e)
+            if "ConnectionTerminated" in err_str or "connection" in err_str.lower() or attempt < retries - 1:
+                print(f"⚠️ Supabase query retry (attempt {attempt+1}/{retries}): {err_str}", file=sys.stderr, flush=True)
+                init_supabase_client()
+                continue
+            raise e
 
 async_anthropic_client = None
 if ANTHROPIC_API_KEY:
@@ -342,9 +363,11 @@ CITATION_REGEX = re.compile(
 def extract_and_intercept_citation(user_query: str):
     """
     1. Deterministically intercepts exact reporter citations directly from public.full_judgments (Tier 1).
-    2. If Tier 1 returns 0 rows, executes standalone Tier 2 Party Name Fallback by parsing remaining text
-       (stripping citation, quotes, punctuation, and tokenized search/party stopwords) and querying case_title ILIKE %candidate_party_name%.
-    3. Returns (row, clean_topic) for Tier 3 vector fallback if no database match is found.
+    2. If Tier 1 returns 0 rows, executes standalone Tier 2 Party Name Fallback by parsing candidate party name
+       from the immediate vicinity (±80 chars) of the matched citation string, stripping parentheticals, statutes,
+       system preambles, and limiting to at most 4 words.
+    3. Uses safe_supabase_query to auto-retry and re-initialize connection if ConnectionTerminated or timeout occurs.
+    4. Returns (row, clean_party_name) for Tier 3 vector fallback if no database match is found.
     """
     match = CITATION_REGEX.search(user_query or "")
     if not match:
@@ -355,20 +378,37 @@ def extract_and_intercept_citation(user_query: str):
     normalized_citation = f"{year} {journal.upper()} {page}"
     raw_citation = f"{year} {journal} {page}"
 
-    # Extract remaining text after stripping citation, quotes, punctuation & stopwords
-    clean_text = CITATION_REGEX.sub(' ', user_query or '')
-    clean_text = re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!]', ' ', clean_text)
     STOPWORDS = {
         "search", "database", "find", "precedents", "precedent", "case", "law",
         "regarding", "on", "for", "lookup", "check", "the", "in", "vs", "v",
         "versus", "against", "show", "get", "fetch", "about", "with", "please",
         "state", "etc", "honorable", "justice"
     }
-    words = [w.strip() for w in clean_text.split() if w.strip().lower() not in STOPWORDS]
-    candidate_party_name = " ".join(words).strip()
+
+    # Extract candidate party name strictly from immediate vicinity (±80 chars) of matched citation
+    start, end = match.span()
+    trailing_window = (user_query or "")[end:end + 120]
+    
+    # Strip parentheticals, statutes, system preambles, and section headers
+    trailing_clean = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|QSO|PLD|SCMR|PCrLJ|What you know|Answer style|===|SYSTEM', trailing_window, flags=re.IGNORECASE)[0]
+    
+    words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', trailing_clean).split()]
+    words = [w for w in words if w.lower() not in STOPWORDS]
+    
+    candidate_party_name = " ".join(words[:6]).strip()
+    
+    # Fallback to leading window if trailing window yielded no party name
+    if len(candidate_party_name) < 3:
+        leading_window = (user_query or "")[max(0, start - 80):start]
+        leading_clean = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|PPC|QSO|PLD|SCMR|PCrLJ|What you know|Answer style|===|SYSTEM', leading_window, flags=re.IGNORECASE)[-1]
+        leading_words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', leading_clean).split()]
+        leading_words = [w for w in leading_words if w.lower() not in STOPWORDS]
+        if leading_words:
+            candidate_party_name = " ".join(leading_words[-4:]).strip()
+
     clean_party_name = candidate_party_name if len(candidate_party_name) >= 3 else ""
 
-    print(f"--> [DEBUG] Original Query: '{user_query}'", flush=True)
+    print(f"--> [DEBUG] Original Query Snippet: '{(user_query or '')[:120]}'", flush=True)
     print(f"--> [DEBUG] Matched Citation: '{matched_citation}'", flush=True)
     print(f"--> [DEBUG] Extracted Party: '{clean_party_name or 'None'}'", flush=True)
 
@@ -376,56 +416,63 @@ def extract_and_intercept_citation(user_query: str):
     raw_cit_underscore = f"{year}_{journal}_{page}"
     row = None
 
+    def _execute_tier_queries():
+        nonlocal row
+        if not supabase:
+            init_supabase_client()
+        if not supabase:
+            return None
+
+        # Step 1: Tier 1 - Exact Citation Equality
+        res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", norm_cit_underscore).limit(1).execute()
+        if not res_supa.data and raw_cit_underscore != norm_cit_underscore:
+            res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", raw_cit_underscore).limit(1).execute()
+        if not res_supa.data:
+            res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("neutral_citation", normalized_citation).limit(1).execute()
+        if not res_supa.data and raw_citation != normalized_citation:
+            res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("neutral_citation", raw_citation).limit(1).execute()
+
+        # Step 1.5: Citation crosswalk lookup fallback
+        if not res_supa.data:
+            try:
+                res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{normalized_citation}%").limit(1).execute()
+                if res_cw and res_cw.data:
+                    fj = res_cw.data[0].get("full_judgments")
+                    if fj:
+                        res_supa.data = [fj]
+            except Exception:
+                pass
+
+        # Step 2: Tier 2 - Standalone Party Name Fallback (Runs if Tier 1 returned None)
+        if not res_supa.data and clean_party_name:
+            try:
+                res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").ilike("case_title", f"%{clean_party_name}%").limit(5).execute()
+                if res_party and res_party.data:
+                    party_rows = res_party.data
+                    sc_rows = [r for r in party_rows if "supreme court" in str(r.get("court_name") or r.get("court") or "").lower()]
+                    if sc_rows:
+                        sc_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
+                        winning_row = sc_rows[0]
+                    else:
+                        party_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
+                        winning_row = party_rows[0]
+
+                    full_row_res = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("id", winning_row.get("id")).limit(1).execute()
+                    if full_row_res and full_row_res.data:
+                        res_supa.data = [full_row_res.data[0]]
+                    else:
+                        res_supa.data = [winning_row]
+            except Exception as party_err:
+                print(f"⚠️ Tier 2 Standalone party fallback error: {party_err}", file=sys.stderr, flush=True)
+
+        return res_supa.data[0] if (res_supa and res_supa.data) else None
+
     try:
-        if supabase:
-            # Step 1: Tier 1 - Exact Citation Equality
-            res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", norm_cit_underscore).limit(1).execute()
-            if not res_supa.data and raw_cit_underscore != norm_cit_underscore:
-                res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", raw_cit_underscore).limit(1).execute()
-            if not res_supa.data:
-                res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("neutral_citation", normalized_citation).limit(1).execute()
-            if not res_supa.data and raw_citation != normalized_citation:
-                res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("neutral_citation", raw_citation).limit(1).execute()
-
-            # Step 1.5: Citation crosswalk lookup fallback
-            if not res_supa.data:
-                try:
-                    res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{normalized_citation}%").limit(1).execute()
-                    if res_cw and res_cw.data:
-                        fj = res_cw.data[0].get("full_judgments")
-                        if fj:
-                            res_supa.data = [fj]
-                except Exception:
-                    pass
-
-            # Step 2: Tier 2 - Standalone Party Name Fallback (Runs if Tier 1 returned None)
-            if not res_supa.data and clean_party_name:
-                try:
-                    # Select metadata only during ILIKE search to prevent PostgREST 57014 timeouts
-                    res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").ilike("case_title", f"%{clean_party_name}%").limit(5).execute()
-                    if res_party and res_party.data:
-                        party_rows = res_party.data
-                        sc_rows = [r for r in party_rows if "supreme court" in str(r.get("court_name") or r.get("court") or "").lower()]
-                        if sc_rows:
-                            sc_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
-                            winning_row = sc_rows[0]
-                        else:
-                            party_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
-                            winning_row = party_rows[0]
-
-                        # Fetch full_text for winning row
-                        full_row_res = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("id", winning_row.get("id")).limit(1).execute()
-                        if full_row_res and full_row_res.data:
-                            res_supa.data = [full_row_res.data[0]]
-                        else:
-                            res_supa.data = [winning_row]
-                except Exception as party_err:
-                    print(f"⚠️ Tier 2 Standalone party fallback error: {party_err}", file=sys.stderr, flush=True)
-
-            if res_supa.data:
-                row = res_supa.data[0]
+        row = safe_supabase_query(_execute_tier_queries)
     except Exception as err:
         print(f"⚠️ Direct citation gatekeeper error: {err}", file=sys.stderr, flush=True)
+
+    return row, clean_party_name
 
     return row, clean_party_name
 
