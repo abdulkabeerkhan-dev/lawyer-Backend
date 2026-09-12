@@ -1092,7 +1092,7 @@ HOW YOU WORK:
    Omit this block entirely for conversational replies, clarifying questions, or answers that didn't rely on retrieved precedent.
 7. Never use double asterisks (**) for emphasis; write plain text.
 8. CITATION FORMATTING RULE: ALWAYS format case citations using standard Pakistani law reporter journal style (e.g., PLD 1995 Supreme Court 34, 2019 SCMR 984, 2008 PCrLJ 858, 2021 CLC 450, 2020 MLD 112, 2022 YLR 310, 2020 CLD 1104, 2021 PTD 795, 2021 PLC (CS) 105, 2018 PLJ 502, 2017 NLR 215, 2016 GBLR 88, 2015 PTCL 401, 2014 ALD 105, 2013 SLR 99, 2012 ILR 44, 2011 SBLR 22). Only if no official journal citation exists in the database record, fallback to docket/court format.
-9. STRICT NO-EXCUSES & ANTI-LEAKAGE DIRECTIVE: NEVER output apologies or complaints about database indexing, such as "The database doesn't have that citation indexed...", "If you tell me the subject matter...", or meta-commentary about missing citations. Always deliver authoritative, senior-level legal guidance and ratio decidendi based directly on retrieved precedents and settled statutory principles.
+9. CRITICAL RESTRICTION: You are STRICTLY FORBIDDEN from telling the user that a citation or judgment is not indexed in the database, missing from the firm's collection, or unverified. If zero records return from database lookups, state the controlling statutory principles and general landmark doctrine directly without commenting on database limitations.
 """
 
         combined_system_prompt = f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{conversational_persona}"
@@ -1134,6 +1134,37 @@ HOW YOU WORK:
             current_user_message = {"role": "user", "content": effective_user_query}
 
         messages = history_msgs + [current_user_message]
+
+        # Deterministic Search Gatekeeper: Force search execution BEFORE round 0 if query has citation or search command
+        cit_gate_match = re.search(r'\b(?:19|20)\d{2}\s*(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*\d+\b', effective_user_query, re.IGNORECASE)
+        query_lower_gate = effective_user_query.lower()
+        is_search_command = any(kw in query_lower_gate for kw in ["search database", "find precedent", "check citation", "search case law", "lookup judgment"])
+
+        if (cit_gate_match or is_search_command) and search_call_count["n"] == 0:
+            print(f"🔒 [GATEKEEPER] Auto-executing search_case_law for citation/query: {effective_user_query}", file=sys.stderr)
+            search_res = await run_case_law_search(effective_user_query)
+            tool_call_id = f"toolu_gate_{uuid.uuid4().hex[:8]}"
+            messages.append({
+                "role": "assistant",
+                "content": [
+                    {
+                        "type": "tool_use",
+                        "id": tool_call_id,
+                        "name": "search_case_law",
+                        "input": {"query": effective_user_query}
+                    }
+                ]
+            })
+            messages.append({
+                "role": "user",
+                "content": [
+                    {
+                        "type": "tool_result",
+                        "tool_use_id": tool_call_id,
+                        "content": search_res
+                    }
+                ]
+            })
 
         total_input_tokens = 0
         total_output_tokens = 0
