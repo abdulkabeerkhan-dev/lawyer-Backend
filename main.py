@@ -666,6 +666,85 @@ def determine_case_outcome(full_text: str, existing_outcome: str = None) -> str:
 
     return "Decided"
 
+def extract_case_roles(raw_text: str, fallback_title: str = "") -> dict:
+    roles = {
+        "initiator": "",
+        "initiator_role": "Petitioner / Appellant",
+        "defender": "",
+        "defender_role": "Respondent / State"
+    }
+    
+    header = (raw_text or "")[:1500]
+    
+    # Pattern: [Name] ... (Petitioner/Appellant/Applicant) Versus [Name] ... (Respondent/Defendant/State)
+    vs_split = re.split(r'\b(?:Versus|VS\.?|V\.)\b', header, maxsplit=1, flags=re.IGNORECASE)
+    
+    if len(vs_split) == 2:
+        left, right = vs_split[0], vs_split[1]
+        
+        # 1. Parse Initiator Role
+        init_role_match = re.search(r'\b(Petitioner|Appellant|Applicant|Plaintiff)s?\b', left, re.IGNORECASE)
+        if init_role_match:
+            roles["initiator_role"] = init_role_match.group(1).title()
+        
+        # Clean Initiator Name
+        left_clean = re.sub(r'(?i)\b(?:Before|Justice|Mr\.|Messrs|J\.|Petitioners?|Appellants?|Applicants?|Plaintiffs?)\b', '', left)
+        left_clean = re.sub(r'[^a-zA-Z\s\.\,\(\)]', ' ', left_clean)
+        clean_init = " ".join(left_clean.split())
+        roles["initiator"] = clean_init[:60].strip().title() if clean_init else ""
+
+        # 2. Parse Defender Role
+        def_role_match = re.search(r'\b(Respondent|Defendant|State|Complainant)s?\b', right, re.IGNORECASE)
+        if def_role_match:
+            roles["defender_role"] = def_role_match.group(1).title()
+            
+        # Clean Defender Name
+        right_clean = re.sub(r'(?i)\b(?:Respondents?|Defendants?|through\s+.*|Advocate.*)\b', '', right)
+        right_clean = re.sub(r'[^a-zA-Z\s\.\,\(\)]', ' ', right_clean)
+        clean_def = " ".join(right_clean.split())
+        roles["defender"] = clean_def[:60].strip().title() if clean_def else ""
+
+    # Fallback to splitting existing case_title if header parsing yields empty strings
+    if not roles["initiator"] and fallback_title:
+        fb_clean = fallback_title.strip()
+        vs_fb = re.split(r'\s+(?:v\.?|vs\.?|versus)\s+', fb_clean, maxsplit=1, flags=re.IGNORECASE)
+        if len(vs_fb) == 2:
+            roles["initiator"] = vs_fb[0].strip().title()
+            roles["defender"] = vs_fb[1].strip().title() if vs_fb[1].strip() else "The State"
+
+    return roles
+
+def extract_operative_order(raw_text: str) -> str:
+    if not raw_text:
+        return "Decided on merits."
+
+    # Look at the final 800 characters where orders conclude
+    tail = raw_text.strip()[-800:]
+    
+    # Strip OCR/trailing artifacts (e.g. ????? or editor codes like H.B.T./131/P)
+    tail = re.sub(r'[\?]{2,}', '', tail)
+    tail = re.sub(r'[A-Z]\.[A-Z]\.[A-Z]\.[\w\/\-]+', '', tail)
+
+    # Search for decisive operative sentences
+    operative_patterns = [
+        r'((?:For the (?:foregoing )?reasons|In view of the above|Under these circumstances).*?\b(?:dismissed|allowed|quashed|accepted|granted|refused)\b.*?\.)',
+        r'(\b(?:Bail\s+is\s+(?:hereby\s+)?(?:granted|refused|allowed|cancelled)|F\.?I\.?R\.?\s+is\s+quashed|Petition\s+(?:is\s+)?(?:dismissed|allowed)|Appeal\s+(?:is\s+)?(?:accepted|dismissed))\b.*?\.)',
+        r'(\bOrder accordingly\b\.?)',
+    ]
+
+    for pat in operative_patterns:
+        match = re.search(pat, tail, flags=re.IGNORECASE | re.DOTALL)
+        if match:
+            clean_res = " ".join(match.group(1).split())
+            return clean_res[:200].strip()
+
+    # Fallback: take the very last clean sentence
+    sentences = [s.strip() for s in tail.split('.') if len(s.strip()) > 15]
+    if sentences:
+        return sentences[-1].strip() + "."
+
+    return "Order passed on merits."
+
 def strip_control_characters(text: str) -> str:
     if not text:
         return ""
@@ -1298,7 +1377,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                                 "text": (row.get("full_text") or "")[:3500],
                                 "pdf_url": None,
                                 "outcome": determine_case_outcome(row.get("full_text") or "", row.get("disposition") or row.get("outcome")),
-                                "statutes": []
+                                "statutes": [],
+                                "parties": extract_case_roles(row.get("full_text") or "", c_title),
+                                "operative_result": extract_operative_order(row.get("full_text") or "")
                             }
                         })
             except Exception as cit_db_err:
@@ -1470,7 +1551,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     "case_id": case_id, "court": court, "year": year_or_date, "preview": text_content,
                     "title": title, "citation": neutral_cit, "score": match_score, "outcome": outcome_val,
                     "statutes": statutes_val, "sections": sections_val, "pdf_url": pdf_url_val,
-                    "relevance": "High" if match_score >= 0.65 else ("Medium" if match_score >= 0.52 else "Low")
+                    "relevance": "High" if match_score >= 0.65 else ("Medium" if match_score >= 0.52 else "Low"),
+                    "parties": meta.get("parties") or extract_case_roles(text_content, title),
+                    "operative_result": meta.get("operative_result") or extract_operative_order(text_content)
                 })
 
             for match in secondary_matches:
@@ -1584,7 +1667,9 @@ HOW YOU WORK:
                 "statutes": [],
                 "sections": [],
                 "pdf_url": pdf_url,
-                "relevance": "High"
+                "relevance": "High",
+                "parties": extract_case_roles(c_text, c_title),
+                "operative_result": extract_operative_order(c_text)
             }
             if not any(c.get("case_id") == c_id or c.get("citation") == c_cit for c in aggregate_citations_payload):
                 aggregate_citations_payload.append(precedent_card_dict)
@@ -1773,6 +1858,8 @@ MANDATORY INSTRUCTIONS:
                     full_text=card.get("raw_judgment_text") or card.get("holding") or matched.get("preview") or "",
                     existing_outcome=card.get("outcome") or matched.get("outcome") or matched.get("disposition")
                 )
+                card["parties"] = card.get("parties") or matched.get("parties") or extract_case_roles(card.get("raw_judgment_text") or matched.get("preview") or "", card.get("case_name") or matched.get("title") or "")
+                card["operative_result"] = card.get("operative_result") or matched.get("operative_result") or extract_operative_order(card.get("raw_judgment_text") or matched.get("preview") or "")
                 verified_cards.append(card)
             else:
                 # Could not confidently tie this card back to a specific retrieved judgment --
@@ -1792,7 +1879,9 @@ MANDATORY INSTRUCTIONS:
                     "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in c.get("statutes", [])],
                     "outcome": determine_case_outcome(c.get("preview") or "", c.get("outcome")), "verified_source": True,
                     "pdf_url": c.get("pdf_url") or f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(c.get('case_id')))}",
-                    "raw_judgment_text": strip_control_characters(c.get("preview", ""))
+                    "raw_judgment_text": strip_control_characters(c.get("preview", "")),
+                    "parties": c.get("parties") or extract_case_roles(c.get("preview") or "", c["title"]),
+                    "operative_result": c.get("operative_result") or extract_operative_order(c.get("preview") or "")
                 }
                 for c in citations_payload
             ]
