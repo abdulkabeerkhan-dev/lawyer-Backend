@@ -168,6 +168,34 @@ if ANTHROPIC_API_KEY:
     except Exception as launch_err:
         print(f"Anthropic client startup warning: {launch_err}")
 
+async def safe_create_anthropic_message(**kwargs):
+    if not async_anthropic_client:
+        raise HTTPException(status_code=503, detail="Anthropic API client is not initialized.")
+    model_candidates = [
+        kwargs.get("model") or CLAUDE_MODEL,
+        "claude-3-5-sonnet-20241022",
+        "claude-3-5-sonnet-20240620",
+        "claude-3-7-sonnet-20250219",
+        "claude-3-haiku-20240307"
+    ]
+    seen = set()
+    models_to_try = [m for m in model_candidates if m and not (m in seen or seen.add(m))]
+    last_exc = None
+    for model_name in models_to_try:
+        try:
+            call_kwargs = dict(kwargs)
+            call_kwargs["model"] = model_name
+            return await async_anthropic_client.messages.create(**call_kwargs)
+        except Exception as e:
+            err_str = str(e)
+            if "404" in err_str or "not_found" in err_str.lower() or "model:" in err_str.lower():
+                print(f"⚠️ Anthropic model '{model_name}' returned 404/not_found. Trying fallback...", file=sys.stderr, flush=True)
+                last_exc = e
+                continue
+            raise e
+    if last_exc:
+        raise last_exc
+
 security_agent = HTTPBearer(auto_error=False)
 _clerk_jwks_keys_cache = None
 
@@ -1778,7 +1806,7 @@ MANDATORY INSTRUCTIONS:
         MAX_TOOL_ROUNDS = 3
 
         for round_idx in range(MAX_TOOL_ROUNDS + 1):
-            claude_message = await async_anthropic_client.messages.create(
+            claude_message = await safe_create_anthropic_message(
                 model=CLAUDE_MODEL,
                 max_tokens=8192,
                 system=combined_system_prompt,
@@ -1839,7 +1867,7 @@ MANDATORY INSTRUCTIONS:
                     {"role": "assistant", "content": raw_model_output},
                     {"role": "user", "content": reflection_prompt},
                 ]
-                claude_message_ref = await async_anthropic_client.messages.create(
+                claude_message_ref = await safe_create_anthropic_message(
                     model=CLAUDE_MODEL, max_tokens=8192, system=combined_system_prompt, messages=reflection_messages
                 )
                 raw_model_output = "".join(getattr(b, "text", "") for b in claude_message_ref.content if getattr(b, "type", None) == "text").strip()
@@ -2603,7 +2631,7 @@ async def continue_query_answer(job_id: str, authenticated_user_id: str = Depend
             {"role": "user", "content": "Continue your response exactly where you stopped. Maintain the exact tag structure."},
         ],
     }
-    continuation_message = await async_anthropic_client.messages.create(**continuation_kwargs)
+    continuation_message = await safe_create_anthropic_message(**continuation_kwargs)
     added_text = "".join(getattr(b, "text", "") for b in continuation_message.content)
     updated_raw = continue_state["raw_model_answer"] + added_text
 
