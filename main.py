@@ -1397,7 +1397,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if cid_key:
                     _seen_case_ids_global.add(cid_key)
                 pdf_url_val = meta.get("pdf_url") or meta.get("pdf_link")
-                if not pdf_url_val or "supabase.co/storage/v1/object/public/judgments-pdf" in str(pdf_url_val):
+                if not pdf_url_val or "supabase.co" in str(pdf_url_val).lower():
                     target_cid = case_id or neutral_cit or title
                     pdf_url_val = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
 
@@ -1699,8 +1699,9 @@ MANDATORY INSTRUCTIONS:
                 card["case_id"] = matched.get("case_id")
                 card["case_name"] = matched.get("title") or card.get("case_name")
                 raw_pdf = matched.get("pdf_url")
-                if not raw_pdf or "supabase.co/storage/v1/object/public/judgments-pdf" in str(raw_pdf):
+                if not raw_pdf or "supabase.co" in str(raw_pdf).lower():
                     raw_pdf = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(card['case_id']))}"
+                card["pdf_url"] = raw_pdf
                 card["date"] = extract_year_from_citation_or_date(card.get("date") or matched.get("year"), card.get("citation") or matched.get("citation"), card.get("case_id") or matched.get("case_id"))
                 card["holding"] = sanitize_holding_text(card.get("holding", "") or matched.get("preview", ""))
                 verified_cards.append(card)
@@ -1721,6 +1722,7 @@ MANDATORY INSTRUCTIONS:
                     "why_relevant": "Retrieved precedent directly governing the statutory issues raised.",
                     "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in c.get("statutes", [])],
                     "outcome": c.get("outcome", "Undetermined"), "verified_source": True,
+                    "pdf_url": c.get("pdf_url") or f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(c.get('case_id')))}",
                     "raw_judgment_text": strip_control_characters(c.get("preview", ""))
                 }
                 for c in citations_payload
@@ -1943,8 +1945,8 @@ async def get_api_judgment_pdf_endpoint(judgment_id: str):
     decoded_id = urllib.parse.unquote(judgment_id).strip()
     match_record = find_judgment_by_id_or_canonical(decoded_id)
 
-    # Check if stored pdf_url is a valid external URL (and not the broken supabase bucket path)
-    if match_record and match_record.get("pdf_url") and "supabase.co/storage/v1/object/public/judgments-pdf" not in str(match_record.get("pdf_url")):
+    # Check if stored pdf_url is a valid external URL (and not any broken supabase bucket path)
+    if match_record and match_record.get("pdf_url") and "supabase.co" not in str(match_record.get("pdf_url")).lower():
         stored_pdf = str(match_record.get("pdf_url"))
         if stored_pdf.startswith("http://") or stored_pdf.startswith("https://"):
             return Response(status_code=307, headers={"Location": stored_pdf})
