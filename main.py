@@ -343,24 +343,34 @@ def extract_and_intercept_citation(user_query: str):
     """
     1. Deterministically intercepts exact reporter citations directly from public.full_judgments (Tier 1).
     2. If Tier 1 returns 0 rows, executes standalone Tier 2 Party Name Fallback by parsing remaining text
-       (stripping citation and common search stopwords) and querying case_title ILIKE %clean_party%.
+       (stripping citation, quotes, punctuation, and tokenized search/party stopwords) and querying case_title ILIKE %candidate_party_name%.
     3. Returns (row, clean_topic) for Tier 3 vector fallback if no database match is found.
     """
     match = CITATION_REGEX.search(user_query or "")
     if not match:
-        return None, user_query
+        return None, user_query or ""
 
+    matched_citation = match.group(0)
     year, journal, page = match.groups()
     normalized_citation = f"{year} {journal.upper()} {page}"
     raw_citation = f"{year} {journal} {page}"
 
-    # Extract remaining text after stripping citation & search stopwords
-    clean_text = CITATION_REGEX.sub('', user_query or '')
-    clean_party_name = re.sub(r'\b(search|database|find|precedents?|case\s*law|regarding|on|for|lookup|check|case)\b', '', clean_text, flags=re.IGNORECASE).strip()
-    clean_party_name = re.sub(r'[\s_]+', ' ', clean_party_name).strip()
-    clean_party_name = re.sub(r'^[^\w]+|[^\w]+$', '', clean_party_name).strip()
+    # Extract remaining text after stripping citation, quotes, punctuation & stopwords
+    clean_text = CITATION_REGEX.sub(' ', user_query or '')
+    clean_text = re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!]', ' ', clean_text)
+    STOPWORDS = {
+        "search", "database", "find", "precedents", "precedent", "case", "law",
+        "regarding", "on", "for", "lookup", "check", "the", "in", "vs", "v",
+        "versus", "against", "show", "get", "fetch", "about", "with", "please",
+        "state", "etc", "honorable", "justice"
+    }
+    words = [w.strip() for w in clean_text.split() if w.strip().lower() not in STOPWORDS]
+    candidate_party_name = " ".join(words).strip()
+    clean_party_name = candidate_party_name if len(candidate_party_name) >= 3 else ""
 
-    candidate_party_name = clean_party_name if len(clean_party_name) >= 3 else None
+    print(f"--> [DEBUG] Original Query: '{user_query}'", flush=True)
+    print(f"--> [DEBUG] Matched Citation: '{matched_citation}'", flush=True)
+    print(f"--> [DEBUG] Extracted Party: '{clean_party_name or 'None'}'", flush=True)
 
     norm_cit_underscore = f"{year}_{journal.upper()}_{page}"
     raw_cit_underscore = f"{year}_{journal}_{page}"
@@ -389,9 +399,9 @@ def extract_and_intercept_citation(user_query: str):
                     pass
 
             # Step 2: Tier 2 - Standalone Party Name Fallback (Runs if Tier 1 returned None)
-            if not res_supa.data and candidate_party_name:
+            if not res_supa.data and clean_party_name:
                 try:
-                    res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").ilike("case_title", f"%{candidate_party_name}%").limit(10).execute()
+                    res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").ilike("case_title", f"%{clean_party_name}%").limit(10).execute()
                     if res_party and res_party.data:
                         party_rows = res_party.data
                         # Order by Supreme Court first, then decision_date DESC NULLS LAST
@@ -403,12 +413,12 @@ def extract_and_intercept_citation(user_query: str):
                             party_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
                             res_supa.data = [party_rows[0]]
                 except Exception as party_err:
-                    print(f"⚠️ Tier 2 Standalone party fallback error: {party_err}", file=sys.stderr)
+                    print(f"⚠️ Tier 2 Standalone party fallback error: {party_err}", file=sys.stderr, flush=True)
 
             if res_supa.data:
                 row = res_supa.data[0]
     except Exception as err:
-        print(f"⚠️ Direct citation gatekeeper error: {err}", file=sys.stderr)
+        print(f"⚠️ Direct citation gatekeeper error: {err}", file=sys.stderr, flush=True)
 
     return row, clean_party_name
 
@@ -1014,10 +1024,16 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
                         # 3. Try Standalone Party Name Fallback if full_judgments & crosswalk had no direct hits
                         if not rows:
-                            clean_text = CITATION_REGEX.sub('', search_query or '')
-                            clean_party = re.sub(r'\b(search|database|find|precedents?|case\s*law|regarding|on|for|lookup|check|case)\b', '', clean_text, flags=re.IGNORECASE).strip()
-                            clean_party = re.sub(r'[\s_]+', ' ', clean_party).strip()
-                            clean_party = re.sub(r'^[^\w]+|[^\w]+$', '', clean_party).strip()
+                            clean_text = CITATION_REGEX.sub(' ', search_query or '')
+                            clean_text = re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!]', ' ', clean_text)
+                            STOPWORDS = {
+                                "search", "database", "find", "precedents", "precedent", "case", "law",
+                                "regarding", "on", "for", "lookup", "check", "the", "in", "vs", "v",
+                                "versus", "against", "show", "get", "fetch", "about", "with", "please",
+                                "state", "etc", "honorable", "justice"
+                            }
+                            words = [w.strip() for w in clean_text.split() if w.strip().lower() not in STOPWORDS]
+                            clean_party = " ".join(words).strip()
                             if len(clean_party) >= 3:
                                 try:
                                     res_title = supabase.table("full_judgments").select("*").ilike("case_title", f"%{clean_party}%").limit(10).execute()
@@ -1031,7 +1047,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                                             party_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
                                             rows = party_rows[:3]
                                 except Exception as p_err:
-                                    print(f"⚠️ Standalone party search error: {p_err}")
+                                    print(f"⚠️ Standalone party search error: {p_err}", file=sys.stderr, flush=True)
 
                         if rows:
                             for row in rows:

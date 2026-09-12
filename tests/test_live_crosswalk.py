@@ -110,6 +110,14 @@ This is paragraph 2 of the judgment text.
         row, clean_topic = extract_and_intercept_citation("2013 PCrLJ 1403 Section 489-F PPC guarantee cheque")
         self.assertIn("Section 489-F PPC guarantee cheque", clean_topic)
 
+    def test_quoted_exact_user_prompt(self):
+        """Test exact quoted user prompt: \"Search database for 2013 PCrLJ 1403 Mian Allah Ditta\"."""
+        from main import extract_and_intercept_citation
+        query = '"Search database for 2013 PCrLJ 1403 Mian Allah Ditta"'
+        card, topic = extract_and_intercept_citation(query)
+        self.assertIsNotNone(card, "Failed to extract card for exact user prompt!")
+        self.assertIn("allah ditta", card.get("case_title", "").lower(), "Wrong case returned!")
+
 if __name__ == "__main__":
     unittest.main()
 
