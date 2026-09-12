@@ -679,6 +679,13 @@ def extract_clean_ratio_snippet(text: str, max_chars: int = 280) -> str:
     clean_t = re.sub(r'(?i)View\s*Full\s*Judgment[^\n]*', '', clean_t)
     clean_t = re.sub(r'(?i)Related\s*Citations[^\n]*', '', clean_t)
     clean_t = re.sub(r'\([A-Z0-9_\-]+\)', '', clean_t)
+
+    # Strip portal scraped case lists from holding previews e.g. "[NAME] VS [NAME] [YEAR] [JOURNAL] [PAGE]"
+    clean_t = re.sub(r'(?:[A-Z0-9_\-\.\s\(\)]{2,60}?\s+(?:VS\.?|V\.?|VERSUS)\s+[A-Z0-9_\-\.\s\(\)]{2,60}?\s+(?:19|20)\d{2}\s+[A-Za-z]+\s+\d+(?:\s*\([A-Za-z0-9_\-\s]+\))?)', '', clean_t, flags=re.IGNORECASE)
+    clean_t = re.sub(r'(?:[A-Z\s\.\(\)]+VS[A-Z\s\.\(\)]+\d{4}\s+[A-Za-z]+\s+\d+[\s\(\)\w\-]*)', '', clean_t)
+    # Strip orphaned citation fragments at start (e.g. "2026 PCrLJ 328")
+    clean_t = re.sub(r'^(?:\d{4}\s+[A-Za-z]+\s+\d+[^a-zA-Z]*)+', '', clean_t, flags=re.IGNORECASE).strip()
+    clean_t = re.sub(r'^\s*[\,\.\;\:]\s*', '', clean_t).strip()
     clean_t = strip_control_characters(clean_t)
 
     # Strip procedural preamble patterns
@@ -1317,13 +1324,15 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             is_commercial_or_criminal_query = any(k in sq_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra", "banking", "recovery", "fio 2001", "leave to defend", "security deposit"])
             is_secp_or_corporate_query = any(k in sq_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance", "12(2)", "section 12", "115 cpc", "civil revision", "42 sra", "specific relief", "fraudulent decree", "stranger", "order xxi", "order 21", "rule 97", "rule 101", "rule 103", "execution", "objection petition", "deemed decree"])
-            CIVIL_KEYWORDS = [
-                "specific relief", "specific relief act", "section 42", "section 8", "cpc", "order xxxix", "order 39",
-                "rule 1", "rule 2", "order vii", "order 7", "declaration", "possession", "suit for", "injunction",
-                "temporary injunction", "family court", "succession", "partition", "plaint", "written statement",
-                "civil revision", "115 cpc", "civil court", "partition suit"
+            NON_CRIMINAL_KEYWORDS = [
+                "khula", "dower", "mehr", "nikahnama", "talaq", "family court", "custody",
+                "maintenance", "guardian", "succession", "cpc", "order xxxix", "order 39",
+                "specific relief", "specific relief act", "section 42", "section 8", "declaration",
+                "possession", "injunction", "temporary injunction", "partition", "partition suit",
+                "fio 2001", "financial institutions", "leave to defend", "cheque dishonour civil",
+                "plaint", "written statement", "civil revision", "115 cpc", "civil court"
             ]
-            is_pure_civil_cpc_query = any(k in sq_lower for k in CIVIL_KEYWORDS)
+            is_non_criminal = any(k in sq_lower for k in NON_CRIMINAL_KEYWORDS)
             is_criminal_override = any(k in sq_lower for k in [
                 "fir", "quash", "420", "406", "489-f", "489f", "crpc", "561-a", "561a",
                 "criminal", "article 199", "writ petition quashing", "nab", "anti-corruption"
@@ -1347,17 +1356,21 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         continue
                     if is_secp_or_corporate_query and any(cr in case_title_str for cr in CRIMINAL_NAB_MARKERS):
                         continue
-                    # Strict Pure Civil query hygiene: filter out criminal state cases ("v. The State" / "vs The State")
-                    if is_pure_civil_cpc_query and not is_criminal_override:
+                    # Strict Non-Criminal / Civil / Family query hygiene: filter out criminal state cases ("v. The State" / "vs The State")
+                    if is_non_criminal and not is_criminal_override:
                         is_state_criminal_case = (
-                            "v. the state" in case_title_str or
-                            "vs. state" in case_title_str or
-                            "v. state" in case_title_str or
-                            "versus state" in case_title_str or
-                            "vs the state" in case_title_str or
-                            case_title_str.endswith("the state") or
+                            case_title_str.endswith("v. the state") or
+                            case_title_str.endswith("vs. state") or
                             case_title_str.endswith("v. state") or
                             case_title_str.endswith("vs state") or
+                            "v. the state" in case_title_str or
+                            "vs. the state" in case_title_str or
+                            "versus the state" in case_title_str or
+                            "the state v." in case_title_str or
+                            "the state vs" in case_title_str or
+                            "v. state" in case_title_str or
+                            "vs. state" in case_title_str or
+                            "versus state" in case_title_str or
                             re.search(r'\bv(?:s|\.)?\s*(?:the\s*)?state\b', case_title_str, re.IGNORECASE) or
                             ("v. federation of pakistan" in case_title_str and "bail" in full_text_str)
                         )
