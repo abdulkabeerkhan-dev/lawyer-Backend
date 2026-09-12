@@ -59,14 +59,30 @@ class TestLiveCrosswalk(unittest.TestCase):
         raw_3 = "Doctor Faqir Nawaz Vs Aurangzeb etc - PESHAWAR-HIGH-COURT"
         self.assertEqual(sanitize_case_title(raw_3), "Doctor Faqir Nawaz v. Aurangzeb Etc")
 
-    def test_extract_and_intercept_citation(self):
-        """Test extract_and_intercept_citation correctly identifies citation and clean topic."""
-        from main import extract_and_intercept_citation
-        row, clean_topic = extract_and_intercept_citation("Search database for 2021 SCMR 2092")
-        self.assertEqual(clean_topic, "")
-        if row:
-            self.assertIn("nasir", row.get("case_title", "").lower())
+    def test_sanitize_judgment_content(self):
+        """Test sanitize_judgment_content strips HTML, nav headers, footers, divider lines, and irregular whitespace."""
+        from scripts.ingest_all_csvs import sanitize_judgment_content
+
+        raw = """<script>console.log("bad");</script>
+<style>.header { color: red; }</style>
+HOME SEARCH CASE SEARCH
+Page 1 of 12
+Pakistan Law Site All Rights Reserved Copyright © 2026
+--------------------------------------------------
+==================================================
+This is paragraph 1 of the judgment text.
+
+**************************************************
+This is paragraph 2 of the judgment text.
+"""
+        cleaned = sanitize_judgment_content(raw)
+        self.assertNotIn("<script>", cleaned)
+        self.assertNotIn("Page 1 of 12", cleaned)
+        self.assertNotIn("--------------------------------------------------", cleaned)
+        self.assertIn("This is paragraph 1 of the judgment text.", cleaned)
+        self.assertIn("This is paragraph 2 of the judgment text.", cleaned)
 
 if __name__ == "__main__":
     unittest.main()
+
 

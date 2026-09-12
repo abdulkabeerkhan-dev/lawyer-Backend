@@ -21,6 +21,7 @@ from dotenv import load_dotenv
 from pinecone import Pinecone
 import voyageai
 from supabase import create_client
+from ingest_all_csvs import sanitize_judgment_content
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -162,7 +163,7 @@ def run_reindex_pipeline(target_namespace: str = TARGET_NAMESPACE):
         court = str(rec.get("court_name") or rec.get("court") or "Supreme Court of Pakistan")
         citation = str(rec.get("neutral_citation") or rec.get("reported_citation") or "")
         decision_date = str(rec.get("decision_date") or "")
-        full_text = str(rec.get("full_text") or rec.get("raw_text") or "")
+        full_text = sanitize_judgment_content(rec.get("full_text") or rec.get("raw_text") or "")
         docket_num = str(rec.get("docket_number") or case_id)
 
         if not full_text or len(full_text.strip()) < 30:
