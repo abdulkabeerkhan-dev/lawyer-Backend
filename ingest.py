@@ -299,28 +299,23 @@ def clean_repeated_phrases(text: str) -> str:
 
 
 
-def clean_court_name(court_name: str) -> str:
-    if not court_name:
-        return "High Court"
-    court_name = court_name.strip()
-    c_lower = court_name.lower()
+def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", text: str = "", **kwargs) -> str:
+    all_fields = [str(court_name or ""), str(title or ""), str(case_id or ""), str(text or "")]
+    for k, v in kwargs.items():
+        if v:
+            all_fields.append(str(v))
+    c_lower = " ".join(all_fields).lower()
 
     # AJK (Azad Jammu & Kashmir) courts are a SEPARATE jurisdiction from mainland Pakistan's
-    # judiciary and must never collapse into "Supreme Court of Pakistan" / "<Province> High
-    # Court" -- this check MUST run before the generic supreme/high-court checks below, because
-    # e.g. "AJK Supreme Court" also contains the substring "supreme court". Getting this backwards
-    # is what let real AJK Supreme Court judgments get relabeled as "Supreme Court of Pakistan"
-    # and surface on mainland-court-specific queries (confirmed via diagnostics.py on 2026-08-23:
-    # dataset_category='ajk_scp_vector' records were coming back with court='Supreme Court of
-    # Pakistan').
-    if any(x in c_lower for x in ("ajk", "azad jammu", "azad kashmir")):
-        if "supreme court" in c_lower:
-            return "AJK Supreme Court"
-        if "high court" in c_lower:
-            return "AJK High Court"
+    # judiciary and must never collapse into "Supreme Court of Pakistan" / "<Province> High Court"
+    if any(x in c_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
+        if "supreme" in c_lower or "scp" in c_lower:
+            return "Supreme Court of Azad Jammu & Kashmir"
+        if "high" in c_lower:
+            return "High Court of Azad Jammu & Kashmir"
         if "service tribunal" in c_lower:
             return "AJK Service Tribunal"
-        return "AJK Court (Other)"
+        return "Supreme Court of Azad Jammu & Kashmir"
 
     is_sc = any(x in c_lower for x in ("scmr", " pld sc ", " supreme "))
     court_name = re.sub(r'\b\d{4}\s+[A-Za-z]+\s+\d+\b', '', court_name, flags=re.IGNORECASE)

@@ -837,8 +837,51 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 print(f"⚠️ [JOB {job_id}] case-law search failed: {search_err}", file=sys.stderr)
                 return "Search tool error: the judgment database could not be reached. Answer using your own knowledge of Pakistani statute and settled principles, and tell the advocate that live case-law verification was unavailable."
 
+            # Direct Reporter Citation Extract & Supabase Boost
+            cit_match = re.search(
+                r'\b((?:19|20)\d{2}\s+(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+)\b',
+                search_query,
+                re.IGNORECASE
+            )
+            if cit_match:
+                extracted_cit = cit_match.group(1).strip()
+                try:
+                    if supabase:
+                        res_supa = supabase.table("full_judgments").select("*").ilike("reported_citation", f"%{extracted_cit}%").limit(3).execute()
+                        if not res_supa.data:
+                            res_supa = supabase.table("full_judgments").select("*").ilike("neutral_citation", f"%{extracted_cit}%").limit(3).execute()
+                        if not res_supa.data:
+                            res_supa = supabase.table("full_judgments").select("*").ilike("canonical_id", f"%{re.sub(r'\\s+', '_', extracted_cit)}%").limit(3).execute()
+                        
+                        if res_supa.data:
+                            boosted_items = []
+                            for row in res_supa.data:
+                                boosted_items.append({
+                                    "score": 0.99,
+                                    "metadata": {
+                                        "case_id": row.get("case_id") or row.get("canonical_id") or row.get("id") or extracted_cit,
+                                        "canonical_id": row.get("canonical_id") or row.get("case_id"),
+                                        "title": row.get("title") or row.get("case_title") or "Reported Precedent",
+                                        "court": row.get("court") or "Supreme Court of Pakistan",
+                                        "citation": row.get("reported_citation") or row.get("neutral_citation") or extracted_cit,
+                                        "date": row.get("date") or row.get("year") or "",
+                                        "text": (row.get("full_text") or "")[:3000],
+                                        "pdf_url": row.get("pdf_url"),
+                                        "outcome": row.get("outcome") or "Verified Precedent",
+                                        "statutes": row.get("statutes", []) if isinstance(row.get("statutes"), list) else []
+                                    }
+                                })
+                            matches_list = boosted_items + matches_list
+                except Exception as cit_db_err:
+                    print(f"⚠️ Direct citation DB lookup notice: {cit_db_err}")
+
             def _passes_source_filter(meta, target):
-                normalized_court = clean_court_name(str(meta.get("court", "")), title=str(meta.get("title") or meta.get("case_title", "")), case_id=str(meta.get("case_id", "")))
+                normalized_court = clean_court_name(
+                    str(meta.get("court", "")),
+                    title=str(meta.get("title") or meta.get("case_title", "")),
+                    case_id=str(meta.get("case_id", "")),
+                    text=str(meta.get("text") or meta.get("text_preview", ""))
+                )
                 haystack = " ".join([normalized_court, str(meta.get("dataset_category", "")), str(meta.get("title", "")), str(meta.get("case_title", ""))]).lower()
                 if any(marker in haystack for marker in NON_JUDGMENT_MARKERS): return False
                 if any(_PAKISTANLAWSITE_RE.search(str(meta.get(k, ""))) for k in ("court", "dataset_category", "title", "case_title")): return False
@@ -860,6 +903,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             is_secp_or_corporate_query = any(k in sq_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance", "12(2)", "section 12", "115 cpc", "civil revision", "42 sra", "specific relief", "fraudulent decree", "stranger", "order xxi", "order 21", "rule 97", "rule 101", "rule 103", "execution", "objection petition", "deemed decree"])
 
             filtered_matches = []
+            seen_in_query = set()
             for m in matches_list:
                 meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
                 score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
@@ -872,9 +916,12 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     continue
                 if is_secp_or_corporate_query and any(cr in case_title_str for cr in CRIMINAL_NAB_MARKERS):
                     continue
-                cid = meta.get("case_id") or meta.get("citation") or meta.get("title")
-                if cid and cid in _seen_case_ids_global:
+                cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
+                cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
+                if cid_key and (cid_key in seen_in_query or cid_key in _seen_case_ids_global):
                     continue
+                if cid_key:
+                    seen_in_query.add(cid_key)
                 filtered_matches.append(m)
 
             primary_matches = filtered_matches[:3]
@@ -884,13 +931,11 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             context_parts = []
             for match in primary_matches:
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
-                court = clean_court_name(str(meta.get('court', 'Unknown Court')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')))
-                year_or_date = str(meta.get('date', '') or meta.get('year', '') or 'Recent')
                 case_id = str(meta.get('case_id', 'Unknown Docket'))
                 text_content = str(meta.get('text', meta.get('text_preview', ''))).strip()
+                court = clean_court_name(str(meta.get('court', 'Unknown Court')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')), text=text_content)
+                year_or_date = str(meta.get('date', '') or meta.get('year', '') or 'Recent')
                 title = clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case'))
-                # Prefer the actual official law-report citation stored in metadata (e.g. "2021 SCMR 500")
-                # over the internal docket/case_id -- case_id is often just an ingestion key, not a real citation.
                 official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
                 neutral_cit = format_neutral_citation(court, official_citation or case_id, year_or_date)
                 outcome_val = str(meta.get("outcome", "")) or "Undetermined"
@@ -900,7 +945,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
                 context_parts.append(f"CASE_ID: {case_id}\nCASE TITLE: {title}\nNEUTRAL CITATION: {neutral_cit}\nCOURT: {court}\nOUTCOME: {outcome_val}\nSTATUTES: {', '.join(statutes_val)}\nCONTENT: {text_content}")
 
-                cid_key = meta.get("case_id") or meta.get("citation") or meta.get("title")
+                cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
+                cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
                 if cid_key:
                     _seen_case_ids_global.add(cid_key)
                 pdf_url_val = meta.get("pdf_url") or meta.get("pdf_link")
@@ -917,14 +963,16 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             for match in secondary_matches:
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
-                court = clean_court_name(str(meta.get('court', 'Court of Record')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')))
+                text_content = str(meta.get('text', meta.get('text_preview', ''))).strip()
+                court = clean_court_name(str(meta.get('court', 'Court of Record')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')), text=text_content)
                 year_or_date = str(meta.get('date', '') or meta.get('year', '') or '')
                 case_id = str(meta.get('case_id', ''))
                 title = clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Precedent on Record')) or 'Precedent on Record'))
                 official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
                 neutral_cit = format_neutral_citation(court, official_citation or case_id, year_or_date)
-                preview_snippet = str(meta.get('text', meta.get('text_preview', ''))).strip()[:180] + "..."
-                cid_key = meta.get("case_id") or meta.get("citation") or meta.get("title")
+                preview_snippet = text_content[:180] + "..."
+                cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
+                cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
                 if cid_key:
                     _seen_case_ids_global.add(cid_key)
                 aggregate_additional_authorities.append({"title": title, "citation": neutral_cit, "summary": preview_snippet})
