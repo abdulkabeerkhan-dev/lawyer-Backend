@@ -1336,23 +1336,21 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         }
 
         def _expand_legal_shorthand(text: str) -> str:
-            lower_text = text.lower()
-            abbrev_expansions = {
-                r"\bcr\.?p\.?c\.?\b": "Code of Criminal Procedure 1898 (CrPC)",
-                r"\bc\.?p\.?c\.?\b": "Code of Civil Procedure 1908 (CPC)",
-                r"\bp\.?p\.?c\.?\b": "Pakistan Penal Code 1860 (PPC)",
-                r"\bq\.?s\.?o\.?\b": "Qanun-e-Shahadat Order 1984",
-                r"\bcnsa\b": "Control of Narcotic Substances Act 1997",
-                r"\bnab\b": "National Accountability Ordinance 1999",
-                r"\bsra\b": "Specific Relief Act 1877",
-            }
-            expansions = [exp for pat, exp in abbrev_expansions.items() if re.search(pat, lower_text) and exp.lower() not in lower_text]
-            expanded = re.sub(r"\bu/s\.?\s*", "under section ", text, flags=re.IGNORECASE)
-            expanded = re.sub(r"\bs\.\s*(\d)", r"section \1", expanded, flags=re.IGNORECASE)
-            expanded = re.sub(r"\bo\.\s*([ivxlcdm\d]+)\b", r"Order \1", expanded, flags=re.IGNORECASE)
-            if expansions:
-                expanded = f"{expanded} ({'; '.join(expansions)})"
-            return expanded
+            t = text
+            # In-place statutory expansions for optimal vector embedding matching
+            t = re.sub(r"\bcr\.?p\.?c\.?\b", "Code of Criminal Procedure 1898 (CrPC)", t, flags=re.IGNORECASE)
+            t = re.sub(r"\bc\.?p\.?c\.?\b", "Code of Civil Procedure 1908 (CPC)", t, flags=re.IGNORECASE)
+            t = re.sub(r"\bp\.?p\.?c\.?\b", "Pakistan Penal Code 1860 (PPC)", t, flags=re.IGNORECASE)
+            t = re.sub(r"\bq\.?s\.?o\.?\b", "Qanun-e-Shahadat Order 1984 (QSO)", t, flags=re.IGNORECASE)
+            t = re.sub(r"\bcnsa\b", "Control of Narcotic Substances Act 1997 (CNSA)", t, flags=re.IGNORECASE)
+            t = re.sub(r"\bnab\b", "National Accountability Ordinance 1999 (NAB)", t, flags=re.IGNORECASE)
+            t = re.sub(r"\bsra\b", "Specific Relief Act 1877 (SRA)", t, flags=re.IGNORECASE)
+            t = re.sub(r"\bu/s\.?\s*", "under section ", t, flags=re.IGNORECASE)
+            t = re.sub(r"\bs\.\s*(\d)", r"section \1", t, flags=re.IGNORECASE)
+            t = re.sub(r"\bo\.\s*([ivxlcdm\d]+)\b", r"Order \1", t, flags=re.IGNORECASE)
+            t = re.sub(r"\b103\s+cr\.?p\.?c\.?\b", "Section 103 Code of Criminal Procedure 1898", t, flags=re.IGNORECASE)
+            t = re.sub(r"\b9\s*\(?c\)?\s*(?:cnsa|narcotics?)\b", "Section 9(c) Control of Narcotic Substances Act 1997", t, flags=re.IGNORECASE)
+            return t
 
         def format_sources_searched(retrieved_matches: List[Dict[str, Any]]) -> str:
             if not retrieved_matches:
@@ -1556,7 +1554,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     if not pinecone_index:
                         return "Search tool unavailable: the judgment database is not connected."
 
-                    query_top_k = 60 if target_source else 30
+                    query_top_k = 60 if target_source else 40
                     raw_matches = pinecone_index.query(
                         namespace=PINECONE_NAMESPACE, vector=query_vector, top_k=query_top_k, include_metadata=True
                     )
@@ -1594,7 +1592,15 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if not target: return True
                 return any(alias in haystack for alias in COURT_ALIASES.get(target, [target.lower()]))
 
-            matches_list = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target_source)]
+            if target_source:
+                strict_court_matches = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target_source)]
+                if len(strict_court_matches) >= 2:
+                    matches_list = strict_court_matches
+                else:
+                    print(f"⚠️ Target court '{target_source}' yielded only {len(strict_court_matches)} matches. Falling back to all superior courts.", flush=True)
+                    matches_list = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target=None)]
+            else:
+                matches_list = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target=None)]
 
             is_commercial_or_criminal_query = any(k in sq_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra", "banking", "recovery", "fio 2001", "leave to defend", "security deposit"])
             is_secp_or_corporate_query = any(k in sq_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance", "12(2)", "section 12", "115 cpc", "civil revision", "42 sra", "specific relief", "fraudulent decree", "stranger", "order xxi", "order 21", "rule 97", "rule 101", "rule 103", "execution", "objection petition", "deemed decree"])
@@ -1608,7 +1614,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             ]
             CRIMINAL_KEYWORDS = [
                 "fir", "quash", "quashing", "quashment", "420", "406", "489-f", "489f", "crpc", "561-a", "561a", "561",
-                "criminal", "article 199", "writ petition quashing", "nab", "anti-corruption", "bail", "497", "498", "ppc", "challan", "prosecution", "accused"
+                "criminal", "article 199", "writ petition quashing", "nab", "anti-corruption", "bail", "497", "498", "ppc", "challan", "prosecution", "accused",
+                "narcotic", "narcotics", "cnsa", "acquittal", "acquitted", "103", "sample", "samples", "fsl", "chemical examiner", "safe custody", "safe transmission"
             ]
             query_combined_text = f"{sq_lower} {effective_user_query.lower()}"
             is_explicitly_criminal = any(k in query_combined_text for k in CRIMINAL_KEYWORDS)
