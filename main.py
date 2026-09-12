@@ -856,7 +856,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if cid_key:
                     _seen_case_ids_global.add(cid_key)
                 pdf_url_val = meta.get("pdf_url") or meta.get("pdf_link")
-                if not pdf_url_val:
+                if not pdf_url_val or "supabase.co/storage/v1/object/public/judgments-pdf" in str(pdf_url_val):
                     target_cid = case_id or neutral_cit or title
                     pdf_url_val = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
 
@@ -1070,7 +1070,10 @@ HOW YOU WORK:
                 card["citation"] = matched.get("citation")
                 card["case_id"] = matched.get("case_id")
                 card["case_name"] = matched.get("title") or card.get("case_name")
-                card["pdf_url"] = matched.get("pdf_url") or f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(card['case_id']))}"
+                raw_pdf = matched.get("pdf_url")
+                if not raw_pdf or "supabase.co/storage/v1/object/public/judgments-pdf" in str(raw_pdf):
+                    raw_pdf = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(card['case_id']))}"
+                card["pdf_url"] = raw_pdf
                 card["holding"] = sanitize_holding_text(card.get("holding", ""))
                 verified_cards.append(card)
             else:
