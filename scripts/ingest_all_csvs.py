@@ -188,15 +188,39 @@ def discover_csv_files() -> List[str]:
 
     return sorted(list(set(found)))
 
-def ingest_csv_file(file_path: str, batch_size: int = 500) -> Tuple[int, int]:
-    """Ingests a single judgment CSV file into PostgreSQL master ledger (full_judgments)."""
+def fetch_existing_case_ids() -> set:
+    """Fetches all existing case_ids from PostgreSQL Master Ledger to enforce strict deduplication."""
+    logger.info("🔍 Fetching existing case_ids from PostgreSQL Master Ledger...")
+    existing = set()
+    try:
+        offset = 0
+        limit = 1000
+        while True:
+            res = supabase.table("full_judgments").select("case_id").range(offset, offset + limit - 1).execute()
+            rows = res.data or []
+            if not rows:
+                break
+            for r in rows:
+                cid = r.get("case_id")
+                if cid:
+                    existing.add(cid)
+            offset += limit
+            if len(rows) < limit:
+                break
+        logger.info(f"✅ Loaded {len(existing):,} existing case_id records from DB.")
+    except Exception as err:
+        logger.warning(f"Notice fetching existing case_ids: {err}")
+    return existing
+
+def ingest_csv_file(file_path: str, existing_case_ids: set, batch_size: int = 500) -> Tuple[int, int]:
+    """Ingests a single judgment CSV file into PostgreSQL master ledger (full_judgments), skipping existing records."""
     logger.info(f"📂 Processing CSV dataset: {file_path}")
     if not os.path.exists(file_path):
         logger.error(f"File not found: {file_path}")
         return 0, 0
 
     inserted_total = 0
-    updated_total = 0
+    skipped_total = 0
     batch = []
 
     try:
@@ -206,14 +230,12 @@ def ingest_csv_file(file_path: str, batch_size: int = 500) -> Tuple[int, int]:
             logger.info(f"   Detected Headers: {headers}")
 
             for row_idx, row in enumerate(reader):
-                # Clean keys
                 r = {str(k).strip().lstrip('\ufeff'): str(v or '').strip() for kk, v in row.items() if kk for k in [kk]}
                 
                 journal = r.get("Journal") or r.get("alphabet") or ""
                 year = r.get("Year") or r.get("year") or ""
                 cit_title = r.get("Citation / Title") or r.get("case_title") or r.get("citation") or ""
                 
-                # Raw text field detection
                 raw_judgment_text = r.get("Full Judgment Body") or r.get("Judgment Content") or r.get("case_description") or r.get("headnotes") or ""
                 headnotes_text = r.get("Headnotes / Case Description") or r.get("headnotes") or ""
 
@@ -222,6 +244,13 @@ def ingest_csv_file(file_path: str, batch_size: int = 500) -> Tuple[int, int]:
                     continue
 
                 neutral_cit, case_title, case_id = extract_citation_and_title(cit_title, default_journal=journal, default_year=year)
+                
+                # Strict Deduplication Check: Skip if case_id already exists in DB or current session
+                if case_id in existing_case_ids:
+                    skipped_total += 1
+                    continue
+
+                existing_case_ids.add(case_id)
                 court = clean_court_name(r.get("court") or "", journal_raw=journal)
 
                 db_record = {
@@ -263,8 +292,8 @@ def ingest_csv_file(file_path: str, batch_size: int = 500) -> Tuple[int, int]:
     except Exception as err:
         logger.error(f"Error processing CSV {file_path}: {err}")
 
-    logger.info(f"✅ Finished {file_path}: {inserted_total} records upserted into Master Ledger.")
-    return inserted_total, updated_total
+    logger.info(f"✅ Finished {file_path}: {inserted_total:,} new records inserted, {skipped_total:,} existing records skipped.")
+    return inserted_total, skipped_total
 
 def main():
     parser = argparse.ArgumentParser(description="Automated Judgment CSV Ingestion & Vector Pipeline Engine")
@@ -276,6 +305,8 @@ def main():
     logger.info("   AUTOMATED JUDGMENT CSV DISCOVERY & SQL MASTER LEDGER IMPORT  ")
     logger.info("==================================================================")
 
+    existing_case_ids = fetch_existing_case_ids()
+
     if args.file:
         files = [args.file]
     else:
@@ -286,13 +317,15 @@ def main():
         size_mb = os.path.getsize(f) / (1024 * 1024) if os.path.exists(f) else 0
         logger.info(f"   • {f} ({size_mb:.1f} MB)")
 
-    total_records = 0
+    total_inserted = 0
+    total_skipped = 0
     for f in files:
-        count, _ = ingest_csv_file(f)
-        total_records += count
+        inserted, skipped = ingest_csv_file(f, existing_case_ids=existing_case_ids)
+        total_inserted += inserted
+        total_skipped += skipped
 
     logger.info(f"==================================================================")
-    logger.info(f"🎉 MASTER LEDGER INGESTION COMPLETE: {total_records:,} records processed.")
+    logger.info(f"🎉 MASTER LEDGER INGESTION COMPLETE: {total_inserted:,} new records inserted, {total_skipped:,} duplicate records skipped.")
     logger.info(f"==================================================================")
 
     if args.reindex:
