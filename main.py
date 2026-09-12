@@ -92,6 +92,8 @@ async def dynamic_cors_middleware(request, call_next):
 PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
 PINECONE_INDEX_NAME = os.environ.get("PINECONE_INDEX_NAME", "legal-kb-pk-local")
 PINECONE_NAMESPACE = os.environ.get("PINECONE_NAMESPACE", "clean-v1")
+if PINECONE_NAMESPACE in ("judgments", "default", ""):
+    PINECONE_NAMESPACE = "clean-v1"
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY")
 VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
@@ -1195,7 +1197,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
                 score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
                 is_boosted = bool(m.get("is_boosted") if isinstance(m, dict) else False) or bool(meta.get("is_boosted"))
-                if score < 0.45 and not is_boosted: continue
+                if score < 0.40 and not is_boosted: continue
                 text_content = strip_control_characters(str(meta.get("text") or meta.get("text_preview") or ""))
                 if not is_boosted and (is_garbled_text(text_content) or is_junk_citation_dump(text_content)):
                     continue
@@ -1384,7 +1386,12 @@ MANDATORY INSTRUCTIONS:
         # Deterministic Search Gatekeeper: Mandatory entrypoint guard (forces search execution if intercepted_card, citation, or search command)
         cit_gate_match = re.search(r'\b(?:19|20)\d{2}\s*(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*\d+\b', effective_user_query, re.IGNORECASE)
         query_lower_gate = effective_user_query.lower()
-        is_search_command = any(kw in query_lower_gate for kw in ["search database", "find precedent", "check citation", "search case law", "lookup judgment"])
+        is_search_command = any(kw in query_lower_gate for kw in [
+            "search database", "find precedent", "check citation", "search case law", "lookup judgment",
+            "whether", "order xx", "order xxx", "cpc", "crpc", "interim relief", "prima facie",
+            "balance of convenience", "irreparable loss", "injunction", "precedent", "case law",
+            "statute", "section", "article", "bail", "plaint", "written statement", "law suit"
+        ])
 
         if (intercepted_card or cit_gate_match or is_search_command) and search_call_count["n"] == 0:
             print(f"🔒 [GATEKEEPER] Mandatory auto-executing search_case_law for query: '{effective_user_query}'", file=sys.stderr, flush=True)
