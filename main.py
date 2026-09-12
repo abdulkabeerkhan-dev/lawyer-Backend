@@ -418,30 +418,37 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
 
     return f"{court_clean} — {ident_clean}{year_fmt}"
 
-def sanitize_case_title(raw_title: str) -> str:
+def clean_precedent_title(title: str, full_text: str = "", neutral_cit: str = "") -> str:
     """
-    Sanitizes party titles:
-    - Strips leading page numbers, reporter citations, court locations, and judge preambles
-    - Strips petition/case number boilerplate ('Writ Petition No...')
-    - Enforces single spaces around 'v.'
+    Strips reporter/judge preambles, enforces single spaces around 'v.',
+    and guards against empty titles ('v.', 'v. The State') by parsing header or citation fallback.
     """
-    if not raw_title:
-        return "Untitled Case"
-
-    t = str(raw_title).replace("\t", " ").strip()
+    t = (title or "").strip()
     
-    # Strip journal citations, court locations & judge preambles (e.g. '2008 Y L R 2548 [Lahore] Before M.A. Shahid Siddiqui, J ')
-    t = re.sub(r'^(?:\d{4}\s+)?[A-Z\s]{2,10}(?:\d+\s+)?(?:\[\w+\])?\s*(?:Before\s+)?(?:Mr\.\s+Justice\s+|Justice\s+)?[A-Z\.\s]+,\s*J\.?\s*', '', t, flags=re.IGNORECASE)
-    t = re.sub(r'^(?:Writ Petition|Civil Revision|Criminal Misc|Crl\.?\s*Misc\.?)\s+No\.?.*?,\s*', '', t, flags=re.IGNORECASE)
-    t = re.sub(r'^\d+\s+(?:(?:19|20)\d{2}\s+[A-Za-z0-9\(\)\s]+\s+\d+\s+)?', '', t, flags=re.IGNORECASE)
-    t = re.sub(r'^(?:(?:19|20)\d{2}\s+(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+\s+)', '', t, flags=re.IGNORECASE)
-    t = re.sub(r'\s*[\-\t]?\s*(?:SUPREME-COURT|HIGH-COURT|SINDH-HIGH-COURT|LAHORE-HIGH-COURT|PESHAWAR-HIGH-COURT|BALOCHISTAN-HIGH-COURT|ISLAMABAD-HIGH-COURT|GILGIT-BALTISTAN\s+CHIEF\s+COURT)\s*$', '', t, flags=re.IGNORECASE)
-    t = re.sub(r'\s*-\s*(?:Honorable\s+)?Justice.*$', '', t, flags=re.IGNORECASE)
-    t = re.sub(r'\s*-\s*[A-Z][a-z]+\s+[A-Z][a-z]+.*$', '', t)
+    # 1. Strip leading reporter preambles (e.g. "Y L R Karachi Anwar Zaheer Jamali, J ")
+    t = re.sub(r'^(?:\d{4}\s+)?[A-Z\s]{2,8}(?:\[\w+\])?\s*(?:Karachi|Lahore|Peshawar|Quetta)?\s*(?:Before\s+)?(?:Mrs?\.\s+|Justice\s+|Mr\.\s+Justice\s+)?[A-Za-z\.\s]+,\s*J\.?\s*', '', t, flags=re.IGNORECASE)
+    
+    # 2. Strip trailing procedural tails (e.g. "Criminal Miscellaneous Application No. Of , Decide")
+    t = re.sub(r'(?:Criminal\s+Misc.*?|Writ\s+Petition.*?|Civil\s+Revision.*)$', '', t, flags=re.IGNORECASE).strip()
 
-    # Enforce single space around 'v.' / 'vs.' / 'versus'
-    t = re.sub(r'\s*(?:vs?\.?|versus)\s*', ' v. ', t, flags=re.IGNORECASE)
+    # 3. Standardize " v. " with explicit surrounding spaces
+    t = re.sub(r'\s*(?:v\.?|vs\.?|versus)\s*', ' v. ', t, flags=re.IGNORECASE)
 
+    # 4. Guard against empty titles ("v.", "v. The State", or len < 8)
+    if not t or t == "v." or t.strip().startswith("v. ") or len(t.strip()) < 8:
+        # Fallback: parse first 600 chars of full_text for [Name] Versus [Name]
+        head = full_text[:600] if full_text else ""
+        m = re.search(r'([A-Z\s\.\,\(\)]{3,40}?)\s+(?:Versus|VS\.?|V\.)\s+([A-Z\s\.\,\(\)]{3,40}?)(?=\r?\n|\.|;|$)', head, re.IGNORECASE)
+        if m:
+            p1 = " ".join(m.group(1).split()).strip().title()
+            p2 = " ".join(m.group(2).split()).strip().title()
+            if p2.lower() in ("state", "the state") or p2.lower().startswith("state"):
+                p2 = "The State"
+            t = f"{p1} v. {p2}"
+        else:
+            t = f"Precedent {neutral_cit}".strip()
+
+    # Standardize ' v. ' formatting & state names
     parts = t.split(' v. ')
     if len(parts) >= 2:
         p1 = " ".join(parts[0].split()).strip().title()
@@ -452,8 +459,12 @@ def sanitize_case_title(raw_title: str) -> str:
     else:
         t = " ".join(t.split()).strip().title()
 
-    t = re.sub(r'\s*-\s*$', '', t).strip()
+    # Clean multi-spaces and edge punctuation
+    t = " ".join(t.split()).strip(" ,.-")
     return t or "Untitled Case"
+
+def sanitize_case_title(raw_title: str, full_text: str = "", neutral_cit: str = "") -> str:
+    return clean_precedent_title(title=raw_title, full_text=full_text, neutral_cit=neutral_cit)
 
 CITATION_REGEX = re.compile(
     r'\b(?:(19\d\d|20\d\d)\s*(SCMR|PLD|CLD|PCrLJ|CLC|MLD|YLR|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*(?:SC|S\.C\.|Supreme\s+Court)?\s*(\d+)|(SCMR|PLD|CLD|PCrLJ|CLC|MLD|YLR|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*(19\d\d|20\d\d)\s*(?:SC|S\.C\.|Supreme\s+Court)?\s*(\d+))\b',
@@ -838,51 +849,39 @@ def extract_case_roles(raw_text: str, fallback_title: str = "") -> dict:
     return roles
 
 def extract_operative_order(raw_text: str) -> str:
-    try:
-        if not raw_text:
-            return "Decided on merits."
+    if not raw_text:
+        return "Order passed on merits."
 
-        # Look at the final 800 characters where orders conclude
-        tail = raw_text.strip()[-800:]
-        
-        # Strip OCR/trailing artifacts (e.g. ????? or editor codes like H.B.T./131/P)
-        tail = re.sub(r'[\?]{2,}', '', tail)
-        tail = re.sub(r'[A-Z]\.[A-Z]\.[A-Z]\.[\w\/\-]+', '', tail)
+    # Look exclusively at the final 1200 characters of the judgment text
+    tail = raw_text[-1200:] if len(raw_text) > 1200 else raw_text
+    
+    # Strip editor stamps and trailing OCR markers
+    tail = re.sub(r'[A-Z]\.[A-Z]\.[A-Z]\.[\w\/\-]+', '', tail)
+    tail = re.sub(r'[\?]{2,}', '', tail)
 
-        # Search for decisive operative sentences
-        operative_patterns = [
-            r'((?:For the (?:foregoing )?reasons|In view of the above|Under these circumstances).*?\b(?:dismissed|allowed|quashed|accepted|granted|refused)\b.*?\.)',
-            r'(\b(?:Bail\s+is\s+(?:hereby\s+)?(?:granted|refused|allowed|cancelled)|F\.?I\.?R\.?\s+is\s+quashed|Petition\s+(?:is\s+)?(?:dismissed|allowed)|Appeal\s+(?:is\s+)?(?:accepted|dismissed))\b.*?\.)',
-            r'(\bOrder accordingly\b\.?)',
-        ]
+    # Patterns indicating genuine judicial closing
+    closing_patterns = [
+        r'((?:Consequently|For the (?:foregoing )?reasons|In view of the above|Under these circumstances|In the light of).*?\b(?:dismissed|allowed|quashed|accepted|granted|refused)\b.*?\.)',
+        r'(\b(?:petition\s+is\s+(?:hereby\s+)?(?:dismissed|allowed|accepted)|proceedings\s+are\s+quashed|F\.?I\.?R\.?\s+is\s+quashed|bail\s+is\s+(?:granted|refused|cancelled))\b.*?\.)',
+        r'(Order accordingly\.?)',
+        r'(\bPetition\s+(?:accepted|dismissed)\.?)'
+    ]
 
-        raw_order = None
-        for pat in operative_patterns:
-            match = re.search(pat, tail, flags=re.IGNORECASE | re.DOTALL)
-            if match:
-                raw_order = " ".join(match.group(1).split())
-                break
+    for pat in closing_patterns:
+        m = re.search(pat, tail, flags=re.IGNORECASE | re.DOTALL)
+        if m:
+            order_sentence = " ".join(m.group(1).split())
+            if len(order_sentence) > 220:
+                order_sentence = order_sentence[:220].rsplit(' ', 1)[0] + "..."
+            return order_sentence.strip()
 
-        if not raw_order:
-            # Fallback: take the very last clean sentence
-            sentences = [s.strip() for s in tail.split('.') if len(s.strip()) > 15]
-            if sentences:
-                raw_order = sentences[-1].strip() + "."
+    # Fallback: clean final complete sentence from the tail (ignore headnote dashes '---')
+    sentences = [s.strip() for s in tail.split('.') if len(s.strip()) > 20 and '---' not in s]
+    if sentences:
+        res = sentences[-1].strip() + "."
+        return res[:220].rsplit(' ', 1)[0] + "..." if len(res) > 220 else res
 
-        if raw_order:
-            clean_res = " ".join(raw_order.split())
-            if len(clean_res) > 220:
-                # Truncate at last complete word boundary before 220 chars
-                truncated = clean_res[:220].rsplit(' ', 1)[0].strip()
-                # Strip dangling trailing punctuation or dangling words like 'to', 'and', 'the'
-                truncated = re.sub(r'\b(?:to|and|the|or|of|in|at|by|with)\s*$', '', truncated, flags=re.IGNORECASE).strip()
-                truncated = re.sub(r'[\s,\.\-:]+$', '', truncated).strip()
-                return truncated + "..."
-            return clean_res
-    except Exception as parse_err:
-        print(f"⚠️ extract_operative_order fallback triggered: {parse_err}", file=sys.stderr)
-
-    return "Order passed on merits."
+    return "Decided on merits."
 
 def strip_control_characters(text: str) -> str:
     if not text:
