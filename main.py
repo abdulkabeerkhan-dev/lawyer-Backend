@@ -185,29 +185,77 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
     court_clean = clean_court_name(court)
     ident_clean = str(case_identifier).strip() if case_identifier else "Matter on Record"
     date_clean = str(year_or_date).strip() if year_or_date else ""
-    
-    # 1. Check if case_identifier is an official law report citation (e.g., 2021 SCMR 1446, PLD 2016 SC 570, 2020 CLD 1104)
-    reporter_match = re.search(r'\b(\d{4})?\s*(PLD|SCMR|MLD|YLR|PCRLJ|PCrLJ|CLC|CLD|PTD|PTCL|PLC|PLC\s*\(CS\))\s+(\d{4}\s+)?([A-Za-z\s]+)?(\d+)\b', ident_clean, re.IGNORECASE)
-    if reporter_match:
-        year_part = reporter_match.group(1) or reporter_match.group(3) or date_clean
-        year_str = re.search(r'\b(19\d{2}|20\d{2})\b', str(year_part or ""))
-        yr = year_str.group(1) if year_str else (date_clean if date_clean.isdigit() else "")
-        journal = reporter_match.group(2).upper()
-        page = reporter_match.group(5)
-        bench = reporter_match.group(4).strip() if reporter_match.group(4) else ""
-        if bench:
+
+    JOURNAL_RE = r'(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC\s*\(CS\)|PLC|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)'
+    CANONICAL_JOURNALS = {
+        "PLD": "PLD", "SCMR": "SCMR", "PCRLJ": "PCrLJ", "CLC": "CLC",
+        "MLD": "MLD", "YLR": "YLR", "CLD": "CLD", "PTD": "PTD", "PLC": "PLC",
+        "PLC (CS)": "PLC (CS)", "PLC(CS)": "PLC (CS)", "PLJ": "PLJ", "NLR": "NLR",
+        "GBLR": "GBLR", "PTCL": "PTCL", "ALD": "ALD", "SLR": "SLR", "ILR": "ILR", "SBLR": "SBLR"
+    }
+
+    def _canon_j(j_raw: str) -> str:
+        u = j_raw.upper().strip()
+        if "PLC" in u and "(CS)" in ident_clean.upper():
+            return "PLC (CS)"
+        return CANONICAL_JOURNALS.get(u, u)
+
+    # 1. Pattern where PLD comes first: e.g. "PLD 1995 Supreme Court 34" or "PLD 1995 SC 34"
+    m_pld = re.search(r'\b(PLD)\s+(19\d{2}|20\d{2})\s+([A-Za-z\s]+)?(\d+)\b', ident_clean, re.IGNORECASE)
+    if m_pld:
+        yr = m_pld.group(2)
+        bench_or_court = m_pld.group(3).strip() if m_pld.group(3) else ""
+        page = m_pld.group(4)
+        if bench_or_court:
+            return f"PLD {yr} {bench_or_court} {page}".strip()
+        return f"PLD {yr} {page}".strip()
+
+    # 2. Pattern where Year comes first: e.g. "2019 SCMR 984", "2008 PCrLJ 858", "2021 PLC (CS) 105"
+    m_year_first = re.search(r'\b(19\d{2}|20\d{2})\s+(' + JOURNAL_RE + r')\s+([A-Za-z\s]+)?(\d+)\b', ident_clean, re.IGNORECASE)
+    if m_year_first:
+        yr = m_year_first.group(1)
+        journal = _canon_j(m_year_first.group(2))
+        bench_or_court = m_year_first.group(3).strip() if m_year_first.group(3) else ""
+        page = m_year_first.group(4)
+        
+        if journal == "PLD":
+            if bench_or_court:
+                return f"PLD {yr} {bench_or_court} {page}".strip()
+            return f"PLD {yr} {page}".strip()
+
+        if bench_or_court:
+            return f"{yr} {journal} {bench_or_court} {page}".strip()
+        return f"{yr} {journal} {page}".strip()
+
+    # 3. General fallback for any string containing one of the 17 journals + page numbers
+    m_gen = re.search(r'\b(\d{4})?\s*(' + JOURNAL_RE + r')\s+(\d{4}\s+)?([A-Za-z\s]+)?(\d+)\b', ident_clean, re.IGNORECASE)
+    if m_gen:
+        yr_part = m_gen.group(1) or m_gen.group(3) or date_clean
+        year_match = re.search(r'\b(19\d{2}|20\d{2})\b', str(yr_part or ""))
+        yr = year_match.group(1) if year_match else (date_clean if date_clean.isdigit() else "")
+        
+        journal = _canon_j(m_gen.group(2))
+        page = m_gen.group(5)
+        bench = m_gen.group(4).strip() if m_gen.group(4) else ""
+        
+        if journal == "PLD":
+            if yr and bench:
+                return f"PLD {yr} {bench} {page}".strip()
+            elif yr:
+                return f"PLD {yr} {page}".strip()
+            return f"PLD {page}".strip()
+
+        if yr and bench:
             return f"{yr} {journal} {bench} {page}".strip()
         elif yr:
             return f"{yr} {journal} {page}".strip()
-        else:
-            return f"{journal} {page}".strip()
+        return f"{journal} {page}".strip()
 
-    # 2. Format docket number with court and year (e.g., Supreme Court of Pakistan — Civil Appeal No. 16 of 2020 (2023))
+    # 4. ONLY if NO official journal citation exists in the record, fallback to docket format
     ident_clean = re.sub(r'\s+', ' ', ident_clean).strip()
     if not ident_clean:
         ident_clean = "Appellate Petition"
 
-    # Extract 4-digit year from date_clean
     year_match = re.search(r'\b(19\d{2}|20\d{2})\b', date_clean)
     year_fmt = f" ({year_match.group(1)})" if year_match and year_match.group(1) not in ident_clean else ""
 
@@ -908,6 +956,7 @@ HOW YOU WORK:
    CRITICAL: "case_id" MUST be copied verbatim, character-for-character, from the "CASE_ID:" line of the matching case in the search tool's results. Never invent, alter, or guess a case_id. Every card's case_id must correspond to the exact case you are discussing in that card -- do not mix up cases or reorder them relative to the CASE_ID each fact came from. If you are unsure which retrieved case a point came from, do not include a card for it.
    Omit this block entirely for conversational replies, clarifying questions, or answers that didn't rely on retrieved precedent.
 7. Never use double asterisks (**) for emphasis; write plain text.
+8. CITATION FORMATTING RULE: ALWAYS format case citations using standard Pakistani law reporter journal style (e.g., PLD 1995 Supreme Court 34, 2019 SCMR 984, 2008 PCrLJ 858, 2021 CLC 450, 2020 MLD 112, 2022 YLR 310, 2020 CLD 1104, 2021 PTD 795, 2021 PLC (CS) 105, 2018 PLJ 502, 2017 NLR 215, 2016 GBLR 88, 2015 PTCL 401, 2014 ALD 105, 2013 SLR 99, 2012 ILR 44, 2011 SBLR 22). Only if no official journal citation exists in the database record, fallback to docket/court format.
 """
 
         combined_system_prompt = f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{conversational_persona}"
