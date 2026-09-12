@@ -356,28 +356,18 @@ def sanitize_case_title(raw_title: str) -> str:
     return t or "Untitled Case"
 
 CITATION_REGEX = re.compile(
-    r'\b(19\d\d|20\d\d)\s*(SCMR|PLD|CLD|PCrLJ|CLC|MLD|YLR|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*(\d+)\b',
+    r'\b(?:(19\d\d|20\d\d)\s*(SCMR|PLD|CLD|PCrLJ|CLC|MLD|YLR|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*(?:SC|S\.C\.|Supreme\s+Court)?\s*(\d+)|(SCMR|PLD|CLD|PCrLJ|CLC|MLD|YLR|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*(19\d\d|20\d\d)\s*(?:SC|S\.C\.|Supreme\s+Court)?\s*(\d+))\b',
     re.IGNORECASE
 )
 
 def extract_and_intercept_citation(user_query: str):
     """
     1. Deterministically intercepts exact reporter citations directly from public.full_judgments (Tier 1).
-    2. If Tier 1 returns 0 rows, executes standalone Tier 2 Party Name Fallback by parsing candidate party name
-       from the immediate vicinity (±80 chars) of the matched citation string, stripping parentheticals, statutes,
-       system preambles, and limiting to at most 4 words.
+    2. If Tier 1 returns 0 rows or query is party-only, executes standalone Tier 2 Party Name Fallback by parsing candidate party name
+       from immediate vicinity (±120 chars) of citation or prompt text, stripping preambles/statutes.
     3. Uses safe_supabase_query to auto-retry and re-initialize connection if ConnectionTerminated or timeout occurs.
     4. Returns (row, clean_party_name) for Tier 3 vector fallback if no database match is found.
     """
-    match = CITATION_REGEX.search(user_query or "")
-    if not match:
-        return None, user_query or ""
-
-    matched_citation = match.group(0)
-    year, journal, page = match.groups()
-    normalized_citation = f"{year} {journal.upper()} {page}"
-    raw_citation = f"{year} {journal} {page}"
-
     STOPWORDS = {
         "search", "database", "find", "precedents", "precedent", "case", "law",
         "regarding", "on", "for", "lookup", "check", "the", "in", "vs", "v",
@@ -385,35 +375,54 @@ def extract_and_intercept_citation(user_query: str):
         "state", "etc", "honorable", "justice"
     }
 
-    # Extract candidate party name strictly from immediate vicinity (±80 chars) of matched citation
-    start, end = match.span()
-    trailing_window = (user_query or "")[end:end + 120]
-    
-    # Strip parentheticals, statutes, system preambles, and section headers
-    trailing_clean = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|QSO|PLD|SCMR|PCrLJ|What you know|Answer style|===|SYSTEM', trailing_window, flags=re.IGNORECASE)[0]
-    
-    words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', trailing_clean).split()]
-    words = [w for w in words if w.lower() not in STOPWORDS]
-    
-    candidate_party_name = " ".join(words[:6]).strip()
-    
-    # Fallback to leading window if trailing window yielded no party name
-    if len(candidate_party_name) < 3:
-        leading_window = (user_query or "")[max(0, start - 80):start]
-        leading_clean = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|PPC|QSO|PLD|SCMR|PCrLJ|What you know|Answer style|===|SYSTEM', leading_window, flags=re.IGNORECASE)[-1]
-        leading_words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', leading_clean).split()]
-        leading_words = [w for w in leading_words if w.lower() not in STOPWORDS]
-        if leading_words:
-            candidate_party_name = " ".join(leading_words[-4:]).strip()
+    match = CITATION_REGEX.search(user_query or "")
+    matched_citation = None
+    normalized_citation = None
+    raw_citation = None
+    norm_cit_underscore = None
+    raw_cit_underscore = None
+
+    if match:
+        matched_citation = match.group(0)
+        g = match.groups()
+        if g[0] is not None:
+            year, journal, page = g[0], g[1], g[2]
+        else:
+            journal, year, page = g[3], g[4], g[5]
+
+        normalized_citation = f"{year} {journal.upper()} {page}"
+        raw_citation = f"{year} {journal} {page}"
+        norm_cit_underscore = f"{year}_{journal.upper()}_{page}"
+        raw_cit_underscore = f"{year}_{journal}_{page}"
+
+        start, end = match.span()
+        trailing_window = (user_query or "")[end:end + 120]
+        trailing_clean = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|QSO|PLD|SCMR|PCrLJ|What you know|Answer style|===|SYSTEM', trailing_window, flags=re.IGNORECASE)[0]
+        words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', trailing_clean).split()]
+        words = [w for w in words if w.lower() not in STOPWORDS]
+        candidate_party_name = " ".join(words[:6]).strip()
+
+        if len(candidate_party_name) < 3:
+            leading_window = (user_query or "")[max(0, start - 80):start]
+            leading_clean = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|PPC|QSO|PLD|SCMR|PCrLJ|What you know|Answer style|===|SYSTEM', leading_window, flags=re.IGNORECASE)[-1]
+            leading_words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', leading_clean).split()]
+            leading_words = [w for w in leading_words if w.lower() not in STOPWORDS]
+            if leading_words:
+                candidate_party_name = " ".join(leading_words[-4:]).strip()
+    else:
+        # No citation numbers found -- parse party name directly from entire query
+        clean_text = CITATION_REGEX.sub(' ', user_query or '')
+        clean_text = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|QSO|What you know|Answer style|===|SYSTEM', clean_text, flags=re.IGNORECASE)[0]
+        words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', clean_text).split()]
+        words = [w for w in words if w.lower() not in STOPWORDS]
+        candidate_party_name = " ".join(words[:6]).strip()
 
     clean_party_name = candidate_party_name if len(candidate_party_name) >= 3 else ""
 
     print(f"--> [DEBUG] Original Query Snippet: '{(user_query or '')[:120]}'", flush=True)
-    print(f"--> [DEBUG] Matched Citation: '{matched_citation}'", flush=True)
+    print(f"--> [DEBUG] Matched Citation: '{matched_citation or 'None'}'", flush=True)
     print(f"--> [DEBUG] Extracted Party: '{clean_party_name or 'None'}'", flush=True)
 
-    norm_cit_underscore = f"{year}_{journal.upper()}_{page}"
-    raw_cit_underscore = f"{year}_{journal}_{page}"
     row = None
 
     def _execute_tier_queries():
@@ -446,10 +455,18 @@ def extract_and_intercept_citation(user_query: str):
         # Step 2: Tier 2 - Standalone Party Name Fallback (Runs if Tier 1 returned None)
         if not res_supa.data and clean_party_name:
             try:
-                res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").ilike("case_title", f"%{clean_party_name}%").limit(5).execute()
+                # Try title prefix match first (e.g. "Tariq Bashir%") for exact party titles
+                res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").ilike("case_title", f"{clean_party_name}%").limit(5).execute()
+                if not res_party or not res_party.data:
+                    res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").ilike("case_title", f"%{clean_party_name}%").limit(10).execute()
                 if res_party and res_party.data:
                     party_rows = res_party.data
-                    sc_rows = [r for r in party_rows if "supreme court" in str(r.get("court_name") or r.get("court") or "").lower()]
+                    # Order by Supreme Court (by court_name or SCMR/PLD apex reporters) first
+                    sc_rows = [
+                        r for r in party_rows 
+                        if "supreme court" in str(r.get("court_name") or r.get("court") or "").lower() 
+                        or any(j in str(r.get("case_id") or r.get("neutral_citation") or "").upper() for j in ["SCMR", "PLD"])
+                    ]
                     if sc_rows:
                         sc_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
                         winning_row = sc_rows[0]
