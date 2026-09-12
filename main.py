@@ -401,17 +401,24 @@ def extract_and_intercept_citation(user_query: str):
             # Step 2: Tier 2 - Standalone Party Name Fallback (Runs if Tier 1 returned None)
             if not res_supa.data and clean_party_name:
                 try:
-                    res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").ilike("case_title", f"%{clean_party_name}%").limit(10).execute()
+                    # Select metadata only during ILIKE search to prevent PostgREST 57014 timeouts
+                    res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").ilike("case_title", f"%{clean_party_name}%").limit(5).execute()
                     if res_party and res_party.data:
                         party_rows = res_party.data
-                        # Order by Supreme Court first, then decision_date DESC NULLS LAST
                         sc_rows = [r for r in party_rows if "supreme court" in str(r.get("court_name") or r.get("court") or "").lower()]
                         if sc_rows:
                             sc_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
-                            res_supa.data = [sc_rows[0]]
+                            winning_row = sc_rows[0]
                         else:
                             party_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
-                            res_supa.data = [party_rows[0]]
+                            winning_row = party_rows[0]
+
+                        # Fetch full_text for winning row
+                        full_row_res = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("id", winning_row.get("id")).limit(1).execute()
+                        if full_row_res and full_row_res.data:
+                            res_supa.data = [full_row_res.data[0]]
+                        else:
+                            res_supa.data = [winning_row]
                 except Exception as party_err:
                     print(f"⚠️ Tier 2 Standalone party fallback error: {party_err}", file=sys.stderr, flush=True)
 
@@ -689,9 +696,9 @@ def cleanup_old_jobs():
 
 async def process_query_job(job_id: str, request: QueryRequest, authenticated_user_id: str):
     try:
-        print(f"--> [SEARCH ENDPOINT] Query received: '{request.query_text}'", flush=True)
-        intercepted_card, clean_topic = extract_and_intercept_citation(request.query_text)
-        print(f"--> [SEARCH ENDPOINT] Card returned: {bool(intercepted_card)}", flush=True)
+        user_prompt = request.query_text
+        intercepted_card, clean_topic = extract_and_intercept_citation(user_prompt)
+        print(f"--> [PRE-LLM CHECK] Query: '{user_prompt}' | Hit: {bool(intercepted_card)}", flush=True)
         print(f"🚀 [JOB {job_id}] Starting query execution...", file=sys.stderr, flush=True)
 
         def clean_base64_data(base64_str: str) -> str:
@@ -1256,6 +1263,48 @@ HOW YOU WORK:
 
         messages = history_msgs + [current_user_message]
 
+        # Force-feed pre-intercepted precedent card into response payload & LLM context
+        grounding_message = ""
+        if intercepted_card:
+            c_cit = intercepted_card.get("neutral_citation") or intercepted_card.get("case_id") or user_prompt
+            c_title = sanitize_case_title(intercepted_card.get("case_title") or "Reported Precedent")
+            c_name = clean_court_name(intercepted_card.get("court_name") or "Court of Record", title=c_title, case_id=str(c_cit))
+            c_text = (intercepted_card.get("full_text") or "")[:4000]
+            c_id = intercepted_card.get("case_id") or intercepted_card.get("id") or c_cit
+            c_date = str(intercepted_card.get("decision_date") or "")
+            pdf_url = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(c_id))}"
+
+            precedent_card_dict = {
+                "case_id": c_id,
+                "court": c_name,
+                "year": c_date,
+                "preview": c_text,
+                "title": c_title,
+                "citation": c_cit,
+                "score": 0.99,
+                "outcome": "Verified Precedent",
+                "statutes": [],
+                "sections": [],
+                "pdf_url": pdf_url,
+                "relevance": "High"
+            }
+            if not any(c.get("case_id") == c_id or c.get("citation") == c_cit for c in aggregate_citations_payload):
+                aggregate_citations_payload.append(precedent_card_dict)
+
+            grounding_message = f"""
+CRITICAL GROUNDING CONTEXT:
+A precedent was successfully retrieved from the database:
+Citation: {c_cit}
+Case Title: {c_title}
+Court: {c_name}
+Full Text / Ratio: {c_text}
+
+TASK: Provide a precise legal analysis of this judgment. 
+DO NOT say "No record under that citation in the database". 
+The precedent was found and verified.
+"""
+            combined_system_prompt = f"{combined_system_prompt}\n\n{grounding_message}"
+
         # Deterministic Search Gatekeeper: Mandatory entrypoint guard (forces search execution if intercepted_card, citation, or search command)
         cit_gate_match = re.search(r'\b(?:19|20)\d{2}\s*(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*\d+\b', effective_user_query, re.IGNORECASE)
         query_lower_gate = effective_user_query.lower()
@@ -1264,6 +1313,8 @@ HOW YOU WORK:
         if (intercepted_card or cit_gate_match or is_search_command) and search_call_count["n"] == 0:
             print(f"🔒 [GATEKEEPER] Mandatory auto-executing search_case_law for query: '{effective_user_query}'", file=sys.stderr, flush=True)
             search_res = await run_case_law_search(effective_user_query)
+            if grounding_message and grounding_message not in search_res:
+                search_res = f"{grounding_message}\n\n{search_res}"
             tool_call_id = f"toolu_gate_{uuid.uuid4().hex[:8]}"
             messages.append({
                 "role": "assistant",
