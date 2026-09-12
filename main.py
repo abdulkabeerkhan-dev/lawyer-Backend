@@ -99,7 +99,7 @@ VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY")
 VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
-CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-5-20250929")
+CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
 
 async def get_voyage_embedding(text: str) -> List[float]:
     if not VOYAGE_API_KEY:
@@ -173,9 +173,9 @@ async def safe_create_anthropic_message(**kwargs):
         raise HTTPException(status_code=503, detail="Anthropic API client is not initialized.")
     model_candidates = [
         kwargs.get("model") or CLAUDE_MODEL,
+        "claude-haiku-4-5-20251001",
         "claude-sonnet-4-5-20250929",
         "claude-sonnet-4-6",
-        "claude-haiku-4-5-20251001",
         "claude-sonnet-5",
         "claude-opus-4-5-20251101",
         "claude-opus-4-6",
