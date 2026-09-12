@@ -423,35 +423,16 @@ def clean_case_title(raw_title: str) -> str:
     if not t:
         return ""
     
-    # Strip leading reporter / bench / portal junk
-    t = re.sub(r'^(?:Latest Caselaws\s+)?', '', t, flags=re.IGNORECASE).strip()
-    t = re.sub(r'^(?:\d+\s+)?(?:\d{4}\s+)?(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC|PLJ|NLR|ALD)\s+\d+\s+', '', t, flags=re.IGNORECASE).strip()
-    t = re.sub(r'^(?:S\s*C\s*M\s*R|Y\s*L\s*R|P\s*L\s*D).*?(?:Bench\s+Present\s+|Before\s+)?[A-Za-z\.\s]+,\s*(?:J|CJ)\.?\s*', '', t, flags=re.IGNORECASE)
+    # 1. Use word boundaries so "Province" or "Tanvir" are NEVER split
+    # Only match isolated "v" or "vs" or "versus"
+    t = re.sub(r'\b(?:versus|vs\.?|v\.)\b', ' v. ', t, flags=re.IGNORECASE)
     
-    # Cut off advocate / judge / procedural delimiters after " - "
-    if " - " in t:
-        t = t.split(" - ")[0].strip()
-    t = re.sub(r'(?:Criminal\s+Misc.*?|Writ\s+Petition.*?|Civil\s+Revision.*)$', '', t, flags=re.IGNORECASE).strip()
+    # 2. In case "v" was already glued to a word boundary without space: e.g. "Zulfiqarv.Mst"
+    t = re.sub(r'([a-zA-Z0-9])v\.(?=[A-Za-z0-9])', r'\1 v. ', t)
 
-    # Isolate strictly standalone "v." or "vs." with word boundaries (avoids breaking "Tanvir")
-    t = re.sub(r'(?<=[a-zA-Z0-9])v\.(?:S\s+|s\s+)?(?=[A-Za-z])', ' v. ', t, flags=re.IGNORECASE)
-    t = re.sub(r'\s*\b(?:v|vs|versus)\.?(?=\s|$)\s*', ' v. ', t, flags=re.IGNORECASE)
-    
-    # Fix "v. S State" -> "v. The State"
-    t = re.sub(r'\bv\.\s*S\s+State\b', 'v. The State', t, flags=re.IGNORECASE)
-    t = re.sub(r'\bv\.\s*State\b', 'v. The State', t, flags=re.IGNORECASE)
-
-    # Standardize casing and spaces
-    parts = t.split(" v. ")
-    if len(parts) == 2:
-        p1 = " ".join(parts[0].split()).strip().title()
-        p2 = " ".join(parts[1].split()).strip().title()
-        p1 = re.sub(r'\b(?:Lahore|Karachi|Peshawar|High|Court)\b.*', '', p1, flags=re.IGNORECASE).strip()
-        if p2.lower() in ("state", "the state") or p2.lower().startswith("state"):
-            p2 = "The State"
-        return f"{p1} v. {p2}"
-        
-    return " ".join(t.split()).strip()
+    # 3. Collapse multiple spaces
+    t = " ".join(t.split()).strip()
+    return t
 
 def clean_precedent_title(title: str, fallback_citation: str = "", full_text: str = "", neutral_cit: str = "") -> str:
     fallback = fallback_citation or neutral_cit or ""
@@ -814,10 +795,25 @@ def determine_case_outcome(full_text: str, existing_outcome: str = None) -> str:
 def extract_case_roles(raw_text: str, fallback_title: str = "") -> dict:
     roles = {
         "initiator": "",
-        "initiator_role": "Petitioner / Appellant",
+        "initiator_role": "Petitioner",
         "defender": "",
-        "defender_role": "Respondent / State"
+        "defender_role": "Respondent"
     }
+    
+    # Check if State or Province is an actual party
+    title_lower = (fallback_title or raw_text or "").lower()
+    if any(s in title_lower for s in ["the state", "state", "prosecution", "counsel for the state"]):
+        roles["defender_role"] = "The State"
+    elif any(g in title_lower for g in ["province", "federation", "government"]):
+        roles["defender_role"] = "Govt. / Respondent"
+    else:
+        roles["defender_role"] = "Respondent"
+
+    if any(p in title_lower for p in ["appellant", "applicant", "plaintiff"]):
+        roles["initiator_role"] = "Appellant"
+    else:
+        roles["initiator_role"] = "Petitioner"
+
     try:
         header = (raw_text or "")[:1500]
         
@@ -827,22 +823,12 @@ def extract_case_roles(raw_text: str, fallback_title: str = "") -> dict:
         if len(vs_split) == 2:
             left, right = vs_split[0], vs_split[1]
             
-            # 1. Parse Initiator Role
-            init_role_match = re.search(r'\b(Petitioner|Appellant|Applicant|Plaintiff)s?\b', left, re.IGNORECASE)
-            if init_role_match:
-                roles["initiator_role"] = init_role_match.group(1).title()
-            
             # Clean Initiator Name
             left_clean = re.sub(r'(?i)\b(?:Before|Justice|Mr\.|Messrs|J\.|Petitioners?|Appellants?|Applicants?|Plaintiffs?)\b', '', left)
             left_clean = re.sub(r'[^a-zA-Z\s\.\,\(\)]', ' ', left_clean)
             clean_init = " ".join(left_clean.split())
             roles["initiator"] = clean_init[:60].strip().title() if clean_init else ""
 
-            # 2. Parse Defender Role
-            def_role_match = re.search(r'\b(Respondent|Defendant|State|Complainant)s?\b', right, re.IGNORECASE)
-            if def_role_match:
-                roles["defender_role"] = def_role_match.group(1).title()
-                
             # Clean Defender Name
             right_clean = re.sub(r'(?i)\b(?:Respondents?|Defendants?|through\s+.*|Advocate.*)\b', '', right)
             right_clean = re.sub(r'[^a-zA-Z\s\.\,\(\)]', ' ', right_clean)
@@ -855,7 +841,7 @@ def extract_case_roles(raw_text: str, fallback_title: str = "") -> dict:
             vs_fb = re.split(r'\s+v\.\s+', fb_clean, maxsplit=1, flags=re.IGNORECASE)
             if len(vs_fb) == 2:
                 roles["initiator"] = vs_fb[0].strip().title()
-                roles["defender"] = vs_fb[1].strip().title() if vs_fb[1].strip() else "The State"
+                roles["defender"] = vs_fb[1].strip().title()
     except Exception as parse_err:
         print(f"⚠️ extract_case_roles fallback triggered: {parse_err}", file=sys.stderr)
         if fallback_title:
@@ -866,9 +852,7 @@ def extract_case_roles(raw_text: str, fallback_title: str = "") -> dict:
                 roles["defender"] = vs_fb[1].strip().title()
 
     roles["initiator"] = str(roles.get("initiator") or "").strip()
-    roles["initiator_role"] = str(roles.get("initiator_role") or "Petitioner / Appellant").strip()
     roles["defender"] = str(roles.get("defender") or "").strip()
-    roles["defender_role"] = str(roles.get("defender_role") or "Respondent / State").strip()
 
     return roles
 
@@ -882,7 +866,7 @@ def extract_operative_order(raw_text: str) -> str:
 
     # Search for decisive operative ending
     m = re.search(
-        r'((?:For the (?:foregoing )?reasons|In view of the above|Under these circumstances|Consequently|As a result|In the result|As a sequel).*?\b(?:acquitted|dismissed|allowed|accepted|quashed|reduced|set aside)\b.*?\.)',
+        r'((?:For the (?:foregoing )?reasons|In view of the above|Under these circumstances|Consequently|As a result|In the result|As a sequel).*?\b(?:acquitted|dismissed|allowed|accepted|quashed|reduced|set aside|maintained|modified)\b.*?\.)',
         tail,
         flags=re.IGNORECASE | re.DOTALL
     )
@@ -894,7 +878,7 @@ def extract_operative_order(raw_text: str) -> str:
 
     # Search for explicit direct order
     m2 = re.search(
-        r'(\b(?:appellant\s+is\s+acquitted\s+of\s+the\s+charge|appeal\s+is\s+(?:hereby\s+)?(?:allowed|dismissed|accepted)|sentence\s+is\s+reduced|conviction\s+is\s+set\s+aside|petition\s+is\s+(?:hereby\s+)?(?:dismissed|allowed|accepted|quashed)|F\.?I\.?R\.?\s+is\s+quashed|bail\s+is\s+(?:granted|refused))\b.*?\.)',
+        r'(\b(?:appellant\s+is\s+acquitted\s+of\s+the\s+charge|appeal\s+is\s+(?:hereby\s+)?(?:allowed|dismissed|accepted)|sentence\s+is\s+reduced|conviction\s+is\s+set\s+aside|constitutional\s+petition\s+is\s+(?:dismissed|allowed)|revision\s+is\s+(?:dismissed|allowed)|petition\s+is\s+(?:hereby\s+)?(?:dismissed|allowed|accepted|quashed)|judgment\s+and\s+decree.*?is\s+set\s+aside|custody\s+of\s+(?:the\s+)?minors?\s+shall\s+remain|custody\s+is\s+handed\s+over|minor\s+is\s+ordered\s+to\s+be\s+handed\s+over|F\.?I\.?R\.?\s+is\s+quashed|bail\s+is\s+(?:granted|refused))\b.*?\.)',
         tail,
         flags=re.IGNORECASE
     )
