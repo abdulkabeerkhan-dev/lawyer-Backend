@@ -868,34 +868,68 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 norm_cit_underscore = re.sub(r'[\s_\-]+', '_', extracted_cit)
                 try:
                     if supabase:
-                        res_supa = supabase.table("full_judgments").select("*").eq("neutral_citation", norm_cit_space).limit(3).execute()
-                        if not res_supa.data:
-                            res_supa = supabase.table("full_judgments").select("*").ilike("case_id", f"%{norm_cit_underscore}%").limit(3).execute()
-                        if not res_supa.data:
-                            res_supa = supabase.table("full_judgments").select("*").ilike("case_title", f"%{norm_cit_space}%").limit(3).execute()
-                        
-                        if res_supa.data:
-                            for row in res_supa.data:
-                                c_name = row.get("court_name") or row.get("court")
-                                if not c_name or c_name == "Court of Record":
-                                    c_name = "Supreme Court of Pakistan" if "SCMR" in extracted_cit.upper() else "High Court"
-                                boosted_matches.append({
-                                    "score": 0.99,
-                                    "metadata": {
-                                        "case_id": row.get("case_id") or row.get("id") or extracted_cit,
-                                        "canonical_id": row.get("case_id") or extracted_cit,
-                                        "title": row.get("case_title") or row.get("title") or "Reported Precedent",
-                                        "court": c_name,
-                                        "citation": row.get("neutral_citation") or extracted_cit,
-                                        "date": str(row.get("decision_date") or row.get("year") or ""),
-                                        "text": (row.get("full_text") or "")[:3500],
-                                        "pdf_url": row.get("pdf_url"),
-                                        "outcome": "Verified Precedent",
-                                        "statutes": []
-                                    }
-                                })
+                        # 1. Try citation_crosswalk table
+                        try:
+                            res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{norm_cit_space}%").limit(3).execute()
+                            if res_cw.data:
+                                for cw_row in res_cw.data:
+                                    fj = cw_row.get("full_judgments") or {}
+                                    if fj:
+                                        boosted_matches.append({
+                                            "score": 0.99,
+                                            "metadata": {
+                                                "case_id": fj.get("case_id") or fj.get("id") or extracted_cit,
+                                                "canonical_id": fj.get("case_id") or extracted_cit,
+                                                "title": fj.get("case_title") or cw_row.get("case_title") or "Reported Precedent",
+                                                "court": fj.get("court_name") or cw_row.get("court") or "Supreme Court of Pakistan",
+                                                "citation": extracted_cit,
+                                                "date": str(fj.get("decision_date") or ""),
+                                                "text": (fj.get("full_text") or "")[:3500],
+                                                "pdf_url": fj.get("pdf_url"),
+                                                "outcome": "Verified Precedent",
+                                                "statutes": []
+                                            }
+                                        })
+                        except Exception:
+                            pass
+
+                        # 2. Try full_judgments direct lookup
+                        if not boosted_matches:
+                            res_supa = supabase.table("full_judgments").select("*").eq("neutral_citation", norm_cit_space).limit(3).execute()
+                            if not res_supa.data:
+                                res_supa = supabase.table("full_judgments").select("*").ilike("case_id", f"%{norm_cit_underscore}%").limit(3).execute()
+                            if not res_supa.data:
+                                res_supa = supabase.table("full_judgments").select("*").ilike("case_title", f"%{norm_cit_space}%").limit(3).execute()
+                            
+                            if res_supa.data:
+                                for row in res_supa.data:
+                                    c_name = row.get("court_name") or row.get("court")
+                                    if not c_name or c_name == "Court of Record":
+                                        c_name = "Supreme Court of Pakistan" if "SCMR" in extracted_cit.upper() else "High Court"
+                                    boosted_matches.append({
+                                        "score": 0.99,
+                                        "metadata": {
+                                            "case_id": row.get("case_id") or row.get("id") or extracted_cit,
+                                            "canonical_id": row.get("case_id") or extracted_cit,
+                                            "title": row.get("case_title") or row.get("title") or "Reported Precedent",
+                                            "court": c_name,
+                                            "citation": row.get("neutral_citation") or extracted_cit,
+                                            "date": str(row.get("decision_date") or row.get("year") or ""),
+                                            "text": (row.get("full_text") or "")[:3500],
+                                            "pdf_url": row.get("pdf_url"),
+                                            "outcome": "Verified Precedent",
+                                            "statutes": []
+                                        }
+                                    })
                 except Exception as cit_db_err:
                     print(f"⚠️ Direct citation DB lookup notice: {cit_db_err}")
+
+            # Prepare clean legal topic query for Voyage embedding (strip citation numbers if present)
+            embedding_query = search_query
+            if cit_match:
+                topic_query = re.sub(r'\b(?:19|20)\d{2}\s+(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+\b', '', search_query, flags=re.IGNORECASE).strip()
+                if len(topic_query) >= 10:
+                    embedding_query = topic_query
 
             try:
                 voyage_model = os.environ.get("VOYAGE_MODEL", "voyage-law-2")
@@ -904,7 +938,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 async with httpx.AsyncClient(timeout=30.0) as client:
                     voyage_response = await client.post(
                         VOYAGE_API_URL,
-                        json={"input": search_query, "model": voyage_model, "input_type": "query"},
+                        json={"input": embedding_query, "model": voyage_model, "input_type": "query"},
                         headers={"Authorization": f"Bearer {VOYAGE_API_KEY}", "Content-Type": "application/json"}
                     )
                     if voyage_response.status_code != 200:
@@ -1058,6 +1092,7 @@ HOW YOU WORK:
    Omit this block entirely for conversational replies, clarifying questions, or answers that didn't rely on retrieved precedent.
 7. Never use double asterisks (**) for emphasis; write plain text.
 8. CITATION FORMATTING RULE: ALWAYS format case citations using standard Pakistani law reporter journal style (e.g., PLD 1995 Supreme Court 34, 2019 SCMR 984, 2008 PCrLJ 858, 2021 CLC 450, 2020 MLD 112, 2022 YLR 310, 2020 CLD 1104, 2021 PTD 795, 2021 PLC (CS) 105, 2018 PLJ 502, 2017 NLR 215, 2016 GBLR 88, 2015 PTCL 401, 2014 ALD 105, 2013 SLR 99, 2012 ILR 44, 2011 SBLR 22). Only if no official journal citation exists in the database record, fallback to docket/court format.
+9. STRICT NO-EXCUSES & ANTI-LEAKAGE DIRECTIVE: NEVER output apologies or complaints about database indexing, such as "The database doesn't have that citation indexed...", "If you tell me the subject matter...", or meta-commentary about missing citations. Always deliver authoritative, senior-level legal guidance and ratio decidendi based directly on retrieved precedents and settled statutory principles.
 """
 
         combined_system_prompt = f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{conversational_persona}"
