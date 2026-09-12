@@ -867,41 +867,47 @@ def extract_case_roles(raw_text: str, fallback_title: str = "") -> dict:
 
 def extract_operative_order(raw_text: str) -> str:
     if not raw_text:
-        return "Decided on merits."
+        return "Disposed of on merits."
 
-    # Search only the last 1500 chars
-    tail = raw_text[-1500:] if len(raw_text) > 1500 else raw_text
+    # Split into clean paragraphs
+    paragraphs = [p.strip() for p in raw_text.split('\n') if len(p.strip()) > 30]
+    if not paragraphs:
+        return "Disposed of on merits."
+
+    # Look exclusively at the last 3 paragraphs
+    closing_slice = " ".join(paragraphs[-3:])
     
-    # Strip OCR trailing trash
-    tail = re.sub(r'[\?]{2,}', '', tail)
-    tail = re.sub(r'[A-Z]\.[A-Z]\.[A-Z]\.[\w\/\-]+', '', tail)
+    # Strip editor stamps and trailing OCR markers
+    closing_slice = re.sub(r'[\?]{2,}', '', closing_slice)
+    closing_slice = re.sub(r'[A-Z]\.[A-Z]\.[A-Z]\.[\w\/\-]+', '', closing_slice)
 
-    # Patterns indicating genuine judicial concluding sentence
-    closing_patterns = [
-        r'((?:For the (?:foregoing )?reasons|In view of the above|Under these circumstances|Consequently|As a sequel).*?\b(?:acquitted|dismissed|allowed|accepted|quashed|reduced)\b.*?\.)',
-        r'(\b(?:appeal\s+is\s+(?:hereby\s+)?(?:allowed|dismissed|accepted)|sentence\s+is\s+reduced|conviction\s+is\s+set\s+aside|appellant\s+is\s+acquitted|petition\s+is\s+(?:hereby\s+)?(?:allowed|dismissed|accepted|quashed)|F\.?I\.?R\.?\s+is\s+quashed|bail\s+is\s+(?:granted|refused))\b.*?\.)',
-        r'(Order accordingly\.?)',
-        r'(\bPetition\s+(?:accepted|dismissed)\.?)'
-    ]
+    # Search for decisive appellate disposition verbs
+    m = re.search(
+        r'((?:For the (?:foregoing )?reasons|In view of the above|Under these circumstances|Consequently|As a result|As a sequel).*?\b(?:acquitted|dismissed|allowed|accepted|quashed|reduced|set aside)\b.*?\.)',
+        closing_slice,
+        flags=re.IGNORECASE | re.DOTALL
+    )
+    if m:
+        clean = " ".join(m.group(1).split())
+        return clean[:220].rsplit(' ', 1)[0] + "..." if len(clean) > 220 else clean
 
-    for pat in closing_patterns:
-        m = re.search(pat, tail, flags=re.IGNORECASE | re.DOTALL)
-        if m:
-            order_sentence = " ".join(m.group(1).split())
-            if len(order_sentence) > 220:
-                order_sentence = order_sentence[:220].rsplit(' ', 1)[0] + "..."
-            return order_sentence.strip()
+    # Direct order matchers
+    m2 = re.search(
+        r'(\b(?:appeal\s+is\s+(?:hereby\s+)?(?:allowed|dismissed|accepted)|appellant\s+is\s+acquitted|conviction\s+is\s+set\s+aside|sentence\s+is\s+reduced|petition\s+is\s+(?:hereby\s+)?(?:dismissed|allowed|accepted|quashed)|F\.?I\.?R\.?\s+is\s+quashed|bail\s+is\s+(?:granted|refused))\b.*?\.)',
+        closing_slice,
+        flags=re.IGNORECASE
+    )
+    if m2:
+        return m2.group(1).strip()
 
-    # Fallback: clean the last full sentence
-    clean_tail = tail.strip()
-    sentences = [s.strip() for s in clean_tail.split('.') if len(s.strip()) > 25 and not s.strip().startswith(('PW', 'P.W', 'Exh', '1.', '2.')) and '---' not in s]
+    # Fallback to the very last complete sentence of the judgment
+    last_para = paragraphs[-1]
+    sentences = [s.strip() for s in last_para.split('.') if len(s.strip()) > 15 and '---' not in s]
     if sentences:
         candidate = sentences[-1] + "."
-        if len(candidate) > 220:
-            candidate = candidate[:220].rsplit(' ', 1)[0] + "..."
-        return candidate
+        return candidate[:220].rsplit(' ', 1)[0] + "..." if len(candidate) > 220 else candidate
 
-    return "Appeal disposed of on merits."
+    return "Decided on merits."
 
 def strip_control_characters(text: str) -> str:
     if not text:
@@ -1649,8 +1655,14 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 is_boosted = bool(m.get("is_boosted") if isinstance(m, dict) else False) or bool(meta.get("is_boosted"))
                 if score < 0.40 and not is_boosted: continue
                 text_content = strip_control_characters(str(meta.get("text") or meta.get("text_preview") or ""))
-                if not is_boosted and (is_garbled_text(text_content) or is_junk_citation_dump(text_content) or is_scraped_portal_junk(text_content)):
-                    continue
+                full_text_val = str(meta.get("full_text") or meta.get("text") or "")
+                if not is_boosted:
+                    if len(full_text_val) < 150 and len(text_content) < 60:
+                        continue
+                    if str(meta.get("title") or meta.get("case_title") or "").strip().lower() in ["v.", "vs.", "", "v", "vs"]:
+                        continue
+                    if is_garbled_text(text_content) or is_junk_citation_dump(text_content) or is_scraped_portal_junk(text_content):
+                        continue
                 case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower().strip()
                 full_text_str = text_content.lower()
 
@@ -1699,6 +1711,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 court = clean_court_name(str(meta.get('court', 'Unknown Court')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')), text=text_content)
                 year_or_date = extract_year_from_citation_or_date(meta.get('date') or meta.get('decision_date') or meta.get('year'), meta.get('citation') or meta.get('neutral_citation'), case_id)
                 title = sanitize_case_title(clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case')))
+                title = re.sub(r'\s*(?:v\.?|vs\.?)\s*', ' v. ', title, flags=re.IGNORECASE).strip()
                 official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
                 neutral_cit = synthesize_canonical_citation(meta)
                 outcome_val = determine_case_outcome(text_content, meta.get("disposition") or meta.get("outcome"))
