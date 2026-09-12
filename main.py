@@ -500,8 +500,10 @@ def clean_markdown_formatting(text: str) -> str:
 def strip_copyright_and_branding(text: str) -> str:
     if not text:
         return ""
-    cit_match = re.search(r'(\bCitation\s*(Name)?\s*:.*)', text, flags=re.IGNORECASE | re.DOTALL)
-    if cit_match and any(noise in text[:cit_match.start()].lower() for noise in ["my account", "pld publishers", "customer care", "saved citations", "case law search", "innertemple"]):
+    
+    # 1. Truncate any leading scraped portal navigation headers before actual judgment start
+    cit_match = re.search(r'(\b(Citation\s*(Name)?\s*:|Side\s*:|Court\s*:|Judge[s]?\s*:|IN THE (SUPREME COURT|HIGH COURT)|BEFORE\s+:|\b(?:19|20)\d{2}\s+(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+\b).*)', text, flags=re.IGNORECASE | re.DOTALL)
+    if cit_match and any(noise in text[:cit_match.start()].lower() for noise in ["my account", "pld publishers", "customer care", "saved citations", "case law search", "innertemple", "clc notes", "home word & phrases", "feedback"]):
         text = cit_match.group(1)
 
     patterns = [
@@ -515,9 +517,9 @@ def strip_copyright_and_branding(text: str) -> str:
         r'pakistanlawsite(?:\.com)?',
         r'Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
         r'Bookmark\s*this\s*Case',
-        r'My\s*Account',
-        r'Customer\s*Care\s*Office',
-        r'PLD\s*Publishers',
+        r'My\s*Account[^\n]*',
+        r'Customer\s*Care\s*Office[^\n]*',
+        r'PLD\s*Publishers[^\n]*',
         r'35-Nabha\s*Road[^\n]*',
         r'Phone:\s*\+?\d+[^\n]*',
         r'Whatsapp:\s*\+?\d+[^\n]*',
@@ -525,12 +527,13 @@ def strip_copyright_and_branding(text: str) -> str:
         r'Email:\s*[^\n]+',
         r'Saved\s*Citations',
         r'innertemple',
-        r'Head\s*Notes\s*on\s*Cases\s*With\s*Complete\s*Judgements?',
-        r'(CLC|YLR|PCrLJ|PCRLJ|PLC|PLC\(CS\))\s*Notes',
-        r'Monthly\s*Journals',
-        r'Case\s*Law\s*Search',
-        r'Last\s*\d+\s*Years?',
-        r'New\s*Statutes',
+        r'Home\s+Word\s*&\s*Phrases[^\n]*',
+        r'Head\s*Notes\s*on\s*Cases\s*With\s*Complete\s*Judgements?[^\n]*',
+        r'(?:CLC|YLR|PCrLJ|PCRLJ|PLC|PLC\(CS\))\s*Notes',
+        r'Monthly\s*Journals[^\n]*',
+        r'Case\s*Law\s*Search[^\n]*',
+        r'Last\s*\d+\s*Years?[^\n]*',
+        r'New\s*Statutes[^\n]*',
         r'Word\s*&\s*Phrases',
         r'Legal\s*Terms',
         r'Maxims',
@@ -539,7 +542,9 @@ def strip_copyright_and_branding(text: str) -> str:
         r'Dictionary',
         r'General\s*Orders',
         r'Circulars',
-        r'Notifications'
+        r'Notifications',
+        r'GBLR\s+Miscellaneous[^\n]*',
+        r'Federal\s+Punjab\s+KPK\s+Balochistan\s+Sindh'
     ]
     cleaned = text
     for pat in patterns:
@@ -553,6 +558,7 @@ def format_clean_judgment_paragraphs(text: str) -> str:
     if not text:
         return ""
     
+    text = strip_copyright_and_branding(text)
     t = text.replace("\r\n", "\n").replace("\r", "\n")
     t = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\ufffd]', '', t)
     
@@ -565,6 +571,10 @@ def format_clean_judgment_paragraphs(text: str) -> str:
                 cleaned_lines.append("")
             continue
         
+        # Filter out standalone menu counter numbers (e.g. 1, 2, 3... 19) left over from scraped navigation menus
+        if re.match(r'^\d{1,2}$', line) and (not cleaned_lines or cleaned_lines[-1] == ""):
+            continue
+
         if cleaned_lines and cleaned_lines[-1] != "":
             prev = cleaned_lines[-1]
             is_new_para = bool(re.match(r'^\s*(\d+[\.\)]|\([0-9a-zA-Z]+\)|\[\d+\]|[A-Z\s]{4,}:|\bJUDGMENT\b|\bORDER\b|\bPRESENT\b)', line))
