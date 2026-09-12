@@ -403,12 +403,12 @@ def extract_and_intercept_citation(user_query: str):
                             party_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
                             res_supa.data = [party_rows[0]]
                 except Exception as party_err:
-                    print(f"⚠️ Standalone party fallback notice: {party_err}")
+                    print(f"⚠️ Tier 2 Standalone party fallback error: {party_err}", file=sys.stderr)
 
             if res_supa.data:
                 row = res_supa.data[0]
     except Exception as err:
-        print(f"⚠️ Direct citation gatekeeper notice: {err}")
+        print(f"⚠️ Direct citation gatekeeper error: {err}", file=sys.stderr)
 
     return row, clean_party_name
 
