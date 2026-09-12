@@ -91,6 +91,7 @@ async def dynamic_cors_middleware(request, call_next):
 # ENVIRONMENT CONFIGURATION
 PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
 PINECONE_INDEX_NAME = os.environ.get("PINECONE_INDEX_NAME", "legal-kb-pk-local")
+PINECONE_NAMESPACE = os.environ.get("PINECONE_NAMESPACE", "clean-v1")
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY")
 VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
@@ -947,7 +948,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
                     query_top_k = 60 if target_source else 30
                     raw_matches = pinecone_index.query(
-                        namespace="judgments", vector=query_vector, top_k=query_top_k, include_metadata=True
+                        namespace=PINECONE_NAMESPACE, vector=query_vector, top_k=query_top_k, include_metadata=True
                     )
                     matches_list = raw_matches.get("matches", []) if isinstance(raw_matches, dict) else getattr(raw_matches, "matches", []) or []
                     if boosted_matches:
@@ -1500,7 +1501,7 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Optional[Dict[str, Any]]
             dummy_vector = [0.0] * 1024
             for field in ["judgment_id", "canonical_id", "case_id", "citation"]:
                 res = pinecone_index.query(
-                    namespace="judgments",
+                    namespace=PINECONE_NAMESPACE,
                     vector=dummy_vector,
                     filter={field: {"$eq": decoded_id}},
                     top_k=10,
@@ -1588,7 +1589,7 @@ async def get_full_judgment(
             for field in ["case_id", "citation"]:
                 try:
                     chunk_matches = pinecone_index.query(
-                        namespace="judgments",
+                        namespace=PINECONE_NAMESPACE,
                         vector=dummy_vector,
                         filter={field: {"$eq": decoded_case_id}},
                         top_k=200,
@@ -1616,7 +1617,7 @@ async def get_full_judgment(
                 if canonical_base:
                     try:
                         base_ids = [f"{re.sub(r'[^a-zA-Z0-9_\-]', '_', canonical_base).lower()}_chunk_{i}" for i in range(100)]
-                        fetch_res = pinecone_index.fetch(ids=base_ids, namespace="judgments")
+                        fetch_res = pinecone_index.fetch(ids=base_ids, namespace=PINECONE_NAMESPACE)
                         fetched_vecs = fetch_res.get("vectors", {}) if isinstance(fetch_res, dict) else getattr(fetch_res, "vectors", {}) or {}
                         if fetched_vecs:
                             matches = list(fetched_vecs.values())
