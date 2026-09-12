@@ -1439,33 +1439,59 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
     doc.build(story)
     return buffer.getvalue()
 
+def is_valid_uuid(val: str) -> bool:
+    if not val or len(val) != 36:
+        return False
+    return bool(re.match(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$', val))
+
 def find_judgment_by_id_or_canonical(target_id: str) -> Optional[Dict[str, Any]]:
     decoded_id = urllib.parse.unquote(target_id).strip()
     norm_id = re.sub(r'\s+', '_', decoded_id)
-    
+    space_id = re.sub(r'[\s_\-]+', ' ', decoded_id).strip()
+
     if supabase:
+        # 1. Try UUID / primary id column ONLY if decoded_id is a valid UUID
+        if is_valid_uuid(decoded_id):
+            try:
+                res = supabase.table("full_judgments").select("*").eq("id", decoded_id).execute()
+                if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
+                    return res.data[0]
+            except Exception as e:
+                print(f"Supabase UUID lookup notice: {e}")
+
+        # 2. Try case_id column (e.g. "2021_SCMR_2092")
         try:
-            # 1. Try UUID / primary id column
-            res = supabase.table("full_judgments").select("*").eq("id", decoded_id).execute()
-            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
-                return res.data[0]
-            
-            # 2. Try canonical_id column
-            res = supabase.table("full_judgments").select("*").eq("canonical_id", decoded_id).execute()
-            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
-                return res.data[0]
-            
-            # 3. Try case_id column
-            res = supabase.table("full_judgments").select("*").eq("case_id", decoded_id).execute()
-            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
-                return res.data[0]
-                
-            # 4. Try norm_id (spaces to underscores)
             res = supabase.table("full_judgments").select("*").eq("case_id", norm_id).execute()
             if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
                 return res.data[0]
         except Exception as e:
-            print(f"⚠️ Supabase judgment lookup notice: {e}")
+            print(f"Supabase case_id lookup notice: {e}")
+
+        # 3. Try neutral_citation column (e.g. "2021 SCMR 2092")
+        try:
+            res = supabase.table("full_judgments").select("*").eq("neutral_citation", space_id).execute()
+            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
+                return res.data[0]
+        except Exception as e:
+            print(f"Supabase neutral_citation lookup notice: {e}")
+
+        # 4. Try case_title column (e.g. "%2021 SCMR 2092%" or "%Muhammad Nasir Shafique%")
+        try:
+            res = supabase.table("full_judgments").select("*").ilike("case_title", f"%{space_id}%").limit(1).execute()
+            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
+                return res.data[0]
+        except Exception as e:
+            print(f"Supabase case_title lookup notice: {e}")
+
+        # 5. Try citation_crosswalk table
+        try:
+            res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{space_id}%").limit(1).execute()
+            if res_cw.data and len(res_cw.data) > 0:
+                fj = res_cw.data[0].get("full_judgments")
+                if fj and len(fj.get("full_text", "")) > 50:
+                    return fj
+        except Exception as e:
+            print(f"Supabase crosswalk lookup notice: {e}")
 
     # Pinecone fallback lookup by exact metadata field match
     if pinecone_index:
@@ -1495,7 +1521,7 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Optional[Dict[str, Any]]
                             "pdf_url": meta0.get("pdf_url") or ""
                         }
         except Exception as e:
-            print(f"⚠️ Pinecone lookup notice: {e}")
+            print(f"Pinecone lookup notice: {e}")
 
     return None
 
