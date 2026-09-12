@@ -417,33 +417,36 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
 def sanitize_case_title(raw_title: str) -> str:
     """
     Sanitizes party titles:
-    - Strips leading page numbers ('339 '), reporter citations ('2021 SCMR 2092 ')
-    - Strips judge suffixes ('- Honorable Justice Sayyed Mazahar Ali Akbar Naqvi')
-    - Strips advocate names and trailing court tags ('SUPREME-COURT')
-    - Standardizes 'VS' / 'VERSUS' to 'v.'
+    - Strips leading page numbers, reporter citations, court locations, and judge preambles
+    - Strips petition/case number boilerplate ('Writ Petition No...')
+    - Enforces single spaces around 'v.'
     """
     if not raw_title:
         return "Untitled Case"
 
     t = str(raw_title).replace("\t", " ").strip()
+    
+    # Strip journal citations, court locations & judge preambles (e.g. '2008 Y L R 2548 [Lahore] Before M.A. Shahid Siddiqui, J ')
+    t = re.sub(r'^(?:\d{4}\s+)?[A-Z\s]{2,10}(?:\d+\s+)?(?:\[\w+\])?\s*(?:Before\s+)?(?:Mr\.\s+Justice\s+|Justice\s+)?[A-Z\.\s]+,\s*J\.?\s*', '', t, flags=re.IGNORECASE)
+    t = re.sub(r'^(?:Writ Petition|Civil Revision|Criminal Misc|Crl\.?\s*Misc\.?)\s+No\.?.*?,\s*', '', t, flags=re.IGNORECASE)
     t = re.sub(r'^\d+\s+(?:(?:19|20)\d{2}\s+[A-Za-z0-9\(\)\s]+\s+\d+\s+)?', '', t, flags=re.IGNORECASE)
     t = re.sub(r'^(?:(?:19|20)\d{2}\s+(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+\s+)', '', t, flags=re.IGNORECASE)
     t = re.sub(r'\s*[\-\t]?\s*(?:SUPREME-COURT|HIGH-COURT|SINDH-HIGH-COURT|LAHORE-HIGH-COURT|PESHAWAR-HIGH-COURT|BALOCHISTAN-HIGH-COURT|ISLAMABAD-HIGH-COURT|GILGIT-BALTISTAN\s+CHIEF\s+COURT)\s*$', '', t, flags=re.IGNORECASE)
     t = re.sub(r'\s*-\s*(?:Honorable\s+)?Justice.*$', '', t, flags=re.IGNORECASE)
     t = re.sub(r'\s*-\s*[A-Z][a-z]+\s+[A-Z][a-z]+.*$', '', t)
-    t = re.sub(r'\s+(?:VS\.?|VERSUS|Vs\.?|vs\.?)\s+', ' v. ', t, flags=re.IGNORECASE)
+
+    # Enforce single space around 'v.' / 'vs.' / 'versus'
+    t = re.sub(r'\s*(?:vs?\.?|versus)\s*', ' v. ', t, flags=re.IGNORECASE)
 
     parts = t.split(' v. ')
-    if len(parts) == 2:
-        p1 = parts[0].strip().title()
-        p2 = parts[1].strip().title()
-        if p2.lower() in ("state", "the state"):
-            p2 = "The State"
-        elif p2.lower().startswith("state"):
+    if len(parts) >= 2:
+        p1 = " ".join(parts[0].split()).strip().title()
+        p2 = " ".join(parts[1].split()).strip().title()
+        if p2.lower() in ("state", "the state") or p2.lower().startswith("state"):
             p2 = "The State"
         t = f"{p1} v. {p2}"
     else:
-        t = t.strip().title()
+        t = " ".join(t.split()).strip().title()
 
     t = re.sub(r'\s*-\s*$', '', t).strip()
     return t or "Untitled Case"
@@ -843,16 +846,29 @@ def extract_operative_order(raw_text: str) -> str:
             r'(\bOrder accordingly\b\.?)',
         ]
 
+        raw_order = None
         for pat in operative_patterns:
             match = re.search(pat, tail, flags=re.IGNORECASE | re.DOTALL)
             if match:
-                clean_res = " ".join(match.group(1).split())
-                return clean_res[:200].strip()
+                raw_order = " ".join(match.group(1).split())
+                break
 
-        # Fallback: take the very last clean sentence
-        sentences = [s.strip() for s in tail.split('.') if len(s.strip()) > 15]
-        if sentences:
-            return sentences[-1].strip() + "."
+        if not raw_order:
+            # Fallback: take the very last clean sentence
+            sentences = [s.strip() for s in tail.split('.') if len(s.strip()) > 15]
+            if sentences:
+                raw_order = sentences[-1].strip() + "."
+
+        if raw_order:
+            clean_res = " ".join(raw_order.split())
+            if len(clean_res) > 220:
+                # Truncate at last complete word boundary before 220 chars
+                truncated = clean_res[:220].rsplit(' ', 1)[0].strip()
+                # Strip dangling trailing punctuation or dangling words like 'to', 'and', 'the'
+                truncated = re.sub(r'\b(?:to|and|the|or|of|in|at|by|with)\s*$', '', truncated, flags=re.IGNORECASE).strip()
+                truncated = re.sub(r'[\s,\.\-:]+$', '', truncated).strip()
+                return truncated + "..."
+            return clean_res
     except Exception as parse_err:
         print(f"⚠️ extract_operative_order fallback triggered: {parse_err}", file=sys.stderr)
 
