@@ -635,9 +635,41 @@ def extract_year_from_citation_or_date(date_val: Any, citation_val: Any, case_id
 
     return "Recent"
 
-def sanitize_holding_text(text: str) -> str:
+PROCEDURAL_PREAMBLE_PATTERNS = [
+    r'^(?:ORDER|JUDGMENT|ORDER SHEET|HEARD)\s*[:\.\-]?\s*',
+    r'^(?:Learned counsel for the parties heard|Arguments heard|Record perused|Perused the record|This is an application|Through this petition|By this single|By this judgment|This order shall dispose of)\b.*?(?:[\.\;]|\n)',
+    r'^(?:Mr\.|Mst\.|Muhammad|Syed|Raja|Chaudhry|Justice)\s+.*?(?:learned counsel|advocate|petitioner|respondent|appellant)\b.*?(?:[\.\;]|\n)'
+]
+
+RATIO_ANCHORS = [
+    r'\bHeld\b\s*:?',
+    r'\bheld that\b',
+    r'\bwe are of the (?:considered )?view\b',
+    r'\bit is (?:well )?settled (?:law )?that\b',
+    r'\bcourt observed that\b',
+    r'\bin our (?:considered )?opinion\b',
+    r'\bratio (?:decidendi|of the case)\b',
+    r'\bthe principle of law\b',
+    r'\bprima facie\b',
+    r'\bbalance of convenience\b',
+    r'\birreparable loss\b',
+    r'\bstatutory delay\b',
+    r'\bproviso\b',
+    r'\bbail is hereby\b',
+    r'\binjunction is hereby\b',
+    r'\bInjunction\b',
+    r'\b(?:granted|refused|dismissed|allowed)\b'
+]
+
+REPORTER_PATTERNS = [
+    r'\b(?:19|20)\d{2}\s+(?:SCMR|PCrLJ|PCRLJ|PLD|YLR|CLC|MLD|PTD|PLC(?:\s*\(CS\))?|CLD|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+\b',
+    r'\b(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR)\s+(?:19|20)\d{2}\s+\d+\b'
+]
+
+def extract_clean_ratio_snippet(text: str, max_chars: int = 280) -> str:
     if not text:
         return "Legal principle extracted from judgment record."
+    
     clean_t = strip_copyright_and_branding(text)
     clean_t = strip_control_characters(clean_t)
 
@@ -649,22 +681,81 @@ def sanitize_holding_text(text: str) -> str:
     clean_t = re.sub(r'\([A-Z0-9_\-]+\)', '', clean_t)
     clean_t = strip_control_characters(clean_t)
 
-    ratio_match = re.search(r'\b(Held\b\s*:?|Order\b\s*:?|Injunction\b|On\s+the\s+point|interim\s+relief|temporary\s+injunction|held\s+that|court\s+held|it\s+was\s+held|prima\s+facie)\b', clean_t, re.IGNORECASE)
+    # Strip procedural preamble patterns
+    for pat in PROCEDURAL_PREAMBLE_PATTERNS:
+        clean_t = re.sub(pat, '', clean_t, flags=re.IGNORECASE | re.MULTILINE).strip()
+
+    # Search for ratio anchors
+    ratio_anchor_pat = '|'.join(RATIO_ANCHORS)
+    ratio_match = re.search(ratio_anchor_pat, clean_t, flags=re.IGNORECASE)
     if ratio_match:
         substance = clean_t[ratio_match.start():].strip()
         if len(substance) >= 15:
-            return substance[:300].strip()
+            return substance[:max_chars].strip()
 
-    cit_matches = len(re.findall(r'\b(PLD|SCMR|MLD|CLC|PCRLJ|PTD|PLC|CLD|YLR)\s+\d{4}\b', clean_t, re.IGNORECASE))
-    if cit_matches >= 2 and len(clean_t) < 400:
-        return "Legal principle extracted from judgment record."
+    # Fallback to first non-preamble paragraph or cleaned text
+    paragraphs = [p.strip() for p in clean_t.split('\n') if p.strip()]
+    for p in paragraphs:
+        if len(p) >= 20 and not any(re.search(pat, p, flags=re.IGNORECASE) for pat in PROCEDURAL_PREAMBLE_PATTERNS):
+            return p[:max_chars].strip()
+
     clean_t = re.sub(r'^\s*[\d\,\s\-\.\;\/\\]{5,}', '', clean_t).strip()
     if not clean_t or len(clean_t) < 15:
         return "Legal principle extracted from judgment record."
     digits_and_commas = len(re.findall(r'[\d\,\s]', clean_t))
     if len(clean_t) > 0 and (digits_and_commas / len(clean_t)) > 0.4:
         return "Legal principle extracted from judgment record."
-    return clean_t[:300].strip()
+    return clean_t[:max_chars].strip()
+
+def sanitize_holding_text(text: str) -> str:
+    return extract_clean_ratio_snippet(text, max_chars=300)
+
+def synthesize_canonical_citation(record: Dict[str, Any]) -> str:
+    if not isinstance(record, dict):
+        return "Precedent Record"
+
+    raw_cit = str(record.get("neutral_citation") or record.get("citation") or "").strip()
+    
+    # 1. Check if raw_cit already contains a valid reporter citation
+    for pat in REPORTER_PATTERNS:
+        match = re.search(pat, raw_cit, flags=re.IGNORECASE)
+        if match:
+            return match.group(0).strip()
+            
+    # 2. Extract decision year
+    year = extract_year_from_citation_or_date(
+        record.get("decision_date") or record.get("date") or record.get("year"),
+        raw_cit,
+        record.get("case_id") or record.get("id")
+    )
+    
+    # 3. Clean court abbreviation
+    court_raw = str(record.get("court_name") or record.get("court") or "").strip()
+    court_abbrev = clean_court_name(court_raw, title=str(record.get("case_title") or record.get("title") or ""), case_id=str(record.get("case_id") or ""))
+    
+    c_lower = court_abbrev.lower()
+    if "supreme court of azad" in c_lower: abbrev = "AJK SC"
+    elif "ajk service" in c_lower: abbrev = "AJK ST"
+    elif "supreme court" in c_lower: abbrev = "SC"
+    elif "federal shariat" in c_lower: abbrev = "FSC"
+    elif "peshawar" in c_lower: abbrev = "PHC"
+    elif "lahore" in c_lower: abbrev = "LHC"
+    elif "sindh" in c_lower: abbrev = "SHC"
+    elif "balochistan" in c_lower: abbrev = "BHC"
+    elif "islamabad" in c_lower: abbrev = "IHC"
+    else: abbrev = "HC"
+
+    case_id = str(record.get("case_id") or record.get("id") or "").strip()
+    docket_match = re.search(r'\b(?:Cr\.?\s*Misc|Civil\s*Rev(?:ision)?|Civil\s*Appeal|Const\s*Pet(?:ition)?|W\.?P\.?|Cr\.?\s*A\.?|C\.?M\.?|C\.?R\.?)\s*\d+[\/\-]\d+\b', f"{raw_cit} {case_id}", flags=re.IGNORECASE)
+    if docket_match:
+        docket = docket_match.group(0).strip()
+        return f"{year} {abbrev} [{docket}]"
+    elif case_id and not case_id.startswith("http") and len(case_id) < 50:
+        return f"{year} {abbrev} [{case_id}]"
+    else:
+        return f"{year} {abbrev} [Precedent Record]"
+
+
 
 # AUTHENTICATION HOOKS
 async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_agent)) -> str:
@@ -1293,7 +1384,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 year_or_date = extract_year_from_citation_or_date(meta.get('date') or meta.get('decision_date') or meta.get('year'), meta.get('citation') or meta.get('neutral_citation'), case_id)
                 title = sanitize_case_title(clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case')))
                 official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
-                neutral_cit = format_neutral_citation(court, official_citation or case_id, year_or_date)
+                neutral_cit = synthesize_canonical_citation(meta)
                 outcome_val = str(meta.get("outcome", "")) or "Undetermined"
                 statutes_val = meta.get("statutes") or []
                 sections_val = meta.get("sections") or []
@@ -1326,7 +1417,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 case_id = str(meta.get('case_id', ''))
                 title = sanitize_case_title(clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Precedent on Record')) or 'Precedent on Record')))
                 official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
-                neutral_cit = format_neutral_citation(court, official_citation or case_id, year_or_date)
+                neutral_cit = synthesize_canonical_citation(meta)
                 preview_snippet = text_content[:180] + "..."
                 cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
                 cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
@@ -1408,7 +1499,7 @@ HOW YOU WORK:
         # Force-feed pre-intercepted precedent card into response payload & LLM context
         grounding_message = ""
         if intercepted_card:
-            c_cit = intercepted_card.get("neutral_citation") or intercepted_card.get("case_id") or user_prompt
+            c_cit = synthesize_canonical_citation(intercepted_card)
             c_title = sanitize_case_title(intercepted_card.get("case_title") or "Reported Precedent")
             c_name = clean_court_name(intercepted_card.get("court_name") or "Court of Record", title=c_title, case_id=str(c_cit))
             c_text = (intercepted_card.get("full_text") or "")[:4000]
