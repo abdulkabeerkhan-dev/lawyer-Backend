@@ -55,6 +55,10 @@ if os.environ.get("SENTRY_DSN"):
 
 app = FastAPI(title="SECTION AI - Legal Intelligence Platform")
 
+@app.get("/health")
+def health_check():
+    return {"status": "ok", "healthy": True}
+
 # CORS ORIGIN ALLOWLIST
 ALLOWED_ORIGINS = [o.strip() for o in os.environ.get("ALLOWED_ORIGINS", "").split(",") if o.strip()]
 if not ALLOWED_ORIGINS:
@@ -1058,11 +1062,14 @@ async def verify_admin_role(authenticated_user_id: str = Depends(verify_clerk_se
         
     if not supabase:
         raise HTTPException(status_code=500, detail="Database connection is currently offline.")
-    profile_query = supabase.table("users").select("role").eq("id", authenticated_user_id).execute()
-    if profile_query.data and len(profile_query.data) > 0:
-        first_row = profile_query.data[0]
-        if isinstance(first_row, dict) and first_row.get("role") == "admin":
-            return authenticated_user_id
+    try:
+        profile_query = safe_supabase_query(lambda: supabase.table("users").select("role").eq("id", authenticated_user_id).execute())
+        if profile_query.data and len(profile_query.data) > 0:
+            first_row = profile_query.data[0]
+            if isinstance(first_row, dict) and first_row.get("role") == "admin":
+                return authenticated_user_id
+    except Exception as e:
+        print(f"⚠️ verify_admin_role check warning: {e}", file=sys.stderr)
             
     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access Denied: Administrative permissions required.")
 
@@ -2568,28 +2575,28 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
     if not supabase: 
         return {"status": "offline", "user": {"id": authenticated_user_id, "email": payload.email, "full_name": payload.full_name, "role": "associate"}}
     try:
-        profile_query = supabase.table("users").select("*").eq("id", authenticated_user_id).execute()
+        profile_query = safe_supabase_query(lambda: supabase.table("users").select("*").eq("id", authenticated_user_id).execute())
         if profile_query.data and len(profile_query.data) > 0:
             existing_user = profile_query.data[0]
             if existing_user.get("full_name") != payload.full_name or existing_user.get("email") != payload.email:
-                updated_profile = supabase.table("users").update({
+                updated_profile = safe_supabase_query(lambda: supabase.table("users").update({
                     "full_name": payload.full_name,
                     "email": payload.email
-                }).eq("id", authenticated_user_id).execute()
+                }).eq("id", authenticated_user_id).execute())
                 res_data = updated_profile.data[0] if (updated_profile.data and len(updated_profile.data) > 0) else existing_user
                 return {"status": "updated", "user": res_data}
             return {"status": "exists", "user": existing_user}
             
-        email_query = supabase.table("users").select("*").eq("email", payload.email).execute()
+        email_query = safe_supabase_query(lambda: supabase.table("users").select("*").eq("email", payload.email).execute())
         if email_query.data and len(email_query.data) > 0:
             legacy_user = email_query.data[0]
             legacy_role = legacy_user.get("role", "associate")
             try:
-                upd = supabase.table("users").update({
+                upd = safe_supabase_query(lambda: supabase.table("users").update({
                     "id": authenticated_user_id,
                     "full_name": payload.full_name,
                     "role": legacy_role
-                }).eq("email", payload.email).execute()
+                }).eq("email", payload.email).execute())
                 if upd.data and len(upd.data) > 0:
                     return {"status": "updated", "user": upd.data[0]}
             except Exception:
@@ -2597,7 +2604,7 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
 
         assigned_role = "associate"
         try:
-            access_check = supabase.table("access_requests").select("status").eq("email", payload.email).execute()
+            access_check = safe_supabase_query(lambda: supabase.table("access_requests").select("status").eq("email", payload.email).execute())
             if access_check.data and len(access_check.data) > 0:
                 status_val = access_check.data[0].get("status")
                 if status_val == "admin_approved":
@@ -2611,7 +2618,7 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
             "full_name": payload.full_name,
             "role": assigned_role
         }
-        inserted_profile = supabase.table("users").upsert(new_row).execute()
+        inserted_profile = safe_supabase_query(lambda: supabase.table("users").upsert(new_row).execute())
         user_res = inserted_profile.data[0] if (inserted_profile.data and len(inserted_profile.data) > 0) else new_row
         return {"status": "created", "user": user_res}
     except Exception as e:
