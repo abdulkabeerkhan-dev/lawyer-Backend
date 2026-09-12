@@ -989,90 +989,52 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 provincial_target = "balochistan"
 
             boosted_matches = []
-            if cit_match:
-                extracted_cit = cit_match.group(1).strip()
-                norm_cit_space = re.sub(r'\s+', ' ', extracted_cit)
-                norm_cit_underscore = re.sub(r'[\s_\-]+', '_', extracted_cit)
-                try:
-                    if supabase:
-                        # 1. Try fast indexed case_id & neutral_citation lookup FIRST (0.01s execution time)
-                        raw_cit_underscore = re.sub(r'[\s_\-]+', '_', extracted_cit)
-                        norm_cit_upper_underscore = re.sub(r'[\s_\-]+', '_', extracted_cit.upper())
-                        norm_cit_upper_space = re.sub(r'\s+', ' ', extracted_cit.upper())
+            try:
+                intercepted_row, clean_topic_extracted = extract_and_intercept_citation(search_query)
+                rows = [intercepted_row] if intercepted_row else []
+                
+                # Try citation_crosswalk table safely if full_judgments had no direct hits
+                if not rows and cit_match:
+                    extracted_cit = cit_match.group(1).strip()
+                    norm_cit_space = re.sub(r'\s+', ' ', extracted_cit)
+                    try:
+                        res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{norm_cit_space}%").limit(3).execute()
+                        if res_cw and res_cw.data:
+                            for cw_row in res_cw.data:
+                                fj = cw_row.get("full_judgments") or {}
+                                if fj:
+                                    rows.append(fj)
+                    except Exception:
+                        pass
 
-                        res_supa = supabase.table("full_judgments").select("*").eq("case_id", norm_cit_upper_underscore).limit(3).execute()
-                        if not res_supa.data and raw_cit_underscore != norm_cit_upper_underscore:
-                            res_supa = supabase.table("full_judgments").select("*").eq("case_id", raw_cit_underscore).limit(3).execute()
-                        if not res_supa.data:
-                            res_supa = supabase.table("full_judgments").select("*").eq("neutral_citation", norm_cit_space).limit(3).execute()
-                        if not res_supa.data and norm_cit_upper_space != norm_cit_space:
-                            res_supa = supabase.table("full_judgments").select("*").eq("neutral_citation", norm_cit_upper_space).limit(3).execute()
-
-                        rows = res_supa.data if res_supa and res_supa.data else []
-
-                        # 2. Try citation_crosswalk table safely if full_judgments had no direct hits
-                        if not rows:
-                            try:
-                                res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{norm_cit_space}%").limit(3).execute()
-                                if res_cw and res_cw.data:
-                                    for cw_row in res_cw.data:
-                                        fj = cw_row.get("full_judgments") or {}
-                                        if fj:
-                                            rows.append(fj)
-                            except Exception:
-                                pass
-
-                        # 3. Try Standalone Party Name Fallback if full_judgments & crosswalk had no direct hits
-                        if not rows:
-                            clean_text = CITATION_REGEX.sub(' ', search_query or '')
-                            clean_text = re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!]', ' ', clean_text)
-                            STOPWORDS = {
-                                "search", "database", "find", "precedents", "precedent", "case", "law",
-                                "regarding", "on", "for", "lookup", "check", "the", "in", "vs", "v",
-                                "versus", "against", "show", "get", "fetch", "about", "with", "please",
-                                "state", "etc", "honorable", "justice"
+                if rows:
+                    for row in rows:
+                        c_cit = row.get("neutral_citation") or row.get("case_id") or search_query
+                        c_title = sanitize_case_title(row.get("case_title") or row.get("title") or "Reported Precedent")
+                        print(f"--> [TOOL INTERCEPT HIT]: Found {c_cit} ({c_title})", flush=True)
+                        c_name = row.get("court_name") or row.get("court")
+                        if not c_name or c_name == "Court of Record":
+                            c_name = "Supreme Court of Pakistan" if "SCMR" in str(c_cit).upper() else "High Court"
+                        boosted_matches.append({
+                            "score": 0.99,
+                            "is_boosted": True,
+                            "metadata": {
+                                "is_boosted": True,
+                                "case_id": row.get("case_id") or row.get("id") or c_cit,
+                                "canonical_id": row.get("case_id") or c_cit,
+                                "title": c_title,
+                                "court": c_name,
+                                "citation": c_cit,
+                                "date": str(row.get("decision_date") or row.get("year") or ""),
+                                "text": (row.get("full_text") or "")[:3500],
+                                "pdf_url": None,
+                                "outcome": "Verified Precedent",
+                                "statutes": []
                             }
-                            words = [w.strip() for w in clean_text.split() if w.strip().lower() not in STOPWORDS]
-                            clean_party = " ".join(words).strip()
-                            if len(clean_party) >= 3:
-                                try:
-                                    res_title = supabase.table("full_judgments").select("*").ilike("case_title", f"%{clean_party}%").limit(10).execute()
-                                    if res_title and res_title.data:
-                                        party_rows = res_title.data
-                                        sc_rows = [r for r in party_rows if "supreme court" in str(r.get("court_name") or r.get("court") or "").lower()]
-                                        if sc_rows:
-                                            sc_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
-                                            rows = sc_rows[:3]
-                                        else:
-                                            party_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
-                                            rows = party_rows[:3]
-                                except Exception as p_err:
-                                    print(f"⚠️ Standalone party search error: {p_err}", file=sys.stderr, flush=True)
+                        })
+            except Exception as cit_db_err:
+                print(f"⚠️ Direct citation DB lookup notice: {cit_db_err}", file=sys.stderr, flush=True)
 
-                        if rows:
-                            for row in rows:
-                                c_name = row.get("court_name") or row.get("court")
-                                if not c_name or c_name == "Court of Record":
-                                    c_name = "Supreme Court of Pakistan" if "SCMR" in extracted_cit.upper() else "High Court"
-                                boosted_matches.append({
-                                    "score": 0.99,
-                                    "is_boosted": True,
-                                    "metadata": {
-                                        "is_boosted": True,
-                                        "case_id": row.get("case_id") or row.get("id") or extracted_cit,
-                                        "canonical_id": row.get("case_id") or extracted_cit,
-                                        "title": sanitize_case_title(row.get("case_title") or row.get("title") or "Reported Precedent"),
-                                        "court": c_name,
-                                        "citation": row.get("neutral_citation") or extracted_cit,
-                                        "date": str(row.get("decision_date") or row.get("year") or ""),
-                                        "text": (row.get("full_text") or "")[:3500],
-                                        "pdf_url": row.get("pdf_url"),
-                                        "outcome": "Verified Precedent",
-                                        "statutes": []
-                                    }
-                                })
-                except Exception as cit_db_err:
-                    print(f"⚠️ Direct citation DB lookup notice: {cit_db_err}")
 
             # Prepare clean legal topic query for Voyage embedding (strip citation numbers if present)
             embedding_query = search_query
@@ -2094,6 +2056,9 @@ async def execute_legal_query(
     background_tasks: BackgroundTasks,
     authenticated_user_id: str = Depends(verify_clerk_session)
 ):
+    print("=" * 60, flush=True)
+    print(f"--> [LIVE REQUEST BODY]: query_text='{request.query_text}'", flush=True)
+    print("=" * 60, flush=True)
     cleanup_old_jobs()
     images_list = request.images or []
     check_user_quota(authenticated_user_id, num_images_requested=len(images_list))
