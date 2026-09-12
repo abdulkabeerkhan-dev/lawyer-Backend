@@ -679,6 +679,9 @@ def cleanup_old_jobs():
 
 async def process_query_job(job_id: str, request: QueryRequest, authenticated_user_id: str):
     try:
+        print(f"--> [SEARCH ENDPOINT] Query received: '{request.query_text}'", flush=True)
+        intercepted_card, clean_topic = extract_and_intercept_citation(request.query_text)
+        print(f"--> [SEARCH ENDPOINT] Card returned: {bool(intercepted_card)}", flush=True)
         print(f"🚀 [JOB {job_id}] Starting query execution...", file=sys.stderr, flush=True)
 
         def clean_base64_data(base64_str: str) -> str:
@@ -1275,13 +1278,13 @@ HOW YOU WORK:
 
         messages = history_msgs + [current_user_message]
 
-        # Deterministic Search Gatekeeper: Force search execution BEFORE round 0 if query has citation or search command
+        # Deterministic Search Gatekeeper: Mandatory entrypoint guard (forces search execution if intercepted_card, citation, or search command)
         cit_gate_match = re.search(r'\b(?:19|20)\d{2}\s*(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*\d+\b', effective_user_query, re.IGNORECASE)
         query_lower_gate = effective_user_query.lower()
         is_search_command = any(kw in query_lower_gate for kw in ["search database", "find precedent", "check citation", "search case law", "lookup judgment"])
 
-        if (cit_gate_match or is_search_command) and search_call_count["n"] == 0:
-            print(f"🔒 [GATEKEEPER] Auto-executing search_case_law for citation/query: {effective_user_query}", file=sys.stderr)
+        if (intercepted_card or cit_gate_match or is_search_command) and search_call_count["n"] == 0:
+            print(f"🔒 [GATEKEEPER] Mandatory auto-executing search_case_law for query: '{effective_user_query}'", file=sys.stderr, flush=True)
             search_res = await run_case_law_search(effective_user_query)
             tool_call_id = f"toolu_gate_{uuid.uuid4().hex[:8]}"
             messages.append({
