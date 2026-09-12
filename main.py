@@ -99,8 +99,7 @@ VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY")
 VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
-DEV_AUTH_BYPASS_ENABLED = os.environ.get("ENABLE_DEV_AUTH_BYPASS", "false").strip().lower() == "true"
-CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5")
+CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-3-5-sonnet-20241022")
 
 async def get_voyage_embedding(text: str) -> List[float]:
     if not VOYAGE_API_KEY:
@@ -432,6 +431,18 @@ def extract_and_intercept_citation(user_query: str):
         words = [w for w in words if w.lower() not in STOPWORDS]
         candidate_party_name = " ".join(words[:6]).strip()
 
+    # Guard: do not treat legal search terms/topics as party names if no "vs" or "v." is present
+    LEGAL_QUERY_WORDS = {
+        "quash", "quashment", "section", "crpc", "cpc", "order", "interim", "relief", "prima", "facie",
+        "allegations", "transaction", "cheque", "cheques", "dishonoured", "possession", "declaration",
+        "injunction", "partition", "statute", "petition", "appeal", "application", "revision", "suit",
+        "plaint", "written", "statement", "561-a", "561a", "497", "498", "420", "406", "489-f", "489f", "law"
+    }
+    is_legal_topic = any(w.lower() in LEGAL_QUERY_WORDS for w in candidate_party_name.split())
+    has_vs_party = any(v in (user_query or "").lower() for v in [" v.", " v ", " vs.", " vs ", " versus "])
+    if is_legal_topic and not has_vs_party:
+        candidate_party_name = ""
+
     clean_party_name = candidate_party_name if len(candidate_party_name) >= 3 else ""
 
     print(f"--> [DEBUG] Original Query Snippet: '{(user_query or '')[:120]}'", flush=True)
@@ -686,75 +697,85 @@ def extract_case_roles(raw_text: str, fallback_title: str = "") -> dict:
         "defender": "",
         "defender_role": "Respondent / State"
     }
-    
-    header = (raw_text or "")[:1500]
-    
-    # Pattern: [Name] ... (Petitioner/Appellant/Applicant) Versus [Name] ... (Respondent/Defendant/State)
-    vs_split = re.split(r'\b(?:Versus|VS\.?|V\.)\b', header, maxsplit=1, flags=re.IGNORECASE)
-    
-    if len(vs_split) == 2:
-        left, right = vs_split[0], vs_split[1]
+    try:
+        header = (raw_text or "")[:1500]
         
-        # 1. Parse Initiator Role
-        init_role_match = re.search(r'\b(Petitioner|Appellant|Applicant|Plaintiff)s?\b', left, re.IGNORECASE)
-        if init_role_match:
-            roles["initiator_role"] = init_role_match.group(1).title()
+        # Pattern: [Name] ... (Petitioner/Appellant/Applicant) Versus [Name] ... (Respondent/Defendant/State)
+        vs_split = re.split(r'\b(?:Versus|VS\.?|V\.)\b', header, maxsplit=1, flags=re.IGNORECASE)
         
-        # Clean Initiator Name
-        left_clean = re.sub(r'(?i)\b(?:Before|Justice|Mr\.|Messrs|J\.|Petitioners?|Appellants?|Applicants?|Plaintiffs?)\b', '', left)
-        left_clean = re.sub(r'[^a-zA-Z\s\.\,\(\)]', ' ', left_clean)
-        clean_init = " ".join(left_clean.split())
-        roles["initiator"] = clean_init[:60].strip().title() if clean_init else ""
-
-        # 2. Parse Defender Role
-        def_role_match = re.search(r'\b(Respondent|Defendant|State|Complainant)s?\b', right, re.IGNORECASE)
-        if def_role_match:
-            roles["defender_role"] = def_role_match.group(1).title()
+        if len(vs_split) == 2:
+            left, right = vs_split[0], vs_split[1]
             
-        # Clean Defender Name
-        right_clean = re.sub(r'(?i)\b(?:Respondents?|Defendants?|through\s+.*|Advocate.*)\b', '', right)
-        right_clean = re.sub(r'[^a-zA-Z\s\.\,\(\)]', ' ', right_clean)
-        clean_def = " ".join(right_clean.split())
-        roles["defender"] = clean_def[:60].strip().title() if clean_def else ""
+            # 1. Parse Initiator Role
+            init_role_match = re.search(r'\b(Petitioner|Appellant|Applicant|Plaintiff)s?\b', left, re.IGNORECASE)
+            if init_role_match:
+                roles["initiator_role"] = init_role_match.group(1).title()
+            
+            # Clean Initiator Name
+            left_clean = re.sub(r'(?i)\b(?:Before|Justice|Mr\.|Messrs|J\.|Petitioners?|Appellants?|Applicants?|Plaintiffs?)\b', '', left)
+            left_clean = re.sub(r'[^a-zA-Z\s\.\,\(\)]', ' ', left_clean)
+            clean_init = " ".join(left_clean.split())
+            roles["initiator"] = clean_init[:60].strip().title() if clean_init else ""
 
-    # Fallback to splitting existing case_title if header parsing yields empty strings
-    if not roles["initiator"] and fallback_title:
-        fb_clean = fallback_title.strip()
-        vs_fb = re.split(r'\s+(?:v\.?|vs\.?|versus)\s+', fb_clean, maxsplit=1, flags=re.IGNORECASE)
-        if len(vs_fb) == 2:
-            roles["initiator"] = vs_fb[0].strip().title()
-            roles["defender"] = vs_fb[1].strip().title() if vs_fb[1].strip() else "The State"
+            # 2. Parse Defender Role
+            def_role_match = re.search(r'\b(Respondent|Defendant|State|Complainant)s?\b', right, re.IGNORECASE)
+            if def_role_match:
+                roles["defender_role"] = def_role_match.group(1).title()
+                
+            # Clean Defender Name
+            right_clean = re.sub(r'(?i)\b(?:Respondents?|Defendants?|through\s+.*|Advocate.*)\b', '', right)
+            right_clean = re.sub(r'[^a-zA-Z\s\.\,\(\)]', ' ', right_clean)
+            clean_def = " ".join(right_clean.split())
+            roles["defender"] = clean_def[:60].strip().title() if clean_def else ""
+
+        # Fallback to splitting existing case_title if header parsing yields empty strings
+        if not roles["initiator"] and fallback_title:
+            fb_clean = fallback_title.strip()
+            vs_fb = re.split(r'\s+(?:v\.?|vs\.?|versus)\s+', fb_clean, maxsplit=1, flags=re.IGNORECASE)
+            if len(vs_fb) == 2:
+                roles["initiator"] = vs_fb[0].strip().title()
+                roles["defender"] = vs_fb[1].strip().title() if vs_fb[1].strip() else "The State"
+    except Exception as parse_err:
+        print(f"⚠️ extract_case_roles fallback triggered: {parse_err}", file=sys.stderr)
+        if fallback_title:
+            vs_fb = re.split(r'\s+(?:v\.?|vs\.?|versus)\s+', fallback_title.strip(), maxsplit=1, flags=re.IGNORECASE)
+            if len(vs_fb) == 2:
+                roles["initiator"] = vs_fb[0].strip().title()
+                roles["defender"] = vs_fb[1].strip().title()
 
     return roles
 
 def extract_operative_order(raw_text: str) -> str:
-    if not raw_text:
-        return "Decided on merits."
+    try:
+        if not raw_text:
+            return "Decided on merits."
 
-    # Look at the final 800 characters where orders conclude
-    tail = raw_text.strip()[-800:]
-    
-    # Strip OCR/trailing artifacts (e.g. ????? or editor codes like H.B.T./131/P)
-    tail = re.sub(r'[\?]{2,}', '', tail)
-    tail = re.sub(r'[A-Z]\.[A-Z]\.[A-Z]\.[\w\/\-]+', '', tail)
+        # Look at the final 800 characters where orders conclude
+        tail = raw_text.strip()[-800:]
+        
+        # Strip OCR/trailing artifacts (e.g. ????? or editor codes like H.B.T./131/P)
+        tail = re.sub(r'[\?]{2,}', '', tail)
+        tail = re.sub(r'[A-Z]\.[A-Z]\.[A-Z]\.[\w\/\-]+', '', tail)
 
-    # Search for decisive operative sentences
-    operative_patterns = [
-        r'((?:For the (?:foregoing )?reasons|In view of the above|Under these circumstances).*?\b(?:dismissed|allowed|quashed|accepted|granted|refused)\b.*?\.)',
-        r'(\b(?:Bail\s+is\s+(?:hereby\s+)?(?:granted|refused|allowed|cancelled)|F\.?I\.?R\.?\s+is\s+quashed|Petition\s+(?:is\s+)?(?:dismissed|allowed)|Appeal\s+(?:is\s+)?(?:accepted|dismissed))\b.*?\.)',
-        r'(\bOrder accordingly\b\.?)',
-    ]
+        # Search for decisive operative sentences
+        operative_patterns = [
+            r'((?:For the (?:foregoing )?reasons|In view of the above|Under these circumstances).*?\b(?:dismissed|allowed|quashed|accepted|granted|refused)\b.*?\.)',
+            r'(\b(?:Bail\s+is\s+(?:hereby\s+)?(?:granted|refused|allowed|cancelled)|F\.?I\.?R\.?\s+is\s+quashed|Petition\s+(?:is\s+)?(?:dismissed|allowed)|Appeal\s+(?:is\s+)?(?:accepted|dismissed))\b.*?\.)',
+            r'(\bOrder accordingly\b\.?)',
+        ]
 
-    for pat in operative_patterns:
-        match = re.search(pat, tail, flags=re.IGNORECASE | re.DOTALL)
-        if match:
-            clean_res = " ".join(match.group(1).split())
-            return clean_res[:200].strip()
+        for pat in operative_patterns:
+            match = re.search(pat, tail, flags=re.IGNORECASE | re.DOTALL)
+            if match:
+                clean_res = " ".join(match.group(1).split())
+                return clean_res[:200].strip()
 
-    # Fallback: take the very last clean sentence
-    sentences = [s.strip() for s in tail.split('.') if len(s.strip()) > 15]
-    if sentences:
-        return sentences[-1].strip() + "."
+        # Fallback: take the very last clean sentence
+        sentences = [s.strip() for s in tail.split('.') if len(s.strip()) > 15]
+        if sentences:
+            return sentences[-1].strip() + "."
+    except Exception as parse_err:
+        print(f"⚠️ extract_operative_order fallback triggered: {parse_err}", file=sys.stderr)
 
     return "Order passed on merits."
 
@@ -1478,11 +1499,13 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 "fio 2001", "financial institutions", "leave to defend", "cheque dishonour civil",
                 "plaint", "written statement", "civil revision", "115 cpc", "civil court"
             ]
-            is_non_criminal = any(k in sq_lower for k in NON_CRIMINAL_KEYWORDS)
-            is_criminal_override = any(k in sq_lower for k in [
-                "fir", "quash", "420", "406", "489-f", "489f", "crpc", "561-a", "561a",
-                "criminal", "article 199", "writ petition quashing", "nab", "anti-corruption"
-            ])
+            CRIMINAL_KEYWORDS = [
+                "fir", "quash", "quashing", "quashment", "420", "406", "489-f", "489f", "crpc", "561-a", "561a", "561",
+                "criminal", "article 199", "writ petition quashing", "nab", "anti-corruption", "bail", "497", "498", "ppc", "challan", "prosecution", "accused"
+            ]
+            query_combined_text = f"{sq_lower} {effective_user_query.lower()}"
+            is_explicitly_criminal = any(k in query_combined_text for k in CRIMINAL_KEYWORDS)
+            is_non_criminal = (not is_explicitly_criminal) and any(k in query_combined_text for k in NON_CRIMINAL_KEYWORDS)
 
             filtered_matches = []
             seen_in_query = set()
@@ -1503,7 +1526,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     if is_secp_or_corporate_query and any(cr in case_title_str for cr in CRIMINAL_NAB_MARKERS):
                         continue
                     # Strict Non-Criminal / Civil / Family query hygiene: filter out criminal state cases ("v. The State" / "vs The State")
-                    if is_non_criminal and not is_criminal_override:
+                    if is_non_criminal and not is_explicitly_criminal:
                         is_state_criminal_case = (
                             case_title_str.endswith("v. the state") or
                             case_title_str.endswith("vs. state") or
