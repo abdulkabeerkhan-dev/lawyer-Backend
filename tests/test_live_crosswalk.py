@@ -47,5 +47,26 @@ class TestLiveCrosswalk(unittest.TestCase):
         self.assertEqual(rec.get("neutral_citation"), "2021 SCMR 2092")
         self.assertIn("muhammad nasir shafique", rec.get("case_title", "").lower(), "Case title mismatch for 2021 SCMR 2092")
 
+    def test_sanitize_case_title(self):
+        """Test sanitize_case_title strips raw scraper artifacts, citations, and court tags."""
+        from main import sanitize_case_title
+        raw_1 = "339\t2021 SCMR 2092\tMUHAMMAD NASIR SHAFIQUE VS State- Honorable Justice Sayyed Mazahar Ali Akbar Naqvi"
+        self.assertEqual(sanitize_case_title(raw_1), "Muhammad Nasir Shafique v. The State")
+
+        raw_2 = "NOOR AHMED VS THE STATE ETC., High Court of Sindh - LAHORE-HIGH-COURT"
+        self.assertEqual(sanitize_case_title(raw_2), "Noor Ahmed v. The State Etc., High Court Of Sindh")
+
+        raw_3 = "Doctor Faqir Nawaz Vs Aurangzeb etc - PESHAWAR-HIGH-COURT"
+        self.assertEqual(sanitize_case_title(raw_3), "Doctor Faqir Nawaz v. Aurangzeb Etc")
+
+    def test_extract_and_intercept_citation(self):
+        """Test extract_and_intercept_citation correctly identifies citation and clean topic."""
+        from main import extract_and_intercept_citation
+        row, clean_topic = extract_and_intercept_citation("Search database for 2021 SCMR 2092")
+        self.assertEqual(clean_topic, "")
+        if row:
+            self.assertIn("nasir", row.get("case_title", "").lower())
+
 if __name__ == "__main__":
     unittest.main()
+

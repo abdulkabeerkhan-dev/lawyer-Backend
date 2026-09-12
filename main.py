@@ -300,6 +300,76 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
 
     return f"{court_clean} — {ident_clean}{year_fmt}"
 
+def sanitize_case_title(raw_title: str) -> str:
+    """
+    Sanitizes party titles:
+    - Strips leading page numbers ('339 '), reporter citations ('2021 SCMR 2092 ')
+    - Strips judge suffixes ('- Honorable Justice Sayyed Mazahar Ali Akbar Naqvi')
+    - Strips advocate names and trailing court tags ('SUPREME-COURT')
+    - Standardizes 'VS' / 'VERSUS' to 'v.'
+    """
+    if not raw_title:
+        return "Untitled Case"
+
+    t = str(raw_title).replace("\t", " ").strip()
+    t = re.sub(r'^\d+\s+(?:(?:19|20)\d{2}\s+[A-Za-z0-9\(\)\s]+\s+\d+\s+)?', '', t, flags=re.IGNORECASE)
+    t = re.sub(r'^(?:(?:19|20)\d{2}\s+(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+\s+)', '', t, flags=re.IGNORECASE)
+    t = re.sub(r'\s*[\-\t]?\s*(?:SUPREME-COURT|HIGH-COURT|SINDH-HIGH-COURT|LAHORE-HIGH-COURT|PESHAWAR-HIGH-COURT|BALOCHISTAN-HIGH-COURT|ISLAMABAD-HIGH-COURT|GILGIT-BALTISTAN\s+CHIEF\s+COURT)\s*$', '', t, flags=re.IGNORECASE)
+    t = re.sub(r'\s*-\s*(?:Honorable\s+)?Justice.*$', '', t, flags=re.IGNORECASE)
+    t = re.sub(r'\s*-\s*[A-Z][a-z]+\s+[A-Z][a-z]+.*$', '', t)
+    t = re.sub(r'\s+(?:VS\.?|VERSUS|Vs\.?|vs\.?)\s+', ' v. ', t, flags=re.IGNORECASE)
+
+    parts = t.split(' v. ')
+    if len(parts) == 2:
+        p1 = parts[0].strip().title()
+        p2 = parts[1].strip().title()
+        if p2.lower() in ("state", "the state"):
+            p2 = "The State"
+        elif p2.lower().startswith("state"):
+            p2 = "The State"
+        t = f"{p1} v. {p2}"
+    else:
+        t = t.strip().title()
+
+    t = re.sub(r'\s*-\s*$', '', t).strip()
+    return t or "Untitled Case"
+
+CITATION_REGEX = re.compile(
+    r'\b(19\d\d|20\d\d)\s*(SCMR|PLD|CLD|PCrLJ|CLC|MLD|YLR|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*(\d+)\b',
+    re.IGNORECASE
+)
+
+def extract_and_intercept_citation(user_query: str):
+    """
+    Deterministically intercepts exact reporter citations (e.g., '2021 SCMR 2092')
+    directly from Supabase before running vector search.
+    """
+    match = CITATION_REGEX.search(user_query or "")
+    if not match:
+        return None, user_query
+
+    year, journal, page = match.groups()
+    normalized_citation = f"{year} {journal.upper()} {page}"
+
+    clean_topic = CITATION_REGEX.sub('', user_query).strip()
+    clean_topic = re.sub(r'\b(search|database|find|precedents|case law|regarding|on|for|lookup|check)\b', '', clean_topic, flags=re.IGNORECASE).strip()
+
+    norm_cit_underscore = f"{year}_{journal.upper()}_{page}"
+    row = None
+    try:
+        if supabase:
+            res_supa = supabase.table("full_judgments").select("*").eq("case_id", norm_cit_underscore).limit(1).execute()
+            if not res_supa.data:
+                res_supa = supabase.table("full_judgments").select("*").eq("neutral_citation", normalized_citation).limit(1).execute()
+            if not res_supa.data:
+                res_supa = supabase.table("full_judgments").select("*").ilike("neutral_citation", f"%{normalized_citation}%").limit(1).execute()
+            if res_supa.data:
+                row = res_supa.data[0]
+    except Exception as err:
+        print(f"⚠️ Direct citation gatekeeper notice: {err}")
+
+    return row, clean_topic
+
 def clean_markdown_formatting(text: str) -> str:
     if not text:
         return ""
@@ -904,7 +974,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                                         "is_boosted": True,
                                         "case_id": row.get("case_id") or row.get("id") or extracted_cit,
                                         "canonical_id": row.get("case_id") or extracted_cit,
-                                        "title": row.get("case_title") or row.get("title") or "Reported Precedent",
+                                        "title": sanitize_case_title(row.get("case_title") or row.get("title") or "Reported Precedent"),
                                         "court": c_name,
                                         "citation": row.get("neutral_citation") or extracted_cit,
                                         "date": str(row.get("decision_date") or row.get("year") or ""),
@@ -1024,7 +1094,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 text_content = str(meta.get('text', meta.get('text_preview', ''))).strip()
                 court = clean_court_name(str(meta.get('court', 'Unknown Court')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')), text=text_content)
                 year_or_date = str(meta.get('date', '') or meta.get('year', '') or 'Recent')
-                title = clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case'))
+                title = sanitize_case_title(clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case')))
                 official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
                 neutral_cit = format_neutral_citation(court, official_citation or case_id, year_or_date)
                 outcome_val = str(meta.get("outcome", "")) or "Undetermined"
@@ -1056,7 +1126,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 court = clean_court_name(str(meta.get('court', 'Court of Record')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')), text=text_content)
                 year_or_date = str(meta.get('date', '') or meta.get('year', '') or '')
                 case_id = str(meta.get('case_id', ''))
-                title = clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Precedent on Record')) or 'Precedent on Record'))
+                title = sanitize_case_title(clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Precedent on Record')) or 'Precedent on Record')))
                 official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
                 neutral_cit = format_neutral_citation(court, official_citation or case_id, year_or_date)
                 preview_snippet = text_content[:180] + "..."
