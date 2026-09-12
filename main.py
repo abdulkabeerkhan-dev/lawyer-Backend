@@ -1226,14 +1226,16 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             is_commercial_or_criminal_query = any(k in sq_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra", "banking", "recovery", "fio 2001", "leave to defend", "security deposit"])
             is_secp_or_corporate_query = any(k in sq_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance", "12(2)", "section 12", "115 cpc", "civil revision", "42 sra", "specific relief", "fraudulent decree", "stranger", "order xxi", "order 21", "rule 97", "rule 101", "rule 103", "execution", "objection petition", "deemed decree"])
-            is_pure_civil_cpc_query = any(k in sq_lower for k in [
-                "cpc", "order xxxix", "order 39", "rule 1", "rule 2", "specific relief act",
-                "section 42", "declaration", "injunction", "temporary injunction", "plaint",
-                "order vii", "order 7", "civil revision", "115 cpc", "civil court", "partition suit"
-            ])
+            CIVIL_KEYWORDS = [
+                "specific relief", "specific relief act", "section 42", "section 8", "cpc", "order xxxix", "order 39",
+                "rule 1", "rule 2", "order vii", "order 7", "declaration", "possession", "suit for", "injunction",
+                "temporary injunction", "family court", "succession", "partition", "plaint", "written statement",
+                "civil revision", "115 cpc", "civil court", "partition suit"
+            ]
+            is_pure_civil_cpc_query = any(k in sq_lower for k in CIVIL_KEYWORDS)
             is_criminal_override = any(k in sq_lower for k in [
                 "fir", "quash", "420", "406", "489-f", "489f", "crpc", "561-a", "561a",
-                "criminal", "article 199", "writ petition quashing", "nab", "anti-corruption", "the state"
+                "criminal", "article 199", "writ petition quashing", "nab", "anti-corruption"
             ])
 
             filtered_matches = []
@@ -1246,15 +1248,29 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 text_content = strip_control_characters(str(meta.get("text") or meta.get("text_preview") or ""))
                 if not is_boosted and (is_garbled_text(text_content) or is_junk_citation_dump(text_content)):
                     continue
-                case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower()
+                case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower().strip()
+                full_text_str = text_content.lower()
+
                 if not is_boosted:
                     if (is_commercial_or_criminal_query or is_secp_or_corporate_query) and any(pol in case_title_str for pol in POLITICAL_MARKERS):
                         continue
                     if is_secp_or_corporate_query and any(cr in case_title_str for cr in CRIMINAL_NAB_MARKERS):
                         continue
-                    # Pure Civil CPC query hygiene: filter out criminal state cases ("v. The State" / "vs The State")
+                    # Strict Pure Civil query hygiene: filter out criminal state cases ("v. The State" / "vs The State")
                     if is_pure_civil_cpc_query and not is_criminal_override:
-                        if re.search(r'\bv(?:s|\.)?\s*(?:the\s*)?state\b', case_title_str, re.IGNORECASE) or case_title_str.endswith("the state"):
+                        is_state_criminal_case = (
+                            "v. the state" in case_title_str or
+                            "vs. state" in case_title_str or
+                            "v. state" in case_title_str or
+                            "versus state" in case_title_str or
+                            "vs the state" in case_title_str or
+                            case_title_str.endswith("the state") or
+                            case_title_str.endswith("v. state") or
+                            case_title_str.endswith("vs state") or
+                            re.search(r'\bv(?:s|\.)?\s*(?:the\s*)?state\b', case_title_str, re.IGNORECASE) or
+                            ("v. federation of pakistan" in case_title_str and "bail" in full_text_str)
+                        )
+                        if is_state_criminal_case:
                             continue
                 cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
                 cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
