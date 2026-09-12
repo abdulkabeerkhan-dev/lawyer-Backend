@@ -149,42 +149,77 @@ security_agent = HTTPBearer(auto_error=False)
 _clerk_jwks_keys_cache = None
 
 def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", text: str = "", **kwargs) -> str:
-    all_fields = [str(court_name or ""), str(title or ""), str(case_id or ""), str(text or "")]
-    for k, v in kwargs.items():
-        if v:
-            all_fields.append(str(v))
-    combined = " ".join(all_fields).lower()
+    c_raw = str(court_name or "").strip()
+    c_lower = c_raw.lower()
 
-    if any(x in combined for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
-        if "high" in combined: return "High Court of Azad Jammu & Kashmir"
-        if "service tribunal" in combined: return "AJK Service Tribunal"
+    # 1. Inspect explicit court_name input first (do not let text snippet keywords override explicit court metadata)
+    if c_lower and c_lower not in ("unknown", "unknown court", "court of record", "not specified", "none", "high court", "court"):
+        if any(x in c_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
+            if "high" in c_lower: return "High Court of Azad Jammu & Kashmir"
+            if "service tribunal" in c_lower: return "AJK Service Tribunal"
+            return "Supreme Court of Azad Jammu & Kashmir"
+        if "federal shariat" in c_lower or "fsc" in c_lower:
+            return "Federal Shariat Court"
+        if "supreme" in c_lower or "scp" in c_lower or "scmr" in c_lower or " pld sc " in c_lower:
+            return "Supreme Court of Pakistan"
+        if "peshawar" in c_lower or "phc" in c_lower:
+            return "Peshawar High Court"
+        if "lahore" in c_lower or "lhc" in c_lower:
+            return "Lahore High Court"
+        if "sindh" in c_lower or "karachi" in c_lower or "shc" in c_lower:
+            return "High Court of Sindh"
+        if "balochistan" in c_lower or "quetta" in c_lower or "bhc" in c_lower:
+            return "High Court of Balochistan"
+        if "islamabad" in c_lower or "ihc" in c_lower:
+            return "Islamabad High Court"
+
+    # 2. Secondary inspection: title and case_id (docket identifier)
+    docket_and_title = " ".join([str(title or ""), str(case_id or "")]).lower()
+    if any(x in docket_and_title for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
+        if "high" in docket_and_title: return "High Court of Azad Jammu & Kashmir"
+        if "service tribunal" in docket_and_title: return "AJK Service Tribunal"
         return "Supreme Court of Azad Jammu & Kashmir"
-
-    if "federal shariat" in combined or "fsc" in combined:
+    if "federal shariat" in docket_and_title or "fsc" in docket_and_title:
         return "Federal Shariat Court"
-
-    court_raw_lower = str(court_name or "").lower()
-    case_id_lower = str(case_id or "").lower()
-    is_explicit_sc = ("supreme" in court_raw_lower) or ("supreme court of pakistan" in case_id_lower) or (" pld sc " in combined)
-    if is_explicit_sc:
+    if "supreme" in docket_and_title or "scp" in docket_and_title or "scmr" in docket_and_title or " pld sc " in docket_and_title:
         return "Supreme Court of Pakistan"
+    if "peshawar" in docket_and_title or "phc" in docket_and_title:
+        return "Peshawar High Court"
+    if "lahore" in docket_and_title or "lhc" in docket_and_title:
+        return "Lahore High Court"
+    if "sindh" in docket_and_title or "karachi" in docket_and_title or "shc" in docket_and_title:
+        return "High Court of Sindh"
+    if "balochistan" in docket_and_title or "quetta" in docket_and_title or "bhc" in docket_and_title:
+        return "High Court of Balochistan"
+    if "islamabad" in docket_and_title or "ihc" in docket_and_title:
+        return "Islamabad High Court"
 
-    if any(city in combined for city in ("lahore", "karachi", "sindh", "peshawar", "balochistan", "quetta", "islamabad")):
-        if "sindh" in combined or "karachi" in combined: return "High Court of Sindh"
-        if "lahore" in combined: return "Lahore High Court"
-        if "peshawar" in combined: return "Peshawar High Court"
-        if "balochistan" in combined or "quetta" in combined: return "High Court of Balochistan"
-        if "islamabad" in combined: return "Islamabad High Court"
+    # 3. Fallback inspection: text snippet (only checked if court_name, title, and case_id gave no explicit match)
+    text_lower = str(text or "").lower()
+    if any(x in text_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
+        if "high" in text_lower: return "High Court of Azad Jammu & Kashmir"
+        if "service tribunal" in text_lower: return "AJK Service Tribunal"
+        return "Supreme Court of Azad Jammu & Kashmir"
+    if "peshawar high court" in text_lower: return "Peshawar High Court"
+    if "lahore high court" in text_lower: return "Lahore High Court"
+    if "high court of sindh" in text_lower or "sindh high court" in text_lower: return "High Court of Sindh"
+    if "high court of balochistan" in text_lower or "balochistan high court" in text_lower: return "High Court of Balochistan"
+    if "islamabad high court" in text_lower: return "Islamabad High Court"
+    if "supreme court of pakistan" in text_lower: return "Supreme Court of Pakistan"
 
-    if "high court" in combined:
-        return "High Court"
+    if c_raw and c_raw.lower() not in ("unknown", "unknown court", "court of record", "not specified", "none"):
+        return c_raw.strip().title()
 
-    return str(court_name).strip().title() if court_name else "Supreme Court of Pakistan"
+    return "High Court"
 
 def format_neutral_citation(court: str, case_identifier: str, year_or_date: str) -> str:
-    court_clean = clean_court_name(court)
     ident_clean = str(case_identifier).strip() if case_identifier else "Matter on Record"
     date_clean = str(year_or_date).strip() if year_or_date else ""
+
+    if any(hc in ident_clean.lower() for hc in ["high court", "supreme court", "peshawar", "lahore", "sindh", "balochistan", "islamabad"]):
+        court_clean = clean_court_name("", case_id=ident_clean)
+    else:
+        court_clean = clean_court_name(court, case_id=ident_clean)
 
     JOURNAL_RE = r'(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC\s*\(CS\)|PLC|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)'
     CANONICAL_JOURNALS = {
@@ -258,6 +293,9 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
 
     year_match = re.search(r'\b(19\d{2}|20\d{2})\b', date_clean)
     year_fmt = f" ({year_match.group(1)})" if year_match and year_match.group(1) not in ident_clean else ""
+
+    if court_clean.lower() in ident_clean.lower():
+        return f"{ident_clean}{year_fmt}"
 
     return f"{court_clean} — {ident_clean}{year_fmt}"
 
@@ -786,7 +824,19 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             search_query = _expand_legal_shorthand(raw_search_query or effective_user_query)
             sq_lower = search_query.lower()
 
-            target_source = None
+            # Direct Reporter Citation Pattern Extract & Supreme Court Target Enforcement
+            cit_match = re.search(
+                r'\b((?:19|20)\d{2}\s+(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+)\b',
+                search_query,
+                re.IGNORECASE
+            )
+            if cit_match:
+                extracted_cit = cit_match.group(1).strip()
+                if any(sc_kw in extracted_cit.upper() for sc_kw in ["SCMR", "PLD SC"]):
+                    target_source = "Supreme Court of Pakistan"
+            elif any(sc_kw in sq_lower for sc_kw in ["scmr", "pld sc", "supreme court", "scp"]):
+                target_source = "Supreme Court of Pakistan"
+
             filter_hint = (court_filter or "").lower().strip()
             for canonical, aliases in COURT_ALIASES.items():
                 if filter_hint and (filter_hint in canonical.lower() or any(a in filter_hint for a in aliases)):
@@ -811,6 +861,42 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             elif any(city in sq_lower for city in ["quetta", "balochistan"]):
                 provincial_target = "balochistan"
 
+            boosted_matches = []
+            if cit_match:
+                extracted_cit = cit_match.group(1).strip()
+                norm_cit_space = re.sub(r'\s+', ' ', extracted_cit)
+                norm_cit_underscore = re.sub(r'[\s_\-]+', '_', extracted_cit)
+                try:
+                    if supabase:
+                        res_supa = supabase.table("full_judgments").select("*").eq("neutral_citation", norm_cit_space).limit(3).execute()
+                        if not res_supa.data:
+                            res_supa = supabase.table("full_judgments").select("*").ilike("case_id", f"%{norm_cit_underscore}%").limit(3).execute()
+                        if not res_supa.data:
+                            res_supa = supabase.table("full_judgments").select("*").ilike("case_title", f"%{norm_cit_space}%").limit(3).execute()
+                        
+                        if res_supa.data:
+                            for row in res_supa.data:
+                                c_name = row.get("court_name") or row.get("court")
+                                if not c_name or c_name == "Court of Record":
+                                    c_name = "Supreme Court of Pakistan" if "SCMR" in extracted_cit.upper() else "High Court"
+                                boosted_matches.append({
+                                    "score": 0.99,
+                                    "metadata": {
+                                        "case_id": row.get("case_id") or row.get("id") or extracted_cit,
+                                        "canonical_id": row.get("case_id") or extracted_cit,
+                                        "title": row.get("case_title") or row.get("title") or "Reported Precedent",
+                                        "court": c_name,
+                                        "citation": row.get("neutral_citation") or extracted_cit,
+                                        "date": str(row.get("decision_date") or row.get("year") or ""),
+                                        "text": (row.get("full_text") or "")[:3500],
+                                        "pdf_url": row.get("pdf_url"),
+                                        "outcome": "Verified Precedent",
+                                        "statutes": []
+                                    }
+                                })
+                except Exception as cit_db_err:
+                    print(f"⚠️ Direct citation DB lookup notice: {cit_db_err}")
+
             try:
                 voyage_model = os.environ.get("VOYAGE_MODEL", "voyage-law-2")
                 if not VOYAGE_API_KEY:
@@ -833,47 +919,14 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     namespace="judgments", vector=query_vector, top_k=query_top_k, include_metadata=True
                 )
                 matches_list = raw_matches.get("matches", []) if isinstance(raw_matches, dict) else getattr(raw_matches, "matches", []) or []
+                if boosted_matches:
+                    matches_list = boosted_matches + matches_list
             except Exception as search_err:
                 print(f"⚠️ [JOB {job_id}] case-law search failed: {search_err}", file=sys.stderr)
-                return "Search tool error: the judgment database could not be reached. Answer using your own knowledge of Pakistani statute and settled principles, and tell the advocate that live case-law verification was unavailable."
-
-            # Direct Reporter Citation Extract & Supabase Boost
-            cit_match = re.search(
-                r'\b((?:19|20)\d{2}\s+(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+)\b',
-                search_query,
-                re.IGNORECASE
-            )
-            if cit_match:
-                extracted_cit = cit_match.group(1).strip()
-                try:
-                    if supabase:
-                        res_supa = supabase.table("full_judgments").select("*").ilike("reported_citation", f"%{extracted_cit}%").limit(3).execute()
-                        if not res_supa.data:
-                            res_supa = supabase.table("full_judgments").select("*").ilike("neutral_citation", f"%{extracted_cit}%").limit(3).execute()
-                        if not res_supa.data:
-                            res_supa = supabase.table("full_judgments").select("*").ilike("canonical_id", f"%{re.sub(r'\\s+', '_', extracted_cit)}%").limit(3).execute()
-                        
-                        if res_supa.data:
-                            boosted_items = []
-                            for row in res_supa.data:
-                                boosted_items.append({
-                                    "score": 0.99,
-                                    "metadata": {
-                                        "case_id": row.get("case_id") or row.get("canonical_id") or row.get("id") or extracted_cit,
-                                        "canonical_id": row.get("canonical_id") or row.get("case_id"),
-                                        "title": row.get("title") or row.get("case_title") or "Reported Precedent",
-                                        "court": row.get("court") or "Supreme Court of Pakistan",
-                                        "citation": row.get("reported_citation") or row.get("neutral_citation") or extracted_cit,
-                                        "date": row.get("date") or row.get("year") or "",
-                                        "text": (row.get("full_text") or "")[:3000],
-                                        "pdf_url": row.get("pdf_url"),
-                                        "outcome": row.get("outcome") or "Verified Precedent",
-                                        "statutes": row.get("statutes", []) if isinstance(row.get("statutes"), list) else []
-                                    }
-                                })
-                            matches_list = boosted_items + matches_list
-                except Exception as cit_db_err:
-                    print(f"⚠️ Direct citation DB lookup notice: {cit_db_err}")
+                if boosted_matches:
+                    matches_list = boosted_matches
+                else:
+                    return "Search tool error: the judgment database could not be reached. Answer using your own knowledge of Pakistani statute and settled principles, and tell the advocate that live case-law verification was unavailable."
 
             def _passes_source_filter(meta, target):
                 normalized_court = clean_court_name(

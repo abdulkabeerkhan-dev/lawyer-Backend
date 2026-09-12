@@ -300,54 +300,68 @@ def clean_repeated_phrases(text: str) -> str:
 
 
 def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", text: str = "", **kwargs) -> str:
-    all_fields = [str(court_name or ""), str(title or ""), str(case_id or ""), str(text or "")]
-    for k, v in kwargs.items():
-        if v:
-            all_fields.append(str(v))
-    c_lower = " ".join(all_fields).lower()
+    c_raw = str(court_name or "").strip()
+    c_lower = c_raw.lower()
 
-    # AJK (Azad Jammu & Kashmir) courts are a SEPARATE jurisdiction from mainland Pakistan's
-    # judiciary and must never collapse into "Supreme Court of Pakistan" / "<Province> High Court"
-    if any(x in c_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
-        if "supreme" in c_lower or "scp" in c_lower:
+    # 1. Inspect explicit court_name input first (do not let text snippet keywords override explicit court metadata)
+    if c_lower and c_lower not in ("unknown", "unknown court", "court of record", "not specified", "none", "high court", "court"):
+        if any(x in c_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
+            if "high" in c_lower: return "High Court of Azad Jammu & Kashmir"
+            if "service tribunal" in c_lower: return "AJK Service Tribunal"
             return "Supreme Court of Azad Jammu & Kashmir"
-        if "high" in c_lower:
-            return "High Court of Azad Jammu & Kashmir"
-        if "service tribunal" in c_lower:
-            return "AJK Service Tribunal"
-        return "Supreme Court of Azad Jammu & Kashmir"
-
-    is_sc = any(x in c_lower for x in ("scmr", " pld sc ", " supreme "))
-    court_name = re.sub(r'\b\d{4}\s+[A-Za-z]+\s+\d+\b', '', court_name, flags=re.IGNORECASE)
-    court_name = re.sub(r'\b\d{4}\b', '', court_name)
-    court_name = court_name.replace('-', ' ')
-    court_name = re.sub(r'\s+', ' ', court_name).strip()
-    c_lower = court_name.lower()
-    if not court_name or c_lower in ("not specified", "unknown", "none"):
-        return "Supreme Court of Pakistan" if is_sc else "High Court"
-    if "supreme court" in c_lower or is_sc:
-        return "Supreme Court of Pakistan"
-
-    # Word-order-independent province/city matching. The old version only matched fixed phrase
-    # orders ("Balochistan High Court", "High Court Sindh") and missed real variants seen in the
-    # actual data -- "High Court Of Balochistan" and "High Court Of Sindh, Circuit Court, Larkana"
-    # both fell through to the generic .title() fallback below instead of normalizing, which is
-    # why Balochistan HC and some Sindh HC records looked like they didn't exist when filtering
-    # on the exact string "Balochistan High Court" / "Sindh High Court" (confirmed via
-    # diagnostics.py: 0 exact-match chunks for Balochistan HC despite real data being present).
-    if "federal shariat" in c_lower:
-        return "Federal Shariat Court"
-    if "high court" in c_lower:
-        if "sindh" in c_lower or "karachi" in c_lower:
-            return "Sindh High Court"
-        if "lahore" in c_lower:
-            return "Lahore High Court"
-        if "peshawar" in c_lower:
+        if "federal shariat" in c_lower or "fsc" in c_lower:
+            return "Federal Shariat Court"
+        if "supreme" in c_lower or "scp" in c_lower or "scmr" in c_lower or " pld sc " in c_lower:
+            return "Supreme Court of Pakistan"
+        if "peshawar" in c_lower or "phc" in c_lower:
             return "Peshawar High Court"
-        if "balochistan" in c_lower or "quetta" in c_lower:
-            return "Balochistan High Court"
-        if "islamabad" in c_lower:
+        if "lahore" in c_lower or "lhc" in c_lower:
+            return "Lahore High Court"
+        if "sindh" in c_lower or "karachi" in c_lower or "shc" in c_lower:
+            return "High Court of Sindh"
+        if "balochistan" in c_lower or "quetta" in c_lower or "bhc" in c_lower:
+            return "High Court of Balochistan"
+        if "islamabad" in c_lower or "ihc" in c_lower:
             return "Islamabad High Court"
+
+    # 2. Secondary inspection: title and case_id (docket identifier)
+    docket_and_title = " ".join([str(title or ""), str(case_id or "")]).lower()
+    if any(x in docket_and_title for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
+        if "high" in docket_and_title: return "High Court of Azad Jammu & Kashmir"
+        if "service tribunal" in docket_and_title: return "AJK Service Tribunal"
+        return "Supreme Court of Azad Jammu & Kashmir"
+    if "federal shariat" in docket_and_title or "fsc" in docket_and_title:
+        return "Federal Shariat Court"
+    if "supreme" in docket_and_title or "scp" in docket_and_title or "scmr" in docket_and_title or " pld sc " in docket_and_title:
+        return "Supreme Court of Pakistan"
+    if "peshawar" in docket_and_title or "phc" in docket_and_title:
+        return "Peshawar High Court"
+    if "lahore" in docket_and_title or "lhc" in docket_and_title:
+        return "Lahore High Court"
+    if "sindh" in docket_and_title or "karachi" in docket_and_title or "shc" in docket_and_title:
+        return "High Court of Sindh"
+    if "balochistan" in docket_and_title or "quetta" in docket_and_title or "bhc" in docket_and_title:
+        return "High Court of Balochistan"
+    if "islamabad" in docket_and_title or "ihc" in docket_and_title:
+        return "Islamabad High Court"
+
+    # 3. Fallback inspection: text snippet (only checked if court_name, title, and case_id gave no explicit match)
+    text_lower = str(text or "").lower()
+    if any(x in text_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
+        if "high" in text_lower: return "High Court of Azad Jammu & Kashmir"
+        if "service tribunal" in text_lower: return "AJK Service Tribunal"
+        return "Supreme Court of Azad Jammu & Kashmir"
+    if "peshawar high court" in text_lower: return "Peshawar High Court"
+    if "lahore high court" in text_lower: return "Lahore High Court"
+    if "high court of sindh" in text_lower or "sindh high court" in text_lower: return "High Court of Sindh"
+    if "high court of balochistan" in text_lower or "balochistan high court" in text_lower: return "High Court of Balochistan"
+    if "islamabad high court" in text_lower: return "Islamabad High Court"
+    if "supreme court of pakistan" in text_lower: return "Supreme Court of Pakistan"
+
+    if c_raw and c_raw.lower() not in ("unknown", "unknown court", "court of record", "not specified", "none"):
+        return c_raw.strip().title()
+
+    return "High Court"
 
     return court_name.title()
 
