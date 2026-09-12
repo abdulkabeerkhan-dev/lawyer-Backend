@@ -174,9 +174,15 @@ async def safe_create_anthropic_message(**kwargs):
     model_candidates = [
         kwargs.get("model") or CLAUDE_MODEL,
         "claude-3-5-sonnet-20241022",
+        "claude-3-5-sonnet-latest",
         "claude-3-5-sonnet-20240620",
         "claude-3-7-sonnet-20250219",
-        "claude-3-haiku-20240307"
+        "claude-3-7-sonnet-latest",
+        "claude-3-5-haiku-20241022",
+        "claude-3-5-haiku-latest",
+        "claude-3-haiku-20240307",
+        "claude-3-opus-20240229",
+        "claude-3-opus-latest"
     ]
     seen = set()
     models_to_try = [m for m in model_candidates if m and not (m in seen or seen.add(m))]
@@ -194,7 +200,12 @@ async def safe_create_anthropic_message(**kwargs):
                 continue
             raise e
     if last_exc:
-        raise last_exc
+        models_str = ", ".join(models_to_try)
+        raise RuntimeError(
+            f"Anthropic API Model Access Error: None of the candidate models ({models_str}) "
+            f"are accessible with the configured ANTHROPIC_API_KEY. "
+            f"Please verify your Anthropic Console (console.anthropic.com) billing status, active credits, or model access permissions."
+        )
 
 security_agent = HTTPBearer(auto_error=False)
 _clerk_jwks_keys_cache = None
