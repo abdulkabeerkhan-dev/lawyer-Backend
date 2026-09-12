@@ -633,6 +633,39 @@ def sanitize_black_box_characters(text: str) -> str:
     t = re.sub(r'[ \t]{2,}', ' ', t)
     return t.strip()
 
+def determine_case_outcome(full_text: str, existing_outcome: str = None) -> str:
+    # 1. Respect valid non-empty DB column if present and not generic
+    if existing_outcome and str(existing_outcome).lower() not in ["undetermined", "none", "unknown", "verified precedent", ""]:
+        return str(existing_outcome).strip()
+
+    if not full_text:
+        return "Decided"
+
+    # Search the operative portion (last 3000 chars or full snippet)
+    target_text = full_text[-3000:] if len(full_text) > 3000 else full_text
+    lower = target_text.lower()
+
+    # Bail & Criminal Dispositions
+    if re.search(r'\b(?:bail\s+(?:is|was|stands|hereby)?\s*(?:granted|confirmed)|admitted\s+to\s+bail|allowed\s+bail|ad-interim\s+bail\s+confirmed)\b', lower):
+        return "Bail Granted"
+    if re.search(r'\b(?:bail\s+(?:is|was|stands|hereby)?\s*(?:refused|rejected|declined|dismissed)|cancellation\s+of\s+bail\s+allowed)\b', lower):
+        return "Bail Refused"
+
+    # General Appellate & Writ Dispositions
+    if re.search(r'\b(?:petition|appeal|revision|writ\s+petition)\s+(?:is|was|stands|hereby)?\s*(?:allowed|accepted)\b', lower):
+        return "Allowed"
+    if re.search(r'\b(?:petition|appeal|revision|writ\s+petition|leave)\s+(?:is|was|stands|hereby)?\s*(?:dismissed|refused|rejected)\b', lower):
+        return "Dismissed"
+    if re.search(r'\b(?:proceedings\s+quashed|fir\s+quashed)\b', lower):
+        return "Quashed"
+
+    # Fallback search across entire document if operative portion missed
+    full_lower = full_text.lower()
+    if re.search(r'\b(?:granted\s+bail|bail\s+allowed)\b', full_lower):
+        return "Bail Granted"
+
+    return "Decided"
+
 def strip_control_characters(text: str) -> str:
     if not text:
         return ""
@@ -1264,7 +1297,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                                 "date": str(row.get("decision_date") or row.get("year") or ""),
                                 "text": (row.get("full_text") or "")[:3500],
                                 "pdf_url": None,
-                                "outcome": "Verified Precedent",
+                                "outcome": determine_case_outcome(row.get("full_text") or "", row.get("disposition") or row.get("outcome")),
                                 "statutes": []
                             }
                         })
@@ -1417,7 +1450,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 title = sanitize_case_title(clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case')))
                 official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
                 neutral_cit = synthesize_canonical_citation(meta)
-                outcome_val = str(meta.get("outcome", "")) or "Undetermined"
+                outcome_val = determine_case_outcome(text_content, meta.get("disposition") or meta.get("outcome"))
                 statutes_val = meta.get("statutes") or []
                 sections_val = meta.get("sections") or []
                 match_score = float(match.get("score", 0.0) if isinstance(match, dict) else getattr(match, "score", 0.0))
@@ -1547,7 +1580,7 @@ HOW YOU WORK:
                 "title": c_title,
                 "citation": c_cit,
                 "score": 0.99,
-                "outcome": "Verified Precedent",
+                "outcome": determine_case_outcome(c_text, intercepted_card.get("disposition") or intercepted_card.get("outcome")),
                 "statutes": [],
                 "sections": [],
                 "pdf_url": pdf_url,
@@ -1736,6 +1769,10 @@ MANDATORY INSTRUCTIONS:
                 card["pdf_url"] = raw_pdf
                 card["date"] = extract_year_from_citation_or_date(card.get("date") or matched.get("year"), card.get("citation") or matched.get("citation"), card.get("case_id") or matched.get("case_id"))
                 card["holding"] = sanitize_holding_text(card.get("holding", "") or matched.get("preview", ""))
+                card["outcome"] = determine_case_outcome(
+                    full_text=card.get("raw_judgment_text") or card.get("holding") or matched.get("preview") or "",
+                    existing_outcome=card.get("outcome") or matched.get("outcome") or matched.get("disposition")
+                )
                 verified_cards.append(card)
             else:
                 # Could not confidently tie this card back to a specific retrieved judgment --
@@ -1753,7 +1790,7 @@ MANDATORY INSTRUCTIONS:
                     "holding": sanitize_holding_text(c.get("preview", "")),
                     "why_relevant": "Retrieved precedent directly governing the statutory issues raised.",
                     "statutes_invoked": [{"name": s, "explanation": "Governing statutory authority"} for s in c.get("statutes", [])],
-                    "outcome": c.get("outcome", "Undetermined"), "verified_source": True,
+                    "outcome": determine_case_outcome(c.get("preview") or "", c.get("outcome")), "verified_source": True,
                     "pdf_url": c.get("pdf_url") or f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(c.get('case_id')))}",
                     "raw_judgment_text": strip_control_characters(c.get("preview", ""))
                 }
