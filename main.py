@@ -342,7 +342,8 @@ CITATION_REGEX = re.compile(
 def extract_and_intercept_citation(user_query: str):
     """
     Deterministically intercepts exact reporter citations (e.g., '2021 SCMR 2092')
-    directly from public.full_judgments in Supabase before running vector search.
+    directly from public.full_judgments in Supabase before running vector search,
+    with Party Title and crosswalk fallbacks when citation exact matches yield 0 rows.
     """
     match = CITATION_REGEX.search(user_query or "")
     if not match:
@@ -360,7 +361,7 @@ def extract_and_intercept_citation(user_query: str):
     row = None
     try:
         if supabase:
-            # Query public.full_judgments using indexed case_id and neutral_citation
+            # 1. Tier 1: Query public.full_judgments using indexed case_id and neutral_citation
             res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", norm_cit_underscore).limit(1).execute()
             if not res_supa.data and raw_cit_underscore != norm_cit_underscore:
                 res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", raw_cit_underscore).limit(1).execute()
@@ -368,6 +369,40 @@ def extract_and_intercept_citation(user_query: str):
                 res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("neutral_citation", normalized_citation).limit(1).execute()
             if not res_supa.data and raw_citation != normalized_citation:
                 res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("neutral_citation", raw_citation).limit(1).execute()
+
+            # 2. Tier 1.5: Citation crosswalk lookup fallback
+            if not res_supa.data:
+                try:
+                    res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{normalized_citation}%").limit(1).execute()
+                    if res_cw and res_cw.data:
+                        fj = res_cw.data[0].get("full_judgments")
+                        if fj:
+                            res_supa.data = [fj]
+                except Exception:
+                    pass
+
+            # 3. Tier 2: Party Title Fallback if citation match yielded 0 rows
+            if not res_supa.data:
+                v_match = re.search(r'\b([A-Z][a-zA-Z\s]{2,30})\s+v(?:s)?\.\s+([A-Z][a-zA-Z\s]{2,30})', user_query, flags=re.IGNORECASE)
+                party_query = None
+                if v_match:
+                    p1 = v_match.group(1).strip()
+                    if len(p1) >= 4 and p1.lower() not in ["search", "database", "precedents"]:
+                        party_query = p1
+                elif len(clean_topic) >= 4:
+                    words = [w for w in clean_topic.split() if w.lower() not in ["section", "ppc", "cpc", "crpc", "cheque", "guarantee", "bail", "quashment", "petition", "appeal", "statute", "regarding", "the", "and", "for"]]
+                    if words:
+                        candidate = " ".join(words[:3])
+                        if len(candidate) >= 4:
+                            party_query = candidate
+                if party_query:
+                    try:
+                        res_title = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").ilike("case_title", f"%{party_query}%").limit(1).execute()
+                        if res_title and res_title.data:
+                            res_supa.data = res_title.data
+                    except Exception:
+                        pass
+
             if res_supa.data:
                 row = res_supa.data[0]
     except Exception as err:
@@ -971,6 +1006,30 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                                             rows.append(fj)
                             except Exception:
                                 pass
+
+                        # 3. Try Party Title fallback if full_judgments & crosswalk had no direct hits
+                        if not rows:
+                            v_match = re.search(r'\b([A-Z][a-zA-Z\s]{2,30})\s+v(?:s)?\.\s+([A-Z][a-zA-Z\s]{2,30})', search_query, flags=re.IGNORECASE)
+                            party_query = None
+                            if v_match:
+                                p1 = v_match.group(1).strip()
+                                if len(p1) >= 4 and p1.lower() not in ["search", "database", "precedents"]:
+                                    party_query = p1
+                            else:
+                                clean_topic_temp = CITATION_REGEX.sub('', search_query)
+                                clean_topic_temp = re.sub(r'^(?:search database for|find|lookup|case law search|precedents? found)\s*', '', clean_topic_temp, flags=re.IGNORECASE).strip()
+                                words = [w for w in clean_topic_temp.split() if w.lower() not in ["section", "ppc", "cpc", "crpc", "cheque", "guarantee", "bail", "quashment", "petition", "appeal", "statute", "regarding", "the", "and", "for"]]
+                                if words:
+                                    candidate = " ".join(words[:3])
+                                    if len(candidate) >= 4:
+                                        party_query = candidate
+                            if party_query:
+                                try:
+                                    res_title = supabase.table("full_judgments").select("*").ilike("case_title", f"%{party_query}%").limit(3).execute()
+                                    if res_title and res_title.data:
+                                        rows = res_title.data
+                                except Exception:
+                                    pass
 
                         if rows:
                             for row in rows:

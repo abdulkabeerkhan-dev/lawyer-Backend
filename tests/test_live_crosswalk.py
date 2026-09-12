@@ -89,6 +89,27 @@ This is paragraph 2 of the judgment text.
         row, clean_topic = extract_and_intercept_citation("2008 PCrLJ 858")
         self.assertEqual(clean_topic, "")
 
+    def test_2013_scmr_51_direct_lookup(self):
+        """Test exact lookup for official apex precedent 2013 SCMR 51 (Mian Allah Ditta v. The State)."""
+        from main import extract_and_intercept_citation
+        row, clean_topic = extract_and_intercept_citation("Search database for 2013 SCMR 51")
+        self.assertIsNotNone(row, "Failed to resolve exact citation 2013 SCMR 51")
+        self.assertIn("allah ditta", row.get("case_title", "").lower())
+        self.assertEqual(clean_topic, "")
+
+    def test_party_title_fallback(self):
+        """Test unmatched reporter citation with party name falls back to party title ilike search."""
+        from main import extract_and_intercept_citation
+        row, clean_topic = extract_and_intercept_citation("2013 PCrLJ 1403 Mian Allah Ditta v. The State")
+        self.assertIsNotNone(row, "Party title fallback failed for Mian Allah Ditta")
+        self.assertIn("allah ditta", row.get("case_title", "").lower())
+
+    def test_unmatched_citation_clean_topic(self):
+        """Test unmatched reporter citation gracefully extracts clean legal topic for vector fallback."""
+        from main import extract_and_intercept_citation
+        row, clean_topic = extract_and_intercept_citation("2013 PCrLJ 1403 Section 489-F PPC guarantee cheque")
+        self.assertIn("Section 489-F PPC guarantee cheque", clean_topic)
+
 if __name__ == "__main__":
     unittest.main()
 
