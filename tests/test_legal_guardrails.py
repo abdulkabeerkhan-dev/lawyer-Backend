@@ -86,6 +86,33 @@ class TestLegalGuardrails(unittest.TestCase):
         self.assertTrue(any("Evidence Act 1872" in e for e in errors))
         self.assertTrue(any("Section 148 ITO 2001" in e for e in errors))
 
+    def test_489f_bail_classification_and_affidavit_checks(self):
+        """
+        Test 4: Validate that lint_legal_output catches:
+        - 489-F PPC misclassified as a bailable offence
+        - Punjab pre-arrest bail draft missing a supporting affidavit
+        """
+        bailable_err_response = """
+        The accused is charged under Section 489-F PPC which is a bailable offence in Pakistan.
+        """
+        errors1 = lint_legal_output(bailable_err_response)
+        self.assertTrue(any("bailable offence" in e for e in errors1))
+
+        draft_missing_affidavit = """
+        IN THE COURT OF THE SESSIONS JUDGE, LAHORE
+        Petition for Pre-arrest Bail under Section 498 CrPC in FIR No. 123/2026 under Section 489-F PPC.
+        Grounds:
+        1. That the petitioner has been falsely implicated.
+        2. That the cheque was given as security.
+        PRAYER:
+        It is respectfully prayed that pre-arrest bail may be granted to the petitioner.
+        CERTIFICATE OF URGENCY:
+        This matter is of urgent nature.
+        """ + (" " * 500)
+        errors2 = lint_legal_output(draft_missing_affidavit)
+        self.assertTrue(any("Supporting Affidavit" in e for e in errors2))
+
 if __name__ == '__main__':
     unittest.main()
+
 
