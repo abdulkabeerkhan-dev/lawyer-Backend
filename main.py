@@ -582,6 +582,7 @@ def format_clean_judgment_paragraphs(text: str) -> str:
     if not text:
         return ""
     
+    text = sanitize_black_box_characters(text)
     text = strip_copyright_and_branding(text)
     t = text.replace("\r\n", "\n").replace("\r", "\n")
     t = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\ufffd]', '', t)
@@ -614,11 +615,29 @@ def format_clean_judgment_paragraphs(text: str) -> str:
     res = re.sub(r'[ \t]{2,}', ' ', res)
     return res.strip()
 
+def sanitize_black_box_characters(text: str) -> str:
+    if not text:
+        return ""
+    t = str(text)
+    # 1. Multiple black box blocks between words (e.g. "MUSHTAQ AHMAD■■■Petitioner" -> "MUSHTAQ AHMAD -- Petitioner")
+    t = re.sub(r'([A-Za-z0-9])[\u25a0-\u25ff\u2600-\u26ff\ufffd■]{2,}([A-Za-z0-9])', r'\1 -- \2', t)
+    # 2. Single black box character between word characters or numbers (e.g. "Ijaz■ul■Hassan" -> "Ijaz-ul-Hassan", "non■reading" -> "non-reading", "20■5■2003" -> "20-5-2003")
+    t = re.sub(r'([A-Za-z0-9])[\u25a0-\u25ff\u2600-\u26ff\ufffd■]+([A-Za-z0-9])', r'\1-\2', t)
+    # 3. Convert repeated black box blocks (e.g. ■■■, ■■■■) between headnote topics / sections -> ' -- '
+    t = re.sub(r'[\u25a0-\u25ff\u2600-\u26ff\ufffd■]{2,}', ' -- ', t)
+    # 4. Strip any leftover single black box glyphs or non-printable control characters
+    t = re.sub(r'[\u25a0-\u25ff\u2600-\u26ff\ufffd■]', ' ', t)
+    t = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]', ' ', t)
+    # 5. Clean up punctuation spacing noise
+    t = re.sub(r'(?:\s*--\s*){2,}', ' -- ', t)
+    t = re.sub(r'[ \t]{2,}', ' ', t)
+    return t.strip()
+
 def strip_control_characters(text: str) -> str:
     if not text:
         return ""
-    text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\ufffd]', ' ', str(text))
-    return re.sub(r'\s+', ' ', text).strip()
+    clean_t = sanitize_black_box_characters(text)
+    return re.sub(r'\s+', ' ', clean_t).strip()
 
 def extract_year_from_citation_or_date(date_val: Any, citation_val: Any, case_id_val: Any = "") -> str:
     raw_date = str(date_val or "").strip()
@@ -1842,7 +1861,11 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
         fontName='Helvetica', fontSize=9.5, leading=13.5, spaceAfter=8
     )
 
-    clean_text = strip_copyright_and_branding(text or "")
+    title = sanitize_black_box_characters(title or "")
+    citation = sanitize_black_box_characters(citation or "")
+    court = sanitize_black_box_characters(court or "")
+    clean_text = sanitize_black_box_characters(text or "")
+    clean_text = strip_copyright_and_branding(clean_text)
     clean_text = re.sub(r'^\s*\[\d+\]\s*', '', clean_text, flags=re.MULTILINE)
 
     paragraphs_list = [p.strip() for p in re.split(r'\n\s*\n+', clean_text) if p.strip()]
