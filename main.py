@@ -877,7 +877,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                                     if fj:
                                         boosted_matches.append({
                                             "score": 0.99,
+                                            "is_boosted": True,
                                             "metadata": {
+                                                "is_boosted": True,
                                                 "case_id": fj.get("case_id") or fj.get("id") or extracted_cit,
                                                 "canonical_id": fj.get("case_id") or extracted_cit,
                                                 "title": fj.get("case_title") or cw_row.get("case_title") or "Reported Precedent",
@@ -908,7 +910,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                                         c_name = "Supreme Court of Pakistan" if "SCMR" in extracted_cit.upper() else "High Court"
                                     boosted_matches.append({
                                         "score": 0.99,
+                                        "is_boosted": True,
                                         "metadata": {
+                                            "is_boosted": True,
                                             "case_id": row.get("case_id") or row.get("id") or extracted_cit,
                                             "canonical_id": row.get("case_id") or extracted_cit,
                                             "title": row.get("case_title") or row.get("title") or "Reported Precedent",
@@ -963,6 +967,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     return "Search tool error: the judgment database could not be reached. Answer using your own knowledge of Pakistani statute and settled principles, and tell the advocate that live case-law verification was unavailable."
 
             def _passes_source_filter(meta, target):
+                if meta.get("is_boosted"):
+                    return True
                 normalized_court = clean_court_name(
                     str(meta.get("court", "")),
                     title=str(meta.get("title") or meta.get("case_title", "")),
@@ -994,15 +1000,17 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             for m in matches_list:
                 meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
                 score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
-                if score < 0.45: continue
+                is_boosted = bool(m.get("is_boosted") if isinstance(m, dict) else False) or bool(meta.get("is_boosted"))
+                if score < 0.45 and not is_boosted: continue
                 text_content = strip_control_characters(str(meta.get("text") or meta.get("text_preview") or ""))
-                if is_garbled_text(text_content) or is_junk_citation_dump(text_content):
+                if not is_boosted and (is_garbled_text(text_content) or is_junk_citation_dump(text_content)):
                     continue
                 case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower()
-                if (is_commercial_or_criminal_query or is_secp_or_corporate_query) and any(pol in case_title_str for pol in POLITICAL_MARKERS):
-                    continue
-                if is_secp_or_corporate_query and any(cr in case_title_str for cr in CRIMINAL_NAB_MARKERS):
-                    continue
+                if not is_boosted:
+                    if (is_commercial_or_criminal_query or is_secp_or_corporate_query) and any(pol in case_title_str for pol in POLITICAL_MARKERS):
+                        continue
+                    if is_secp_or_corporate_query and any(cr in case_title_str for cr in CRIMINAL_NAB_MARKERS):
+                        continue
                 cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
                 cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
                 if cid_key and (cid_key in seen_in_query or cid_key in _seen_case_ids_global):
