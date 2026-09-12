@@ -89,6 +89,11 @@ You must adhere strictly to codified Pakistani statutory law and controlling Sup
    - SBLR YEAR Page
    ONLY if a judgment record does NOT contain one of these official journal citations in database metadata, fallback to docket/court format (e.g. Supreme Court — Civil Appeal No. 870 of 2012).
 
+9. HIGH COURT REPORTER VS. SUPREME COURT JURISDICTION DIRECTIVE:
+   - Citations containing YLR, MLD, CLC, or PCrLJ are High Court decisions (Lahore, Sindh, Peshawar, Balochistan, or Islamabad High Court).
+   - Only citations with SCMR or explicit PLD ... SC represent the Supreme Court of Pakistan.
+   - If a citation is YLR, MLD, CLC, or PCrLJ, NEVER describe or output 'Supreme Court of Pakistan' as the deciding forum.
+
 10. BANK GUARANTEE & INJUNCTION DIRECTIVE (ORDER XXXIX CPC & AUTONOMY DOCTRINE):
    - Core Autonomy Doctrine: An unconditional bank guarantee is an autonomous contract independent of the underlying agreement. Breaches of the underlying contract (e.g., delayed site handover, design approvals, alleged wrongful termination) do NOT ground an interim injunction under Order XXXIX Rules 1 & 2 CPC (2021 SCMR 1446 / 2021 SCP 3209; PLD 2003 SC 191).
    - The Two Exclusive Exceptions:
@@ -201,5 +206,16 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
     is_full_draft = bool(re.search(r'\bin\s+the\s+court\s+of\b', text_lower)) and len(draft_text) > 800
     if is_full_draft and re.search(r'\bpre-?arrest\s+bail\b', text_lower) and "affidavit" not in text_lower:
         errors.append("Drafting a Punjab pre-arrest bail application without a standalone, separately-headed Supporting Affidavit sworn on oath -- this is mandatory under the High Court Rules and Orders and is commonly missed; a Certificate of Urgency alone is not sufficient.")
+
+    # Rule 8: High Court Reporter vs Supreme Court hallucination check
+    hc_reporters_pattern = r'\b((?:19|20)\d{2}\s+(?:YLR|MLD|CLC|PCrLJ|PCRLJ)\s+\d+)\b'
+    hc_matches = re.finditer(hc_reporters_pattern, draft_text, re.IGNORECASE)
+    for m in hc_matches:
+        cit_str = m.group(0)
+        start_w = max(0, m.start() - 120)
+        end_w = min(len(draft_text), m.end() + 120)
+        snippet = draft_text[start_w:end_w].lower()
+        if "supreme court" in snippet and "scmr" not in snippet and "pld sc" not in snippet and "pld supreme court" not in snippet:
+            errors.append(f"Citations containing YLR, MLD, CLC, or PCrLJ ('{cit_str}') are High Court decisions -- do not attribute them to the Supreme Court of Pakistan.")
 
     return errors

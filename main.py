@@ -176,36 +176,46 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
     c_raw = str(court_name or "").strip()
     c_lower = c_raw.lower()
 
+    # High Court Reporter Constraint: YLR, MLD, CLC, PCrLJ etc. are strictly High Courts, NOT Supreme Court
+    search_haystack = " ".join([str(court_name or ""), str(title or ""), str(case_id or "")]).upper()
+    has_hc_reporter = any(j in search_haystack for j in ["YLR", "MLD", "CLC", "PCRLJ", "PCrLJ", "CLD", "PTD", "PLC", "PLJ", "NLR", "ALD", "SBLR"])
+    has_sc_reporter = "SCMR" in search_haystack or "PLD SC" in search_haystack or "PLD SUPREME COURT" in search_haystack or "S.C." in search_haystack
+    is_hc_only = has_hc_reporter and not has_sc_reporter
+
     # 1. Inspect explicit court_name input first (do not let text snippet keywords override explicit court metadata)
     if c_lower and c_lower not in ("unknown", "unknown court", "court of record", "not specified", "none", "high court", "court"):
-        if any(x in c_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
-            if "high" in c_lower: return "High Court of Azad Jammu & Kashmir"
-            if "service tribunal" in c_lower: return "AJK Service Tribunal"
-            return "Supreme Court of Azad Jammu & Kashmir"
-        if "federal shariat" in c_lower or "fsc" in c_lower:
-            return "Federal Shariat Court"
-        if "supreme" in c_lower or "scp" in c_lower or "scmr" in c_lower or " pld sc " in c_lower:
-            return "Supreme Court of Pakistan"
-        if "peshawar" in c_lower or "phc" in c_lower:
-            return "Peshawar High Court"
-        if "lahore" in c_lower or "lhc" in c_lower:
-            return "Lahore High Court"
-        if "sindh" in c_lower or "karachi" in c_lower or "shc" in c_lower:
-            return "High Court of Sindh"
-        if "balochistan" in c_lower or "quetta" in c_lower or "bhc" in c_lower:
-            return "High Court of Balochistan"
-        if "islamabad" in c_lower or "ihc" in c_lower:
-            return "Islamabad High Court"
+        if is_hc_only and ("supreme" in c_lower or "scp" in c_lower):
+            pass  # Reject Supreme Court designation for High Court only reporters
+        else:
+            if any(x in c_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
+                if "high" in c_lower: return "High Court of Azad Jammu & Kashmir"
+                if "service tribunal" in c_lower: return "AJK Service Tribunal"
+                return "Supreme Court of Azad Jammu & Kashmir"
+            if "federal shariat" in c_lower or "fsc" in c_lower:
+                return "Federal Shariat Court"
+            if "supreme" in c_lower or "scp" in c_lower or "scmr" in c_lower or " pld sc " in c_lower:
+                return "Supreme Court of Pakistan"
+            if "peshawar" in c_lower or "phc" in c_lower:
+                return "Peshawar High Court"
+            if "lahore" in c_lower or "lhc" in c_lower:
+                return "Lahore High Court"
+            if "sindh" in c_lower or "karachi" in c_lower or "shc" in c_lower:
+                return "High Court of Sindh"
+            if "balochistan" in c_lower or "quetta" in c_lower or "bhc" in c_lower:
+                return "High Court of Balochistan"
+            if "islamabad" in c_lower or "ihc" in c_lower:
+                return "Islamabad High Court"
 
     # 2. Secondary inspection: title and case_id (docket identifier)
     docket_and_title = " ".join([str(title or ""), str(case_id or "")]).lower()
     if any(x in docket_and_title for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
         if "high" in docket_and_title: return "High Court of Azad Jammu & Kashmir"
         if "service tribunal" in docket_and_title: return "AJK Service Tribunal"
-        return "Supreme Court of Azad Jammu & Kashmir"
+        if not is_hc_only: return "Supreme Court of Azad Jammu & Kashmir"
+        return "High Court of Azad Jammu & Kashmir"
     if "federal shariat" in docket_and_title or "fsc" in docket_and_title:
         return "Federal Shariat Court"
-    if "supreme" in docket_and_title or "scp" in docket_and_title or "scmr" in docket_and_title or " pld sc " in docket_and_title:
+    if not is_hc_only and ("supreme" in docket_and_title or "scp" in docket_and_title or "scmr" in docket_and_title or " pld sc " in docket_and_title):
         return "Supreme Court of Pakistan"
     if "peshawar" in docket_and_title or "phc" in docket_and_title:
         return "Peshawar High Court"
@@ -223,15 +233,18 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
     if any(x in text_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
         if "high" in text_lower: return "High Court of Azad Jammu & Kashmir"
         if "service tribunal" in text_lower: return "AJK Service Tribunal"
-        return "Supreme Court of Azad Jammu & Kashmir"
+        if not is_hc_only: return "Supreme Court of Azad Jammu & Kashmir"
+        return "High Court of Azad Jammu & Kashmir"
     if "peshawar high court" in text_lower: return "Peshawar High Court"
     if "lahore high court" in text_lower: return "Lahore High Court"
     if "high court of sindh" in text_lower or "sindh high court" in text_lower: return "High Court of Sindh"
     if "high court of balochistan" in text_lower or "balochistan high court" in text_lower: return "High Court of Balochistan"
     if "islamabad high court" in text_lower: return "Islamabad High Court"
-    if "supreme court of pakistan" in text_lower: return "Supreme Court of Pakistan"
+    if not is_hc_only and "supreme court of pakistan" in text_lower: return "Supreme Court of Pakistan"
 
     if c_raw and c_raw.lower() not in ("unknown", "unknown court", "court of record", "not specified", "none"):
+        if is_hc_only and "supreme" in c_raw.lower():
+            return "High Court"
         return c_raw.strip().title()
 
     return "High Court"
@@ -635,7 +648,7 @@ def sanitize_black_box_characters(text: str) -> str:
 
 def determine_case_outcome(full_text: str, existing_outcome: str = None) -> str:
     # 1. Respect valid non-empty DB column if present and not generic
-    if existing_outcome and str(existing_outcome).lower() not in ["undetermined", "none", "unknown", "verified precedent", ""]:
+    if existing_outcome and str(existing_outcome).lower() not in ["undetermined", "none", "unknown", "verified precedent", "decided", ""]:
         return str(existing_outcome).strip()
 
     if not full_text:
@@ -652,9 +665,9 @@ def determine_case_outcome(full_text: str, existing_outcome: str = None) -> str:
         return "Bail Refused"
 
     # General Appellate & Writ Dispositions
-    if re.search(r'\b(?:petition|appeal|revision|writ\s+petition)\s+(?:is|was|stands|hereby)?\s*(?:allowed|accepted)\b', lower):
+    if re.search(r'\b(?:petition|appeal|revision|writ\s+petition|application)\b.*?\b(?:allowed|accepted)\b', lower) or re.search(r'\b(?:is|was|stands|hereby)\s+(?:allowed|accepted)\b', lower):
         return "Allowed"
-    if re.search(r'\b(?:petition|appeal|revision|writ\s+petition|leave)\s+(?:is|was|stands|hereby)?\s*(?:dismissed|refused|rejected)\b', lower):
+    if re.search(r'\b(?:petition|appeal|revision|writ\s+petition|leave|application)\b.*?\b(?:dismissed|refused|rejected)\b', lower) or re.search(r'\b(?:is|was|stands|hereby)\s+(?:dismissed|refused|rejected)\b', lower) or re.search(r'\bdismissed\s+in\s+limine\b', lower):
         return "Dismissed"
     if re.search(r'\b(?:proceedings\s+quashed|fir\s+quashed)\b', lower):
         return "Quashed"
@@ -1536,7 +1549,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 sections_val = meta.get("sections") or []
                 match_score = float(match.get("score", 0.0) if isinstance(match, dict) else getattr(match, "score", 0.0))
 
-                context_parts.append(f"CASE_ID: {case_id}\nCASE TITLE: {title}\nNEUTRAL CITATION: {neutral_cit}\nCOURT: {court}\nOUTCOME: {outcome_val}\nSTATUTES: {', '.join(statutes_val)}\nCONTENT: {text_content}")
+                context_parts.append(f"CASE_ID: {case_id}\nCASE TITLE: {title}\nNEUTRAL CITATION: {neutral_cit}\nCOURT: {court}\nOUTCOME: {outcome_val}\nSUMMARY CONTEXT: Citation: {neutral_cit} | Deciding Court: {court} | Outcome: {outcome_val}\nSTATUTES: {', '.join(statutes_val)}\nCONTENT: {text_content}")
 
                 cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
                 cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
@@ -1602,6 +1615,9 @@ HOW YOU WORK:
 7. Never use double asterisks (**) for emphasis; write plain text.
 8. CITATION FORMATTING RULE: ALWAYS format case citations using standard Pakistani law reporter journal style (e.g., PLD 1995 Supreme Court 34, 2019 SCMR 984, 2008 PCrLJ 858, 2021 CLC 450, 2020 MLD 112, 2022 YLR 310, 2020 CLD 1104, 2021 PTD 795, 2021 PLC (CS) 105, 2018 PLJ 502, 2017 NLR 215, 2016 GBLR 88, 2015 PTCL 401, 2014 ALD 105, 2013 SLR 99, 2012 ILR 44, 2011 SBLR 22). Only if no official journal citation exists in the database record, fallback to docket/court format.
 9. CRITICAL RESTRICTION: You are STRICTLY FORBIDDEN from telling the user that a citation or judgment is not indexed in the database, missing from the firm's collection, or unverified. If zero records return from database lookups, state the controlling statutory principles and general landmark doctrine directly without commenting on database limitations.
+10. CASE OUTCOME & HIGH COURT REPORTER RULES:
+    - When summarizing or discussing each precedent case in your response or precedent cards, use the exact Outcome provided in the context (e.g. 'Outcome: FIR Quashed', 'Outcome: Bail Granted', 'Outcome: Allowed', 'Outcome: Dismissed', 'Outcome: Quashed'). Do NOT default to 'Outcome: Decided'.
+    - Citations containing YLR, MLD, CLC, or PCrLJ represent High Court decisions (Lahore High Court, High Court of Sindh, Peshawar High Court, High Court of Balochistan, or Islamabad High Court). Only SCMR or explicit PLD ... SC citations represent the Supreme Court of Pakistan. Never state or output 'Supreme Court of Pakistan' for a YLR, MLD, CLC, or PCrLJ citation.
 """
 
         combined_system_prompt = f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{conversational_persona}"
@@ -1674,6 +1690,7 @@ HOW YOU WORK:
             if not any(c.get("case_id") == c_id or c.get("citation") == c_cit for c in aggregate_citations_payload):
                 aggregate_citations_payload.append(precedent_card_dict)
 
+            intercepted_outcome = precedent_card_dict.get("outcome") or "Decided"
             grounding_message = f"""
 CRITICAL GROUNDING CONTEXT:
 A precedent was successfully retrieved from the database:
@@ -1681,12 +1698,15 @@ A precedent was successfully retrieved from the database:
 - Case Title: {c_title}
 - Deciding Court: {c_name}
 - Decision Date: {c_date}
+- Outcome: {intercepted_outcome}
+- Summary Context: Citation: {c_cit} | Deciding Court: {c_name} | Outcome: {intercepted_outcome}
 - Full Text / Headnote: {c_text}
 
 MANDATORY INSTRUCTIONS:
-1. The deciding forum is: {c_name}. Do NOT misidentify this as the "Supreme Court of Pakistan" unless court_name explicitly states that.
+1. The deciding forum is: {c_name}. Do NOT misidentify this as the "Supreme Court of Pakistan" unless court_name explicitly states that. Citations containing YLR, MLD, CLC, or PCrLJ belong strictly to High Courts.
 2. In the "Cases discussed" section and heading, use the exact forum from above.
 3. In "Sources Searched", reflect the actual source forum ({c_name}).
+4. When summarizing each discussed case, use the exact Outcome provided in the context (e.g. 'Outcome: {intercepted_outcome}'). Do NOT default to 'Outcome: Decided'.
 """
             combined_system_prompt = f"{combined_system_prompt}\n\n{grounding_message}"
 
