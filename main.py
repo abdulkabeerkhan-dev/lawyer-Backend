@@ -1002,9 +1002,14 @@ HOW YOU WORK:
         citations_payload = aggregate_citations_payload
         additional_authorities = aggregate_additional_authorities
 
-        # Deterministic Legal Output Verification & Reflection Loop (only when we actually
-        # grounded the answer in retrieved case law -- casual replies skip this entirely)
-        if citations_payload:
+        # Deterministic Legal Output Verification & Reflection Loop.
+        # Runs whenever the answer either (a) is grounded in retrieved case law, or (b) discusses
+        # specific statutory sections/articles at all -- the second case matters just as much,
+        # because a quick conceptual answer given straight from memory (no search_case_law call)
+        # is exactly where cross-jurisdiction statutory leakage (India/UK substance on a correctly
+        # named Pakistani act) is most likely to slip through ungrounded.
+        _discusses_statute = bool(re.search(r'\b(section|article|order\s+[ivxlcdm]+)\s+\d', raw_model_output, re.IGNORECASE))
+        if citations_payload or _discusses_statute:
             lint_errors = lint_legal_output(raw_model_output, query_context=effective_user_query)
             if lint_errors:
                 print(f"⚠️ Legal Guardrails Lint Errors detected: {lint_errors}. Triggering reflection loop...", file=sys.stderr)

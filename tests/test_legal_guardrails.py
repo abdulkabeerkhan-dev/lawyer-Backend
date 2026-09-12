@@ -61,5 +61,31 @@ class TestLegalGuardrails(unittest.TestCase):
         self.assertNotIn("12 years", valid_response)
         self.assertNotIn("Balochistan", valid_response)
 
+    def test_cross_jurisdiction_semantic_leakage(self):
+        """
+        Test 3: Validate that lint_legal_output catches cross-jurisdiction semantic leakage:
+        - CrPC 1973 / anticipatory bail Section 438
+        - Limitation Act 1963 / Specific Relief Act 1963
+        - Companies Act 2013 / SARFAESI / Evidence Act 1872
+        - Section 148 ITO 2001 as reassessment/reopening
+        """
+        bad_response = """
+        Application for anticipatory bail under Section 438 of CrPC 1973.
+        Suit governed by Limitation Act 1963 and Specific Relief Act 1963.
+        Company governance under Companies Act 2013 and SARFAESI Act.
+        Evidence produced under Evidence Act 1872.
+        Tax reassessment under Section 148 Income Tax Ordinance 2001.
+        """
+        errors = lint_legal_output(bad_response)
+        self.assertTrue(any("CrPC 1973" in e for e in errors))
+        self.assertTrue(any("Section 438" in e for e in errors))
+        self.assertTrue(any("Limitation Act 1963" in e for e in errors))
+        self.assertTrue(any("Specific Relief Act 1963" in e for e in errors))
+        self.assertTrue(any("Companies Act 2013" in e for e in errors))
+        self.assertTrue(any("SARFAESI" in e for e in errors))
+        self.assertTrue(any("Evidence Act 1872" in e for e in errors))
+        self.assertTrue(any("Section 148 ITO 2001" in e for e in errors))
+
 if __name__ == '__main__':
     unittest.main()
+

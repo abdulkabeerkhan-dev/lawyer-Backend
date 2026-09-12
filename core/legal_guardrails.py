@@ -40,6 +40,20 @@ You must adhere strictly to codified Pakistani statutory law and controlling Sup
    - Article 79 QSO 1984 requires proving financial and property contracts by calling at least two attesting witnesses.
    - Section 271 of CPC DOES NOT EXIST (CPC ends at Section 158). Decrees are executed under Order XXI CPC.
 
+5. CROSS-JURISDICTION STATUTORY DISAMBIGUATION (INDIA/UK/US LEAKAGE PREVENTION):
+   CRITICAL: You have been trained on far more Indian, UK, and US legal text than Pakistani. Pakistan and India share a British colonial legal heritage, so an act name or section NUMBER can be correct for Pakistan while the SUBSTANCE you attach to it is silently imported from India's post-1947 amendments, which diverged from Pakistan's. A correct-looking citation with wrong-country substance is worse than an obviously foreign one, because it will not be caught by simply banning the word "Indian". Before stating what any section/article DOES, actively check it against this table where applicable:
+   - Section 148, Income Tax Ordinance 2001 (Pakistan) = advance tax collection on imports. It is NOT "reassessment"/"reopening of assessment" -- that is India's Income-tax Act 1961 meaning. In Pakistan, reassessment/amendment of assessment is Section 122 ITO 2001.
+   - Section 489-F, Pakistan Penal Code = dishonestly issuing a cheque without sufficient funds/authority (a PPC offence, bailable, max 3 years). It is NOT forgery (PPC Sections 463-471) and is NOT the same offence as India's Negotiable Instruments Act 1881 Section 138 cheque-dishonour framework -- Pakistan has no equivalent standalone Negotiable Instruments Act offence for this; do not cite the Negotiable Instruments Act as authority for cheque dishonour in Pakistan.
+   - Limitation Act, 1908 (Pakistan, still in force) -- NOT the Limitation Act 1963 (that is India's replacement Act with different Articles/periods). Never cite "Limitation Act 1963" for a Pakistani matter.
+   - Specific Relief Act, 1877 (Pakistan, still in force) -- NOT the Specific Relief Act 1963 (India's replacement, with materially different provisions on specific performance being discretionary vs. presumed). Never cite "Specific Relief Act 1963" for a Pakistani matter.
+   - Code of Criminal Procedure, 1898 (Pakistan, still in force, CrPC) -- NOT India's Code of Criminal Procedure 1973, which uses entirely different section numbers for the same concepts. Bail in Pakistan is Section 497 (non-bailable) / Section 498 (pre-arrest/bailable) CrPC 1898. Do NOT call pre-arrest bail "anticipatory bail under Section 438" -- that is India's 1973 Code terminology and numbering; Pakistan's equivalent is Section 498 CrPC 1898 pre-arrest bail.
+   - Companies Act, 2017 (Pakistan, regulated by SECP) -- NOT India's Companies Act 2013. Different section numbering entirely.
+   - National Accountability Ordinance, 1999 (NAB Ordinance, Pakistan) governs corruption/accountability matters -- NOT India's Prevention of Corruption Act 1988.
+   - Financial Institutions (Recovery of Finances) Ordinance, 2001 (FIO 2001, Pakistan) governs bank/financial recovery suits -- NOT India's SARFAESI Act 2002 or DRT Act.
+   - Muslim Family Laws Ordinance, 1961 (Pakistan) governs Muslim family matters including the Arbitration Council mechanism for divorce/reconciliation -- do not import Indian personal-law procedure or terminology.
+   - Pakistan Penal Code (PPC) retains its own post-1947 amendments (e.g. 489-F was added specifically to the PPC) and has diverged from the Indian Penal Code (IPC) despite a shared origin -- never assume a section means the same thing in both simply because the numbering looks similar.
+   - If you are not certain a section's substance is the Pakistani version and not a colonial-era counterpart's amended version, say so explicitly and flag it for verification rather than stating it with false confidence.
+
 10. BANK GUARANTEE & INJUNCTION DIRECTIVE (ORDER XXXIX CPC & AUTONOMY DOCTRINE):
    - Core Autonomy Doctrine: An unconditional bank guarantee is an autonomous contract independent of the underlying agreement. Breaches of the underlying contract (e.g., delayed site handover, design approvals, alleged wrongful termination) do NOT ground an interim injunction under Order XXXIX Rules 1 & 2 CPC (2021 SCMR 1446 / 2021 SCP 3209; PLD 2003 SC 191).
    - The Two Exclusive Exceptions:
@@ -109,5 +123,32 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
             errors.append("Territorial Mismatch: Recommending High Court of Balochistan for a Punjab/Lahore/Rawalpindi dispute.")
         if ("peshawar high court" in text_lower) and not any(k in query_lower for k in ["peshawar", "khyber", "kp", "kpk"]):
             errors.append("Territorial Mismatch: Recommending Peshawar High Court for a Punjab dispute.")
+
+    # Rule 5: Cross-jurisdiction SEMANTIC leakage (India/UK/US substance silently attached to a
+    # correctly-named Pakistani act/section). These are harder than Rule 2's literal foreign-act-name
+    # checks: the act name is right, but the meaning attached to it has been imported from another
+    # jurisdiction's diverged version of a shared colonial-era statute.
+    if re.search(r'\bsection\s*148\b', text_lower) and re.search(r'\b(income tax ordinance|ito\s*2001)\b', text_lower) and re.search(r'\b(reassess|reopen)', text_lower):
+        errors.append("Describing Section 148 ITO 2001 as 'reassessment/reopening' -- that is India's Income-tax Act meaning. Pakistan's Section 148 ITO 2001 is advance tax on imports; reassessment in Pakistan is Section 122 ITO 2001.")
+    if re.search(r'\b489-?f\b', text_lower) and re.search(r'\b(forgery|cheating\s+and\s+dishonestly)\b', text_lower) and "cheque" not in text_lower:
+        errors.append("Describing Section 489-F PPC as forgery/cheating without reference to cheque dishonour -- 489-F is specifically the dishonest-cheque-issuance offence, not general forgery (PPC Sections 463-471).")
+    if re.search(r'\bnegotiable instruments act\b', text_lower) and any(k in text_lower for k in ["cheque", "dishonour", "dishonor", "bounce"]):
+        errors.append("Citing the Negotiable Instruments Act for cheque dishonour -- Pakistan has no standalone Negotiable Instruments Act offence for this; the governing provision is Section 489-F PPC.")
+    if re.search(r'\blimitation act,?\s*1963\b', text_lower):
+        errors.append("Citing 'Limitation Act 1963' -- Pakistan retains the Limitation Act 1908; 1963 is India's replacement Act with different Articles/periods.")
+    if re.search(r'\bspecific relief act,?\s*1963\b', text_lower):
+        errors.append("Citing 'Specific Relief Act 1963' -- Pakistan retains the Specific Relief Act 1877; 1963 is India's replacement Act with materially different provisions.")
+    if re.search(r'\bcode of criminal procedure,?\s*1973\b', text_lower) or re.search(r'\bcrpc,?\s*1973\b', text_lower):
+        errors.append("Citing 'CrPC 1973' -- Pakistan retains the Code of Criminal Procedure 1898; 1973 is India's replacement Code with different section numbers for the same concepts.")
+    if re.search(r'\banticipatory bail\b', text_lower) and re.search(r'\bsection\s*438\b', text_lower):
+        errors.append("Citing 'anticipatory bail under Section 438' -- that is India's CrPC 1973 terminology/numbering. Pakistan's equivalent is pre-arrest bail under Section 498 CrPC 1898.")
+    if re.search(r'\bcompanies act,?\s*2013\b', text_lower):
+        errors.append("Citing 'Companies Act 2013' -- Pakistan's company law is the Companies Act 2017 (SECP-regulated); 2013 is India's Companies Act.")
+    if re.search(r'\bprevention of corruption act\b', text_lower):
+        errors.append("Citing 'Prevention of Corruption Act' -- Pakistan's accountability/corruption law is the National Accountability Ordinance 1999 (NAB Ordinance), not India's Prevention of Corruption Act 1988.")
+    if re.search(r'\bsarfaesi\b', text_lower):
+        errors.append("Citing 'SARFAESI' -- that is India's recovery law. Pakistan's equivalent for bank/financial institution recovery is the Financial Institutions (Recovery of Finances) Ordinance 2001 (FIO 2001).")
+    if re.search(r'\bevidence act,?\s*1872\b', text_lower) and "indian" not in text_lower:
+        errors.append("Citing 'Evidence Act 1872' -- Pakistan replaced this with the Qanun-e-Shahadat Order 1984 (QSO 1984); do not cite the 1872 Evidence Act framework even without the word 'Indian'.")
 
     return errors
