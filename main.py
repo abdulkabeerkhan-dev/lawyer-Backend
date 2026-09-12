@@ -342,7 +342,7 @@ CITATION_REGEX = re.compile(
 def extract_and_intercept_citation(user_query: str):
     """
     Deterministically intercepts exact reporter citations (e.g., '2021 SCMR 2092')
-    directly from Supabase before running vector search.
+    directly from public.full_judgments in Supabase before running vector search.
     """
     match = CITATION_REGEX.search(user_query or "")
     if not match:
@@ -350,19 +350,24 @@ def extract_and_intercept_citation(user_query: str):
 
     year, journal, page = match.groups()
     normalized_citation = f"{year} {journal.upper()} {page}"
+    raw_citation = f"{year} {journal} {page}"
 
     clean_topic = CITATION_REGEX.sub('', user_query).strip()
     clean_topic = re.sub(r'\b(search|database|find|precedents|case law|regarding|on|for|lookup|check)\b', '', clean_topic, flags=re.IGNORECASE).strip()
 
     norm_cit_underscore = f"{year}_{journal.upper()}_{page}"
+    raw_cit_underscore = f"{year}_{journal}_{page}"
     row = None
     try:
         if supabase:
-            res_supa = supabase.table("full_judgments").select("*").eq("case_id", norm_cit_underscore).limit(1).execute()
+            # Query public.full_judgments using indexed case_id and neutral_citation
+            res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", norm_cit_underscore).limit(1).execute()
+            if not res_supa.data and raw_cit_underscore != norm_cit_underscore:
+                res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", raw_cit_underscore).limit(1).execute()
             if not res_supa.data:
-                res_supa = supabase.table("full_judgments").select("*").eq("neutral_citation", normalized_citation).limit(1).execute()
-            if not res_supa.data:
-                res_supa = supabase.table("full_judgments").select("*").ilike("neutral_citation", f"%{normalized_citation}%").limit(1).execute()
+                res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("neutral_citation", normalized_citation).limit(1).execute()
+            if not res_supa.data and raw_citation != normalized_citation:
+                res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("neutral_citation", raw_citation).limit(1).execute()
             if res_supa.data:
                 row = res_supa.data[0]
     except Exception as err:
@@ -940,14 +945,18 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 norm_cit_underscore = re.sub(r'[\s_\-]+', '_', extracted_cit)
                 try:
                     if supabase:
-                        # 1. Try fast indexed case_id lookup FIRST (0.5s execution time)
-                        res_supa = supabase.table("full_judgments").select("*").eq("case_id", norm_cit_underscore).limit(3).execute()
+                        # 1. Try fast indexed case_id & neutral_citation lookup FIRST (0.01s execution time)
+                        raw_cit_underscore = re.sub(r'[\s_\-]+', '_', extracted_cit)
+                        norm_cit_upper_underscore = re.sub(r'[\s_\-]+', '_', extracted_cit.upper())
+                        norm_cit_upper_space = re.sub(r'\s+', ' ', extracted_cit.upper())
+
+                        res_supa = supabase.table("full_judgments").select("*").eq("case_id", norm_cit_upper_underscore).limit(3).execute()
+                        if not res_supa.data and raw_cit_underscore != norm_cit_upper_underscore:
+                            res_supa = supabase.table("full_judgments").select("*").eq("case_id", raw_cit_underscore).limit(3).execute()
                         if not res_supa.data:
                             res_supa = supabase.table("full_judgments").select("*").eq("neutral_citation", norm_cit_space).limit(3).execute()
-                        if not res_supa.data:
-                            res_supa = supabase.table("full_judgments").select("*").ilike("case_id", f"%{norm_cit_underscore}%").limit(3).execute()
-                        if not res_supa.data:
-                            res_supa = supabase.table("full_judgments").select("*").ilike("case_title", f"%{norm_cit_space}%").limit(3).execute()
+                        if not res_supa.data and norm_cit_upper_space != norm_cit_space:
+                            res_supa = supabase.table("full_judgments").select("*").eq("neutral_citation", norm_cit_upper_space).limit(3).execute()
 
                         rows = res_supa.data if res_supa and res_supa.data else []
 
