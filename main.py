@@ -626,7 +626,12 @@ def extract_and_intercept_citation(user_query: str):
         # Step 2: Tier 2 - Standalone Party Name Fallback (Runs if Tier 1 returned None)
         if not res_supa.data and clean_party_name:
             try:
-                res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").ilike("case_title", f"{clean_party_name}%").limit(5).execute()
+                res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").ilike("case_title", f"%{clean_party_name}%").limit(5).execute()
+                if not res_party or not res_party.data:
+                    p_words = clean_party_name.split()
+                    if len(p_words) >= 2:
+                        short_party = " ".join(p_words[-2:])
+                        res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").ilike("case_title", f"%{short_party}%").limit(5).execute()
                 if res_party and res_party.data:
                     party_rows = res_party.data
                     sc_rows = [
@@ -1388,6 +1393,19 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             else:
                 effective_user_query = combined_uploaded_doc_text.strip()
 
+        upload_extraction_failed = (len(all_uploads) > 0) and (not has_image) and (not has_doc_text)
+
+        doc_review_keywords = [
+            r'\b(?:review|analyze|examine|check|read|summarize|draft\s+response\s+to|reply\s+to)\s+(?:this|the|my|attached)?\s*(?:document|file|petition|appeal|notice|contract|agreement|pleading|attachment|pdf|docx)\b',
+            r'\b(?:attached|uploaded)\s+(?:document|file|petition|appeal|notice|contract|agreement|pleading|pdf|docx)\b',
+            r'\b(?:review|analyze)\s+attached\b',
+            r'\bsee\s+attached\b'
+        ]
+        is_doc_analysis_request = any(re.search(pat, effective_user_query, re.IGNORECASE) for pat in doc_review_keywords)
+        is_doc_analysis_without_content = is_doc_analysis_request and (not has_doc_text) and (not has_image)
+
+        withhold_tools = upload_extraction_failed or is_doc_analysis_without_content
+
         # ==============================================================================
         # FAST PATH: pure greetings / small talk never need to hit Claude+tools at all
         # ==============================================================================
@@ -1854,9 +1872,26 @@ HOW YOU WORK:
 10. CASE OUTCOME & HIGH COURT REPORTER RULES:
     - When summarizing or discussing each precedent case in your response or precedent cards, use the exact Outcome provided in the context (e.g. 'Outcome: FIR Quashed', 'Outcome: Bail Granted', 'Outcome: Allowed', 'Outcome: Dismissed', 'Outcome: Quashed'). Do NOT default to 'Outcome: Decided'.
     - Citations containing YLR, MLD, CLC, or PCrLJ represent High Court decisions (Lahore High Court, High Court of Sindh, Peshawar High Court, High Court of Balochistan, or Islamabad High Court). Only SCMR or explicit PLD ... SC citations represent the Supreme Court of Pakistan. Never state or output 'Supreme Court of Pakistan' for a YLR, MLD, CLC, or PCrLJ citation.
+11. ABSOLUTE RULE FOR MISSING DOCUMENTS & CLARIFYING QUESTIONS:
+    - You are STRICTLY FORBIDDEN from calling the search_case_law tool when you are asking the user for missing information, clarifying details, or when a requested document's content is missing/unreadable.
+    - NEVER call search_case_law when responding to requests like "review this document", "draft response to attached petition", or "analyze attached case" if no actual document text is available. Respond directly to state that the document content is missing or unreadable and ask for the document text without executing any database searches.
 """
 
         combined_system_prompt = f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{conversational_persona}"
+
+        if upload_extraction_failed:
+            failed_file_names = []
+            for item in all_uploads:
+                item_dict = item.model_dump() if hasattr(item, "model_dump") else (item.dict() if hasattr(item, "dict") else (item if isinstance(item, dict) else {}))
+                fname = item_dict.get("name") or item_dict.get("filename") or item_dict.get("fileName") or "attached file"
+                failed_file_names.append(str(fname))
+            failed_str = ", ".join(failed_file_names)
+            upload_failure_note = f"\n\nCRITICAL ATTACHMENT EXTRACTION FAILURE:\nThe user attached {len(all_uploads)} file(s) ({failed_str}), BUT the server could NOT extract any readable text or image content (the files may be corrupt, password-protected, image-only scanned PDFs without OCR, or in an unsupported format).\nDIRECTIVE: Inform the user plainly that their attached file(s) ({failed_str}) were received by the server but could not be read or extracted. Explain that the text could not be extracted (corrupt/password-protected/unsupported scan) and ask them to paste or re-upload the text directly. Do NOT say 'no file was attached'. Do NOT guess or hallucinate the file contents, and do NOT attempt to search case law."
+            combined_system_prompt = f"{combined_system_prompt}\n\n{upload_failure_note}"
+
+        elif is_doc_analysis_without_content:
+            doc_missing_note = "\n\nCRITICAL NOTICE: The user is asking to review, analyze, or draft a response to a document, BUT no document text or image content is attached or present in the message.\nDIRECTIVE: Inform the user plainly that the document content is missing or not provided. Ask them to paste or attach the text of the document so you can review it. Do NOT call search_case_law or invent document details."
+            combined_system_prompt = f"{combined_system_prompt}\n\n{doc_missing_note}"
 
         CASE_LAW_TOOL = {
             "name": "search_case_law",
@@ -1956,7 +1991,7 @@ MANDATORY INSTRUCTIONS:
             "statute", "section", "article", "bail", "plaint", "written statement", "law suit"
         ])
 
-        if (intercepted_card or cit_gate_match or is_search_command) and search_call_count["n"] == 0:
+        if (not withhold_tools) and (intercepted_card or cit_gate_match or is_search_command) and search_call_count["n"] == 0:
             print(f"🔒 [GATEKEEPER] Mandatory auto-executing search_case_law for query: '{effective_user_query}'", file=sys.stderr, flush=True)
             search_res = await run_case_law_search(effective_user_query)
             if grounding_message and grounding_message not in search_res:
@@ -1990,13 +2025,15 @@ MANDATORY INSTRUCTIONS:
         is_token_truncated = False
         MAX_TOOL_ROUNDS = 3
 
+        tools_to_pass = [] if withhold_tools else [CASE_LAW_TOOL]
+
         for round_idx in range(MAX_TOOL_ROUNDS + 1):
             claude_message = await safe_create_anthropic_message(
                 model=CLAUDE_MODEL,
                 max_tokens=8192,
                 system=combined_system_prompt,
                 messages=messages,
-                tools=[CASE_LAW_TOOL],
+                tools=tools_to_pass,
             )
             if hasattr(claude_message, "usage") and claude_message.usage:
                 total_input_tokens += getattr(claude_message.usage, "input_tokens", 0) or 0
