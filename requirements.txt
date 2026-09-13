@@ -14,3 +14,7 @@ tiktoken
 tqdm
 reportlab
 python-docx
+pypdf
+pdfplumber
+pdfminer.six
+pillow

@@ -112,8 +112,9 @@ async def get_voyage_embedding(text: str) -> List[float]:
         "Authorization": f"Bearer {VOYAGE_API_KEY}",
         "Content-Type": "application/json"
     }
+    clean_input = text[:4000] if text else ""
     payload = {
-        "input": [text],
+        "input": [clean_input],
         "model": "voyage-law-2"
     }
     async with httpx.AsyncClient(timeout=30.0) as client:
@@ -1125,21 +1126,37 @@ class ImagePayload(BaseModel):
     base64: Optional[str] = None
     file_base64: Optional[str] = None
     data: Optional[str] = None
+    content: Optional[str] = None
+    file: Optional[str] = None
+    uri: Optional[str] = None
+    url: Optional[str] = None
     mime_type: Optional[str] = None
+    mimeType: Optional[str] = None
     type: Optional[str] = None
+    contentType: Optional[str] = None
+    mediaType: Optional[str] = None
     name: Optional[str] = None
+    filename: Optional[str] = None
+    fileName: Optional[str] = None
+
+    class Config:
+        extra = "allow"
 
 class ChatMessagePayload(BaseModel):
     role: Optional[str] = "user"
     content: Optional[str] = ""
 
 class QueryRequest(BaseModel):
-    query_text: str
+    query_text: Optional[str] = ""
     images: Optional[List[ImagePayload]] = None
     documents: Optional[List[ImagePayload]] = None
     files: Optional[List[ImagePayload]] = None
+    attachments: Optional[List[ImagePayload]] = None
     category: str = "general"
     messages: Optional[List[ChatMessagePayload]] = None
+
+    class Config:
+        extra = "allow"
 
 class FeedbackRequest(BaseModel):
     query_id: str
@@ -1267,8 +1284,24 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 except Exception as pdf_err:
                     print(f"⚠️ pypdf extraction failed: {pdf_err}", file=sys.stderr)
 
-            # 3. Plain text fallback
-            if not extracted_text:
+                if not extracted_text:
+                    try:
+                        import pdfplumber
+                        with pdfplumber.open(io.BytesIO(raw_bytes)) as pdf:
+                            pages_t = [p.extract_text() for p in pdf.pages if p.extract_text()]
+                            extracted_text = "\n".join(pages_t).strip()
+                    except Exception as plumber_err:
+                        print(f"⚠️ pdfplumber extraction failed: {plumber_err}", file=sys.stderr)
+
+                if not extracted_text:
+                    try:
+                        from pdfminer.high_level import extract_text as pdfminer_extract
+                        extracted_text = pdfminer_extract(io.BytesIO(raw_bytes)).strip()
+                    except Exception as miner_err:
+                        print(f"⚠️ pdfminer extraction failed: {miner_err}", file=sys.stderr)
+
+            # 3. Plain text fallback (only if non-image)
+            if not extracted_text and not m.startswith("image/"):
                 try:
                     decoded = raw_bytes.decode("utf-8", errors="ignore").strip()
                     if decoded and len(decoded) > 10 and not any(c in decoded[:50] for c in ['\x00', '\x01', '\x02']):
@@ -1278,50 +1311,59 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             return extracted_text
 
-        all_uploads = (request.images or []) + (request.documents or []) + (request.files or [])
+        all_uploads = (request.images or []) + (request.documents or []) + (request.files or []) + (getattr(request, "attachments", None) or [])
         check_user_quota(authenticated_user_id, num_images_requested=len(all_uploads))
 
         valid_vision_images = []
         extracted_doc_texts = []
 
         for item in all_uploads:
-            # Flexible resolution of base64 string & mime type regardless of key names sent by frontend
-            raw_b64 = item.image_base64 or item.base64 or item.file_base64 or item.data or ""
-            raw_mime = item.image_mime_type or item.mime_type or item.type or ""
-            name_lower = (item.name or "").lower()
+            item_dict = item.model_dump() if hasattr(item, "model_dump") else (item.dict() if hasattr(item, "dict") else (item if isinstance(item, dict) else {}))
+            raw_b64 = (
+                item_dict.get("image_base64") or item_dict.get("base64") or item_dict.get("file_base64")
+                or item_dict.get("data") or item_dict.get("content") or item_dict.get("file") or item_dict.get("url") or ""
+            )
+            raw_mime = (
+                item_dict.get("image_mime_type") or item_dict.get("mime_type") or item_dict.get("mimeType")
+                or item_dict.get("type") or item_dict.get("contentType") or item_dict.get("mediaType") or ""
+            )
+            name_lower = str(item_dict.get("name") or item_dict.get("filename") or item_dict.get("fileName") or "").lower()
 
             if not raw_mime and name_lower:
                 if name_lower.endswith(".docx"): raw_mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 elif name_lower.endswith(".pdf"): raw_mime = "application/pdf"
                 elif name_lower.endswith(".png"): raw_mime = "image/png"
                 elif name_lower.endswith((".jpg", ".jpeg")): raw_mime = "image/jpeg"
+                elif name_lower.endswith(".webp"): raw_mime = "image/webp"
+                elif name_lower.endswith(".txt"): raw_mime = "text/plain"
 
             m = raw_mime.lower().strip()
 
-            # Extract doc text if docx / pdf / text
-            doc_t = extract_text_from_document_base64(raw_b64, m)
-            if doc_t:
-                extracted_doc_texts.append(doc_t)
-            elif m.startswith("image/"):
-                # Create a standardized item for vision payload
+            if m.startswith("image/") or name_lower.endswith((".png", ".jpg", ".jpeg", ".webp", ".gif")):
                 norm_item = ImagePayload(
                     image_base64=raw_b64,
-                    image_mime_type=m if m != "image/jpg" else "image/jpeg"
+                    image_mime_type=m if m and m != "image/jpg" else ("image/png" if name_lower.endswith(".png") else "image/jpeg")
                 )
                 valid_vision_images.append(norm_item)
-            elif raw_b64:
-                # Fallback: attempt extraction without mime
-                doc_t_fallback = extract_text_from_document_base64(raw_b64, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-                if doc_t_fallback:
-                    extracted_doc_texts.append(doc_t_fallback)
+            else:
+                doc_t = extract_text_from_document_base64(raw_b64, m)
+                if doc_t:
+                    extracted_doc_texts.append(doc_t)
+                elif raw_b64:
+                    doc_t_fallback = extract_text_from_document_base64(raw_b64, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                    if doc_t_fallback:
+                        extracted_doc_texts.append(doc_t_fallback)
 
         has_image = len(valid_vision_images) > 0
         has_doc_text = len(extracted_doc_texts) > 0
         combined_uploaded_doc_text = "\n\n=== UPLOADED DOCUMENT ATTACHMENT ===\n\n" + "\n\n".join(extracted_doc_texts) if has_doc_text else ""
 
-        effective_user_query = request.query_text
+        effective_user_query = (request.query_text or "").strip()
         if combined_uploaded_doc_text:
-            effective_user_query = f"{request.query_text}\n\n{combined_uploaded_doc_text}".strip()
+            if effective_user_query:
+                effective_user_query = f"{effective_user_query}\n\n{combined_uploaded_doc_text}".strip()
+            else:
+                effective_user_query = combined_uploaded_doc_text.strip()
 
         # ==============================================================================
         # FAST PATH: pure greetings / small talk never need to hit Claude+tools at all
