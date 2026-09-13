@@ -1362,10 +1362,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         upload_extraction_failed = (len(all_uploads) > 0) and (not has_image) and (not has_doc_text)
 
         doc_review_keywords = [
-            r'\b(?:review|analyze|examine|check|read|summarize|draft\s+response\s+to|reply\s+to)\s+(?:this|the|my|attached)?\s*(?:document|file|petition|appeal|notice|contract|agreement|pleading|attachment|pdf|docx)\b',
-            r'\b(?:attached|uploaded)\s+(?:document|file|petition|appeal|notice|contract|agreement|pleading|pdf|docx)\b',
-            r'\b(?:review|analyze)\s+attached\b',
-            r'\bsee\s+attached\b'
+            r'\b(?:review|analyze|examine|check|read|summarize|draft\s+response\s+to|reply\s+to)\s+(?:this|the|my|att?ac?h?e?d?)?\s*(?:do[cu]{1,2}[umne]{1,4}t|file?|pete?i?t?i?o?n|appe?a?l|noti?c?e|contra?c?t|agre?e?m?e?n?t|plea?d?i?n?g|att?ac?h?m?e?n?t|pdf|docx)\b',
+            r'\b(?:att?ac?h?e?d?|uploaded)\s+(?:do[cu]{1,2}[umne]{1,4}t|file?|pete?i?t?i?o?n|appe?a?l|noti?c?e|contra?c?t|agre?e?m?e?n?t|plea?d?i?n?g|pdf|docx)\b',
+            r'\b(?:review|analyze)\s+att?ac?h?e?d?\b',
+            r'\bsee\s+att?ac?h?e?d?\b'
         ]
         is_doc_analysis_request = any(re.search(pat, effective_user_query, re.IGNORECASE) for pat in doc_review_keywords)
         is_doc_analysis_without_content = is_doc_analysis_request and (not has_doc_text) and (not has_image)
@@ -2151,8 +2151,26 @@ MANDATORY INSTRUCTIONS:
                 for c in citations_payload
             ]
 
+        ans_lower = executive_answer.lower()
+        is_missing_doc_response = withhold_tools or upload_extraction_failed or is_doc_analysis_without_content or any(phrase in ans_lower for phrase in [
+            "don't see any attached document",
+            "no document",
+            "attached file",
+            "could not be read",
+            "could not extract",
+            "please paste",
+            "attach the text",
+            "missing or unreadable"
+        ])
+
+        if is_missing_doc_response:
+            precedent_cards = []
+            additional_authorities = []
+            citations_payload = []
+            aggregate_sources_matches = []
+
         display_answer = executive_answer
-        if citations_payload or additional_authorities:
+        if (not is_missing_doc_response) and (citations_payload or additional_authorities):
             if additional_authorities:
                 add_lines = ["\n\nADDITIONAL RELEVANT AUTHORITIES:"] + [f"• {a['title']} — {a['citation']}" for a in additional_authorities]
                 display_answer += "\n".join(add_lines)
