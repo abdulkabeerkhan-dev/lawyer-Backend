@@ -176,81 +176,47 @@ if ANTHROPIC_API_KEY:
 async def safe_create_anthropic_message(**kwargs):
     if not async_anthropic_client:
         raise HTTPException(status_code=503, detail="Anthropic API client is not initialized.")
-    model_candidates = [
-        kwargs.get("model") or CLAUDE_MODEL,
-        "claude-haiku-4-5-20251001",
-        "claude-sonnet-4-5-20250929",
-        "claude-sonnet-4-6",
-        "claude-sonnet-5",
-        "claude-opus-4-5-20251101",
-        "claude-opus-4-6",
-        "claude-opus-4-7",
-        "claude-opus-4-8",
-        "claude-fable-5",
-        "claude-fable-5-1",
-        "claude-3-5-sonnet-20241022",
-        "claude-3-5-sonnet-latest",
-        "claude-3-5-sonnet-20240620",
-        "claude-3-7-sonnet-20250219",
-        "claude-3-7-sonnet-latest",
-        "claude-3-5-haiku-20241022",
-        "claude-3-5-haiku-latest",
-        "claude-3-haiku-20240307",
-        "claude-3-opus-20240229",
-        "claude-3-opus-latest"
-    ]
-    seen = set()
-    models_to_try = [m for m in model_candidates if m and not (m in seen or seen.add(m))]
-    last_exc = None
-    for model_name in models_to_try:
-        try:
-            call_kwargs = dict(kwargs)
-            call_kwargs["model"] = model_name
-            return await async_anthropic_client.messages.create(**call_kwargs)
-        except Exception as e:
-            err_str = str(e)
-            if "404" in err_str or "not_found" in err_str.lower() or "model:" in err_str.lower():
-                print(f"⚠️ Anthropic model '{model_name}' returned 404/not_found. Trying fallback...", file=sys.stderr, flush=True)
-                last_exc = e
-                continue
+    
+    primary_model = kwargs.get("model") or CLAUDE_MODEL
+    call_kwargs = dict(kwargs)
+    call_kwargs["model"] = primary_model
+
+    try:
+        return await async_anthropic_client.messages.create(**call_kwargs)
+    except Exception as e:
+        err_str = str(e)
+        if not ("404" in err_str or "not_found" in err_str.lower() or "model:" in err_str.lower()):
             raise e
 
-    # Dynamic Fallback: query Anthropic /v1/models endpoint to discover active models on this key/workspace
-    if ANTHROPIC_API_KEY:
-        try:
-            async with httpx.AsyncClient(timeout=10.0) as client:
-                headers = {
-                    "x-api-key": ANTHROPIC_API_KEY,
-                    "anthropic-version": "2023-06-01",
-                    "content-type": "application/json"
-                }
-                resp = await client.get("https://api.anthropic.com/v1/models?limit=100", headers=headers)
-                if resp.status_code == 200:
-                    fetched_data = resp.json()
-                    dynamic_models = [m["id"] for m in fetched_data.get("data", []) if isinstance(m, dict) and "id" in m]
-                    for m_id in dynamic_models:
-                        if m_id in seen:
-                            continue
-                        seen.add(m_id)
-                        try:
-                            call_kwargs = dict(kwargs)
-                            call_kwargs["model"] = m_id
-                            print(f"🔄 Trying dynamically discovered Anthropic model '{m_id}'...", file=sys.stderr, flush=True)
-                            return await async_anthropic_client.messages.create(**call_kwargs)
-                        except Exception as dyn_err:
-                            print(f"⚠️ Dynamic model '{m_id}' failed: {dyn_err}", file=sys.stderr, flush=True)
-                            last_exc = dyn_err
-                            continue
-        except Exception as fetch_err:
-            print(f"⚠️ Could not fetch dynamic model list: {fetch_err}", file=sys.stderr, flush=True)
+        fallback_model = os.environ.get("ANTHROPIC_FALLBACK_MODEL", "").strip()
+        if fallback_model and fallback_model != primary_model:
+            print(
+                f"⚠️ Anthropic primary model '{primary_model}' returned 404/not_found. "
+                f"Trying operator-configured fallback model '{fallback_model}'...",
+                file=sys.stderr,
+                flush=True
+            )
+            try:
+                fallback_kwargs = dict(kwargs)
+                fallback_kwargs["model"] = fallback_model
+                return await async_anthropic_client.messages.create(**fallback_kwargs)
+            except Exception as fallback_err:
+                print(
+                    f"❌ Operator-configured fallback model '{fallback_model}' failed: {fallback_err}",
+                    file=sys.stderr,
+                    flush=True
+                )
+                raise RuntimeError(
+                    f"Anthropic API Model Access Error: Neither primary model '{primary_model}' "
+                    f"nor configured fallback model '{fallback_model}' is accessible. "
+                    f"Original error: {e}"
+                ) from fallback_err
 
-    if last_exc:
-        models_str = ", ".join(models_to_try)
         raise RuntimeError(
-            f"Anthropic API Model Access Error: None of the candidate models ({models_str}) "
-            f"are accessible with the configured ANTHROPIC_API_KEY. "
-            f"Please verify your Anthropic Console (console.anthropic.com) billing status, active credits, or model access permissions."
-        )
+            f"Anthropic API Model Access Error: Model '{primary_model}' is not accessible with the configured ANTHROPIC_API_KEY. "
+            f"Set ANTHROPIC_FALLBACK_MODEL environment variable or verify model permissions in Anthropic Console. "
+            f"Original error: {e}"
+        ) from e
 
 security_agent = HTTPBearer(auto_error=False)
 _clerk_jwks_keys_cache = None
