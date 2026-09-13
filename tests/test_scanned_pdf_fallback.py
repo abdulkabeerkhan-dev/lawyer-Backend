@@ -29,9 +29,9 @@ class TestScannedPdfFallback(unittest.TestCase):
 
         import main
         with patch('pypdf.PdfReader', return_value=mock_reader):
-            b64_dummy = base64.b64encode(b"%PDF-1.4 dummy scanned pdf").decode("utf-8")
+            b64_dummy = base64.b64encode(b"%PDF-1.4\n%\xe2\xe3\xcf\xd3\x00\x01\x02\n1 0 obj\n<<>>\nendobj\ntrailer\n<<>>\nstartxref\n0\n%%EOF").decode("utf-8")
             # Run text extraction which returns empty for scanned PDF
-            doc_t = main.extract_text_from_document_base64(b64_dummy, "application/pdf") if hasattr(main, 'extract_text_from_document_base64') else ""
+            doc_t = main.extract_text_from_document_base64(b64_dummy, "application/pdf")
             self.assertEqual(doc_t, "")
 
 if __name__ == '__main__':
