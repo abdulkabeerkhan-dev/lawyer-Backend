@@ -72,5 +72,27 @@ class TestUploadAndToolWithholding(unittest.TestCase):
         ])
         self.assertTrue(is_missing_doc_response)
 
+    def test_upload_key_harvesting(self):
+        from main import QueryRequest
+        req = QueryRequest(query_text="review the document")
+        req_dict = {"document": {"name": "suit_partition.docx", "fileData": "data:application/docx;base64,12345"}}
+        upload_keys = [
+            "images", "documents", "files", "attachments", "uploaded_files", "uploaded_documents",
+            "image", "document", "file", "attachment", "uploaded_file", "uploaded_document",
+            "file_data", "fileData", "doc", "docs"
+        ]
+        raw_upload_list = []
+        for k in upload_keys:
+            val = req_dict.get(k)
+            if val:
+                if isinstance(val, list):
+                    raw_upload_list.extend(val)
+                else:
+                    raw_upload_list.append(val)
+        self.assertEqual(len(raw_upload_list), 1)
+        item = raw_upload_list[0]
+        raw_b64 = item.get("fileData")
+        self.assertEqual(raw_b64, "data:application/docx;base64,12345")
+
 if __name__ == '__main__':
     unittest.main()

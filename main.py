@@ -1360,18 +1360,40 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 text = re.sub(r'\b(\w+(?:\s+\w+){0,3})\s+\1\b', r'\1', text, flags=re.IGNORECASE)
             return text
 
-        all_uploads = (request.images or []) + (request.documents or []) + (request.files or []) + (getattr(request, "attachments", None) or [])
+        req_dict = request.model_dump() if hasattr(request, "model_dump") else (request.dict() if hasattr(request, "dict") else (request if isinstance(request, dict) else {}))
+        upload_keys = [
+            "images", "documents", "files", "attachments", "uploaded_files", "uploaded_documents",
+            "image", "document", "file", "attachment", "uploaded_file", "uploaded_document",
+            "file_data", "fileData", "doc", "docs"
+        ]
+
+        raw_upload_list = []
+        for k in upload_keys:
+            val = req_dict.get(k) or getattr(request, k, None)
+            if val:
+                if isinstance(val, list):
+                    raw_upload_list.extend(val)
+                else:
+                    raw_upload_list.append(val)
+
+        all_uploads = raw_upload_list
         check_user_quota(authenticated_user_id, num_images_requested=len(all_uploads))
 
         valid_vision_images = []
         extracted_doc_texts = []
 
         for item in all_uploads:
-            item_dict = item.model_dump() if hasattr(item, "model_dump") else (item.dict() if hasattr(item, "dict") else (item if isinstance(item, dict) else {}))
-            raw_b64 = (
-                item_dict.get("image_base64") or item_dict.get("base64") or item_dict.get("file_base64")
-                or item_dict.get("data") or item_dict.get("content") or item_dict.get("file") or item_dict.get("url") or ""
-            )
+            if isinstance(item, str):
+                raw_b64 = item
+                item_dict = {}
+            else:
+                item_dict = item.model_dump() if hasattr(item, "model_dump") else (item.dict() if hasattr(item, "dict") else (item if isinstance(item, dict) else {}))
+                raw_b64 = (
+                    item_dict.get("image_base64") or item_dict.get("base64") or item_dict.get("file_base64")
+                    or item_dict.get("fileData") or item_dict.get("base64Data") or item_dict.get("base64_string")
+                    or item_dict.get("b64") or item_dict.get("data") or item_dict.get("content") or item_dict.get("file")
+                    or item_dict.get("src") or item_dict.get("bytes") or item_dict.get("url") or ""
+                )
             raw_mime = (
                 item_dict.get("image_mime_type") or item_dict.get("mime_type") or item_dict.get("mimeType")
                 or item_dict.get("type") or item_dict.get("contentType") or item_dict.get("mediaType") or ""
