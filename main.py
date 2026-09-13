@@ -385,11 +385,59 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
 
     return f"{court_clean} — {ident_clean}{year_fmt}"
 
+def repair_ocr_words(text: str) -> str:
+    if not text:
+        return ""
+    # 1. Recombine fragmented administrative terms
+    t = re.sub(r'\bpro(?:v\b|\.|\s*v\.\s*)ince\b', 'Province', text, flags=re.IGNORECASE)
+    t = re.sub(r'\bgo(?:v\b|\.|\s*v\.\s*)ernment\b', 'Government', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bde(?:v\b|\.|\s*v\.\s*)elopment\b', 'Development', t, flags=re.IGNORECASE)
+    
+    # 2. Fix names split by accidental "v." or "v"
+    t = re.sub(r'\bnaq\s*v\.?\s*i\b', 'Naqvi', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bja\s*v\.?\s*aid\b', 'Javaid', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bmaul\s*v\.?\s*i\b', 'Maulvi', t, flags=re.IGNORECASE)
+    t = re.sub(r'\btan\s*v\.?\s*ir\b', 'Tanvir', t, flags=re.IGNORECASE)
+
+    # 3. Add space around "v." where letter/digit/bracket meets uppercase/lowercase
+    t = re.sub(r'([a-zA-Z0-9\)])v\.(?=[A-Za-z0-9])', r'\1 v. ', t)
+    
+    # 4. Standardize standalone " v. "
+    t = re.sub(r'\s+(?:versus|vs\.?|v\.)\s+', ' v. ', t, flags=re.IGNORECASE)
+    
+    # 5. Clean up multiple spaces
+    return " ".join(t.split()).strip()
+
+def infer_court_from_citation(citation: str, raw_text: str = "", court_hint: str = "") -> str:
+    if court_hint and str(court_hint).strip().lower() not in ("unknown", "unknown court", "court of record", "not specified", "none", "", "null", "undefined"):
+        return clean_court_name(str(court_hint), title="", case_id=citation, text=raw_text)
+
+    cit_upper = str(citation or "").upper()
+    if "SCMR" in cit_upper or ("PLD" in cit_upper and (" SC" in cit_upper or "SUPREME COURT" in cit_upper)):
+        return "Supreme Court of Pakistan"
+    if "FSC" in cit_upper:
+        return "Federal Shariat Court"
+
+    combined = f"{citation} {raw_text[:500]}".lower()
+    if "lahore" in combined:
+        return "Lahore High Court"
+    if "karachi" in combined or "sindh" in combined:
+        return "High Court of Sindh"
+    if "peshawar" in combined or "pesh" in combined:
+        return "Peshawar High Court"
+    if "quetta" in combined or "balochistan" in combined:
+        return "High Court of Balochistan"
+    if "islamabad" in combined:
+        return "Islamabad High Court"
+
+    return clean_court_name(court_name="", title="", case_id=citation, text=raw_text) or "High Court"
+
 def clean_case_title(raw_title: str) -> str:
     if not raw_title:
         return "Reported Precedent"
         
     t = raw_title.strip()
+    t = repair_ocr_words(t)
 
     # 1. Truncate at bench/judge or advocate separator or court tag
     if " - " in t:
@@ -402,13 +450,13 @@ def clean_case_title(raw_title: str) -> str:
     # 3. Strip leading scraper tabs, page numbers and citations (e.g. "339\t2021 SCMR 2092\t", "587 2006 Ylr 1728 ")
     t = re.sub(r'^(?:\d+[\s\t]+)?(?:\d{4}[\s\t]+[A-Za-z\s\t]+[\s\t]+\d+[\s\t]+)?', '', t).strip()
 
-    # 4. Standardize " v. " spacing without breaking names like Javaid, Naqvi, Maulvi, Tanvir
-    t = re.sub(r'([a-zA-Z\)])v\.(?=[A-Z])', r'\1 v. ', t)
+    # 4. Repair pass after preamble stripping
+    t = repair_ocr_words(t)
     
     # Split into initiator and defender on versus / vs / v.
     m = re.split(r'\s+(?:versus|vs\.?|v\.)\s+', t, flags=re.IGNORECASE)
     if len(m) == 2:
-        p1, p2 = m[0].strip(), m[1].strip()
+        p1, p2 = repair_ocr_words(m[0].strip()), repair_ocr_words(m[1].strip())
         
         # Capitalize if party contains ALL-CAPS words
         if any(w.isupper() and len(w) > 1 for w in p1.split()):
@@ -433,7 +481,7 @@ def clean_case_title(raw_title: str) -> str:
         t = re.sub(r'\betc\b', 'Etc', t, flags=re.IGNORECASE)
 
     # 5. Clean up extra whitespace
-    t = " ".join(t.split()).strip(" ,.-")
+    t = repair_ocr_words(t)
     return t
 
 def clean_precedent_title(title: str, fallback_citation: str = "", full_text: str = "", neutral_cit: str = "") -> str:
@@ -1839,12 +1887,12 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
                 case_id = str(meta.get('case_id', 'Unknown Docket'))
                 text_content = str(meta.get('text', meta.get('text_preview', ''))).strip()
-                court = clean_court_name(str(meta.get('court', 'Unknown Court')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')), text=text_content)
+                official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
+                neutral_cit = synthesize_canonical_citation(meta)
+                court = infer_court_from_citation(neutral_cit or official_citation, text_content, meta.get('court') or meta.get('court_name') or '')
                 year_or_date = extract_year_from_citation_or_date(meta.get('date') or meta.get('decision_date') or meta.get('year'), meta.get('citation') or meta.get('neutral_citation'), case_id)
                 title = sanitize_case_title(clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case')))
                 title = re.sub(r'\s*(?:v\.?|vs\.?)\s*', ' v. ', title, flags=re.IGNORECASE).strip()
-                official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
-                neutral_cit = synthesize_canonical_citation(meta)
                 outcome_val = determine_case_outcome(text_content, meta.get("disposition") or meta.get("outcome"))
                 statutes_val = meta.get("statutes") or []
                 sections_val = meta.get("sections") or []
@@ -1862,7 +1910,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     pdf_url_val = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
 
                 aggregate_citations_payload.append({
-                    "case_id": case_id, "court": court, "year": year_or_date, "preview": text_content,
+                    "case_id": case_id, "court": court, "court_name": court, "year": year_or_date, "preview": text_content,
                     "title": title, "citation": neutral_cit, "score": match_score, "outcome": outcome_val,
                     "statutes": statutes_val, "sections": sections_val, "pdf_url": pdf_url_val,
                     "relevance": "High" if match_score >= 0.65 else ("Medium" if match_score >= 0.52 else "Low"),
@@ -2005,8 +2053,8 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
         if intercepted_card:
             c_cit = synthesize_canonical_citation(intercepted_card)
             c_title = sanitize_case_title(intercepted_card.get("case_title") or "Reported Precedent")
-            c_name = clean_court_name(intercepted_card.get("court_name") or "Court of Record", title=c_title, case_id=str(c_cit))
             c_text = (intercepted_card.get("full_text") or "")[:4000]
+            c_name = infer_court_from_citation(c_cit, c_text, intercepted_card.get("court_name") or intercepted_card.get("court") or "")
             c_id = intercepted_card.get("case_id") or intercepted_card.get("id") or c_cit
             c_date = extract_year_from_citation_or_date(intercepted_card.get("decision_date") or intercepted_card.get("year"), c_cit, c_id)
             pdf_url = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(c_id))}"
@@ -2014,6 +2062,7 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
             precedent_card_dict = {
                 "case_id": c_id,
                 "court": c_name,
+                "court_name": c_name,
                 "year": c_date,
                 "preview": c_text,
                 "title": c_title,
@@ -2210,6 +2259,13 @@ MANDATORY INSTRUCTIONS:
                 card["citation"] = matched.get("citation") or card.get("citation") or "Neutral Citation"
                 card["case_id"] = matched.get("case_id") or card.get("case_id") or str(card.get("citation") or "case_id")
                 card["case_name"] = sanitize_case_title(matched.get("title") or card.get("case_name") or "Reported Precedent")
+                court_str = infer_court_from_citation(
+                    card.get("citation") or matched.get("citation") or "",
+                    card.get("raw_judgment_text") or matched.get("preview") or "",
+                    matched.get("court") or matched.get("court_name") or card.get("court") or card.get("court_name") or ""
+                )
+                card["court_name"] = court_str
+                card["court"] = court_str
                 raw_pdf = matched.get("pdf_url") or card.get("pdf_url")
                 if not raw_pdf or "supabase.co" in str(raw_pdf).lower():
                     raw_pdf = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(card['case_id']))}"
@@ -2239,6 +2295,8 @@ MANDATORY INSTRUCTIONS:
                     "case_name": sanitize_case_title(c.get("title") or c.get("case_name") or "Reported Precedent"),
                     "case_id": c.get("case_id") or c.get("citation") or "case_id",
                     "citation": c.get("citation") or "Neutral Citation",
+                    "court_name": infer_court_from_citation(c.get("citation") or "", c.get("preview") or "", c.get("court") or c.get("court_name") or ""),
+                    "court": infer_court_from_citation(c.get("citation") or "", c.get("preview") or "", c.get("court") or c.get("court_name") or ""),
                     "date": extract_year_from_citation_or_date(c.get("year"), c.get("citation"), c.get("case_id")) or "2024",
                     "issue": "Legal proposition extracted from indexed public judgment record.",
                     "holding": sanitize_holding_text(c.get("preview", "")) or "Holding on record.",
