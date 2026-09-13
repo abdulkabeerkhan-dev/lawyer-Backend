@@ -1211,19 +1211,145 @@ def cleanup_old_jobs():
     except Exception as e:
         print(f"⚠️ Error cleaning up old jobs: {e}", file=sys.stderr)
 
+def clean_base64_data(base64_str: str) -> str:
+    return base64_str.split(",", 1)[1] if "," in base64_str else base64_str.strip()
+
+def sanitize_mime_type(mime: str) -> str:
+    m = (mime or "").lower().strip()
+    return "image/jpeg" if m == "image/jpg" else m
+
+def extract_text_from_legacy_doc(raw_bytes: bytes) -> str:
+    if not raw_bytes:
+        return ""
+    extracted = []
+    utf16_matches = re.findall(rb'(?:[\x20-\x7e\x0a\x0d]\x00){4,}', raw_bytes)
+    for match in utf16_matches:
+        try:
+            s = match.decode('utf-16le', errors='ignore').strip()
+            if len(s) > 10 and not any(kw in s for kw in ['Root Entry', 'WordDocument', 'Table', 'SummaryInformation']):
+                extracted.append(s)
+        except Exception:
+            pass
+
+    if not extracted:
+        ascii_matches = re.findall(rb'[\x20-\x7e\x0a\x0d]{10,}', raw_bytes)
+        for match in ascii_matches:
+            try:
+                s = match.decode('latin1', errors='ignore').strip()
+                if len(s) > 15 and not any(kw in s for kw in ['Microsoft Word', 'Normal.dotm', 'CompObj']):
+                    extracted.append(s)
+            except Exception:
+                pass
+    return "\n\n".join(extracted).strip()
+
+def extract_text_from_document_base64(b64_str: str, mime_type: str) -> str:
+    if not b64_str:
+        return ""
+    try:
+        raw_bytes = base64.b64decode(clean_base64_data(b64_str))
+    except Exception as b64_err:
+        print(f"⚠️ Base64 decode error: {b64_err}", file=sys.stderr)
+        return ""
+
+    m = (mime_type or "").lower().strip()
+    extracted_text = ""
+
+    # 1. Check if DOCX or DOC (by MIME or Zip PK / OLE magic bytes)
+    if "wordprocessingml" in m or "docx" in m or "msword" in m or "officedocument" in m or raw_bytes.startswith(b'PK\x03\x04') or raw_bytes.startswith(b'\xd0\xcf\x11\xe0'):
+        try:
+            import docx
+            doc_obj = docx.Document(io.BytesIO(raw_bytes))
+            full_p = [p.text for p in doc_obj.paragraphs if p.text.strip()]
+            for table in doc_obj.tables:
+                for row in table.rows:
+                    full_p.append(" | ".join(cell.text.strip() for cell in row.cells if cell.text.strip()))
+            extracted_text = "\n".join(full_p).strip()
+        except Exception as docx_err:
+            print(f"⚠️ python-docx parsing failed: {docx_err}", file=sys.stderr)
+            try:
+                import zipfile
+                with zipfile.ZipFile(io.BytesIO(raw_bytes)) as z:
+                    if "word/document.xml" in z.namelist():
+                        xml_content = z.read("word/document.xml").decode("utf-8", errors="ignore")
+                        text_bits = re.findall(r'<w:t[^>]*>(.*?)</w:t>', xml_content)
+                        extracted_text = " ".join(text_bits).strip()
+            except Exception as fallback_err:
+                print(f"⚠️ XML docx fallback extraction failed: {fallback_err}", file=sys.stderr)
+
+        if not extracted_text:
+            extracted_text = extract_text_from_legacy_doc(raw_bytes)
+
+    # 2. Check if PDF (by MIME or %PDF magic bytes)
+    if not extracted_text and ("pdf" in m or raw_bytes.startswith(b'%PDF')):
+        try:
+            import pypdf
+            reader = pypdf.PdfReader(io.BytesIO(raw_bytes))
+            pdf_pages = [page.extract_text() for page in reader.pages if page.extract_text()]
+            extracted_text = "\n".join(pdf_pages).strip()
+        except Exception as pdf_err:
+            print(f"⚠️ pypdf extraction failed: {pdf_err}", file=sys.stderr)
+
+        if not extracted_text:
+            try:
+                import pdfplumber
+                with pdfplumber.open(io.BytesIO(raw_bytes)) as pdf:
+                    pages_t = [p.extract_text() for p in pdf.pages if p.extract_text()]
+                    extracted_text = "\n".join(pages_t).strip()
+            except Exception as plumber_err:
+                print(f"⚠️ pdfplumber extraction failed: {plumber_err}", file=sys.stderr)
+
+        if not extracted_text:
+            try:
+                from pdfminer.high_level import extract_text as pdfminer_extract
+                extracted_text = pdfminer_extract(io.BytesIO(raw_bytes)).strip()
+            except Exception as miner_err:
+                print(f"⚠️ pdfminer extraction failed: {miner_err}", file=sys.stderr)
+
+    # 3. Plain text fallback (only if non-image)
+    if not extracted_text and not m.startswith("image/"):
+        try:
+            decoded = raw_bytes.decode("utf-8", errors="ignore").strip()
+            if decoded and len(decoded) > 10 and not any(c in decoded[:50] for c in ['\x00', '\x01', '\x02']):
+                extracted_text = decoded
+        except Exception:
+            pass
+
+    return extracted_text
+
+def extract_images_from_pdf_base64(b64_str: str) -> List[ImagePayload]:
+    extracted_images = []
+    if not b64_str:
+        return extracted_images
+    try:
+        raw_bytes = base64.b64decode(clean_base64_data(b64_str))
+        import pypdf
+        from PIL import Image
+        reader = pypdf.PdfReader(io.BytesIO(raw_bytes))
+        for page in reader.pages:
+            if hasattr(page, "images") and page.images:
+                for img_file in page.images:
+                    try:
+                        pil_img = Image.open(io.BytesIO(img_file.data))
+                        if pil_img.width > 60 and pil_img.height > 60:
+                            buf = io.BytesIO()
+                            pil_img.convert("RGB").save(buf, format="JPEG", quality=85)
+                            b64_out = base64.b64encode(buf.getvalue()).decode("utf-8")
+                            extracted_images.append(ImagePayload(
+                                image_base64=b64_out,
+                                image_mime_type="image/jpeg"
+                            ))
+                    except Exception:
+                        pass
+    except Exception as pdf_img_err:
+        print(f"⚠️ PDF image extraction warning: {pdf_img_err}", file=sys.stderr, flush=True)
+    return extracted_images
+
 async def process_query_job(job_id: str, request: QueryRequest, authenticated_user_id: str):
     try:
         user_prompt = request.query_text
         intercepted_card, clean_topic = extract_and_intercept_citation(user_prompt)
         print(f"--> [PRE-LLM CHECK] Query: '{user_prompt}' | Hit: {bool(intercepted_card)}", flush=True)
         print(f"🚀 [JOB {job_id}] Starting query execution...", file=sys.stderr, flush=True)
-
-        def clean_base64_data(base64_str: str) -> str:
-            return base64_str.split(",", 1)[1] if "," in base64_str else base64_str.strip()
-
-        def sanitize_mime_type(mime: str) -> str:
-            m = mime.lower().strip()
-            return "image/jpeg" if m == "image/jpg" else m
 
         def clean_repeated_phrases(text: str) -> str:
             if not text: return ""
@@ -1233,103 +1359,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 prev_text = text
                 text = re.sub(r'\b(\w+(?:\s+\w+){0,3})\s+\1\b', r'\1', text, flags=re.IGNORECASE)
             return text
-
-        def extract_text_from_document_base64(b64_str: str, mime_type: str) -> str:
-            if not b64_str:
-                return ""
-            try:
-                raw_bytes = base64.b64decode(clean_base64_data(b64_str))
-            except Exception as b64_err:
-                print(f"⚠️ Base64 decode error: {b64_err}", file=sys.stderr)
-                return ""
-
-            m = (mime_type or "").lower().strip()
-            extracted_text = ""
-
-            # 1. Check if DOCX (by MIME or Zip PK header magic bytes)
-            if "wordprocessingml" in m or "docx" in m or raw_bytes.startswith(b'PK\x03\x04'):
-                try:
-                    import docx
-                    doc_obj = docx.Document(io.BytesIO(raw_bytes))
-                    full_p = [p.text for p in doc_obj.paragraphs if p.text.strip()]
-                    for table in doc_obj.tables:
-                        for row in table.rows:
-                            full_p.append(" | ".join(cell.text.strip() for cell in row.cells if cell.text.strip()))
-                    extracted_text = "\n".join(full_p).strip()
-                except Exception as docx_err:
-                    print(f"⚠️ python-docx parsing failed: {docx_err}", file=sys.stderr)
-                    try:
-                        import zipfile
-                        with zipfile.ZipFile(io.BytesIO(raw_bytes)) as z:
-                            if "word/document.xml" in z.namelist():
-                                xml_content = z.read("word/document.xml").decode("utf-8", errors="ignore")
-                                text_bits = re.findall(r'<w:t[^>]*>(.*?)</w:t>', xml_content)
-                                extracted_text = " ".join(text_bits).strip()
-                    except Exception as fallback_err:
-                        print(f"⚠️ XML docx fallback extraction failed: {fallback_err}", file=sys.stderr)
-
-            # 2. Check if PDF (by MIME or %PDF magic bytes)
-            if not extracted_text and ("pdf" in m or raw_bytes.startswith(b'%PDF')):
-                try:
-                    import pypdf
-                    reader = pypdf.PdfReader(io.BytesIO(raw_bytes))
-                    pdf_pages = [page.extract_text() for page in reader.pages if page.extract_text()]
-                    extracted_text = "\n".join(pdf_pages).strip()
-                except Exception as pdf_err:
-                    print(f"⚠️ pypdf extraction failed: {pdf_err}", file=sys.stderr)
-
-                if not extracted_text:
-                    try:
-                        import pdfplumber
-                        with pdfplumber.open(io.BytesIO(raw_bytes)) as pdf:
-                            pages_t = [p.extract_text() for p in pdf.pages if p.extract_text()]
-                            extracted_text = "\n".join(pages_t).strip()
-                    except Exception as plumber_err:
-                        print(f"⚠️ pdfplumber extraction failed: {plumber_err}", file=sys.stderr)
-
-                if not extracted_text:
-                    try:
-                        from pdfminer.high_level import extract_text as pdfminer_extract
-                        extracted_text = pdfminer_extract(io.BytesIO(raw_bytes)).strip()
-                    except Exception as miner_err:
-                        print(f"⚠️ pdfminer extraction failed: {miner_err}", file=sys.stderr)
-
-            # 3. Plain text fallback (only if non-image)
-            if not extracted_text and not m.startswith("image/"):
-                try:
-                    decoded = raw_bytes.decode("utf-8", errors="ignore").strip()
-                    if decoded and len(decoded) > 10 and not any(c in decoded[:50] for c in ['\x00', '\x01', '\x02']):
-                        extracted_text = decoded
-                except Exception:
-                    pass
-
-        def extract_images_from_pdf_base64(b64_str: str) -> List[ImagePayload]:
-            extracted_images = []
-            if not b64_str:
-                return extracted_images
-            try:
-                raw_bytes = base64.b64decode(clean_base64_data(b64_str))
-                import pypdf
-                from PIL import Image
-                reader = pypdf.PdfReader(io.BytesIO(raw_bytes))
-                for page in reader.pages:
-                    if hasattr(page, "images") and page.images:
-                        for img_file in page.images:
-                            try:
-                                pil_img = Image.open(io.BytesIO(img_file.data))
-                                if pil_img.width > 60 and pil_img.height > 60:
-                                    buf = io.BytesIO()
-                                    pil_img.convert("RGB").save(buf, format="JPEG", quality=85)
-                                    b64_out = base64.b64encode(buf.getvalue()).decode("utf-8")
-                                    extracted_images.append(ImagePayload(
-                                        image_base64=b64_out,
-                                        image_mime_type="image/jpeg"
-                                    ))
-                            except Exception:
-                                pass
-            except Exception as pdf_img_err:
-                print(f"⚠️ PDF image extraction warning: {pdf_img_err}", file=sys.stderr, flush=True)
-            return extracted_images
 
         all_uploads = (request.images or []) + (request.documents or []) + (request.files or []) + (getattr(request, "attachments", None) or [])
         check_user_quota(authenticated_user_id, num_images_requested=len(all_uploads))
@@ -1349,8 +1378,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             )
             name_lower = str(item_dict.get("name") or item_dict.get("filename") or item_dict.get("fileName") or "").lower()
 
-            if not raw_mime and name_lower:
-                if name_lower.endswith(".docx"): raw_mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            if name_lower:
+                if name_lower.endswith((".docx", ".doc")): raw_mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 elif name_lower.endswith(".pdf"): raw_mime = "application/pdf"
                 elif name_lower.endswith(".png"): raw_mime = "image/png"
                 elif name_lower.endswith((".jpg", ".jpeg")): raw_mime = "image/jpeg"
