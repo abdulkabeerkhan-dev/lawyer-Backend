@@ -425,24 +425,48 @@ def clean_case_title(raw_title: str) -> str:
         
     t = raw_title.strip()
 
-    # 1. Truncate at bench/judge or advocate separator
+    # 1. Truncate at bench/judge or advocate separator or court tag
     if " - " in t:
         t = t.split(" - ")[0].strip()
+    t = re.sub(r'-\s*(?:Honorable|Before|Advocate|Justice|[A-Z\-]+HIGH-COURT|[A-Z\-]+COURT).*$', '', t, flags=re.IGNORECASE).strip()
 
     # 2. Strip leading reporter preambles (e.g. "Y L R Lahore Muhammad Khalid Alvi, J ")
     t = re.sub(r'^(?:Y\s*L\s*R|P\s*L\s*D|S\s*C\s*M\s*R).*?(?:J\b|CJ\b)\s*', '', t, flags=re.IGNORECASE).strip()
 
-    # 3. Strip leading scraper page numbers and citations (e.g. "587 2006 Ylr 1728 ")
-    t = re.sub(r'^\d+\s+\d{4}\s+[A-Za-z\s]+\d+\s+', '', t).strip()
+    # 3. Strip leading scraper tabs, page numbers and citations (e.g. "339\t2021 SCMR 2092\t", "587 2006 Ylr 1728 ")
+    t = re.sub(r'^(?:\d+[\s\t]+)?(?:\d{4}[\s\t]+[A-Za-z\s\t]+[\s\t]+\d+[\s\t]+)?', '', t).strip()
 
-    # 4. FIX "v." SPACING SAFELY WITHOUT BREAKING "Javaid", "Naqvi", "Maulvi"
-    # ONLY insert spaces when lowercase letter is glued to uppercase letter via 'v.' (e.g. "Zulfiqarv.Mst")
-    t = re.sub(r'([a-z\)])v\.(?=[A-Z])', r'\1 v. ', t)
+    # 4. Standardize " v. " spacing without breaking names like Javaid, Naqvi, Maulvi, Tanvir
+    t = re.sub(r'([a-zA-Z\)])v\.(?=[A-Z])', r'\1 v. ', t)
     
-    # Standardize already spaced or standalone " v. " / " vs. " / " versus "
-    t = re.sub(r'\s+(?:versus|vs\.?|v\.)\s+', ' v. ', t, flags=re.IGNORECASE)
+    # Split into initiator and defender on versus / vs / v.
+    m = re.split(r'\s+(?:versus|vs\.?|v\.)\s+', t, flags=re.IGNORECASE)
+    if len(m) == 2:
+        p1, p2 = m[0].strip(), m[1].strip()
+        
+        # Capitalize if party contains ALL-CAPS words
+        if any(w.isupper() and len(w) > 1 for w in p1.split()):
+            p1 = p1.title()
+        if any(w.isupper() and len(w) > 1 for w in p2.split()):
+            p2 = p2.title()
+        
+        # Standardize State/Etc
+        if p2.lower() in ("state", "the state"):
+            p2 = "The State"
+        elif p2.lower() in ("state etc.", "state etc", "the state etc.", "the state etc"):
+            p2 = "The State Etc."
+        
+        # Capitalize Etc in party names
+        p1 = re.sub(r'\betc\b', 'Etc', p1, flags=re.IGNORECASE)
+        p2 = re.sub(r'\betc\b', 'Etc', p2, flags=re.IGNORECASE)
 
-    # 5. Clean up duplicate spaces
+        t = f"{p1} v. {p2}"
+    else:
+        if t.isupper():
+            t = t.title()
+        t = re.sub(r'\betc\b', 'Etc', t, flags=re.IGNORECASE)
+
+    # 5. Clean up extra whitespace
     t = " ".join(t.split()).strip(" ,.-")
     return t
 
@@ -494,16 +518,16 @@ def extract_and_intercept_citation(user_query: str):
     2. If Tier 1 returns 0 rows or query is party-only, executes standalone Tier 2 Party Name Fallback by parsing candidate party name
        from immediate vicinity (±120 chars) of citation or prompt text, stripping preambles/statutes.
     3. Uses safe_supabase_query to auto-retry and re-initialize connection if ConnectionTerminated or timeout occurs.
-    4. Returns (row, clean_party_name) for Tier 3 vector fallback if no database match is found.
+    4. Returns (row, clean_party_name/clean_topic) for Tier 3 vector fallback if no database match is found.
     """
     STOPWORDS = {
         "search", "database", "find", "precedents", "precedent", "case", "law",
-        "regarding", "on", "for", "lookup", "check", "the", "in", "vs", "v",
-        "versus", "against", "show", "get", "fetch", "about", "with", "please",
-        "state", "etc", "honorable", "justice"
+        "regarding", "on", "for", "lookup", "check", "in", "show", "get", "fetch",
+        "about", "with", "please", "etc", "honorable", "justice"
     }
 
-    match = CITATION_REGEX.search(user_query or "")
+    raw_q = (user_query or "").strip().strip('"' + "'")
+    match = CITATION_REGEX.search(raw_q)
     matched_citation = None
     normalized_citation = None
     raw_citation = None
@@ -524,14 +548,18 @@ def extract_and_intercept_citation(user_query: str):
         raw_cit_underscore = f"{year}_{journal}_{page}"
 
         start, end = match.span()
-        trailing_window = (user_query or "")[end:end + 120]
-        trailing_clean = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|QSO|PLD|SCMR|PCrLJ|What you know|Answer style|===|SYSTEM', trailing_window, flags=re.IGNORECASE)[0]
-        words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', trailing_clean).split()]
+        trailing_window = raw_q[end:end + 120]
+        trailing_clean = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|PPC|QSO|PLD|SCMR|PCrLJ|What you know|Answer style|===|SYSTEM', trailing_window, flags=re.IGNORECASE)[0]
+        
+        vs_split = re.split(r'\s+(?:versus|vs\.?|v\.)\s+', trailing_clean, flags=re.IGNORECASE)
+        part_to_parse = vs_split[0] if len(vs_split) == 2 else trailing_clean
+
+        words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', part_to_parse).split()]
         words = [w for w in words if w.lower() not in STOPWORDS]
         candidate_party_name = " ".join(words[:6]).strip()
 
         if len(candidate_party_name) < 3:
-            leading_window = (user_query or "")[max(0, start - 80):start]
+            leading_window = raw_q[max(0, start - 80):start]
             leading_clean = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|PPC|QSO|PLD|SCMR|PCrLJ|What you know|Answer style|===|SYSTEM', leading_window, flags=re.IGNORECASE)[-1]
             leading_words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', leading_clean).split()]
             leading_words = [w for w in leading_words if w.lower() not in STOPWORDS]
@@ -539,27 +567,30 @@ def extract_and_intercept_citation(user_query: str):
                 candidate_party_name = " ".join(leading_words[-4:]).strip()
     else:
         # No citation numbers found -- parse party name directly from entire query
-        clean_text = CITATION_REGEX.sub(' ', user_query or '')
-        clean_text = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|QSO|What you know|Answer style|===|SYSTEM', clean_text, flags=re.IGNORECASE)[0]
-        words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', clean_text).split()]
+        clean_text = CITATION_REGEX.sub(' ', raw_q)
+        clean_text = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|PPC|QSO|What you know|Answer style|===|SYSTEM', clean_text, flags=re.IGNORECASE)[0]
+        vs_split = re.split(r'\s+(?:versus|vs\.?|v\.)\s+', clean_text, flags=re.IGNORECASE)
+        part_to_parse = vs_split[0] if len(vs_split) == 2 else clean_text
+        words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', part_to_parse).split()]
         words = [w for w in words if w.lower() not in STOPWORDS]
         candidate_party_name = " ".join(words[:6]).strip()
 
-    # Guard: do not treat legal search terms/topics as party names if no "vs" or "v." is present
     LEGAL_QUERY_WORDS = {
         "quash", "quashment", "section", "crpc", "cpc", "order", "interim", "relief", "prima", "facie",
         "allegations", "transaction", "cheque", "cheques", "dishonoured", "possession", "declaration",
         "injunction", "partition", "statute", "petition", "appeal", "application", "revision", "suit",
-        "plaint", "written", "statement", "561-a", "561a", "497", "498", "420", "406", "489-f", "489f", "law"
+        "plaint", "written", "statement", "561-a", "561a", "497", "498", "420", "406", "489-f", "489f", "law", "guarantee"
     }
     is_legal_topic = any(w.lower() in LEGAL_QUERY_WORDS for w in candidate_party_name.split())
-    has_vs_party = any(v in (user_query or "").lower() for v in [" v.", " v ", " vs.", " vs ", " versus "])
+    has_vs_party = any(v in raw_q.lower() for v in [" v.", " v ", " vs.", " vs ", " versus "])
+
+    extracted_topic = " ".join(CITATION_REGEX.sub(' ', raw_q).split()).strip(" ,.-")
     if is_legal_topic and not has_vs_party:
-        candidate_party_name = ""
+        clean_party_name = ""
+    else:
+        clean_party_name = candidate_party_name if len(candidate_party_name) >= 3 else ""
 
-    clean_party_name = candidate_party_name if len(candidate_party_name) >= 3 else ""
-
-    print(f"--> [DEBUG] Original Query Snippet: '{(user_query or '')[:120]}'", flush=True)
+    print(f"--> [DEBUG] Original Query Snippet: '{raw_q[:120]}'", flush=True)
     print(f"--> [DEBUG] Matched Citation: '{matched_citation or 'None'}'", flush=True)
     print(f"--> [DEBUG] Extracted Party: '{clean_party_name or 'None'}'", flush=True)
 
@@ -595,24 +626,15 @@ def extract_and_intercept_citation(user_query: str):
         # Step 2: Tier 2 - Standalone Party Name Fallback (Runs if Tier 1 returned None)
         if not res_supa.data and clean_party_name:
             try:
-                # Try title prefix match first (e.g. "Tariq Bashir%") for exact party titles
                 res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").ilike("case_title", f"{clean_party_name}%").limit(5).execute()
-                if not res_party or not res_party.data:
-                    res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").ilike("case_title", f"%{clean_party_name}%").limit(10).execute()
                 if res_party and res_party.data:
                     party_rows = res_party.data
-                    # Order by Supreme Court (by court_name or SCMR/PLD apex reporters) first
                     sc_rows = [
                         r for r in party_rows 
                         if "supreme court" in str(r.get("court_name") or r.get("court") or "").lower() 
                         or any(j in str(r.get("case_id") or r.get("neutral_citation") or "").upper() for j in ["SCMR", "PLD"])
                     ]
-                    if sc_rows:
-                        sc_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
-                        winning_row = sc_rows[0]
-                    else:
-                        party_rows.sort(key=lambda r: str(r.get("decision_date") or ""), reverse=True)
-                        winning_row = party_rows[0]
+                    winning_row = sc_rows[0] if sc_rows else party_rows[0]
 
                     full_row_res = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("id", winning_row.get("id")).limit(1).execute()
                     if full_row_res and full_row_res.data:
@@ -629,9 +651,10 @@ def extract_and_intercept_citation(user_query: str):
     except Exception as err:
         print(f"⚠️ Direct citation gatekeeper error: {err}", file=sys.stderr, flush=True)
 
-    return row, clean_party_name
-
-    return row, clean_party_name
+    if row:
+        return row, ""
+    else:
+        return None, (extracted_topic if (is_legal_topic and not has_vs_party) else clean_party_name)
 
 def clean_markdown_formatting(text: str) -> str:
     if not text:
