@@ -1303,7 +1303,33 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 except Exception:
                     pass
 
-            return extracted_text
+        def extract_images_from_pdf_base64(b64_str: str) -> List[ImagePayload]:
+            extracted_images = []
+            if not b64_str:
+                return extracted_images
+            try:
+                raw_bytes = base64.b64decode(clean_base64_data(b64_str))
+                import pypdf
+                from PIL import Image
+                reader = pypdf.PdfReader(io.BytesIO(raw_bytes))
+                for page in reader.pages:
+                    if hasattr(page, "images") and page.images:
+                        for img_file in page.images:
+                            try:
+                                pil_img = Image.open(io.BytesIO(img_file.data))
+                                if pil_img.width > 60 and pil_img.height > 60:
+                                    buf = io.BytesIO()
+                                    pil_img.convert("RGB").save(buf, format="JPEG", quality=85)
+                                    b64_out = base64.b64encode(buf.getvalue()).decode("utf-8")
+                                    extracted_images.append(ImagePayload(
+                                        image_base64=b64_out,
+                                        image_mime_type="image/jpeg"
+                                    ))
+                            except Exception:
+                                pass
+            except Exception as pdf_img_err:
+                print(f"⚠️ PDF image extraction warning: {pdf_img_err}", file=sys.stderr, flush=True)
+            return extracted_images
 
         all_uploads = (request.images or []) + (request.documents or []) + (request.files or []) + (getattr(request, "attachments", None) or [])
         check_user_quota(authenticated_user_id, num_images_requested=len(all_uploads))
@@ -1347,6 +1373,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     doc_t_fallback = extract_text_from_document_base64(raw_b64, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
                     if doc_t_fallback:
                         extracted_doc_texts.append(doc_t_fallback)
+                    elif "pdf" in m or name_lower.endswith(".pdf") or raw_b64.startswith("JVBERi"):
+                        pdf_imgs = extract_images_from_pdf_base64(raw_b64)
+                        if pdf_imgs:
+                            valid_vision_images.extend(pdf_imgs)
 
         has_image = len(valid_vision_images) > 0
         has_doc_text = len(extracted_doc_texts) > 0
