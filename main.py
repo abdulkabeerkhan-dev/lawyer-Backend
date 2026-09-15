@@ -1338,6 +1338,39 @@ class PleadingExportRequest(BaseModel):
     memorandum_text: str
     precedents: Optional[List[Dict[str, Any]]] = None
 
+def boost_banking_fio_precedents(query: str, hits: list) -> list:
+    """Prioritize Financial Institutions Ordinance (FIO) 2001 Section 10 leave to defend
+    and markup calculation cases when banking keywords are present.
+    """
+    banking_keywords = ["financial institutions", "recovery of finances", "leave to defend", "markup", "mark-up", "section 10", "fio 2001", "banking court", "recovery suit"]
+    is_banking_query = any(kw in (query or "").lower() for kw in banking_keywords)
+    
+    if not is_banking_query or not hits:
+        return hits
+        
+    scored = []
+    for idx, h in enumerate(hits):
+        meta = h.get("metadata", {}) if isinstance(h, dict) else getattr(h, "metadata", {}) or {}
+        holding = str(h.get("holding") or meta.get("holding") or "")
+        full_text = str(h.get("full_text") or meta.get("full_text") or meta.get("text") or meta.get("text_preview") or "")
+        case_title = str(h.get("case_title") or meta.get("case_title") or meta.get("title") or "")
+        text = f"{holding} {full_text} {case_title}".lower()
+        
+        base_score = float(h.get("score", 0.0) if isinstance(h, dict) else getattr(h, "score", 0.0))
+        score = base_score
+        
+        if "leave to defend" in text or "section 10" in text:
+            score += 4.0
+        if "markup" in text or "mark-up" in text or "interest" in text or "cost of funds" in text:
+            score += 3.0
+        if "financial institutions" in text or "recovery of finances" in text or "fio 2001" in text:
+            score += 2.0
+            
+        scored.append((score, -idx, h))
+        
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return [h for _, _, h in scored]
+
 SYSTEM_PROMPTS = {
     "criminal": "You are an elite Pakistani criminal law specialist, holding deep expertise in the Pakistan Penal Code (PPC) and Code of Criminal Procedure (CrPC).",
     "divorce_family": "You are a leading Pakistani family law expert, specializing in the Muslim Family Laws Ordinance, Dissolution of Muslim Marriages Act, and related custody jurisprudence.",
@@ -2055,6 +2088,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     seen_in_query.add(cid_key)
                 filtered_matches.append(m)
 
+            filtered_matches = boost_banking_fio_precedents(f"{sq_lower} {effective_user_query.lower()}", filtered_matches)
             primary_matches = filtered_matches[:3]
             secondary_matches = filtered_matches[3:6]
             aggregate_sources_matches.extend(primary_matches + secondary_matches)
