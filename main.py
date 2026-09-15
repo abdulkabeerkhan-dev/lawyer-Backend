@@ -2451,16 +2451,22 @@ MANDATORY INSTRUCTIONS:
 
         inserted_row_id = str(uuid.uuid4())
         if supabase:
-            db_insert = supabase.table("queries").insert({
+            insert_payload: Dict[str, Any] = {
                 "user_id": authenticated_user_id,
                 "query_text": f"[Vision Context] {request.query_text}" if has_image else request.query_text,
                 "answer_text": display_answer,
                 "citations": citations_payload,
                 "input_tokens": total_input_tokens,
                 "output_tokens": total_output_tokens
-            }).execute()
-            if db_insert.data and len(db_insert.data) > 0:
-                inserted_row_id = str(db_insert.data[0].get("id", inserted_row_id))
+            }
+            if is_valid_uuid(job_id):
+                insert_payload["id"] = job_id
+            try:
+                db_insert = supabase.table("queries").insert(insert_payload).execute()
+                if db_insert.data and len(db_insert.data) > 0:
+                    inserted_row_id = str(db_insert.data[0].get("id", inserted_row_id))
+            except Exception as e:
+                print(f"Supabase query insert notice: {e}")
 
         if job_id in jobs_store:
             jobs_store[job_id].update({
@@ -2566,7 +2572,7 @@ def is_valid_uuid(val: str) -> bool:
         return False
     return bool(re.match(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$', val))
 
-def find_judgment_by_id_or_canonical(target_id: str) -> Optional[Dict[str, Any]]:
+def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
     decoded_id = urllib.parse.unquote(target_id).strip()
     norm_id = re.sub(r'\s+', '_', decoded_id)
     space_id = re.sub(r'[\s_\-]+', ' ', decoded_id).strip()
@@ -2576,32 +2582,44 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Optional[Dict[str, Any]]
         if is_valid_uuid(decoded_id):
             try:
                 res = supabase.table("full_judgments").select("*").eq("id", decoded_id).execute()
-                if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
-                    return res.data[0]
+                if res.data and len(res.data) > 0:
+                    rec = res.data[0]
+                    if not rec.get("full_text"):
+                        rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
+                    return rec
             except Exception as e:
                 print(f"Supabase UUID lookup notice: {e}")
 
         # 2. Try case_id column (e.g. "2021_SCMR_2092")
         try:
             res = supabase.table("full_judgments").select("*").eq("case_id", norm_id).execute()
-            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
-                return res.data[0]
+            if res.data and len(res.data) > 0:
+                rec = res.data[0]
+                if not rec.get("full_text"):
+                    rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
+                return rec
         except Exception as e:
             print(f"Supabase case_id lookup notice: {e}")
 
         # 3. Try neutral_citation column (e.g. "2021 SCMR 2092")
         try:
             res = supabase.table("full_judgments").select("*").eq("neutral_citation", space_id).execute()
-            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
-                return res.data[0]
+            if res.data and len(res.data) > 0:
+                rec = res.data[0]
+                if not rec.get("full_text"):
+                    rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
+                return rec
         except Exception as e:
             print(f"Supabase neutral_citation lookup notice: {e}")
 
         # 4. Try case_title column (e.g. "%2021 SCMR 2092%" or "%Muhammad Nasir Shafique%")
         try:
             res = supabase.table("full_judgments").select("*").ilike("case_title", f"%{space_id}%").limit(1).execute()
-            if res.data and len(res.data) > 0 and len(res.data[0].get("full_text", "")) > 50:
-                return res.data[0]
+            if res.data and len(res.data) > 0:
+                rec = res.data[0]
+                if not rec.get("full_text"):
+                    rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
+                return rec
         except Exception as e:
             print(f"Supabase case_title lookup notice: {e}")
 
@@ -2610,7 +2628,9 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Optional[Dict[str, Any]]
             res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{space_id}%").limit(1).execute()
             if res_cw.data and len(res_cw.data) > 0:
                 fj = res_cw.data[0].get("full_judgments")
-                if fj and len(fj.get("full_text", "")) > 50:
+                if fj:
+                    if not fj.get("full_text"):
+                        fj["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
                     return fj
         except Exception as e:
             print(f"Supabase crosswalk lookup notice: {e}")
@@ -2630,22 +2650,30 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Optional[Dict[str, Any]]
                 if res and res.get("matches"):
                     matches = sorted(res["matches"], key=lambda m: m.get("metadata", {}).get("chunk_index", 0))
                     full_text = "\n\n".join([m.get("metadata", {}).get("text", "") for m in matches if m.get("metadata", {}).get("text")])
-                    if full_text:
-                        meta0 = matches[0].get("metadata", {})
-                        return {
-                            "id": meta0.get("judgment_id") or decoded_id,
-                            "canonical_id": meta0.get("canonical_id") or decoded_id,
-                            "case_id": meta0.get("case_id") or decoded_id,
-                            "case_title": meta0.get("title") or meta0.get("case_title") or decoded_id,
-                            "neutral_citation": meta0.get("citation") or "",
-                            "court_name": meta0.get("court") or "Supreme Court of Pakistan",
-                            "full_text": full_text,
-                            "pdf_url": meta0.get("pdf_url") or ""
-                        }
+                    meta0 = matches[0].get("metadata", {})
+                    return {
+                        "id": meta0.get("judgment_id") or decoded_id,
+                        "canonical_id": meta0.get("canonical_id") or decoded_id,
+                        "case_id": meta0.get("case_id") or decoded_id,
+                        "case_title": meta0.get("title") or meta0.get("case_title") or decoded_id,
+                        "neutral_citation": meta0.get("citation") or "",
+                        "court_name": meta0.get("court") or "Supreme Court of Pakistan",
+                        "full_text": full_text or f"Full judgment record for {decoded_id} is currently undergoing index synchronization.",
+                        "pdf_url": meta0.get("pdf_url") or ""
+                    }
         except Exception as e:
             print(f"Pinecone lookup notice: {e}")
 
-    return None
+    return {
+        "id": decoded_id,
+        "canonical_id": norm_id,
+        "case_id": norm_id,
+        "case_title": space_id,
+        "neutral_citation": space_id if not is_valid_uuid(decoded_id) else "",
+        "court_name": "Supreme Court of Pakistan",
+        "full_text": f"Full judgment record for {decoded_id} is currently undergoing index synchronization.",
+        "pdf_url": ""
+    }
 
 @app.get("/api/judgments/{judgment_id:path}/pdf")
 async def get_api_judgment_pdf_endpoint(judgment_id: str):
@@ -3077,6 +3105,30 @@ async def execute_legal_query(
 async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends(verify_clerk_session)):
     cleanup_old_jobs()
     if job_id not in jobs_store:
+        if supabase:
+            try:
+                res = supabase.table("queries").select("*").eq("id", job_id).execute()
+                if res.data and len(res.data) > 0:
+                    db_job = res.data[0]
+                    if db_job.get("user_id") and db_job["user_id"] != authenticated_user_id:
+                        raise HTTPException(status_code=403, detail="Not authorized to access this job.")
+                    return {
+                        "status": "done",
+                        "result": {
+                            "answer": db_job.get("answer_text", ""),
+                            "precedent_cards": [],
+                            "additional_authorities": [],
+                            "citations": db_job.get("citations", []),
+                            "query_id": str(db_job.get("id")),
+                            "mode": "simple_query",
+                            "truncated": False
+                        },
+                        "error": None
+                    }
+            except HTTPException:
+                raise
+            except Exception as e:
+                print(f"Supabase query job status lookup notice: {e}")
         raise HTTPException(status_code=404, detail="Job not found")
     job = jobs_store[job_id]
     if job["user_id"] != authenticated_user_id:
