@@ -1017,11 +1017,40 @@ REPORTER_PATTERNS = [
     r'\b(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR)\s+(?:19|20)\d{2}\s+\d+\b'
 ]
 
+def clean_scraper_artifacts(raw_text: str) -> str:
+    """Removes web scraper navigation junk, bookmark banners, and portal headers
+    from raw legal judgment text before card rendering.
+    """
+    if not raw_text:
+        return ""
+        
+    t = raw_text
+    
+    # 1. Remove common web portal header prefixes
+    patterns_to_strip = [
+        r'citation\s+name\s+[a-z0-9]+\s+[a-z\s]+high\s+court\s+[a-z\s]+',
+        r'case\s+description\s+bookmark\s+this\s+case\s+p\s*l\s*d\s*',
+        r'bookmark\s+this\s+case',
+        r'y\s*l\s*r\s+[a-z]+\s+[a-z\s]+v\.\s*',
+        r'scmr\s+present\s+[a-z\s]+\s+jj\s*',
+        r'h\s*l\s*r\s*-\s*',
+        r's\s*c\s*m\s*r\s+present\s+[a-z\s\,\.\-]+\s+jj?\s*',
+        r'c\s*l\s*c\s+present\s+[a-z\s\,\.\-]+\s+jj?\s*',
+    ]
+    
+    for pat in patterns_to_strip:
+        t = re.sub(pat, '', t, flags=re.IGNORECASE)
+        
+    # 2. Clean up repetitive spacing and leftover punctuation
+    t = re.sub(r'\s{2,}', ' ', t)
+    return t.strip(" ,.-")
+
 def extract_clean_ratio_snippet(text: str, max_chars: int = 280) -> str:
     if not text:
         return "Legal principle extracted from judgment record."
     
-    clean_t = strip_copyright_and_branding(text)
+    clean_t = clean_scraper_artifacts(text)
+    clean_t = strip_copyright_and_branding(clean_t)
     clean_t = strip_control_characters(clean_t)
 
     clean_t = re.sub(r'(?i)Latest\s*Caselaws.*?\([A-Za-z0-9_\-\s]+\)', '', clean_t)
@@ -1066,7 +1095,7 @@ def extract_clean_ratio_snippet(text: str, max_chars: int = 280) -> str:
     return clean_t[:max_chars].strip()
 
 def sanitize_holding_text(text: str) -> str:
-    return extract_clean_ratio_snippet(text, max_chars=300)
+    return extract_clean_ratio_snippet(clean_scraper_artifacts(text), max_chars=300)
 
 def synthesize_canonical_citation(record: Dict[str, Any]) -> str:
     if not isinstance(record, dict):
