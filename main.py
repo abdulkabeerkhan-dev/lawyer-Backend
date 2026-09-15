@@ -3056,8 +3056,13 @@ async def list_associates(admin_id: str = Depends(verify_admin_role)):
     try:
         res = supabase.table("users").select("*").order("full_name").execute()
         users_list = res.data or []
+        
+        req_res = supabase.table("access_requests").select("*").order("created_at", desc=True).execute()
+        req_list = req_res.data or []
+
         queries_res = supabase.table("queries").select("user_id, created_at").execute()
         queries_list = queries_res.data or []
+
         user_stats = {}
         for q in queries_list:
             uid = q.get("user_id")
@@ -3069,13 +3074,57 @@ async def list_associates(admin_id: str = Depends(verify_admin_role)):
             if created_str and (not user_stats[uid]["last_active_at"] or created_str > user_stats[uid]["last_active_at"]):
                 user_stats[uid]["last_active_at"] = created_str
 
+        existing_emails = set()
+        combined_associates = []
+
         for user in users_list:
+            email = str(user.get("email") or "").lower().strip()
+            if email:
+                existing_emails.add(email)
             uid = user.get("id")
             stats = user_stats.get(uid, {"total_queries": 0, "last_active_at": None})
-            user["total_queries"] = stats["total_queries"]
-            user["last_active_at"] = stats["last_active_at"]
-            user["last_active"] = stats["last_active_at"]
-        return users_list
+            role_val = user.get("role") or "associate"
+            status_val = user.get("status") or ("active" if role_val in ("associate", "admin") else "pending")
+            
+            combined_associates.append({
+                "id": uid,
+                "full_name": user.get("full_name") or "Associate",
+                "name": user.get("full_name") or "Associate",
+                "email": user.get("email") or "",
+                "role": role_val,
+                "status": status_val,
+                "total_queries": stats["total_queries"],
+                "queries": stats["total_queries"],
+                "last_active_at": stats["last_active_at"],
+                "last_active": stats["last_active_at"],
+                "created_at": user.get("created_at")
+            })
+
+        for req in req_list:
+            req_email = str(req.get("email") or "").lower().strip()
+            if req_email and req_email in existing_emails:
+                continue
+            if req_email:
+                existing_emails.add(req_email)
+            
+            req_status = req.get("status") or "pending"
+            clean_status = "active" if req_status in ("approved", "admin_approved", "active") else "pending"
+            
+            combined_associates.append({
+                "id": req.get("id"),
+                "full_name": req.get("full_name") or "Pending Associate",
+                "name": req.get("full_name") or "Pending Associate",
+                "email": req.get("email") or "",
+                "role": "associate",
+                "status": clean_status,
+                "total_queries": 0,
+                "queries": 0,
+                "last_active_at": None,
+                "last_active": None,
+                "created_at": req.get("created_at")
+            })
+
+        return combined_associates
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -3099,10 +3148,12 @@ async def create_associate(payload: AssociateCreatePayload, admin_id: str = Depe
 @app.post("/admin/associates/{associate_id}/status")
 async def set_associate_status(associate_id: str, payload: AssociateStatusPayload, admin_id: str = Depends(verify_admin_role)):
     try:
-        res = supabase.table("users").update({"role": payload.status}).eq("id", associate_id).execute()
+        res = supabase.table("users").update({"role": payload.status, "status": payload.status}).eq("id", associate_id).execute()
+        if not res.data:
+            res = supabase.table("access_requests").update({"status": payload.status}).eq("id", associate_id).execute()
         if not res.data:
             raise HTTPException(status_code=404, detail="Target associate not found.")
-        return {"status": "success", "data": res.data[0]}
+        return {"status": "success", "data": res.data[0] if isinstance(res.data, list) else res.data}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -3110,6 +3161,7 @@ async def set_associate_status(associate_id: str, payload: AssociateStatusPayloa
 async def delete_associate(associate_id: str, admin_id: str = Depends(verify_admin_role)):
     try:
         supabase.table("users").delete().eq("id", associate_id).execute()
+        supabase.table("access_requests").delete().eq("id", associate_id).execute()
         return {"status": "success", "message": f"Associate '{associate_id}' removed."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
