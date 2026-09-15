@@ -133,6 +133,81 @@ if PINECONE_API_KEY:
     except Exception as launch_err:
         print(f"⚠️ Pinecone startup warning: {launch_err}", file=sys.stderr, flush=True)
 
+class LegalRetrieverConfig:
+    def __init__(self, default_k: int = 12, min_similarity_threshold: float = 0.65, query_expansion: bool = True):
+        self.default_k = default_k
+        self.min_similarity_threshold = min_similarity_threshold
+        self.query_expansion = query_expansion
+
+class LegalSearchPipeline:
+    def __init__(self, vector_client=None, config: Optional[LegalRetrieverConfig] = None):
+        self.vector_client = vector_client
+        self.config = config or LegalRetrieverConfig()
+
+    def set_default_top_k(self, default_k: int) -> None:
+        self.config.default_k = default_k
+
+    def set_minimum_threshold(self, threshold: float) -> None:
+        self.config.min_similarity_threshold = threshold
+
+    def enable_query_expansion(self, enabled: bool = True) -> None:
+        self.config.query_expansion = enabled
+
+    def search_precedents(
+        self, 
+        vector_index=None, 
+        query_vector: Optional[List[float]] = None, 
+        top_k: Optional[int] = None, 
+        namespace: Optional[str] = None
+    ) -> List[Dict[str, Any]]:
+        target_index = vector_index or self.vector_client
+        if not target_index or not query_vector:
+            return []
+        
+        k = top_k if top_k is not None else self.config.default_k
+        ns = namespace or PINECONE_NAMESPACE
+        
+        res = target_index.query(namespace=ns, vector=query_vector, top_k=k, include_metadata=True)
+        raw_matches = res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", []) or []
+        
+        filtered_results = []
+        for m in raw_matches:
+            meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
+            score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
+            is_boosted = bool(m.get("is_boosted") if isinstance(m, dict) else False) or bool(meta.get("is_boosted"))
+            
+            if is_boosted or score >= self.config.min_similarity_threshold:
+                hit_data = dict(m) if isinstance(m, dict) else {"id": getattr(m, "id", ""), "score": score, "metadata": meta}
+                hit_data["similarity_score"] = score
+                filtered_results.append(hit_data)
+                
+        # Enable fallback expansion if initial results return sparse matches (< 3)
+        if len(filtered_results) < 3 and self.config.query_expansion:
+            for m in raw_matches:
+                meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
+                score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
+                hit_id = m.get("id") if isinstance(m, dict) else getattr(m, "id", "")
+                if score >= 0.40 and not any((r.get("id") if isinstance(r, dict) else getattr(r, "id", "")) == hit_id for r in filtered_results):
+                    hit_data = dict(m) if isinstance(m, dict) else {"id": hit_id, "score": score, "metadata": meta}
+                    hit_data["similarity_score"] = score
+                    filtered_results.append(hit_data)
+                    
+        return filtered_results
+
+def configure_retrieval_depth(vector_store_client=None, default_k: int = 12) -> None:
+    """Configures the vector search client to fetch a higher volume of candidate 
+    precedents per query, ensuring exhaustive research coverage before ranking.
+    """
+    global global_search_pipeline
+    if vector_store_client:
+        global_search_pipeline.vector_client = vector_store_client
+    global_search_pipeline.set_default_top_k(default_k)
+    global_search_pipeline.enable_query_expansion(True)
+    global_search_pipeline.set_minimum_threshold(0.65)
+
+global_retriever_config = LegalRetrieverConfig(default_k=40, min_similarity_threshold=0.65, query_expansion=True)
+global_search_pipeline = LegalSearchPipeline(vector_client=pinecone_index, config=global_retriever_config)
+
 supabase: Any = None
 def init_supabase_client():
     global supabase
@@ -1841,11 +1916,14 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     if not pinecone_index:
                         return "Search tool unavailable: the judgment database is not connected."
 
-                    query_top_k = 60 if target_source else 40
-                    raw_matches = pinecone_index.query(
-                        namespace=PINECONE_NAMESPACE, vector=query_vector, top_k=query_top_k, include_metadata=True
+                    query_top_k = 60 if target_source else global_retriever_config.default_k
+                    raw_matches = global_search_pipeline.search_precedents(
+                        vector_index=pinecone_index,
+                        query_vector=query_vector,
+                        top_k=query_top_k,
+                        namespace=PINECONE_NAMESPACE
                     )
-                    matches_list = raw_matches.get("matches", []) if isinstance(raw_matches, dict) else getattr(raw_matches, "matches", []) or []
+                    matches_list = raw_matches
                     if boosted_matches:
                         matches_list = boosted_matches + matches_list
                 except Exception as search_err:
