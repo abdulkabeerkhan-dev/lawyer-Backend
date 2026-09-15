@@ -1906,16 +1906,19 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         continue
                     if (is_secp_or_corporate_query or is_corporate_law_query) and any(cr in case_title_str for cr in CRIMINAL_NAB_MARKERS):
                         continue
-                    # Strict Corporate Query Hygiene: Filter out irrelevant administrative/revenue/service petitions unless corporate law is explicitly involved
+                    # Strict Corporate Query Hygiene: Filter out irrelevant administrative, labor, customs, ECL, rent, arbitration, and revenue petitions unless corporate law is explicitly involved
                     if (is_secp_or_corporate_query or is_corporate_law_query):
-                        ADMIN_REVENUE_MARKERS = [
+                        EXCLUDED_NON_CORPORATE_MARKERS = [
                             "board of revenue", "senior member", "service tribunal", "civil servant",
                             "establishment division", "settlement department", "consolidation officer",
-                            "district returning officer", "member, board of revenue", "land revenue"
+                            "district returning officer", "member, board of revenue", "land revenue",
+                            "labour appellate", "labour court", "industrial dispute", "master and servant",
+                            "customs", "smuggling", "anti-smuggling", "anti smuggling", "taxation and anti",
+                            "exit control list", "passport", "rent controller", "enemy property", "surety bond", "arbitration act"
                         ]
                         haystack_check = f"{case_title_str} {full_text_str}"
-                        if any(arm in haystack_check for arm in ADMIN_REVENUE_MARKERS):
-                            if not any(cw in haystack_check for cw in ["company", "companies", "corporate", "shareholder", "secp", "director", "section 286", "section 290"]):
+                        if any(arm in haystack_check for arm in EXCLUDED_NON_CORPORATE_MARKERS):
+                            if not any(cw in haystack_check for cw in ["section 286", "section 290", "oppression", "mismanagement", "minority shareholder", "majority shareholder", "corporate governance"]):
                                 continue
                     # Strict Non-Criminal / Civil / Family query hygiene: filter out criminal state cases ("v. The State" / "vs The State")
                     if is_non_criminal and not is_explicitly_criminal:
