@@ -388,16 +388,31 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
 def repair_ocr_words(text: str) -> str:
     if not text:
         return ""
-    # 1. Recombine fragmented administrative terms
-    t = re.sub(r'\bpro(?:v\b|\.|\s*v\.\s*)ince\b', 'Province', text, flags=re.IGNORECASE)
-    t = re.sub(r'\bgo(?:v\b|\.|\s*v\.\s*)ernment\b', 'Government', t, flags=re.IGNORECASE)
-    t = re.sub(r'\bde(?:v\b|\.|\s*v\.\s*)elopment\b', 'Development', t, flags=re.IGNORECASE)
+    # 1. Recombine fragmented administrative / corporate / legal terms
+    t = re.sub(r'\bpro(?:v\b|\.|\s*v\.\s*|\s+v\s+)ince\b', 'Province', text, flags=re.IGNORECASE)
+    t = re.sub(r'\bgo(?:v\b|\.|\s*v\.\s*|\s+v\s+)ernment\b', 'Government', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bde(?:v\b|\.|\s*v\.\s*|\s+v\s+)elopment\b', 'Development', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bbe(?:v\b|\.|\s*v\.\s*|\s+v\s+)erages?\b', 'Beverages', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bcooperati(?:v\b|\.|\s*v\.\s*|\s+v\s+)es\b', 'Cooperatives', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bcooperati(?:v\b|\.|\s*v\.\s*|\s+v\s+)e\b', 'Cooperative', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bser(?:v\b|\.|\s*v\.\s*|\s+v\s+)ices?\b', 'Services', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bpro(?:v\b|\.|\s*v\.\s*|\s+v\s+)isions?\b', 'Provisions', t, flags=re.IGNORECASE)
+    t = re.sub(r'\buni(?:v\b|\.|\s*v\.\s*|\s+v\s+)ersit(?:y|ies)\b', 'Universities', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bdi(?:v\b|\.|\s*v\.\s*|\s+v\s+)ision\b', 'Division', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bre(?:v\b|\.|\s*v\.\s*|\s+v\s+)enue\b', 'Revenue', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bad(?:v\b|\.|\s*v\.\s*|\s+v\s+)ocate\b', 'Advocate', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bre(?:v\b|\.|\s*v\.\s*|\s+v\s+)iew\b', 'Review', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bexe(?:v\b|\.|\s*v\.\s*|\s+v\s+)utive\b', 'Executive', t, flags=re.IGNORECASE)
     
     # 2. Fix names split by accidental "v." or "v"
     t = re.sub(r'\bnaq\s*v\.?\s*i\b', 'Naqvi', t, flags=re.IGNORECASE)
     t = re.sub(r'\bja\s*v\.?\s*aid\b', 'Javaid', t, flags=re.IGNORECASE)
     t = re.sub(r'\bmaul\s*v\.?\s*i\b', 'Maulvi', t, flags=re.IGNORECASE)
     t = re.sub(r'\btan\s*v\.?\s*ir\b', 'Tanvir', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bpar\s*v\.?\s*een\b', 'Parveen', t, flags=re.IGNORECASE)
+    t = re.sub(r'\bper\s*v\.?\s*ez\b', 'Pervez', t, flags=re.IGNORECASE)
+    t = re.sub(r'\briz\s*v\.?\s*i\b', 'Rizvi', t, flags=re.IGNORECASE)
+    t = re.sub(r'\briz\s*v\.?\s*an\b', 'Rizwan', t, flags=re.IGNORECASE)
 
     # 3. Add space around "v." where letter/digit/bracket meets uppercase/lowercase
     t = re.sub(r'([a-zA-Z0-9\)])v\.(?=[A-Za-z0-9])', r'\1 v. ', t)
@@ -1892,7 +1907,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 court = infer_court_from_citation(neutral_cit or official_citation, text_content, meta.get('court') or meta.get('court_name') or '')
                 year_or_date = extract_year_from_citation_or_date(meta.get('date') or meta.get('decision_date') or meta.get('year'), meta.get('citation') or meta.get('neutral_citation'), case_id)
                 title = sanitize_case_title(clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case')))
-                title = re.sub(r'\s*(?:v\.?|vs\.?)\s*', ' v. ', title, flags=re.IGNORECASE).strip()
                 outcome_val = determine_case_outcome(text_content, meta.get("disposition") or meta.get("outcome"))
                 statutes_val = meta.get("statutes") or []
                 sections_val = meta.get("sections") or []
