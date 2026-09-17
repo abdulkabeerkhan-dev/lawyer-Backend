@@ -133,8 +133,35 @@ if PINECONE_API_KEY:
     except Exception as launch_err:
         print(f"⚠️ Pinecone startup warning: {launch_err}", file=sys.stderr, flush=True)
 
+def extract_raw_user_query(incoming_query: str) -> str:
+    """
+    Strips system-injected persona and styling headers (e.g., '[What you know about this lawyer: ...]')
+    to isolate the attorney's actual legal proposition before parsing or embedding.
+    """
+    if not incoming_query:
+        return ""
+    clean_query = str(incoming_query)
+    
+    # 1. Remove lawyer context block
+    clean_query = re.sub(r"\[What you know about this lawyer:.*?\]", "", clean_query, flags=re.DOTALL)
+    
+    # 2. Remove answer formatting block
+    clean_query = re.sub(r"\[Answer style:.*?\]", "", clean_query, flags=re.DOTALL)
+    
+    # 3. Remove conversation history markers
+    clean_query = re.sub(r"\[Earlier in this conversation:.*?\]", "", clean_query, flags=re.DOTALL)
+    
+    # 4. Strip stray wrapping quotes or whitespace
+    clean_query = clean_query.strip().strip("'\"")
+    return clean_query if clean_query else incoming_query.strip()
+
 class LegalRetrieverConfig:
-    def __init__(self, default_k: int = 12, min_similarity_threshold: float = 0.65, query_expansion: bool = True):
+    STRICT_THRESHOLD: float = 0.70
+    FALLBACK_FLOOR: float = 0.65  # Never drop down to 0.40
+    TOP_K_DEFAULT: int = 40
+    TOP_K_FILTERED: int = 60
+
+    def __init__(self, default_k: int = 40, min_similarity_threshold: float = 0.65, query_expansion: bool = True):
         self.default_k = default_k
         self.min_similarity_threshold = min_similarity_threshold
         self.query_expansion = query_expansion
@@ -153,12 +180,42 @@ class LegalSearchPipeline:
     def enable_query_expansion(self, enabled: bool = True) -> None:
         self.config.query_expansion = enabled
 
+    def _build_metadata_filter(self, clean_query: str, target_court: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Dynamically derives hard Pinecone metadata filters based on explicit legal acts
+        and court jurisdictions detected in the isolated query.
+        """
+        filters: Dict[str, Any] = {}
+        query_lower = (clean_query or "").lower()
+
+        # 1. Court / Superior jurisdiction filter
+        if target_court:
+            filters["court"] = {"$eq": target_court}
+        elif "supreme court" in query_lower or "scmr" in query_lower or "pld sc" in query_lower:
+            filters["court"] = {"$eq": "Supreme Court of Pakistan"}
+        elif "lahore high court" in query_lower or "lhc" in query_lower:
+            filters["court"] = {"$eq": "Lahore High Court"}
+        elif "sindh high court" in query_lower or "shc" in query_lower:
+            filters["court"] = {"$eq": "High Court of Sindh"}
+
+        # 2. Statutory metadata scoping
+        if "family court" in query_lower or "maintenance" in query_lower or "decretal amount" in query_lower:
+            filters["dataset_category"] = {"$in": ["family", "civil"]}
+        elif "partition" in query_lower or "ppipa" in query_lower:
+            filters["dataset_category"] = {"$eq": "civil"}
+        elif "indoor management" in query_lower or "companies act" in query_lower or "secp" in query_lower:
+            filters["dataset_category"] = {"$eq": "corporate"}
+
+        return filters
+
     def search_precedents(
         self, 
         vector_index=None, 
         query_vector: Optional[List[float]] = None, 
         top_k: Optional[int] = None, 
-        namespace: Optional[str] = None
+        namespace: Optional[str] = None,
+        clean_query: str = "",
+        filter_dict: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
         target_index = vector_index or self.vector_client
         if not target_index or not query_vector:
@@ -167,32 +224,53 @@ class LegalSearchPipeline:
         k = top_k if top_k is not None else self.config.default_k
         ns = namespace or PINECONE_NAMESPACE
         
-        res = target_index.query(namespace=ns, vector=query_vector, top_k=k, include_metadata=True)
+        pinecone_filter = filter_dict or (self._build_metadata_filter(clean_query) if clean_query else None)
+        query_params: Dict[str, Any] = {
+            "namespace": ns,
+            "vector": query_vector,
+            "top_k": k,
+            "include_metadata": True
+        }
+        if pinecone_filter:
+            query_params["filter"] = pinecone_filter
+
+        try:
+            res = target_index.query(**query_params)
+        except Exception as e:
+            print(f"⚠️ Pinecone filter query notice ({pinecone_filter}): {e}", file=sys.stderr)
+            query_params.pop("filter", None)
+            res = target_index.query(**query_params)
+
         raw_matches = res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", []) or []
         
-        filtered_results = []
+        # Step 6: Strict score filtering (NO 0.40 FALLBACK EXPANSION)
+        strict_floor = self.config.min_similarity_threshold or LegalRetrieverConfig.STRICT_THRESHOLD
+        candidates = []
         for m in raw_matches:
             meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
             score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
             is_boosted = bool(m.get("is_boosted") if isinstance(m, dict) else False) or bool(meta.get("is_boosted"))
             
-            if is_boosted or score >= self.config.min_similarity_threshold:
+            if is_boosted or score >= strict_floor:
                 hit_data = dict(m) if isinstance(m, dict) else {"id": getattr(m, "id", ""), "score": score, "metadata": meta}
                 hit_data["similarity_score"] = score
-                filtered_results.append(hit_data)
-                
-        # Enable fallback expansion if initial results return sparse matches (< 3)
-        if len(filtered_results) < 3 and self.config.query_expansion:
+                candidates.append(hit_data)
+
+        # Step 7: Secondary check with strict floor (0.65 minimum, abort low-confidence noise)
+        if len(candidates) < 2:
+            secondary_candidates = []
             for m in raw_matches:
                 meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
                 score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
-                hit_id = m.get("id") if isinstance(m, dict) else getattr(m, "id", "")
-                if score >= 0.40 and not any((r.get("id") if isinstance(r, dict) else getattr(r, "id", "")) == hit_id for r in filtered_results):
-                    hit_data = dict(m) if isinstance(m, dict) else {"id": hit_id, "score": score, "metadata": meta}
+                is_boosted = bool(m.get("is_boosted") if isinstance(m, dict) else False) or bool(meta.get("is_boosted"))
+                if is_boosted or score >= LegalRetrieverConfig.FALLBACK_FLOOR:
+                    hit_data = dict(m) if isinstance(m, dict) else {"id": getattr(m, "id", ""), "score": score, "metadata": meta}
                     hit_data["similarity_score"] = score
-                    filtered_results.append(hit_data)
-                    
-        return filtered_results
+                    secondary_candidates.append(hit_data)
+            if secondary_candidates:
+                candidates = secondary_candidates
+
+        return candidates
 
 def configure_retrieval_depth(vector_store_client=None, default_k: int = 12) -> None:
     """Configures the vector search client to fetch a higher volume of candidate 

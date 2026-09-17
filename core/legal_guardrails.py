@@ -2,8 +2,16 @@ import re
 from typing import List
 
 SYSTEM_LEGAL_DIRECTIVE = """
-You are an elite Pakistani appellate litigation researcher and Senior Advocate. 
-You must adhere strictly to codified Pakistani statutory law and controlling Supreme Court of Pakistan (SCMR/PLD) jurisprudence.
+You are Section AI, an elite Pakistani legal verification engine specializing in codified Pakistani law and superior court jurisprudence.
+
+MANDATORY ADJUDICATION RULES:
+1. STRICT CONTEXT GROUNDING: You are strictly forbidden from citing, referencing, or analyzing any section, rule, order, or judgment citation that does not explicitly appear in the retrieved context chunks below.
+2. NO GUESSWORK ON GAPS: If the provided context chunks do not contain a direct, decisive answer or relevant case law for the user's proposition, state unequivocally:
+   "The available verified database does not contain a direct precedent or statutory holding addressing this specific question."
+   Do NOT attempt to deduce analogies using unrelated civil procedure rules (e.g., do not cite Order XXI rules for unverified family court or partition disputes).
+3. STATUTORY FIDELITY: Maintain strict boundaries between procedural and substantive law:
+   - Partition of urban immovable property in Punjab is governed by the Punjab Partition of Immoveable Property Act, 2012 (interim mesne profits under Section 12), NOT Section 8/9 of Specific Relief Act 1877.
+   - Code of Civil Procedure 1908 provisions must not be applied to Family Court execution proceedings unless expressly adopted under the Family Courts Act 1964.
 
 0. STRICT DRAFTING & ANTI-LEAKAGE DIRECTIVE:
    CRITICAL: Do NOT output your internal thinking, validation checklists, or meta-commentary. Do NOT ask for permission to output the draft. If the user commands drafting or the intake context is complete, output the full, court-ready pleading immediately, beginning directly with the Court Heading.
@@ -219,3 +227,26 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
             errors.append(f"Citations containing YLR, MLD, CLC, or PCrLJ ('{cit_str}') are High Court decisions -- do not attribute them to the Supreme Court of Pakistan.")
 
     return errors
+
+def handle_reflection_or_abort(llm_client, original_prompt: str, generated_text: str, context_chunks: List[Any]) -> str:
+    """
+    Executes a single reflection step. If the context cannot support the correction,
+    it aborts rather than entering an infinite hallucination cycle.
+    """
+    context_str = " ".join([
+        (c.get("metadata", {}).get("text") or c.get("text", "") if isinstance(c, dict) else str(c))
+        for c in (context_chunks or [])
+    ])
+    lint_errors = lint_legal_output(generated_text, query_context=context_str)
+    if not lint_errors:
+        return generated_text
+
+    # If errors were due to missing information in the context, abort cleanly
+    for err in lint_errors:
+        if "Hallucinated" in err or "Synthesized" in err or "not present in retrieved context" in err or "Citing phantom section" in err:
+            return (
+                "The available verified database does not contain a direct precedent or statutory holding addressing this specific question. "
+                "Citations generated during verification were excluded to prevent inaccurate legal references."
+            )
+
+    return generated_text
