@@ -182,8 +182,8 @@ class LegalSearchPipeline:
 
     def _build_metadata_filter(self, clean_query: str, target_court: Optional[str] = None) -> Dict[str, Any]:
         """
-        Dynamically derives hard Pinecone metadata filters based on explicit legal acts
-        and court jurisdictions detected in the isolated query.
+        Dynamically derives hard Pinecone metadata filters based on explicit legal acts,
+        temporal boundaries, and court jurisdictions detected in the isolated query.
         """
         filters: Dict[str, Any] = {}
         query_lower = (clean_query or "").lower()
@@ -191,6 +191,8 @@ class LegalSearchPipeline:
         # 1. Court / Superior jurisdiction filter
         if target_court:
             filters["court"] = {"$eq": target_court}
+        elif "multan" in query_lower:
+            filters["court"] = {"$in": ["Lahore High Court, Multan Bench", "LHC Multan", "Lahore High Court"]}
         elif "supreme court" in query_lower or "scmr" in query_lower or "pld sc" in query_lower:
             filters["court"] = {"$eq": "Supreme Court of Pakistan"}
         elif "lahore high court" in query_lower or "lhc" in query_lower:
@@ -198,8 +200,12 @@ class LegalSearchPipeline:
         elif "sindh high court" in query_lower or "shc" in query_lower:
             filters["court"] = {"$eq": "High Court of Sindh"}
 
-        # 2. Statutory metadata scoping
-        if "family court" in query_lower or "maintenance" in query_lower or "decretal amount" in query_lower:
+        # 2. Statutory metadata scoping & temporal boundaries
+        if "punjab rented premises act" in query_lower or "prpa" in query_lower or "2009" in query_lower:
+            # Do not accept pre-2009 Cantonment or Urban Rent Restriction cases as direct statutory hits for PRPA 2009
+            filters["year"] = {"$gte": 2009}
+            filters["dataset_category"] = {"$eq": "rent"}
+        elif "family court" in query_lower or "maintenance" in query_lower or "decretal amount" in query_lower:
             filters["dataset_category"] = {"$in": ["family", "civil"]}
         elif "partition" in query_lower or "ppipa" in query_lower:
             filters["dataset_category"] = {"$eq": "civil"}

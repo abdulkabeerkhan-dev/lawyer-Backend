@@ -12,6 +12,12 @@ MANDATORY ADJUDICATION RULES:
 3. STATUTORY FIDELITY: Maintain strict boundaries between procedural and substantive law:
    - Partition of urban immovable property in Punjab is governed by the Punjab Partition of Immoveable Property Act, 2012 (interim mesne profits under Section 12), NOT Section 8/9 of Specific Relief Act 1877.
    - Code of Civil Procedure 1908 provisions must not be applied to Family Court execution proceedings unless expressly adopted under the Family Courts Act 1964.
+4. PRIMARY HOLDING VS. INTERNAL CITATIONS:
+   - You must distinguish between the actual ruling of the target case and older cases cited within it.
+   - If Case A quotes Case B, NEVER say "Case A held that [quote from Case B]". State: "In Case A, the Court cited Case B (Citation) for the proposition that...".
+   - Under no circumstances apply an older case decided under the Cantonment Rent Restriction Act 1963 or the Punjab Urban Rent Restriction Ordinance 1959 as a direct statutory interpretation of the Punjab Rented Premises Act 2009. Clearly state when principles originate from repealed or distinct rent regimes.
+5. NO UNGROUNDED ADDITIONAL AUTHORITIES:
+   - Never output a list of "Additional Authorities" unless each listed authority is physically present in the retrieved context chunks with an explicit holding and volume/page citation.
 
 0. STRICT DRAFTING & ANTI-LEAKAGE DIRECTIVE:
    CRITICAL: Do NOT output your internal thinking, validation checklists, or meta-commentary. Do NOT ask for permission to output the draft. If the user commands drafting or the intake context is complete, output the full, court-ready pleading immediately, beginning directly with the Court Heading.
@@ -225,6 +231,33 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
         snippet = draft_text[start_w:end_w].lower()
         if "supreme court" in snippet and "scmr" not in snippet and "pld sc" not in snippet and "pld supreme court" not in snippet:
             errors.append(f"Citations containing YLR, MLD, CLC, or PCrLJ ('{cit_str}') are High Court decisions -- do not attribute them to the Supreme Court of Pakistan.")
+
+    # Rule 9: Temporal / statutory anachronism check (pre-2009 cases attributed to PRPA 2009)
+    if "punjab rented premises act" in text_lower or "prpa" in text_lower:
+        pre_2009_citations = re.findall(r"\b(19\d\d|200[0-8])\s+(YLR|SCMR|PLD|MLD|CLC|PCRLJ|PCRLJ)\s+(\d+)\b", draft_text, re.IGNORECASE)
+        for year, journal, page in pre_2009_citations:
+            if f"{year} {journal} {page}".lower() in text_lower and ("under the punjab rented premises act" in text_lower or "interpreting the 2009 act" in text_lower):
+                errors.append(f"Anachronistic statutory attribution: {year} {journal} {page} predates the Punjab Rented Premises Act 2009.")
+
+    # Rule 10: Bare / ungrounded additional authorities list check
+    if "additional relevant authorities" in text_lower or "additional authorities" in text_lower:
+        parts = re.split(r'additional\s+(?:relevant\s+)?authorities', draft_text, flags=re.IGNORECASE)
+        if len(parts) > 1:
+            additional_section = parts[-1]
+            bare_citations = re.findall(r"\b((?:19|20)\d{2}\s+(?:YLR|SCMR|PLD|MLD|CLC|PCRLJ|PCRLJ)\s+\d+)\b", additional_section, re.IGNORECASE)
+            
+            chunk_citations = set()
+            if context_chunks:
+                for c in context_chunks:
+                    meta = c.get("metadata", {}) if isinstance(c, dict) else getattr(c, "metadata", {}) or {}
+                    cit = str(meta.get("citation") or meta.get("neutral_citation") or "").replace(" ", "").upper()
+                    if cit:
+                        chunk_citations.add(cit)
+
+            for raw_cit in bare_citations:
+                clean_c = raw_cit.replace(" ", "").upper()
+                if chunk_citations and clean_c not in chunk_citations:
+                    errors.append(f"Ungrounded authority detected in additional citations: {raw_cit}")
 
     return errors
 
