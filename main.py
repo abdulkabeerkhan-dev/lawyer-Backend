@@ -164,9 +164,45 @@ def extract_raw_user_query(incoming_query: str) -> str:
     clean_query = clean_query.strip().strip("'\"")
     return clean_query if clean_query else incoming_query.strip()
 
+def expand_legal_query_doctrinally(query: str) -> str:
+    """
+    Doctrinally expands natural language user queries into formal legal terminology,
+    statutory references, and procedural acts to bridge semantic gaps in vector search.
+    """
+    if not query:
+        return ""
+    
+    t = query
+    q_lower = query.lower()
+    expansions = []
+
+    # Khula / Family Law / Dissolution of Marriage
+    if any(k in q_lower for k in ["khula", "dissolution of marriage", "wife consent", "dower return", "haq mehr"]):
+        expansions.append("Dissolution of Muslim Marriages Act 1939 West Pakistan Family Courts Act 1964 Section 8 MFLO 1961 Khula unilateral right of wife dower return haq mehr")
+
+    # Pre-emption / Talbs
+    if any(k in q_lower for k in ["pre-emption", "preemption", "talb", "muwathibat", "ishhad"]):
+        expansions.append("Punjab Pre-emption Act 1991 Section 13 Talb-i-Muwathibat Talb-i-Ishhad immediate demand performance of talb notice")
+
+    # Dishonoured Cheque / Security Cheque / Section 489-F PPC
+    if any(k in q_lower for k in ["489-f", "489f", "cheque", "dishonour", "security cheque"]):
+        expansions.append("Section 489-F Pakistan Penal Code 1860 dishonoured cheque security cheque loan repayment fulfillment of obligation pre-arrest bail Section 498 CrPC")
+
+    # Narcotics / CNSA / Sample Protocol
+    if any(k in q_lower for k in ["cnsa", "9(c)", "9c", "narcotics", "charas", "heroin", "chemical examiner"]):
+        expansions.append("Control of Narcotic Substances Act 1997 Section 9(c) safe custody safe transmission sample delay chemical examiner report")
+
+    # Rent / PRPA
+    if any(k in q_lower for k in ["rent", "landlord", "tenant", "eviction", "prpa"]):
+        expansions.append("Punjab Rented Premises Act 2009 Section 13 Section 15 tenancy agreement default in payment of rent eviction application")
+
+    if expansions:
+        t = t + " " + " ".join(expansions)
+    return t
+
 class LegalRetrieverConfig:
     STRICT_THRESHOLD: float = 0.70
-    FALLBACK_FLOOR: float = 0.65  # Never drop down to 0.40
+    FALLBACK_FLOOR: float = 0.50  # Lowered to 0.50 to allow expanded family/doctrinal hits (0.54-0.60) into context payload
     TOP_K_DEFAULT: int = 40
     TOP_K_FILTERED: int = 60
 
@@ -1799,6 +1835,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             t = re.sub(r"\bo\.\s*([ivxlcdm\d]+)\b", r"Order \1", t, flags=re.IGNORECASE)
             t = re.sub(r"\b103\s+cr\.?p\.?c\.?\b", "Section 103 Code of Criminal Procedure 1898", t, flags=re.IGNORECASE)
             t = re.sub(r"\b9\s*\(?c\)?\s*(?:cnsa|narcotics?)\b", "Section 9(c) Control of Narcotic Substances Act 1997", t, flags=re.IGNORECASE)
+            t = expand_legal_query_doctrinally(t)
             return t
 
         def format_sources_searched(retrieved_matches: List[Dict[str, Any]]) -> str:
