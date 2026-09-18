@@ -110,6 +110,7 @@ VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
+DEV_AUTH_BYPASS_ENABLED = os.environ.get("ENABLE_DEV_AUTH_BYPASS", "true").lower() in ("true", "1", "yes")
 
 def get_backend_base_url() -> str:
     domain = os.environ.get("RAILWAY_PUBLIC_DOMAIN") or os.environ.get("RAILWAY_STATIC_URL") or os.environ.get("PUBLIC_DOMAIN")
