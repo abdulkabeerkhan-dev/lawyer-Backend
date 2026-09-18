@@ -34,7 +34,7 @@ if not SUPABASE_URL or not SUPABASE_SERVICE_KEY:
 
 supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
-RAILWAY_URL = os.environ.get("RAILWAY_URL", "https://web-production-53d0.up.railway.app")
+RAILWAY_URL = os.environ.get("RAILWAY_URL", "https://lawyer-backend-production-5804.up.railway.app")
 
 JOURNAL_REGEX = r'(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC\s*\(CS\)|PLC|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)'
 

@@ -6,7 +6,7 @@ import sys
 # Add parent directory to sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-RAILWAY_URL = os.environ.get("RAILWAY_URL", "https://web-production-53d0.up.railway.app")
+RAILWAY_URL = os.environ.get("RAILWAY_URL", "https://lawyer-backend-production-5804.up.railway.app")
 
 class TestLiveCrosswalk(unittest.TestCase):
 

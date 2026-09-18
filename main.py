@@ -105,6 +105,15 @@ SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
 
+def get_backend_base_url() -> str:
+    domain = os.environ.get("RAILWAY_PUBLIC_DOMAIN") or os.environ.get("RAILWAY_STATIC_URL") or os.environ.get("PUBLIC_DOMAIN")
+    if domain:
+        domain = domain.strip()
+        if not domain.startswith("http://") and not domain.startswith("https://"):
+            return f"https://{domain}"
+        return domain
+    return "https://lawyer-backend-production-5804.up.railway.app"
+
 async def get_voyage_embedding(text: str) -> List[float]:
     if not VOYAGE_API_KEY:
         raise HTTPException(status_code=500, detail="VOYAGE_API_KEY is missing from environment.")
@@ -2201,7 +2210,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 pdf_url_val = meta.get("pdf_url") or meta.get("pdf_link")
                 if not pdf_url_val or "supabase.co" in str(pdf_url_val).lower():
                     target_cid = case_id or neutral_cit or title
-                    pdf_url_val = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
+                    pdf_url_val = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
 
                 aggregate_citations_payload.append({
                     "case_id": case_id, "court": court, "court_name": court, "year": year_or_date, "preview": text_content,
@@ -2351,7 +2360,7 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
             c_name = infer_court_from_citation(c_cit, c_text, intercepted_card.get("court_name") or intercepted_card.get("court") or "")
             c_id = intercepted_card.get("case_id") or intercepted_card.get("id") or c_cit
             c_date = extract_year_from_citation_or_date(intercepted_card.get("decision_date") or intercepted_card.get("year"), c_cit, c_id)
-            pdf_url = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(c_id))}"
+            pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c_id))}"
 
             precedent_card_dict = {
                 "case_id": c_id,
@@ -2562,7 +2571,7 @@ MANDATORY INSTRUCTIONS:
                 card["court"] = court_str
                 raw_pdf = matched.get("pdf_url") or card.get("pdf_url")
                 if not raw_pdf or "supabase.co" in str(raw_pdf).lower():
-                    raw_pdf = f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(card['case_id']))}"
+                    raw_pdf = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(card['case_id']))}"
                 card["pdf_url"] = raw_pdf
                 card["date"] = extract_year_from_citation_or_date(card.get("date") or matched.get("year"), card.get("citation") or matched.get("citation"), card.get("case_id") or matched.get("case_id")) or "2024"
                 card["holding"] = sanitize_holding_text(card.get("holding", "") or matched.get("preview", "")) or "Holding on record."
@@ -2598,7 +2607,7 @@ MANDATORY INSTRUCTIONS:
                     "statutes_invoked": [{"name": str(s), "explanation": "Governing statutory authority"} for s in (c.get("statutes") or [])],
                     "outcome": determine_case_outcome(c.get("preview") or "", c.get("outcome")) or "Decided",
                     "verified_source": True,
-                    "pdf_url": c.get("pdf_url") or f"https://web-production-53d0.up.railway.app/judgment-pdf/{urllib.parse.quote(str(c.get('case_id') or c.get('citation') or ''))}",
+                    "pdf_url": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('case_id') or c.get('citation') or ''))}",
                     "raw_judgment_text": strip_control_characters(c.get("preview", "")),
                     "parties": c.get("parties") or extract_case_roles(c.get("preview") or "", c.get("title") or ""),
                     "operative_result": c.get("operative_result") or extract_operative_order(c.get("preview") or "") or "Order passed on merits."
