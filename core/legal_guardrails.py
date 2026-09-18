@@ -30,6 +30,11 @@ MANDATORY ADJUDICATION RULES:
    - Dower / Zar-i-Khula: The wife returns dower received, or surrenders unpaid dower. However, non-return of dower is a civil liability (repayable as arrears) and DOES NOT suspend or invalidate the Khula decree.
    - Prohibition against Fabricating MFLO Sections: NEVER cite "Section 2(viii) MFLO 1961" (Section 2 contains only general definitions: Chairman, Council, etc. and has no subsection viii defining Khula).
 
+8. PRECEDENT HIERARCHY & STARE DECISIS RULE:
+   - Supreme Court judgments (SCMR, PLD SC) strictly supersede High Court rulings (YLR, CLC, MLD, PLD High Court) on any conflicting proposition of law under Article 189 of the Constitution of Pakistan.
+   - If older High Court rulings state a defect is 'not fatal' or curable, but a subsequent Supreme Court authority holds the omission fatal (e.g. non-production of the informer in pre-emption suits under Mian Pir Muhammad PLD 2007 SC 302, Bashir Ahmed 2011 SCMR 1062, and Allah Ditta 2013 SCMR 866), you MUST declare the Supreme Court rule as the controlling law.
+   - Explicitly highlight when a procedural defect (such as withholding the informer who relayed knowledge of sale) results in the dismissal of a pre-emption suit.
+
 0. STRICT DRAFTING & ANTI-LEAKAGE DIRECTIVE:
    CRITICAL: Do NOT output your internal thinking, validation checklists, or meta-commentary. Do NOT ask for permission to output the draft. If the user commands drafting or the intake context is complete, output the full, court-ready pleading immediately, beginning directly with the Court Heading.
 
@@ -276,6 +281,11 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
             errors.append("Citing phantom Section 2(viii) MFLO 1961 (Section 2 contains only definitions: Chairman, Council, Prescribed; it has no subsection viii).")
         if re.search(r'khula\s+(?:is\s+a\s+contractual\s+dissolution|requires\s+(?:the\s+)?husband(?:\'s)?\s+consent)', text_lower) or "requires mutual agreement or, in the absence of agreement, the husband's consent" in text_lower:
             errors.append("Holding that Khula requires husband's consent (Fatal error: Under Khurshid Bibi v. Muhammad Amin PLD 1967 SC 97 and Family Courts Act 1964 Section 10, the wife has an independent right to Khula and husband's consent is NOT required).")
+
+    # Rule 12: Pre-emption / Informer non-production stare decisis (PLD 2007 SC 302 / 2011 SCMR 1062)
+    if any(k in text_lower or k in query_lower for k in ["pre-emption", "preemption", "talb-i-muwathibat", "informer"]):
+        if ("informer" in text_lower or "informant" in text_lower) and re.search(r'(?:omission|withholding|non-production|failure\s+to\s+produce)\s+(?:of\s+)?(?:the\s+)?informer\s+is\s+(?:not\s+fatal|curable|not\s+a\s+fatal\s+defect)', text_lower):
+            errors.append("Erroneously holding that non-production of the informer is not fatal (Controlling law under Supreme Court PLD 2007 SC 302 and 2011 SCMR 1062: withholding the informer from the witness box is a fatal defect resulting in dismissal of the pre-emption suit).")
 
     return errors
 

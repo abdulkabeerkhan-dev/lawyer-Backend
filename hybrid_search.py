@@ -143,6 +143,59 @@ class BM25Index:
 
 
 # ---------------------------------------------------------------------------
+# Judicial Hierarchy & Recency Re-weighting
+# ---------------------------------------------------------------------------
+import datetime
+
+def get_court_authority_weight(citation: str, court_name: str = "") -> float:
+    """
+    Under Article 189 of the Constitution of Pakistan, Supreme Court decisions
+    are binding on all courts in Pakistan. High Court decisions under Article 201
+    bind subordinate courts in their respective province.
+    """
+    cit_upper = (citation or "").upper()
+    court_upper = (court_name or "").upper()
+
+    # Supreme Court carries highest weight (Apex binding precedent)
+    if "SCMR" in cit_upper or "SC" in cit_upper or "SUPREME" in court_upper:
+        return 1.35
+    # High Courts (Principal & Benches)
+    if any(h in cit_upper for h in ["PLD", "PCRLJ", "CLC", "YLR", "MLD", "PTD", "PLC", "CLD", "PLJ", "NLR"]):
+        return 1.05
+    return 1.0
+
+
+def extract_year_num(year_val: Any, citation: str = "", doc_id: str = "") -> int:
+    """Extract 4-digit integer year from metadata, citation, or doc_id."""
+    if isinstance(year_val, int) and year_val > 1800:
+        return year_val
+    if isinstance(year_val, str) and year_val.strip().isdigit():
+        val = int(year_val.strip())
+        if 1800 < val < 2100:
+            return val
+    m = re.search(r'\b(19\d\d|20\d\d)\b', f"{year_val} {citation} {doc_id}")
+    if m:
+        return int(m.group(1))
+    return 0
+
+
+def get_recency_weight(year_val: Any, citation: str = "", doc_id: str = "") -> float:
+    """
+    Temporal precedence weighting: Newer decisions prevent applying overruled
+    doctrines. Gives high priority to post-2017 decisions and solid priority
+    to post-2007 apex developments.
+    """
+    y = extract_year_num(year_val, citation, doc_id)
+    if not y or y < 1900:
+        return 1.0
+    if y >= 2017:
+        return 1.25
+    if y >= 2007:
+        return 1.15
+    return 1.0
+
+
+# ---------------------------------------------------------------------------
 # Reciprocal Rank Fusion
 # ---------------------------------------------------------------------------
 def reciprocal_rank_fusion(
@@ -151,9 +204,11 @@ def reciprocal_rank_fusion(
     k: int = 60
 ) -> List[Dict[str, Any]]:
     """
-    Merge two ranked result lists via Reciprocal Rank Fusion.
+    Merge two ranked result lists via Reciprocal Rank Fusion (RRF) with
+    judicial hierarchy and recency re-weighting.
 
     RRF(d) = sum over each ranker r: 1 / (k + rank_r(d))
+    FinalScore(d) = RRF(d) * CourtWeight(d) * RecencyWeight(d)
     """
     rrf_scores: Dict[str, float] = {}
     dense_scores: Dict[str, float] = {}
@@ -175,22 +230,36 @@ def reciprocal_rank_fusion(
         if doc_id not in metadata_map:
             metadata_map[doc_id] = meta
 
-    sorted_ids = sorted(rrf_scores.keys(), key=lambda d: rrf_scores[d], reverse=True)
-
     results = []
-    for doc_id in sorted_ids:
+    for doc_id in rrf_scores:
+        meta = metadata_map.get(doc_id, {}) or {}
+        cit = meta.get("citation", "") or meta.get("neutral_citation", "")
+        court = meta.get("court", "") or meta.get("court_name", "")
+        raw_year = meta.get("year", 0) or meta.get("decision_date", "") or meta.get("date", "")
+
+        court_weight = get_court_authority_weight(cit, court)
+        recency_weight = get_recency_weight(raw_year, citation=cit, doc_id=doc_id)
+
+        base_rrf = rrf_scores[doc_id]
+        final_rank_score = base_rrf * court_weight * recency_weight
+
         results.append({
             "id": doc_id,
-            "score": rrf_scores[doc_id],  # Unified candidate score
-            "rrf_score": rrf_scores[doc_id],
+            "score": final_rank_score,  # Re-weighted candidate score
+            "rrf_score": base_rrf,
+            "final_rank_score": final_rank_score,
+            "court_weight": court_weight,
+            "recency_weight": recency_weight,
             "similarity_score": dense_scores.get(doc_id, 0.0),
             "dense_score": dense_scores.get(doc_id, 0.0),
             "sparse_score": sparse_scores.get(doc_id, 0.0),
             "dense_rank": dense_ranks.get(doc_id, 0),
             "sparse_rank": sparse_ranks.get(doc_id, 0),
-            "metadata": metadata_map.get(doc_id, {}),
+            "metadata": meta,
         })
 
+    # Sort final candidates by final_rank_score descending
+    results.sort(key=lambda x: x["final_rank_score"], reverse=True)
     return results
 
 
