@@ -207,6 +207,22 @@ class TestLegalGuardrails(unittest.TestCase):
         clean_errors = lint_legal_output(good_output, query_context="Income Tax Ordinance 2001 Section 122 assessment writ")
         self.assertFalse(any("1999 SCMR 1402" in e for e in clean_errors))
 
+    def test_corporate_oppression_guardrail(self):
+        # Assert Rule 15 directive text in SYSTEM_LEGAL_DIRECTIVE
+        self.assertIn("Under the Companies Act 2017, winding up of a commercially solvent and running company under the 'just and equitable' clause (Section 301) is strictly a remedy of last resort", SYSTEM_LEGAL_DIRECTIVE)
+        self.assertIn("Where minority shareholders allege oppression, mismanagement, or deadlock under Section 286, the Company Bench must explore alternative corrective remedies", SYSTEM_LEGAL_DIRECTIVE)
+        self.assertIn("The Court will not order the corporate death of a solvent company where its substratum remains intact, in accordance with Haji Muhammad Ismail (PLD 2002 SC 510)", SYSTEM_LEGAL_DIRECTIVE)
+
+        # Assert linter intercepts assertion that winding up is the primary/mandatory remedy for oppression in solvent company
+        bad_output = "In this dispute under the Companies Act 2017 regarding minority oppression in a solvent company, winding up is the primary remedy and must be ordered for deadlock without exploring alternative remedies."
+        errors = lint_legal_output(bad_output, query_context="Companies Act 2017 Section 286 minority oppression winding up")
+        self.assertTrue(any("Haji Muhammad Ismail" in e and "Section 286/301" in e for e in errors))
+
+        # Assert clean output passes
+        good_output = "Under Haji Muhammad Ismail (PLD 2002 SC 510) and Section 286/301 Companies Act 2017, winding up a solvent running company is strictly a remedy of last resort; the Company Bench should order forensic audits or share buyouts."
+        clean_errors = lint_legal_output(good_output, query_context="Companies Act 2017 Section 286 minority oppression winding up")
+        self.assertFalse(any("Haji Muhammad Ismail" in e for e in clean_errors))
+
 if __name__ == '__main__':
     unittest.main()
 

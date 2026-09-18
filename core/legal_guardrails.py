@@ -147,6 +147,9 @@ MANDATORY ADJUDICATION RULES:
 
 14. CONSTITUTIONAL WRITS & FISCAL STATUTES (ARTICLE 199 & ITO 2001 DIRECTIVE):
     Under Article 199 of the Constitution of Pakistan, the presence of an adequate alternate statutory remedy (such as appeals under Section 127 Income Tax Ordinance 2001) generally bars the entertainment of a writ petition. As settled in Collector of Customs v. Sheikh Spinning Mills (1999 SCMR 1402) and Premier Systems (2022 SCMR 1978), allegations of procedural defect, ex-parte order, or lack of notice under Section 122(9) fall squarely within the remedial jurisdiction of the Commissioner (Appeals) and ATIR, unless the order is completely coram non judice or passed under an ultra vires law.
+
+15. CORPORATE OPPRESSION & WINDING UP DIRECTIVE (SECTIONS 286 & 301 COMPANIES ACT 2017):
+    Under the Companies Act 2017, winding up of a commercially solvent and running company under the 'just and equitable' clause (Section 301) is strictly a remedy of last resort. Where minority shareholders allege oppression, mismanagement, or deadlock under Section 286, the Company Bench must explore alternative corrective remedies (such as forensic audits, restructuring of boards, or ordering a share purchase at fair valuation). The Court will not order the corporate death of a solvent company where its substratum remains intact, in accordance with Haji Muhammad Ismail (PLD 2002 SC 510).
 """
 
 def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
@@ -323,6 +326,12 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
         if ("article 199" in text_lower or "writ petition" in text_lower or "high court" in text_lower) and any(k in text_lower for k in ["natural justice", "notice", "122(9)", "ex-parte", "audi alteram"]):
             if re.search(r'(?:natural justice|lack of notice|122\(9\)|ex-parte|audi alteram partem).*(?:automatically\s+(?:bypasses|dispenses with|overrides|allows)|directly\s+(?:maintainable|entitles?|approache?s?)\s+(?:a\s+)?(?:writ|article 199)|writ\s+lies?\s+(?:directly\s+)?without\s+(?:exhausting|filing|availing)\s+(?:an?\s+)?(?:appeal|statutory\s+remedy|section 127)|exempt\s+from\s+(?:exhausting|availing)\s+(?:the\s+)?(?:statutory\s+remedy|appeal))', text_lower):
                 errors.append("Erroneously asserting that natural justice defects, lack of Section 122(9) notice, or ex-parte tax assessment automatically bypass the statutory tax appellate hierarchy under Section 127 ITO 2001 (Controlling law under Collector of Customs v. Sheikh Spinning Mills 1999 SCMR 1402, Hamdard Dawakhana PLD 1992 SC 847, and Premier Systems 2022 SCMR 1978: statutory appeal under Section 127 before Commissioner Appeals and ATIR is an adequate alternate remedy under Article 199; procedural defects and natural justice grievances fall squarely within the appellate hierarchy's competence and cannot bypass statutory remedies unless the action is completely coram non judice or passed under an ultra vires law).")
+
+    # Rule 17: Corporate Oppression & Just and Equitable Winding Up (Haji Muhammad Ismail PLD 2002 SC 510 / Sections 286 & 301 Companies Act 2017)
+    if any(k in text_lower or k in query_lower for k in ["companies act", "company law", "winding up", "section 286", "section 301", "section 290", "oppression", "mismanagement", "minority shareholder", "just and equitable"]):
+        if ("winding up" in text_lower or "corporate death" in text_lower or "section 301" in text_lower) and any(k in text_lower for k in ["solvent", "running company", "substratum intact", "oppression", "deadlock"]):
+            if re.search(r'(?:winding up|corporate death).*(?:is\s+(?:the\s+)?(?:primary|first|routine|mandatory)\s+remedy|must\s+be\s+(?:ordered|granted)\s+(?:upon|for|on\s+grounds\s+of)\s+(?:minority\s+oppression|deadlock|mismanagement)|cannot\s+explore\s+alternative\s+remedies)', text_lower):
+                errors.append("Erroneously asserting that winding up is the primary or mandatory remedy for corporate oppression/deadlock in a solvent company (Controlling law under Haji Muhammad Ismail PLD 2002 SC 510, 2017 CLD 847, and Section 286/301 Companies Act 2017: winding up of a commercially solvent and running company under the just and equitable clause is strictly a remedy of last resort; the Company Bench must explore alternative corrective remedies under Section 286 such as forensic audits, board restructuring, or ordering share buy-outs at fair valuation).")
 
     return errors
 
