@@ -1,5 +1,5 @@
 import re
-from typing import List
+from typing import List, Dict, Any, Optional, Tuple, Set
 
 SYSTEM_LEGAL_DIRECTIVE = """
 You are Section AI, an elite Pakistani legal verification engine specializing in codified Pakistani law and superior court jurisprudence.
