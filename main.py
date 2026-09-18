@@ -199,6 +199,11 @@ def expand_legal_query_doctrinally(query: str, return_flag: bool = False) -> Any
         if not any(k in q_lower for k in ["section 9 cpc", "sec 9 cpc", "section 9 c.p.c"]):
             expansions.append("Punjab Rented Premises Act 2009 Section 13 Section 15 tenancy agreement default in payment of rent eviction application")
 
+    # Private Defence / Self Defence (Section 302 PPC / Section 100 PPC / Bail)
+    if any(k in q_lower for k in ["private defence", "self defence", "self-defence", "plea of self defence"]):
+        if any(k in q_lower for k in ["302", "ppc", "murder", "bail"]):
+            expansions.append("Section 302 Section 96 Section 97 Section 99 Section 100 Pakistan Penal Code 1860 PPC plea of self defence private defence grant of bail further inquiry Section 497 CrPC")
+
     was_expanded = len(expansions) > 0
     if expansions:
         t = t + " " + " ".join(expansions)

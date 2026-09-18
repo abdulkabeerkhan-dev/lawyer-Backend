@@ -16,5 +16,11 @@
     "expected_citation": null,
     "should_refuse": true,
     "notes": "THE REGRESSION CASE. Section 9 CPC does not govern PRPA-regime tenancy eviction, so no case law should ground this. Correctly refused pre-FALLBACK_FLOOR-change (0 matches). After FALLBACK_FLOOR dropped to 0.50 globally, this started returning a confident, ungrounded opinion citing Section 13/16 PRPA 2009 with no disclosure that it wasn't retrieved from case law. This item is the canary for that bug — if it ever starts returning candidates again, FALLBACK_FLOOR scoping broke."
+  },
+  {
+    "question": "Can an accused charged under Section 302 PPC be granted bail on the plea of self defence or private defence?",
+    "expected_citation": "2008 YLR 1137",
+    "should_refuse": false,
+    "notes": "Section 302 PPC / Section 100 PPC private defence bail precedent (Shaukat Ali v. State). Verified indexed in Pinecone. Must pass via expand_legal_query_doctrinally private defence trigger."
   }
 ]
