@@ -164,13 +164,15 @@ def extract_raw_user_query(incoming_query: str) -> str:
     clean_query = clean_query.strip().strip("'\"")
     return clean_query if clean_query else incoming_query.strip()
 
-def expand_legal_query_doctrinally(query: str) -> str:
+def expand_legal_query_doctrinally(query: str, return_flag: bool = False) -> Any:
     """
     Doctrinally expands natural language user queries into formal legal terminology,
     statutory references, and procedural acts to bridge semantic gaps in vector search.
+    Target domains: Khula/Family, Pre-emption, 489-F PPC Cheques, CNSA 9(c), PRPA 2009.
+    Returns expanded string or (expanded string, was_expanded) if return_flag is True.
     """
     if not query:
-        return ""
+        return ("", False) if return_flag else ""
     
     t = query
     q_lower = query.lower()
@@ -192,13 +194,15 @@ def expand_legal_query_doctrinally(query: str) -> str:
     if any(k in q_lower for k in ["cnsa", "9(c)", "9c", "narcotics", "charas", "heroin", "chemical examiner"]):
         expansions.append("Control of Narcotic Substances Act 1997 Section 9(c) safe custody safe transmission sample delay chemical examiner report")
 
-    # Rent / PRPA
-    if any(k in q_lower for k in ["rent", "landlord", "tenant", "eviction", "prpa"]):
-        expansions.append("Punjab Rented Premises Act 2009 Section 13 Section 15 tenancy agreement default in payment of rent eviction application")
+    # Rent / PRPA (Requires PRPA / Rented Premises intent; exclude Section 9 CPC civil suits)
+    if any(k in q_lower for k in ["prpa", "punjab rented premises act", "section 13 prpa", "section 15 prpa", "rent controller eviction", "rented premises"]):
+        if not any(k in q_lower for k in ["section 9 cpc", "sec 9 cpc", "section 9 c.p.c"]):
+            expansions.append("Punjab Rented Premises Act 2009 Section 13 Section 15 tenancy agreement default in payment of rent eviction application")
 
+    was_expanded = len(expansions) > 0
     if expansions:
         t = t + " " + " ".join(expansions)
-    return t
+    return (t, was_expanded) if return_flag else t
 
 class LegalRetrieverConfig:
     STRICT_THRESHOLD: float = 0.70
@@ -266,7 +270,8 @@ class LegalSearchPipeline:
         top_k: Optional[int] = None, 
         namespace: Optional[str] = None,
         clean_query: str = "",
-        filter_dict: Optional[Dict[str, Any]] = None
+        filter_dict: Optional[Dict[str, Any]] = None,
+        is_doctrinally_expanded: bool = False
     ) -> List[Dict[str, Any]]:
         target_index = vector_index or self.vector_client
         if not target_index or not query_vector:
@@ -287,14 +292,22 @@ class LegalSearchPipeline:
 
         try:
             res = target_index.query(**query_params)
+            raw_matches = res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", []) or []
+            if not raw_matches and pinecone_filter:
+                # Soft fallback if hard metadata filter yielded 0 matches
+                query_params_nofilter = dict(query_params)
+                query_params_nofilter.pop("filter", None)
+                res = target_index.query(**query_params_nofilter)
+                raw_matches = res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", []) or []
         except Exception as e:
             print(f"⚠️ Pinecone filter query notice ({pinecone_filter}): {e}", file=sys.stderr)
             query_params.pop("filter", None)
             res = target_index.query(**query_params)
+            raw_matches = res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", []) or []
 
         raw_matches = res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", []) or []
         
-        # Step 6: Strict score filtering (NO 0.40 FALLBACK EXPANSION)
+        # Step 6: Strict score filtering (0.65 minimum)
         strict_floor = self.config.min_similarity_threshold or LegalRetrieverConfig.STRICT_THRESHOLD
         candidates = []
         for m in raw_matches:
@@ -305,10 +318,11 @@ class LegalSearchPipeline:
             if is_boosted or score >= strict_floor:
                 hit_data = dict(m) if isinstance(m, dict) else {"id": getattr(m, "id", ""), "score": score, "metadata": meta}
                 hit_data["similarity_score"] = score
+                hit_data["fallback_entered"] = False
                 candidates.append(hit_data)
 
-        # Step 7: Secondary check with strict floor (0.65 minimum, abort low-confidence noise)
-        if len(candidates) < 2:
+        # Step 7: Secondary check -- 0.50 FALLBACK_FLOOR ONLY engages if query was doctrinally expanded!
+        if len(candidates) < 2 and is_doctrinally_expanded:
             secondary_candidates = []
             for m in raw_matches:
                 meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
@@ -317,6 +331,7 @@ class LegalSearchPipeline:
                 if is_boosted or score >= LegalRetrieverConfig.FALLBACK_FLOOR:
                     hit_data = dict(m) if isinstance(m, dict) else {"id": getattr(m, "id", ""), "score": score, "metadata": meta}
                     hit_data["similarity_score"] = score
+                    hit_data["fallback_entered"] = (score < strict_floor and not is_boosted)
                     secondary_candidates.append(hit_data)
             if secondary_candidates:
                 candidates = secondary_candidates
@@ -1820,7 +1835,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             "Federal Shariat Court": ["federal shariat court", "fsc"],
         }
 
-        def _expand_legal_shorthand(text: str) -> str:
+        def _expand_legal_shorthand(text: str, return_flag: bool = False) -> Any:
             t = text
             # In-place statutory expansions for optimal vector embedding matching
             t = re.sub(r"\bcr\.?p\.?c\.?\b", "Code of Criminal Procedure 1898 (CrPC)", t, flags=re.IGNORECASE)
@@ -1835,8 +1850,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             t = re.sub(r"\bo\.\s*([ivxlcdm\d]+)\b", r"Order \1", t, flags=re.IGNORECASE)
             t = re.sub(r"\b103\s+cr\.?p\.?c\.?\b", "Section 103 Code of Criminal Procedure 1898", t, flags=re.IGNORECASE)
             t = re.sub(r"\b9\s*\(?c\)?\s*(?:cnsa|narcotics?)\b", "Section 9(c) Control of Narcotic Substances Act 1997", t, flags=re.IGNORECASE)
-            t = expand_legal_query_doctrinally(t)
-            return t
+            t, was_expanded = expand_legal_query_doctrinally(t, return_flag=True)
+            return (t, was_expanded) if return_flag else t
 
         def format_sources_searched(retrieved_matches: List[Dict[str, Any]]) -> str:
             if not retrieved_matches:
@@ -1920,7 +1935,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
         async def run_case_law_search(raw_search_query: str, court_filter: Optional[str] = None) -> str:
             search_call_count["n"] += 1
-            search_query = _expand_legal_shorthand(raw_search_query or effective_user_query)
+            search_query, is_doctrinally_expanded = _expand_legal_shorthand(raw_search_query or effective_user_query, return_flag=True)
             sq_lower = search_query.lower()
             target_source = None
 
@@ -2086,7 +2101,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         vector_index=pinecone_index,
                         query_vector=query_vector,
                         top_k=query_top_k,
-                        namespace=PINECONE_NAMESPACE
+                        namespace=PINECONE_NAMESPACE,
+                        clean_query=search_query,
+                        is_doctrinally_expanded=is_doctrinally_expanded
                     )
                     matches_list = raw_matches
                     if boosted_matches:
@@ -2277,8 +2294,26 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     _seen_case_ids_global.add(cid_key)
                 aggregate_additional_authorities.append({"title": title, "citation": neutral_cit, "summary": preview_snippet})
 
+            has_high_confidence_precedent = any(
+                float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0)) >= 0.65 or
+                bool(m.get("is_boosted") if isinstance(m, dict) else False)
+                for m in primary_matches
+            )
+
+            if primary_matches and not has_high_confidence_precedent:
+                provenance_flag = (
+                    "⚠️ PROVENANCE MANDATE FOR MODEL:\n"
+                    "No matching high-confidence case law (similarity >= 0.65) was retrieved from the database on point for this query.\n"
+                    "YOU MUST INCLUDE THIS EXACT LINE AT THE VERY START OF YOUR RESPONSE:\n"
+                    "\"⚠️ No matching case law found — this is a statutory analysis, not a retrieved precedent.\"\n\n"
+                )
+                context_parts.insert(0, provenance_flag)
+
             if not context_parts:
-                return "No matching judgments were found in the database for this search. Do not fabricate citations -- answer from settled statutory principles and say the database returned no precedent on point."
+                return (
+                    "⚠️ No matching case law found — this is a statutory analysis, not a retrieved precedent.\n\n"
+                    "No matching precedents were found in the database for this search. Do not fabricate citations -- answer strictly from settled statutory principles and explicitly state that no precedent on point was retrieved."
+                )
 
             return "\n\n=========================================\n\n".join(context_parts)
 

@@ -1,0 +1,20 @@
+[
+  {
+    "question": "Can a wife claim dissolution of marriage on the ground of Khula without consent of her husband?",
+    "expected_citation": "2006 YLR 96",
+    "should_refuse": false,
+    "notes": "Original bug: scored 0.5458, below the 0.65 strict floor, so 0 matches even though 2006 YLR 96 is fully indexed. Fixed via expand_legal_query_doctrinally. Must keep passing at >=0.60 raw score."
+  },
+  {
+    "question": "Can a Family Court grant khula without the husband's consent, and what evidentiary standard applies?",
+    "expected_citation": "2006 YLR 2204",
+    "should_refuse": false,
+    "notes": "Rephrasing of the case above with 'Family Court' / 'evidentiary standard' framing instead of plain 'dissolution of marriage'. Tests that the fix generalizes beyond the exact phrasing that was tuned."
+  },
+  {
+    "question": "Can a landlord claim eviction of a commercial shop under Section 9 CPC in Lahore for non-payment of rent?",
+    "expected_citation": null,
+    "should_refuse": true,
+    "notes": "THE REGRESSION CASE. Section 9 CPC does not govern PRPA-regime tenancy eviction, so no case law should ground this. Correctly refused pre-FALLBACK_FLOOR-change (0 matches). After FALLBACK_FLOOR dropped to 0.50 globally, this started returning a confident, ungrounded opinion citing Section 13/16 PRPA 2009 with no disclosure that it wasn't retrieved from case law. This item is the canary for that bug — if it ever starts returning candidates again, FALLBACK_FLOOR scoping broke."
+  }
+]
