@@ -436,11 +436,11 @@ async def safe_create_anthropic_message(**kwargs):
     call_kwargs = dict(kwargs)
     call_kwargs["model"] = primary_model
 
-    # Enforce minimum 4096 max_tokens to prevent truncation of detailed precedent cards
+    # Enforce minimum 8192 max_tokens to prevent truncation of detailed precedent cards
     if "max_output_tokens" in call_kwargs:
         call_kwargs["max_tokens"] = call_kwargs.pop("max_output_tokens")
-    if "max_tokens" in call_kwargs and isinstance(call_kwargs["max_tokens"], int) and call_kwargs["max_tokens"] < 4096:
-        call_kwargs["max_tokens"] = 4096
+    if "max_tokens" in call_kwargs and isinstance(call_kwargs["max_tokens"], int) and call_kwargs["max_tokens"] < 8192:
+        call_kwargs["max_tokens"] = 8192
 
     try:
         return await async_anthropic_client.messages.create(**call_kwargs)
@@ -2447,7 +2447,7 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
 <<<CARDS>>>
 [{"case_id": "...", "case_name": "...", "citation": "...", "date": "...", "outcome": "...", "issue": "...", "holding": "...", "why_relevant": "...", "statutes_invoked": [{"name": "...", "explanation": "..."}]}]
 <<<END_CARDS>>>
-   CRITICAL: "case_id" MUST be copied verbatim, character-for-character, from the "CASE_ID:" line of the matching case in the search tool's results. Never invent, alter, or guess a case_id. Every card's case_id must correspond to the exact case you are discussing in that card.
+   CRITICAL: Keep "issue", "holding", and "why_relevant" concise (1-2 sentences each). Detailed legal analysis belongs in the main opinion body, not repeated inside JSON card fields. "case_id" MUST be copied verbatim, character-for-character, from the "CASE_ID:" line of the matching case in the search tool's results. Never invent, alter, or guess a case_id. Every card's case_id must correspond to the exact case you are discussing in that card.
 
 9. CITATION FORMATTING RULE: ALWAYS format case citations using standard Pakistani law reporter journal style (e.g., PLD 1995 Supreme Court 34, 2019 SCMR 984, 2008 PCrLJ 858, 2021 CLC 450, 2020 MLD 112, 2022 YLR 310, 2020 CLD 1104, 2021 PTD 795, 2021 PLC (CS) 105, 2018 PLJ 502, 2017 NLR 215, 2016 GBLR 88, 2015 PTCL 401, 2014 ALD 105, 2013 SLR 99, 2012 ILR 44, 2011 SBLR 22).
 
@@ -2631,8 +2631,8 @@ MANDATORY INSTRUCTIONS:
             print(f"DEBUG: Calling Claude LLM (round {round_idx+1}) with {len(messages)} messages.", flush=True)
             claude_message = await safe_create_anthropic_message(
                 model=CLAUDE_MODEL,
-                max_tokens=4096,
-                max_output_tokens=4096,
+                max_tokens=8192,
+                max_output_tokens=8192,
                 system=combined_system_prompt,
                 messages=messages,
                 tools=tools_to_pass,
@@ -2692,7 +2692,7 @@ MANDATORY INSTRUCTIONS:
                     {"role": "user", "content": reflection_prompt},
                 ]
                 claude_message_ref = await safe_create_anthropic_message(
-                    model=CLAUDE_MODEL, max_tokens=4096, max_output_tokens=4096, system=combined_system_prompt, messages=reflection_messages
+                    model=CLAUDE_MODEL, max_tokens=8192, max_output_tokens=8192, system=combined_system_prompt, messages=reflection_messages
                 )
                 raw_model_output = "".join(getattr(b, "text", "") for b in claude_message_ref.content if getattr(b, "type", None) == "text").strip()
                 is_token_truncated = (getattr(claude_message_ref, "stop_reason", None) == "max_tokens")
@@ -2700,7 +2700,7 @@ MANDATORY INSTRUCTIONS:
         executive_answer = ""
         precedent_cards = []
 
-        cards_match = re.search(r'<<<CARDS>>>(.*?)<<<END_CARDS>>>', raw_model_output, re.DOTALL)
+        cards_match = re.search(r'<<<CARDS>>>(.*?)(?:<<<END_CARDS>>>|$)', raw_model_output, re.DOTALL)
         if cards_match:
             try:
                 parsed_cards = json.loads(cards_match.group(1).strip())
@@ -2715,7 +2715,7 @@ MANDATORY INSTRUCTIONS:
                             precedent_cards.append(c_json)
                     except Exception:
                         pass
-            executive_answer = re.sub(r'<<<CARDS>>>.*?<<<END_CARDS>>>', '', raw_model_output, flags=re.DOTALL).strip()
+            executive_answer = re.sub(r'<<<CARDS>>>.*?(?:<<<END_CARDS>>>|$)', '', raw_model_output, flags=re.DOTALL).strip()
         else:
             executive_answer = raw_model_output
 
@@ -3553,6 +3553,79 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
         raise HTTPException(status_code=403, detail="Not authorized to access this job.")
     return {"status": job["status"], "result": job.get("result"), "error": job.get("error")}
 
+@app.get("/query/{job_id}/stream")
+async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depends(verify_clerk_session)):
+    """
+    SSE / EventStream endpoint for Lovable and frontend streaming clients.
+    Emits query progress, sends complete payload upon completion, and terminates with 'data: [DONE]\\n\\n'.
+    """
+    cleanup_old_jobs()
+    if job_id not in jobs_store:
+        if supabase:
+            try:
+                res = supabase.table("queries").select("*").eq("id", job_id).execute()
+                if res.data and len(res.data) > 0:
+                    db_job = res.data[0]
+                    if db_job.get("user_id") and db_job["user_id"] != authenticated_user_id:
+                        raise HTTPException(status_code=403, detail="Not authorized to access this job.")
+                    async def db_sse():
+                        ans = db_job.get("answer_text", "")
+                        yield f"data: {json.dumps({'status': 'done', 'result': {'answer': ans, 'response': ans, 'truncated': False}})}\n\n"
+                        yield "data: [DONE]\n\n"
+                    return StreamingResponse(db_sse(), media_type="text/event-stream")
+            except HTTPException:
+                raise
+            except Exception as e:
+                print(f"Supabase query stream notice: {e}")
+        raise HTTPException(status_code=404, detail="Job not found")
+
+    job = jobs_store[job_id]
+    if job["user_id"] != authenticated_user_id:
+        raise HTTPException(status_code=403, detail="Not authorized to access this job.")
+
+    async def sse_generator():
+        last_status = None
+        max_wait_seconds = 180
+        start_time = asyncio.get_event_loop().time()
+        while True:
+            current_job = jobs_store.get(job_id)
+            if not current_job:
+                yield "data: [DONE]\n\n"
+                break
+
+            status = current_job.get("status")
+            if status != last_status:
+                last_status = status
+                yield f"data: {json.dumps({'status': status})}\n\n"
+
+            if status == "done":
+                res = current_job.get("result") or {}
+                yield f"data: {json.dumps({'status': 'done', 'result': res})}\n\n"
+                yield "data: [DONE]\n\n"
+                break
+            elif status == "error":
+                err = current_job.get("error") or "Unknown error"
+                yield f"data: {json.dumps({'status': 'error', 'error': str(err)})}\n\n"
+                yield "data: [DONE]\n\n"
+                break
+
+            if asyncio.get_event_loop().time() - start_time > max_wait_seconds:
+                yield f"data: {json.dumps({'status': 'error', 'error': 'Query processing timeout'})}\n\n"
+                yield "data: [DONE]\n\n"
+                break
+
+            await asyncio.sleep(0.5)
+
+    return StreamingResponse(
+        sse_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
+    )
+
 @app.post("/query/{job_id}/continue")
 async def continue_query_answer(job_id: str, authenticated_user_id: str = Depends(verify_clerk_session)):
     cleanup_old_jobs()
@@ -3567,8 +3640,8 @@ async def continue_query_answer(job_id: str, authenticated_user_id: str = Depend
 
     continuation_kwargs = {
         "model": CLAUDE_MODEL,
-        "max_tokens": 4096,
-        "max_output_tokens": 4096,
+        "max_tokens": 8192,
+        "max_output_tokens": 8192,
         "system": continue_state["system_prompt"],
         "messages": [
             {"role": "user", "content": continue_state["claude_message_content"]},
