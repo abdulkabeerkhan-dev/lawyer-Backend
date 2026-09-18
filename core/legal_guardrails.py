@@ -144,6 +144,9 @@ MANDATORY ADJUDICATION RULES:
 
 13. COMMERCIAL & BANKING LAW / FIO 2001 SECTION 10 DIRECTIVE:
     Under Section 10 of the Financial Institutions (Recovery of Finances) Ordinance 2001, compliance with subsections (3), (4), and (5) is mandatory. As held in Apollo Textile Mills (PLD 2012 SC 268) and Tri-Star Shipping (2015 SCMR 1060), failure to provide a specific statement of accounts or formulated dispute points is fatal. The Banking Court has no jurisdiction to grant conditional leave on deposit of security and must reject the leave application and pass a decree under Section 10(11).
+
+14. CONSTITUTIONAL WRITS & FISCAL STATUTES (ARTICLE 199 & ITO 2001 DIRECTIVE):
+    Under Article 199 of the Constitution of Pakistan, the presence of an adequate alternate statutory remedy (such as appeals under Section 127 Income Tax Ordinance 2001) generally bars the entertainment of a writ petition. As settled in Collector of Customs v. Sheikh Spinning Mills (1999 SCMR 1402) and Premier Systems (2022 SCMR 1978), allegations of procedural defect, ex-parte order, or lack of notice under Section 122(9) fall squarely within the remedial jurisdiction of the Commissioner (Appeals) and ATIR, unless the order is completely coram non judice or passed under an ultra vires law.
 """
 
 def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
@@ -314,6 +317,12 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
     if any(k in text_lower or k in query_lower for k in ["fio 2001", "financial institutions (recovery", "section 10", "leave to defend", "banking court", "recovery of finances"]):
         if ("section 10" in text_lower or "leave to defend" in text_lower or "banking court" in text_lower) and re.search(r'(?:subsections?\s*\(?(?:3|4|5)\)?\s*(?:is|are)\s*(?:directory|not\s+mandatory|curable|discretionary)|grant(?:ed|ing)?\s+conditional\s+leave\s+(?:on|upon)\s+deposit\s+of\s+security\s+(?:despite|notwithstanding)\s+(?:non-compliance|failure\s+to\s+comply))', text_lower):
             errors.append("Erroneously stating that Section 10(3)-(5) FIO 2001 requirements are directory or that the Banking Court has jurisdiction to grant conditional leave despite non-compliance (Controlling law under Apollo Textile Mills PLD 2012 SC 268 and Tri-Star Shipping 2015 SCMR 1060: compliance with Section 10(3)-(5) is strictly mandatory; failure to provide an itemized statement of accounts or formulated dispute points is fatal, and the Banking Court has no jurisdiction to grant conditional leave on deposit of security and must reject the leave application and pass a decree under Section 10(11)).")
+
+    # Rule 16: Tax Appellate Hierarchy & Article 199 Writ Bar (Collector of Customs 1999 SCMR 1402 / Premier Systems 2022 SCMR 1978)
+    if any(k in text_lower or k in query_lower for k in ["income tax", "ito 2001", "customs", "tax assessment", "section 122", "section 127", "commissioner inland revenue", "commissioner (appeals)", "atir", "sales tax"]):
+        if ("article 199" in text_lower or "writ petition" in text_lower or "high court" in text_lower) and any(k in text_lower for k in ["natural justice", "notice", "122(9)", "ex-parte", "audi alteram"]):
+            if re.search(r'(?:natural justice|lack of notice|122\(9\)|ex-parte|audi alteram partem).*(?:automatically\s+(?:bypasses|dispenses with|overrides|allows)|directly\s+(?:maintainable|entitles?|approache?s?)\s+(?:a\s+)?(?:writ|article 199)|writ\s+lies?\s+(?:directly\s+)?without\s+(?:exhausting|filing|availing)\s+(?:an?\s+)?(?:appeal|statutory\s+remedy|section 127)|exempt\s+from\s+(?:exhausting|availing)\s+(?:the\s+)?(?:statutory\s+remedy|appeal))', text_lower):
+                errors.append("Erroneously asserting that natural justice defects, lack of Section 122(9) notice, or ex-parte tax assessment automatically bypass the statutory tax appellate hierarchy under Section 127 ITO 2001 (Controlling law under Collector of Customs v. Sheikh Spinning Mills 1999 SCMR 1402, Hamdard Dawakhana PLD 1992 SC 847, and Premier Systems 2022 SCMR 1978: statutory appeal under Section 127 before Commissioner Appeals and ATIR is an adequate alternate remedy under Article 199; procedural defects and natural justice grievances fall squarely within the appellate hierarchy's competence and cannot bypass statutory remedies unless the action is completely coram non judice or passed under an ultra vires law).")
 
     return errors
 

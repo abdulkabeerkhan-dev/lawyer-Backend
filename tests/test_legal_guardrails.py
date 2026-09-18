@@ -192,6 +192,21 @@ class TestLegalGuardrails(unittest.TestCase):
         clean_errors = lint_legal_output(good_output, query_context="FIO 2001 Section 10 leave to defend")
         self.assertFalse(any("Section 10(3)-(5)" in e for e in clean_errors))
 
+    def test_tax_writ_guardrail(self):
+        # Assert Rule 14 directive text in SYSTEM_LEGAL_DIRECTIVE
+        self.assertIn("Under Article 199 of the Constitution of Pakistan, the presence of an adequate alternate statutory remedy (such as appeals under Section 127 Income Tax Ordinance 2001) generally bars the entertainment of a writ petition", SYSTEM_LEGAL_DIRECTIVE)
+        self.assertIn("As settled in Collector of Customs v. Sheikh Spinning Mills (1999 SCMR 1402) and Premier Systems (2022 SCMR 1978), allegations of procedural defect, ex-parte order, or lack of notice under Section 122(9) fall squarely within the remedial jurisdiction of the Commissioner (Appeals) and ATIR, unless the order is completely coram non judice or passed under an ultra vires law", SYSTEM_LEGAL_DIRECTIVE)
+
+        # Assert linter intercepts assertion that natural justice defects automatically bypass tax appellate hierarchy
+        bad_output = "Where the assessing officer passed an amended assessment without notice under Section 122(9), this violation of natural justice automatically bypasses the statutory appeal under Section 127 ITO 2001 and directly entitles the taxpayer to maintain an Article 199 writ petition."
+        errors = lint_legal_output(bad_output, query_context="Income Tax Ordinance 2001 Section 122 assessment writ")
+        self.assertTrue(any("1999 SCMR 1402" in e and "Section 127 ITO 2001" in e for e in errors))
+
+        # Assert clean output passes
+        good_output = "Under Premier Systems (2022 SCMR 1978) and 1999 SCMR 1402, an ex-parte order or lack of notice under Section 122(9) must be challenged via statutory appeal under Section 127 ITO 2001 before the Commissioner (Appeals), as an Article 199 writ does not lie when an adequate alternate remedy exists."
+        clean_errors = lint_legal_output(good_output, query_context="Income Tax Ordinance 2001 Section 122 assessment writ")
+        self.assertFalse(any("1999 SCMR 1402" in e for e in clean_errors))
+
 if __name__ == '__main__':
     unittest.main()
 
