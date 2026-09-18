@@ -2745,6 +2745,9 @@ MANDATORY INSTRUCTIONS:
                 if not raw_pdf or "supabase.co" in str(raw_pdf).lower():
                     raw_pdf = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(card['case_id']))}"
                 card["pdf_url"] = raw_pdf
+                card["pdf_link"] = raw_pdf
+                card["download_url"] = raw_pdf
+                card["url"] = raw_pdf
                 card["date"] = extract_year_from_citation_or_date(card.get("date") or matched.get("year"), card.get("citation") or matched.get("citation"), card.get("case_id") or matched.get("case_id")) or "2024"
                 card["holding"] = sanitize_holding_text(card.get("holding", "") or matched.get("preview", "")) or "Holding on record."
                 card["issue"] = str(card.get("issue") or "Legal issue analyzed.").strip()
@@ -2780,6 +2783,9 @@ MANDATORY INSTRUCTIONS:
                     "outcome": determine_case_outcome(c.get("preview") or "", c.get("outcome")) or "Decided",
                     "verified_source": True,
                     "pdf_url": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('case_id') or c.get('citation') or ''))}",
+                    "pdf_link": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('case_id') or c.get('citation') or ''))}",
+                    "download_url": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('case_id') or c.get('citation') or ''))}",
+                    "url": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('case_id') or c.get('citation') or ''))}",
                     "raw_judgment_text": strip_control_characters(c.get("preview", "")),
                     "parties": c.get("parties") or extract_case_roles(c.get("preview") or "", c.get("title") or ""),
                     "operative_result": c.get("operative_result") or extract_operative_order(c.get("preview") or "") or "Order passed on merits."
@@ -2850,6 +2856,9 @@ MANDATORY INSTRUCTIONS:
                 "status": "done",
                 "result": {
                     "answer": display_answer,
+                    "response": display_answer,
+                    "model_answer": display_answer,
+                    "precedents": precedent_cards,
                     "precedent_cards": precedent_cards,
                     "additional_authorities": additional_authorities,
                     "citations": citations_payload,
@@ -3489,15 +3498,38 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                     db_job = res.data[0]
                     if db_job.get("user_id") and db_job["user_id"] != authenticated_user_id:
                         raise HTTPException(status_code=403, detail="Not authorized to access this job.")
+                    citations_list = db_job.get("citations", []) or []
+                    reconstructed_cards = []
+                    for c in citations_list:
+                        cid = c.get("case_id") or c.get("citation") or "precedent"
+                        p_url = c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(cid))}"
+                        reconstructed_cards.append({
+                            "case_name": c.get("title") or c.get("case_name") or "Reported Precedent",
+                            "case_id": cid,
+                            "citation": c.get("citation") or "Neutral Citation",
+                            "court": c.get("court") or c.get("court_name") or "High Court",
+                            "court_name": c.get("court") or c.get("court_name") or "High Court",
+                            "holding": c.get("preview") or c.get("holding") or "Holding on record.",
+                            "pdf_url": p_url,
+                            "pdf_link": p_url,
+                            "download_url": p_url,
+                            "url": p_url,
+                            "statutes_invoked": [{"name": str(s), "explanation": "Governing statutory authority"} for s in (c.get("statutes") or [])],
+                            "outcome": c.get("outcome") or "Decided",
+                            "operative_result": c.get("operative_result") or "Order passed on merits."
+                        })
                     return {
                         "status": "done",
                         "result": {
                             "answer": db_job.get("answer_text", ""),
-                            "precedent_cards": [],
+                            "response": db_job.get("answer_text", ""),
+                            "model_answer": db_job.get("answer_text", ""),
+                            "precedents": reconstructed_cards,
+                            "precedent_cards": reconstructed_cards,
                             "additional_authorities": [],
-                            "citations": db_job.get("citations", []),
+                            "citations": citations_list,
                             "query_id": str(db_job.get("id")),
-                            "mode": "simple_query",
+                            "mode": "caselaw_search",
                             "truncated": False
                         },
                         "error": None
