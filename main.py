@@ -45,6 +45,11 @@ except ImportError:
 
 load_dotenv()
 
+if sys.stdout and hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+if sys.stderr and hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+
 # SENTRY SYSTEM LOG ENGINE
 if os.environ.get("SENTRY_DSN"):
     sentry_sdk.init(
@@ -2210,7 +2215,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if len(strict_court_matches) >= 2:
                     matches_list = strict_court_matches
                 else:
-                    print(f"⚠️ Target court '{target_source}' yielded only {len(strict_court_matches)} matches. Falling back to all superior courts.", flush=True)
+                    print(f"[WARN] Target court '{target_source}' yielded only {len(strict_court_matches)} matches. Falling back to all superior courts.", flush=True)
                     matches_list = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target=None)]
             else:
                 matches_list = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target=None)]
@@ -2238,9 +2243,11 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             seen_in_query = set()
             for m in matches_list:
                 meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
-                score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
+                sim_score = float(m.get("similarity_score", 0.0) or m.get("dense_score", 0.0) or 0.0)
                 is_boosted = bool(m.get("is_boosted") if isinstance(m, dict) else False) or bool(meta.get("is_boosted"))
-                if score < 0.40 and not is_boosted: continue
+                has_rrf = bool(m.get("rrf_score"))
+                if (not is_boosted) and (not has_rrf) and sim_score < 0.40:
+                    continue
                 text_content = strip_control_characters(str(meta.get("text") or meta.get("text_preview") or ""))
                 full_text_val = str(meta.get("full_text") or meta.get("text") or "")
                 case_tit_clean = str(meta.get("title") or meta.get("case_title") or "").strip()
@@ -2312,7 +2319,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             for match in primary_matches:
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
                 case_id = str(meta.get('case_id', 'Unknown Docket'))
-                text_content = str(meta.get('text', meta.get('text_preview', ''))).strip()
+                text_content = str(meta.get('text') or meta.get('text_content') or meta.get('text_preview') or meta.get('full_text') or '').strip()
                 official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
                 neutral_cit = synthesize_canonical_citation(meta)
                 court = infer_court_from_citation(neutral_cit or official_citation, text_content, meta.get('court') or meta.get('court_name') or '')
@@ -2323,7 +2330,18 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 sections_val = meta.get("sections") or []
                 match_score = float(match.get("score", 0.0) if isinstance(match, dict) else getattr(match, "score", 0.0))
 
-                context_parts.append(f"CASE_ID: {case_id}\nCASE TITLE: {title}\nNEUTRAL CITATION: {neutral_cit}\nCOURT: {court}\nOUTCOME: {outcome_val}\nSUMMARY CONTEXT: Citation: {neutral_cit} | Deciding Court: {court} | Outcome: {outcome_val}\nSTATUTES: {', '.join(statutes_val)}\nCONTENT: {text_content}")
+                context_parts.append(
+                    f"=== RETRIEVED PRECEDENT #{len(context_parts)+1} ===\n"
+                    f"CASE_ID: {case_id}\n"
+                    f"CASE TITLE: {title}\n"
+                    f"NEUTRAL CITATION: {neutral_cit}\n"
+                    f"COURT: {court}\n"
+                    f"DECISION DATE: {year_or_date}\n"
+                    f"OUTCOME: {outcome_val}\n"
+                    f"STATUTES: {', '.join(statutes_val)}\n"
+                    f"KEY HOLDING & TEXT CONTENT:\n{text_content}\n"
+                    f"=== END PRECEDENT ==="
+                )
 
                 cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
                 cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
@@ -2345,13 +2363,11 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             for match in secondary_matches:
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
-                text_content = str(meta.get('text', meta.get('text_preview', ''))).strip()
+                text_content = str(meta.get('text') or meta.get('text_content') or meta.get('text_preview') or meta.get('full_text') or '').strip()
                 court = clean_court_name(str(meta.get('court', 'Court of Record')), title=str(meta.get('title', '')), case_id=str(meta.get('case_id', '')), text=text_content)
                 case_id = str(meta.get('case_id', ''))
                 year_or_date = extract_year_from_citation_or_date(meta.get('date') or meta.get('decision_date') or meta.get('year'), meta.get('citation') or meta.get('neutral_citation'), case_id)
-                case_id = str(meta.get('case_id', ''))
                 title = sanitize_case_title(clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Precedent on Record')) or 'Precedent on Record')))
-                official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
                 neutral_cit = synthesize_canonical_citation(meta)
                 preview_snippet = text_content[:180] + "..."
                 cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
@@ -2360,31 +2376,27 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     _seen_case_ids_global.add(cid_key)
                 aggregate_additional_authorities.append({"title": title, "citation": neutral_cit, "summary": preview_snippet})
 
-            has_high_confidence_precedent = any(
-                float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0)) >= 0.65 or
-                float(m.get("dense_score", 0.0) or 0.0) >= 0.65 or
-                float(m.get("sparse_score", 0.0) or 0.0) >= 6.0 or
-                (float(m.get("dense_score", 0.0) or 0.0) >= 0.52 and float(m.get("sparse_score", 0.0) or 0.0) >= 2.0) or
-                bool(m.get("is_boosted") if isinstance(m, dict) else False)
-                for m in primary_matches
+            # Debug logger for retrieved candidates
+            print(f"DEBUG: Retrieved {len(primary_matches)} candidates passed to LLM.", flush=True)
+            for c in primary_matches[:3]:
+                meta_c = c.get('metadata', {}) if isinstance(c, dict) else getattr(c, 'metadata', {}) or {}
+                cit_c = meta_c.get('citation') or meta_c.get('neutral_citation') or c.get('id')
+                sc_c = c.get('rrf_score') or c.get('score')
+                print(f"DEBUG TOP HIT: {cit_c} - Score: {sc_c}", flush=True)
+
+            if primary_matches:
+                header = (
+                    "=== RETRIEVED PRECEDENTS FROM VERIFIED DATABASE ===\n"
+                    f"Retrieved {len(primary_matches)} verified superior court precedent(s) for this query.\n"
+                    "MANDATORY DIRECTIVE: You MUST cite, analyze, and ground your legal reasoning in these retrieved precedents.\n"
+                    "DO NOT state that the database contains no direct precedent when precedents are provided below.\n\n"
+                )
+                return header + "\n\n".join(context_parts)
+
+            return (
+                "⚠️ No matching case law found — this is a statutory analysis, not a retrieved precedent.\n\n"
+                "No matching precedents were found in the database for this search. Do not fabricate citations -- answer strictly from settled statutory principles and explicitly state that no precedent on point was retrieved."
             )
-
-            if primary_matches and not has_high_confidence_precedent:
-                provenance_flag = (
-                    "⚠️ PROVENANCE MANDATE FOR MODEL:\n"
-                    "No matching high-confidence case law (similarity >= 0.65) was retrieved from the database on point for this query.\n"
-                    "YOU MUST INCLUDE THIS EXACT LINE AT THE VERY START OF YOUR RESPONSE:\n"
-                    "\"⚠️ No matching case law found — this is a statutory analysis, not a retrieved precedent.\"\n\n"
-                )
-                context_parts.insert(0, provenance_flag)
-
-            if not context_parts:
-                return (
-                    "⚠️ No matching case law found — this is a statutory analysis, not a retrieved precedent.\n\n"
-                    "No matching precedents were found in the database for this search. Do not fabricate citations -- answer strictly from settled statutory principles and explicitly state that no precedent on point was retrieved."
-                )
-
-            return "\n\n=========================================\n\n".join(context_parts)
 
         # ==============================================================================
         # ONE FLEXIBLE, CONVERSATIONAL SYSTEM PROMPT
@@ -2545,17 +2557,32 @@ MANDATORY INSTRUCTIONS:
 """
             combined_system_prompt = f"{combined_system_prompt}\n\n{grounding_message}"
 
-        # Deterministic Search Gatekeeper: Mandatory entrypoint guard (forces search execution if intercepted_card, citation, or search command)
+        # Deterministic Search Gatekeeper: Mandatory entrypoint guard (forces search execution if intercepted_card, citation, or legal query)
         cit_gate_match = re.search(r'\b(?:19|20)\d{2}\s*(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*\d+\b', effective_user_query, re.IGNORECASE)
-        query_lower_gate = effective_user_query.lower()
-        is_search_command = any(kw in query_lower_gate for kw in [
-            "search database", "find precedent", "check citation", "search case law", "lookup judgment",
-            "whether", "order xx", "order xxx", "cpc", "crpc", "interim relief", "prima facie",
-            "balance of convenience", "irreparable loss", "injunction", "precedent", "case law",
-            "statute", "section", "article", "bail", "plaint", "written statement", "law suit"
-        ])
+        query_lower_gate = effective_user_query.lower().strip()
+        _, was_expanded_gate = expand_legal_query_doctrinally(effective_user_query, return_flag=True)
+        is_pure_greeting = query_lower_gate in ["hi", "hello", "hey", "good morning", "good afternoon", "good evening", "thanks", "thank you", "who are you"]
+        is_search_command = (
+            not is_pure_greeting and (
+                was_expanded_gate or
+                intercepted_card is not None or
+                cit_gate_match is not None or
+                any(kw in query_lower_gate for kw in [
+                    "search database", "find precedent", "check citation", "search case law", "lookup judgment",
+                    "whether", "order xx", "order xxx", "cpc", "crpc", "interim relief", "prima facie",
+                    "balance of convenience", "irreparable loss", "injunction", "precedent", "case law",
+                    "statute", "section", "article", "bail", "plaint", "written statement", "law suit",
+                    "khula", "dower", "mehr", "marriage", "divorce", "talaq", "family", "custody",
+                    "maintenance", "guardian", "court", "judge", "suit", "petition", "appeal", "revision",
+                    "eviction", "tenant", "landlord", "rent", "cheque", "489-f", "fir", "quash", "cnsa",
+                    "can", "what", "is", "how", "does", "explain", "analyze", "rule", "ruling", "holding",
+                    "decree", "right", "liability", "damages", "limitation", "gift", "succession", "inheritance",
+                    "pre-emption", "preemption", "talb", "secp", "company", "shareholder", "director", "legal"
+                ])
+            )
+        )
 
-        if (not withhold_tools) and (intercepted_card or cit_gate_match or is_search_command) and search_call_count["n"] == 0:
+        if (not withhold_tools) and is_search_command and search_call_count["n"] == 0:
             print(f"🔒 [GATEKEEPER] Mandatory auto-executing search_case_law for query: '{effective_user_query}'", file=sys.stderr, flush=True)
             search_res = await run_case_law_search(effective_user_query)
             if grounding_message and grounding_message not in search_res:
@@ -2592,6 +2619,7 @@ MANDATORY INSTRUCTIONS:
         tools_to_pass = [] if withhold_tools else [CASE_LAW_TOOL]
 
         for round_idx in range(MAX_TOOL_ROUNDS + 1):
+            print(f"DEBUG: Calling Claude LLM (round {round_idx+1}) with {len(messages)} messages.", flush=True)
             claude_message = await safe_create_anthropic_message(
                 model=CLAUDE_MODEL,
                 max_tokens=8192,

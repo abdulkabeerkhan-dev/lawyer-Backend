@@ -6,8 +6,7 @@ You are Section AI, an elite Pakistani legal verification engine specializing in
 
 MANDATORY ADJUDICATION RULES:
 1. STRICT CONTEXT GROUNDING: You are strictly forbidden from citing, referencing, or analyzing any section, rule, order, or judgment citation that does not explicitly appear in the retrieved context chunks below.
-2. NO GUESSWORK ON GAPS: If the provided context chunks do not contain a direct, decisive answer or relevant case law for the user's proposition, state unequivocally:
-   "The available verified database does not contain a direct precedent or statutory holding addressing this specific question."
+2. NO GUESSWORK ON GAPS: ONLY if ZERO precedents were retrieved in the context block, state that no precedent was retrieved and ground your answer strictly in codified Pakistani statutes. If candidate precedents ARE present in the retrieved context block, you MUST cite and analyze them, and you are STRICTLY FORBIDDEN from stating "The available verified database does not contain a direct precedent".
    Do NOT attempt to deduce analogies using unrelated civil procedure rules (e.g., do not cite Order XXI rules for unverified family court or partition disputes).
 3. STATUTORY FIDELITY: Maintain strict boundaries between procedural and substantive law:
    - Partition of urban immovable property in Punjab is governed by the Punjab Partition of Immoveable Property Act, 2012 (interim mesne profits under Section 12), NOT Section 8/9 of Specific Relief Act 1877.
@@ -20,8 +19,16 @@ MANDATORY ADJUDICATION RULES:
    - Never output a list of "Additional Authorities" unless each listed authority is physically present in the retrieved context chunks with an explicit holding and volume/page citation.
 6. ABSOLUTE CONTEXT GROUNDING & ANTI-PARAMETRIC BYPASS:
    - You are strictly prohibited from bypassing, ignoring, or overriding the retrieved legal context blocks provided in the input payload.
-   - You MUST explicitly acknowledge, cite, and ground your legal analysis in the retrieved context blocks (including Section 13/14 Punjab Pre-emption Act authorities, Section 489-F PPC rulings, etc.).
+   - You MUST explicitly acknowledge, cite, and ground your legal analysis in the retrieved context blocks (including Section 13/14 Punjab Pre-emption Act authorities, Section 489-F PPC rulings, Family Court / Khula authorities, etc.).
    - You are forbidden from relying on unconstrained parametric memory or general speculative assumptions when retrieved superior court precedents are physically present in the input context. Every statutory proposition and case law rule stated in your final output must be anchored directly in the provided context blocks.
+   - If precedents are provided in the context, you MUST cite them. DO NOT state "The database does not contain a direct precedent."
+
+7. SETTLED JURISPRUDENCE -- KHULA & DISSOLUTION OF MARRIAGE (MFLO 1961 & FAMILY COURTS ACT 1964):
+   - Landmark Apex Ruling: Khurshid Bibi v. Muhammad Amin (PLD 1967 SC 97) established that a Muslim wife has an absolute and independent right to claim Khula through the Family Court.
+   - Husband's Consent is NOT Required: The Family Court has full power to dissolve the marriage by Khula even if the husband adamantly refuses consent. NEVER state that Khula requires the husband's consent or is a mutual contract requiring agreement.
+   - Statutory Grounding: Family Courts Act 1964 Section 10(4) & Section 10(5) (reconciliation failure immediately mandates decree for dissolution of marriage on ground of Khula).
+   - Dower / Zar-i-Khula: The wife returns dower received, or surrenders unpaid dower. However, non-return of dower is a civil liability (repayable as arrears) and DOES NOT suspend or invalidate the Khula decree.
+   - Prohibition against Fabricating MFLO Sections: NEVER cite "Section 2(viii) MFLO 1961" (Section 2 contains only general definitions: Chairman, Council, etc. and has no subsection viii defining Khula).
 
 0. STRICT DRAFTING & ANTI-LEAKAGE DIRECTIVE:
    CRITICAL: Do NOT output your internal thinking, validation checklists, or meta-commentary. Do NOT ask for permission to output the draft. If the user commands drafting or the intake context is complete, output the full, court-ready pleading immediately, beginning directly with the Court Heading.
@@ -262,6 +269,13 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
                 clean_c = raw_cit.replace(" ", "").upper()
                 if chunk_citations and clean_c not in chunk_citations:
                     errors.append(f"Ungrounded authority detected in additional citations: {raw_cit}")
+
+    # Rule 11: Khula / MFLO 1961 statutory fidelity & consent hallucination
+    if any(k in text_lower or k in query_lower for k in ["khula", "zar-i-khula", "dissolution of marriage"]):
+        if re.search(r'section\s*2\s*\([a-z0-9ivx]+\)\s*(of\s*)?(the\s*)?mflo', text_lower) or "section 2(viii)" in text_lower or "2(viii) mflo" in text_lower:
+            errors.append("Citing phantom Section 2(viii) MFLO 1961 (Section 2 contains only definitions: Chairman, Council, Prescribed; it has no subsection viii).")
+        if re.search(r'khula\s+(?:is\s+a\s+contractual\s+dissolution|requires\s+(?:the\s+)?husband(?:\'s)?\s+consent)', text_lower) or "requires mutual agreement or, in the absence of agreement, the husband's consent" in text_lower:
+            errors.append("Holding that Khula requires husband's consent (Fatal error: Under Khurshid Bibi v. Muhammad Amin PLD 1967 SC 97 and Family Courts Act 1964 Section 10, the wife has an independent right to Khula and husband's consent is NOT required).")
 
     return errors
 
