@@ -1482,6 +1482,15 @@ def synthesize_canonical_citation(record: Dict[str, Any]) -> str:
     else: abbrev = "HC"
 
     case_id = str(record.get("case_id") or record.get("id") or "").strip()
+    # Check if case_id encodes a reporter citation e.g. 2007_PLD_190, 2018_MLD_1148, 2015_SCMR_1002
+    cid_cit_m = re.match(r'^(\d{4})_([A-Za-z]+)(?:_([A-Za-z]+))?_(\d+)(?:_.*)?$', case_id)
+    if cid_cit_m:
+        yr, rep, court_tag, page = cid_cit_m.group(1), cid_cit_m.group(2).upper(), cid_cit_m.group(3), cid_cit_m.group(4)
+        if rep == "PLD":
+            c_tag = court_tag or ("Lah" if abbrev == "LHC" else ("SC" if abbrev == "SC" else ("Kar" if abbrev == "SHC" else ("Pesh" if abbrev == "PHC" else ""))))
+            return f"PLD {yr} {c_tag} {page}".strip()
+        return f"{yr} {rep} {page}"
+
     docket_match = re.search(r'\b(?:Cr\.?\s*Misc|Civil\s*Rev(?:ision)?|Civil\s*Appeal|Const\s*Pet(?:ition)?|W\.?P\.?|Cr\.?\s*A\.?|C\.?M\.?|C\.?R\.?)\s*\d+[\/\-]\d+\b', f"{raw_cit} {case_id}", flags=re.IGNORECASE)
     if docket_match:
         docket = docket_match.group(0).strip()
