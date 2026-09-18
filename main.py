@@ -95,9 +95,9 @@ async def dynamic_cors_middleware(request, call_next):
 # ENVIRONMENT CONFIGURATION
 PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
 PINECONE_INDEX_NAME = os.environ.get("PINECONE_INDEX_NAME", "legal-kb-pk-local")
-PINECONE_NAMESPACE = os.environ.get("PINECONE_NAMESPACE", "clean-v1")
-if PINECONE_NAMESPACE in ("judgments", "default", ""):
-    PINECONE_NAMESPACE = "clean-v1"
+PINECONE_NAMESPACE = os.environ.get("PINECONE_NAMESPACE", "judgments")
+if not PINECONE_NAMESPACE or PINECONE_NAMESPACE == "default":
+    PINECONE_NAMESPACE = "judgments"
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY")
 VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
