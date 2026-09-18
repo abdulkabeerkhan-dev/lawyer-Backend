@@ -103,7 +103,7 @@ VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY")
 VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
-CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
+CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-5-20250929")
 
 def get_backend_base_url() -> str:
     domain = os.environ.get("RAILWAY_PUBLIC_DOMAIN") or os.environ.get("RAILWAY_STATIC_URL") or os.environ.get("PUBLIC_DOMAIN")
@@ -361,7 +361,7 @@ async def safe_create_anthropic_message(**kwargs):
         custom_fallback = os.environ.get("ANTHROPIC_FALLBACK_MODEL", "").strip()
         if custom_fallback:
             candidate_models.append(custom_fallback)
-        for m in ["claude-3-7-sonnet-20250219", "claude-3-5-sonnet-20241022", "claude-3-5-haiku-20241022", "claude-3-haiku-20240307"]:
+        for m in ["claude-sonnet-4-5-20250929", "claude-haiku-4-5-20251001", "claude-sonnet-4-6", "claude-3-7-sonnet-20250219", "claude-3-5-sonnet-20241022"]:
             if m not in candidate_models and m != primary_model:
                 candidate_models.append(m)
 
