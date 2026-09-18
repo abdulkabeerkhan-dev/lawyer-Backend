@@ -182,17 +182,23 @@ def extract_year_num(year_val: Any, citation: str = "", doc_id: str = "") -> int
 def get_recency_weight(year_val: Any, citation: str = "", doc_id: str = "") -> float:
     """
     Temporal precedence weighting: Newer decisions prevent applying overruled
-    doctrines. Gives high priority to post-2017 decisions and solid priority
-    to post-2007 apex developments.
+    doctrines. Gives high priority to post-2017/2020/2024 decisions and solid
+    priority to post-2007 apex developments.
     """
     y = extract_year_num(year_val, citation, doc_id)
     if not y or y < 1900:
         return 1.0
+    if y >= 2024:
+        return 1.35
+    if y >= 2020:
+        return 1.28
     if y >= 2017:
-        return 1.25
-    if y >= 2007:
-        return 1.15
-    return 1.0
+        return 1.22
+    if y >= 2010:
+        return 1.12
+    if y >= 2000:
+        return 1.00
+    return 0.92
 
 
 # ---------------------------------------------------------------------------
