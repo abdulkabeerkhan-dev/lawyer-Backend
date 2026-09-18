@@ -436,6 +436,12 @@ async def safe_create_anthropic_message(**kwargs):
     call_kwargs = dict(kwargs)
     call_kwargs["model"] = primary_model
 
+    # Enforce minimum 4096 max_tokens to prevent truncation of detailed precedent cards
+    if "max_output_tokens" in call_kwargs:
+        call_kwargs["max_tokens"] = call_kwargs.pop("max_output_tokens")
+    if "max_tokens" in call_kwargs and isinstance(call_kwargs["max_tokens"], int) and call_kwargs["max_tokens"] < 4096:
+        call_kwargs["max_tokens"] = 4096
+
     try:
         return await async_anthropic_client.messages.create(**call_kwargs)
     except Exception as e:
@@ -460,8 +466,10 @@ async def safe_create_anthropic_message(**kwargs):
                 flush=True
             )
             try:
-                fallback_kwargs = dict(kwargs)
+                fallback_kwargs = dict(call_kwargs)
                 fallback_kwargs["model"] = fallback_model
+                if fallback_model in ["claude-3-haiku-20240307"] and fallback_kwargs.get("max_tokens", 0) > 4096:
+                    fallback_kwargs["max_tokens"] = 4096
                 return await async_anthropic_client.messages.create(**fallback_kwargs)
             except Exception as fallback_err:
                 fb_str = str(fallback_err)
@@ -2623,7 +2631,8 @@ MANDATORY INSTRUCTIONS:
             print(f"DEBUG: Calling Claude LLM (round {round_idx+1}) with {len(messages)} messages.", flush=True)
             claude_message = await safe_create_anthropic_message(
                 model=CLAUDE_MODEL,
-                max_tokens=8192,
+                max_tokens=4096,
+                max_output_tokens=4096,
                 system=combined_system_prompt,
                 messages=messages,
                 tools=tools_to_pass,
@@ -2683,7 +2692,7 @@ MANDATORY INSTRUCTIONS:
                     {"role": "user", "content": reflection_prompt},
                 ]
                 claude_message_ref = await safe_create_anthropic_message(
-                    model=CLAUDE_MODEL, max_tokens=8192, system=combined_system_prompt, messages=reflection_messages
+                    model=CLAUDE_MODEL, max_tokens=4096, max_output_tokens=4096, system=combined_system_prompt, messages=reflection_messages
                 )
                 raw_model_output = "".join(getattr(b, "text", "") for b in claude_message_ref.content if getattr(b, "type", None) == "text").strip()
                 is_token_truncated = (getattr(claude_message_ref, "stop_reason", None) == "max_tokens")
@@ -3558,7 +3567,8 @@ async def continue_query_answer(job_id: str, authenticated_user_id: str = Depend
 
     continuation_kwargs = {
         "model": CLAUDE_MODEL,
-        "max_tokens": 8192,
+        "max_tokens": 4096,
+        "max_output_tokens": 4096,
         "system": continue_state["system_prompt"],
         "messages": [
             {"role": "user", "content": continue_state["claude_message_content"]},

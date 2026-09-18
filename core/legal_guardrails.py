@@ -119,12 +119,15 @@ MANDATORY ADJUDICATION RULES:
    - SBLR YEAR Page
    ONLY if a judgment record does NOT contain one of these official journal citations in database metadata, fallback to docket/court format (e.g. Supreme Court — Civil Appeal No. 870 of 2012).
 
-9. HIGH COURT REPORTER VS. SUPREME COURT JURISDICTION DIRECTIVE:
+9. NARCOTICS CHAIN-OF-CUSTODY DIRECTIVE (CNSA 1997):
+   In CNSA 1997 prosecutions, safe custody and safe transmission are mandatory links. Failure to examine the Moharrir (Malkhana in-charge) or the official who transmitted samples to the Chemical Examiner breaks the chain of custody. Under Ikramullah (2015 SCMR 1002) and Imam Bakhsh (2018 SCMR 2039), this break renders the Chemical Examiner's report inadmissible, entitling the accused to an acquittal even if the chemical report is positive.
+
+10. HIGH COURT REPORTER VS. SUPREME COURT JURISDICTION DIRECTIVE:
    - Citations containing YLR, MLD, CLC, or PCrLJ are High Court decisions (Lahore, Sindh, Peshawar, Balochistan, or Islamabad High Court).
    - Only citations with SCMR or explicit PLD ... SC represent the Supreme Court of Pakistan.
    - If a citation is YLR, MLD, CLC, or PCrLJ, NEVER describe or output 'Supreme Court of Pakistan' as the deciding forum.
 
-10. BANK GUARANTEE & INJUNCTION DIRECTIVE (ORDER XXXIX CPC & AUTONOMY DOCTRINE):
+11. BANK GUARANTEE & INJUNCTION DIRECTIVE (ORDER XXXIX CPC & AUTONOMY DOCTRINE):
    - Core Autonomy Doctrine: An unconditional bank guarantee is an autonomous contract independent of the underlying agreement. Breaches of the underlying contract (e.g., delayed site handover, design approvals, alleged wrongful termination) do NOT ground an interim injunction under Order XXXIX Rules 1 & 2 CPC (2021 SCMR 1446 / 2021 SCP 3209; PLD 2003 SC 191).
    - The Two Exclusive Exceptions:
      1. Fraud of an egregious nature known to the bank (vitiating the very foundation of the transaction, such as encashment demand when underlying obligation is fully satisfied to beneficiary's own knowledge).
@@ -286,6 +289,11 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
     if any(k in text_lower or k in query_lower for k in ["pre-emption", "preemption", "talb-i-muwathibat", "informer"]):
         if ("informer" in text_lower or "informant" in text_lower) and re.search(r'(?:omission|withholding|non-production|failure\s+to\s+produce)\s+(?:of\s+)?(?:the\s+)?informer\s+is\s+(?:not\s+fatal|curable|not\s+a\s+fatal\s+defect)', text_lower):
             errors.append("Erroneously holding that non-production of the informer is not fatal (Controlling law under Supreme Court PLD 2007 SC 302 and 2011 SCMR 1062: withholding the informer from the witness box is a fatal defect resulting in dismissal of the pre-emption suit).")
+
+    # Rule 13: CNSA 1997 narcotics chain of custody / safe transmission (Ikramullah / Imam Bakhsh)
+    if any(k in text_lower or k in query_lower for k in ["cnsa", "narcotic", "charas", "heroin", "opium", "chain of custody", "malkhana", "chemical examiner"]):
+        if ("chain of custody" in text_lower or "moharrir" in text_lower or "malkhana" in text_lower or "chemical examiner" in text_lower) and re.search(r'(?:failure\s+to\s+examine|non-production\s+of)\s+(?:the\s+)?(?:moharrir|carrier|official|constable)\s+is\s+(?:not\s+fatal|curable|a\s+mere\s+irregularity)', text_lower):
+            errors.append("Erroneously stating that failure to examine the Moharrir or carrier official in CNSA prosecutions is not fatal (Controlling law under Ikramullah 2015 SCMR 1002, Imam Bakhsh 2018 SCMR 2039, and Abdul Ghani 2019 SCMR 608: failure to examine the Moharrir or transmitting official breaks the chain of custody, rendering the chemical examiner's report inadmissible and entitling the accused to acquittal).")
 
     return errors
 

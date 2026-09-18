@@ -112,7 +112,27 @@ class TestLegalGuardrails(unittest.TestCase):
         errors2 = lint_legal_output(draft_missing_affidavit)
         self.assertTrue(any("Supporting Affidavit" in e for e in errors2))
 
+    def test_narcotics_chain_of_custody_guardrail(self):
+        """
+        Test 5: Validate that lint_legal_output catches erroneous claim that
+        failure to examine the Moharrir or carrier is not fatal in CNSA prosecutions.
+        """
+        bad_narcotics_response = """
+        In this prosecution under Section 9(c) CNSA 1997, 5 kg charas was recovered.
+        Although the Moharrir of the Malkhana was not produced, failure to examine the Moharrir is not fatal
+        and is a mere irregularity cured by the positive Chemical Examiner's report.
+        """
+        query_context = "CNSA 1997 chain of custody effect of non-examination of Moharrir"
+        errors = lint_legal_output(bad_narcotics_response, query_context=query_context)
+        self.assertTrue(any("failure to examine the Moharrir" in e for e in errors), f"Failed to detect fatal Moharrir omission: {errors}")
+
+        # Assert that SYSTEM_LEGAL_DIRECTIVE contains Rule 9 verbatim
+        self.assertIn("In CNSA 1997 prosecutions, safe custody and safe transmission are mandatory links", SYSTEM_LEGAL_DIRECTIVE)
+        self.assertIn("Ikramullah (2015 SCMR 1002)", SYSTEM_LEGAL_DIRECTIVE)
+        self.assertIn("Imam Bakhsh (2018 SCMR 2039)", SYSTEM_LEGAL_DIRECTIVE)
+
 if __name__ == '__main__':
     unittest.main()
+
 
 
