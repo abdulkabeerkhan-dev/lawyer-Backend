@@ -18,6 +18,7 @@ from pinecone import Pinecone
 from anthropic import AsyncAnthropic
 from supabase import create_client, Client
 from dotenv import load_dotenv
+from hybrid_search import BM25Index, HybridSearchEngine, reciprocal_rank_fusion
 
 from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks, Request
 from fastapi.responses import StreamingResponse
@@ -138,9 +139,30 @@ pinecone_index = None
 if PINECONE_API_KEY:
     try:
         pc = Pinecone(api_key=PINECONE_API_KEY)
-        pinecone_index = pc.Index(PINECONE_INDEX_NAME)
+        pinecone_host = os.getenv("PINECONE_HOST", "https://legal-kb-pk-local-uc3rhld.svc.aped-4627-b74a.pinecone.io")
+        try:
+            pinecone_index = pc.Index(PINECONE_INDEX_NAME, host=pinecone_host)
+        except Exception:
+            pinecone_index = pc.Index(PINECONE_INDEX_NAME)
     except Exception as launch_err:
-        print(f"⚠️ Pinecone startup warning: {launch_err}", file=sys.stderr, flush=True)
+        print(f"[WARN] Pinecone startup warning: {launch_err}", file=sys.stderr, flush=True)
+
+# INITIALIZE HYBRID SEARCH ENGINE & BM25 INDEX
+BM25_INDEX_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bm25_index.pkl")
+global_bm25_index: Optional[BM25Index] = None
+def get_global_bm25_index() -> Optional[BM25Index]:
+    global global_bm25_index
+    if global_bm25_index is None and os.path.exists(BM25_INDEX_FILE):
+        try:
+            global_bm25_index = BM25Index.load(BM25_INDEX_FILE)
+            print(f"[BM25] Global BM25 index loaded: {global_bm25_index.corpus_size:,} chunks.", flush=True)
+        except Exception as bm25_err:
+            print(f"⚠️ BM25 index load error: {bm25_err}", file=sys.stderr, flush=True)
+    return global_bm25_index
+
+# Attempt initial load
+get_global_bm25_index()
+global_hybrid_engine = HybridSearchEngine(bm25_index=global_bm25_index, rrf_k=60)
 
 def extract_raw_user_query(incoming_query: str) -> str:
     """
@@ -221,9 +243,10 @@ class LegalRetrieverConfig:
         self.query_expansion = query_expansion
 
 class LegalSearchPipeline:
-    def __init__(self, vector_client=None, config: Optional[LegalRetrieverConfig] = None):
+    def __init__(self, vector_client=None, config: Optional[LegalRetrieverConfig] = None, hybrid_engine: Optional[HybridSearchEngine] = None):
         self.vector_client = vector_client
         self.config = config or LegalRetrieverConfig()
+        self.hybrid_engine = hybrid_engine or global_hybrid_engine
 
     def set_default_top_k(self, default_k: int) -> None:
         self.config.default_k = default_k
@@ -234,39 +257,15 @@ class LegalSearchPipeline:
     def enable_query_expansion(self, enabled: bool = True) -> None:
         self.config.query_expansion = enabled
 
-    def _build_metadata_filter(self, clean_query: str, target_court: Optional[str] = None) -> Dict[str, Any]:
+    def _build_metadata_filter(self, clean_query: str, target_court: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """
-        Dynamically derives hard Pinecone metadata filters based on explicit legal acts,
-        temporal boundaries, and court jurisdictions detected in the isolated query.
+        Dynamically derives Pinecone metadata filters when explicit court constraints are provided.
+        Avoids filtering on non-existent metadata fields (e.g. dataset_category) to ensure universal hybrid retrieval.
         """
         filters: Dict[str, Any] = {}
-        query_lower = (clean_query or "").lower()
-
-        # 1. Court / Superior jurisdiction filter
         if target_court:
             filters["court"] = {"$eq": target_court}
-        elif "multan" in query_lower:
-            filters["court"] = {"$in": ["Lahore High Court, Multan Bench", "LHC Multan", "Lahore High Court"]}
-        elif "supreme court" in query_lower or "scmr" in query_lower or "pld sc" in query_lower:
-            filters["court"] = {"$eq": "Supreme Court of Pakistan"}
-        elif "lahore high court" in query_lower or "lhc" in query_lower:
-            filters["court"] = {"$eq": "Lahore High Court"}
-        elif "sindh high court" in query_lower or "shc" in query_lower:
-            filters["court"] = {"$eq": "High Court of Sindh"}
-
-        # 2. Statutory metadata scoping & temporal boundaries
-        if "punjab rented premises act" in query_lower or "prpa" in query_lower or "2009" in query_lower:
-            # Do not accept pre-2009 Cantonment or Urban Rent Restriction cases as direct statutory hits for PRPA 2009
-            filters["year"] = {"$gte": 2009}
-            filters["dataset_category"] = {"$eq": "rent"}
-        elif "family court" in query_lower or "maintenance" in query_lower or "decretal amount" in query_lower:
-            filters["dataset_category"] = {"$in": ["family", "civil"]}
-        elif "partition" in query_lower or "ppipa" in query_lower:
-            filters["dataset_category"] = {"$eq": "civil"}
-        elif "indoor management" in query_lower or "companies act" in query_lower or "secp" in query_lower:
-            filters["dataset_category"] = {"$eq": "corporate"}
-
-        return filters
+        return filters if filters else None
 
     def search_precedents(
         self, 
@@ -286,62 +285,88 @@ class LegalSearchPipeline:
         ns = namespace or PINECONE_NAMESPACE
         
         pinecone_filter = filter_dict or (self._build_metadata_filter(clean_query) if clean_query else None)
-        query_params: Dict[str, Any] = {
-            "namespace": ns,
-            "vector": query_vector,
-            "top_k": k,
-            "include_metadata": True
-        }
-        if pinecone_filter:
-            query_params["filter"] = pinecone_filter
 
-        try:
-            res = target_index.query(**query_params)
-            raw_matches = res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", []) or []
-            if not raw_matches and pinecone_filter:
-                # Soft fallback if hard metadata filter yielded 0 matches
-                query_params_nofilter = dict(query_params)
-                query_params_nofilter.pop("filter", None)
-                res = target_index.query(**query_params_nofilter)
-                raw_matches = res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", []) or []
-        except Exception as e:
-            print(f"⚠️ Pinecone filter query notice ({pinecone_filter}): {e}", file=sys.stderr)
-            query_params.pop("filter", None)
-            res = target_index.query(**query_params)
-            raw_matches = res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", []) or []
+        # 1. UNIVERSAL HYBRID RETRIEVAL: Dense + BM25 with Reciprocal Rank Fusion (k=60)
+        hybrid_engine = getattr(self, "hybrid_engine", None) or global_hybrid_engine
+        if hybrid_engine and (not hybrid_engine.bm25_index or hybrid_engine.bm25_index.corpus_size == 0):
+            fresh_bm25 = get_global_bm25_index()
+            if fresh_bm25:
+                hybrid_engine.bm25_index = fresh_bm25
 
-        raw_matches = res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", []) or []
-        
-        # Step 6: Strict score filtering (0.65 minimum)
-        strict_floor = self.config.min_similarity_threshold or LegalRetrieverConfig.STRICT_THRESHOLD
+        raw_candidates = []
+        if hybrid_engine and hybrid_engine.bm25_index and hybrid_engine.bm25_index.corpus_size > 0:
+            raw_candidates = hybrid_engine.search(
+                pinecone_index=target_index,
+                query_vector=query_vector,
+                query_text=clean_query,
+                top_k=k,
+                namespace=ns,
+                pinecone_filter=pinecone_filter
+            )
+        else:
+            # Fallback to dense if BM25 index is not yet built or available
+            dense_matches = hybrid_engine._dense_search(
+                target_index, query_vector, k, ns, pinecone_filter
+            ) if hybrid_engine else []
+            for rank, (doc_id, score, meta) in enumerate(dense_matches):
+                raw_candidates.append({
+                    "id": doc_id,
+                    "score": score,
+                    "rrf_score": 1.0 / (60 + rank + 1),
+                    "similarity_score": score,
+                    "dense_score": score,
+                    "sparse_score": 0.0,
+                    "dense_rank": rank + 1,
+                    "sparse_rank": 0,
+                    "metadata": meta
+                })
+
+        # 2. GENERALIZED DYNAMIC THRESHOLDING
+        # Replaces rigid 0.65/0.50 score cutoffs with dynamic RRF candidate filtering.
+        # Preserves refusal mechanics when both dense and sparse pipelines yield near-zero overlap.
         candidates = []
-        for m in raw_matches:
+        for m in raw_candidates:
             meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
-            score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
+            dense_s = float(m.get("dense_score", 0.0) or m.get("similarity_score", 0.0))
+            sparse_s = float(m.get("sparse_score", 0.0))
+            rrf_s = float(m.get("rrf_score", 0.0) or m.get("score", 0.0))
             is_boosted = bool(m.get("is_boosted") if isinstance(m, dict) else False) or bool(meta.get("is_boosted"))
+            dense_r = int(m.get("dense_rank", 0))
+            sparse_r = int(m.get("sparse_rank", 0))
             
-            if is_boosted or score >= strict_floor:
-                hit_data = dict(m) if isinstance(m, dict) else {"id": getattr(m, "id", ""), "score": score, "metadata": meta}
-                hit_data["similarity_score"] = score
-                hit_data["fallback_entered"] = False
+            has_overlap = (dense_r > 0 and sparse_r > 0 and dense_s > 0.0 and sparse_s > 0.0)
+            
+            # Dynamic qualification logic:
+            # 1. Boosted direct citation matches (score 0.99) always qualify.
+            # 2. High dense semantic confidence (dense_score >= 0.64) always qualifies.
+            # 3. For doctrinally expanded queries (Khula, 302 PPC bail, Pre-emption, Cheques, etc.):
+            #    - Any candidate meeting the FALLBACK_FLOOR (dense_score >= 0.50) qualifies.
+            #    - Any candidate with multi-modal overlap (dense >= 0.46 and sparse >= 2.0, or sparse >= 12.0) qualifies.
+            # 4. For non-doctrinal queries:
+            #    - Strict semantic match (dense >= 0.64) or high-confidence mutual overlap (dense >= 0.58 and sparse >= 15.0).
+            #    - This ensures out-of-scope queries (like Section 9 CPC eviction) have 0 candidates and honestly refuse.
+            if is_doctrinally_expanded:
+                qualifies = (
+                    is_boosted or
+                    dense_s >= 0.50 or
+                    (has_overlap and dense_s >= 0.46 and sparse_s >= 2.0) or
+                    (has_overlap and sparse_s >= 12.0)
+                )
+            else:
+                qualifies = (
+                    is_boosted or
+                    dense_s >= 0.64 or
+                    (has_overlap and dense_s >= 0.58 and sparse_s >= 15.0)
+                )
+            
+            if qualifies:
+                hit_data = dict(m) if isinstance(m, dict) else {"id": getattr(m, "id", ""), "score": rrf_s, "metadata": meta}
+                hit_data["similarity_score"] = dense_s
+                hit_data["fallback_entered"] = (dense_s < 0.64 and not is_boosted and sparse_s < 8.0)
                 candidates.append(hit_data)
 
-        # Step 7: Secondary check -- 0.50 FALLBACK_FLOOR ONLY engages if query was doctrinally expanded!
-        if len(candidates) < 2 and is_doctrinally_expanded:
-            secondary_candidates = []
-            for m in raw_matches:
-                meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
-                score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
-                is_boosted = bool(m.get("is_boosted") if isinstance(m, dict) else False) or bool(meta.get("is_boosted"))
-                if is_boosted or score >= LegalRetrieverConfig.FALLBACK_FLOOR:
-                    hit_data = dict(m) if isinstance(m, dict) else {"id": getattr(m, "id", ""), "score": score, "metadata": meta}
-                    hit_data["similarity_score"] = score
-                    hit_data["fallback_entered"] = (score < strict_floor and not is_boosted)
-                    secondary_candidates.append(hit_data)
-            if secondary_candidates:
-                candidates = secondary_candidates
-
         return candidates
+
 
 def configure_retrieval_depth(vector_store_client=None, default_k: int = 12) -> None:
     """Configures the vector search client to fetch a higher volume of candidate 
@@ -762,66 +787,97 @@ def is_scraped_portal_junk(text: str) -> bool:
     t_lower = str(text or "").lower()
     return any(marker in t_lower for marker in junk_markers)
 
+# ---------------------------------------------------------------------------
+# UNIVERSAL PAKISTANI LAW REPORTER CITATION INTERCEPTOR
+# ---------------------------------------------------------------------------
+JOURNAL_PATTERN = r'(?:PLD|P\.L\.D\.|SCMR|S\.C\.M\.R\.|YLR|Y\.L\.R\.|CLC|C\.L\.C\.|MLD|M\.L\.D\.|PCrLJ|P\.Cr\.L\.J\.|PCRLJ|P\s*Cr\s*L\s*J|PTD|P\.T\.D\.|PLC(?:\s*\(CS\))?|P\.L\.C\.|CLD|C\.L\.D\.|PLJ|P\.L\.J\.|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)'
+COURT_QUALIFIER = r'(?:SC|S\.C\.|Supreme\s+Court|Lah|Lahore|Kar|Karachi|Sindh|Pesh|Peshawar|Qta|Quetta|Balochistan|FSC|Shariat)?'
+
 CITATION_REGEX = re.compile(
-    r'\b(?:(19\d\d|20\d\d)\s*(SCMR|PLD|CLD|PCrLJ|CLC|MLD|YLR|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*(?:SC|S\.C\.|Supreme\s+Court)?\s*(\d+)|(SCMR|PLD|CLD|PCrLJ|CLC|MLD|YLR|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s*(19\d\d|20\d\d)\s*(?:SC|S\.C\.|Supreme\s+Court)?\s*(\d+))\b',
+    rf'\b(?:'
+    rf'((?:19|20)\d{{2}})\s+({JOURNAL_PATTERN})\s*(?:{COURT_QUALIFIER})\s*(\d+)'
+    rf'|'
+    rf'({JOURNAL_PATTERN})\s*(?:{COURT_QUALIFIER})\s*((?:19|20)\d{{2}})\s+(\d+)'
+    rf'|'
+    rf'({JOURNAL_PATTERN})\s+((?:19|20)\d{{2}})\s*(?:{COURT_QUALIFIER})\s*(\d+)'
+    rf')\b',
     re.IGNORECASE
 )
 
+class InterceptedCitationResult(dict):
+    """
+    A dict subclass representing an intercepted precedent (backwards-compatible with
+    tests expecting a dict) that also exposes .all_rows when multiple citations are
+    embedded in the query.
+    """
+    def __init__(self, primary_row: Dict[str, Any], all_rows: Optional[List[Dict[str, Any]]] = None):
+        super().__init__(primary_row or {})
+        self.all_rows = all_rows or ([primary_row] if primary_row else [])
+
 def extract_and_intercept_citation(user_query: str):
     """
-    1. Deterministically intercepts exact reporter citations directly from public.full_judgments (Tier 1).
-    2. If Tier 1 returns 0 rows or query is party-only, executes standalone Tier 2 Party Name Fallback by parsing candidate party name
-       from immediate vicinity (±120 chars) of citation or prompt text, stripping preambles/statutes.
-    3. Uses safe_supabase_query to auto-retry and re-initialize connection if ConnectionTerminated or timeout occurs.
-    4. Returns (row, clean_party_name/clean_topic) for Tier 3 vector fallback if no database match is found.
+    1. Deterministically intercepts exact reporter citations (PLD, SCMR, YLR, CLC, MLD, PCrLJ, PTD, PLC, CLD, PLJ)
+       embedded inside any natural-language sentence, automatically querying Supabase full_judgments and citation_crosswalk.
+    2. If no citation matches or database returns 0 rows, executes standalone Tier 2 Party Name Fallback.
+    3. Returns (row, clean_party_name/clean_topic). When multiple citations match, row is an InterceptedCitationResult
+       exposing .all_rows.
     """
     STOPWORDS = {
         "search", "database", "find", "precedents", "precedent", "case", "law",
         "regarding", "on", "for", "lookup", "check", "in", "show", "get", "fetch",
-        "about", "with", "please", "etc", "honorable", "justice"
+        "about", "with", "please", "etc", "honorable", "justice", "tell", "me"
     }
 
     raw_q = (user_query or "").strip().strip('"' + "'")
-    match = CITATION_REGEX.search(raw_q)
-    matched_citation = None
-    normalized_citation = None
-    raw_citation = None
-    norm_cit_underscore = None
-    raw_cit_underscore = None
-
-    if match:
-        matched_citation = match.group(0)
-        g = match.groups()
+    matches = list(CITATION_REGEX.finditer(raw_q))
+    
+    parsed_citations = []
+    for m in matches:
+        g = m.groups()
         if g[0] is not None:
             year, journal, page = g[0], g[1], g[2]
-        else:
+        elif g[3] is not None:
             journal, year, page = g[3], g[4], g[5]
+        else:
+            journal, year, page = g[6], g[7], g[8]
 
-        normalized_citation = f"{year} {journal.upper()} {page}"
-        raw_citation = f"{year} {journal} {page}"
-        norm_cit_underscore = f"{year}_{journal.upper()}_{page}"
-        raw_cit_underscore = f"{year}_{journal}_{page}"
+        clean_j = re.sub(r'[\.\s]+', '', journal).upper()
+        if 'PLC' in clean_j and 'CS' in clean_j:
+            clean_j = 'PLC (CS)'
+        elif clean_j == 'PCRLJ':
+            clean_j = 'PCrLJ'
 
-        start, end = match.span()
-        trailing_window = raw_q[end:end + 120]
+        parsed_citations.append({
+            "raw": m.group(0),
+            "normalized": f"{year} {clean_j} {page}",
+            "raw_spaced": f"{year} {journal} {page}",
+            "norm_underscore": f"{year}_{clean_j}_{page}",
+            "raw_underscore": f"{year}_{journal}_{page}",
+            "year": str(year),
+            "journal": clean_j,
+            "page": str(page),
+            "span": m.span()
+        })
+
+    candidate_party_name = ""
+    if parsed_citations:
+        first_span = parsed_citations[0]["span"]
+        trailing_window = raw_q[first_span[1]:first_span[1] + 120]
         trailing_clean = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|PPC|QSO|PLD|SCMR|PCrLJ|What you know|Answer style|===|SYSTEM', trailing_window, flags=re.IGNORECASE)[0]
-        
         vs_split = re.split(r'\s+(?:versus|vs\.?|v\.)\s+', trailing_clean, flags=re.IGNORECASE)
         part_to_parse = vs_split[0] if len(vs_split) == 2 else trailing_clean
-
         words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', part_to_parse).split()]
         words = [w for w in words if w.lower() not in STOPWORDS]
         candidate_party_name = " ".join(words[:6]).strip()
 
         if len(candidate_party_name) < 3:
-            leading_window = raw_q[max(0, start - 80):start]
+            leading_window = raw_q[max(0, first_span[0] - 80):first_span[0]]
             leading_clean = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|PPC|QSO|PLD|SCMR|PCrLJ|What you know|Answer style|===|SYSTEM', leading_window, flags=re.IGNORECASE)[-1]
             leading_words = [w.strip() for w in re.sub(r'["\'\(\)\[\]\,\.\:\;\?\!\/]', ' ', leading_clean).split()]
             leading_words = [w for w in leading_words if w.lower() not in STOPWORDS]
             if leading_words:
                 candidate_party_name = " ".join(leading_words[-4:]).strip()
     else:
-        # No citation numbers found -- parse party name directly from entire query
         clean_text = CITATION_REGEX.sub(' ', raw_q)
         clean_text = re.split(r'[\(\[\{\n\r]|Code of|CrPC|CPC|PPC|QSO|What you know|Answer style|===|SYSTEM', clean_text, flags=re.IGNORECASE)[0]
         vs_split = re.split(r'\s+(?:versus|vs\.?|v\.)\s+', clean_text, flags=re.IGNORECASE)
@@ -838,48 +894,57 @@ def extract_and_intercept_citation(user_query: str):
     }
     is_legal_topic = any(w.lower() in LEGAL_QUERY_WORDS for w in candidate_party_name.split())
     has_vs_party = any(v in raw_q.lower() for v in [" v.", " v ", " vs.", " vs ", " versus "])
-
     extracted_topic = " ".join(CITATION_REGEX.sub(' ', raw_q).split()).strip(" ,.-")
-    if is_legal_topic and not has_vs_party:
-        clean_party_name = ""
-    else:
-        clean_party_name = candidate_party_name if len(candidate_party_name) >= 3 else ""
+    clean_party_name = "" if (is_legal_topic and not has_vs_party) else (candidate_party_name if len(candidate_party_name) >= 3 else "")
 
-    print(f"--> [DEBUG] Original Query Snippet: '{raw_q[:120]}'", flush=True)
-    print(f"--> [DEBUG] Matched Citation: '{matched_citation or 'None'}'", flush=True)
-    print(f"--> [DEBUG] Extracted Party: '{clean_party_name or 'None'}'", flush=True)
-
-    row = None
+    found_rows: List[Dict[str, Any]] = []
 
     def _execute_tier_queries():
-        nonlocal row
+        nonlocal found_rows
         if not supabase:
             init_supabase_client()
         if not supabase:
             return None
 
-        # Step 1: Tier 1 - Exact Citation Equality
-        res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", norm_cit_underscore).limit(1).execute()
-        if not res_supa.data and raw_cit_underscore != norm_cit_underscore:
-            res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", raw_cit_underscore).limit(1).execute()
-        if not res_supa.data:
-            res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("neutral_citation", normalized_citation).limit(1).execute()
-        if not res_supa.data and raw_citation != normalized_citation:
-            res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("neutral_citation", raw_citation).limit(1).execute()
+        seen_row_ids = set()
 
-        # Step 1.5: Citation crosswalk lookup fallback
-        if not res_supa.data:
-            try:
-                res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{normalized_citation}%").limit(1).execute()
-                if res_cw and res_cw.data:
-                    fj = res_cw.data[0].get("full_judgments")
-                    if fj:
-                        res_supa.data = [fj]
-            except Exception:
-                pass
+        # Step 1: Tier 1 - Query each detected citation across full_judgments & crosswalk
+        for cit_info in parsed_citations:
+            norm_u = cit_info["norm_underscore"]
+            raw_u = cit_info["raw_underscore"]
+            norm_s = cit_info["normalized"]
+            raw_s = cit_info["raw_spaced"]
 
-        # Step 2: Tier 2 - Standalone Party Name Fallback (Runs if Tier 1 returned None)
-        if not res_supa.data and clean_party_name:
+            # Exact equality on case_id / neutral_citation
+            res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", norm_u).limit(1).execute()
+            if not res_supa.data and raw_u != norm_u:
+                res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", raw_u).limit(1).execute()
+            if not res_supa.data:
+                res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("neutral_citation", norm_s).limit(1).execute()
+            if not res_supa.data and raw_s != norm_s:
+                res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("neutral_citation", raw_s).limit(1).execute()
+
+            # Crosswalk lookup fallback
+            if not res_supa.data:
+                try:
+                    res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{norm_s}%").limit(2).execute()
+                    if res_cw and res_cw.data:
+                        for cw_item in res_cw.data:
+                            fj = cw_item.get("full_judgments")
+                            if fj and fj.get("id") not in seen_row_ids:
+                                seen_row_ids.add(fj.get("id"))
+                                found_rows.append(fj)
+                except Exception:
+                    pass
+
+            if res_supa and res_supa.data:
+                for r in res_supa.data:
+                    if r.get("id") not in seen_row_ids:
+                        seen_row_ids.add(r.get("id"))
+                        found_rows.append(r)
+
+        # Step 2: Tier 2 - Standalone Party Name Fallback (if Tier 1 yielded 0 rows)
+        if not found_rows and clean_party_name:
             try:
                 res_party = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").ilike("case_title", f"%{clean_party_name}%").limit(5).execute()
                 if not res_party or not res_party.data:
@@ -895,26 +960,26 @@ def extract_and_intercept_citation(user_query: str):
                         or any(j in str(r.get("case_id") or r.get("neutral_citation") or "").upper() for j in ["SCMR", "PLD"])
                     ]
                     winning_row = sc_rows[0] if sc_rows else party_rows[0]
-
                     full_row_res = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("id", winning_row.get("id")).limit(1).execute()
-                    if full_row_res and full_row_res.data:
-                        res_supa.data = [full_row_res.data[0]]
-                    else:
-                        res_supa.data = [winning_row]
+                    winning_full = full_row_res.data[0] if (full_row_res and full_row_res.data) else winning_row
+                    found_rows.append(winning_full)
             except Exception as party_err:
                 print(f"⚠️ Tier 2 Standalone party fallback error: {party_err}", file=sys.stderr, flush=True)
 
-        return res_supa.data[0] if (res_supa and res_supa.data) else None
+        return found_rows
 
     try:
-        row = safe_supabase_query(_execute_tier_queries)
+        safe_supabase_query(_execute_tier_queries)
     except Exception as err:
-        print(f"⚠️ Direct citation gatekeeper error: {err}", file=sys.stderr, flush=True)
+        print(f"⚠️ Direct citation gatekeeper notice: {err}", file=sys.stderr, flush=True)
 
-    if row:
-        return row, ""
+    if found_rows:
+        primary_row = found_rows[0]
+        result = InterceptedCitationResult(primary_row, all_rows=found_rows)
+        return result, ""
     else:
         return None, (extracted_topic if (is_legal_topic and not has_vs_party) else clean_party_name)
+
 
 def clean_markdown_formatting(text: str) -> str:
     if not text:
@@ -1945,13 +2010,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             target_source = None
 
             # Direct Reporter Citation Pattern Extract & Supreme Court Target Enforcement
-            cit_match = re.search(
-                r'\b((?:19|20)\d{2}\s+(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+)\b',
-                search_query,
-                re.IGNORECASE
-            )
+            cit_match = CITATION_REGEX.search(search_query)
             if cit_match:
-                extracted_cit = cit_match.group(1).strip()
+                extracted_cit = cit_match.group(0).strip()
                 if any(sc_kw in extracted_cit.upper() for sc_kw in ["SCMR", "PLD SC"]):
                     target_source = "Supreme Court of Pakistan"
             elif any(sc_kw in sq_lower for sc_kw in ["scmr", "pld sc", "supreme court", "scp"]):
@@ -1984,11 +2045,11 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             boosted_matches = []
             try:
                 intercepted_row, clean_topic_extracted = extract_and_intercept_citation(search_query)
-                rows = [intercepted_row] if intercepted_row else []
+                rows = getattr(intercepted_row, "all_rows", [intercepted_row] if intercepted_row else [])
                 
                 # Try citation_crosswalk table safely if full_judgments had no direct hits
                 if not rows and cit_match:
-                    extracted_cit = cit_match.group(1).strip()
+                    extracted_cit = cit_match.group(0).strip()
                     norm_cit_space = re.sub(r'\s+', ' ', extracted_cit)
                     try:
                         res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{norm_cit_space}%").limit(3).execute()
@@ -2076,7 +2137,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             embedding_query = search_query
             topic_query_clean = ""
             if cit_match:
-                topic_query = re.sub(r'\b(?:19|20)\d{2}\s+(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+\b', '', search_query, flags=re.IGNORECASE).strip()
+                topic_query = CITATION_REGEX.sub('', search_query).strip()
                 topic_query_clean = re.sub(r'^(?:search database for|find|lookup|case law search|precedents? found)\s*', '', topic_query, flags=re.IGNORECASE).strip()
                 if len(topic_query) >= 10:
                     embedding_query = topic_query
@@ -2301,6 +2362,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             has_high_confidence_precedent = any(
                 float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0)) >= 0.65 or
+                float(m.get("dense_score", 0.0) or 0.0) >= 0.65 or
+                float(m.get("sparse_score", 0.0) or 0.0) >= 6.0 or
+                (float(m.get("dense_score", 0.0) or 0.0) >= 0.52 and float(m.get("sparse_score", 0.0) or 0.0) >= 2.0) or
                 bool(m.get("is_boosted") if isinstance(m, dict) else False)
                 for m in primary_matches
             )

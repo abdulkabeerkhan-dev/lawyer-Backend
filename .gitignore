@@ -33,3 +33,13 @@ datasets/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Scratch and ad-hoc debug files
+scratch/
+check_syntax.py
+check_taha.py
+debug_garbled.py
+test_garbled.py
+judgments_ids_cache.json
+pdf_occurrences.txt
+routes_found.txt

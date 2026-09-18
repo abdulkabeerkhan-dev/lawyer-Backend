@@ -18,3 +18,4 @@ pypdf
 pdfplumber
 pdfminer.six
 pillow
+rank-bm25
