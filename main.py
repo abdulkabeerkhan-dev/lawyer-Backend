@@ -3386,14 +3386,26 @@ def parse_date_to_iso(date_str: Optional[str]) -> Optional[str]:
 async def list_associates(admin_id: str = Depends(verify_admin_role)):
     if not supabase: raise HTTPException(status_code=503, detail="Database offline.")
     try:
-        res = supabase.table("users").select("*").order("full_name").execute()
-        users_list = res.data or []
-        
-        req_res = supabase.table("access_requests").select("*").order("created_at", desc=True).execute()
-        req_list = req_res.data or []
+        users_list = []
+        try:
+            res = safe_supabase_query(lambda: supabase.table("users").select("*").execute())
+            users_list = res.data or []
+        except Exception as u_err:
+            print(f"⚠️ users fetch notice: {u_err}", file=sys.stderr)
 
-        queries_res = supabase.table("queries").select("user_id, created_at").execute()
-        queries_list = queries_res.data or []
+        req_list = []
+        try:
+            req_res = safe_supabase_query(lambda: supabase.table("access_requests").select("*").execute())
+            req_list = req_res.data or []
+        except Exception as req_err:
+            print(f"⚠️ access_requests fetch notice: {req_err}", file=sys.stderr)
+
+        queries_list = []
+        try:
+            queries_res = safe_supabase_query(lambda: supabase.table("queries").select("user_id, created_at").execute())
+            queries_list = queries_res.data or []
+        except Exception as q_err:
+            print(f"⚠️ queries fetch notice: {q_err}", file=sys.stderr)
 
         user_stats = {}
         for q in queries_list:
