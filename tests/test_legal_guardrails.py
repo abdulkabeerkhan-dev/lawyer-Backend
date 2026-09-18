@@ -176,6 +176,22 @@ class TestLegalGuardrails(unittest.TestCase):
         self.assertNotIn("Citation Name", clean["operative_result"])
         self.assertNotIn("LAHORE-HIGH-COURT", str(clean))
 
+    def test_fio_2001_section10_guardrail(self):
+        # Assert Rule 13 directive text in SYSTEM_LEGAL_DIRECTIVE
+        self.assertIn("Under Section 10 of the Financial Institutions (Recovery of Finances) Ordinance 2001, compliance with subsections (3), (4), and (5) is mandatory", SYSTEM_LEGAL_DIRECTIVE)
+        self.assertIn("As held in Apollo Textile Mills (PLD 2012 SC 268) and Tri-Star Shipping (2015 SCMR 1060), failure to provide a specific statement of accounts or formulated dispute points is fatal", SYSTEM_LEGAL_DIRECTIVE)
+        self.assertIn("The Banking Court has no jurisdiction to grant conditional leave on deposit of security and must reject the leave application and pass a decree under Section 10(11)", SYSTEM_LEGAL_DIRECTIVE)
+
+        # Assert linter intercepts false claims that Section 10(3)-(5) is directory
+        bad_output = "In a suit under FIO 2001, the requirements of section 10 subsections (3), (4), and (5) are directory and the court can grant conditional leave on deposit of security despite non-compliance."
+        errors = lint_legal_output(bad_output, query_context="FIO 2001 Section 10 leave to defend")
+        self.assertTrue(any("Apollo Textile Mills" in e and "Section 10(3)-(5)" in e for e in errors))
+
+        # Assert clean output passes
+        good_output = "Under Section 10 FIO 2001 and Apollo Textile Mills (PLD 2012 SC 268), compliance with subsections (3), (4), and (5) is mandatory; non-compliance mandates rejection and a decree under Section 10(11)."
+        clean_errors = lint_legal_output(good_output, query_context="FIO 2001 Section 10 leave to defend")
+        self.assertFalse(any("Section 10(3)-(5)" in e for e in clean_errors))
+
 if __name__ == '__main__':
     unittest.main()
 

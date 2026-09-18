@@ -141,6 +141,9 @@ MANDATORY ADJUDICATION RULES:
        - Plenary Civil Suit before the Senior Civil Judge under Section 9 CPC, OR
        - Application under Section 41 read with Second Schedule of the Arbitration Act 1940 (or Section 11 Recognition & Enforcement Act 2011 if international) before the designated civil court having jurisdiction if contract contains an arbitration clause.
    - Civil Court Subject-Matter Jurisdiction: The Civil Court HAS Section 9 subject-matter jurisdiction over bank guarantee suits, but must refuse Order XXXIX interim injunctions on substantive legal grounds unless the strict fraud / irretrievable injustice exceptions are proven with unimpeachable evidence.
+
+13. COMMERCIAL & BANKING LAW / FIO 2001 SECTION 10 DIRECTIVE:
+    Under Section 10 of the Financial Institutions (Recovery of Finances) Ordinance 2001, compliance with subsections (3), (4), and (5) is mandatory. As held in Apollo Textile Mills (PLD 2012 SC 268) and Tri-Star Shipping (2015 SCMR 1060), failure to provide a specific statement of accounts or formulated dispute points is fatal. The Banking Court has no jurisdiction to grant conditional leave on deposit of security and must reject the leave application and pass a decree under Section 10(11).
 """
 
 def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
@@ -306,6 +309,11 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
             errors.append("Citing Section 34 CPC in decree execution/maintenance (Section 34 CPC deals with interest on commercial/civil decrees, not execution or maintenance debt).")
         if re.search(r'article\s*109\b', text_lower) and any(kw in text_lower for kw in ["execution", "maintenance", "family court", "arrest", "civil prison"]):
             errors.append("Citing Article 109 Limitation Act in decree execution/maintenance (Article 109 deals strictly with profits of immovable property/mesne profits; execution of decrees is governed by Article 181/182 Limitation Act / Section 48 CPC).")
+
+    # Rule 15: FIO 2001 Section 10 Leave to Defend (Apollo Textile Mills / Tri-Star Shipping)
+    if any(k in text_lower or k in query_lower for k in ["fio 2001", "financial institutions (recovery", "section 10", "leave to defend", "banking court", "recovery of finances"]):
+        if ("section 10" in text_lower or "leave to defend" in text_lower or "banking court" in text_lower) and re.search(r'(?:subsections?\s*\(?(?:3|4|5)\)?\s*(?:is|are)\s*(?:directory|not\s+mandatory|curable|discretionary)|grant(?:ed|ing)?\s+conditional\s+leave\s+(?:on|upon)\s+deposit\s+of\s+security\s+(?:despite|notwithstanding)\s+(?:non-compliance|failure\s+to\s+comply))', text_lower):
+            errors.append("Erroneously stating that Section 10(3)-(5) FIO 2001 requirements are directory or that the Banking Court has jurisdiction to grant conditional leave despite non-compliance (Controlling law under Apollo Textile Mills PLD 2012 SC 268 and Tri-Star Shipping 2015 SCMR 1060: compliance with Section 10(3)-(5) is strictly mandatory; failure to provide an itemized statement of accounts or formulated dispute points is fatal, and the Banking Court has no jurisdiction to grant conditional leave on deposit of security and must reject the leave application and pass a decree under Section 10(11)).")
 
     return errors
 
