@@ -716,27 +716,42 @@ def clean_case_title(raw_title: str) -> str:
     if not raw_title:
         return "Reported Precedent"
         
-    t = raw_title.strip()
+    t = str(raw_title).strip()
     t = repair_ocr_words(t)
 
-    # 1. Truncate at bench/judge or advocate separator or court tag
+    # 1. Strip Citation Name, Case Description, Bookmark prefixes
+    t = re.sub(r'^(?:Citation\s*Name|Case\s*Description|Bookmark\s*this\s*case)\s*:?\s*', '', t, flags=re.IGNORECASE).strip()
+
+    # 2. Strip leading reporter citations (e.g. "PLD 2007 Lah 190", "2009 MLD 1204", "339\t2021 SCMR 2092\t")
+    t = re.sub(r'^(?:\d+[\s\t]+)?(?:(?:19|20)\d{2}\s+[A-Za-z\s\t]+\s+\d+|(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC|PLJ|NLR)\s+(?:19|20)\d{2}(?:\s+[A-Za-z]+)?\s+\d+)\s*', '', t, flags=re.IGNORECASE).strip()
+
+    # 3. Strip portal court tags (e.g. "LAHORE-HIGH-COURT", "SUPREME-COURT-OF-PAKISTAN")
+    t = re.sub(r'^[A-Z\-]+(?:HIGH-COURT|COURT)(?:-[A-Z]+)*\s*', '', t, flags=re.IGNORECASE).strip()
+
+    # 4. Truncate at bench/judge or advocate separator or court tag
     if " - " in t:
         t = t.split(" - ")[0].strip()
     t = re.sub(r'-\s*(?:Honorable|Before|Advocate|Justice|[A-Z\-]+HIGH-COURT|[A-Z\-]+COURT).*$', '', t, flags=re.IGNORECASE).strip()
+    t = re.sub(r'\s+Before\s*:?.*$', '', t, flags=re.IGNORECASE).strip()
 
-    # 2. Strip leading reporter preambles (e.g. "Y L R Lahore Muhammad Khalid Alvi, J ")
+    # 5. Strip leading reporter preambles (e.g. "Y L R Lahore Muhammad Khalid Alvi, J ")
     t = re.sub(r'^(?:Y\s*L\s*R|P\s*L\s*D|S\s*C\s*M\s*R).*?(?:J\b|CJ\b)\s*', '', t, flags=re.IGNORECASE).strip()
 
-    # 3. Strip leading scraper tabs, page numbers and citations (e.g. "339\t2021 SCMR 2092\t", "587 2006 Ylr 1728 ")
+    # 6. Strip leading scraper tabs, page numbers and citations (e.g. "339\t2021 SCMR 2092\t", "587 2006 Ylr 1728 ")
     t = re.sub(r'^(?:\d+[\s\t]+)?(?:\d{4}[\s\t]+[A-Za-z\s\t]+[\s\t]+\d+[\s\t]+)?', '', t).strip()
 
-    # 4. Repair pass after preamble stripping
+    # 7. Strip Side Appellant / Side Petitioner prefixes
+    t = re.sub(r'^Side\s+(?:Appellant|Opponent|Respondent|Petitioner|Defendant|Plaintiff)\s*:?\s*', '', t, flags=re.IGNORECASE).strip()
+
+    # 8. Repair pass after preamble stripping
     t = repair_ocr_words(t)
     
     # Split into initiator and defender on versus / vs / v.
     m = re.split(r'\s+(?:versus|vs\.?|v\.)\s+', t, flags=re.IGNORECASE)
     if len(m) == 2:
-        p1, p2 = repair_ocr_words(m[0].strip()), repair_ocr_words(m[1].strip())
+        p1 = re.sub(r'^Side\s+(?:Appellant|Petitioner|Applicant)\s*:?\s*', '', m[0].strip(), flags=re.IGNORECASE)
+        p2 = re.sub(r'^Side\s+(?:Respondent|Opponent|Defendant)\s*:?\s*', '', m[1].strip(), flags=re.IGNORECASE)
+        p1, p2 = repair_ocr_words(p1), repair_ocr_words(p2)
         
         # Capitalize if party contains ALL-CAPS words
         if any(w.isupper() and len(w) > 1 for w in p1.split()):
@@ -760,19 +775,21 @@ def clean_case_title(raw_title: str) -> str:
             t = t.title()
         t = re.sub(r'\betc\b', 'Etc', t, flags=re.IGNORECASE)
 
-    # 5. Clean up extra whitespace
+    # 9. Clean up extra whitespace
     t = repair_ocr_words(t)
     return t
 
 def clean_precedent_title(title: str, fallback_citation: str = "", full_text: str = "", neutral_cit: str = "") -> str:
     fallback = fallback_citation or neutral_cit or ""
-    raw = (title or "").strip()
+    raw = re.sub(r'^(?:Citation\s*Name|Case\s*Description|Bookmark\s*this\s*case)\s*:?\s*', '', str(title or "").strip(), flags=re.IGNORECASE)
     cleaned = clean_case_title(raw)
-    if cleaned and cleaned != "v." and not cleaned.startswith("v. ") and len(cleaned) >= 5:
+    if cleaned and cleaned != "v." and not cleaned.startswith("v. ") and len(cleaned) >= 5 and "citation name" not in cleaned.lower():
         return cleaned
 
     if full_text:
         head = full_text[:600]
+        head = re.sub(r'^(?:Citation\s*Name|Case\s*Description|Bookmark\s*this\s*case)\s*:?\s*', '', head, flags=re.IGNORECASE)
+        head = re.sub(r'^[A-Z\-]+(?:HIGH-COURT|COURT)(?:-[A-Z]+)*\s*', '', head, flags=re.IGNORECASE)
         m = re.search(r'([A-Z\s\.\,\(\)]{3,40}?)\s+(?:Versus|VS\.?|V\.)\s+([A-Z\s\.\,\(\)]{3,40}?)(?=\r?\n|\.|;|$)', head, re.IGNORECASE)
         if m:
             p1 = " ".join(m.group(1).split()).strip().title()
@@ -787,7 +804,8 @@ def clean_precedent_title(title: str, fallback_citation: str = "", full_text: st
             t = t.replace("v.", "").replace("v. ", "").strip()
             return f"State v. {t}"
 
-    return f"Precedent {fallback}".strip() or "Untitled Case"
+    clean_fallback = re.sub(r'^(?:Citation\s*Name|Case\s*Description|Bookmark\s*this\s*case)\s*:?\s*', '', fallback, flags=re.IGNORECASE).strip()
+    return f"Precedent {clean_fallback}".strip() or "Untitled Case"
 
 def sanitize_case_title(raw_title: str, full_text: str = "", neutral_cit: str = "") -> str:
     return clean_precedent_title(title=raw_title, fallback_citation=neutral_cit, full_text=full_text, neutral_cit=neutral_cit)
@@ -1188,8 +1206,21 @@ def extract_case_roles(raw_text: str, fallback_title: str = "") -> dict:
     else:
         roles["initiator_role"] = "Petitioner"
 
+    # If a clean case title is provided, split it directly to get perfect party names
+    if fallback_title and "citation name" not in fallback_title.lower() and "untitled" not in fallback_title.lower():
+        fb_clean = sanitize_case_title(fallback_title)
+        vs_fb = re.split(r'\s+(?:v\.|versus)\s+', fb_clean, maxsplit=1, flags=re.IGNORECASE)
+        if len(vs_fb) == 2 and len(vs_fb[0].strip()) > 1 and len(vs_fb[1].strip()) > 1:
+            roles["initiator"] = vs_fb[0].strip().title()
+            roles["defender"] = vs_fb[1].strip().title()
+            return roles
+
     try:
         header = (raw_text or "")[:1500]
+        # Strip Citation Name and portal tags from header before parsing roles
+        header = re.sub(r'^(?:Citation\s*Name|Case\s*Description|Bookmark\s*this\s*case)\s*:?\s*', '', header, flags=re.IGNORECASE).strip()
+        header = re.sub(r'^[A-Z\-]+(?:HIGH-COURT|COURT)(?:-[A-Z]+)*\s*', '', header, flags=re.IGNORECASE).strip()
+        header = re.sub(r'^(?:(?:19|20)\d{2}\s+[A-Za-z\s\t]+\s+\d+|(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC|PLJ|NLR)\s+(?:19|20)\d{2}(?:\s+[A-Za-z]+)?\s+\d+)\s*', '', header, flags=re.IGNORECASE).strip()
         
         # Pattern: [Name] ... (Petitioner/Appellant/Applicant) Versus [Name] ... (Respondent/Defendant/State)
         vs_split = re.split(r'\b(?:Versus|VS\.?|V\.)\b', header, maxsplit=1, flags=re.IGNORECASE)
@@ -1198,13 +1229,13 @@ def extract_case_roles(raw_text: str, fallback_title: str = "") -> dict:
             left, right = vs_split[0], vs_split[1]
             
             # Clean Initiator Name
-            left_clean = re.sub(r'(?i)\b(?:Before|Justice|Mr\.|Messrs|J\.|Petitioners?|Appellants?|Applicants?|Plaintiffs?)\b', '', left)
+            left_clean = re.sub(r'(?i)\b(?:Before|Justice|Mr\.|Messrs|J\.|Petitioners?|Appellants?|Applicants?|Plaintiffs?|Side\s+(?:Appellant|Petitioner|Applicant))\b', '', left)
             left_clean = re.sub(r'[^a-zA-Z\s\.\,\(\)]', ' ', left_clean)
             clean_init = " ".join(left_clean.split())
             roles["initiator"] = clean_init[:60].strip().title() if clean_init else ""
 
             # Clean Defender Name
-            right_clean = re.sub(r'(?i)\b(?:Respondents?|Defendants?|through\s+.*|Advocate.*)\b', '', right)
+            right_clean = re.sub(r'(?i)\b(?:Respondents?|Defendants?|through\s+.*|Advocate.*|Side\s+(?:Respondent|Opponent|Defendant))\b', '', right)
             right_clean = re.sub(r'[^a-zA-Z\s\.\,\(\)]', ' ', right_clean)
             clean_def = " ".join(right_clean.split())
             roles["defender"] = clean_def[:60].strip().title() if clean_def else ""
@@ -1293,6 +1324,8 @@ def extract_year_from_citation_or_date(date_val: Any, citation_val: Any, case_id
 
 PROCEDURAL_PREAMBLE_PATTERNS = [
     r'^(?:ORDER|JUDGMENT|ORDER SHEET|HEARD)\s*[:\.\-]?\s*',
+    r'^(?:Citation\s*Name|Case\s*Description|Bookmark\s*this\s*case)\s*:?\s*.*?(?:[\.\;]|\n)',
+    r'^[A-Z\-]+(?:HIGH-COURT|COURT)(?:-[A-Z]+)*\s*.*?(?:[\.\;]|\n)',
     r'^(?:Learned counsel for the parties heard|Arguments heard|Record perused|Perused the record|This is an application|Through this petition|By this single|By this judgment|This order shall dispose of)\b.*?(?:[\.\;]|\n)',
     r'^(?:Mr\.|Mst\.|Muhammad|Syed|Raja|Chaudhry|Justice)\s+.*?(?:learned counsel|advocate|petitioner|respondent|appellant)\b.*?(?:[\.\;]|\n)'
 ]
@@ -1319,36 +1352,45 @@ RATIO_ANCHORS = [
 
 REPORTER_PATTERNS = [
     r'\b(?:19|20)\d{2}\s+(?:SCMR|PCrLJ|PCRLJ|PLD|YLR|CLC|MLD|PTD|PLC(?:\s*\(CS\))?|CLD|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+\b',
-    r'\b(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR)\s+(?:19|20)\d{2}\s+\d+\b'
+    r'\b(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR)\s+(?:19|20)\d{2}(?:\s+(?:SC|Lah|Kar|Pesh|Quetta|Qta|FSC|AJK))?\s+\d+\b'
 ]
 
 def clean_scraper_artifacts(raw_text: str) -> str:
-    """Removes web scraper navigation junk, bookmark banners, and portal headers
-    from raw legal judgment text before card rendering.
+    """Removes web scraper navigation junk, bookmark banners, portal headers,
+    and metadata lines from raw legal judgment text before card rendering.
     """
     if not raw_text:
         return ""
         
-    t = raw_text
+    t = str(raw_text)
     
-    # 1. Remove common web portal header prefixes
+    # 1. Remove common web portal header prefixes and scraper tags
     patterns_to_strip = [
-        r'citation\s+name\s+[a-z0-9]+\s+[a-z\s]+high\s+court\s+[a-z\s]+',
-        r'case\s+description\s+bookmark\s+this\s+case\s+p\s*l\s*d\s*',
-        r'bookmark\s+this\s+case',
-        r'y\s*l\s*r\s+[a-z]+\s+[a-z\s]+v\.\s*',
-        r'scmr\s+present\s+[a-z\s]+\s+jj\s*',
-        r'h\s*l\s*r\s*-\s*',
-        r's\s*c\s*m\s*r\s+present\s+[a-z\s\,\.\-]+\s+jj?\s*',
-        r'c\s*l\s*c\s+present\s+[a-z\s\,\.\-]+\s+jj?\s*',
+        r'(?i)\bCitation\s*Name\s*:?\s*',
+        r'(?i)\bCase\s*Description\s*:?\s*',
+        r'(?i)\bBookmark\s*this\s*case\b',
+        r'\b[A-Z\-]+(?:HIGH-COURT|COURT)(?:-[A-Z]+)*\b',
+        r'(?i)\bSide\s+(?:Appellant|Opponent|Respondent|Petitioner|Defendant|Plaintiff)\s*:?\s*',
+        r'(?i)\b(?:19|20)\d{2}\s+[A-Z\s]{2,10}\s+\d+\s*\[[A-Za-z\s]+\]\s*(?:Before\s+[^\n\,\.]+(?:JJ?\.?|J\.?)?)?',
+        r'(?i)\b(?:Before|Present)\s*:\s*.*?(?:\([^\)]*Bench\)|Bench\)?|High\s*Court|Supreme\s*Court|JJ?\.?|Justice\b)[,\.\s]*',
+        r'(?i)\b(?:Writ\s*Pet(?:ition)?|Civil\s*Appeal|Const(?:itution)?\s*Pet(?:ition)?|Cr(?:iminal)?\s*Misc(?:ellaneous)?)\s*(?:No\.?)?\s*[\d\w\/\-]+(?:\s*decided\s*on\s*[^,\n\.]+[,\.\n])?',
+        r'(?i)\bPresent\s*:\s*(?:Mr\.\s*)?Justice[^\n\.]+[,\.\n]',
+        r'(?i)Latest\s*Caselaws.*?\([A-Za-z0-9_\-\s]+\)',
+        r'(?i)Latest\s*Caselaws[^\n]*',
+        r'(?i)Recent\s*Judgments.*',
+        r'(?i)View\s*Full\s*Judgment[^\n]*',
+        r'(?i)Related\s*Citations[^\n]*',
+        r'(?i)Latest\s*from\s*the\s*journal[^\n]*',
+        r'(?i)Justice\s*Sector\s*Response[^\n]*',
+        r'(?i)Employees\s*Old-Age\s*Benefits[^\n]*',
     ]
     
     for pat in patterns_to_strip:
-        t = re.sub(pat, '', t, flags=re.IGNORECASE)
+        t = re.sub(pat, '', t)
         
     # 2. Clean up repetitive spacing and leftover punctuation
     t = re.sub(r'\s{2,}', ' ', t)
-    return t.strip(" ,.-")
+    return t.strip(" ,.-:\t\r\n")
 
 def extract_clean_ratio_snippet(text: str, max_chars: int = 280) -> str:
     if not text:
@@ -1368,8 +1410,8 @@ def extract_clean_ratio_snippet(text: str, max_chars: int = 280) -> str:
     # Strip portal scraped case lists from holding previews e.g. "[NAME] VS [NAME] [YEAR] [JOURNAL] [PAGE]"
     clean_t = re.sub(r'(?:[A-Z0-9_\-\.\s\(\)]{2,60}?\s+(?:VS\.?|V\.?|VERSUS)\s+[A-Z0-9_\-\.\s\(\)]{2,60}?\s+(?:19|20)\d{2}\s+[A-Za-z]+\s+\d+(?:\s*\([A-Za-z0-9_\-\s]+\))?)', '', clean_t, flags=re.IGNORECASE)
     clean_t = re.sub(r'(?:[A-Z\s\.\(\)]+VS[A-Z\s\.\(\)]+\d{4}\s+[A-Za-z]+\s+\d+[\s\(\)\w\-]*)', '', clean_t)
-    # Strip orphaned citation fragments at start (e.g. "2026 PCrLJ 328")
-    clean_t = re.sub(r'^(?:\d{4}\s+[A-Za-z]+\s+\d+[^a-zA-Z]*)+', '', clean_t, flags=re.IGNORECASE).strip()
+    # Strip orphaned citation fragments at start (e.g. "2026 PCrLJ 328", "PLD 2007 Lah 190")
+    clean_t = re.sub(r'^(?:(?:19|20)\d{2}\s+[A-Za-z\s]+\s+\d+|(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC|PLJ|NLR)\s+(?:19|20)\d{2}(?:\s+[A-Za-z]+)?\s+\d+)\s*', '', clean_t, flags=re.IGNORECASE).strip()
     clean_t = re.sub(r'^\s*[\,\.\;\:]\s*', '', clean_t).strip()
     clean_t = strip_control_characters(clean_t)
 
@@ -1407,6 +1449,8 @@ def synthesize_canonical_citation(record: Dict[str, Any]) -> str:
         return "Precedent Record"
 
     raw_cit = str(record.get("neutral_citation") or record.get("citation") or "").strip()
+    raw_cit = re.sub(r'^(?:Citation\s*Name|Case\s*Description|Bookmark\s*this\s*case)\s*:?\s*', '', raw_cit, flags=re.IGNORECASE).strip()
+    raw_cit = re.sub(r'\b[A-Z\-]+(?:HIGH-COURT|COURT)(?:-[A-Z]+)*\b', '', raw_cit, flags=re.IGNORECASE).strip()
     
     # 1. Check if raw_cit already contains a valid reporter citation
     for pat in REPORTER_PATTERNS:
@@ -1446,6 +1490,65 @@ def synthesize_canonical_citation(record: Dict[str, Any]) -> str:
         return f"{year} {abbrev} [{case_id}]"
     else:
         return f"{year} {abbrev} [Precedent Record]"
+
+def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
+    """Sanitizes every field of a precedent card to ensure zero scraper artifacts
+    (e.g., 'Citation Name:', portal banners, raw court tags) leak into the frontend.
+    """
+    if not isinstance(card, dict):
+        return card
+
+    c = dict(card)
+    
+    # 1. Clean case name / title
+    raw_title = str(c.get("case_name") or c.get("title") or "Reported Precedent")
+    c["case_name"] = sanitize_case_title(raw_title)
+    if "title" in c:
+        c["title"] = c["case_name"]
+
+    # 2. Clean citation: strip "Citation Name:", portal junk, and normalize
+    raw_cit = str(c.get("citation") or c.get("neutral_citation") or "").strip()
+    clean_cit = re.sub(r'(?i)\b(?:Citation\s*Name|Case\s*Description|Bookmark\s*this\s*case)\s*:?\s*', '', raw_cit).strip()
+    clean_cit = re.sub(r'\b[A-Z\-]+(?:HIGH-COURT|COURT)(?:-[A-Z]+)*\b', '', clean_cit).strip()
+    matched_cit = None
+    for pat in REPORTER_PATTERNS:
+        m = re.search(pat, clean_cit, flags=re.IGNORECASE)
+        if m:
+            matched_cit = m.group(0).strip()
+            break
+    c["citation"] = matched_cit or clean_cit or synthesize_canonical_citation(c)
+
+    # 3. Clean holding
+    raw_holding = str(c.get("holding") or c.get("preview") or "")
+    clean_h = sanitize_holding_text(raw_holding)
+    clean_h = re.sub(r'^(?:(?:19|20)\d{2}\s+[A-Za-z\s]+\s+\d+|(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC|PLJ|NLR)\s+(?:19|20)\d{2}(?:\s+[A-Za-z]+)?\s+\d+)\s*', '', clean_h, flags=re.IGNORECASE).strip()
+    clean_h = re.sub(r'^(?:.+?\s+(?:VERSUS|VS\.?|V\.)\s+.+?)(?:(?<!Mst)\.\s*|\n|$)', '', clean_h, flags=re.IGNORECASE).strip()
+    c["holding"] = clean_h or "Holding on record."
+
+    # 4. Clean raw_judgment_text
+    raw_text = str(c.get("raw_judgment_text") or c.get("preview") or "")
+    c["raw_judgment_text"] = clean_scraper_artifacts(strip_control_characters(raw_text))
+
+    # 5. Clean operative_result
+    raw_op = str(c.get("operative_result") or "")
+    clean_op = clean_scraper_artifacts(raw_op) if raw_op else "Order passed on merits."
+    clean_op = re.sub(r'^(?:(?:19|20)\d{2}\s+[A-Za-z\s]+\s+\d+|(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC|PLJ|NLR)\s+(?:19|20)\d{2}(?:\s+[A-Za-z]+)?\s+\d+)\s*', '', clean_op, flags=re.IGNORECASE).strip()
+    clean_op = re.sub(r'^(?:.+?\s+(?:VERSUS|VS\.?|V\.)\s+.+?)(?:(?<!Mst)\.\s*|\n|$)', '', clean_op, flags=re.IGNORECASE).strip()
+    c["operative_result"] = clean_op or "Order passed on merits."
+
+    # 6. Clean parties: ensure initiator and defender don't contain "Citation Name", court tags, or reporter preambles
+    parties = c.get("parties")
+    if not parties or not isinstance(parties, dict) or "citation name" in str(parties).lower() or any(tag in str(parties) for tag in ["HIGH-COURT", "COURT"]):
+        c["parties"] = extract_case_roles(c.get("raw_judgment_text") or "", fallback_title=c.get("case_name") or "")
+
+    # 7. Strip any remaining occurrences of "Citation Name" or portal banners from all string fields
+    for k in ["case_name", "citation", "court_name", "court", "holding", "issue", "why_relevant", "operative_result", "raw_judgment_text"]:
+        if isinstance(c.get(k), str):
+            c[k] = re.sub(r'(?i)\b(?:Citation\s*Name|Case\s*Description|Bookmark\s*this\s*case)\s*:?\s*', '', c[k]).strip()
+            c[k] = re.sub(r'\b[A-Z\-]+(?:HIGH-COURT|COURT)(?:-[A-Z]+)*\b', '', c[k]).strip()
+            c[k] = c[k].lstrip(' :,-')
+
+    return c
 
 
 
@@ -2768,7 +2871,7 @@ MANDATORY INSTRUCTIONS:
                 ) or "Decided"
                 card["parties"] = card.get("parties") or matched.get("parties") or extract_case_roles(card.get("raw_judgment_text") or matched.get("preview") or "", card.get("case_name") or matched.get("title") or "")
                 card["operative_result"] = card.get("operative_result") or matched.get("operative_result") or extract_operative_order(card.get("raw_judgment_text") or matched.get("preview") or "") or "Order passed on merits."
-                verified_cards.append(card)
+                verified_cards.append(sanitize_precedent_card(card))
             else:
                 # Could not confidently tie this card back to a specific retrieved judgment --
                 # drop the case_id/link rather than risk pointing to the wrong judgment's text/PDF.
@@ -2778,7 +2881,7 @@ MANDATORY INSTRUCTIONS:
 
         if not precedent_cards and citations_payload:
             precedent_cards = [
-                {
+                sanitize_precedent_card({
                     "case_name": sanitize_case_title(c.get("title") or c.get("case_name") or "Reported Precedent"),
                     "case_id": c.get("case_id") or c.get("citation") or "case_id",
                     "citation": c.get("citation") or "Neutral Citation",
@@ -2798,7 +2901,7 @@ MANDATORY INSTRUCTIONS:
                     "raw_judgment_text": strip_control_characters(c.get("preview", "")),
                     "parties": c.get("parties") or extract_case_roles(c.get("preview") or "", c.get("title") or ""),
                     "operative_result": c.get("operative_result") or extract_operative_order(c.get("preview") or "") or "Order passed on merits."
-                }
+                })
                 for c in citations_payload
             ]
 
@@ -2859,6 +2962,9 @@ MANDATORY INSTRUCTIONS:
                     inserted_row_id = str(db_insert.data[0].get("id", inserted_row_id))
             except Exception as e:
                 print(f"Supabase query insert notice: {e}")
+
+        # Final sanitization pass to guarantee zero scraper artifacts in precedent cards
+        precedent_cards = [sanitize_precedent_card(c) for c in precedent_cards]
 
         if job_id in jobs_store:
             jobs_store[job_id].update({
@@ -3512,7 +3618,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                     for c in citations_list:
                         cid = c.get("case_id") or c.get("citation") or "precedent"
                         p_url = c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(cid))}"
-                        reconstructed_cards.append({
+                        reconstructed_cards.append(sanitize_precedent_card({
                             "case_name": c.get("title") or c.get("case_name") or "Reported Precedent",
                             "case_id": cid,
                             "citation": c.get("citation") or "Neutral Citation",
@@ -3526,7 +3632,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                             "statutes_invoked": [{"name": str(s), "explanation": "Governing statutory authority"} for s in (c.get("statutes") or [])],
                             "outcome": c.get("outcome") or "Decided",
                             "operative_result": c.get("operative_result") or "Order passed on merits."
-                        })
+                        }))
                     return {
                         "status": "done",
                         "result": {

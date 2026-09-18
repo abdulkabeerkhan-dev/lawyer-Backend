@@ -153,6 +153,29 @@ class TestLegalGuardrails(unittest.TestCase):
         self.assertIn("Serving the period of detention only bars the judgment-debtor from being re-arrested for that same default under Section 58(2) CPC", SYSTEM_LEGAL_DIRECTIVE)
         self.assertIn("Do NOT cite Section 34 CPC (which deals with interest) or Article 109 Limitation Act", SYSTEM_LEGAL_DIRECTIVE)
 
+    def test_sanitize_precedent_card_removes_scraper_junk(self):
+        from main import sanitize_precedent_card
+        dirty_card = {
+            "case_name": "Citation Name: PLD 2007 Lah 190 LAHORE-HIGH-COURT MUHAMMAD ASLAM VS Mst. NASREEN AKHTAR and others Before: Lahore High Court (Rawalpindi Bench) Writ",
+            "citation": "Citation Name: PLD 2007 Lah 190 LAHORE",
+            "court_name": "Lahore High Court",
+            "court": "Lahore High Court",
+            "holding": "Citation Name: PLD 2007 Lah 190 LAHORE-HIGH-COURT MUHAMMAD ASLAM VS Mst. NASREEN AKHTAR. Civil imprisonment does NOT discharge, satisfy, or wipe out the decretal debt.",
+            "raw_judgment_text": "Citation Name: PLD 2007 Lah 190 LAHORE-HIGH-COURT MUHAMMAD ASLAM VS Mst. NASREEN AKHTAR and others Before: Lahore High Court (Rawalpindi Bench) Writ Petition No. 123 of 2006. Civil imprisonment does not satisfy debt.",
+            "operative_result": "Citation Name: PLD 2007 Lah 190 The decree remains alive, operative, and fully enforceable against property.",
+            "parties": {"initiator": "Citation Name: Muhammad Aslam", "initiator_role": "Petitioner", "defender": "Mst. Nasreen Akhtar", "defender_role": "Respondent"}
+        }
+        clean = sanitize_precedent_card(dirty_card)
+        self.assertEqual(clean["case_name"], "Muhammad Aslam v. Mst. Nasreen Akhtar And Others")
+        self.assertEqual(clean["citation"], "PLD 2007 Lah 190")
+        self.assertIn("Civil imprisonment does NOT discharge", clean["holding"])
+        self.assertNotIn("Citation Name", clean["holding"])
+        self.assertNotIn("Citation Name", clean["case_name"])
+        self.assertNotIn("Citation Name", clean["citation"])
+        self.assertNotIn("Citation Name", clean["raw_judgment_text"])
+        self.assertNotIn("Citation Name", clean["operative_result"])
+        self.assertNotIn("LAHORE-HIGH-COURT", str(clean))
+
 if __name__ == '__main__':
     unittest.main()
 
