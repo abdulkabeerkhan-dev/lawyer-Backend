@@ -356,11 +356,19 @@ async def safe_create_anthropic_message(**kwargs):
         if not ("404" in err_str or "not_found" in err_str.lower() or "model:" in err_str.lower()):
             raise e
 
-        fallback_model = os.environ.get("ANTHROPIC_FALLBACK_MODEL", "").strip()
-        if fallback_model and fallback_model != primary_model:
+        # Build candidate list of fallback models
+        candidate_models = []
+        custom_fallback = os.environ.get("ANTHROPIC_FALLBACK_MODEL", "").strip()
+        if custom_fallback:
+            candidate_models.append(custom_fallback)
+        for m in ["claude-3-7-sonnet-20250219", "claude-3-5-sonnet-20241022", "claude-3-5-haiku-20241022", "claude-3-haiku-20240307"]:
+            if m not in candidate_models and m != primary_model:
+                candidate_models.append(m)
+
+        for fallback_model in candidate_models:
             print(
-                f"⚠️ Anthropic primary model '{primary_model}' returned 404/not_found. "
-                f"Trying operator-configured fallback model '{fallback_model}'...",
+                f"⚠️ Anthropic model '{primary_model}' returned 404/not_found. "
+                f"Attempting fallback model '{fallback_model}'...",
                 file=sys.stderr,
                 flush=True
             )
@@ -369,16 +377,10 @@ async def safe_create_anthropic_message(**kwargs):
                 fallback_kwargs["model"] = fallback_model
                 return await async_anthropic_client.messages.create(**fallback_kwargs)
             except Exception as fallback_err:
-                print(
-                    f"❌ Operator-configured fallback model '{fallback_model}' failed: {fallback_err}",
-                    file=sys.stderr,
-                    flush=True
-                )
-                raise RuntimeError(
-                    f"Anthropic API Model Access Error: Neither primary model '{primary_model}' "
-                    f"nor configured fallback model '{fallback_model}' is accessible. "
-                    f"Original error: {e}"
-                ) from fallback_err
+                fb_str = str(fallback_err)
+                if not ("404" in fb_str or "not_found" in fb_str.lower() or "model:" in fb_str.lower()):
+                    raise fallback_err
+                continue
 
         raise RuntimeError(
             f"Anthropic API Model Access Error: Model '{primary_model}' is not accessible with the configured ANTHROPIC_API_KEY. "
