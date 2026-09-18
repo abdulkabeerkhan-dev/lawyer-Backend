@@ -122,12 +122,15 @@ MANDATORY ADJUDICATION RULES:
 9. NARCOTICS CHAIN-OF-CUSTODY DIRECTIVE (CNSA 1997):
    In CNSA 1997 prosecutions, safe custody and safe transmission are mandatory links. Failure to examine the Moharrir (Malkhana in-charge) or the official who transmitted samples to the Chemical Examiner breaks the chain of custody. Under Ikramullah (2015 SCMR 1002) and Imam Bakhsh (2018 SCMR 2039), this break renders the Chemical Examiner's report inadmissible, entitling the accused to an acquittal even if the chemical report is positive.
 
-10. HIGH COURT REPORTER VS. SUPREME COURT JURISDICTION DIRECTIVE:
+10. FAMILY COURT & CIVIL MONEY DECREE EXECUTION / SECTION 58 CPC DIRECTIVE:
+    In execution of Family Court and civil money decrees, civil imprisonment under Section 51 and Section 58 CPC / Section 13 Family Courts Act 1964 does NOT discharge or waive the decretal debt. Serving the period of detention only bars the judgment-debtor from being re-arrested for that same default under Section 58(2) CPC; the decree remains alive and enforceable against his property, salary, and assets. Do NOT cite Section 34 CPC (which deals with interest) or Article 109 Limitation Act.
+
+11. HIGH COURT REPORTER VS. SUPREME COURT JURISDICTION DIRECTIVE:
    - Citations containing YLR, MLD, CLC, or PCrLJ are High Court decisions (Lahore, Sindh, Peshawar, Balochistan, or Islamabad High Court).
    - Only citations with SCMR or explicit PLD ... SC represent the Supreme Court of Pakistan.
    - If a citation is YLR, MLD, CLC, or PCrLJ, NEVER describe or output 'Supreme Court of Pakistan' as the deciding forum.
 
-11. BANK GUARANTEE & INJUNCTION DIRECTIVE (ORDER XXXIX CPC & AUTONOMY DOCTRINE):
+12. BANK GUARANTEE & INJUNCTION DIRECTIVE (ORDER XXXIX CPC & AUTONOMY DOCTRINE):
    - Core Autonomy Doctrine: An unconditional bank guarantee is an autonomous contract independent of the underlying agreement. Breaches of the underlying contract (e.g., delayed site handover, design approvals, alleged wrongful termination) do NOT ground an interim injunction under Order XXXIX Rules 1 & 2 CPC (2021 SCMR 1446 / 2021 SCP 3209; PLD 2003 SC 191).
    - The Two Exclusive Exceptions:
      1. Fraud of an egregious nature known to the bank (vitiating the very foundation of the transaction, such as encashment demand when underlying obligation is fully satisfied to beneficiary's own knowledge).
@@ -294,6 +297,15 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
     if any(k in text_lower or k in query_lower for k in ["cnsa", "narcotic", "charas", "heroin", "opium", "chain of custody", "malkhana", "chemical examiner"]):
         if ("chain of custody" in text_lower or "moharrir" in text_lower or "malkhana" in text_lower or "chemical examiner" in text_lower) and re.search(r'(?:failure\s+to\s+examine|non-production\s+of)\s+(?:the\s+)?(?:moharrir|carrier|official|constable)\s+is\s+(?:not\s+fatal|curable|a\s+mere\s+irregularity)', text_lower):
             errors.append("Erroneously stating that failure to examine the Moharrir or carrier official in CNSA prosecutions is not fatal (Controlling law under Ikramullah 2015 SCMR 1002, Imam Bakhsh 2018 SCMR 2039, and Abdul Ghani 2019 SCMR 608: failure to examine the Moharrir or transmitting official breaks the chain of custody, rendering the chemical examiner's report inadmissible and entitling the accused to acquittal).")
+
+    # Rule 14: Family Court & civil money decree execution / Section 58 CPC civil imprisonment
+    if any(k in text_lower or k in query_lower for k in ["section 58", "section 51", "civil imprisonment", "civil prison", "arrest and detention", "maintenance decree", "execution of decree", "judgment debtor", "decretal amount", "family court"]):
+        if ("civil imprisonment" in text_lower or "detention" in text_lower or "civil prison" in text_lower) and re.search(r'(?:discharges?|waives?|satisfies?|extinguishes?)\s+(?:the\s+)?(?:decretal\s+)?(?:debt|amount|decree|liability)', text_lower):
+            errors.append("Erroneously holding that civil imprisonment discharges or satisfies the decretal debt (Controlling law under Section 58(2) CPC and Section 13 Family Courts Act 1964: release from civil prison does not discharge the debt; it only bars re-arrest for the same default, leaving the decree enforceable against property and assets).")
+        if re.search(r'section\s*34\s*cpc\b', text_lower) and any(kw in text_lower for kw in ["execution", "maintenance", "family court", "arrest", "civil prison"]):
+            errors.append("Citing Section 34 CPC in decree execution/maintenance (Section 34 CPC deals with interest on commercial/civil decrees, not execution or maintenance debt).")
+        if re.search(r'article\s*109\b', text_lower) and any(kw in text_lower for kw in ["execution", "maintenance", "family court", "arrest", "civil prison"]):
+            errors.append("Citing Article 109 Limitation Act in decree execution/maintenance (Article 109 deals strictly with profits of immovable property/mesne profits; execution of decrees is governed by Article 181/182 Limitation Act / Section 48 CPC).")
 
     return errors
 

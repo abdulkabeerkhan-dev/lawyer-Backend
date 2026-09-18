@@ -131,6 +131,28 @@ class TestLegalGuardrails(unittest.TestCase):
         self.assertIn("Ikramullah (2015 SCMR 1002)", SYSTEM_LEGAL_DIRECTIVE)
         self.assertIn("Imam Bakhsh (2018 SCMR 2039)", SYSTEM_LEGAL_DIRECTIVE)
 
+    def test_section58_cpc_execution_guardrail(self):
+        """
+        Test 6: Validate that lint_legal_output catches:
+        - Erroneous claim that civil imprisonment discharges or satisfies the decretal debt
+        - Inappropriate citation of Section 34 CPC or Article 109 in decree execution
+        """
+        bad_execution_response = """
+        The judgment-debtor has already served 6 months civil imprisonment in execution of the maintenance decree.
+        Therefore, undergoing civil imprisonment satisfies the decretal debt and waives the decretal liability.
+        The decree-holder can only claim interest under Section 34 CPC or mesne profits under Article 109.
+        """
+        query_context = "execution of maintenance decree civil imprisonment Section 58 CPC"
+        errors = lint_legal_output(bad_execution_response, query_context=query_context)
+        self.assertTrue(any("civil imprisonment discharges or satisfies" in e for e in errors), f"Failed to detect civil imprisonment debt discharge error: {errors}")
+        self.assertTrue(any("Section 34 CPC" in e for e in errors), f"Failed to detect Section 34 CPC misuse: {errors}")
+        self.assertTrue(any("Article 109" in e for e in errors), f"Failed to detect Article 109 misuse: {errors}")
+
+        # Assert that SYSTEM_LEGAL_DIRECTIVE contains Rule 10 verbatim
+        self.assertIn("In execution of Family Court and civil money decrees, civil imprisonment under Section 51 and Section 58 CPC / Section 13 Family Courts Act 1964 does NOT discharge or waive the decretal debt", SYSTEM_LEGAL_DIRECTIVE)
+        self.assertIn("Serving the period of detention only bars the judgment-debtor from being re-arrested for that same default under Section 58(2) CPC", SYSTEM_LEGAL_DIRECTIVE)
+        self.assertIn("Do NOT cite Section 34 CPC (which deals with interest) or Article 109 Limitation Act", SYSTEM_LEGAL_DIRECTIVE)
+
 if __name__ == '__main__':
     unittest.main()
 
