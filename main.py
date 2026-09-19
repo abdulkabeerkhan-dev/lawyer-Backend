@@ -2217,48 +2217,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             except Exception as cit_db_err:
                 print(f"⚠️ Direct citation DB lookup notice: {cit_db_err}", file=sys.stderr, flush=True)
 
-            is_corporate_law_query = any(k in sq_lower for k in [
-                "secp", "companies act", "companies ordinance", "company law", "section 286", "section 290",
-                "oppression", "mismanagement", "shareholder", "minority shareholder", "majority shareholder",
-                "minority director", "voting power", "board of directors", "winding up", "company petition"
-            ])
-
-            if is_corporate_law_query and supabase:
-                try:
-                    corp_keywords = ["Companies Act", "Companies Ordinance", "286", "290", "oppression", "mismanagement", "minority shareholder"]
-                    for ckw in corp_keywords:
-                        if ckw.lower() in sq_lower or ckw in ["Companies Act", "Companies Ordinance"]:
-                            res_corp = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, decision_date, full_text, court_name").ilike("full_text", f"%{ckw}%").limit(3).execute()
-                            if res_corp and res_corp.data:
-                                for row in res_corp.data:
-                                    c_cit = row.get("neutral_citation") or row.get("case_id")
-                                    c_title = sanitize_case_title(row.get("case_title") or "Reported Precedent")
-                                    c_name = row.get("court_name") or "High Court"
-                                    c_id = row.get("case_id") or row.get("id") or c_cit
-                                    if not any(bm.get("metadata", {}).get("case_id") == c_id for bm in boosted_matches):
-                                        boosted_matches.append({
-                                            "score": 0.98,
-                                            "is_boosted": True,
-                                            "metadata": {
-                                                "is_boosted": True,
-                                                "case_id": c_id,
-                                                "canonical_id": c_id,
-                                                "title": c_title,
-                                                "court": c_name,
-                                                "citation": c_cit,
-                                                "date": str(row.get("decision_date") or row.get("year") or ""),
-                                                "text": (row.get("full_text") or "")[:3500],
-                                                "pdf_url": None,
-                                                "outcome": determine_case_outcome(row.get("full_text") or "", row.get("disposition") or row.get("outcome")),
-                                                "statutes": ["Companies Act 2017" if "2017" in str(row.get("full_text") or "") else "Companies Ordinance 1984"],
-                                                "parties": extract_case_roles(row.get("full_text") or "", c_title),
-                                                "operative_result": extract_operative_order(row.get("full_text") or "")
-                                            }
-                                        })
-                except Exception as corp_err:
-                    print(f"⚠️ Corporate DB lookup notice: {corp_err}", file=sys.stderr, flush=True)
-
-
             # Prepare clean legal topic query for Voyage embedding (strip citation numbers if present)
             embedding_query = search_query
             topic_query_clean = ""
@@ -2268,7 +2226,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if len(topic_query) >= 10:
                     embedding_query = topic_query
 
-            if boosted_matches and len(topic_query_clean) < 5:
+            if boosted_matches and cit_match and len(topic_query_clean) < 5:
                 matches_list = boosted_matches
             else:
                 try:
