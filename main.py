@@ -232,10 +232,20 @@ def expand_legal_query_doctrinally(query: str, return_flag: bool = False) -> Any
         if any(k in q_lower for k in ["302", "ppc", "murder", "bail"]):
             expansions.append("Section 302 Section 96 Section 97 Section 99 Section 100 Pakistan Penal Code 1860 PPC plea of self defence private defence grant of bail further inquiry Section 497 CrPC")
 
+    # Statutory Interpretation / Conflict of Special Laws / Non-Obstante Clauses
+    if any(k in q_lower for k in [
+        "non-obstante", "non obstante", "non onstante", "non instante", "non-onstante",
+        "special laws", "two special laws", "conflict of special laws", "conflict between two special laws",
+        "which would prevail", "which will prevail", "overriding clause", "overriding effect",
+        "later in time", "later statute", "mushahid shah"
+    ]):
+        expansions.append("conflict between two special laws non-obstante clause overriding effect later statute in time Syed Mushahid Shah 2017 SCMR 1218 leges posteriores priores contrarias abrogant generalia specialibus non derogant statutory interpretation Supreme Court")
+
     was_expanded = len(expansions) > 0
     if expansions:
         t = t + " " + " ".join(expansions)
     return (t, was_expanded) if return_flag else t
+
 
 class LegalRetrieverConfig:
     STRICT_THRESHOLD: float = 0.70
@@ -1975,12 +1985,33 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         has_doc_text = len(extracted_doc_texts) > 0
         combined_uploaded_doc_text = "\n\n=== UPLOADED DOCUMENT ATTACHMENT ===\n\n" + "\n\n".join(extracted_doc_texts) if has_doc_text else ""
 
-        effective_user_query = (request.query_text or "").strip()
+        raw_input_text = (request.query_text or "").strip()
+        frontend_prompt_envelope = ""
+
+        # Extract frontend prompt envelopes (e.g. Lovable lawyer profile, chat history replay, answer style instructions)
+        # Matches blocks like [What you know about this lawyer: ...], [Earlier in this conversation: ...], [Answer style: ...]
+        envelope_blocks = re.findall(r'(\[(?:What you know about this lawyer|Earlier in this conversation|Answer style|Context|Instructions?):[\s\S]*?\])', raw_input_text, re.IGNORECASE)
+        if envelope_blocks:
+            clean_text = raw_input_text
+            envelope_parts = []
+            for b in envelope_blocks:
+                clean_text = clean_text.replace(b, "")
+                envelope_parts.append(b.strip())
+            clean_text = clean_text.strip()
+            if clean_text:
+                frontend_prompt_envelope = "\n\n".join(envelope_parts)
+                effective_user_query = clean_text
+            else:
+                effective_user_query = raw_input_text
+        else:
+            effective_user_query = raw_input_text
+
         if combined_uploaded_doc_text:
             if effective_user_query:
                 effective_user_query = f"{effective_user_query}\n\n{combined_uploaded_doc_text}".strip()
             else:
                 effective_user_query = combined_uploaded_doc_text.strip()
+
 
         upload_extraction_failed = (len(all_uploads) > 0) and (not has_image) and (not has_doc_text)
 
@@ -2046,7 +2077,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             t = re.sub(r"\bo\.\s*([ivxlcdm\d]+)\b", r"Order \1", t, flags=re.IGNORECASE)
             t = re.sub(r"\b103\s+cr\.?p\.?c\.?\b", "Section 103 Code of Criminal Procedure 1898", t, flags=re.IGNORECASE)
             t = re.sub(r"\b9\s*\(?c\)?\s*(?:cnsa|narcotics?)\b", "Section 9(c) Control of Narcotic Substances Act 1997", t, flags=re.IGNORECASE)
+            t = re.sub(r"\bnon[\s\-_]+(?:onstante|instants|ostante|obstante)\b", "non-obstante", t, flags=re.IGNORECASE)
             t, was_expanded = expand_legal_query_doctrinally(t, return_flag=True)
+
             return (t, was_expanded) if return_flag else t
 
         def format_sources_searched(retrieved_matches: List[Dict[str, Any]]) -> str:
@@ -2301,6 +2334,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             is_commercial_or_criminal_query = any(k in sq_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra", "banking", "recovery", "fio 2001", "leave to defend", "security deposit"])
             is_secp_or_corporate_query = any(k in sq_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance", "12(2)", "section 12", "115 cpc", "civil revision", "42 sra", "specific relief", "fraudulent decree", "stranger", "order xxi", "order 21", "rule 97", "rule 101", "rule 103", "execution", "objection petition", "deemed decree"])
+            is_corporate_law_query = is_secp_or_corporate_query
             NON_CRIMINAL_KEYWORDS = [
                 "khula", "dower", "mehr", "nikahnama", "talaq", "family court", "custody",
                 "maintenance", "guardian", "succession", "cpc", "order xxxix", "order 39",
@@ -2532,6 +2566,8 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
 """
 
         combined_system_prompt = f"{SYSTEM_LEGAL_DIRECTIVE}\n\n{conversational_persona}"
+        if frontend_prompt_envelope:
+            combined_system_prompt = f"{combined_system_prompt}\n\nFRONTEND CLIENT DIRECTIVES & CONTEXT:\n{frontend_prompt_envelope}\n\nCRITICAL DIRECTIVE: Do NOT output or repeat the client context, answer style instructions, conversation metadata, or prompt brackets in your visible reply. Respond directly to the user's actual question adhering to their preferred style."
 
         if upload_extraction_failed:
             failed_file_names = []

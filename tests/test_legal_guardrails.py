@@ -223,8 +223,25 @@ class TestLegalGuardrails(unittest.TestCase):
         clean_errors = lint_legal_output(good_output, query_context="Companies Act 2017 Section 286 minority oppression winding up")
         self.assertFalse(any("Haji Muhammad Ismail" in e for e in clean_errors))
 
+    def test_statutory_conflict_non_obstante_guardrail(self):
+        # Assert Rule 16 directive text in SYSTEM_LEGAL_DIRECTIVE
+        self.assertIn("Where two special statutes both contain non-obstante clauses", SYSTEM_LEGAL_DIRECTIVE)
+        self.assertIn("the statute enacted LATER IN TIME generally prevails over the prior statute (leges posteriores priores contrarias abrogant)", SYSTEM_LEGAL_DIRECTIVE)
+        self.assertIn("Syed Mushahid Shah v. Federal Investigation Agency (2017 SCMR 1218)", SYSTEM_LEGAL_DIRECTIVE)
+
+        # Assert linter intercepts assertion that earlier statute prevails without considering later in time
+        bad_output = "Where two special laws conflict, the earlier statute prevails over the later statute."
+        errors = lint_legal_output(bad_output, query_context="two special laws in conflict with non-obstante clause which would prevail")
+        self.assertTrue(any("Syed Mushahid Shah" in e and "2017 SCMR 1218" in e for e in errors))
+
+        # Assert clean output passes
+        good_output = "Under Syed Mushahid Shah v. FIA (2017 SCMR 1218), where two special laws conflict and both contain non-obstante clauses, the statute later in time generally prevails under leges posteriores priores contrarias abrogant, subject to legislative purpose and Article 25 safeguards."
+        clean_errors = lint_legal_output(good_output, query_context="two special laws in conflict with non-obstante clause which would prevail")
+        self.assertFalse(any("Syed Mushahid Shah" in e for e in clean_errors))
+
 if __name__ == '__main__':
     unittest.main()
+
 
 
 

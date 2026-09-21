@@ -150,7 +150,13 @@ MANDATORY ADJUDICATION RULES:
 
 15. CORPORATE OPPRESSION & WINDING UP DIRECTIVE (SECTIONS 286 & 301 COMPANIES ACT 2017):
     Under the Companies Act 2017, winding up of a commercially solvent and running company under the 'just and equitable' clause (Section 301) is strictly a remedy of last resort. Where minority shareholders allege oppression, mismanagement, or deadlock under Section 286, the Company Bench must explore alternative corrective remedies (such as forensic audits, restructuring of boards, or ordering a share purchase at fair valuation). The Court will not order the corporate death of a solvent company where its substratum remains intact, in accordance with Haji Muhammad Ismail (PLD 2002 SC 510).
+
+16. STATUTORY INTERPRETATION -- CONFLICT BETWEEN SPECIAL LAWS & COMPETING NON-OBSTANTE CLAUSES:
+    - Where two special statutes both contain non-obstante clauses ("notwithstanding anything contained in any other law for the time being in force") and are in direct, irreconcilable conflict, the statute enacted LATER IN TIME generally prevails over the prior statute (leges posteriores priores contrarias abrogant), as settled by the 5-Judge Bench of the Supreme Court of Pakistan in Syed Mushahid Shah v. Federal Investigation Agency (2017 SCMR 1218).
+    - This rule is not mechanical: the Court must examine the object, purpose, and policy of both enactments and ascertain legislative intent. Non-obstante clauses must be understood in context and set aside earlier provisions only to the extent of direct inconsistency.
+    - Concurrent Jurisdiction Bar (Articles 4 & 25): Where parallel operation of two special laws would permit an entity or prosecution to pick and choose between a harsher forum/penalty (e.g. Offences in Respect of Banks Special Courts Ordinance 1984) and a more protective or specialized forum (e.g. Financial Institutions Recovery of Finances Ordinance 2001), concurrent operation is impermissible as it violates Articles 4 and 25 of the Constitution. The later enactment (FIO 2001) prevails exclusively.
 """
+
 
 def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
     """
@@ -333,7 +339,14 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
             if re.search(r'(?:winding up|corporate death).*(?:is\s+(?:the\s+)?(?:primary|first|routine|mandatory)\s+remedy|must\s+be\s+(?:ordered|granted)\s+(?:upon|for|on\s+grounds\s+of)\s+(?:minority\s+oppression|deadlock|mismanagement)|cannot\s+explore\s+alternative\s+remedies)', text_lower):
                 errors.append("Erroneously asserting that winding up is the primary or mandatory remedy for corporate oppression/deadlock in a solvent company (Controlling law under Haji Muhammad Ismail PLD 2002 SC 510, 2017 CLD 847, and Section 286/301 Companies Act 2017: winding up of a commercially solvent and running company under the just and equitable clause is strictly a remedy of last resort; the Company Bench must explore alternative corrective remedies under Section 286 such as forensic audits, board restructuring, or ordering share buy-outs at fair valuation).")
 
+    # Rule 18: Conflicting special laws with competing non-obstante clauses (Syed Mushahid Shah 2017 SCMR 1218)
+    if any(k in query_lower for k in ["non-obstante", "non obstante", "non onstante", "non instante", "two special laws", "conflict between two special laws", "which would prevail", "which will prevail"]):
+        if re.search(r'\bearlier\s+(?:special\s+)?(?:law|statute|enactment)\s+(?:shall\s+|will\s+|automatically\s+)?prevails?\b', text_lower) and not any(k in text_lower for k in ["mushahid shah", "2017 scmr 1218", "leges posteriores"]):
+            errors.append("Erroneously stating that an earlier special law automatically prevails over a subsequent special law when both have non-obstante clauses (Controlling law under Syed Mushahid Shah v. FIA 2017 SCMR 1218: the statute enacted later in time generally prevails under leges posteriores priores contrarias abrogant, subject to legislative purpose and constitutional safeguards under Article 25).")
+
     return errors
+
+
 
 def handle_reflection_or_abort(llm_client, original_prompt: str, generated_text: str, context_chunks: List[Any]) -> str:
     """
