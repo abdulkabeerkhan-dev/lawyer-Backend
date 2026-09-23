@@ -1454,8 +1454,6 @@ def extract_and_intercept_citation(user_query: str):
                 )
                 if not annot and ("1958" in str(r.get("case_id") or "") and "533" in str(r.get("case_id") or "")):
                     annot = get_precedent_annotation("1958_PLD_SC_533") or get_precedent_annotation("1958_PLD_533")
-                if not annot and ("2004" in str(r.get("case_id") or "") and "1186" in str(r.get("case_id") or "")):
-                    annot = get_precedent_annotation("2004_CLC_1186")
                 if annot:
                     banner = format_precedent_status_banner(annot)
                     r["precedent_status"] = annot.get("status")
@@ -3606,18 +3604,8 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                 except Exception as quote_banner_err:
                     print(f"⚠️ [Quote Verifier Banner Error]: {quote_banner_err}", file=sys.stderr)
 
-            # Phase 5 Pilot: Precedent Currency & Overruling-Status Banner
-            try:
-                from core.precedent_tracker import check_citations_and_query_for_precedent_status
-                all_active_cits = list(aggregate_citations_payload or []) + list(citations_payload or [])
-                prec_banner = check_citations_and_query_for_precedent_status(
-                    query_text=user_prompt,
-                    citations=all_active_cits
-                )
-                if prec_banner and "Notice on Precedent Status" not in display_answer:
-                    display_answer = f"{prec_banner}\n\n" + display_answer
-            except Exception as prec_err:
-                print(f"⚠️ [Precedent Tracker Banner Error]: {prec_err}", file=sys.stderr)
+            # Phase 5 Pilot: Precedent Currency & Overruling-Status (Metadata Only)
+            # Raw markdown alert is omitted from display_answer to allow frontend dedicated UI rendering.
 
         # Mode label for the frontend UI (metadata only -- no longer drives response shape)
         query_lower = request.query_text.lower()
@@ -3706,8 +3694,10 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
         if not top_precedent_status:
             try:
-                from core.precedent_tracker import check_precedent_currency, format_precedent_status_banner
+                from core.precedent_tracker import find_precedent_status_annotation, check_precedent_currency, format_precedent_status_banner
+                all_active = list(precedent_cards or []) + list(citations_payload or [])
                 q_annot = (
+                    find_precedent_status_annotation(query_text=user_prompt, citations=all_active) or
                     check_precedent_currency(user_prompt) or
                     (check_precedent_currency("1958_PLD_SC_533") if ("1958" in user_prompt and "533" in user_prompt) else None)
                 )

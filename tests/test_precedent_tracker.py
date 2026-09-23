@@ -65,6 +65,19 @@ class TestPrecedentTracker(unittest.TestCase):
         )
         self.assertIsNone(banner, "Warning banner must NOT fire for superseding authority")
 
+    def test_structured_payload_metadata_without_text_alert(self):
+        """Verifies find_precedent_status_annotation extracts structured fields for custom UI components."""
+        from core.precedent_tracker import find_precedent_status_annotation
+        annot = find_precedent_status_annotation(
+            query_text="doctrine of revolutionary legality martial law",
+            citations=[]
+        )
+        self.assertIsNotNone(annot)
+        self.assertEqual(annot.get("status"), "overruled")
+        self.assertEqual(annot.get("superseding_citation"), "PLD 1972 SC 139")
+        self.assertEqual(annot.get("superseding_case_name"), "Asma Jilani v. Government of Punjab")
+        self.assertIn("revolutionary legality", annot.get("doctrinal_note", ""))
+
 
 if __name__ == "__main__":
     unittest.main()

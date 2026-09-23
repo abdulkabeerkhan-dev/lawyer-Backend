@@ -140,25 +140,25 @@ def format_precedent_status_banner(status_info: Dict[str, Any]) -> str:
     return banner
 
 
-def check_citations_and_query_for_precedent_status(
+def find_precedent_status_annotation(
     query_text: str = "",
     citations: Optional[List[Dict[str, Any]]] = None
-) -> Optional[str]:
+) -> Optional[Dict[str, Any]]:
     """
     Evaluates whether the user query or any retrieved precedent card in `citations`
     refers to a precedent with negative currency status.
-    Returns the formatted banner if triggered, else None.
+    Returns the annotation record if triggered, else None.
     
     CONTROL GUARD: Never fires for the superseding authority (e.g. Asma Jilani).
     """
     # 1. Check retrieved citations in payload
     for c in (citations or []):
-        for field in ["case_id", "supabase_id", "citation", "neutral_citation", "title"]:
+        for field in ["case_id", "supabase_id", "citation", "neutral_citation", "title", "case_name"]:
             val = c.get(field)
             if val:
                 annot = check_precedent_currency(str(val))
                 if annot:
-                    return format_precedent_status_banner(annot)
+                    return annot
 
     # 2. Check query text specifically for the superseded case
     q_norm = _normalize_key(query_text)
@@ -177,12 +177,28 @@ def check_citations_and_query_for_precedent_status(
 
         for tk in target_keys:
             if tk and tk in q_norm:
-                return format_precedent_status_banner(entry)
+                return entry
 
     # 3. Check for specific natural-language doctrine queries regarding revolutionary legality
     if any(k in query_text.lower() for k in ["revolutionary legality", "doctrine of revolutionary legality"]):
         dosso_annot = check_precedent_currency("1958_PLD_SC_533") or check_precedent_currency("PLD 1958 SC 533")
         if dosso_annot:
-            return format_precedent_status_banner(dosso_annot)
+            return dosso_annot
 
     return None
+
+
+def check_citations_and_query_for_precedent_status(
+    query_text: str = "",
+    citations: Optional[List[Dict[str, Any]]] = None
+) -> Optional[str]:
+    """
+    Evaluates whether the user query or any retrieved precedent card in `citations`
+    refers to a precedent with negative currency status.
+    Returns the formatted banner if triggered, else None.
+    """
+    annot = find_precedent_status_annotation(query_text=query_text, citations=citations)
+    if annot:
+        return format_precedent_status_banner(annot)
+    return None
+
