@@ -299,6 +299,45 @@ def clean_repeated_phrases(text: str) -> str:
 
 
 
+COURT_BENCH_MAP = {
+    # Punjab / LHC
+    "Lahore": "Lahore High Court",
+    "Rawalpindi": "Lahore High Court",
+    "Multan": "Lahore High Court",
+    "Bahawalpur": "Lahore High Court",
+    
+    # Sindh / SHC
+    "Karachi": "Sindh High Court",
+    "Sukkur": "Sindh High Court",
+    "Hyderabad": "Sindh High Court",
+    "Larkana": "Sindh High Court",
+    
+    # KP / PHC
+    "Peshawar": "Peshawar High Court",
+    "Abbottabad": "Peshawar High Court",
+    "Mingora": "Peshawar High Court",
+    "Dera Ismail Khan": "Peshawar High Court",
+    "Bannu": "Peshawar High Court",
+    
+    # Balochistan / BHC
+    "Quetta": "Balochistan High Court",
+    "Sibi": "Balochistan High Court",
+    "Turbat": "Balochistan High Court",
+    
+    # Federal
+    "Islamabad": "Islamabad High Court"
+}
+
+def extract_bracketed_court(text: str) -> str:
+    # Looks for [City] near the top of the judgment
+    if not text:
+        return ""
+    match = re.search(r"\[([A-Za-z\s]+)\]", text[:500])
+    if match:
+        city = match.group(1).strip()
+        return COURT_BENCH_MAP.get(city, "") or {k.lower(): v for k, v in COURT_BENCH_MAP.items()}.get(city.lower(), "")
+    return ""
+
 def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", text: str = "", **kwargs) -> str:
     c_raw = str(court_name or "").strip()
     c_lower = c_raw.lower()
@@ -357,6 +396,10 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
     if "high court of balochistan" in text_lower or "balochistan high court" in text_lower: return "High Court of Balochistan"
     if "islamabad high court" in text_lower: return "Islamabad High Court"
     if "supreme court of pakistan" in text_lower: return "Supreme Court of Pakistan"
+
+    bracketed = extract_bracketed_court(str(text or ""))
+    if bracketed:
+        return bracketed
 
     if c_raw and c_raw.lower() not in ("unknown", "unknown court", "court of record", "not specified", "none"):
         return c_raw.strip().title()

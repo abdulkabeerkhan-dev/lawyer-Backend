@@ -27,6 +27,8 @@ COLLISION_WHITELIST = {
     "2007 YLR 2827",
     "2006_YLR_3278",
     "2006 YLR 3278",
+    "2006_YLR_96",
+    "2006 YLR 96",
 }
 
 
@@ -40,7 +42,7 @@ def is_whitelisted_citation(identifier: str) -> bool:
     if not identifier:
         return False
     norm = _normalize_key(identifier)
-    return norm in {_normalize_key(x) for x in COLLISION_WHITELIST} or any(k in norm for k in ["2006ylr1206", "2007ylr2827", "2006ylr3278"])
+    return norm in {_normalize_key(x) for x in COLLISION_WHITELIST} or any(k in norm for k in ["2006ylr1206", "2007ylr2827", "2006ylr3278", "2006ylr96"])
 
 
 

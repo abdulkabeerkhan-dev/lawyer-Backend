@@ -591,6 +591,45 @@ async def safe_create_anthropic_message(**kwargs):
 security_agent = HTTPBearer(auto_error=False)
 _clerk_jwks_keys_cache = None
 
+COURT_BENCH_MAP = {
+    # Punjab / LHC
+    "Lahore": "Lahore High Court",
+    "Rawalpindi": "Lahore High Court",
+    "Multan": "Lahore High Court",
+    "Bahawalpur": "Lahore High Court",
+    
+    # Sindh / SHC
+    "Karachi": "Sindh High Court",
+    "Sukkur": "Sindh High Court",
+    "Hyderabad": "Sindh High Court",
+    "Larkana": "Sindh High Court",
+    
+    # KP / PHC
+    "Peshawar": "Peshawar High Court",
+    "Abbottabad": "Peshawar High Court",
+    "Mingora": "Peshawar High Court",
+    "Dera Ismail Khan": "Peshawar High Court",
+    "Bannu": "Peshawar High Court",
+    
+    # Balochistan / BHC
+    "Quetta": "Balochistan High Court",
+    "Sibi": "Balochistan High Court",
+    "Turbat": "Balochistan High Court",
+    
+    # Federal
+    "Islamabad": "Islamabad High Court"
+}
+
+def extract_bracketed_court(text: str) -> str:
+    # Looks for [City] near the top of the judgment
+    if not text:
+        return ""
+    match = re.search(r"\[([A-Za-z\s]+)\]", text[:500])
+    if match:
+        city = match.group(1).strip()
+        return COURT_BENCH_MAP.get(city, "") or {k.lower(): v for k, v in COURT_BENCH_MAP.items()}.get(city.lower(), "")
+    return ""
+
 def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", text: str = "", **kwargs) -> str:
     c_raw = str(court_name or "").strip()
     c_lower = c_raw.lower()
@@ -690,18 +729,6 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
     clean_txt_snippet = re.sub(r"(?i)35-Nabha Road[^\n]*", "", str(text or "")[:2000])
     text_lower = clean_txt_snippet.lower()
 
-    # Direct city bracket tags common in Pakistani law reporters e.g. [Lahore], [Karachi], [Peshawar]
-    if re.search(r'\[\s*(?:Lahore|Rawalpindi|Multan|Bahawalpur)\s*\]', clean_txt_snippet, re.IGNORECASE):
-        return "Lahore High Court"
-    if re.search(r'\[\s*(?:Karachi|Sindh|Sukkur|Hyderabad)\s*\]', clean_txt_snippet, re.IGNORECASE):
-        return "High Court of Sindh"
-    if re.search(r'\[\s*(?:Peshawar|Abbottabad|D\.I\.\s*Khan|Mingora)\s*\]', clean_txt_snippet, re.IGNORECASE):
-        return "Peshawar High Court"
-    if re.search(r'\[\s*(?:Quetta|Balochistan|Sibi|Turbat)\s*\]', clean_txt_snippet, re.IGNORECASE):
-        return "High Court of Balochistan"
-    if re.search(r'\[\s*Islamabad\s*\]', clean_txt_snippet, re.IGNORECASE):
-        return "Islamabad High Court"
-
     if any(x in text_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
         if "high" in text_lower: return "High Court of Azad Jammu & Kashmir"
         if "service tribunal" in text_lower: return "AJK Service Tribunal"
@@ -713,6 +740,11 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
     if "high court of balochistan" in text_lower or "balochistan high court" in text_lower: return "High Court of Balochistan"
     if "islamabad high court" in text_lower: return "Islamabad High Court"
     if not is_hc_only and ("supreme court of pakistan" in text_lower or "supreme-court" in text_lower): return "Supreme Court of Pakistan"
+
+    # Fallback to bracketed city header extraction (e.g. [Lahore], [Karachi], [Rawalpindi])
+    bracketed = extract_bracketed_court(clean_txt_snippet) or extract_bracketed_court(str(text or ""))
+    if bracketed:
+        return bracketed
 
     if c_raw and c_raw.lower() not in ("unresolved", "court not identified", "unknown", "unknown court", "court of record", "not specified", "none"):
         if is_hc_only and "supreme" in c_raw.lower():
@@ -905,6 +937,10 @@ def infer_court_from_citation(citation: str, raw_text: str = "", court_hint: str
         return "High Court of Balochistan"
     if "islamabad" in combined:
         return "Islamabad High Court"
+
+    bracketed = extract_bracketed_court(clean_txt_snippet) or extract_bracketed_court(str(raw_text or ""))
+    if bracketed:
+        return bracketed
 
     return clean_court_name(court_name="", title="", case_id=citation, text=raw_text) or "Court not identified"
 
@@ -1106,6 +1142,8 @@ COLLISION_WHITELIST = {
     "2007 YLR 2827",
     "2006_YLR_3278",
     "2006 YLR 3278",
+    "2006_YLR_96",
+    "2006 YLR 96",
 }
 
 KNOWN_COLLISIONS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "known_collisions.json")
@@ -2089,7 +2127,8 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
     ylr_verified_keys = [
         "2006_YLR_1206", "2006 YLR 1206",
         "2007_YLR_2827", "2007 YLR 2827",
-        "2006_YLR_3278", "2006 YLR 3278"
+        "2006_YLR_3278", "2006 YLR 3278",
+        "2006_YLR_96", "2006 YLR 96"
     ]
     if any(k in card_cit or k in card_title for k in ylr_verified_keys) or any(k in str(c.get("case_id", "")) for k in ylr_verified_keys):
         c["court_name"] = "Lahore High Court"
@@ -3121,7 +3160,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 is_whitelisted = (
                     case_id in COLLISION_WHITELIST or
                     neutral_cit in COLLISION_WHITELIST or
-                    any(k in str(case_id).lower() or k in str(neutral_cit).lower() for k in ["2006_ylr_1206", "2006 ylr 1206", "2007_ylr_2827", "2007 ylr 2827", "2006_ylr_3278", "2006 ylr 3278"])
+                    any(k in str(case_id).lower() or k in str(neutral_cit).lower() for k in ["2006_ylr_1206", "2006 ylr 1206", "2007_ylr_2827", "2007 ylr 2827", "2006_ylr_3278", "2006 ylr 3278", "2006_ylr_96", "2006 ylr 96"])
                 )
                 if is_whitelisted or raw_c_type == "full_text":
                     c_type_val = "full_text"
@@ -3208,7 +3247,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     m_text = str(meta_m.get('text') or meta_m.get('text_content') or meta_m.get('text_preview') or meta_m.get('full_text') or '').strip()
                     m_ctype = str(meta_m.get("content_type") or "").lower()
                     m_cid_val = str(meta_m.get("citation") or meta_m.get("neutral_citation") or meta_m.get("case_id") or m.get("id") or "")
-                    if any(k in m_cid_val.lower() for k in ["2006_ylr_1206", "2006 ylr 1206", "2007_ylr_2827", "2007 ylr 2827", "2006_ylr_3278", "2006 ylr 3278"]) or m_cid_val in COLLISION_WHITELIST:
+                    if any(k in m_cid_val.lower() for k in ["2006_ylr_1206", "2006 ylr 1206", "2007_ylr_2827", "2007 ylr 2827", "2006_ylr_3278", "2006 ylr 3278", "2006_ylr_96", "2006 ylr 96"]) or m_cid_val in COLLISION_WHITELIST:
                         continue
                     if m.get("is_fts_fallback") or meta_m.get("is_fts_fallback") or m_ctype == "postgres_fts_fallback":
                         fts_cases.append(m_cid_val)
@@ -3981,7 +4020,7 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
         if not rec_dict:
             return rec_dict
         c_name = rec_dict.get("court_name") or rec_dict.get("court")
-        ylr_cases = ["2006_YLR_1206", "2006 YLR 1206", "2007_YLR_2827", "2007 YLR 2827", "2006_YLR_3278", "2006 YLR 3278"]
+        ylr_cases = ["2006_YLR_1206", "2006 YLR 1206", "2007_YLR_2827", "2007 YLR 2827", "2006_YLR_3278", "2006 YLR 3278", "2006_YLR_96", "2006 YLR 96"]
         if any(k in str(rec_dict.get("case_id") or "").upper() or k in str(rec_dict.get("neutral_citation") or "").upper() for k in ylr_cases):
             rec_dict["court_name"] = "Lahore High Court"
             rec_dict["court"] = "Lahore High Court"
