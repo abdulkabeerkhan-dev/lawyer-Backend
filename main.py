@@ -3709,8 +3709,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                 from core.precedent_tracker import check_precedent_currency, format_precedent_status_banner
                 q_annot = (
                     check_precedent_currency(user_prompt) or
-                    (check_precedent_currency("1958_PLD_SC_533") if ("1958" in user_prompt and "533" in user_prompt) else None) or
-                    (check_precedent_currency("2004_CLC_1186") if ("2004" in user_prompt and "1186" in user_prompt) else None)
+                    (check_precedent_currency("1958_PLD_SC_533") if ("1958" in user_prompt and "533" in user_prompt) else None)
                 )
                 if q_annot:
                     top_precedent_status = q_annot.get("status")
@@ -3734,7 +3733,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     "citations": citations_payload,
                     "query_id": inserted_row_id,
                     "mode": mode,
-                    "truncated": False,
+                    "truncated": is_token_truncated,
                     "precedent_status": top_precedent_status,
                     "precedent_status_warning": top_precedent_warning,
                     "superseding_citation": top_superseding_citation,
@@ -4495,9 +4494,6 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
 
             if status == "done":
                 res = current_job.get("result") or {}
-                # Ensure truncated is False so frontend never shows cut-short message
-                if isinstance(res, dict):
-                    res["truncated"] = False
                 yield f"data: {json.dumps({'status': 'done', 'result': res})}\n\n"
                 yield "data: [DONE]\n\n"
                 break
