@@ -40,33 +40,43 @@ pc = Pinecone(api_key=PINECONE_API_KEY)
 index = pc.Index(PINECONE_INDEX_NAME)
 
 
-def get_all_vector_ids() -> List[str]:
+def get_all_vector_ids(force_refresh: bool = False) -> List[str]:
     """Retrieve all vector IDs in namespace 'judgments', caching them locally."""
-    if os.path.exists(CACHE_IDS_FILE):
+    if not force_refresh and os.path.exists(CACHE_IDS_FILE):
         try:
             with open(CACHE_IDS_FILE, "r", encoding="utf-8") as f:
                 cached_ids = json.load(f)
-            if len(cached_ids) >= 29000:
+            if len(cached_ids) >= 86000:
                 logger.info(f"Loaded {len(cached_ids):,} vector IDs from cache ({CACHE_IDS_FILE})")
                 return cached_ids
         except Exception as e:
             logger.warning(f"Cache read error: {e}")
 
-    logger.info(f"Listing all vectors from Pinecone namespace '{NAMESPACE}'...")
-    all_ids = []
-    max_retries = 3
+    logger.info(f"Listing all vectors from Pinecone namespace '{NAMESPACE}' using parallel prefix enumeration...")
+    # Base prefixes: 0-9 and a-f; split prefix '2' into 20-2f because it has ~37k items
+    prefixes = []
+    for c in "013456789abcdef":
+        prefixes.append(c)
+    for c in "0123456789abcdef":
+        prefixes.append("2" + c)
 
-    for retry in range(max_retries):
-        try:
-            all_ids = []
-            for page in index.list(namespace=NAMESPACE):
-                for item in page:
-                    vid = item if isinstance(item, str) else getattr(item, 'id', str(item))
-                    all_ids.append(vid)
-            break
-        except Exception as e:
-            logger.warning(f"Error listing vectors (attempt {retry+1}/{max_retries}): {e}")
-            time.sleep(2)
+    all_ids = []
+    def fetch_prefix(pfx):
+        p_ids = []
+        for page in index.list(namespace=NAMESPACE, prefix=pfx):
+            for item in page:
+                vid = item if isinstance(item, str) else getattr(item, 'id', str(item))
+                p_ids.append(vid)
+        return p_ids
+
+    with ThreadPoolExecutor(max_workers=20) as executor:
+        futures = {executor.submit(fetch_prefix, pfx): pfx for pfx in prefixes}
+        for f in as_completed(futures):
+            p_ids = f.result()
+            all_ids.extend(p_ids)
+
+    # De-duplicate just in case
+    all_ids = list(dict.fromkeys(all_ids))
 
     logger.info(f"Enumerated {len(all_ids):,} vector IDs in namespace '{NAMESPACE}'")
     if all_ids:
@@ -94,11 +104,13 @@ def fetch_batch_metadata(batch_ids: List[str]) -> List[Dict[str, Any]]:
                         "id": str(vid),
                         "text": text,
                         "metadata": {
+                            "supabase_id": meta.get("supabase_id") or "",
                             "case_id": meta.get("case_id") or meta.get("canonical_id") or vid,
                             "citation": meta.get("citation") or meta.get("neutral_citation") or "",
                             "case_title": meta.get("case_title") or meta.get("title") or "",
                             "court": meta.get("court") or meta.get("court_name") or "",
                             "decision_date": meta.get("decision_date") or meta.get("year") or "",
+                            "content_type": meta.get("content_type", "unknown"),
                             "sections": meta.get("sections") or [],
                             "statutes": meta.get("statutes") or [],
                             "chunk_index": meta.get("chunk_index", 0),

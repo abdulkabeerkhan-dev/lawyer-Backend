@@ -239,6 +239,33 @@ class TestLegalGuardrails(unittest.TestCase):
         clean_errors = lint_legal_output(good_output, query_context="two special laws in conflict with non-obstante clause which would prevail")
         self.assertFalse(any("Syed Mushahid Shah" in e for e in clean_errors))
 
+    def test_headnote_only_disclosure_guardrail(self):
+        """
+        Test Rule 19: Answers citing headnote_only precedents must include the
+        mandatory disclosure (headnote summary + advice to verify against certified text).
+        """
+        mock_chunks = [
+            {
+                "citation": "2026 SCMR 99",
+                "content_type": "headnote_only",
+                "title": "Binyameen v. The State"
+            }
+        ]
+
+        # Case 1: Answer cites 2026 SCMR 99 without any disclosure -> MUST fail
+        bad_answer = "In 2026 SCMR 99, the Supreme Court held that the accused was entitled to bail under Section 497(2) CrPC."
+        errors = lint_legal_output(bad_answer, context_chunks=mock_chunks)
+        self.assertTrue(any("2026 SCMR 99" in e and "headnote-only" in e for e in errors))
+
+        # Case 2: Answer cites 2026 SCMR 99 with full Directive 13 disclosure -> MUST pass
+        good_answer = (
+            "In 2026 SCMR 99, the reported headnote summary indicates that bail was granted under Section 497(2) CrPC. "
+            "Note: Only the editorial headnote summary is currently recorded in the database; counsel is advised to verify "
+            "the proposition against the certified official full judgment text before presenting in pleadings."
+        )
+        clean_errors = lint_legal_output(good_answer, context_chunks=mock_chunks)
+        self.assertFalse(any("headnote-only" in e for e in clean_errors))
+
 if __name__ == '__main__':
     unittest.main()
 

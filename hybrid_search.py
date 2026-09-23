@@ -149,19 +149,45 @@ import datetime
 
 def get_court_authority_weight(citation: str, court_name: str = "") -> float:
     """
-    Under Article 189 of the Constitution of Pakistan, Supreme Court decisions
-    are binding on all courts in Pakistan. High Court decisions under Article 201
-    bind subordinate courts in their respective province.
+    Under Article 189 of the Constitution of Pakistan, Supreme Court of Pakistan
+    decisions are binding on all courts in Pakistan (1.35x multiplier).
+    Recognized provincial High Court decisions under Article 201 bind subordinate
+    courts in their respective province (1.05x multiplier).
+    Historical/external courts (Privy Council, Dhaka High Court, Federal Court,
+    AJK courts, Board of Revenue) and unresolved records receive a neutral 1.0x weight.
     """
     cit_upper = (citation or "").upper()
     court_upper = (court_name or "").upper()
 
-    # Supreme Court carries highest weight (Apex binding precedent)
-    if "SCMR" in cit_upper or "SC" in cit_upper or "SUPREME" in court_upper:
+    # 1. Check for non-Pakistani or pre-constitutional/special jurisdictions first -> neutral 1.0x
+    neutral_courts = [
+        "AZAD KASHMIR", "AJ&K", "AJK", "DHAKA", "DACCA", "EAST BENGAL", "EAST PAKISTAN",
+        "PRIVY COUNCIL", "PRIVY-COUNCIL", "FEDERAL COURT", "FEDERAL-COURT",
+        "BOARD OF REVENUE", "REVENUE", "INDIA", "UNRESOLVED", "COURT OF RECORD",
+        "COURT NOT IDENTIFIED", "UNKNOWN", "FEDERAL CONSTITUTIONAL COURT", "FEDERAL-CONSTITUTIONAL-COURT"
+    ]
+    if any(nc in court_upper for nc in neutral_courts):
+        return 1.0
+
+    # 2. Supreme Court of Pakistan (Apex binding precedent under Art. 189)
+    if "SUPREME COURT OF PAKISTAN" in court_upper:
         return 1.35
-    # High Courts (Principal & Benches)
-    if any(h in cit_upper for h in ["PLD", "PCRLJ", "CLC", "YLR", "MLD", "PTD", "PLC", "CLD", "PLJ", "NLR"]):
+    if "SCMR" in cit_upper or "PLD SC" in cit_upper or "PLD_SC_" in cit_upper:
+        return 1.35
+
+    # 3. Recognized Pakistani High Courts under Art. 201 (LHC, SHC, PHC, BHC, IHC)
+    recognized_high_courts = [
+        "LAHORE HIGH COURT", "HIGH COURT OF SINDH", "PESHAWAR HIGH COURT",
+        "HIGH COURT OF BALOCHISTAN", "ISLAMABAD HIGH COURT"
+    ]
+    if any(hc in court_upper for hc in recognized_high_courts):
         return 1.05
+
+    # 4. Fallback on citation reporter if court_name was empty/unspecified
+    if not court_upper or court_upper in ("HIGH COURT", "COURT"):
+        if any(h in cit_upper for h in ["PCRLJ", "CLC", "YLR", "MLD", "PTD", "PLC", "CLD", "PLJ", "NLR"]):
+            return 1.05
+
     return 1.0
 
 
@@ -181,24 +207,19 @@ def extract_year_num(year_val: Any, citation: str = "", doc_id: str = "") -> int
 
 def get_recency_weight(year_val: Any, citation: str = "", doc_id: str = "") -> float:
     """
-    Temporal precedence weighting: Newer decisions prevent applying overruled
-    doctrines. Gives high priority to post-2017/2020/2024 decisions and solid
-    priority to post-2007 apex developments.
+    Temporal precedence weighting: Gently prefers recent rulings without
+    penalizing or burying landmark constitutional and apex precedents.
     """
     y = extract_year_num(year_val, citation, doc_id)
     if not y or y < 1900:
         return 1.0
     if y >= 2024:
-        return 1.35
+        return 1.06
     if y >= 2020:
-        return 1.28
+        return 1.04
     if y >= 2017:
-        return 1.22
-    if y >= 2010:
-        return 1.12
-    if y >= 2000:
-        return 1.00
-    return 0.92
+        return 1.02
+    return 1.00
 
 
 # ---------------------------------------------------------------------------

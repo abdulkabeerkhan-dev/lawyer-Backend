@@ -1,0 +1,702 @@
+[
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "1",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_1",
+    "display_name": "Section 1",
+    "title": "Short title, extent and commencement",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "2",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_2",
+    "display_name": "Section 2",
+    "title": "Definitions (building, final order, landlord, pagri, premises, prescribed, rent, Rent Registrar, Rent Tribunal, sub-tenant, tenancy agreement, tenant)",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_3",
+    "display_name": "Section 3",
+    "title": "Exemption of premises owned by Federal Government, Provincial Government or local authority",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "4",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_4",
+    "display_name": "Section 4",
+    "title": "Act to override other laws",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "5",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_5",
+    "display_name": "Section 5",
+    "title": "Agreement between landlord and tenant in writing and registered with Rent Registrar",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "6",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_6",
+    "display_name": "Section 6",
+    "title": "Contents of tenancy agreement",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "7",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_7",
+    "display_name": "Section 7",
+    "title": "Payment of rent by bank deposit, cheque or receipt",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "8",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_8",
+    "display_name": "Section 8",
+    "title": "Existing tenancy without written agreement to be regularized within two years",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "9",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_9",
+    "display_name": "Section 9",
+    "title": "Effect of non-compliance with registration; fine",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "10",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_10",
+    "display_name": "Section 10",
+    "title": "Effect of other agreements",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "11",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_11",
+    "display_name": "Section 11",
+    "title": "Subletting not allowed without written consent of landlord",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "12",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_12",
+    "display_name": "Section 12",
+    "title": "Obligations of landlord (maintenance, taxes, essential services)",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "13",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_13",
+    "display_name": "Section 13",
+    "title": "Obligations of tenant (timely payment of rent, reasonable care, surrender of possession)",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "14",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_14",
+    "display_name": "Section 14",
+    "title": "Reimbursement of expenses incurred on repairs",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "15",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_15",
+    "display_name": "Section 15",
+    "title": "Grounds for eviction (expiry of tenancy, default in rent, subletting, breach of agreement, misuse, destruction)",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "16",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_16",
+    "display_name": "Section 16",
+    "title": "Establishment of Rent Tribunal",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "17",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_17",
+    "display_name": "Section 17",
+    "title": "Rent Registrar; appointment and functions",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "18",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_18",
+    "display_name": "Section 18",
+    "title": "Staff and establishment of Rent Tribunal",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "19",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_19",
+    "display_name": "Section 19",
+    "title": "Filing of application for eviction or other relief",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "20",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_20",
+    "display_name": "Section 20",
+    "title": "Application for deposit of rent",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "21",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_21",
+    "display_name": "Section 21",
+    "title": "Appearance of parties and consequences of non-appearance",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "22",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_22",
+    "display_name": "Section 22",
+    "title": "Leave to contest eviction application; affidavit showing reasonable grounds",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "23",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_23",
+    "display_name": "Section 23",
+    "title": "Written reply upon grant of leave to contest",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "24",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_24",
+    "display_name": "Section 24",
+    "title": "Payment of rent and other dues pending proceedings",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "25",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_25",
+    "display_name": "Section 25",
+    "title": "Recording of evidence by Rent Tribunal",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "26",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_26",
+    "display_name": "Section 26",
+    "title": "Rent Tribunal to exercise powers of Civil Court",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "27",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_27",
+    "display_name": "Section 27",
+    "title": "Period for disposal of application within four months",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "28",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_28",
+    "display_name": "Section 28",
+    "title": "Appeal to District Judge within thirty days against final order",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "29",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_29",
+    "display_name": "Section 29",
+    "title": "General power of transfer of cases",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "30",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_30",
+    "display_name": "Section 30",
+    "title": "Transfer of ownership during tenancy",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "31",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_31",
+    "display_name": "Section 31",
+    "title": "Execution of orders of Rent Tribunal",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "32",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_32",
+    "display_name": "Section 32",
+    "title": "Indemnity for acts done in good faith",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "33",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_33",
+    "display_name": "Section 33",
+    "title": "Power to make rules",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "34",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_34",
+    "display_name": "Section 34",
+    "title": "Provisions of Qanun-e-Shahadat Order and Code of Civil Procedure not to apply",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "PRPA_2009",
+    "act_name": "Punjab Rented Premises Act, 2009",
+    "provision_type": "section",
+    "primary_num": "35",
+    "secondary_num": null,
+    "canonical_id": "PRPA_2009_SEC_35",
+    "display_name": "Section 35",
+    "title": "Repeal of Punjab Urban Rent Restriction Ordinance 1959 and savings",
+    "status": {
+      "federal": "not_applicable",
+      "punjab": "in_force",
+      "sindh": "not_applicable",
+      "kp": "not_applicable",
+      "balochistan": "not_applicable"
+    },
+    "superseded_reference": null,
+    "source_citation": "Punjab Gazette (Extraordinary), Punjab Act VII of 2009; punjablaws.gov.pk/laws/498.html",
+    "source_verified_date": "2026-09-23"
+  }
+]

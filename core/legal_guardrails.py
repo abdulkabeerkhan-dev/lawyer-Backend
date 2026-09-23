@@ -158,7 +158,7 @@ MANDATORY ADJUDICATION RULES:
 """
 
 
-def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
+def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: Optional[List[Any]] = None) -> List[str]:
     """
     Deterministically scans generated legal drafts for severe statutory hallucinations,
     limitation misstatements, foreign acts, phantom CPC sections, and territorial mismatches.
@@ -308,6 +308,18 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
         if ("informer" in text_lower or "informant" in text_lower) and re.search(r'(?:omission|withholding|non-production|failure\s+to\s+produce)\s+(?:of\s+)?(?:the\s+)?informer\s+is\s+(?:not\s+fatal|curable|not\s+a\s+fatal\s+defect)', text_lower):
             errors.append("Erroneously holding that non-production of the informer is not fatal (Controlling law under Supreme Court PLD 2007 SC 302 and 2011 SCMR 1062: withholding the informer from the witness box is a fatal defect resulting in dismissal of the pre-emption suit).")
 
+    # Rule 13: Phase 2 Statutory Citation Validation & Hybrid Hallucination Interception
+    try:
+        from core.statutory_validator import validate_citations_in_text
+        stat_res = validate_citations_in_text(draft_text)
+        for h in stat_res.get("hybrids", []):
+            errors.append(f"Hybrid Statutory Hallucination: '{h['raw_citation']}' conflates a substantive Section with a procedural Order/Rule in the Code of Civil Procedure, 1908 (these do not exist as a single combined provision).")
+        for u in stat_res.get("unverified", []):
+            errors.append(f"Unverified Statutory Citation: '{u['raw_citation']}' could not be verified against official bare-act lookup tables.")
+    except Exception:
+        pass
+
+
     # Rule 13: CNSA 1997 narcotics chain of custody / safe transmission (Ikramullah / Imam Bakhsh)
     if any(k in text_lower or k in query_lower for k in ["cnsa", "narcotic", "charas", "heroin", "opium", "chain of custody", "malkhana", "chemical examiner"]):
         if ("chain of custody" in text_lower or "moharrir" in text_lower or "malkhana" in text_lower or "chemical examiner" in text_lower) and re.search(r'(?:failure\s+to\s+examine|non-production\s+of)\s+(?:the\s+)?(?:moharrir|carrier|official|constable)\s+is\s+(?:not\s+fatal|curable|a\s+mere\s+irregularity)', text_lower):
@@ -343,6 +355,39 @@ def lint_legal_output(draft_text: str, query_context: str = "") -> List[str]:
     if any(k in query_lower for k in ["non-obstante", "non obstante", "non onstante", "non instante", "two special laws", "conflict between two special laws", "which would prevail", "which will prevail"]):
         if re.search(r'\bearlier\s+(?:special\s+)?(?:law|statute|enactment)\s+(?:shall\s+|will\s+|automatically\s+)?prevails?\b', text_lower) and not any(k in text_lower for k in ["mushahid shah", "2017 scmr 1218", "leges posteriores"]):
             errors.append("Erroneously stating that an earlier special law automatically prevails over a subsequent special law when both have non-obstante clauses (Controlling law under Syed Mushahid Shah v. FIA 2017 SCMR 1218: the statute enacted later in time generally prevails under leges posteriores priores contrarias abrogant, subject to legislative purpose and constitutional safeguards under Article 25).")
+
+    # Rule 19: Headnote Transparency & Mandatory Verification Disclosure (Directive 13)
+    # Answers citing or relying on precedents tagged as 'headnote_only' must disclose that only
+    # a headnote summary is available and advise verifying against official/certified text.
+    headnote_cits: Set[str] = set()
+    if context_chunks:
+        for c in context_chunks:
+            meta = c.get("metadata", {}) if isinstance(c, dict) else (getattr(c, "metadata", {}) or {})
+            c_type = meta.get("content_type") or (c.get("content_type") if isinstance(c, dict) else None)
+            if c_type == "headnote_only":
+                cit = meta.get("citation") or meta.get("neutral_citation") or (c.get("citation") if isinstance(c, dict) else None)
+                if cit:
+                    headnote_cits.add(str(cit).strip())
+
+    # Also extract from query_context if formatted as retrieved precedent blocks
+    if "headnote_only" in query_lower:
+        blocks = re.findall(r'(?:neutral\s+)?citation:\s*([^\n]+).*?content\s+type:\s*headnote_only', query_context, re.IGNORECASE | re.DOTALL)
+        for b_cit in blocks:
+            headnote_cits.add(b_cit.strip())
+
+    for h_cit in headnote_cits:
+        norm_cit = re.sub(r'[\s_]+', ' ', h_cit).strip().lower()
+        clean_key = re.sub(r'[^a-z0-9]', '', norm_cit)
+        clean_text = re.sub(r'[^a-z0-9]', '', text_lower)
+        if norm_cit and (norm_cit in text_lower or (clean_key and clean_key in clean_text)):
+            has_headnote_mention = any(k in text_lower for k in ["headnote", "head-note", "editorial summary", "summary only", "digest summary"])
+            has_verify_advice = any(k in text_lower for k in ["verify", "verification", "certified copy", "certified text", "official text", "full judgment text", "original judgment", "primary opinion"])
+            if not (has_headnote_mention and has_verify_advice):
+                errors.append(
+                    f"Citing headnote-only precedent ('{h_cit}') without mandatory transparency disclosure (Directive 13). "
+                    "You must explicitly disclose to the advocate that only the reported headnote summary is currently available in the database, "
+                    "avoid quoting headnotes as the court's verbatim words, and advise verifying against the official/certified full judgment text."
+                )
 
     return errors
 
