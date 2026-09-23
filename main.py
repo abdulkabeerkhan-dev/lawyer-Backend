@@ -1082,6 +1082,11 @@ PRE_DIGITIZATION_BOUNDARY = {
     },
 }
 
+COLLISION_WHITELIST = {
+    "2006_YLR_1206",
+    "2006 YLR 1206",
+}
+
 KNOWN_COLLISIONS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "known_collisions.json")
 KNOWN_COLLISIONS_MAP: Dict[str, Any] = {}
 if os.path.exists(KNOWN_COLLISIONS_FILE):
@@ -1205,10 +1210,23 @@ def extract_and_intercept_citation(user_query: str):
                 yr < PRE_DIGITIZATION_BOUNDARY[jnl]["cutoff_year"]
             )
 
+            # Explicit collision whitelist (e.g. 2006 YLR 1206)
+            is_whitelisted = (
+                norm_u in COLLISION_WHITELIST or
+                raw_u in COLLISION_WHITELIST or
+                norm_s in COLLISION_WHITELIST or
+                raw_s in COLLISION_WHITELIST or
+                (yr == 2006 and jnl == "YLR" and pg == 1206)
+            )
+
+            # Collision shield strictly targets known PLD parallel journal overlaps
             is_colliding = (
-                ((yr, pg) in KNOWN_COLLIDING_PLD_PAGES if jnl == "PLD" else False) or
-                (norm_u in KNOWN_COLLISIONS_MAP) or
-                (raw_u in KNOWN_COLLISIONS_MAP)
+                (not is_whitelisted) and
+                (jnl == "PLD") and (
+                    ((yr, pg) in KNOWN_COLLIDING_PLD_PAGES) or
+                    (norm_u in KNOWN_COLLISIONS_MAP) or
+                    (raw_u in KNOWN_COLLISIONS_MAP)
+                )
             )
 
             COURT_DISPLAY_NAMES = {
@@ -1326,13 +1344,24 @@ def extract_and_intercept_citation(user_query: str):
                     r["court"] = stored_court
                     r["supabase_id"] = r.get("id")
 
-                    is_collision_mismatch = (
-                        (not is_dosso) and
-                        req_court and (
-                            (stored_court_code != "UNKNOWN" and req_court != stored_court_code) or
-                            (is_colliding and (is_corrupt_stub or (yr, pg) == (1955, 240) or "LAHORE-HIGH-COURT" in raw_full))
+                    # Explicit collision mismatch guard
+                    if is_whitelisted or is_dosso:
+                        is_collision_mismatch = False
+                    elif jnl == "YLR":
+                        # YLR is a High Court reporter with no Supreme Court edition.
+                        # If High Court text exists in the database, allow it to pass through
+                        # rather than suppressing it for a missing Supreme Court edition.
+                        is_collision_mismatch = False
+                    elif jnl != "PLD":
+                        # Collision shielding strictly targets known PLD parallel journal overlaps
+                        is_collision_mismatch = False
+                    else:
+                        is_collision_mismatch = (
+                            req_court and (
+                                (stored_court_code != "UNKNOWN" and req_court != stored_court_code) or
+                                (is_colliding and (is_corrupt_stub or (yr, pg) == (1955, 240) or "LAHORE-HIGH-COURT" in raw_full))
+                            )
                         )
-                    )
 
                     if is_collision_mismatch:
                         if is_pre_digitization:

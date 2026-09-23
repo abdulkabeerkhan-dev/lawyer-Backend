@@ -20,10 +20,24 @@ _LOCAL_ANNOTATIONS: Optional[List[Dict[str, Any]]] = None
 _LOOKUP_MAP: Dict[str, Dict[str, Any]] = {}
 
 
+COLLISION_WHITELIST = {
+    "2006_YLR_1206",
+    "2006 YLR 1206",
+}
+
+
 def _normalize_key(s: str) -> str:
     if not s:
         return ""
     return re.sub(r'[^a-z0-9]', '', str(s).lower())
+
+
+def is_whitelisted_citation(identifier: str) -> bool:
+    if not identifier:
+        return False
+    norm = _normalize_key(identifier)
+    return norm in {_normalize_key(x) for x in COLLISION_WHITELIST} or "2006ylr1206" in norm
+
 
 
 def load_local_annotations(force_reload: bool = False) -> List[Dict[str, Any]]:

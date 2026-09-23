@@ -49,6 +49,18 @@ class TestPreDigitizationBoundary(unittest.TestCase):
         self.assertNotEqual(card.get("status"), "pre_digitization_boundary")
         self.assertIn("Havover Fire Insurance", card.get("case_title", ""))
 
+    def test_ylr_2006_1206_whitelisted_and_served(self):
+        """2006 YLR 1206 must pass through full text without collision suppression even if SC is in query."""
+        for query in ["2006 YLR 1206", "Supreme Court 2006 YLR 1206", "2006 YLR 1206 SC"]:
+            card, _ = extract_and_intercept_citation(query)
+            self.assertIsNotNone(card, f"Intercept failed for query: {query}")
+            self.assertNotEqual(card.get("status"), "known_collision_unavailable", f"Unexpected collision suppression for {query}")
+            self.assertNotEqual(card.get("status"), "pre_digitization_boundary")
+            self.assertEqual(card.get("court_name"), "Lahore High Court")
+            self.assertEqual(card.get("case_id"), "2006_YLR_1206")
+            self.assertTrue(len(card.get("full_text") or "") > 1000, "Full text was missing or truncated")
+            self.assertIn("FAIZ ULLAH", card.get("full_text", "").upper())
+
 
 if __name__ == "__main__":
     unittest.main()
