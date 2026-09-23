@@ -23,6 +23,10 @@ _LOOKUP_MAP: Dict[str, Dict[str, Any]] = {}
 COLLISION_WHITELIST = {
     "2006_YLR_1206",
     "2006 YLR 1206",
+    "2007_YLR_2827",
+    "2007 YLR 2827",
+    "2006_YLR_3278",
+    "2006 YLR 3278",
 }
 
 
@@ -36,7 +40,7 @@ def is_whitelisted_citation(identifier: str) -> bool:
     if not identifier:
         return False
     norm = _normalize_key(identifier)
-    return norm in {_normalize_key(x) for x in COLLISION_WHITELIST} or "2006ylr1206" in norm
+    return norm in {_normalize_key(x) for x in COLLISION_WHITELIST} or any(k in norm for k in ["2006ylr1206", "2007ylr2827", "2006ylr3278"])
 
 
 
