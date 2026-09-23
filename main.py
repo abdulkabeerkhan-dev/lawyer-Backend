@@ -601,6 +601,10 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
     has_sc_reporter = "SCMR" in search_haystack or "PLD SC" in search_haystack or "PLD SUPREME COURT" in search_haystack or "S.C." in search_haystack
     is_hc_only = has_hc_reporter and not has_sc_reporter
 
+    # Explicit Whitelist: 2006 YLR 1206 is always Lahore High Court
+    if "2006_YLR_1206" in search_haystack or "2006 YLR 1206" in search_haystack:
+        return "Lahore High Court"
+
     # 1. Inspect explicit court_name input first (do not let text snippet keywords override explicit court metadata)
     if c_lower and c_lower not in ("unresolved", "court not identified", "unknown", "unknown court", "court of record", "not specified", "none", "high court", "court"):
         if is_hc_only and ("supreme" in c_lower or "scp" in c_lower):
@@ -683,8 +687,21 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
         return "Islamabad High Court"
 
     # 4. Fallback inspection: text snippet (ignore Nabha Road navigation boilerplate)
-    clean_txt_snippet = re.sub(r"(?i)35-Nabha Road[^\n]*", "", str(text or "")[:1500])
+    clean_txt_snippet = re.sub(r"(?i)35-Nabha Road[^\n]*", "", str(text or "")[:2000])
     text_lower = clean_txt_snippet.lower()
+
+    # Direct city bracket tags common in Pakistani law reporters e.g. [Lahore], [Karachi], [Peshawar]
+    if re.search(r'\[\s*(?:Lahore|Rawalpindi|Multan|Bahawalpur)\s*\]', clean_txt_snippet, re.IGNORECASE):
+        return "Lahore High Court"
+    if re.search(r'\[\s*(?:Karachi|Sindh|Sukkur|Hyderabad)\s*\]', clean_txt_snippet, re.IGNORECASE):
+        return "High Court of Sindh"
+    if re.search(r'\[\s*(?:Peshawar|Abbottabad|D\.I\.\s*Khan|Mingora)\s*\]', clean_txt_snippet, re.IGNORECASE):
+        return "Peshawar High Court"
+    if re.search(r'\[\s*(?:Quetta|Balochistan|Sibi|Turbat)\s*\]', clean_txt_snippet, re.IGNORECASE):
+        return "High Court of Balochistan"
+    if re.search(r'\[\s*Islamabad\s*\]', clean_txt_snippet, re.IGNORECASE):
+        return "Islamabad High Court"
+
     if any(x in text_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
         if "high" in text_lower: return "High Court of Azad Jammu & Kashmir"
         if "service tribunal" in text_lower: return "AJK Service Tribunal"
@@ -2064,6 +2081,25 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
         c["precedent_superseded_by"] = "PLD 1972 SC 139"
         c["doctrinal_note"] = "The doctrine of revolutionary legality validating extra-constitutional seizure of power was expressly rejected and declared bad law."
 
+    # Explicit Whitelist & Court Resolution for 2006 YLR 1206
+    if ("2006" in card_cit and "YLR" in card_cit and "1206" in card_cit) or "2006_YLR_1206" in card_cit or "2006 YLR 1206" in card_title:
+        c["court_name"] = "Lahore High Court"
+        c["court"] = "Lahore High Court"
+        c["content_type"] = "full_text"
+        c["is_headnote"] = False
+
+    # Dynamic court cleanup fallback
+    if not c.get("court_name") or c.get("court_name") in ("Court not identified", "Court of Record", "Unknown", "unknown court", "None"):
+        resolved_c = clean_court_name(
+            court_name="",
+            title=c.get("case_name") or c.get("title") or "",
+            case_id=c.get("case_id") or c.get("citation") or "",
+            text=c.get("raw_judgment_text") or c.get("preview") or ""
+        )
+        if resolved_c and resolved_c != "Court not identified":
+            c["court_name"] = resolved_c
+            c["court"] = resolved_c
+
     return c
 
 
@@ -2751,7 +2787,13 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             c_name = "Supreme Court of Pakistan" if any(k in str(c_cit).upper() for k in ["SCMR", "SC", "SUPREME COURT"]) else "High Court"
                         
                         raw_txt_full = row.get("full_text") or ""
-                        c_type = row.get("content_type") or ("headnote_only" if len(raw_txt_full.split()) < 300 else "full_text")
+                        c_cit_str = str(c_cit).lower()
+                        c_id_str = str(row.get("case_id") or "").lower()
+                        if "2006_ylr_1206" in c_id_str or "2006 ylr 1206" in c_cit_str or c_cit in COLLISION_WHITELIST or row.get("case_id") in COLLISION_WHITELIST:
+                            c_type = "full_text"
+                            c_name = "Lahore High Court"
+                        else:
+                            c_type = row.get("content_type") or ("headnote_only" if len(raw_txt_full.split()) < 300 else "full_text")
 
                         boosted_matches.append({
                             "score": 0.99,
@@ -3100,10 +3142,13 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     meta_m = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
                     m_text = str(meta_m.get('text') or meta_m.get('text_content') or meta_m.get('text_preview') or meta_m.get('full_text') or '').strip()
                     m_ctype = str(meta_m.get("content_type") or "").lower()
+                    m_cid_val = str(meta_m.get("citation") or meta_m.get("neutral_citation") or meta_m.get("case_id") or m.get("id") or "")
+                    if "2006_ylr_1206" in m_cid_val.lower() or "2006 ylr 1206" in m_cid_val.lower() or m_cid_val in COLLISION_WHITELIST:
+                        continue
                     if m.get("is_fts_fallback") or meta_m.get("is_fts_fallback") or m_ctype == "postgres_fts_fallback":
-                        fts_cases.append(str(meta_m.get("citation") or meta_m.get("neutral_citation") or m.get("id")))
+                        fts_cases.append(m_cid_val)
                     elif m_ctype == "headnote_only" or (m_ctype in ("", "unknown", "none") and len(m_text.split()) < 300):
-                        headnote_cases.append(str(meta_m.get("citation") or meta_m.get("neutral_citation") or m.get("id")))
+                        headnote_cases.append(m_cid_val)
                 if fts_cases:
                     header += (
                         f"CRITICAL TRANSPARENCY REQUIREMENT (MANDATORY):\n"
@@ -3255,7 +3300,13 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
             c_date = extract_year_from_citation_or_date(intercepted_card.get("decision_date") or intercepted_card.get("year"), c_cit, c_id)
             pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(target_pdf_id))}"
 
-            c_type = intercepted_card.get("content_type") or ("headnote_only" if len(c_text.split()) < 300 else "full_text")
+            c_cit_str = str(c_cit).lower()
+            c_id_str = str(c_id).lower()
+            if "2006_ylr_1206" in c_id_str or "2006 ylr 1206" in c_cit_str or c_cit in COLLISION_WHITELIST or c_id in COLLISION_WHITELIST:
+                c_type = "full_text"
+                c_name = "Lahore High Court"
+            else:
+                c_type = intercepted_card.get("content_type") or ("headnote_only" if len(c_text.split()) < 300 else "full_text")
 
             precedent_card_dict = {
                 "case_id": c_id,
@@ -3591,6 +3642,10 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                 str(c.get("citation") or c.get("case_id"))
                 for c in (citations_payload or [])
                 if str(c.get("content_type", "")).lower() == "headnote_only"
+                and "2006_ylr_1206" not in str(c.get("case_id", "")).lower()
+                and "2006 ylr 1206" not in str(c.get("citation", "")).lower()
+                and c.get("case_id") not in COLLISION_WHITELIST
+                and c.get("citation") not in COLLISION_WHITELIST
             ]
             if headnote_cits and not any(k in display_answer.lower() for k in ["headnote", "short order"]):
                 headnote_banner = (
@@ -3861,7 +3916,10 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
         if not rec_dict:
             return rec_dict
         c_name = rec_dict.get("court_name") or rec_dict.get("court")
-        if not c_name or c_name in ("Court of Record", "Court not identified", "High Court"):
+        if "2006_YLR_1206" in str(rec_dict.get("case_id") or "").upper() or "2006 YLR 1206" in str(rec_dict.get("neutral_citation") or "").upper():
+            rec_dict["court_name"] = "Lahore High Court"
+            rec_dict["court"] = "Lahore High Court"
+        elif not c_name or c_name in ("Court of Record", "Court not identified", "High Court"):
             resolved = clean_court_name(court_name="", title=rec_dict.get("case_title") or "", case_id=rec_dict.get("case_id") or "", text=rec_dict.get("full_text") or "")
             if resolved and resolved != "Court not identified":
                 rec_dict["court_name"] = resolved
@@ -4522,8 +4580,8 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
                 yield "data: [DONE]\n\n"
                 break
 
-            # Heartbeat keepalive every 2 seconds to prevent Railway / Cloudflare SSE stream drops
-            if now - last_ping_time >= 2.0:
+            # Heartbeat keepalive every 1.5 seconds to prevent Railway / Cloudflare SSE stream drops
+            if now - last_ping_time >= 1.5:
                 last_ping_time = now
                 yield ": keepalive\n\n"
 
@@ -4532,14 +4590,15 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
                 yield "data: [DONE]\n\n"
                 break
 
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(0.2)
 
     return StreamingResponse(
         sse_generator(),
         media_type="text/event-stream",
         headers={
-            "Cache-Control": "no-cache",
+            "Cache-Control": "no-cache, no-transform",
             "Connection": "keep-alive",
+            "Content-Type": "text/event-stream; charset=utf-8",
             "X-Accel-Buffering": "no"
         }
     )

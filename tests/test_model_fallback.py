@@ -16,7 +16,7 @@ class TestModelFallback(unittest.TestCase):
         with patch.object(main, 'async_anthropic_client', mock_client):
             res = asyncio.run(main.safe_create_anthropic_message(model="claude-3-7-sonnet-20250219", messages=[]))
             self.assertEqual(res, "success_primary")
-            mock_client.messages.create.assert_called_once_with(model="claude-3-7-sonnet-20250219", messages=[])
+            mock_client.messages.create.assert_called_once_with(model="claude-3-7-sonnet-20250219", messages=[], max_tokens=8192)
 
     def test_safe_create_anthropic_message_non_404_raises(self):
         import main
