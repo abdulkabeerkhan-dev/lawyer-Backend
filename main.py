@@ -19,7 +19,7 @@ from pinecone import Pinecone
 from anthropic import AsyncAnthropic
 from supabase import create_client, Client
 from dotenv import load_dotenv
-from hybrid_search import BM25Index, HybridSearchEngine, reciprocal_rank_fusion
+from hybrid_search import BM25Index, HybridSearchEngine, reciprocal_rank_fusion, get_court_authority_weight, get_recency_weight
 
 from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks, Request
 from fastapi.responses import StreamingResponse
@@ -2256,6 +2256,51 @@ def boost_banking_fio_precedents(query: str, hits: list) -> list:
     scored.sort(key=lambda x: x[0], reverse=True)
     return [h for _, _, h in scored]
 
+def rerank_by_judicial_hierarchy_and_recency(hits: list) -> list:
+    """
+    Reranks candidate precedents by applying:
+    1. Direct citation boost preservation (score 9999.0).
+    2. Article 189 constitutional binding weight (Supreme Court 1.35x, High Court 1.05x).
+    3. Smooth contemporary recency lift (+0% for <=2010, up to +10% lift for 2018–2026).
+    Ensures that when older and modern authorities have comparable semantic relevance,
+    the contemporary ruling wins.
+    """
+    if not hits:
+        return hits
+
+    scored = []
+    for idx, h in enumerate(hits):
+        if isinstance(h, dict) and (h.get("is_boosted") or (isinstance(h.get("metadata"), dict) and h["metadata"].get("is_boosted"))):
+            scored.append((9999.0, -idx, h))
+            continue
+
+        meta = h.get("metadata", {}) if isinstance(h, dict) else getattr(h, "metadata", {}) or {}
+        cit = meta.get("citation", "") or meta.get("neutral_citation", "") or h.get("citation", "")
+        court = meta.get("court", "") or meta.get("court_name", "") or h.get("court", "") or h.get("court_name", "")
+        raw_year = meta.get("year", 0) or meta.get("decision_date", "") or meta.get("date", "") or h.get("year", 0)
+        doc_id = str(h.get("id") or meta.get("case_id") or "")
+
+        court_w = get_court_authority_weight(cit, court)
+        recency_w = get_recency_weight(raw_year, citation=cit, doc_id=doc_id)
+
+        base_s = float(h.get("final_rank_score") or 0.0)
+        if not base_s:
+            rrf_s = float(h.get("rrf_score") or 0.0)
+            if rrf_s > 0:
+                base_s = rrf_s * court_w * recency_w
+            else:
+                dense_s = float(h.get("dense_score") or h.get("similarity_score") or h.get("score") or 0.0)
+                base_s = dense_s * court_w * recency_w
+        else:
+            base_s = base_s
+
+        h["final_rank_score"] = base_s
+        scored.append((base_s, -idx, h))
+
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return [h for _, _, h in scored]
+
+
 SYSTEM_PROMPTS = {
     "criminal": "You are an elite Pakistani criminal law specialist, holding deep expertise in the Pakistan Penal Code (PPC) and Code of Criminal Procedure (CrPC).",
     "divorce_family": "You are a leading Pakistani family law expert, specializing in the Muslim Family Laws Ordinance, Dissolution of Muslim Marriages Act, and related custody jurisprudence.",
@@ -3000,6 +3045,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 filtered_matches.append(m)
 
             filtered_matches = boost_banking_fio_precedents(f"{sq_lower} {effective_user_query.lower()}", filtered_matches)
+            filtered_matches = rerank_by_judicial_hierarchy_and_recency(filtered_matches)
             primary_matches = filtered_matches[:3]
             secondary_matches = filtered_matches[3:6]
             aggregate_sources_matches.extend(primary_matches + secondary_matches)

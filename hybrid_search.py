@@ -209,17 +209,14 @@ def get_recency_weight(year_val: Any, citation: str = "", doc_id: str = "") -> f
     """
     Temporal precedence weighting: Gently prefers recent rulings without
     penalizing or burying landmark constitutional and apex precedents.
+    Year-based decay/boost gives up to a +10% lift for contemporary precedents (2010–2026).
     """
     y = extract_year_num(year_val, citation, doc_id)
     if not y or y < 1900:
         return 1.0
-    if y >= 2024:
-        return 1.06
-    if y >= 2020:
-        return 1.04
-    if y >= 2017:
-        return 1.02
-    return 1.00
+    recency_delta = max(0, y - 2010)
+    recency_boost = (recency_delta / 16.0) * 0.10  # up to +0.10 (10%) lift
+    return 1.0 + recency_boost
 
 
 # ---------------------------------------------------------------------------
