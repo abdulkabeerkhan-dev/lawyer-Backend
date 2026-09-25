@@ -43,3 +43,9 @@ test_garbled.py
 judgments_ids_cache.json
 pdf_occurrences.txt
 routes_found.txt
+reindex_queue*.json
+reindex_queue*.json.bak
+target_fetch_queue.json
+baseline_queue_overlap.json
+skipped_stubs.csv
+

@@ -26,6 +26,10 @@ from fastapi.responses import StreamingResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 
+from prompts.pleading_generator import PLEADING_SYSTEM_PROMPT
+from core.document_builder import generate_court_docx
+
+
 try:
     from docx import Document
     from docx.shared import Inches, Pt, RGBColor
@@ -1942,6 +1946,35 @@ def clean_scraper_artifacts(raw_text: str) -> str:
     t = re.sub(r'\s{2,}', ' ', t)
     return t.strip(" ,.-:\t\r\n")
 
+def generate_clean_snippet(full_text: str, max_words: int = 40) -> str:
+    """
+    Creates a clean, readable snippet from raw judgment text without cutting off mid-word.
+    Removes OCR artifacts and dangling dashes (e.g. ---Contention of petitioner).
+    """
+    if not full_text:
+        return "No text available."
+
+    # Clean up raw OCR artifacts, multiple dashes, and bracketed headers
+    clean_text = re.sub(r'-{2,}', ' ', full_text)
+    clean_text = re.sub(r'\[.*?\]', '', clean_text)
+    clean_text = re.sub(r'^[-\s:;.,]+', '', clean_text)
+    clean_text = re.sub(r'\s+', ' ', clean_text).strip()
+
+    # Split into words and truncate gracefully
+    words = clean_text.split()
+    if len(words) <= max_words:
+        clean_short = re.sub(r'[.,;:\-]+$', '', clean_text).strip()
+        return clean_short or clean_text
+
+    snippet = " ".join(words[:max_words])
+
+    # Ensure it ends on a complete word, and append an ellipsis
+    # Strip any trailing punctuation before adding the ellipsis
+    snippet = re.sub(r'[.,;:\-]+$', '', snippet).strip()
+
+    return snippet + "..."
+
+
 def extract_clean_ratio_snippet(text: str, max_chars: int = 280) -> str:
     if not text:
         return "Legal principle extracted from judgment record."
@@ -1969,19 +2002,19 @@ def extract_clean_ratio_snippet(text: str, max_chars: int = 280) -> str:
     for pat in PROCEDURAL_PREAMBLE_PATTERNS:
         clean_t = re.sub(pat, '', clean_t, flags=re.IGNORECASE | re.MULTILINE).strip()
 
-    # Search for ratio anchors
+    # Search for ratio anchors / keyword matches to extract clean context window
     ratio_anchor_pat = '|'.join(RATIO_ANCHORS)
     ratio_match = re.search(ratio_anchor_pat, clean_t, flags=re.IGNORECASE)
     if ratio_match:
         substance = clean_t[ratio_match.start():].strip()
         if len(substance) >= 15:
-            return substance[:max_chars].strip()
+            return generate_clean_snippet(substance, max_words=45)
 
     # Fallback to first non-preamble paragraph or cleaned text
     paragraphs = [p.strip() for p in clean_t.split('\n') if p.strip()]
     for p in paragraphs:
         if len(p) >= 20 and not any(re.search(pat, p, flags=re.IGNORECASE) for pat in PROCEDURAL_PREAMBLE_PATTERNS):
-            return p[:max_chars].strip()
+            return generate_clean_snippet(p, max_words=45)
 
     clean_t = re.sub(r'^\s*[\d\,\s\-\.\;\/\\]{5,}', '', clean_t).strip()
     if not clean_t or len(clean_t) < 15:
@@ -1989,10 +2022,14 @@ def extract_clean_ratio_snippet(text: str, max_chars: int = 280) -> str:
     digits_and_commas = len(re.findall(r'[\d\,\s]', clean_t))
     if len(clean_t) > 0 and (digits_and_commas / len(clean_t)) > 0.4:
         return "Legal principle extracted from judgment record."
-    return clean_t[:max_chars].strip()
+    return generate_clean_snippet(clean_t, max_words=45)
 
 def sanitize_holding_text(text: str) -> str:
-    return extract_clean_ratio_snippet(clean_scraper_artifacts(text), max_chars=300)
+    if not text:
+        return "Holding on record."
+    raw = extract_clean_ratio_snippet(clean_scraper_artifacts(text), max_chars=350)
+    return generate_clean_snippet(raw, max_words=45)
+
 
 def synthesize_canonical_citation(record: Dict[str, Any]) -> str:
     if not isinstance(record, dict):
@@ -2082,7 +2119,11 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
     clean_h = sanitize_holding_text(raw_holding)
     clean_h = re.sub(r'^(?:(?:19|20)\d{2}\s+[A-Za-z\s]+\s+\d+|(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC|PLJ|NLR)\s+(?:19|20)\d{2}(?:\s+[A-Za-z]+)?\s+\d+)\s*', '', clean_h, flags=re.IGNORECASE).strip()
     clean_h = re.sub(r'^(?:.+?\s+(?:VERSUS|VS\.?|V\.)\s+.+?)(?:(?<!Mst)\.\s*|\n|$)', '', clean_h, flags=re.IGNORECASE).strip()
-    c["holding"] = clean_h or "Holding on record."
+    final_holding = generate_clean_snippet(clean_h, max_words=45) if clean_h else "Holding on record."
+    c["holding"] = final_holding
+    c["Holding"] = c["holding"]
+    c["preview"] = c["holding"]
+
 
     # 4. Clean raw_judgment_text
     raw_text = str(c.get("raw_judgment_text") or c.get("preview") or "")
@@ -3164,10 +3205,11 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 )
                 if is_whitelisted or raw_c_type == "full_text":
                     c_type_val = "full_text"
-                    if "ylr" in str(neutral_cit).lower() or "ylr" in str(case_id).lower():
+                    if is_whitelisted:
                         court = "Lahore High Court"
+
                 elif not raw_c_type or str(raw_c_type).lower() in ("unknown", "none"):
-                    c_type_val = "full_text"
+                    c_type_val = "headnote_only" if len(text_content.split()) < 300 else "full_text"
                 else:
                     c_type_val = str(raw_c_type)
 
@@ -3194,9 +3236,13 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     target_cid = meta.get("supabase_id") or meta.get("id") or case_id or neutral_cit or title
                     pdf_url_val = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(target_cid))}"
 
+                clean_holding_snip = generate_clean_snippet(text_content, max_words=45)
                 aggregate_citations_payload.append({
                     "supabase_id": meta.get("supabase_id") or meta.get("id") or "",
-                    "case_id": case_id, "court": court, "court_name": court, "year": year_or_date, "preview": text_content,
+                    "case_id": case_id, "court": court, "court_name": court, "year": year_or_date, 
+                    "preview": clean_holding_snip,
+                    "holding": clean_holding_snip,
+                    "Holding": clean_holding_snip,
                     "title": title, "citation": neutral_cit, "score": match_score, "outcome": outcome_val,
                     "statutes": statutes_val, "sections": sections_val, "pdf_url": pdf_url_val,
                     "content_type": c_type_val,
@@ -3216,7 +3262,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 year_or_date = extract_year_from_citation_or_date(meta.get('date') or meta.get('decision_date') or meta.get('year'), meta.get('citation') or meta.get('neutral_citation'), case_id)
                 title = sanitize_case_title(clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Precedent on Record')) or 'Precedent on Record')))
                 neutral_cit = synthesize_canonical_citation(meta)
-                preview_snippet = text_content[:180] + "..."
+                preview_snippet = generate_clean_snippet(text_content, max_words=35)
+
                 cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
                 cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
                 if cid_key:
@@ -3251,8 +3298,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         continue
                     if m.get("is_fts_fallback") or meta_m.get("is_fts_fallback") or m_ctype == "postgres_fts_fallback":
                         fts_cases.append(m_cid_val)
-                    elif m_ctype == "headnote_only":
+                    elif m_ctype == "headnote_only" or (m_ctype in ("", "unknown", "none") and len(m_text.split()) < 300):
                         headnote_cases.append(m_cid_val)
+
                 if fts_cases:
                     header += (
                         f"CRITICAL TRANSPARENCY REQUIREMENT (MANDATORY):\n"
@@ -3412,13 +3460,16 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
             else:
                 c_type = intercepted_card.get("content_type") or ("headnote_only" if len(c_text.split()) < 300 else "full_text")
 
+            clean_holding_snip = generate_clean_snippet(c_text, max_words=45)
             precedent_card_dict = {
                 "case_id": c_id,
                 "supabase_id": c_supabase_id,
                 "court": c_name,
                 "court_name": c_name,
                 "year": c_date,
-                "preview": c_text,
+                "preview": clean_holding_snip,
+                "holding": clean_holding_snip,
+                "Holding": clean_holding_snip,
                 "title": c_title,
                 "citation": c_cit,
                 "score": 0.99,
@@ -4021,16 +4072,33 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
             return rec_dict
         c_name = rec_dict.get("court_name") or rec_dict.get("court")
         ylr_cases = ["2006_YLR_1206", "2006 YLR 1206", "2007_YLR_2827", "2007 YLR 2827", "2006_YLR_3278", "2006 YLR 3278", "2006_YLR_96", "2006 YLR 96"]
-        if any(k in str(rec_dict.get("case_id") or "").upper() or k in str(rec_dict.get("neutral_citation") or "").upper() for k in ylr_cases):
+        is_wl = (
+            any(k in str(rec_dict.get("case_id") or "").upper() or k in str(rec_dict.get("neutral_citation") or "").upper() for k in ylr_cases) or
+            rec_dict.get("case_id") in COLLISION_WHITELIST or
+            rec_dict.get("neutral_citation") in COLLISION_WHITELIST
+        )
+        if is_wl:
             rec_dict["court_name"] = "Lahore High Court"
             rec_dict["court"] = "Lahore High Court"
             rec_dict["content_type"] = "full_text"
             rec_dict["is_headnote"] = False
-        elif not c_name or c_name in ("Court of Record", "Court not identified", "High Court"):
+        else:
+            raw_c = rec_dict.get("content_type")
+            if not raw_c or str(raw_c).lower() in ("unknown", "none"):
+                raw_text = rec_dict.get("full_text") or ""
+                if len(raw_text.split()) < 300:
+                    rec_dict["content_type"] = "headnote_only"
+                    rec_dict["is_headnote"] = True
+                else:
+                    rec_dict["content_type"] = "full_text"
+                    rec_dict["is_headnote"] = False
+
+        if not c_name or c_name in ("Court of Record", "Court not identified", "High Court"):
             resolved = clean_court_name(court_name="", title=rec_dict.get("case_title") or "", case_id=rec_dict.get("case_id") or "", text=rec_dict.get("full_text") or "")
             if resolved and resolved != "Court not identified":
                 rec_dict["court_name"] = resolved
                 rec_dict["court"] = resolved
+
         try:
             from core.precedent_tracker import get_precedent_annotation, format_precedent_status_banner
             annot = (
@@ -5095,4 +5163,108 @@ async def get_indexing_status():
         }
     except Exception as e:
         return {"status": "error", "error": str(e)}
+
+
+# ============================================================================
+# STAGE 3: COURT PLEADING GENERATION ENDPOINT
+# ============================================================================
+
+@app.post("/generate-pleading")
+async def generate_pleading(payload: dict):
+    """
+    Generates a Pakistani court-ready legal pleading (.docx) using verified law
+    fetched directly from Supabase, strictly adhering to the Unfilled Bracket
+    and Zero Paraphrasing rules.
+    """
+    if not isinstance(payload, dict):
+        raise HTTPException(status_code=400, detail="Invalid request payload format.")
+
+    selected_ids = payload.get("selected_case_ids", [])
+    if not selected_ids:
+        raise HTTPException(status_code=400, detail="No selected_case_ids provided in payload.")
+
+    # 1. Fetch Verified Law strictly from Supabase using the IDs
+    try:
+        uuid_pattern = re.compile(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$')
+        uuid_ids = [cid for cid in selected_ids if uuid_pattern.match(str(cid))]
+        case_ids = [cid for cid in selected_ids if not uuid_pattern.match(str(cid))]
+
+        verified_law_data = []
+
+        def _fetch_cases_by_field(field_name, ids):
+            # Attempt to select with holding_snippet if available, fallback to full_text
+            try:
+                res = supabase.table("full_judgments").select("id, case_id, neutral_citation, holding_snippet, full_text").in_(field_name, ids).execute()
+                return res.data or []
+            except Exception:
+                res = supabase.table("full_judgments").select("id, case_id, neutral_citation, full_text").in_(field_name, ids).execute()
+                return res.data or []
+
+        if uuid_ids:
+            verified_law_data.extend(_fetch_cases_by_field("id", uuid_ids))
+        if case_ids:
+            verified_law_data.extend(_fetch_cases_by_field("case_id", case_ids))
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database fetch failed: {str(e)}")
+
+    if not verified_law_data:
+        raise HTTPException(status_code=400, detail="No verified cases found for the provided IDs.")
+
+    # Format the verified law for the prompt
+    verified_law_items = []
+    for case in verified_law_data:
+        citation = case.get("neutral_citation") or case.get("case_id") or "Unspecified Citation"
+        holding = case.get("holding_snippet")
+        if not holding:
+            holding = generate_clean_snippet(case.get("full_text", ""), max_words=60)
+        verified_law_items.append(f"Citation: {citation}\nHolding: {holding}")
+
+    verified_law_formatted = "\n\n".join(verified_law_items)
+
+    # 2. Construct the User Prompt
+    court_name = payload.get("court_name", "HIGH COURT / SUPREME COURT")
+    case_title = payload.get("case_title", "IN RE: PETITION")
+    facts = payload.get("facts", "")
+
+    user_prompt = f"""
+COURT: {court_name}
+CAUSE TITLE: {case_title}
+
+USER FACTS:
+{facts}
+
+VERIFIED LAW:
+{verified_law_formatted}
+"""
+
+    # 3. Call Claude API
+    try:
+        model_name = os.environ.get("PLEADING_MODEL") or os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
+        response = await safe_create_anthropic_message(
+            model=model_name,
+            max_tokens=2500,
+            system=PLEADING_SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": user_prompt}]
+        )
+        draft_markdown = response.content[0].text
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"LLM Generation failed: {str(e)}")
+
+    # 4. Generate the DOCX
+    docx_buffer = generate_court_docx(
+        case_title=case_title,
+        court_name=court_name,
+        pleading_text=draft_markdown
+    )
+
+    # 5. Return as downloadable file
+    return StreamingResponse(
+        docx_buffer,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={"Content-Disposition": "attachment; filename=draft_pleading.docx"}
+    )
+
 

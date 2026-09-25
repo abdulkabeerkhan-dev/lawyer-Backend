@@ -176,6 +176,34 @@ class TestLegalGuardrails(unittest.TestCase):
         self.assertNotIn("Citation Name", clean["operative_result"])
         self.assertNotIn("LAHORE-HIGH-COURT", str(clean))
 
+    def test_generate_clean_snippet_and_ocr_artifacts(self):
+        from main import generate_clean_snippet, sanitize_holding_text, sanitize_precedent_card
+        # Test 1: Dangling dashes and OCR artifacts
+        raw_ocr = "---Contention of petitioner that decree was void cannot be accepted [PLD 2020 Lah 12] --- Held, execution must proceed."
+        snip = generate_clean_snippet(raw_ocr, max_words=10)
+        self.assertNotIn("---", snip)
+        self.assertNotIn("[PLD 2020 Lah 12]", snip)
+        self.assertTrue(snip.startswith("Contention of petitioner"))
+        self.assertTrue(snip.endswith("..."))
+
+        # Test 2: Word boundary truncation without mid-word slice
+        long_text = "The quick brown fox jumps over the lazy dog and runs across the wide open fields without stopping for anyone in the entire village today."
+        snip2 = generate_clean_snippet(long_text, max_words=5)
+        self.assertEqual(snip2, "The quick brown fox jumps...")
+
+        # Test 3: Precedent card holding and preview cleanup
+        dirty_card = {
+            "case_name": "Test Case",
+            "citation": "2024 SCMR 100",
+            "holding": "---Contention of petitioner---The high court properly exercised jurisdiction and refused bail."
+        }
+        cleaned_card = sanitize_precedent_card(dirty_card)
+        self.assertNotIn("---", cleaned_card["holding"])
+        self.assertNotIn("---", cleaned_card["Holding"])
+        self.assertNotIn("---", cleaned_card["preview"])
+        self.assertEqual(cleaned_card["holding"], cleaned_card["Holding"])
+        self.assertEqual(cleaned_card["holding"], cleaned_card["preview"])
+
     def test_fio_2001_section10_guardrail(self):
         # Assert Rule 13 directive text in SYSTEM_LEGAL_DIRECTIVE
         self.assertIn("Under Section 10 of the Financial Institutions (Recovery of Finances) Ordinance 2001, compliance with subsections (3), (4), and (5) is mandatory", SYSTEM_LEGAL_DIRECTIVE)
