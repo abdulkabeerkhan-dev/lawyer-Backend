@@ -21,6 +21,25 @@ class TestQuarantineDashboard(unittest.TestCase):
             )
         self.assertIn("SAFETY VIOLATION", str(ctx.exception))
 
+    def test_direct_script_promotion_blocked_on_generic_reviewer_even_with_token(self):
+        """Verify passing a generic/system reviewer is blocked even if token prefix matches."""
+        with self.assertRaises(ValueError) as ctx:
+            approve_and_promote_record(
+                record_composite_key_or_url="any_key",
+                reviewer="kabeer_admin",
+                dashboard_session_token="HUMAN_DASHBOARD_VERIFIED_TEST123"
+            )
+        self.assertIn("verified human reviewer identifier must be provided", str(ctx.exception))
+
+        with self.assertRaises(ValueError) as ctx2:
+            approve_and_promote_record(
+                record_composite_key_or_url="any_key",
+                reviewer="system",
+                dashboard_session_token="HUMAN_DASHBOARD_VERIFIED_TEST123"
+            )
+        self.assertIn("verified human reviewer identifier must be provided", str(ctx2.exception))
+
+
     def test_submit_review_rejects_generic_reviewer(self):
         """Verify API blocks generic or missing human reviewer names."""
         payload = {
