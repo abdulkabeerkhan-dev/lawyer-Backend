@@ -165,13 +165,15 @@ def approve_and_promote_record(
         "decision_date": date_val,
         "full_text": full_text,
         "docket_number": docket,
-        "case_type": case_type
+        "case_type": case_type,
+        "source_url": target.get("source_url")
     }
 
     # 1. Insert into full_judgments
     db_promoted = False
     db_error = None
     if supabase_client:
+        existing = None
         try:
             # Check if case_id already in full_judgments
             existing = supabase_client.table("full_judgments").select("id").eq("case_id", canonical_id).execute()
@@ -181,8 +183,23 @@ def approve_and_promote_record(
                 res = supabase_client.table("full_judgments").insert(promoted_payload).execute()
             db_promoted = True
         except Exception as e:
-            db_error = str(e)
-            print(f"⚠️ Supabase promotion insert notice: {e}")
+            err_str = str(e)
+            if "source_url" in err_str:
+                # Graceful schema fallback: Retry without source_url if column not yet added via DDL
+                try:
+                    payload_no_src = {k: v for k, v in promoted_payload.items() if k != "source_url"}
+                    if existing and existing.data:
+                        res = supabase_client.table("full_judgments").update(payload_no_src).eq("case_id", canonical_id).execute()
+                    else:
+                        res = supabase_client.table("full_judgments").insert(payload_no_src).execute()
+                    db_promoted = True
+                    print(f"⚠️ Notice: 'source_url' column missing in full_judgments; promoted record without it. Please run DDL.")
+                except Exception as retry_err:
+                    db_error = str(retry_err)
+                    print(f"⚠️ Supabase promotion retry notice: {retry_err}")
+            else:
+                db_error = err_str
+                print(f"⚠️ Supabase promotion insert notice: {e}")
 
 
     # 2. Update quarantine record status

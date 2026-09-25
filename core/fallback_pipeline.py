@@ -203,7 +203,22 @@ def stage5_extract_metadata_and_text(pdf_bytes: bytes, source_url: str) -> Dict[
 
         # 2. Extract Docket and Case Type
         for line in lines[:25]:
-            if re.search(r"\b(C\.?P|W\.?P|Civil|Criminal|Const|Writ|Petition|Appeal|Revision|C\.M)\b", line, re.IGNORECASE) and re.search(r"\d+", line):
+            m_cm = re.search(r'\bC\.?M\.?\s*(?:No\.?)?\s*(\d+[\w\/\-]*\s*(?:of\s*\d{4})?)', line, re.IGNORECASE)
+            m_cp = re.search(r'\b(?:C\.?P\.?L?\.?A?\.?|Civil\s+Petition)\s*(?:No\.?)?\s*(\d+[\w\/\-]*\s*(?:of\s*\d{4})?)', line, re.IGNORECASE)
+            m_wp = re.search(r'\b(?:W\.?P\.?|Writ\s+Petition)\s*(?:No\.?)?\s*(\d+[\w\/\-]*\s*(?:of\s*\d{4})?)', line, re.IGNORECASE)
+            if m_cm:
+                result["case_type"] = "CM"
+                result["docket_number"] = re.sub(r'\s*of\s*', '/', m_cm.group(1)).replace(' ', '').strip()
+                break
+            elif m_cp:
+                result["case_type"] = "CP"
+                result["docket_number"] = re.sub(r'\s*of\s*', '/', m_cp.group(1)).replace(' ', '').strip()
+                break
+            elif m_wp:
+                result["case_type"] = "WP"
+                result["docket_number"] = re.sub(r'\s*of\s*', '/', m_wp.group(1)).replace(' ', '').strip()
+                break
+            elif re.search(r"\b(Civil|Criminal|Const|Writ|Petition|Appeal|Revision)\b", line, re.IGNORECASE) and re.search(r"\d+", line):
                 ctype, docket = extract_case_type_and_docket(line)
                 if docket:
                     result["case_type"] = ctype
@@ -213,46 +228,51 @@ def stage5_extract_metadata_and_text(pdf_bytes: bytes, source_url: str) -> Dict[
         # 3. Extract Parties / Case Title
         for i, line in enumerate(lines[:35]):
             if re.search(r"^versus$|^vs\.?$|^v\.?$", line, re.IGNORECASE):
-                pet_lines = [l for l in lines[max(0, i-3):i] if not re.search(r"petitioner|appellant|applicant|against\s+judgment", l, re.IGNORECASE)]
-                resp_lines = [l for l in lines[i+1:min(len(lines), i+4)] if not re.search(r"respondent|opposite|for\s+the", l, re.IGNORECASE)]
-                p = " ".join(pet_lines).strip()
-                r = " ".join(resp_lines).strip()
+                raw_pet_lines = [l for l in lines[max(0, i-4):i] if not re.search(r'against|passed\s+by|tribunal|appeal\s+no|c\.?p\.?l?\.?a?\.?|order\s+sheet|writ\s+petition|department', l, re.IGNORECASE)]
+                p_str = " ".join(raw_pet_lines).strip()
+                p = re.split(r'Petitioner|Appellant|Applicant', p_str, flags=re.IGNORECASE)[0].strip()
+
+                raw_resp_lines = lines[i+1:min(len(lines), i+6)]
+                r_raw = " ".join(raw_resp_lines).strip()
+                r = re.split(r'Respondent|Opposite|For the|S\.?No|Order with signature|Date of order|In Person|JUDGE', r_raw, flags=re.IGNORECASE)[0].strip()
+
                 if ")" in p:
                     p = p.split(")")[-1].strip()
-                r = re.split(r"S\.?No|Order with signature|Date of order", r, flags=re.IGNORECASE)[0].strip()
-                p = re.sub(r"^[\.…\s\-]+|[\.…\s\-]+$", "", p)
-                r = re.sub(r"^[\.…\s\-]+|[\.…\s\-]+$", "", r)
-                # Strip leading 'In Writ Petition No. ...' if present in petitioner string
-                p = re.sub(r"^(?:in\s+)?(?:writ\s+petition|civil\s+appeal|c\.?p\.?l?\.?a?\.?)\s*(?:no\.?)?\s*[\d\w\/\-]+\s*(?:of\s*\d{4})?", "", p, flags=re.IGNORECASE).strip()
+                p = re.sub(r'\(?Against\s+.*?\)?', '', p, flags=re.IGNORECASE).strip()
+                p = re.sub(r'^(?:in\s+)?(?:writ\s+petition|civil\s+appeal|c\.?m\.?|c\.?p\.?l?\.?a?\.?)\s*(?:no\.?)?\s*[\d\w\/\-]+\s*(?:of\s*\d{4})?', '', p, flags=re.IGNORECASE).strip()
+                p = re.sub(r'^(?:in\s+)', '', p, flags=re.IGNORECASE).strip()
+                r = re.sub(r'\s+Proceeding\b', '', r, flags=re.IGNORECASE).strip()
+                p = re.sub(r'^[\.…\s\-\?:]+|[\.…\s\-\?:]+$', '', p).strip()
+                r = re.sub(r'^[\.…\s\-\?:]+|[\.…\s\-\?:]+$', '', r).strip()
                 if p and r:
                     result["case_title"] = f"{p} v. {r}"
                     break
 
-        # 4. Extract Decision Date
-        # Exclude "Against judgment dated ..." to avoid picking up the lower court date
-        clean_text_for_date = re.sub(r"Against\s+judgment\s+dated[^\n]*", "", p1_text, flags=re.IGNORECASE)
-        date_patterns = [
-            r"(?:Date of Hearing|Decided on|Order Date)\s*[:\-]?\s*([\d]{1,2}[\./\-][\d]{1,2}[\./\-][\d]{2,4})",
-            r"(?:Date of Hearing|Decided on|Order Date)\s*[:\-]?\s*([\d]{1,2}\s+[A-Za-z]+,?\s+[\d]{4})",
-            r"\b([\d]{1,2}[\./\-][\d]{1,2}[\./\-][\d]{4})\b",
-            r"\b([\d]{1,2}\s+(?:January|February|March|April|May|June|July|August|September|October|November|December),?\s+[\d]{4})\b"
+        # 4. Extract Decision Date (Bottom-Anchored to Signatures/Footer)
+        footer = full_text[-2500:] if len(full_text) > 2500 else full_text
+        date_val = None
+        bottom_patterns = [
+            r'(?:Islamabad|Lahore|Karachi|Peshawar|Quetta|Rawalpindi)[\.,\s\n]+(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+,?\s+\d{4})',
+            r'(?:Islamabad|Lahore|Karachi|Peshawar|Quetta|Rawalpindi)[\.,\s\n]+(\d{1,2}[\./\-]\d{1,2}[\./\-]\d{2,4})',
+            r'(\d{1,2}(?:st|nd|rd|th)?\s+(?:January|February|March|April|May|June|July|August|September|October|November|December),?\s+\d{4})[\s\n]+(?:Approved for Reporting|JUDGE|Chief Justice)',
+            r'(\d{1,2}[\./\-]\d{1,2}[\./\-]\d{2,4})[\s\n]+(?:Approved for Reporting|JUDGE|Chief Justice)',
+            r'(?:Announced|Decided|Signed)[\s\w]*?(?:on)?[\s:]+(\d{1,2}[\./\-]\d{1,2}[\./\-]\d{2,4})',
+            r'(?:Announced|Decided|Signed)[\s\w]*?(?:on)?[\s:]+(\d{1,2}\s+[A-Za-z]+,?\s+\d{4})',
         ]
-        
-        # Check first page (excluding lower court reference)
-        for pat in date_patterns:
-            m_date = re.search(pat, clean_text_for_date, re.IGNORECASE)
-            if m_date:
-                result["decision_date"] = m_date.group(1).strip()
+        for pat in bottom_patterns:
+            m = re.search(pat, footer, re.IGNORECASE)
+            if m:
+                date_val = m.group(1).strip()
                 break
-
-        # If not found, check the signature block on the last page
-        if not result["decision_date"] and len(pages_text) > 1:
-            last_text = pages_text[-1]
-            for pat in date_patterns:
-                m_date = re.search(pat, last_text, re.IGNORECASE)
-                if m_date:
-                    result["decision_date"] = m_date.group(1).strip()
-                    break
+        if not date_val:
+            m_hearing = re.search(r'(?:Date of Hearing|Decided on|Order Date)\s*[:\-\n\s]+(\d{1,2}[\./\-]\d{1,2}[\./\-]\d{2,4}|\d{1,2}\s+[A-Za-z]+,?\s+\d{4})', full_text, re.IGNORECASE)
+            if m_hearing:
+                date_val = m_hearing.group(1).strip()
+        if not date_val:
+            m_order = re.search(r'\n\s*(\d{1,2}\.\d{1,2}\.\d{4})\s*\n\s*(?:Mr\.|Ms\.|Mian|Ch\.|Advocate)', full_text)
+            if m_order:
+                date_val = m_order.group(1).strip()
+        result["decision_date"] = date_val
 
         # 5. Extract Judges / Bench
         present_match = re.search(r"(?:PRESENT|BEFORE)\s*:\s*([\s\S]*?)(?:(?:C\.?P|W\.?P|Civil|ORDER|Judgment|Versus|Petitioner))", p1_text, re.IGNORECASE)
@@ -261,6 +281,14 @@ def stage5_extract_metadata_and_text(pdf_bytes: bytes, source_url: str) -> Dict[
             judges = [line.strip() for line in judge_block.splitlines() if re.search(r"Justice|Mr\.|Mrs\.|Chief Justice", line, re.IGNORECASE)]
             if judges:
                 result["judge_names"] = ", ".join(judges)
+        if not result["judge_names"]:
+            m_sig = re.search(r'\(([A-Z\s\.]+)\)\s*\n\s*(?:JUDGE|Chief Justice)', footer)
+            if m_sig:
+                result["judge_names"] = f"Mr. Justice {m_sig.group(1).strip().title()}"
+        if not result["judge_names"]:
+            m_sig2 = re.search(r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+),?\s+J\.', full_text[:3000])
+            if m_sig2:
+                result["judge_names"] = f"{m_sig2.group(1)}, J."
 
         # 6. Extracted Citation
         url_filename = os.path.basename(source_url)

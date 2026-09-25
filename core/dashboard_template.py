@@ -140,14 +140,34 @@ def get_dashboard_html() -> str:
           ? `<span class="px-2 py-0.5 text-xs font-semibold rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Promoted: ${escapeHtml(r.promoted_to_case_id || '')}</span>`
           : '<span class="px-2 py-0.5 text-xs font-semibold rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">Rejected</span>';
 
-        const titleVal = escapeHtml(r.extracted_case_title || r.case_title || '');
-        const courtVal = escapeHtml(r.extracted_court_name || r.court_name || '');
+        const titleVal = escapeHtml(r.case_title || r.extracted_case_title || '');
+        const courtVal = escapeHtml(r.court_name || r.extracted_court_name || '');
         const docketVal = escapeHtml(r.docket_number || '');
         const typeVal = escapeHtml(r.case_type || 'CP');
-        const dateVal = escapeHtml(r.extracted_date || r.decision_date || '');
-        const citationVal = escapeHtml(r.extracted_citation || r.neutral_citation || '');
-        const benchVal = escapeHtml(r.extracted_judge_names || r.bench || '');
+        const dateVal = escapeHtml(r.decision_date || r.extracted_date || '');
+        const citationVal = escapeHtml(r.neutral_citation || r.extracted_citation || '');
+        const benchVal = escapeHtml(r.bench || r.extracted_judge_names || '');
         const rawText = escapeHtml((r.raw_text || '').slice(0, 2000));
+
+        let domain = '';
+        try {
+          if (r.source_url) {
+            domain = new URL(r.source_url).hostname.replace('www.', '');
+          }
+        } catch (e) {}
+
+        const isPartial = r.is_partial || r.content_type === 'partial' || (r.text_health_score !== null && r.text_health_score !== undefined && r.text_health_score < 0.8);
+        const dynamicBadge = isPartial
+          ? `<div class="p-2 rounded-lg bg-amber-950/60 border border-amber-800/80 text-amber-300 text-xs flex items-center justify-between gap-2 font-medium">
+              <span>⚠️ Partial document — full text extraction incomplete.</span>
+              <a href="${escapeHtml(r.source_url)}" target="_blank" class="underline font-semibold hover:text-amber-100 flex-shrink-0">Read the complete judgment at the original source →</a>
+            </div>`
+          : r.source_url
+          ? `<div class="p-2 rounded-lg bg-sky-950/60 border border-sky-800/80 text-sky-300 text-xs flex items-center justify-between gap-2 font-medium">
+              <span>Retrieved directly from <strong>${escapeHtml(domain || 'Official Court Portal')}</strong> — not yet in our full verified index.</span>
+              <a href="${escapeHtml(r.source_url)}" target="_blank" class="underline font-semibold hover:text-sky-100 flex-shrink-0">View original source →</a>
+            </div>`
+          : '';
 
         return `
           <div class="card rounded-xl p-5 space-y-4 border ${isPromoted ? 'border-emerald-800' : isRejected ? 'border-rose-900' : 'border-slate-700'}" id="card-${r.id}">
@@ -164,6 +184,9 @@ def get_dashboard_html() -> str:
                 📄 Open Official Source Document ↗
               </a>
             </div>
+
+            <!-- Dynamic State Badge -->
+            ${dynamicBadge}
 
             <!-- Editable Metadata Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs">

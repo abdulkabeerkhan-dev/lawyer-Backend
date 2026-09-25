@@ -2189,6 +2189,61 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
             c["court_name"] = resolved_c
             c["court"] = resolved_c
 
+    # Dynamic Source & Completeness Badges for Lawyer UI
+    source_url = c.get("source_url") or c.get("url") or c.get("pdf_url") or ""
+    is_external_url = source_url.startswith("http") and "127.0.0.1" not in source_url and "localhost" not in source_url and "supabase.co" not in source_url
+    
+    is_partial_doc = (
+        c.get("is_partial") is True or
+        c.get("content_type") == "partial" or
+        c.get("extraction_incomplete") is True or
+        (isinstance(c.get("text_health_score"), (int, float)) and c.get("text_health_score") < 0.80) or
+        (c.get("is_fts_fallback") and not c.get("full_text_available", True))
+    )
+
+    domain = ""
+    if is_external_url:
+        try:
+            domain = urllib.parse.urlparse(source_url).netloc.replace("www.", "")
+        except Exception:
+            domain = ""
+    if not domain and (c.get("is_fresh_fetch") or is_partial_doc):
+        court_val = str(c.get("court_name") or "").lower()
+        if "supreme" in court_val:
+            domain = "supremecourt.gov.pk"
+        elif "lahore" in court_val:
+            domain = "sys.lhc.gov.pk"
+        elif "sindh" in court_val:
+            domain = "shc.gov.pk"
+        elif "peshawar" in court_val:
+            domain = "peshawarhighcourt.gov.pk"
+        elif "islamabad" in court_val:
+            domain = "ihc.gov.pk"
+        else:
+            domain = "Official Court Portal"
+
+    if is_partial_doc and (is_external_url or domain):
+        target_link = source_url if is_external_url else "#"
+        badge_text = "⚠️ Partial document — full text extraction incomplete. [Read the complete judgment at the original source →]"
+        badge_md = f"⚠️ Partial document — full text extraction incomplete. [Read the complete judgment at the original source →]({target_link})"
+        badge_html = f'<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-medium">⚠️ Partial document — full text extraction incomplete. <a href="{target_link}" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-200 font-semibold ml-1">Read the complete judgment at the original source →</a></div>'
+        c["source_badge_type"] = "partial_fetch"
+        c["source_badge_text"] = badge_text
+        c["source_badge_markdown"] = badge_md
+        c["source_badge_html"] = badge_html
+        c["source_badge"] = badge_text
+    elif is_external_url or c.get("is_fresh_fetch"):
+        target_link = source_url if is_external_url else "#"
+        domain_name = domain or "Official Court Portal"
+        badge_text = f"Retrieved directly from {domain_name} — not yet in our full verified index. [View original source →]"
+        badge_md = f"Retrieved directly from {domain_name} — not yet in our full verified index. [View original source →]({target_link})"
+        badge_html = f'<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-sky-500/10 border border-sky-500/30 text-sky-300 text-xs font-medium"><span>Retrieved directly from <strong>{domain_name}</strong> — not yet in our full verified index.</span> <a href="{target_link}" target="_blank" rel="noopener noreferrer" class="underline hover:text-sky-200 font-semibold ml-1">View original source →</a></div>'
+        c["source_badge_type"] = "fresh_fetch"
+        c["source_badge_text"] = badge_text
+        c["source_badge_markdown"] = badge_md
+        c["source_badge_html"] = badge_html
+        c["source_badge"] = badge_text
+
     return c
 
 
@@ -5280,20 +5335,160 @@ from core.quarantine_manager import (
 from core.dashboard_template import get_dashboard_html
 
 
+def normalize_quarantine_record_for_dashboard(r: dict) -> dict:
+    """
+    Ensures all structured fields (Court Name, Docket Number, Case Type Code,
+    Decision Date, Citation, Bench, Parties) are populated cleanly from extracted
+    fields or dynamic raw_text extraction so human curators do not have to retype data.
+    """
+    raw_text = r.get("raw_text") or ""
+    source_url = r.get("source_url") or ""
+    
+    # 1. Base mapping from existing DB columns
+    court = r.get("court_name") or r.get("extracted_court_name") or ""
+    docket = r.get("docket_number") or ""
+    ctype = r.get("case_type") or ""
+    date_val = r.get("decision_date") or r.get("extracted_date") or ""
+    citation = r.get("neutral_citation") or r.get("extracted_citation") or ""
+    bench = r.get("bench") or r.get("extracted_judge_names") or ""
+    title = r.get("case_title") or r.get("extracted_case_title") or ""
+
+    # 2. Extract / clean from raw_text
+    if raw_text:
+        footer = raw_text[-2500:] if len(raw_text) > 2500 else raw_text
+
+        # Bottom-anchored decision date
+        bottom_patterns = [
+            r'(?:Islamabad|Lahore|Karachi|Peshawar|Quetta|Rawalpindi)[\.,\s\n]+(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+,?\s+\d{4})',
+            r'(?:Islamabad|Lahore|Karachi|Peshawar|Quetta|Rawalpindi)[\.,\s\n]+(\d{1,2}[\./\-]\d{1,2}[\./\-]\d{2,4})',
+            r'(\d{1,2}(?:st|nd|rd|th)?\s+(?:January|February|March|April|May|June|July|August|September|October|November|December),?\s+\d{4})[\s\n]+(?:Approved for Reporting|JUDGE|Chief Justice)',
+            r'(\d{1,2}[\./\-]\d{1,2}[\./\-]\d{2,4})[\s\n]+(?:Approved for Reporting|JUDGE|Chief Justice)',
+            r'(?:Announced|Decided|Signed)[\s\w]*?(?:on)?[\s:]+(\d{1,2}[\./\-]\d{1,2}[\./\-]\d{2,4})',
+            r'(?:Announced|Decided|Signed)[\s\w]*?(?:on)?[\s:]+(\d{1,2}\s+[A-Za-z]+,?\s+\d{4})',
+        ]
+        for pat in bottom_patterns:
+            m = re.search(pat, footer, re.IGNORECASE)
+            if m:
+                date_val = m.group(1).strip()
+                break
+        if not date_val:
+            m_hearing = re.search(r'(?:Date of Hearing|Decided on|Order Date)\s*[:\-\n\s]+(\d{1,2}[\./\-]\d{1,2}[\./\-]\d{2,4}|\d{1,2}\s+[A-Za-z]+,?\s+\d{4})', raw_text, re.IGNORECASE)
+            if m_hearing:
+                date_val = m_hearing.group(1).strip()
+        if not date_val:
+            m_order = re.search(r'\n\s*(\d{1,2}\.\d{1,2}\.\d{4})\s*\n\s*(?:Mr\.|Ms\.|Mian|Ch\.|Advocate)', raw_text)
+            if m_order:
+                date_val = m_order.group(1).strip()
+
+        # Bench extraction fallback
+        if not bench or bench.lower() in ("none", "null", ""):
+            present_match = re.search(r"(?:PRESENT|BEFORE)\s*:\s*([\s\S]*?)(?:(?:C\.?P|W\.?P|Civil|ORDER|Judgment|Versus|Petitioner))", raw_text[:2000], re.IGNORECASE)
+            if present_match:
+                judge_block = present_match.group(1).strip()
+                judges = [l.strip() for l in judge_block.splitlines() if re.search(r"Justice|Mr\.|Mrs\.|Chief Justice", l, re.IGNORECASE)]
+                if judges:
+                    bench = ", ".join(judges)
+            if not bench:
+                m_sig = re.search(r'\(([A-Z\s\.]+)\)\s*\n\s*(?:JUDGE|Chief Justice)', footer)
+                if m_sig:
+                    bench = f"Mr. Justice {m_sig.group(1).strip().title()}"
+            if not bench:
+                m_sig2 = re.search(r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+),?\s+J\.', raw_text[:3000])
+                if m_sig2:
+                    bench = f"{m_sig2.group(1)}, J."
+
+        # Case title extraction / cleanup
+        if not title or title.lower() in ("none", "null", "") or "petitioner:" in title.lower() or "against " in title.lower() or "s.no" in title.lower() or "in writ" in title.lower():
+            lines = [l.strip() for l in raw_text[:3000].splitlines() if l.strip()]
+            for i, line in enumerate(lines[:35]):
+                if re.search(r"^versus$|^vs\.?$|^v\.?$", line, re.IGNORECASE):
+                    raw_pet_lines = [l for l in lines[max(0, i-4):i] if not re.search(r'against|passed\s+by|tribunal|appeal\s+no|c\.?p\.?l?\.?a?\.?|order\s+sheet|writ\s+petition|department', l, re.IGNORECASE)]
+                    p_str = " ".join(raw_pet_lines).strip()
+                    p = re.split(r'Petitioner|Appellant|Applicant', p_str, flags=re.IGNORECASE)[0].strip()
+
+                    raw_resp_lines = lines[i+1:min(len(lines), i+6)]
+                    r_raw = " ".join(raw_resp_lines).strip()
+                    r_str = re.split(r'Respondent|Opposite|For the|S\.?No|Order with signature|Date of order|In Person|JUDGE', r_raw, flags=re.IGNORECASE)[0].strip()
+
+                    if ")" in p: p = p.split(")")[-1].strip()
+                    p = re.sub(r'\(?Against\s+.*?\)?', '', p, flags=re.IGNORECASE).strip()
+                    p = re.sub(r'^(?:in\s+)?(?:writ\s+petition|civil\s+appeal|c\.?m\.?|c\.?p\.?l?\.?a?\.?)\s*(?:no\.?)?\s*[\d\w\/\-]+\s*(?:of\s*\d{4})?', '', p, flags=re.IGNORECASE).strip()
+                    p = re.sub(r'^(?:in\s+)', '', p, flags=re.IGNORECASE).strip()
+                    r_str = re.sub(r'\s+Proceeding\b', '', r_str, flags=re.IGNORECASE).strip()
+                    p = re.sub(r'^[\.…\s\-\?:]+|[\.…\s\-\?:]+$', '', p).strip()
+                    r_str = re.sub(r'^[\.…\s\-\?:]+|[\.…\s\-\?:]+$', '', r_str).strip()
+                    if p and r_str:
+                        title = f"{p} v. {r_str}"
+                        break
+
+        # Court name fallback
+        if not court or court.lower() in ("none", "null", ""):
+            if "supremecourt" in source_url.lower():
+                court = "Supreme Court of Pakistan"
+            elif "lhc" in source_url.lower():
+                court = "Lahore High Court"
+            elif "shc" in source_url.lower():
+                court = "High Court of Sindh"
+            elif "phc" in source_url.lower():
+                court = "Peshawar High Court"
+            elif "ihc" in source_url.lower():
+                court = "Islamabad High Court"
+            elif "balochistan" in source_url.lower():
+                court = "High Court of Balochistan"
+
+        # Docket / Case Type cleanup
+        if not ctype or ctype == "GEN":
+            if "C.M" in raw_text[:1000] or "1969" in docket:
+                ctype = "CM"
+            elif "C.P" in raw_text[:1000] or "Civil Petition" in raw_text[:1000]:
+                ctype = "CP"
+            elif "W.P" in raw_text[:1000] or "Writ" in raw_text[:1000]:
+                ctype = "WP"
+
+        if docket:
+            docket = re.sub(r'\s*of\s*', '/', docket).replace(' ', '').strip()
+
+        if not citation:
+            cit_match = re.search(r'(\d{4}\s*[A-Za-z]+\s*\d+)', os.path.basename(source_url))
+            if cit_match:
+                citation = cit_match.group(1).replace("_", " ").upper()
+            elif ctype and docket:
+                citation = f"{ctype} {docket}"
+
+    # Write normalized values into the record dict for the dashboard
+    r["court_name"] = court
+    r["extracted_court_name"] = court
+    r["case_title"] = title
+    r["extracted_case_title"] = title
+    r["docket_number"] = docket
+    r["case_type"] = ctype or "CP"
+    r["decision_date"] = date_val
+    r["extracted_date"] = date_val
+    r["neutral_citation"] = citation
+    r["extracted_citation"] = citation
+    r["bench"] = bench
+    r["extracted_judge_names"] = bench
+    return r
+
+
 @app.get("/admin/quarantine/records")
 async def get_quarantine_records():
     """
     Returns live quarantined candidate records from Supabase quarantined_judgments
-    or local ledger fallback.
+    or local ledger fallback, fully normalized with structured fields mapped.
     """
     try:
+        raw_records = []
         if supabase:
             res = supabase.table("quarantined_judgments").select("*").order("fetched_at", desc=True).execute()
             if res.data:
-                return {"status": "success", "records": res.data}
+                raw_records = res.data
         
-        records = list_quarantined_records(status_filter=None)
-        return {"status": "success", "records": records}
+        if not raw_records:
+            raw_records = list_quarantined_records(status_filter=None)
+
+        normalized = [normalize_quarantine_record_for_dashboard(dict(r)) for r in raw_records]
+        return {"status": "success", "records": normalized}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch quarantine records: {str(e)}")
 
