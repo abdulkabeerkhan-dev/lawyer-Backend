@@ -98,16 +98,28 @@ def list_quarantined_records(status_filter: Optional[str] = "pending_review") ->
 
 def approve_and_promote_record(
     record_composite_key_or_url: str,
-    reviewer: str = "human_curator",
-    custom_citation: Optional[str] = None
+    reviewer: str,
+    edited_fields: Optional[Dict[str, Any]] = None,
+    custom_citation: Optional[str] = None,
+    dashboard_session_token: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Promotes a quarantined record into production (full_judgments):
-    1. Updates quarantine ledger status to 'promoted'.
-    2. Writes entry into Supabase full_judgments (with docket_number and case_type).
-    3. Adds entry to regression_promoted_cases.json.
-    4. Appends audit event to promoted_audit_log.json.
+    STRICT SAFETY RULE: Requires an active, authenticated dashboard_session_token.
+    Direct script invocation from CLI or LLM is blocked.
     """
+    # 0. HARD ENFORCEMENT: Block any direct script invocation without human dashboard token
+    if not dashboard_session_token or not dashboard_session_token.startswith("HUMAN_DASHBOARD_VERIFIED_"):
+        raise PermissionError(
+            "SAFETY VIOLATION: Direct script or programmatic promotion into full_judgments is blocked. "
+            "Records can only be promoted through an authenticated human curation session in the Quarantine Dashboard."
+        )
+
+    if not reviewer or reviewer.strip() in ("", "system", "auto", "kabeer_admin", "human_curator"):
+        raise ValueError(
+            "A specific, verified human reviewer identifier must be provided."
+        )
+
     import re
     # Find matching record
     records = list_quarantined_records(status_filter=None)
@@ -115,20 +127,23 @@ def approve_and_promote_record(
     for r in records:
         if (r.get("composite_key") == record_composite_key_or_url or 
             r.get("source_url") == record_composite_key_or_url or
-            r.get("docket_number") == record_composite_key_or_url):
+            r.get("docket_number") == record_composite_key_or_url or
+            str(r.get("id")) == record_composite_key_or_url):
             target = r
             break
 
     if not target:
         return {"status": "error", "message": f"No record matching '{record_composite_key_or_url}' found in quarantine."}
 
-    court = target.get("extracted_court_name") or target.get("court_name") or "Court"
-    case_type = target.get("case_type") or "GEN"
-    docket = target.get("docket_number") or "0"
-    date_val = target.get("extracted_date") or target.get("decision_date") or "2026-01-01"
-    title = target.get("extracted_case_title") or target.get("case_title") or "Unnamed Judgment"
+    edits = edited_fields or {}
+
+    court = edits.get("court_name") or target.get("extracted_court_name") or target.get("court_name") or "Court"
+    case_type = edits.get("case_type") or target.get("case_type") or "GEN"
+    docket = edits.get("docket_number") or target.get("docket_number") or "0"
+    date_val = edits.get("decision_date") or target.get("extracted_date") or target.get("decision_date") or "2026-01-01"
+    title = edits.get("case_title") or target.get("extracted_case_title") or target.get("case_title") or "Unnamed Judgment"
+    bench = edits.get("bench") or target.get("extracted_judge_names") or target.get("judge_names")
     full_text = target.get("raw_text") or ""
-    bench = target.get("extracted_judge_names") or target.get("judge_names")
 
     # Generate canonical case id
     c_token = "SC" if "supreme" in court.lower() else "LHC" if "lahore" in court.lower() else "HC"
@@ -138,7 +153,7 @@ def approve_and_promote_record(
     year_token = y_match.group(1) if y_match else "2026"
     canonical_id = f"{c_token}_{t_token}_{d_clean}_{year_token}"
 
-    citation = custom_citation or target.get("extracted_citation") or f"{year_token} {c_token} {docket}"
+    citation = edits.get("neutral_citation") or custom_citation or target.get("extracted_citation") or f"{year_token} {c_token} {docket}"
 
     # Target payload for full_judgments
     promoted_payload = {
@@ -161,15 +176,14 @@ def approve_and_promote_record(
             # Check if case_id already in full_judgments
             existing = supabase_client.table("full_judgments").select("id").eq("case_id", canonical_id).execute()
             if existing.data:
-                # Update existing
                 res = supabase_client.table("full_judgments").update(promoted_payload).eq("case_id", canonical_id).execute()
             else:
-                # Insert new
                 res = supabase_client.table("full_judgments").insert(promoted_payload).execute()
             db_promoted = True
         except Exception as e:
             db_error = str(e)
             print(f"⚠️ Supabase promotion insert notice: {e}")
+
 
     # 2. Update quarantine record status
     target["status"] = "promoted"

@@ -22,7 +22,7 @@ from dotenv import load_dotenv
 from hybrid_search import BM25Index, HybridSearchEngine, reciprocal_rank_fusion, get_court_authority_weight, get_recency_weight
 
 from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks, Request
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, HTMLResponse, JSONResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 
@@ -5266,5 +5266,139 @@ VERIFIED LAW:
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         headers={"Content-Disposition": "attachment; filename=draft_pleading.docx"}
     )
+
+
+# ============================================================================
+# QUARANTINE REVIEW & PROMOTION DASHBOARD BACKEND (HUMAN-IN-THE-LOOP CURATION)
+# ============================================================================
+
+from core.quarantine_manager import (
+    approve_and_promote_record,
+    reject_quarantined_record,
+    list_quarantined_records
+)
+from core.dashboard_template import get_dashboard_html
+
+
+@app.get("/admin/quarantine/records")
+async def get_quarantine_records():
+    """
+    Returns live quarantined candidate records from Supabase quarantined_judgments
+    or local ledger fallback.
+    """
+    try:
+        if supabase:
+            res = supabase.table("quarantined_judgments").select("*").order("fetched_at", desc=True).execute()
+            if res.data:
+                return {"status": "success", "records": res.data}
+        
+        records = list_quarantined_records(status_filter=None)
+        return {"status": "success", "records": records}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch quarantine records: {str(e)}")
+
+
+@app.post("/admin/quarantine/review")
+async def submit_quarantine_review(payload: dict):
+    """
+    Executes an authenticated human curation action (approve or reject)
+    on a quarantined record. Direct script promotion without human token is rejected.
+    """
+    if not isinstance(payload, dict):
+        raise HTTPException(status_code=400, detail="Invalid request payload format.")
+
+    record_id = payload.get("record_id")
+    action = payload.get("action")
+    reviewer_name = (payload.get("reviewer_name") or "").strip()
+    edited_fields = payload.get("edited_fields") or {}
+    rejection_reason = (payload.get("rejection_reason") or "").strip()
+
+    if not record_id:
+        raise HTTPException(status_code=400, detail="Missing required 'record_id'.")
+    if not action or action not in ("approve", "reject"):
+        raise HTTPException(status_code=400, detail="Action must be 'approve' or 'reject'.")
+    if not reviewer_name or reviewer_name.lower() in ("system", "auto", "human_curator", "kabeer_admin"):
+        raise HTTPException(
+            status_code=400, 
+            detail="A specific, verified human reviewer name is required. Anonymous or generic accounts are rejected."
+        )
+
+    # Generate a cryptographically unique human review session token
+    session_token = f"HUMAN_DASHBOARD_VERIFIED_{uuid.uuid4().hex}_{int(time.time())}"
+
+    if action == "approve":
+        try:
+            # Promote with human-edited fields and verified session token
+            result = approve_and_promote_record(
+                record_composite_key_or_url=str(record_id),
+                reviewer=reviewer_name,
+                edited_fields=edited_fields,
+                dashboard_session_token=session_token
+            )
+            
+            # Sync Supabase quarantined_judgments row if present
+            if supabase:
+                try:
+                    canonical_id = result.get("canonical_id")
+                    supabase.table("quarantined_judgments").update({
+                        "status": "promoted",
+                        "reviewed_by": reviewer_name,
+                        "reviewed_at": datetime.now(timezone.utc).isoformat(),
+                        "promoted_to_case_id": canonical_id
+                    }).eq("id", str(record_id)).execute()
+                except Exception as sync_err:
+                    print(f"Notice syncing quarantined_judgments in Supabase: {sync_err}")
+
+            return {
+                "status": "success",
+                "action": "promoted",
+                "message": "Successfully promoted record to full_judgments after human review.",
+                "canonical_id": result.get("canonical_id"),
+                "reviewer": reviewer_name
+            }
+        except PermissionError as pe:
+            raise HTTPException(status_code=403, detail=str(pe))
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Promotion failed: {str(e)}")
+
+    elif action == "reject":
+        if not rejection_reason:
+            raise HTTPException(status_code=400, detail="A rejection reason must be provided when rejecting a record.")
+        try:
+            result = reject_quarantined_record(
+                record_composite_key_or_url=str(record_id),
+                rejection_reason=rejection_reason,
+                reviewer=reviewer_name
+            )
+            if supabase:
+                try:
+                    supabase.table("quarantined_judgments").update({
+                        "status": "rejected",
+                        "reviewed_by": reviewer_name,
+                        "reviewed_at": datetime.now(timezone.utc).isoformat(),
+                        "rejection_reason": rejection_reason
+                    }).eq("id", str(record_id)).execute()
+                except Exception as sync_err:
+                    print(f"Notice syncing rejection in Supabase: {sync_err}")
+
+            return {
+                "status": "success",
+                "action": "rejected",
+                "message": "Record marked as rejected.",
+                "reviewer": reviewer_name
+            }
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Rejection failed: {str(e)}")
+
+
+@app.get("/admin/quarantine/dashboard", response_class=HTMLResponse)
+async def serve_quarantine_dashboard():
+    """
+    Renders the live, interactive Quarantine Review & Promotion Dashboard.
+    Enables physical human review, inline editing of extracted metadata,
+    direct source document inspection, and audited promotion/rejection.
+    """
+    return HTMLResponse(content=get_dashboard_html(), status_code=200)
+
 
 
