@@ -26,6 +26,14 @@ from main import get_voyage_embedding
 from hybrid_search import tokenize_legal_text
 
 sb = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+
+# STANDING SAFETY GUARD: Prevent accidental direct mutations to production full_judgments
+if os.environ.get("ALLOW_DIRECT_PROD_MUTATION") != "TRUE":
+    raise RuntimeError(
+        "SAFETY GUARD: Direct script writes to full_judgments are blocked to prevent accidental data contamination. "
+        "Set ALLOW_DIRECT_PROD_MUTATION=TRUE explicitly if you genuinely intend to run this offline migration."
+    )
+
 pc = Pinecone(api_key=PINECONE_API_KEY)
 pinecone_index = pc.Index(PINECONE_INDEX_NAME, host=PINECONE_HOST)
 

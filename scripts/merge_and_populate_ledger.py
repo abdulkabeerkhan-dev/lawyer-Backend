@@ -34,6 +34,14 @@ if not SUPABASE_URL or not SUPABASE_SERVICE_KEY:
 
 supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
+# STANDING SAFETY GUARD: Prevent accidental direct mutations to production full_judgments
+if os.environ.get("ALLOW_DIRECT_PROD_MUTATION") != "TRUE":
+    raise RuntimeError(
+        "SAFETY GUARD: Direct script writes to full_judgments are blocked to prevent accidental data contamination. "
+        "Set ALLOW_DIRECT_PROD_MUTATION=TRUE explicitly if you genuinely intend to run this offline migration."
+    )
+
+
 RAILWAY_URL = os.environ.get("RAILWAY_URL", "https://lawyer-backend-production-5804.up.railway.app")
 
 JOURNAL_REGEX = r'(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC\s*\(CS\)|PLC|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)'

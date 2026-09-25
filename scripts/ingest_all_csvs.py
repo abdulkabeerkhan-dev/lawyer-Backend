@@ -38,6 +38,14 @@ SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY") or os.environ.get(
 
 if not SUPABASE_URL or not SUPABASE_SERVICE_KEY:
     logger.error("SUPABASE_URL or SUPABASE_SERVICE_KEY missing from environment.")
+
+# STANDING SAFETY GUARD: Prevent accidental direct mutations to production full_judgments
+if os.environ.get("ALLOW_DIRECT_PROD_MUTATION") != "TRUE":
+    raise RuntimeError(
+        "SAFETY GUARD: Direct script writes to full_judgments are blocked to prevent accidental data contamination. "
+        "Set ALLOW_DIRECT_PROD_MUTATION=TRUE explicitly if you genuinely intend to run this offline migration."
+    )
+
     sys.exit(1)
 
 supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)

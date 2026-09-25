@@ -17,6 +17,14 @@ def run_crosswalk_patch():
     print("Connecting to Supabase...")
     sb = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
+# STANDING SAFETY GUARD: Prevent accidental direct mutations to production full_judgments
+if os.environ.get("ALLOW_DIRECT_PROD_MUTATION") != "TRUE":
+    raise RuntimeError(
+        "SAFETY GUARD: Direct script writes to full_judgments are blocked to prevent accidental data contamination. "
+        "Set ALLOW_DIRECT_PROD_MUTATION=TRUE explicitly if you genuinely intend to run this offline migration."
+    )
+
+
     # 1. Look up target judgment in full_judgments
     res = sb.table("full_judgments").select("*").or_("case_id.eq.2021_SCMR_2092,neutral_citation.eq.2021 SCMR 2092,case_title.ilike.%Muhammad Nasir Shafique%").execute()
     

@@ -16,6 +16,14 @@ if not sb_url or not sb_key:
 
 supabase = create_client(sb_url, sb_key)
 
+# STANDING SAFETY GUARD: Prevent accidental direct mutations to production full_judgments
+if os.environ.get("ALLOW_DIRECT_PROD_MUTATION") != "TRUE":
+    raise RuntimeError(
+        "SAFETY GUARD: Direct script writes to full_judgments are blocked to prevent accidental data contamination. "
+        "Set ALLOW_DIRECT_PROD_MUTATION=TRUE explicitly if you genuinely intend to run this offline migration."
+    )
+
+
 def generate_canonical_id(court: str, case_type: str, case_number: str, year: str) -> str:
     norm_court = str(court or "").strip().upper()
     if "SUPREME" in norm_court or "SC" in norm_court:
