@@ -64,6 +64,7 @@ class TestStatutoryValidator(unittest.TestCase):
             ("Section 9 CPC", "CPC_1908_SEC_9"),
             ("Section 302(b) PPC", "PPC_1860_SEC_302_B"),
             ("Section 489-F PPC", "PPC_1860_SEC_489F"),
+            ("Section 489-F", "PPC_1860_SEC_489F"),
             ("Section 22-A(6)(a) CrPC", "CRPC_1898_SEC_22A_6_A"),
             ("Order XXI Rule 58 CPC", "CPC_1908_ORD_XXI_R_58"),
             ("Order 21 Rule 58 CPC", "CPC_1908_ORD_XXI_R_58"),

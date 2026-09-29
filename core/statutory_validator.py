@@ -361,10 +361,12 @@ def parse_statutory_citation(text: str) -> Dict[str, Any]:
         elif g3:
             cl = g3
 
+        explicit_act = (act_code is not None)
         return {
             "is_valid": True,
             "status": "parsed",
             "act_code": act_code or "CPC_1908",
+            "explicit_act": explicit_act,
             "provision_type": "section",
             "primary_num": raw_prim,
             "subsection": sub,
@@ -399,26 +401,52 @@ def validate_statutory_citation(citation: str, default_act: str = None) -> Dict[
     if not parsed.get("is_valid"):
         return parsed
 
+    explicit_act = parsed.get("explicit_act", True)
     act_code = parsed.get("act_code") or default_act
-    if not act_code:
-        return {
-            "is_valid": False,
-            "status": "missing_act",
-            "raw_citation": citation,
-            "message": f"Could not determine statute for citation '{citation}'."
-        }
+    record = None
+    canonical_id = None
 
-    canonical_id = generate_canonical_id(
-        act_code=act_code,
-        primary_num=parsed["primary_num"],
-        subsection=parsed.get("subsection"),
-        clause=parsed.get("clause"),
-        rule_num=parsed.get("rule_num"),
-        sub_rule=parsed.get("sub_rule"),
-        provision_type=parsed.get("provision_type", "section")
-    )
+    # If act was not explicitly stated in the citation (e.g. "Section 489-F"),
+    # search candidate acts in registry (prioritizing penal/procedural acts for sections > 158 or with letter suffixes)
+    if not explicit_act and parsed.get("provision_type") == "section":
+        candidate_acts = ["PPC_1860", "CRPC_1898", "CPC_1908", "CNSA_1997", "PRPA_2009", "FAMILY_COURTS_1964", "LIMITATION_1908", "PREEMPTION_1991", "MFLO_1961", "DMMA_1939"]
+        for cand_act in candidate_acts:
+            cand_id = generate_canonical_id(
+                act_code=cand_act,
+                primary_num=parsed["primary_num"],
+                subsection=parsed.get("subsection"),
+                clause=parsed.get("clause"),
+                rule_num=parsed.get("rule_num"),
+                sub_rule=parsed.get("sub_rule"),
+                provision_type=parsed.get("provision_type", "section")
+            )
+            rec = registry.get_by_canonical_id(cand_id)
+            if rec:
+                act_code = cand_act
+                canonical_id = cand_id
+                record = rec
+                break
 
-    record = registry.get_by_canonical_id(canonical_id)
+    if not record:
+        if not act_code:
+            return {
+                "is_valid": False,
+                "status": "missing_act",
+                "raw_citation": citation,
+                "message": f"Could not determine statute for citation '{citation}'."
+            }
+
+        canonical_id = generate_canonical_id(
+            act_code=act_code,
+            primary_num=parsed["primary_num"],
+            subsection=parsed.get("subsection"),
+            clause=parsed.get("clause"),
+            rule_num=parsed.get("rule_num"),
+            sub_rule=parsed.get("sub_rule"),
+            provision_type=parsed.get("provision_type", "section")
+        )
+        record = registry.get_by_canonical_id(canonical_id)
+
     if record:
         return {
             "is_valid": True,

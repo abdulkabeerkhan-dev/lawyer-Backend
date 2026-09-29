@@ -165,8 +165,21 @@ def run_reindex_pipeline(target_namespace: str = TARGET_NAMESPACE):
         decision_date = str(rec.get("decision_date") or "")
         full_text = sanitize_judgment_content(rec.get("full_text") or rec.get("raw_text") or "")
         docket_num = str(rec.get("docket_number") or case_id)
-
-        if not full_text or len(full_text.strip()) < 30:
+        PLACEHOLDER_SYNC_PHRASES = [
+            "undergoing index synchronization",
+            "currently undergoing",
+            "index synchronization",
+            "full judgment text is currently undergoing",
+            "full judgment record for",
+            "[precedent record]",
+            "precedent record"
+        ]
+        haystack_check = f"{title} {citation}".lower()
+        if any(p in haystack_check for p in PLACEHOLDER_SYNC_PHRASES):
+            continue
+        if any(p in full_text.lower() for p in ["undergoing index synchronization", "index synchronization", "currently undergoing"]):
+            continue
+        if not full_text or len(full_text.strip()) < 150:
             continue
 
         text_chunks = chunk_text_deterministically(full_text, CHUNK_SIZE, CHUNK_OVERLAP)

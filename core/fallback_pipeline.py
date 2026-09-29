@@ -524,3 +524,90 @@ def process_court_pdf_pipeline(url: str) -> Dict[str, Any]:
         "gates": gates,
         "quarantined": q_res
     }
+
+
+# ==============================================================================
+# STAGE 2: EXTERNAL COURT DISCOVERY FALLBACK SEARCH
+# ==============================================================================
+def search_whitelisted_court_precedents(query: str, max_results: int = 2) -> List[Dict[str, Any]]:
+    """
+    Stage 2 External Court Discovery:
+    When local vector and full-text searches return zero qualifying candidates (or only stubs),
+    this function executes a targeted web search against WHITELISTED_COURT_DOMAINS.
+    Discovered PDF URLs are processed through Stages 4 -> 5 -> 6 -> 7 and returned as verified candidate dicts.
+    """
+    if not query:
+        return []
+
+    clean_q = re.sub(r'[^\w\s\-\"\']', ' ', query).strip()
+    terms = [w for w in clean_q.split() if len(w) > 2][:8]
+    if not terms:
+        return []
+
+    court_sites = " OR ".join([f"site:{d}" for d in ["supremecourt.gov.pk", "sys.lhc.gov.pk", "lhc.gov.pk", "shc.gov.pk", "phc.gov.pk"]])
+    search_str = f"{' '.join(terms)} filetype:pdf ({court_sites})"
+
+    encoded_query = urllib.parse.quote(search_str)
+    search_url = f"https://html.duckduckgo.com/html/?q={encoded_query}"
+
+    discovered_pdf_urls: List[str] = []
+    try:
+        req = urllib.request.Request(search_url, headers=BROWSER_HEADERS)
+        with urllib.request.urlopen(req, timeout=12) as resp:
+            html = resp.read().decode("utf-8", errors="ignore")
+            uddg_matches = re.findall(r'uddg=([^&]+)', html)
+            for raw_u in uddg_matches:
+                u = urllib.parse.unquote(raw_u)
+                parsed = urllib.parse.urlparse(u)
+                domain = parsed.netloc.lower()
+                if any(domain == wd or domain.endswith("." + wd) for wd in WHITELISTED_COURT_DOMAINS):
+                    if u.lower().endswith(".pdf") or "judgment" in u.lower() or "order" in u.lower():
+                        if u not in discovered_pdf_urls:
+                            discovered_pdf_urls.append(u)
+                            if len(discovered_pdf_urls) >= max_results:
+                                break
+    except Exception as e:
+        print(f"⚠️ External court discovery notice: {e}", file=sys.stderr, flush=True)
+
+    candidates: List[Dict[str, Any]] = []
+    for pdf_url in discovered_pdf_urls:
+        try:
+            res = process_court_pdf_pipeline(pdf_url)
+            if res.get("status") == "success" and res.get("gates", {}).get("gate4_passed"):
+                rec = res.get("extracted", {})
+                rec_title = rec.get("case_title") or "Reported Precedent"
+                rec_cit = rec.get("extracted_citation") or f"{rec.get('court_name')} [{rec.get('docket_number')}]"
+                rec_text = rec.get("raw_text") or ""
+
+                candidates.append({
+                    "id": rec_cit,
+                    "score": 0.75,
+                    "dense_score": 0.75,
+                    "sparse_score": 0.0,
+                    "rrf_score": 0.025,
+                    "is_fresh_fetch": True,
+                    "source_url": pdf_url,
+                    "metadata": {
+                        "id": rec_cit,
+                        "case_id": rec.get("docket_number") or rec_cit,
+                        "canonical_id": rec_cit,
+                        "citation": rec_cit,
+                        "title": rec_title,
+                        "case_title": rec_title,
+                        "court": rec.get("court_name"),
+                        "court_name": rec.get("court_name"),
+                        "date": rec.get("decision_date"),
+                        "year": rec.get("decision_date"),
+                        "text": rec_text[:3500],
+                        "full_text": rec_text[:3500],
+                        "content_type": "fresh_court_fetch",
+                        "is_fresh_fetch": True,
+                        "source_url": pdf_url,
+                        "pdf_url": pdf_url
+                    }
+                })
+        except Exception as proc_err:
+            print(f"⚠️ Error running fallback pipeline on {pdf_url}: {proc_err}", file=sys.stderr, flush=True)
+
+    return candidates
+

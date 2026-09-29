@@ -36,12 +36,12 @@ PINECONE_NAMESPACE = "judgments"
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY")
 
-# STANDING SAFETY GUARD: Prevent accidental direct mutations to production full_judgments
-if os.environ.get("ALLOW_DIRECT_PROD_MUTATION") != "TRUE":
-    raise RuntimeError(
-        "SAFETY GUARD: Direct script writes to full_judgments are blocked to prevent accidental data contamination. "
-        "Set ALLOW_DIRECT_PROD_MUTATION=TRUE explicitly if you genuinely intend to run this offline migration."
-    )
+def check_prod_safety_guard():
+    if os.environ.get("ALLOW_DIRECT_PROD_MUTATION") != "TRUE":
+        raise RuntimeError(
+            "SAFETY GUARD: Direct script writes to full_judgments are blocked to prevent accidental data contamination. "
+            "Set ALLOW_DIRECT_PROD_MUTATION=TRUE explicitly if you genuinely intend to run this offline migration."
+        )
 
 
 CHECKPOINT_PATH = os.path.join(WORKSPACE_DIR, "indexing_checkpoint.log")
@@ -454,6 +454,7 @@ def upsert_pinecone_with_retry(
 
 
 def run_pipeline(limit: int = 100, is_dry_run: bool = True, stratified_200: bool = False, pause_at: int = 0):
+    check_prod_safety_guard()
     print("=" * 70)
     if pause_at > 0:
         mode_str = f"PRODUCTION RUN (PAUSING AT {pause_at:,} JUDGMENTS FOR SPOT CHECK)"
@@ -592,12 +593,28 @@ def run_pipeline(limit: int = 100, is_dry_run: bool = True, stratified_200: bool
                     cleaned_text = clean_portal_boilerplate(raw_text)
                     tok_count = len(tokenizer.encode(cleaned_text))
 
-                    # Stub filter: <50 tokens
-                    if tok_count < MIN_CLEAN_TOKENS:
+                    # Strict Stub & Synchronization Placeholder Filter
+                    PLACEHOLDER_SYNC_PHRASES = [
+                        "undergoing index synchronization",
+                        "currently undergoing",
+                        "index synchronization",
+                        "full judgment text is currently undergoing",
+                        "full judgment record for",
+                        "[precedent record]",
+                        "precedent record"
+                    ]
+                    raw_cit = (item.get("neutral_citation") or cid).strip()
+                    case_title = clean_or_extract_title(item.get("case_title"), raw_text)
+                    haystack_ident = f"{case_title} {raw_cit}".lower()
+
+                    is_sync_placeholder = any(p in haystack_ident for p in PLACEHOLDER_SYNC_PHRASES) or any(p in cleaned_text.lower() for p in ["undergoing index synchronization", "index synchronization", "currently undergoing"])
+                    is_too_short = len(cleaned_text.strip()) < 150 or tok_count < 25
+
+                    if is_sync_placeholder or is_too_short:
                         stubs_skipped += 1
                         successful_case_ids.append(cid)
                         with open(SKIPPED_STUBS_PATH, "a", encoding="utf-8") as sf:
-                            sf.write(f'"{cid}","{item.get("neutral_citation") or cid}",{tok_count}\n')
+                            sf.write(f'"{cid}","{raw_cit}",{tok_count}\n')
                         continue
 
                     supabase_id = str(item.get("id"))

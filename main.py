@@ -264,6 +264,10 @@ def expand_legal_query_doctrinally(query: str, return_flag: bool = False) -> Any
         if any(k in q_lower for k in ["302", "ppc", "murder", "bail"]):
             expansions.append("Section 302 Section 96 Section 97 Section 99 Section 100 Pakistan Penal Code 1860 PPC plea of self defence private defence grant of bail further inquiry Section 497 CrPC")
 
+    # Quashing of FIR / Section 561-A CrPC / Article 199 Writs
+    if any(k in q_lower for k in ["quash", "quashing", "quashment", "561-a", "561a", "fir quash", "quash fir"]):
+        expansions.append("Section 561-A Code of Criminal Procedure 1898 CrPC Article 199 Constitution of Pakistan 1973 quashing of FIR abuse of process of court mala fide ulterior motives no cognizable offence disclosed civil dispute criminalized Ahmad Saeed 1996 SCMR 186 Badar Ur Islam 2007 YLR 2766")
+
     # Statutory Interpretation / Conflict of Special Laws / Non-Obstante Clauses
     if any(k in q_lower for k in [
         "non-obstante", "non obstante", "non onstante", "non instante", "non-onstante",
@@ -298,15 +302,33 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
 
     ts_query = " & ".join(words)
     
+    def _clean_fts_rows(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        valid = []
+        for r in rows:
+            txt = str(r.get("full_text") or "").strip()
+            cid = str(r.get("case_id") or "").strip()
+            title = str(r.get("case_title") or "").strip()
+            cit = str(r.get("neutral_citation") or "").strip()
+            if len(txt) < 150:
+                continue
+            if any(p in cid for p in ["---", "___", "PENAL CODE", "Constitution of Pakistan"]) and not any(re.search(pat, cit, re.IGNORECASE) for pat in REPORTER_PATTERNS):
+                continue
+            if any(p in title for p in ["---", "Refusal Of---", "Grant Of---", "Reduction In---"]):
+                continue
+            valid.append(r)
+        return valid[:limit]
+
     # 1. Try text_search column first (if migration applied with GIN index)
     try:
         res = supabase.table('full_judgments') \
             .select('id, case_id, neutral_citation, case_title, court_name, decision_date, full_text') \
-            .limit(limit) \
+            .limit(limit * 2) \
             .text_search('text_search', ts_query) \
             .execute()
         if res.data:
-            return res.data
+            cleaned = _clean_fts_rows(res.data)
+            if cleaned:
+                return cleaned
     except Exception:
         pass
 
@@ -314,11 +336,13 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
     try:
         res = supabase.table('full_judgments') \
             .select('id, case_id, neutral_citation, case_title, court_name, decision_date, full_text') \
-            .limit(limit) \
+            .limit(limit * 2) \
             .text_search('full_text', ts_query) \
             .execute()
         if res.data:
-            return res.data
+            cleaned = _clean_fts_rows(res.data)
+            if cleaned:
+                return cleaned
     except Exception as e:
         print(f"⚠️ Postgres full_text FTS notice: {e}", file=sys.stderr, flush=True)
 
@@ -334,11 +358,13 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
             title_query = " & ".join(search_words)
             res = supabase.table('full_judgments') \
                 .select('id, case_id, neutral_citation, case_title, court_name, decision_date, full_text') \
-                .limit(limit) \
+                .limit(limit * 2) \
                 .text_search('case_title', title_query) \
                 .execute()
             if res.data:
-                return res.data
+                cleaned = _clean_fts_rows(res.data)
+                if cleaned:
+                    return cleaned
     except Exception as e:
         print(f"⚠️ Postgres case_title FTS notice: {e}", file=sys.stderr, flush=True)
 
@@ -462,15 +488,23 @@ class LegalSearchPipeline:
             if is_doctrinally_expanded:
                 qualifies = (
                     is_boosted or
-                    dense_s >= 0.50 or
-                    (has_overlap and dense_s >= 0.46 and sparse_s >= 2.0) or
-                    (has_overlap and sparse_s >= 12.0)
+                    dense_s >= 0.48 or
+                    (has_overlap and dense_s >= 0.44 and sparse_s >= 2.0) or
+                    (has_overlap and sparse_s >= 10.0)
                 )
             else:
+                cq_lower = clean_query.lower()
+                is_substantive_legal = any(k in cq_lower for k in [
+                    "quash", "fir", "bail", "497", "498", "489-f", "302", "cpc", "crpc", "injunction", "stay",
+                    "appeal", "revision", "decree", "order", "section", "article", "writ", "suit", "plaint", "written statement",
+                    "specific performance", "possession", "declaration", "limitation", "pre-emption", "khula", "dower"
+                ])
+                min_dense = 0.52 if is_substantive_legal else 0.60
                 qualifies = (
                     is_boosted or
-                    dense_s >= 0.64 or
-                    (has_overlap and dense_s >= 0.58 and sparse_s >= 15.0)
+                    dense_s >= min_dense or
+                    (has_overlap and dense_s >= 0.48 and sparse_s >= 6.0) or
+                    (has_overlap and sparse_s >= 12.0)
                 )
             
             if qualifies:
@@ -638,41 +672,33 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
     c_raw = str(court_name or "").strip()
     c_lower = c_raw.lower()
 
-    # High Court Reporter Constraint: YLR, MLD, CLC, PCrLJ etc. are strictly High Courts, NOT Supreme Court
-    search_haystack = " ".join([str(court_name or ""), str(title or ""), str(case_id or "")]).upper()
-    has_hc_reporter = any(j in search_haystack for j in ["YLR", "MLD", "CLC", "PCRLJ", "PCrLJ", "CLD", "PTD", "PLC", "PLJ", "NLR", "ALD", "SBLR"])
-    has_sc_reporter = "SCMR" in search_haystack or "PLD SC" in search_haystack or "PLD SUPREME COURT" in search_haystack or "S.C." in search_haystack
-    is_hc_only = has_hc_reporter and not has_sc_reporter
-
     # Explicit Whitelist: 2006 YLR 1206 is always Lahore High Court
+    search_haystack = " ".join([str(court_name or ""), str(title or ""), str(case_id or "")]).upper()
     if "2006_YLR_1206" in search_haystack or "2006 YLR 1206" in search_haystack:
         return "Lahore High Court"
 
-    # 1. Inspect explicit court_name input first (do not let text snippet keywords override explicit court metadata)
+    # 1. Inspect explicit court_name input first (court determination comes from actual metadata / document content)
     if c_lower and c_lower not in ("unresolved", "court not identified", "unknown", "unknown court", "court of record", "not specified", "none", "high court", "court"):
-        if is_hc_only and ("supreme" in c_lower or "scp" in c_lower):
-            pass  # Reject Supreme Court designation for High Court only reporters
-        else:
-            if any(x in c_lower for x in ("federal constitutional", "fcc")):
-                return "Federal Constitutional Court"
-            if any(x in c_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
-                if "high" in c_lower: return "High Court of Azad Jammu & Kashmir"
-                if "service tribunal" in c_lower: return "AJK Service Tribunal"
-                return "Supreme Court of Azad Jammu & Kashmir"
-            if "federal shariat" in c_lower or "fsc" in c_lower:
-                return "Federal Shariat Court"
-            if "supreme" in c_lower or "scp" in c_lower or "scmr" in c_lower or " pld sc " in c_lower:
-                return "Supreme Court of Pakistan"
-            if "peshawar" in c_lower or "phc" in c_lower:
-                return "Peshawar High Court"
-            if "lahore" in c_lower or "lhc" in c_lower:
-                return "Lahore High Court"
-            if "sindh" in c_lower or "karachi" in c_lower or "shc" in c_lower:
-                return "High Court of Sindh"
-            if "balochistan" in c_lower or "quetta" in c_lower or "bhc" in c_lower:
-                return "High Court of Balochistan"
-            if "islamabad" in c_lower or "ihc" in c_lower:
-                return "Islamabad High Court"
+        if any(x in c_lower for x in ("federal constitutional", "fcc")):
+            return "Federal Constitutional Court"
+        if any(x in c_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
+            if "high" in c_lower: return "High Court of Azad Jammu & Kashmir"
+            if "service tribunal" in c_lower: return "AJK Service Tribunal"
+            return "Supreme Court of Azad Jammu & Kashmir"
+        if "federal shariat" in c_lower or "fsc" in c_lower:
+            return "Federal Shariat Court"
+        if "supreme" in c_lower or "scp" in c_lower or "scmr" in c_lower or " pld sc " in c_lower:
+            return "Supreme Court of Pakistan"
+        if "peshawar" in c_lower or "phc" in c_lower:
+            return "Peshawar High Court"
+        if "lahore" in c_lower or "lhc" in c_lower:
+            return "Lahore High Court"
+        if "sindh" in c_lower or "karachi" in c_lower or "shc" in c_lower:
+            return "High Court of Sindh"
+        if "balochistan" in c_lower or "quetta" in c_lower or "bhc" in c_lower:
+            return "High Court of Balochistan"
+        if "islamabad" in c_lower or "ihc" in c_lower:
+            return "Islamabad High Court"
 
     # 2. Portal Citation Name Line and Header Inspection (Direct from source text)
     if text:
@@ -686,8 +712,7 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
             if "HIGH-COURT-AZAD" in p_line:
                 return "High Court of Azad Jammu & Kashmir"
             if "SUPREME-COURT" in p_line or "SUPREME COURT" in p_line:
-                if not is_hc_only:
-                    return "Supreme Court of Pakistan"
+                return "Supreme Court of Pakistan"
             if "LAHORE-HIGH-COURT" in p_line:
                 return "Lahore High Court"
             if "SINDH-HIGH-COURT" in p_line or "KARACHI" in p_line:
@@ -702,7 +727,7 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
                 return "Federal Shariat Court"
 
         # Early print volume heading check e.g. "P L D 1967 Supreme Court 97"
-        if not is_hc_only and re.search(r"(?i)(?:P\s*L\s*D|SCMR)\s+\d{4}\s+(?:Supreme\s+Court|SC)\b", text[:1500]):
+        if re.search(r"(?i)(?:P\s*L\s*D|SCMR)\s+\d{4}\s+(?:Supreme\s+Court|SC)\b", text[:1500]):
             return "Supreme Court of Pakistan"
 
     # 3. Secondary inspection: title and case_id (docket identifier)
@@ -712,11 +737,10 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
     if any(x in docket_and_title for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
         if "high" in docket_and_title: return "High Court of Azad Jammu & Kashmir"
         if "service tribunal" in docket_and_title: return "AJK Service Tribunal"
-        if not is_hc_only: return "Supreme Court of Azad Jammu & Kashmir"
-        return "High Court of Azad Jammu & Kashmir"
+        return "Supreme Court of Azad Jammu & Kashmir"
     if "federal shariat" in docket_and_title or "fsc" in docket_and_title:
         return "Federal Shariat Court"
-    if not is_hc_only and ("supreme" in docket_and_title or "scp" in docket_and_title or "scmr" in docket_and_title or " pld sc " in docket_and_title):
+    if "supreme" in docket_and_title or "scp" in docket_and_title or "scmr" in docket_and_title or " pld sc " in docket_and_title:
         return "Supreme Court of Pakistan"
     if "peshawar" in docket_and_title or "phc" in docket_and_title:
         return "Peshawar High Court"
@@ -736,14 +760,13 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
     if any(x in text_lower for x in ("ajk", "azad jammu", "azad kashmir", "mirpur", "muzaffarabad", "rawalakot")):
         if "high" in text_lower: return "High Court of Azad Jammu & Kashmir"
         if "service tribunal" in text_lower: return "AJK Service Tribunal"
-        if not is_hc_only: return "Supreme Court of Azad Jammu & Kashmir"
-        return "High Court of Azad Jammu & Kashmir"
+        return "Supreme Court of Azad Jammu & Kashmir"
     if "peshawar high court" in text_lower: return "Peshawar High Court"
     if "lahore high court" in text_lower or "lahore-high-court" in text_lower: return "Lahore High Court"
     if "high court of sindh" in text_lower or "sindh high court" in text_lower: return "High Court of Sindh"
     if "high court of balochistan" in text_lower or "balochistan high court" in text_lower: return "High Court of Balochistan"
     if "islamabad high court" in text_lower: return "Islamabad High Court"
-    if not is_hc_only and ("supreme court of pakistan" in text_lower or "supreme-court" in text_lower): return "Supreme Court of Pakistan"
+    if "supreme court of pakistan" in text_lower or "supreme-court" in text_lower: return "Supreme Court of Pakistan"
 
     # Fallback to bracketed city header extraction (e.g. [Lahore], [Karachi], [Rawalpindi])
     bracketed = extract_bracketed_court(clean_txt_snippet) or extract_bracketed_court(str(text or ""))
@@ -751,8 +774,6 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
         return bracketed
 
     if c_raw and c_raw.lower() not in ("unresolved", "court not identified", "unknown", "unknown court", "court of record", "not specified", "none"):
-        if is_hc_only and "supreme" in c_raw.lower():
-            return "Court not identified"
         return c_raw.strip().title()
 
     return "Court not identified"
@@ -1043,6 +1064,41 @@ def clean_precedent_title(title: str, fallback_citation: str = "", full_text: st
 
     clean_fallback = re.sub(r'^(?:Citation\s*Name|Case\s*Description|Bookmark\s*this\s*case)\s*:?\s*', '', fallback, flags=re.IGNORECASE).strip()
     return f"Precedent {clean_fallback}".strip() or "Untitled Case"
+
+def clean_or_extract_title(case_title: str, raw_text: str = "") -> str:
+    """Cleans OCR digit intrusions and extracts fallback title if case_title is a leaked statutory header or generic."""
+    title = (case_title or "").strip()
+
+    is_leaked = (
+        not title or
+        title in ("Reported Precedent", "Untitled Case", "Precedent on Record", "Unknown") or
+        bool(re.match(r'^(?:s\.|section|art\.|article|order|o\.|rule|r\.|dated|form)\s*\d*', title, re.IGNORECASE))
+    )
+
+    if is_leaked and raw_text:
+        # Pattern A: Chunk header format e.g. [1996 SCMR 186 | 32\t1996 SCMR 186\tAHMAD SAEED VS STATE]
+        m_hdr = re.search(r'\[[^|\]]+\|\s*(?:[A-Z0-9\s,\.\(\)\/–\-]+?\t)?([A-Z0-9\s,\.\(\)\/–\-]{3,60}?\s+(?:VS|V\.|VERSUS)\s+[A-Z0-9\s,\.\(\)\/–\-]{3,60}?)(?:\]|\n|\r)', raw_text[:2000], re.IGNORECASE)
+        if m_hdr:
+            raw_extracted = m_hdr.group(1).strip()
+            # Strip any leading tab / numbers
+            cleaned_hdr = re.sub(r'^(?:[0-9\s\w\.\/\-–]+?\t|\d+\s+)', '', raw_extracted).strip()
+            if " vs " in cleaned_hdr.lower() or " v. " in cleaned_hdr.lower() or " versus " in cleaned_hdr.lower():
+                title = cleaned_hdr
+        else:
+            m = re.search(r'(?:Bookmark this Case\s*|Citation Name:[^\n]*)\n+([A-Z0-9\s,\.\(\)\/-]+?\s+(?:VS|V\.)\s+[A-Z0-9\s,\.\(\)\/-]+?)(?:\n|Civil|Criminal|Constitution|Appellate|\Z)', raw_text[:2000], re.IGNORECASE)
+            if m:
+                extracted = m.group(1).strip()
+                extracted = re.sub(r'\s*-\s*[A-Z\-]+(?:COURT|HIGH-COURT)[A-Z\-]*', '', extracted, flags=re.IGNORECASE)
+                title = extracted
+
+    # Clean intra-word OCR digit intrusions
+    title = re.sub(r'(?<=[A-Za-z])1(?=[A-Za-z])', 'i', title)
+    title = re.sub(r'(?<=[A-Za-z])1\b', 'i', title)
+    title = re.sub(r'\b1(?=[A-Za-z]{3,})', '', title)
+    title = re.sub(r'(?<=[A-Za-z])0(?=[A-Za-z])', 'o', title)
+    title = re.sub(r'\s*-\s*(?:[A-Za-z\-]+(?:COURT|HIGH-COURT)|Lahore|Karachi|Peshawar|Quetta|Dhaka)[A-Za-z\-]*\s*$', '', title, flags=re.IGNORECASE).strip()
+    title = re.sub(r'^(?:Bookmark this Case|Citation Name:[^\n]*)\s*', '', title, flags=re.IGNORECASE).strip()
+    return title or "Reported Precedent"
 
 def sanitize_case_title(raw_title: str, full_text: str = "", neutral_cit: str = "") -> str:
     return clean_precedent_title(title=raw_title, fallback_citation=neutral_cit, full_text=full_text, neutral_cit=neutral_cit)
@@ -1904,10 +1960,47 @@ RATIO_ANCHORS = [
     r'\b(?:granted|refused|dismissed|allowed)\b'
 ]
 
+OFFICIAL_PAKISTAN_REPORTERS = (
+    r'PLD|P\.L\.D\.|SCMR|S\.C\.M\.R\.|YLR|Y\.L\.R\.|CLC|C\.L\.C\.|'
+    r'MLD|M\.L\.D\.|PCrLJ|P\.Cr\.L\.J\.|PCRLJ|P\s*Cr\s*L\s*J|'
+    r'PTD|P\.T\.D\.|PLC(?:\s*\(CS\))?|P\.L\.C\.|CLD|C\.L\.D\.|'
+    r'PLJ|P\.L\.J\.|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR'
+)
+COURT_IDENTIFIERS = (
+    r'SC|S\.C\.|Supreme\s+Court|Lah|Lahore|Kar|Karachi|Sindh|'
+    r'Pesh|Peshawar|Qta|Quetta|Balochistan|FSC|Shariat|IHC|'
+    r'Islamabad|AJK|AJ&K|FCC'
+)
+
+CANONICAL_CITATION_REGEX = re.compile(
+    rf'\b(?:'
+    rf'((?:19|20)\d{{2}})\s+({OFFICIAL_PAKISTAN_REPORTERS})(?:\s+(?:{COURT_IDENTIFIERS}))?\s+(\d+)'
+    rf'|'
+    rf'({OFFICIAL_PAKISTAN_REPORTERS})\s+((?:19|20)\d{{2}})(?:\s+(?:{COURT_IDENTIFIERS}))?\s+(\d+)'
+    rf'|'
+    rf'({OFFICIAL_PAKISTAN_REPORTERS})\s+(?:{COURT_IDENTIFIERS})\s+((?:19|20)\d{{2}})\s+(\d+)'
+    rf'|'
+    rf'((?:19|20)\d{{2}})_({OFFICIAL_PAKISTAN_REPORTERS})(?:_(?:{COURT_IDENTIFIERS}))?_(\d+)'
+    rf')\b',
+    re.IGNORECASE
+)
+
 REPORTER_PATTERNS = [
-    r'\b(?:19|20)\d{2}\s+(?:SCMR|PCrLJ|PCRLJ|PLD|YLR|CLC|MLD|PTD|PLC(?:\s*\(CS\))?|CLD|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)\s+\d+\b',
-    r'\b(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC(?:\s*\(CS\))?|PLJ|NLR)\s+(?:19|20)\d{2}(?:\s+(?:SC|Lah|Kar|Pesh|Quetta|Qta|FSC|AJK))?\s+\d+\b'
+    rf'\b(?:19|20)\d{{2}}\s+(?:{OFFICIAL_PAKISTAN_REPORTERS})(?:\s+(?:{COURT_IDENTIFIERS}))?\s+\d+\b',
+    rf'\b(?:{OFFICIAL_PAKISTAN_REPORTERS})\s+(?:19|20)\d{{2}}(?:\s+(?:{COURT_IDENTIFIERS}))?\s+\d+\b',
+    rf'\b(?:{OFFICIAL_PAKISTAN_REPORTERS})\s+(?:{COURT_IDENTIFIERS})\s+(?:19|20)\d{{2}}\s+\d+\b',
+    rf'\b(?:19|20)\d{{2}}_(?:{OFFICIAL_PAKISTAN_REPORTERS})(?:_(?:{COURT_IDENTIFIERS}))?_\d+\b'
 ]
+
+def extract_canonical_reporter_citation(text_or_cit: str) -> Optional[str]:
+    """Finds and extracts an official Pakistan law reporter citation with volume & page."""
+    if not text_or_cit:
+        return None
+    m = CANONICAL_CITATION_REGEX.search(str(text_or_cit))
+    if m:
+        return m.group(0).strip().replace('_', ' ')
+    return None
+
 
 def clean_scraper_artifacts(raw_text: str) -> str:
     """Removes web scraper navigation junk, bookmark banners, portal headers,
@@ -2086,6 +2179,171 @@ def synthesize_canonical_citation(record: Dict[str, Any]) -> str:
         return f"{year} {abbrev} [{case_id}]"
     else:
         return f"{year} {abbrev} [Precedent Record]"
+
+
+def is_junk_citation_dump(text: str) -> bool:
+    if not text or len(text.strip()) < 15:
+        return True
+    t = strip_control_characters(text)
+    cit_matches = len(re.findall(r'\b(PLD|SCMR|MLD|CLC|PCRLJ|PTD|PLC|CLD|YLR)\s+\d{4}\b', t, re.IGNORECASE))
+    if cit_matches >= 2 and len(t) < 400:
+        return True
+    num_tokens = len(re.findall(r'\b\d+\b', t))
+    total_tokens = len(t.split())
+    if total_tokens > 0 and (num_tokens / total_tokens) > 0.25:
+        return True
+    narrative_words = {"held", "observed", "court", "petitioner", "respondent", "appellant", "judgment", "order", "section", "article", "rule", "dismissed", "allowed", "found", "per"}
+    words = [w.lower() for w in t.split()]
+    narrative_count = sum(1 for w in words if w in narrative_words)
+    if total_tokens >= 10 and narrative_count == 0 and cit_matches >= 1:
+        return True
+    return False
+
+
+def is_garbled_text(text: str) -> bool:
+    if not text or len(text.strip()) < 10:
+        return True
+    if '\ufffd' in text or '\x00' in text:
+        return True
+    if re.search(r'\b[A-Za-z$%\\]{2,}\d+[A-Za-z$%\\]{2,}\b', text) or re.search(r'\b\d+[A-Z]{5,}\b', text):
+        return True
+    if re.search(r'[\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]', text):
+        return True
+    words = [re.sub(r'[^a-zA-Z0-9]', '', w) for w in text.split() if w.strip()]
+    if not words:
+        return True
+    garbled_count = 0
+    for w in words:
+        if len(w) > 4 and sum(1 for c in w if c.isdigit()) >= 1 and sum(1 for c in w if c.isalpha()) >= 3:
+            garbled_count += 1
+    if len(words) > 3 and (garbled_count / len(words)) > 0.1:
+        return True
+    if len(words) >= 8:
+        valid_shorts = {
+            "a", "an", "the", "and", "or", "in", "on", "at", "to", "for", "of", "off", "by", "is", "it",
+            "be", "as", "no", "not", "has", "had", "was", "per", "vs", "v", "sub", "art", "sec", "pld",
+            "clc", "ylr", "mld", "ptd", "plc", "cld", "sc", "hc", "lhc", "shc", "phc", "bhc", "ihc", "rs", "nos",
+            "if", "do", "we", "he", "she", "me", "my", "us", "so", "up", "out", "our", "its", "may", "can", "law",
+            "act", "set", "out", "due", "any", "all", "few", "two", "one", "three", "four", "five", "six", "day"
+        }
+        unknown_shorts = [w for w in words if 1 <= len(w) <= 3 and w.lower() not in valid_shorts and not w.isdigit()]
+        if len(unknown_shorts) / len(words) > 0.3:
+            return True
+    return False
+
+
+def is_usable_precedent(card_or_match: Dict[str, Any]) -> bool:
+    """
+    Deterministic quality floor & citation mandate:
+    1. Mandatory Canonical Citation Validation: Any record must feature an official, recognized
+       Pakistan law reporter citation (e.g., PLD, SCMR, YLR, CLC, PCrLJ, MLD, etc.) combined with a
+       verified volume and page number. If a record lacks this canonical citation structure
+       (e.g., synthetic stubs like '1973 HC [Precedent Record]'), it is immediately dropped.
+    2. Purge Placeholder / Corruption Artifacts: Any record containing synchronization
+       placeholders (e.g., 'undergoing index synchronization', '[Precedent Record]'), corrupted
+       text, or generic party placeholders without authentic parties is purged.
+       Genuine headnote-only records with verified canonical citations are PRESERVED and routed
+       to the headnote disclosure-banner system.
+    """
+    if not isinstance(card_or_match, dict):
+        return False
+    meta = card_or_match.get("metadata", {}) if isinstance(card_or_match, dict) else getattr(card_or_match, "metadata", {}) or {}
+
+    title = str(meta.get("title") or meta.get("case_title") or card_or_match.get("title") or card_or_match.get("case_title") or card_or_match.get("case_name") or "").strip()
+    citation = str(meta.get("citation") or meta.get("neutral_citation") or card_or_match.get("citation") or card_or_match.get("neutral_citation") or "").strip()
+    case_id = str(meta.get("case_id") or card_or_match.get("case_id") or card_or_match.get("id") or "").strip()
+    text = str(meta.get("text") or meta.get("full_text") or meta.get("text_preview") or card_or_match.get("full_text") or card_or_match.get("preview") or card_or_match.get("holding") or card_or_match.get("text") or "").strip()
+    content_type = str(meta.get("content_type") or card_or_match.get("content_type") or "").lower().strip()
+    is_headnote = bool(meta.get("is_headnote") or card_or_match.get("is_headnote"))
+
+    # =========================================================================
+    # MANDATE 1: MANDATORY CITATION VALIDATION
+    # Must feature an official recognized Pakistan law reporter citation
+    # (e.g., PLD, SCMR, YLR, CLC, PCrLJ, MLD, etc.) with verified volume and page number.
+    # If lacking canonical structure, immediately dropped.
+    # =========================================================================
+    canonical_cit = (
+        extract_canonical_reporter_citation(citation) or
+        extract_canonical_reporter_citation(case_id) or
+        extract_canonical_reporter_citation(text[:300])
+    )
+    if not canonical_cit:
+        return False
+
+    # Backfill normalized citation so downstream consumers have canonical citation
+    if not extract_canonical_reporter_citation(citation):
+        if "metadata" in card_or_match and isinstance(card_or_match["metadata"], dict):
+            card_or_match["metadata"]["citation"] = canonical_cit
+        card_or_match["citation"] = canonical_cit
+
+    # Reject synthetic/stub citations that lack official reporter backing
+    if re.match(r'^(?:(?:19|20)\d{2}\s+HC|Recent\s+HC)(?:\s*\[.*\])?$', citation, re.IGNORECASE):
+        return False
+    if "precedent record" in citation.lower():
+        return False
+
+    # =========================================================================
+    # MANDATE 2: PURGE CORRUPTION & SYNCHRONIZATION PLACEHOLDER STUBS
+    # Purge sync placeholders and unverified stubs. Legitimate headnotes with
+    # canonical citations are preserved and routed to the disclosure system.
+    # =========================================================================
+    # A. Editorial placeholder markers in title or citation
+    title_lower = title.lower()
+    cit_lower = citation.lower()
+    FORBIDDEN_MARKERS = [
+        "undergoing index synchronization",
+        "index synchronization",
+        "currently undergoing",
+        "full judgment record for",
+        "[precedent record]",
+        "precedent record",
+        "untitled precedent record",
+        "untitled record",
+        "untitled case"
+    ]
+    if any(marker in title_lower or marker in cit_lower for marker in FORBIDDEN_MARKERS):
+        return False
+
+    # B. Total exclusion of untitled / generic precedent records without verifiable parties
+    generic_title_patterns = [
+        r'^(?:petitioner\s*(?:v\.?|versus)\s*(?:the\s*)?state|recent\s*hc|unknown|precedent\s*record|untitled(?:\s*case)?|reported\s*precedent)$',
+        r'^(?:the\s*state\s*(?:v\.?|versus)\s*accused|state\s*(?:v\.?|versus)\s*accused)$',
+        r'^(?:appellant\s*(?:v\.?|versus)\s*(?:the\s*)?state|applicant\s*(?:v\.?|versus)\s*(?:the\s*)?state)$'
+    ]
+    is_generic_title = (
+        not title or
+        title_lower in ("v.", "vs.", "v", "vs", "precedent record", "untitled case", "reported precedent", "precedent on record", "unknown") or
+        any(re.match(pat, title, re.IGNORECASE) for pat in generic_title_patterns)
+    )
+    if is_generic_title:
+        # Check if an authentic party title exists in the text header or text content
+        extracted_party_title = clean_or_extract_title(title, text[:2500])
+        extracted_party_lower = extracted_party_title.lower()
+        if not extracted_party_title or extracted_party_lower in ("reported precedent", "untitled case", "precedent on record") or any(re.match(pat, extracted_party_title, re.IGNORECASE) for pat in generic_title_patterns):
+            return False
+        # Update title with extracted authentic title
+        if "metadata" in card_or_match and isinstance(card_or_match["metadata"], dict):
+            card_or_match["metadata"]["title"] = extracted_party_title
+        card_or_match["title"] = extracted_party_title
+
+    # C. Scraper artifacts / corruption
+    if is_garbled_text(text) or is_junk_citation_dump(text) or is_scraped_portal_junk(text):
+        return False
+
+    # D. Content length floor: Ensure record is a substantive opinion or headnote chunk (>= 80 meaningful characters and >= 15 words)
+    clean_meaningful_text = re.sub(r'\[[^|\]]+\|\s*[^\]]+\]', '', text).strip()
+    words = clean_meaningful_text.split()
+    if len(clean_meaningful_text) < 80 or len(words) < 15:
+        return False
+
+    # E. Text-level placeholder exclusion
+    text_lower = clean_meaningful_text.lower()
+    if any(marker in text_lower[:500] for marker in ["undergoing index synchronization"]):
+        return False
+
+    return True
+
+
 
 def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
     """Sanitizes every field of a precedent card to ensure zero scraper artifacts
@@ -2844,55 +3102,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         POLITICAL_MARKERS = ["nawaz sharif", "imran khan", "benazir bhutto", "tikka iqbal", "zafar ali shah", "pml-n", "pti", "pakistan bar council", "bar council", "disqualification", "election petition"]
         CRIMINAL_NAB_MARKERS = ["olas khan", "national accountability ordinance", "banking companies"]
 
-        def is_junk_citation_dump(text: str) -> bool:
-            if not text or len(text.strip()) < 15:
-                return True
-            t = strip_control_characters(text)
-            cit_matches = len(re.findall(r'\b(PLD|SCMR|MLD|CLC|PCRLJ|PTD|PLC|CLD|YLR)\s+\d{4}\b', t, re.IGNORECASE))
-            if cit_matches >= 2 and len(t) < 400:
-                return True
-            num_tokens = len(re.findall(r'\b\d+\b', t))
-            total_tokens = len(t.split())
-            if total_tokens > 0 and (num_tokens / total_tokens) > 0.25:
-                return True
-            narrative_words = {"held", "observed", "court", "petitioner", "respondent", "appellant", "judgment", "order", "section", "article", "rule", "dismissed", "allowed", "found", "per"}
-            words = [w.lower() for w in t.split()]
-            narrative_count = sum(1 for w in words if w in narrative_words)
-            if total_tokens >= 10 and narrative_count == 0 and cit_matches >= 1:
-                return True
-            return False
-
-        def is_garbled_text(text: str) -> bool:
-            if not text or len(text.strip()) < 10:
-                return True
-            if '\ufffd' in text or '\x00' in text:
-                return True
-            if re.search(r'\b[A-Za-z$%\\]{2,}\d+[A-Za-z$%\\]{2,}\b', text) or re.search(r'\b\d+[A-Z]{5,}\b', text):
-                return True
-            if re.search(r'[\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]', text):
-                return True
-            words = [re.sub(r'[^a-zA-Z0-9]', '', w) for w in text.split() if w.strip()]
-            if not words:
-                return True
-            garbled_count = 0
-            for w in words:
-                if len(w) > 4 and sum(1 for c in w if c.isdigit()) >= 1 and sum(1 for c in w if c.isalpha()) >= 3:
-                    garbled_count += 1
-            if len(words) > 3 and (garbled_count / len(words)) > 0.1:
-                return True
-            if len(words) >= 8:
-                valid_shorts = {
-                    "a", "an", "the", "and", "or", "in", "on", "at", "to", "for", "of", "off", "by", "is", "it",
-                    "be", "as", "no", "not", "has", "had", "was", "per", "vs", "v", "sub", "art", "sec", "pld",
-                    "clc", "ylr", "mld", "ptd", "plc", "cld", "sc", "hc", "lhc", "shc", "phc", "bhc", "ihc", "rs", "nos",
-                    "if", "do", "we", "he", "she", "me", "my", "us", "so", "up", "out", "our", "its", "may", "can", "law",
-                    "act", "set", "out", "due", "any", "all", "few", "two", "one", "three", "four", "five", "six", "day"
-                }
-                unknown_shorts = [w for w in words if 1 <= len(w) <= 3 and w.lower() not in valid_shorts and not w.isdigit()]
-                if len(unknown_shorts) / len(words) > 0.3:
-                    return True
-            return False
-
         # ==============================================================================
         # CASE-LAW RETRIEVAL AS A TOOL -- Claude decides IF and WHEN to call this.
         # It is no longer a pipeline stage that runs unconditionally before every reply.
@@ -3184,6 +3393,8 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
                 if cid_key and (cid_key in seen_in_query or cid_key in _seen_case_ids_global):
                     continue
+                if not is_usable_precedent(m):
+                    continue
                 if cid_key:
                     seen_in_query.add(cid_key)
                 filtered_matches.append(m)
@@ -3200,7 +3411,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 fts_records = fallback_supabase_fulltext(raw_search_query or search_query, limit=3)
                 if fts_records:
                     print(f"--> [TERTIARY FALLBACK]: Postgres FTS retrieved {len(fts_records)} unindexed candidates for query '{raw_search_query or search_query}'", flush=True)
-                    from scripts.batch_vector_indexer import clean_or_extract_title
                     for r in fts_records:
                         cid = r.get("case_id") or str(r.get("id"))
                         raw_txt = r.get("full_text") or ""
@@ -3234,8 +3444,26 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                                 "is_fts_fallback": True
                             }
                         }
-                        primary_matches.append(m_obj)
-                        aggregate_sources_matches.append(m_obj)
+                        if is_usable_precedent(m_obj):
+                            primary_matches.append(m_obj)
+                            aggregate_sources_matches.append(m_obj)
+
+            # STAGE 2 EXTERNAL WEB-FALLBACK TRIGGER
+            # When both Pinecone vector search and Postgres FTS return zero usable candidates
+            # (or only discarded stub/placeholder records), trigger external discovery against whitelisted court portals.
+            if not primary_matches:
+                print(f"--> [STAGE 2 FALLBACK]: Zero usable local candidates. Firing external web search against whitelisted court domains for '{search_query}'...", flush=True)
+                try:
+                    from core.fallback_pipeline import search_whitelisted_court_precedents
+                    ext_candidates = search_whitelisted_court_precedents(search_query, max_results=2)
+                    for ext_c in ext_candidates:
+                        if is_usable_precedent(ext_c):
+                            primary_matches.append(ext_c)
+                            aggregate_sources_matches.append(ext_c)
+                    if primary_matches:
+                        print(f"✅ [STAGE 2 FALLBACK OK]: Successfully retrieved {len(primary_matches)} verified external court precedents.", flush=True)
+                except Exception as ext_err:
+                    print(f"⚠️ Stage 2 external fallback notice: {ext_err}", file=sys.stderr, flush=True)
 
             context_parts = []
             for match in primary_matches:
@@ -3496,6 +3724,10 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
 
         # Force-feed pre-intercepted precedent card into response payload & LLM context
         grounding_message = ""
+        if intercepted_card and not is_usable_precedent(intercepted_card):
+            print(f"--> [INTERCEPTOR]: Purged unverified or headnote-only card {intercepted_card.get('neutral_citation') or intercepted_card.get('citation')}", flush=True)
+            intercepted_card = None
+
         if intercepted_card:
             c_cit = synthesize_canonical_citation(intercepted_card)
             c_title = sanitize_case_title(intercepted_card.get("case_title") or "Reported Precedent")
@@ -3559,7 +3791,7 @@ A precedent was successfully retrieved from the database:
 - Full Text / Headnote: {c_text}
 
 MANDATORY INSTRUCTIONS:
-1. The deciding forum is: {c_name}. Citations containing YLR, MLD, CLC, or PCrLJ belong strictly to High Courts.
+1. The deciding forum is: {c_name}.
 2. In the "Cases discussed" section and heading, use the exact forum from above ({c_name}).
 3. In "Sources Searched", reflect the actual source forum ({c_name}).
 4. When summarizing each discussed case, use the exact Outcome provided in the context (e.g. 'Outcome: {intercepted_outcome}'). Do NOT default to 'Outcome: Decided'.

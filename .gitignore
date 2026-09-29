@@ -26,6 +26,7 @@ ingest_failures.log
 # Large data/batch files
 failed_batches.jsonl
 ingestion_state.json
+ingestion_state_*.json
 
 # Dataset files
 datasets/
