@@ -4267,13 +4267,23 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                         if cit_key and txt_val:
                             ctx_payload[cit_key] = txt_val
                     if ctx_payload:
+                        # Upgraded Option A code:
                         quote_scan = verify_text_quotes(display_answer, ctx_payload, silent_sanitize=True)
                         if quote_scan.get("sanitized_text"):
                             display_answer = quote_scan["sanitized_text"]
-                        if quote_scan.get("warning_banner") and "Quote Attribution Correction" not in display_answer and "Unverified Quotation Notice" not in display_answer:
-                            display_answer = f"{quote_scan['warning_banner']}\n\n" + display_answer
+
+                        # Explicitly suppress the warning banner from rendering to the user interface
+                        # (We only keep sanitization active in the background)
                 except Exception as quote_banner_err:
                     print(f"⚠️ [Quote Verifier Banner Error]: {quote_banner_err}", file=sys.stderr)
+
+            # Option A Safety Scrub: Purge any raw Unverified Quotation Notice block from display_answer
+            if "Unverified Quotation Notice" in display_answer:
+                display_answer = re.sub(
+                    r'(?is)⚠️\s*\*{0,2}Unverified Quotation Notice\*{0,2}:.*?(?=(?:\n\s*###|\n\s*1\.|\n\s*\*{1,2}[A-Z]|\Z))',
+                    '',
+                    display_answer
+                ).strip()
 
             # Phase 5 Pilot: Precedent Currency & Overruling-Status (Metadata Only)
             # Raw markdown alert is omitted from display_answer to allow frontend dedicated UI rendering.

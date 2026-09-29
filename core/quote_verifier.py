@@ -277,10 +277,8 @@ def sanitize_unverified_quotes(generated_text: str, unverified_quotes: List[str]
             sanitized_text = sanitized_text.replace(smart_single, quote)
         else:
             q_strip = quote.strip()
-            for dq in (f'"{q_strip}"', f'“{q_strip}”', f"'{q_strip}'", f'‘{q_strip}’'):
-                if dq in sanitized_text:
-                    sanitized_text = sanitized_text.replace(dq, q_strip)
-                    break
+            pattern = r'["“\'‘]\s*' + re.escape(q_strip) + r'\s*["”\'’]'
+            sanitized_text = re.sub(pattern, q_strip, sanitized_text)
 
     return sanitized_text
 
