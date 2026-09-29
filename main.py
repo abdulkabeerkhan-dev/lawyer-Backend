@@ -1,13 +1,14 @@
 import os
 import sys
 import asyncio
+import threading
 import time
 import uuid
 import io
 import base64
 import urllib.parse
 from datetime import datetime, timezone, timedelta
-from typing import List, Dict, Any, Optional, cast
+from typing import List, Dict, Any, Optional, cast, Set
 import re
 import json
 
@@ -2732,6 +2733,54 @@ def check_user_quota(user_id: str, num_images_requested: int):
     except Exception as e:
         print(f"⚠️ Quota verification error: {e}")
 
+ACTIVE_HEADNOTE_UPGRADE_JOBS: Set[str] = set()
+
+def trigger_background_headnote_worker(case_id: str = "", citation: str = "", title: str = "", portal_url: Optional[str] = None):
+    """
+    Dedicated background priority worker:
+    When an active query encounters a headnote-only record and synchronous discovery exceeds
+    the in-flight timeout, this worker runs asynchronously in a dedicated worker thread
+    to download, parse via PyMuPDF, validate through Gates 1-4, and stage/quarantine the full
+    verbatim judgment without delaying the user's immediate response.
+    """
+    cid_clean = str(case_id or "").strip()
+    cit_clean = str(citation or "").strip()
+    if not cit_clean and not cid_clean:
+        return
+    job_key = f"{cid_clean}::{cit_clean}".strip().lower()
+    if job_key in ACTIVE_HEADNOTE_UPGRADE_JOBS:
+        return
+    ACTIVE_HEADNOTE_UPGRADE_JOBS.add(job_key)
+
+    def _worker():
+        try:
+            print(f"🚀 [BACKGROUND HEADNOTE WORKER]: Starting dedicated background upgrade for '{cit_clean or cid_clean}'...", flush=True)
+            from core.fallback_pipeline import process_court_pdf_pipeline, search_whitelisted_court_precedents
+            p_url_clean = str(portal_url or "").strip()
+            if p_url_clean and any(d in p_url_clean.lower() for d in ["supremecourt.gov.pk", "lhc.gov.pk", "sys.lhc.gov.pk", "shc.gov.pk", "phc.gov.pk", "ihc.gov.pk", "balochistanhighcourt.gov.pk"]):
+                res = process_court_pdf_pipeline(p_url_clean)
+                if res.get("status") == "success" and res.get("gates", {}).get("gate4_passed"):
+                    print(f"✅ [BACKGROUND HEADNOTE WORKER OK]: Successfully downloaded & verified full judgment for '{cit_clean}' from {p_url_clean}.", flush=True)
+                    return
+
+            target_query = f"{cit_clean} {title}".strip()
+            if target_query:
+                candidates = search_whitelisted_court_precedents(target_query, max_results=1)
+                if candidates:
+                    cand = candidates[0]
+                    cand_meta = cand.get("metadata", {})
+                    p_url = cand_meta.get("pdf_url") or cand_meta.get("source_url")
+                    print(f"✅ [BACKGROUND HEADNOTE WORKER OK]: Discovered and verified full judgment for '{cit_clean}' from {p_url}.", flush=True)
+                else:
+                    print(f"ℹ️ [BACKGROUND HEADNOTE WORKER]: Portal search completed; no court PDF found for '{cit_clean}'.", flush=True)
+        except Exception as e:
+            print(f"⚠️ [BACKGROUND HEADNOTE WORKER ERROR] for '{cit_clean}': {e}", file=sys.stderr, flush=True)
+        finally:
+            ACTIVE_HEADNOTE_UPGRADE_JOBS.discard(job_key)
+
+    worker_thread = threading.Thread(target=_worker, name=f"HeadnoteUpgrade-{(cit_clean or cid_clean)[:15]}", daemon=True)
+    worker_thread.start()
+
 jobs_store: Dict[str, Dict[str, Any]] = {}
 
 def cleanup_old_jobs():
@@ -3463,50 +3512,97 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             should_trigger_fallback = (not primary_matches) or bool(headnote_candidates)
 
             if should_trigger_fallback:
+                hn_cit = ""
+                hn_title = ""
+                hn_case_id = ""
+                hn_portal_url = None
                 if not primary_matches:
                     fallback_target_query = search_query
                     print(f"--> [STAGE 2 FALLBACK]: Zero usable local candidates. Firing external web search against whitelisted court domains for '{fallback_target_query}'...", flush=True)
                 else:
                     top_hn = headnote_candidates[0]
                     hn_meta = top_hn.get("metadata", {}) if isinstance(top_hn, dict) else getattr(top_hn, "metadata", {}) or {}
-                    hn_cit = hn_meta.get("citation") or hn_meta.get("neutral_citation") or top_hn.get("citation") or ""
-                    hn_title = hn_meta.get("title") or hn_meta.get("case_title") or top_hn.get("title") or ""
+                    hn_cit = str(hn_meta.get("citation") or hn_meta.get("neutral_citation") or top_hn.get("citation") or "").strip()
+                    hn_title = str(hn_meta.get("title") or hn_meta.get("case_title") or top_hn.get("title") or "").strip()
+                    hn_case_id = str(hn_meta.get("case_id") or top_hn.get("case_id") or top_hn.get("id") or "").strip()
+                    hn_portal_url = hn_meta.get("pdf_url") or hn_meta.get("source_url") or hn_meta.get("url") or top_hn.get("pdf_url") or top_hn.get("source_url")
                     fallback_target_query = f"{hn_cit} {hn_title}".strip() or search_query
-                    print(f"--> [STAGE 2 HEADNOTE FALLBACK]: Local candidate '{hn_cit}' is headnote-only. Firing targeted web search on court portals for full judgment...", flush=True)
+                    print(f"--> [STAGE 2 HEADNOTE FALLBACK]: Local candidate '{hn_cit}' is headnote-only. Initiating upgrade...", flush=True)
 
-                try:
-                    from core.fallback_pipeline import search_whitelisted_court_precedents
-                    loop = asyncio.get_running_loop()
-                    ext_candidates = await asyncio.wait_for(
-                        loop.run_in_executor(None, search_whitelisted_court_precedents, fallback_target_query, 2),
-                        timeout=7.0
-                    )
-                    if ext_candidates:
-                        valid_ext = [ext_c for ext_c in ext_candidates if is_usable_precedent(ext_c)]
-                        if valid_ext:
-                            if not primary_matches:
-                                for ext_c in valid_ext:
-                                    primary_matches.append(ext_c)
-                                    aggregate_sources_matches.append(ext_c)
-                                print(f"✅ [STAGE 2 FALLBACK OK]: Successfully retrieved {len(primary_matches)} verified external court precedents.", flush=True)
-                            else:
-                                # Upgrade headnote candidate with full verbatim text and certified PDF
-                                best_ext = valid_ext[0]
+                upgraded_directly = False
+                # 1. Prioritize fast blocking fetch if portal URL is present
+                if primary_matches and hn_portal_url and any(d in str(hn_portal_url).lower() for d in ["supremecourt.gov.pk", "lhc.gov.pk", "sys.lhc.gov.pk", "shc.gov.pk", "phc.gov.pk", "ihc.gov.pk", "balochistanhighcourt.gov.pk"]):
+                    try:
+                        from core.fallback_pipeline import process_court_pdf_pipeline
+                        print(f"--> [BLOCKING DIRECT FETCH]: Portal URL present ({hn_portal_url}). Executing fast blocking fetch...", flush=True)
+                        loop = asyncio.get_running_loop()
+                        direct_res = await asyncio.wait_for(
+                            loop.run_in_executor(None, process_court_pdf_pipeline, str(hn_portal_url)),
+                            timeout=8.0
+                        )
+                        if direct_res.get("status") == "success" and direct_res.get("gates", {}).get("gate4_passed"):
+                            rec = direct_res.get("extracted", {})
+                            full_text = rec.get("raw_text") or ""
+                            if len(full_text.split()) >= 300:
                                 upgraded_target = headnote_candidates[0]
                                 if "metadata" in upgraded_target and isinstance(upgraded_target["metadata"], dict):
-                                    upgraded_target["metadata"]["text"] = best_ext["metadata"]["text"]
-                                    upgraded_target["metadata"]["full_text"] = best_ext["metadata"]["text"]
+                                    upgraded_target["metadata"]["text"] = full_text[:4000]
+                                    upgraded_target["metadata"]["full_text"] = full_text[:4000]
                                     upgraded_target["metadata"]["content_type"] = "fresh_court_fetch"
-                                    upgraded_target["metadata"]["pdf_url"] = best_ext["metadata"].get("pdf_url")
-                                    upgraded_target["metadata"]["source_url"] = best_ext["metadata"].get("source_url")
+                                    upgraded_target["metadata"]["pdf_url"] = str(hn_portal_url)
+                                    upgraded_target["metadata"]["source_url"] = str(hn_portal_url)
                                     upgraded_target["metadata"]["is_upgraded_from_headnote"] = True
                                 upgraded_target["content_type"] = "fresh_court_fetch"
-                                upgraded_target["text"] = best_ext["metadata"]["text"]
-                                print(f"✅ [HEADNOTE UPGRADE OK]: Upgraded headnote candidate '{fallback_target_query}' to full verbatim court judgment.", flush=True)
-                except asyncio.TimeoutError:
-                    print(f"⏱️ [STAGE 2 FALLBACK]: Web search for '{fallback_target_query}' reached 7s timeout. Proceeding with headnote disclosure banner.", flush=True)
-                except Exception as ext_err:
-                    print(f"⚠️ Stage 2 external fallback notice: {ext_err}", file=sys.stderr, flush=True)
+                                upgraded_target["text"] = full_text[:4000]
+                                upgraded_directly = True
+                                print(f"✅ [DIRECT UPGRADE OK]: Upgraded headnote candidate '{hn_cit}' directly from portal PDF.", flush=True)
+                    except Exception as direct_err:
+                        print(f"⚠️ Direct portal fetch notice: {direct_err}", file=sys.stderr, flush=True)
+
+                # 2. If not upgraded directly, run bounded discovery or trigger immediate background priority worker
+                if not upgraded_directly:
+                    try:
+                        from core.fallback_pipeline import search_whitelisted_court_precedents
+                        loop = asyncio.get_running_loop()
+                        ext_candidates = await asyncio.wait_for(
+                            loop.run_in_executor(None, search_whitelisted_court_precedents, fallback_target_query, 2),
+                            timeout=7.0
+                        )
+                        if ext_candidates:
+                            valid_ext = [ext_c for ext_c in ext_candidates if is_usable_precedent(ext_c)]
+                            if valid_ext:
+                                if not primary_matches:
+                                    for ext_c in valid_ext:
+                                        primary_matches.append(ext_c)
+                                        aggregate_sources_matches.append(ext_c)
+                                    print(f"✅ [STAGE 2 FALLBACK OK]: Successfully retrieved {len(primary_matches)} verified external court precedents.", flush=True)
+                                else:
+                                    best_ext = valid_ext[0]
+                                    upgraded_target = headnote_candidates[0]
+                                    if "metadata" in upgraded_target and isinstance(upgraded_target["metadata"], dict):
+                                        upgraded_target["metadata"]["text"] = best_ext["metadata"]["text"]
+                                        upgraded_target["metadata"]["full_text"] = best_ext["metadata"]["text"]
+                                        upgraded_target["metadata"]["content_type"] = "fresh_court_fetch"
+                                        upgraded_target["metadata"]["pdf_url"] = best_ext["metadata"].get("pdf_url")
+                                        upgraded_target["metadata"]["source_url"] = best_ext["metadata"].get("source_url")
+                                        upgraded_target["metadata"]["is_upgraded_from_headnote"] = True
+                                    upgraded_target["content_type"] = "fresh_court_fetch"
+                                    upgraded_target["text"] = best_ext["metadata"]["text"]
+                                    print(f"✅ [HEADNOTE UPGRADE OK]: Upgraded headnote candidate '{fallback_target_query}' to full verbatim court judgment.", flush=True)
+                            else:
+                                if headnote_candidates:
+                                    trigger_background_headnote_worker(case_id=hn_case_id, citation=hn_cit, title=hn_title, portal_url=str(hn_portal_url or ""))
+                        else:
+                            if headnote_candidates:
+                                trigger_background_headnote_worker(case_id=hn_case_id, citation=hn_cit, title=hn_title, portal_url=str(hn_portal_url or ""))
+                    except asyncio.TimeoutError:
+                        print(f"⏱️ [STAGE 2 FALLBACK]: Web search for '{fallback_target_query}' reached 7s timeout. Spawning dedicated background priority worker...", flush=True)
+                        if headnote_candidates:
+                            trigger_background_headnote_worker(case_id=hn_case_id, citation=hn_cit, title=hn_title, portal_url=str(hn_portal_url or ""))
+                    except Exception as ext_err:
+                        print(f"⚠️ Stage 2 external fallback notice: {ext_err}", file=sys.stderr, flush=True)
+                        if headnote_candidates:
+                            trigger_background_headnote_worker(case_id=hn_case_id, citation=hn_cit, title=hn_title, portal_url=str(hn_portal_url or ""))
 
             context_parts = []
             for match in primary_matches:

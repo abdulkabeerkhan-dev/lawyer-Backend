@@ -420,3 +420,17 @@ def handle_reflection_or_abort(llm_client, original_prompt: str, generated_text:
             )
 
     return generated_text
+
+
+def is_structural_or_title_quote(quote_text: str) -> bool:
+    """
+    Ignore short quotes, title-case headings, or typical LLM structural wrappers.
+    Prevents structural headers, bullet titles, or case name phrases wrapped in quotes
+    from triggering the Unverified Quotation Notice.
+    """
+    if not quote_text or not isinstance(quote_text, str):
+        return True
+    cleaned = quote_text.strip()
+    if len(cleaned.split()) <= 6 or cleaned.endswith(":") or cleaned.endswith("—"):
+        return True
+    return False

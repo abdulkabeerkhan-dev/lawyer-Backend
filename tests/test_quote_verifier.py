@@ -112,6 +112,32 @@ class TestQuoteVerifier(unittest.TestCase):
         self.assertIn("Unverified Quotation Notice", res["warning_banner"])
         self.assertIn("2020 SCMR 850", res["warning_banner"])
 
+    def test_is_structural_or_title_quote_helper(self):
+        """Verify helper correctly classifies short titles, colons, dashes, and long prose."""
+        from core.legal_guardrails import is_structural_or_title_quote
+        # <= 6 words
+        self.assertTrue(is_structural_or_title_quote("Mst. Aisha Bibi v. Federation"))
+        self.assertTrue(is_structural_or_title_quote("Legal Opinion on Bail"))
+        # Colon suffix
+        self.assertTrue(is_structural_or_title_quote("EXECUTIVE SUMMARY AND COMPREHENSIVE LEGAL ANALYSIS:"))
+        # Dash suffix
+        self.assertTrue(is_structural_or_title_quote("SECTION 489-F PPC BAIL PRINCIPLES —"))
+        # Substantive sentence (> 6 words, no colon/dash)
+        self.assertFalse(is_structural_or_title_quote("The liberty of a citizen is a sacred trust under the Constitution."))
+
+    def test_structural_quotes_do_not_trigger_unverified_banner(self):
+        """Verify response text containing quoted headings does not trigger Unverified Quotation Notice."""
+        response_text = (
+            "Here is the formal memorandum:\n\n"
+            "\"EXECUTIVE SUMMARY & LEGAL OPINION:\"\n"
+            "Under Section 489-F PPC, bail is the rule rather than the exception.\n\n"
+            "\"STATUTORY & PROCEDURAL FRAMEWORK:\"\n"
+            "Section 497(1) prohibitory clause does not bar bail for three-year offences.\n"
+        )
+        res = verify_text_quotes(response_text, self.context_payload)
+        self.assertEqual(res["unverified_count"], 0)
+        self.assertIsNone(res["warning_banner"])
+
 
 if __name__ == "__main__":
     unittest.main()

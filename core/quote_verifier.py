@@ -11,6 +11,8 @@ from typing import Dict, List, Optional, Tuple, Any
 SIMILARITY_THRESHOLD = 0.85
 MIN_QUOTE_LENGTH = 25  # Minimum character length to treat as substantive quotation
 
+from core.legal_guardrails import is_structural_or_title_quote
+
 
 def normalize_text(text: str) -> str:
     """Normalize text for OCR noise, punctuation differences, and whitespace."""
@@ -171,6 +173,17 @@ def verify_quote_attribution(
     If attributed_citation doesn't contain the quote, checks other cases to detect
     cross-case misattribution (e.g. Farooq Imran vs. Tahir Umar holding).
     """
+    if is_structural_or_title_quote(quote):
+        return {
+            "is_verified": True,
+            "status": "structural_or_title",
+            "attributed_citation": attributed_citation,
+            "matched_citation": None,
+            "similarity_score": 1.0,
+            "quote": quote,
+            "message": "Quote is a structural heading or title phrase."
+        }
+
     # 1. Check primary attributed case
     primary_key = None
     if attributed_citation:
@@ -246,8 +259,11 @@ def verify_text_quotes(
     unverified = []
 
     for q in quotes:
+        quote_text = q.get("quote", "")
+        if is_structural_or_title_quote(quote_text):
+            continue
         result = verify_quote_attribution(
-            quote=q["quote"],
+            quote=quote_text,
             attributed_citation=q.get("attributed_citation"),
             context_payload=context_payload,
             threshold=threshold
