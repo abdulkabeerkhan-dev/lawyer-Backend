@@ -139,5 +139,38 @@ class TestQuoteVerifier(unittest.TestCase):
         self.assertIsNone(res["warning_banner"])
 
 
+    def test_sanitize_unverified_quotes_strips_quotes_silently(self):
+        """Verify Option A: Silent Sanitization strips quotes into authoritative prose."""
+        from core.quote_verifier import sanitize_unverified_quotes
+        text = (
+            "The High Court held: \"The petitioner has committed fraud beyond reasonable doubt.\" "
+            "Additionally, the court noted ‘no remedy lies in equity’ for willful defaulters."
+        )
+        unverified = [
+            "The petitioner has committed fraud beyond reasonable doubt.",
+            "no remedy lies in equity"
+        ]
+        sanitized = sanitize_unverified_quotes(text, unverified)
+        self.assertNotIn("\"The petitioner has committed fraud beyond reasonable doubt.\"", sanitized)
+        self.assertNotIn("‘no remedy lies in equity’", sanitized)
+        self.assertIn("The High Court held: The petitioner has committed fraud beyond reasonable doubt.", sanitized)
+        self.assertIn("additionally, the court noted no remedy lies in equity for willful defaulters.".lower(), sanitized.lower())
+
+    def test_verify_text_quotes_silent_sanitize_option_a(self):
+        """Verify verify_text_quotes with silent_sanitize=True strips quotes and suppresses unverified banner."""
+        from core.quote_verifier import verify_text_quotes
+        response_text = (
+            "In PLD 2018 SC 400, the Court held: "
+            "\"Every defaulting debtor shall suffer instant forfeiture of property without trial.\""
+        )
+        res = verify_text_quotes(response_text, self.context_payload, silent_sanitize=True)
+        self.assertEqual(res["unverified_count"], 1)
+        # Warning banner should NOT contain Unverified Quotation Notice when silent_sanitize=True
+        self.assertIsNone(res["warning_banner"])
+        # Sanitized text should be clean and unquoted
+        self.assertNotIn("\"Every defaulting debtor shall suffer instant forfeiture of property without trial.\"", res["sanitized_text"])
+        self.assertIn("Every defaulting debtor shall suffer instant forfeiture of property without trial.", res["sanitized_text"])
+
+
 if __name__ == "__main__":
     unittest.main()

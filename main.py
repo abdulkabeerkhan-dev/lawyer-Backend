@@ -4259,7 +4259,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
             if citations_payload:
                 try:
-                    from core.quote_verifier import verify_text_quotes
+                    from core.quote_verifier import verify_text_quotes, sanitize_unverified_quotes
                     ctx_payload = {}
                     for c in (citations_payload or []):
                         cit_key = str(c.get("citation") or c.get("neutral_citation") or c.get("case_id") or "").strip()
@@ -4267,7 +4267,9 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                         if cit_key and txt_val:
                             ctx_payload[cit_key] = txt_val
                     if ctx_payload:
-                        quote_scan = verify_text_quotes(display_answer, ctx_payload)
+                        quote_scan = verify_text_quotes(display_answer, ctx_payload, silent_sanitize=True)
+                        if quote_scan.get("sanitized_text"):
+                            display_answer = quote_scan["sanitized_text"]
                         if quote_scan.get("warning_banner") and "Quote Attribution Correction" not in display_answer and "Unverified Quotation Notice" not in display_answer:
                             display_answer = f"{quote_scan['warning_banner']}\n\n" + display_answer
                 except Exception as quote_banner_err:
