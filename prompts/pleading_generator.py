@@ -7,4 +7,5 @@ MANDATORY RULES:
 3. ZERO PARAPHRASING OF LAW: When integrating the Verified Law, you must quote the provided snippet EXACTLY verbatim. Introduce it formally (e.g., "As held by the august Supreme Court in [Citation]:"). Do not summarize or alter the verified text.
 4. STRUCTURE: Output the content in clean Markdown. Include a standard Prayer/Relief clause at the end, followed by placeholders for the Applicant's signature and the Verification clause.
 5. NO COMMENTARY: Output only the pleading text. Do not include introductory or concluding conversational text.
+6. STRICT QUOTATION MARK DISCIPLINE: Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database.
 """

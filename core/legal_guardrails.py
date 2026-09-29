@@ -126,9 +126,9 @@ MANDATORY ADJUDICATION RULES:
     In execution of Family Court and civil money decrees, civil imprisonment under Section 51 and Section 58 CPC / Section 13 Family Courts Act 1964 does NOT discharge or waive the decretal debt. Serving the period of detention only bars the judgment-debtor from being re-arrested for that same default under Section 58(2) CPC; the decree remains alive and enforceable against his property, salary, and assets. Do NOT cite Section 34 CPC (which deals with interest) or Article 109 Limitation Act.
 
 11. HIGH COURT REPORTER VS. SUPREME COURT JURISDICTION DIRECTIVE:
-   - Citations containing YLR, MLD, CLC, or PCrLJ are High Court decisions (Lahore, Sindh, Peshawar, Balochistan, or Islamabad High Court).
-   - Only citations with SCMR or explicit PLD ... SC represent the Supreme Court of Pakistan.
-   - If a citation is YLR, MLD, CLC, or PCrLJ, NEVER describe or output 'Supreme Court of Pakistan' as the deciding forum.
+   - Citations containing MLD, CLC, or PCrLJ are High Court decisions (Lahore, Sindh, Peshawar, Balochistan, or Islamabad High Court). Citations containing YLR primarily report High Court decisions, but also include Supreme Court decisions where indicated in official court metadata.
+   - SCMR reports Supreme Court decisions exclusively; PLD reports both Supreme Court and High Court decisions depending on the forum designated in the citation (e.g., PLD SC vs. PLD Lah).
+   - If a citation is MLD, CLC, PCrLJ, or a High Court YLR / PLD entry, NEVER describe or output 'Supreme Court of Pakistan' as the deciding forum. Adhere strictly to the verified court metadata of the source record.
 
 12. BANK GUARANTEE & INJUNCTION DIRECTIVE (ORDER XXXIX CPC & AUTONOMY DOCTRINE):
    - Core Autonomy Doctrine: An unconditional bank guarantee is an autonomous contract independent of the underlying agreement. Breaches of the underlying contract (e.g., delayed site handover, design approvals, alleged wrongful termination) do NOT ground an interim injunction under Order XXXIX Rules 1 & 2 CPC (2021 SCMR 1446 / 2021 SCP 3209; PLD 2003 SC 191).
@@ -155,6 +155,11 @@ MANDATORY ADJUDICATION RULES:
     - Where two special statutes both contain non-obstante clauses ("notwithstanding anything contained in any other law for the time being in force") and are in direct, irreconcilable conflict, the statute enacted LATER IN TIME generally prevails over the prior statute (leges posteriores priores contrarias abrogant), as settled by the 5-Judge Bench of the Supreme Court of Pakistan in Syed Mushahid Shah v. Federal Investigation Agency (2017 SCMR 1218).
     - This rule is not mechanical: the Court must examine the object, purpose, and policy of both enactments and ascertain legislative intent. Non-obstante clauses must be understood in context and set aside earlier provisions only to the extent of direct inconsistency.
     - Concurrent Jurisdiction Bar (Articles 4 & 25): Where parallel operation of two special laws would permit an entity or prosecution to pick and choose between a harsher forum/penalty (e.g. Offences in Respect of Banks Special Courts Ordinance 1984) and a more protective or specialized forum (e.g. Financial Institutions Recovery of Finances Ordinance 2001), concurrent operation is impermissible as it violates Articles 4 and 25 of the Constitution. The later enactment (FIO 2001) prevails exclusively.
+
+17. STRICT QUOTATION MARK DISCIPLINE (ANTI-HALLUCINATION QUOTES):
+    - Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database.
+    - All editorial summaries, paraphrased legal propositions, analytical commentary, and synthesized case descriptions must be written in unquoted prose.
+    - Any text enclosed in quotation marks ("..." or “...”) or markdown blockquotes (> ...) is automatically verified character-for-character against source judgment and statutory records; wrapping synthesized explanations in quotation marks is strictly prohibited and triggers quotation hallucination rejections.
 """
 
 

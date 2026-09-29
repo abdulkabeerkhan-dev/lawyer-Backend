@@ -2705,12 +2705,12 @@ def rerank_by_judicial_hierarchy_and_recency(hits: list) -> list:
 
 
 SYSTEM_PROMPTS = {
-    "criminal": "You are an elite Pakistani criminal law specialist, holding deep expertise in the Pakistan Penal Code (PPC) and Code of Criminal Procedure (CrPC).",
-    "divorce_family": "You are a leading Pakistani family law expert, specializing in the Muslim Family Laws Ordinance, Dissolution of Muslim Marriages Act, and related custody jurisprudence.",
-    "government_constitutional": "You are a senior Pakistani constitutional law expert, specializing in Article 199 writ petitions, civil service regulations, and administrative law.",
-    "corporate_tax": "You are a Pakistani corporate and tax law advisor, specializing in the Companies Act 2017, Contract Act, and SECP regulations.",
-    "land_property": "You are an expert on Pakistani land revenue, Specific Relief Act 1877, Transfer of Property Act, and registration laws.",
-    "general": "You are an elite, highly precise Pakistani legal expert and Senior Appellate Advocate."
+    "criminal": "You are an elite Pakistani criminal law specialist, holding deep expertise in the Pakistan Penal Code (PPC) and Code of Criminal Procedure (CrPC). Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database.",
+    "divorce_family": "You are a leading Pakistani family law expert, specializing in the Muslim Family Laws Ordinance, Dissolution of Muslim Marriages Act, and related custody jurisprudence. Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database.",
+    "government_constitutional": "You are a senior Pakistani constitutional law expert, specializing in Article 199 writ petitions, civil service regulations, and administrative law. Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database.",
+    "corporate_tax": "You are a Pakistani corporate and tax law advisor, specializing in the Companies Act 2017, Contract Act, and SECP regulations. Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database.",
+    "land_property": "You are an expert on Pakistani land revenue, Specific Relief Act 1877, Transfer of Property Act, and registration laws. Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database.",
+    "general": "You are an elite, highly precise Pakistani legal expert and Senior Appellate Advocate. Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database."
 }
 
 def check_user_quota(user_id: str, num_images_requested: int):
@@ -3694,7 +3694,7 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
 
 11. CASE OUTCOME & HIGH COURT REPORTER RULES:
     - When summarizing or discussing each precedent case in your response or precedent cards, use the exact Outcome provided in the context.
-    - Citations containing YLR, MLD, CLC, or PCrLJ represent High Court decisions. Only SCMR or explicit PLD ... SC citations represent the Supreme Court of Pakistan. Never state or output 'Supreme Court of Pakistan' for a YLR, MLD, CLC, or PCrLJ citation.
+    - Citations containing MLD, CLC, or PCrLJ represent High Court decisions. Citations containing YLR primarily represent High Court decisions unless explicit Supreme Court metadata is attached. Only SCMR or explicit PLD ... SC citations represent the Supreme Court of Pakistan. Never state or output 'Supreme Court of Pakistan' for MLD, CLC, PCrLJ, or High Court YLR records.
 
 12. ABSOLUTE RULE FOR MISSING DOCUMENTS & CLARIFYING QUESTIONS:
     - You are STRICTLY FORBIDDEN from calling the search_case_law tool when asking the user for missing information, clarifying details, or when a requested document's content is missing/unreadable.
@@ -3705,6 +3705,10 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
     - NEVER QUOTE HEADNOTES AS JUDICIAL REASONING: Never quote headnote text as the court's or judge's verbatim words. Headnotes are editorial summaries, not judicial dictums.
     - ADVISE VERIFICATION: Explicitly advise the advocate to verify the proposition against the certified or official full judgment text before presenting it in pleadings or oral arguments.
     - Treat 'unknown' content type neutrally as an electronic summary, adhering to the same verification principles if text brevity suggests it is not a full verbatim opinion.
+
+14. STRICT QUOTATION MARK DISCIPLINE (ANTI-HALLUCINATION QUOTES):
+    - Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database.
+    - Write all analytical conclusions, conceptual restatements, and headnote digests in clean unquoted prose. Quotation marks ("..." or “...”) and markdown blockquotes (> ...) are reserved exclusively for verbatim excerpts directly sourced from judgments or statutory text.
 """
 
 

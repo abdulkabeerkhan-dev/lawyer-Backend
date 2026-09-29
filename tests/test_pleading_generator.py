@@ -23,6 +23,8 @@ class TestPleadingGenerator(unittest.TestCase):
         self.assertIn("ZERO PARAPHRASING OF LAW", PLEADING_SYSTEM_PROMPT)
         self.assertIn("STRUCTURE:", PLEADING_SYSTEM_PROMPT)
         self.assertIn("NO COMMENTARY:", PLEADING_SYSTEM_PROMPT)
+        self.assertIn("STRICT QUOTATION MARK DISCIPLINE", PLEADING_SYSTEM_PROMPT)
+        self.assertIn("Never wrap synthesized summaries or explanations in quotation marks", PLEADING_SYSTEM_PROMPT)
 
     def test_stage_2_generate_court_docx(self):
         case_title = "Mst. Aisha Bibi v. Federation of Pakistan"

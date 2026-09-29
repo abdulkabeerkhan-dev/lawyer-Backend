@@ -294,6 +294,13 @@ class TestLegalGuardrails(unittest.TestCase):
         clean_errors = lint_legal_output(good_answer, context_chunks=mock_chunks)
         self.assertFalse(any("headnote-only" in e for e in clean_errors))
 
+    def test_strict_quotation_discipline_directive(self):
+        """
+        Test Rule 17: Assert SYSTEM_LEGAL_DIRECTIVE contains the mandatory quotation mark discipline.
+        """
+        self.assertIn("STRICT QUOTATION MARK DISCIPLINE (ANTI-HALLUCINATION QUOTES)", SYSTEM_LEGAL_DIRECTIVE)
+        self.assertIn("Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database.", SYSTEM_LEGAL_DIRECTIVE)
+
 if __name__ == '__main__':
     unittest.main()
 
