@@ -497,8 +497,9 @@ def process_court_pdf_pipeline(url: str) -> Dict[str, Any]:
     print(f"    - Docket: {record['docket_number']}")
     print(f"    - Title: {record['case_title']}")
     print(f"    - Date: {record['decision_date']}")
-    print(f"    - Judges: {record['judge_names']}")
-    print(f"    - Confidence: {record['ocr_confidence']:.1%} ({record['page_count']} pages)")
+    ocr_conf = record.get('ocr_confidence')
+    conf_str = f"{ocr_conf:.1%}" if ocr_conf is not None else "N/A"
+    print(f"    - Confidence: {conf_str} ({record.get('page_count', 0)} pages)")
 
     # STAGE 6: Gates
     print("--> [Stage 6] Evaluating Gates 1 through 4...")

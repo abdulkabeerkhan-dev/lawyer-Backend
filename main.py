@@ -3449,19 +3449,61 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             aggregate_sources_matches.append(m_obj)
 
             # STAGE 2 EXTERNAL WEB-FALLBACK TRIGGER
-            # When both Pinecone vector search and Postgres FTS return zero usable candidates
-            # (or only discarded stub/placeholder records), trigger external discovery against whitelisted court portals.
-            if not primary_matches:
-                print(f"--> [STAGE 2 FALLBACK]: Zero usable local candidates. Firing external web search against whitelisted court domains for '{search_query}'...", flush=True)
+            # Condition 1: When local vector and FTS return zero usable candidates (or only discarded stubs).
+            # Condition 2: When candidate(s) are headnote_only / editorial summaries (< 300 words),
+            # trigger targeted external search against whitelisted court portals to fetch the full verbatim judgment.
+            headnote_candidates = [
+                m for m in primary_matches
+                if (
+                    str(m.get("metadata", {}).get("content_type") or m.get("content_type") or "").lower() in ("headnote_only", "editorial_summary", "short_order", "headnote") or
+                    len(str(m.get("metadata", {}).get("text") or m.get("text") or "").split()) < 300
+                )
+            ]
+            should_trigger_fallback = (not primary_matches) or bool(headnote_candidates)
+
+            if should_trigger_fallback:
+                if not primary_matches:
+                    fallback_target_query = search_query
+                    print(f"--> [STAGE 2 FALLBACK]: Zero usable local candidates. Firing external web search against whitelisted court domains for '{fallback_target_query}'...", flush=True)
+                else:
+                    top_hn = headnote_candidates[0]
+                    hn_meta = top_hn.get("metadata", {}) if isinstance(top_hn, dict) else getattr(top_hn, "metadata", {}) or {}
+                    hn_cit = hn_meta.get("citation") or hn_meta.get("neutral_citation") or top_hn.get("citation") or ""
+                    hn_title = hn_meta.get("title") or hn_meta.get("case_title") or top_hn.get("title") or ""
+                    fallback_target_query = f"{hn_cit} {hn_title}".strip() or search_query
+                    print(f"--> [STAGE 2 HEADNOTE FALLBACK]: Local candidate '{hn_cit}' is headnote-only. Firing targeted web search on court portals for full judgment...", flush=True)
+
                 try:
                     from core.fallback_pipeline import search_whitelisted_court_precedents
-                    ext_candidates = search_whitelisted_court_precedents(search_query, max_results=2)
-                    for ext_c in ext_candidates:
-                        if is_usable_precedent(ext_c):
-                            primary_matches.append(ext_c)
-                            aggregate_sources_matches.append(ext_c)
-                    if primary_matches:
-                        print(f"✅ [STAGE 2 FALLBACK OK]: Successfully retrieved {len(primary_matches)} verified external court precedents.", flush=True)
+                    loop = asyncio.get_running_loop()
+                    ext_candidates = await asyncio.wait_for(
+                        loop.run_in_executor(None, search_whitelisted_court_precedents, fallback_target_query, 2),
+                        timeout=7.0
+                    )
+                    if ext_candidates:
+                        valid_ext = [ext_c for ext_c in ext_candidates if is_usable_precedent(ext_c)]
+                        if valid_ext:
+                            if not primary_matches:
+                                for ext_c in valid_ext:
+                                    primary_matches.append(ext_c)
+                                    aggregate_sources_matches.append(ext_c)
+                                print(f"✅ [STAGE 2 FALLBACK OK]: Successfully retrieved {len(primary_matches)} verified external court precedents.", flush=True)
+                            else:
+                                # Upgrade headnote candidate with full verbatim text and certified PDF
+                                best_ext = valid_ext[0]
+                                upgraded_target = headnote_candidates[0]
+                                if "metadata" in upgraded_target and isinstance(upgraded_target["metadata"], dict):
+                                    upgraded_target["metadata"]["text"] = best_ext["metadata"]["text"]
+                                    upgraded_target["metadata"]["full_text"] = best_ext["metadata"]["text"]
+                                    upgraded_target["metadata"]["content_type"] = "fresh_court_fetch"
+                                    upgraded_target["metadata"]["pdf_url"] = best_ext["metadata"].get("pdf_url")
+                                    upgraded_target["metadata"]["source_url"] = best_ext["metadata"].get("source_url")
+                                    upgraded_target["metadata"]["is_upgraded_from_headnote"] = True
+                                upgraded_target["content_type"] = "fresh_court_fetch"
+                                upgraded_target["text"] = best_ext["metadata"]["text"]
+                                print(f"✅ [HEADNOTE UPGRADE OK]: Upgraded headnote candidate '{fallback_target_query}' to full verbatim court judgment.", flush=True)
+                except asyncio.TimeoutError:
+                    print(f"⏱️ [STAGE 2 FALLBACK]: Web search for '{fallback_target_query}' reached 7s timeout. Proceeding with headnote disclosure banner.", flush=True)
                 except Exception as ext_err:
                     print(f"⚠️ Stage 2 external fallback notice: {ext_err}", file=sys.stderr, flush=True)
 

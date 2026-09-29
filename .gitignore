@@ -30,6 +30,7 @@ ingestion_state_*.json
 
 # Dataset files
 datasets/
+headnote_citations_manifest*.csv
 
 # OS files
 .DS_Store
