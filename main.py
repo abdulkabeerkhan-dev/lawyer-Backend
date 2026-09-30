@@ -139,6 +139,7 @@ PINECONE_NAMESPACE = os.environ.get("PINECONE_NAMESPACE", "judgments")
 if not PINECONE_NAMESPACE or PINECONE_NAMESPACE == "default":
     PINECONE_NAMESPACE = "judgments"
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
+ANTHROPIC_WORKSPACE_ID = os.environ.get("ANTHROPIC_WORKSPACE_ID")
 VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY")
 VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
@@ -564,7 +565,10 @@ def safe_supabase_query(query_fn, retries=4):
 async_anthropic_client = None
 if ANTHROPIC_API_KEY:
     try:
-        raw_client = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
+        anthropic_headers = {}
+        if ANTHROPIC_WORKSPACE_ID:
+            anthropic_headers["anthropic-workspace-id"] = ANTHROPIC_WORKSPACE_ID
+        raw_client = AsyncAnthropic(api_key=ANTHROPIC_API_KEY, default_headers=anthropic_headers if anthropic_headers else None)
         try:
             from langsmith import wrappers
             async_anthropic_client = wrappers.wrap_anthropic(raw_client)
