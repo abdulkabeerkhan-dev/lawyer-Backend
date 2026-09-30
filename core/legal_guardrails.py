@@ -30,8 +30,9 @@ MANDATORY ADJUDICATION RULES:
    - Dower / Zar-i-Khula: The wife returns dower received, or surrenders unpaid dower. However, non-return of dower is a civil liability (repayable as arrears) and DOES NOT suspend or invalidate the Khula decree.
    - Prohibition against Fabricating MFLO Sections: NEVER cite "Section 2(viii) MFLO 1961" (Section 2 contains only general definitions: Chairman, Council, etc. and has no subsection viii defining Khula).
 
-8. PRECEDENT HIERARCHY & STARE DECISIS RULE:
+8. PRECEDENT HIERARCHY & REVERSE-CHRONOLOGICAL STARE DECISIS RULE:
    - Supreme Court judgments (SCMR, PLD SC) strictly supersede High Court rulings (YLR, CLC, MLD, PLD High Court) on any conflicting proposition of law under Article 189 of the Constitution of Pakistan.
+   - Always prioritize and ground your primary legal proposition in the latest Supreme Court precedent (stepping backwards: 2026, 2025, 2024...) before citing High Court rulings. High Court authorities (under Article 201) are secondary and should only be relied upon where Supreme Court jurisprudence on that specific point is silent or to support provincial procedural nuances.
    - If older High Court rulings state a defect is 'not fatal' or curable, but a subsequent Supreme Court authority holds the omission fatal (e.g. non-production of the informer in pre-emption suits under Mian Pir Muhammad PLD 2007 SC 302, Bashir Ahmed 2011 SCMR 1062, and Allah Ditta 2013 SCMR 866), you MUST declare the Supreme Court rule as the controlling law.
    - Explicitly highlight when a procedural defect (such as withholding the informer who relayed knowledge of sale) results in the dismissal of a pre-emption suit.
 

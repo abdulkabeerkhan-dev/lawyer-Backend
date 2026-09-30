@@ -377,10 +377,10 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
 class LegalRetrieverConfig:
     STRICT_THRESHOLD: float = 0.70
     FALLBACK_FLOOR: float = 0.50  # Lowered to 0.50 to allow expanded family/doctrinal hits (0.54-0.60) into context payload
-    TOP_K_DEFAULT: int = 40
-    TOP_K_FILTERED: int = 60
+    TOP_K_DEFAULT: int = 60
+    TOP_K_FILTERED: int = 80
 
-    def __init__(self, default_k: int = 40, min_similarity_threshold: float = 0.65, query_expansion: bool = True):
+    def __init__(self, default_k: int = 60, min_similarity_threshold: float = 0.65, query_expansion: bool = True):
         self.default_k = default_k
         self.min_similarity_threshold = min_similarity_threshold
         self.query_expansion = query_expansion
@@ -465,7 +465,7 @@ class LegalSearchPipeline:
                 })
 
         # 2. GENERALIZED DYNAMIC THRESHOLDING
-        # Replaces rigid 0.65/0.50 score cutoffs with dynamic RRF candidate filtering.
+        # Replaces rigid score cutoffs with dynamic RRF candidate filtering.
         # Preserves refusal mechanics when both dense and sparse pipelines yield near-zero overlap.
         candidates = []
         for m in raw_candidates:
@@ -483,17 +483,19 @@ class LegalSearchPipeline:
             # 1. Boosted direct citation matches (score 0.99) always qualify.
             # 2. High dense semantic confidence (dense_score >= 0.64) always qualifies.
             # 3. For doctrinally expanded queries (Khula, 302 PPC bail, Pre-emption, Cheques, etc.):
-            #    - Any candidate meeting the FALLBACK_FLOOR (dense_score >= 0.50) qualifies.
-            #    - Any candidate with multi-modal overlap (dense >= 0.46 and sparse >= 2.0, or sparse >= 12.0) qualifies.
+            #    - Any candidate meeting the FALLBACK_FLOOR (dense_score >= 0.48) qualifies.
+            #    - Any candidate with multi-modal overlap (dense >= 0.44 and sparse >= 2.0) qualifies.
+            #    - Any strong BM25 keyword match (sparse_score >= 8.0) qualifies even if dense didn't capture it in top-k.
             # 4. For non-doctrinal queries:
-            #    - Strict semantic match (dense >= 0.64) or high-confidence mutual overlap (dense >= 0.58 and sparse >= 15.0).
-            #    - This ensures out-of-scope queries (like Section 9 CPC eviction) have 0 candidates and honestly refuse.
+            #    - Strict semantic match (dense >= min_dense) or high-confidence mutual overlap (dense >= 0.48 and sparse >= 6.0).
+            #    - Strong BM25 keyword match (sparse_score >= 10.0) qualifies.
+            #    - Ensures out-of-scope non-legal queries have 0 candidates and honestly refuse.
             if is_doctrinally_expanded:
                 qualifies = (
                     is_boosted or
                     dense_s >= 0.48 or
                     (has_overlap and dense_s >= 0.44 and sparse_s >= 2.0) or
-                    (has_overlap and sparse_s >= 10.0)
+                    sparse_s >= 8.0
                 )
             else:
                 cq_lower = clean_query.lower()
@@ -507,7 +509,7 @@ class LegalSearchPipeline:
                     is_boosted or
                     dense_s >= min_dense or
                     (has_overlap and dense_s >= 0.48 and sparse_s >= 6.0) or
-                    (has_overlap and sparse_s >= 12.0)
+                    sparse_s >= 10.0
                 )
             
             if qualifies:
@@ -515,7 +517,6 @@ class LegalSearchPipeline:
                 hit_data["similarity_score"] = dense_s
                 hit_data["fallback_entered"] = (dense_s < 0.64 and not is_boosted and sparse_s < 8.0)
                 candidates.append(hit_data)
-
         return candidates
 
 
@@ -2664,49 +2665,118 @@ def boost_banking_fio_precedents(query: str, hits: list) -> list:
     scored.sort(key=lambda x: x[0], reverse=True)
     return [h for _, _, h in scored]
 
+def get_court_hierarchy_tier(citation: str = "", court_name: str = "") -> int:
+    """
+    Returns the judicial hierarchy tier under the Pakistani constitutional framework:
+    - Tier 1: Supreme Court of Pakistan (Apex Court, binding on all under Article 189)
+    - Tier 2: Provincial High Courts (LHC, SHC, IHC, PHC, BHC under Article 201)
+    - Tier 3: Subordinate Courts and specialized tribunals (Revenue, Ombudsman, etc.)
+    """
+    cit_upper = (citation or "").upper()
+    court_upper = (court_name or "").upper()
+    
+    # 1. Non-Pakistani / foreign or subordinate tribunals
+    subordinate_or_neutral = [
+        "AZAD KASHMIR", "AJ&K", "AJK", "DHAKA", "DACCA", "EAST BENGAL", "EAST PAKISTAN",
+        "PRIVY COUNCIL", "PRIVY-COUNCIL", "FEDERAL COURT", "FEDERAL-COURT",
+        "BOARD OF REVENUE", "REVENUE", "INDIA", "FEDERAL TAX OMBUDSMAN", "TAX OMBUDSMAN",
+        "APPELLATE TRIBUNAL", "SERVICE TRIBUNAL"
+    ]
+    if any(nc in court_upper for nc in subordinate_or_neutral):
+        return 3
+        
+    # 2. Supreme Court of Pakistan (Apex precedent under Article 189)
+    if "SUPREME COURT OF PAKISTAN" in court_upper or court_upper.strip() == "SUPREME COURT":
+        return 1
+    if "SCMR" in cit_upper or "PLD SC" in cit_upper or "PLD_SC" in cit_upper or " PLD 202" in cit_upper or "SC" in cit_upper.split():
+        return 1
+        
+    # 3. Provincial High Courts under Article 201
+    recognized_high_courts = [
+        "LAHORE HIGH COURT", "HIGH COURT OF SINDH", "PESHAWAR HIGH COURT",
+        "HIGH COURT OF BALOCHISTAN", "ISLAMABAD HIGH COURT", "HIGH COURT"
+    ]
+    if any(hc in court_upper for hc in recognized_high_courts):
+        return 2
+    if any(h in cit_upper for h in ["PCRLJ", "CLC", "YLR", "MLD", "PTD", "PLC", "CLD", "PLJ", "NLR", "LHC", "SHC", "IHC", "PHC", "BHC"]):
+        return 2
+        
+    return 3
+
+def extract_year_int(year_val: Any, citation: str = "", doc_id: str = "") -> int:
+    """Extract 4-digit integer year from metadata, citation, or doc_id."""
+    if isinstance(year_val, int) and 1900 < year_val < 2100:
+        return year_val
+    if isinstance(year_val, str) and year_val.strip().isdigit():
+        val = int(year_val.strip())
+        if 1900 < val < 2100:
+            return val
+    search_str = f"{year_val} {citation} {doc_id}"
+    matches = re.findall(r'\b(19\d\d|20\d\d)\b', search_str)
+    if matches:
+        return int(matches[0])
+    return 1900
+
 def rerank_by_judicial_hierarchy_and_recency(hits: list) -> list:
     """
     Reranks candidate precedents by applying:
     1. Direct citation boost preservation (score 9999.0).
-    2. Article 189 constitutional binding weight (Supreme Court 1.35x, High Court 1.05x).
-    3. Smooth contemporary recency lift (+0% for <=2010, up to +10% lift for 2018–2026).
-    Ensures that when older and modern authorities have comparable semantic relevance,
-    the contemporary ruling wins.
+    2. Court hierarchy tiering (Tier 1 Supreme Court under Art. 189 > Tier 2 High Courts under Art. 201 > Tier 3 Others).
+    3. Strict reverse-chronological order within each court tier (2026 -> 2025 -> 2024 -> 2023 -> 2022 -> ...).
+    4. Relevance score tie-breaker within the same tier and recency bracket.
     """
     if not hits:
         return hits
 
-    scored = []
-    for idx, h in enumerate(hits):
-        if isinstance(h, dict) and (h.get("is_boosted") or (isinstance(h.get("metadata"), dict) and h["metadata"].get("is_boosted"))):
-            scored.append((9999.0, -idx, h))
-            continue
+    def rank_sort_key(item):
+        idx, h = item
+        meta = h.get("metadata", {}) if isinstance(h, dict) else getattr(h, "metadata", {}) or {}
+        is_boosted = bool(h.get("is_boosted") if isinstance(h, dict) else False) or bool(meta.get("is_boosted"))
+        if is_boosted:
+            return (0, -9999, -9999.0, idx)
+            
+        cit = meta.get("citation", "") or meta.get("neutral_citation", "") or h.get("citation", "")
+        court = meta.get("court", "") or meta.get("court_name", "") or h.get("court", "") or h.get("court_name", "")
+        raw_year = meta.get("year", 0) or meta.get("decision_date", "") or meta.get("date", "") or h.get("year", 0)
+        doc_id = str(h.get("id") or meta.get("case_id") or "")
+        
+        tier = get_court_hierarchy_tier(str(cit), str(court))
+        year = extract_year_int(raw_year, citation=str(cit), doc_id=doc_id)
+        
+        rel_score = float(h.get("rrf_score") or h.get("sparse_score") or h.get("dense_score") or h.get("similarity_score") or h.get("score") or 0.0)
+        
+        # Sort criteria:
+        # Tier 1 (Supreme Court) comes before Tier 2 (High Courts)
+        # Higher year (2026, 2025, 2024...) comes before lower year (-year)
+        # Higher relevance score comes before lower relevance score (-rel_score)
+        return (tier, -year, -rel_score, idx)
 
+    indexed_hits = list(enumerate(hits))
+    indexed_hits.sort(key=rank_sort_key)
+    
+    ranked_hits = []
+    for rank_idx, (_, h) in enumerate(indexed_hits):
         meta = h.get("metadata", {}) if isinstance(h, dict) else getattr(h, "metadata", {}) or {}
         cit = meta.get("citation", "") or meta.get("neutral_citation", "") or h.get("citation", "")
         court = meta.get("court", "") or meta.get("court_name", "") or h.get("court", "") or h.get("court_name", "")
         raw_year = meta.get("year", 0) or meta.get("decision_date", "") or meta.get("date", "") or h.get("year", 0)
         doc_id = str(h.get("id") or meta.get("case_id") or "")
-
-        court_w = get_court_authority_weight(cit, court)
-        recency_w = get_recency_weight(raw_year, citation=cit, doc_id=doc_id)
-
-        base_s = float(h.get("final_rank_score") or 0.0)
-        if not base_s:
-            rrf_s = float(h.get("rrf_score") or 0.0)
-            if rrf_s > 0:
-                base_s = rrf_s * court_w * recency_w
-            else:
-                dense_s = float(h.get("dense_score") or h.get("similarity_score") or h.get("score") or 0.0)
-                base_s = dense_s * court_w * recency_w
+        tier = get_court_hierarchy_tier(str(cit), str(court))
+        year = extract_year_int(raw_year, citation=str(cit), doc_id=doc_id)
+        
+        is_boosted = bool(h.get("is_boosted") if isinstance(h, dict) else False) or bool(meta.get("is_boosted"))
+        if is_boosted:
+            computed_score = 9999.0
         else:
-            base_s = base_s
+            base_tier_score = 0.85 if tier == 1 else (0.70 if tier == 2 else 0.50)
+            recency_delta = max(0, min(16, year - 2010)) / 16.0 * 0.10
+            computed_score = round(base_tier_score + recency_delta, 4)
+        
+        h["final_rank_score"] = computed_score
+        ranked_hits.append(h)
 
-        h["final_rank_score"] = base_s
-        scored.append((base_s, -idx, h))
+    return ranked_hits
 
-    scored.sort(key=lambda x: x[0], reverse=True)
-    return [h for _, _, h in scored]
 
 
 SYSTEM_PROMPTS = {
@@ -3374,6 +3444,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             is_explicitly_criminal = any(k in query_combined_text for k in CRIMINAL_KEYWORDS)
             is_non_criminal = (not is_explicitly_criminal) and any(k in query_combined_text for k in NON_CRIMINAL_KEYWORDS)
 
+            matches_list = rerank_by_judicial_hierarchy_and_recency(matches_list)
             filtered_matches = []
             seen_in_query = set()
             for m in matches_list:
