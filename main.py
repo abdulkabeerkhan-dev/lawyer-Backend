@@ -3694,6 +3694,15 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 sections_val = meta.get("sections") or []
                 match_score = float(match.get("score", 0.0) if isinstance(match, dict) else getattr(match, "score", 0.0))
 
+                full_body_str = str(meta.get("full_text") or meta.get("raw_text") or "").strip()
+                if full_body_str and len(full_body_str.split()) > len(text_content.split()):
+                    text_content = full_body_str
+
+                has_full_body = (
+                    len(text_content.split()) >= 300 or
+                    len(full_body_str.split()) >= 300
+                )
+
                 raw_c_type = meta.get("content_type")
                 is_whitelisted = (
                     case_id in COLLISION_WHITELIST or
@@ -3704,9 +3713,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     c_type_val = "full_text"
                     if is_whitelisted:
                         court = "Lahore High Court"
-
+                elif raw_c_type == "headnote_only":
+                    c_type_val = "headnote_only" if not has_full_body else "full_text"
                 elif not raw_c_type or str(raw_c_type).lower() in ("unknown", "none"):
-                    c_type_val = "headnote_only" if len(text_content.split()) < 300 else "full_text"
+                    c_type_val = "full_text" if has_full_body else "headnote_only"
                 else:
                     c_type_val = str(raw_c_type)
 
@@ -3880,6 +3890,13 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
 14. STRICT QUOTATION MARK DISCIPLINE (ANTI-HALLUCINATION QUOTES):
     - Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database.
     - Write all analytical conclusions, conceptual restatements, and headnote digests in clean unquoted prose. Quotation marks ("..." or “...”) and markdown blockquotes (> ...) are reserved exclusively for verbatim excerpts directly sourced from judgments or statutory text.
+
+15. STRICT SEGREGATION OF "RATIO / HOLDING" VS. "ANALOGY / APPLICATION":
+    - Never blend, interpolate, or extrapolate your own legal theories or analogical reasoning into the reported "Holding" or "Ratio Decidendi" of a precedent.
+    - If a cited judgment dealt with Section 52 TPA in a declaratory suit concerning specific immovable property, report its holding EXACTLY as such. DO NOT state that the case held, established, or ruled on maintenance suits, money decrees, or fraudulent transfers unless that specific subject matter was actually adjudicated in the case text.
+    - Any extrapolation or conceptual comparison MUST be isolated under a distinct heading titled "Application by Analogy / Legal Commentary", explicitly clarifying to the advocate that the precedent did not directly involve or decide that question.
+    - Never invent non-existent ratios, presumptions, or tests (e.g. inventing a "four-part test" or "presumption of fraud on transfers to close relatives after a maintenance suit") not in the source text.
+    - "Cases Discussed" counter and section must be restricted STRICTLY to actual judicial precedents (e.g. PLD, SCMR, YLR, CLC, MLD, PCrLJ), never listing statutory sections or acts.
 """
 
 

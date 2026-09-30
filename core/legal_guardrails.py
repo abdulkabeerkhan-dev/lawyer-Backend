@@ -158,9 +158,26 @@ MANDATORY ADJUDICATION RULES:
     - Concurrent Jurisdiction Bar (Articles 4 & 25): Where parallel operation of two special laws would permit an entity or prosecution to pick and choose between a harsher forum/penalty (e.g. Offences in Respect of Banks Special Courts Ordinance 1984) and a more protective or specialized forum (e.g. Financial Institutions Recovery of Finances Ordinance 2001), concurrent operation is impermissible as it violates Articles 4 and 25 of the Constitution. The later enactment (FIO 2001) prevails exclusively.
 
 17. STRICT QUOTATION MARK DISCIPLINE (ANTI-HALLUCINATION QUOTES):
-    - Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database.
-    - All editorial summaries, paraphrased legal propositions, analytical commentary, and synthesized case descriptions must be written in unquoted prose.
-    - Any text enclosed in quotation marks ("..." or “...”) or markdown blockquotes (> ...) is automatically verified character-for-character against source judgment and statutory records; wrapping synthesized explanations in quotation marks is strictly prohibited and triggers quotation hallucination rejections.
+    Never wrap synthesized summaries or explanations in quotation marks. Use quotation marks only when extracting verbatim text lines directly from the source judgment database.
+    Write all analytical conclusions, conceptual restatements, and headnote digests in clean unquoted prose. Quotation marks ("..." or “...”) and markdown blockquotes (> ...) are reserved exclusively for verbatim excerpts directly sourced from judgments or statutory text.
+
+18. LIS PENDENS (SECTION 52 TPA), FRAUDULENT TRANSFERS (SECTION 53 TPA) & EXECUTION MECHANICS:
+    - Section 52 TPA (Lis Pendens) applies ONLY where a right to specific immovable property is directly and specifically in question in the suit. It does NOT apply to an ordinary money suit, recovery suit, or maintenance claim unless the plaint specifically seeks to create a charge on or attach that specific property.
+    - Money/Maintenance Debtor Alienation: When a judgment-debtor fraudulently alienates general property to defeat or delay execution of a money or maintenance decree, the substantive governing remedy is SECTION 53 of the Transfer of Property Act 1882 (fraudulent transfer voidable at the option of any creditor defeated or delayed).
+    - Nature of Lis Pendens Transfer: An alienation pendente lite under Section 52 TPA is NOT "void", "void ab initio", or "cancelled". The sale remains valid between transferor and transferee, but is legally subservient and subject to the decree in the pending suit.
+    - Section 52 vs. Section 41 TPA: Section 52 lis pendens is an EXCEPTION to Section 41 (bona fide purchaser for value without notice). A transferee pendente lite is bound by the result of the litigation regardless of lack of notice or good faith. Never describe Section 41 as an exception to lis pendens.
+    - Execution Attachment: Attachment of immovable property in execution of a decree is strictly governed by ORDER XXI RULE 54 CPC. Citing Order XXI Rule 96 (which deals with delivery of possession to an auction-purchaser of property in occupancy of a tenant) for attachment is a fatal procedural error.
+    - Cancellation of Deeds: Cancellation of void or voidable written instruments/sale deeds is governed strictly by SECTION 39 of the Specific Relief Act 1877. Never cite Section 54 (which governs perpetual injunctions) for cancellation or setting aside a deed.
+    - Scope of Section 47 CPC: Section 47 CPC applies strictly to questions arising between the parties to the suit or their representatives. A third-party transferee or stranger claiming independent title is NOT determined summarily under Section 47; their claim must be investigated under ORDER XXI RULE 58 CPC (objections to attachment) or adjudicated via a separate suit under Section 53 TPA / Order XXI Rule 103 CPC.
+    - Family Courts Act 1964 Execution (Section 17 CPC Bar): Under Section 17 of the Family Courts Act 1964, the CPC is expressly EXCLUDED from family proceedings (except Sections 10 and 11). Decrees of Family Courts (including maintenance and dower) execute under SECTION 13 of the Family Courts Act 1964 and Rule 22 of the West Pakistan Family Courts Rules 1965 (as arrears of land revenue or under the special civil court powers granted under Section 13(4)). Blanket application of the CPC without citing Section 13 and Section 17 is a fatal statutory error.
+
+19. STRICT HOLDING VS. ADVOCATE ANALOGY SEPARATION DIRECTIVE:
+    - In your analysis under "Cases Discussed" or case summaries:
+      * The "Holding of the Court" must state ONLY what the judges actually held, ruled, and decided on the facts of that case.
+      * NEVER invent, interpolate, or attribute non-existent ratios, presumptions, or tests (e.g. inventing a "four-part test" or "presumption of fraud on transfers to close relatives after a maintenance suit") to the Supreme Court or High Courts if not in the judgment text.
+      * NEVER claim an authority is "directly governing" when it was decided under a completely different statute (e.g. do not cite a Contract Act attorney/principal case as "directly governing" execution of a family maintenance decree).
+      * If you apply a case by analogy, you MUST cordone it off under a distinct sub-heading: "### Application by Analogy / Commentary" and explicitly disclose that the cited authority was decided on different statutory facts.
+    - "Cases Discussed" counter and section must contain ONLY actual judicial precedents (citations to superior court judgments like SCMR, PLD, CLC), NEVER statutory section cards (like Section 42 SRA or Section 52 TPA).
 """
 
 
@@ -395,6 +412,58 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
                     "avoid quoting headnotes as the court's verbatim words, and advise verifying against the official/certified full judgment text."
                 )
 
+    # Rule 20: Execution & Property Alienation Procedural Hygiene (Order XXI Rule 96 vs 54, SRA Section 54 vs 39, Section 52 TPA transfer characterization, Section 41 TPA, Section 47 CPC vs Rule 58 / Section 53 TPA, Family Courts Act Section 17)
+    # 20.1: Order XXI Rule 96 cited for attachment/restraining alienation (Rule 54 is attachment; Rule 96 is delivery of possession to auction-purchaser)
+    if re.search(r'\b(?:order\s+(?:xxi|21)|o\.?\s*(?:xxi|21))[\s,]+rule\s*96\b', text_lower) and any(k in text_lower for k in ["attach", "attachment", "alienat", "restrain", "freez", "prevent transfer"]):
+        errors.append(
+            "Citing Order XXI Rule 96 CPC for attachment/restraining alienation of property (Order XXI Rule 96 CPC deals solely with delivery of possession to an occupancy tenant or auction-purchaser; the mandatory procedural provision for attachment of immovable property before sale in execution is Order XXI Rule 54 CPC)."
+        )
+
+    # 20.2: Section 54 Specific Relief Act cited for cancellation of instruments (Section 39 is cancellation; Section 54 is perpetual injunction)
+    if re.search(r'\bsection\s*54\s*(?:of\s*(?:the\s*)?)?(?:specific\s+relief\s+act|sra\b)', text_lower) and any(k in text_lower for k in ["cancel", "cancellation", "set aside", "void deed", "void gift", "void sale"]):
+        errors.append(
+            "Citing Section 54 Specific Relief Act 1877 for cancellation of deeds/instruments (Section 54 SRA governs perpetual injunctions; the statutory provision for cancellation of void or voidable written instruments/deeds is Section 39 SRA)."
+        )
+
+    # 20.3: Section 52 TPA (Lis Pendens) transfer mischaracterized as "void" or "cancelled"
+    if re.search(r'\bsection\s*52\s*(?:of\s*(?:the\s*)?)?(?:transfer\s+of\s+property\s+act|tpa\b)', text_lower):
+        if re.search(r'\b(?:renders?|makes?|is|are|declared?)\s+(?:the\s+)?(?:transfer|alienation|sale|gift)\s+(?:completely\s+|ab\s+initio\s+|illegal\s+and\s+)?(?:void|null\s+and\s+void|cancelled|invalid\s+ab\s+initio)\b', text_lower) or re.search(r'\btransfers?\s+(?:is|are)\s+void\s+under\s+section\s*52\b', text_lower):
+            errors.append(
+                "Describing a transfer hit by Section 52 Transfer of Property Act 1882 (Lis Pendens) as 'void' or 'cancelled' (Controlling law: Lis pendens does not render a transfer void ab initio; the transfer remains valid inter partes but is legally subservient and subject to the eventual decree and rights adjudicated in the pending suit)."
+            )
+
+    # 20.4: Section 41 TPA bona fide purchaser treated as exception to Section 52 TPA
+    if "section 52" in text_lower and "section 41" in text_lower:
+        if re.search(r'section\s*41.*(?:exception\s+to\s+section\s*52|protects?.*against\s+section\s*52|overrides?\s+section\s*52|defeats?\s+lis\s+pendens)', text_lower) or re.search(r'bona\s+fide\s+purchaser.*(?:exception\s+to\s+section\s*52|defeats?\s+(?:the\s+rule\s+of\s+)?lis\s+pendens|overrides?\s+section\s*52)', text_lower):
+            errors.append(
+                "Erroneously asserting that Section 41 TPA (bona fide purchaser protection) protects a transferee against or is an exception to Section 52 TPA (Controlling law: Section 52 lis pendens strictly overrides Section 41 TPA; a transferee pendente lite cannot plead bona fide purchase without notice to defeat a decree in a suit where Section 52 applies)."
+            )
+
+    # 20.5: Family Court execution conflating ordinary CPC without Section 17 bar and Section 13 powers
+    if any(k in query_lower or k in text_lower for k in ["family court", "maintenance decree", "maintenance suit"]) and any(k in text_lower for k in ["order xxi", "order 21"]):
+        if not any(k in text_lower for k in ["section 17", "section 13", "family courts act"]):
+            errors.append(
+                "Invoking Code of Civil Procedure (Order XXI) for Family Court decree execution without noting the statutory framework of the Family Courts Act 1964 (Section 17 Family Courts Act 1964 expressly bars the application of the CPC to Family Court proceedings, except Sections 10 and 11. Family Court execution is governed specifically by Section 13 of the Family Courts Act 1964 and applicable Family Court Rules)."
+            )
+
+    # Rule 21: Case Grounding & Strict Separation of Holding vs. Analogy / Commentary check
+    # Check if "Cases Discussed" section includes statutory sections or non-precedents
+    if "cases discussed" in text_lower:
+        cd_parts = re.split(r'cases\s+discussed', draft_text, flags=re.IGNORECASE)
+        if len(cd_parts) > 1:
+            cd_section = cd_parts[-1].split("##")[0].split("\n\n\n")[0]
+            statutory_leakage = re.findall(r'\b(?:section|sec\.?|order|article|art\.?)\s+\d+', cd_section, re.IGNORECASE)
+            if statutory_leakage:
+                errors.append(
+                    f"'Cases Discussed' section contains statutory citations ({', '.join(statutory_leakage[:3])}) rather than judicial precedents. Only actual judicial case precedents (e.g., PLD, SCMR, YLR) may be listed under Cases Discussed."
+                )
+
+    # Check for fabricated doctrines or ratios not in precedent (e.g. four-part test for maintenance transfer)
+    if re.search(r'\bfour-?part\s+test\b', text_lower) and any(k in text_lower for k in ["section 52", "maintenance", "tabassum shaheen"]):
+        errors.append(
+            "Attributing a fabricated 'four-part test' to precedent (no superior court precedent formulates a rigid four-part test applying Section 52 TPA to maintenance suits; statutory ingredients must be quoted directly without inventing multi-factor tests)."
+        )
+
     return errors
 
 
@@ -474,4 +543,103 @@ def sanitize_unverified_quotes(generated_text: str, unverified_quotes: List[str]
             sanitized_text = re.sub(pattern, q_strip, sanitized_text)
 
     return sanitized_text
+
+
+def verify_case_grounding(cited_case_name: str, source_judgment_text: str, model_assertion: str) -> Dict[str, Any]:
+    """
+    Verifies that a legal proposition or ratio attributed to a cited precedent
+    is actually entailed by the source judgment text, rather than being an LLM
+    extrapolation, speculative inference, or blended analogical commentary.
+    
+    Args:
+        cited_case_name: The name or citation of the case (e.g., 'Tabassum Shaheen v. Mst. Tasneem Akhtar', '2025 PLD 63').
+        source_judgment_text: The retrieved raw or full text of the judgment.
+        model_assertion: The text/holding written by the LLM attributing a specific ratio to the case.
+        
+    Returns:
+        {
+            "is_grounded": bool,
+            "cited_case": str,
+            "entailment_score": float,  # 0.0 to 1.0
+            "unsupported_propositions": List[str],
+            "reason": str
+        }
+    """
+    if not source_judgment_text or not source_judgment_text.strip():
+        return {
+            "is_grounded": False,
+            "cited_case": cited_case_name,
+            "entailment_score": 0.0,
+            "unsupported_propositions": ["Source judgment text is empty or missing from retrieved context."],
+            "reason": "Missing source judgment text for verification."
+        }
+
+    src_lower = source_judgment_text.lower()
+    assertion_lower = model_assertion.lower()
+
+    unsupported: List[str] = []
+
+    # 1. Check for specific statutory sections asserted as held or applied in the case
+    assertion_secs = re.findall(r'\b(?:section|sec\.?|s\.)\s*(\d+[a-z]?)\b', assertion_lower)
+    for sec in set(assertion_secs):
+        sec_num = sec.lower()
+        # Look for section mention in the source text
+        pattern = rf'\b(?:section|sec\.?|s\.)\s*{re.escape(sec_num)}\b'
+        if not re.search(pattern, src_lower) and not re.search(rf'\b{re.escape(sec_num)}\b', src_lower):
+            unsupported.append(
+                f"Assertion claims the court held or applied Section {sec.upper()}, but Section {sec.upper()} does not appear in the source judgment."
+            )
+
+    # 2. Check for asserted subject-matter domains that may be entirely absent from the source judgment
+    domain_terms = {
+        "maintenance": ["maintenance", "kharch", "dower", "minor children", "child support"],
+        "pre-emption": ["pre-emption", "preemption", "talb", "shufa"],
+        "cheque dishonour": ["cheque", "dishonour", "dishonor", "489-f"],
+        "narcotics": ["narcotics", "cnsa", "charas", "heroin", "chain of custody"],
+        "tax assessment": ["tax assessment", "income tax", "ito 2001", "commissioner inland revenue"],
+    }
+
+    for domain, terms in domain_terms.items():
+        if any(t in assertion_lower for t in terms):
+            if not any(t in src_lower for t in terms):
+                unsupported.append(
+                    f"Assertion purports that {cited_case_name} adjudicated or established a rule regarding '{domain}', but the source judgment contains no discussion of {domain}."
+                )
+
+    # 3. Check for fabricated structural assertions (e.g., "four-part test", "three-pronged test", "presumption of fraud")
+    fabricated_doctrines = [
+        ("four-part test", r'\bfour-?part\s+test\b'),
+        ("three-pronged test", r'\bthree-?pronged\s+test\b'),
+        ("presumption of fraud on relatives", r'presumption\s+of\s+fraud.*(?:relative|family|kin|maintenance)'),
+    ]
+    for doc_name, doc_pattern in fabricated_doctrines:
+        if re.search(doc_pattern, assertion_lower):
+            if not re.search(doc_pattern, src_lower):
+                unsupported.append(f"Assertion attributes a '{doc_name}' to the judgment which does not exist in the source text.")
+
+    # 4. Check for ungrounded procedural claims (e.g., claiming the judgment applied or mandated Order XXI Rule 96 or Section 54 SRA)
+    if "order xxi rule 96" in assertion_lower and "rule 96" not in src_lower:
+        unsupported.append("Assertion claims the judgment applied or mandated Order XXI Rule 96, which is absent in the source judgment.")
+    if "section 54" in assertion_lower and "specific relief act" in assertion_lower and "section 54" not in src_lower:
+        unsupported.append("Assertion claims the judgment cancelled an instrument under Section 54 SRA, which does not appear in the source judgment.")
+
+    # Calculate entailment score
+    if unsupported:
+        penalty = min(0.35 * len(unsupported), 1.0)
+        entailment_score = round(max(0.0, 1.0 - penalty), 2)
+        is_grounded = entailment_score >= 0.70 and len(unsupported) == 0
+    else:
+        entailment_score = 1.0
+        is_grounded = True
+
+    reason = "Case holding is grounded in source judgment text." if is_grounded else f"Attribution ungrounded: {'; '.join(unsupported)}"
+
+    return {
+        "is_grounded": is_grounded,
+        "cited_case": cited_case_name,
+        "entailment_score": entailment_score,
+        "unsupported_propositions": unsupported,
+        "reason": reason
+    }
+
 
