@@ -89,7 +89,14 @@ app = FastAPI(title="SECTION AI - Legal Intelligence Platform")
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok", "healthy": True}
+    return {
+        "status": "ok",
+        "healthy": True,
+        "anthropic_key_len": len(ANTHROPIC_API_KEY) if ANTHROPIC_API_KEY else 0,
+        "anthropic_key_suffix": ANTHROPIC_API_KEY[-6:] if ANTHROPIC_API_KEY else None,
+        "workspace_id": ANTHROPIC_WORKSPACE_ID,
+        "model": CLAUDE_MODEL
+    }
 
 @app.get("/coverage")
 def get_corpus_coverage():
@@ -158,7 +165,7 @@ PINECONE_NAMESPACE = os.environ.get("PINECONE_NAMESPACE", "judgments")
 if not PINECONE_NAMESPACE or PINECONE_NAMESPACE == "default":
     PINECONE_NAMESPACE = "judgments"
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
-ANTHROPIC_WORKSPACE_ID = os.environ.get("ANTHROPIC_WORKSPACE_ID")
+ANTHROPIC_WORKSPACE_ID = os.environ.get("ANTHROPIC_WORKSPACE_ID") or "wrkspc_016AwCn1LDaCtQ39UsfQiWjU"
 VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY")
 VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
