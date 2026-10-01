@@ -4506,9 +4506,9 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         # is exactly where cross-jurisdiction statutory leakage (India/UK substance on a correctly
         # named Pakistani act) is most likely to slip through ungrounded.
         _discusses_statute = bool(re.search(r'\b(section|article|order\s+[ivxlcdm]+)\s+\d', raw_model_output, re.IGNORECASE))
-        _user_requested_memo = bool(re.search(r'\b(formal\s+opinion|legal\s+memorandum|research\s+memo(?:randum)?|draft\s+(?:an?\s+)?opinion)\b', effective_user_query, re.IGNORECASE))
+        _user_requested_memo = bool(re.search(r'\b(formal\s+opinion|formal\s+memo|legal\s+memorandum|research\s+memo(?:randum)?|draft\s+(?:an?\s+)?opinion)\b', effective_user_query, re.IGNORECASE))
         _has_memo_structure = bool(re.search(r'(?:^|\n)(?:#{1,4}|\*{2})\s*(?:(?:I|[1])[\.\:\)]\s*)?executive\s*summary', raw_model_output, re.IGNORECASE))
-        _is_formal_opinion = bool(_user_requested_memo or _has_memo_structure or (citations_payload and len(citations_payload) >= 2 and "summary" in raw_model_output.lower()))
+        _is_formal_opinion = bool(_user_requested_memo or _has_memo_structure)
 
         MAX_REFLECTION_ROUNDS = 2
         for ref_round in range(MAX_REFLECTION_ROUNDS):

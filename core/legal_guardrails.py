@@ -1221,6 +1221,9 @@ def check_memo_completeness(text: str, is_formal_opinion: bool = True, context_c
             issues.append("Empty <<<CARDS>>> block")
         else:
             cards_content = cards_match.group(1).strip()
+            # Strip markdown code fences if model wrapped the JSON (e.g. ```json ... ```)
+            cards_content = re.sub(r'^```(?:json)?\s*', '', cards_content)
+            cards_content = re.sub(r'\s*```$', '', cards_content).strip()
             try:
                 parsed = json.loads(cards_content)
                 if not isinstance(parsed, list):
