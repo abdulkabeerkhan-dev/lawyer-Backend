@@ -623,7 +623,7 @@ async def safe_create_anthropic_message(**kwargs):
         custom_fallback = os.environ.get("ANTHROPIC_FALLBACK_MODEL", "").strip()
         if custom_fallback:
             candidate_models.append(custom_fallback)
-        for m in ["claude-haiku-4-5-20251001", "claude-3-5-haiku-20241022", "claude-3-haiku-20240307"]:
+        for m in ["claude-haiku-4-5-20251001", "claude-3-5-haiku-20241022"]:
             if m not in candidate_models and m != primary_model:
                 candidate_models.append(m)
 
@@ -637,8 +637,6 @@ async def safe_create_anthropic_message(**kwargs):
             try:
                 fallback_kwargs = dict(call_kwargs)
                 fallback_kwargs["model"] = fallback_model
-                if fallback_model in ["claude-3-haiku-20240307"] and fallback_kwargs.get("max_tokens", 0) > 4096:
-                    fallback_kwargs["max_tokens"] = 4096
                 return await async_anthropic_client.messages.create(**fallback_kwargs)
             except Exception as fallback_err:
                 fb_str = str(fallback_err)
@@ -3919,10 +3917,64 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             # Await live currency signals gathered concurrently with case-law retrieval (Item 3)
             if live_currency_task:
+                live_res_list = []
                 try:
-                    await asyncio.wait_for(asyncio.shield(live_currency_task), timeout=1.5)
-                except Exception:
-                    pass
+                    live_res_list = await asyncio.wait_for(asyncio.shield(live_currency_task), timeout=6.0)
+                except asyncio.TimeoutError:
+                    live_res_list = [{"status": "NOT_CHECKED", "reason": "still_running"}]
+                except Exception as ex:
+                    live_res_list = [{"status": "NOT_CHECKED", "reason": str(ex)}]
+
+                # Integrate live check results directly into currency_findings (Item 3 & 4)
+                if live_res_list and isinstance(live_res_list, list):
+                    act_live_map = {}
+                    for item in live_res_list:
+                        if isinstance(item, dict) and item.get("act_code"):
+                            act_live_map[item["act_code"].upper()] = item
+
+                    updated_cfs = []
+                    for cf in currency_findings:
+                        act_key = cf.get("act_code", "").upper()
+                        live_info = act_live_map.get(act_key)
+                        if live_info:
+                            live_status = live_info.get("status")
+                            live_signals = live_info.get("signals") or []
+                            search_outcome = live_info.get("search_outcome")
+                            sources_checked = live_info.get("sources_checked") or ["Pakistan Code", "National Assembly"]
+                            sources_str = ", ".join(sources_checked)
+                            check_dt = (live_info.get("checked_at") or "")[:10] or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+                            if live_status == "CHECKED" and not live_signals:
+                                updated_cf = check_statute_currency(
+                                    canonical_id=cf["canonical_id"],
+                                    act_code=cf["act_code"],
+                                    query_text=raw_search_query or effective_user_query,
+                                    online_checked=True,
+                                    online_sources=sources_str,
+                                    online_check_date=check_dt
+                                )
+                                updated_cfs.append(updated_cf)
+                            elif live_status == "CHECKED" and live_signals:
+                                updated_cf = check_statute_currency(
+                                    canonical_id=cf["canonical_id"],
+                                    act_code=cf["act_code"],
+                                    query_text=raw_search_query or effective_user_query
+                                )
+                                updated_cfs.append(updated_cf)
+                            elif live_status == "NOT_CHECKED":
+                                outcome_tag = search_outcome or live_info.get("reason") or "still_running"
+                                updated_cf = check_statute_currency(
+                                    canonical_id=cf["canonical_id"],
+                                    act_code=cf["act_code"],
+                                    query_text=raw_search_query or effective_user_query,
+                                    search_outcome=outcome_tag
+                                )
+                                updated_cfs.append(updated_cf)
+                            else:
+                                updated_cfs.append(cf)
+                        else:
+                            updated_cfs.append(cf)
+                    currency_findings = updated_cfs
 
             # Item 7.b: Await always-on search for recent judgments on same issue
             if external_judgments_task:

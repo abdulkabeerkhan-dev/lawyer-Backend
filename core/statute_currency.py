@@ -10,6 +10,8 @@ import re
 import json
 import time
 import logging
+import hashlib
+import urllib.parse
 from enum import Enum
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -81,6 +83,9 @@ TIER_1_DOMAINS = [
     "balochistancode.gob.pk",
     "pakistan.gov.pk",
     "supremecourt.gov.pk",
+    "federalshariatcourt.gov.pk",
+    "fsc.gov.pk",
+    "fcc.gov.pk",
     "lhc.gov.pk",
     "shc.gov.pk",
     "phc.gov.pk",
@@ -97,23 +102,45 @@ TIER_2_DOMAINS = [
 ]
 
 RECENCY_WORDS_PATTERN = re.compile(
-    r"\b(new|recent|recently|amended|amendment|latest|updated|current|fresh|ordinance)\b",
+    r"\b(new|recent|recently|amended|amendment|latest|updated|ordinance)\b",
     re.IGNORECASE
 )
 
 
 def classify_source_tier(source_url: str) -> str:
-    """Classifies a URL into Tier 1 (official), Tier 2 (reputable legal), or Tier 3 (news/blogs)."""
+    """
+    Classifies a URL into Tier 1 (official), Tier 2 (reputable legal), or Tier 3 (news/blogs).
+    Strictly parses the hostname/netloc to prevent URL spoofing (e.g., evil.com/?ref=na.gov.pk
+    or na.gov.pk.evil.com or blog.com/pakistancode.gov.pk).
+    """
     if not source_url:
         return "tier_3"
-    s_lower = source_url.lower()
-    for d in TIER_1_DOMAINS:
-        if d in s_lower:
-            return "tier_1"
-    for d in TIER_2_DOMAINS:
-        if d in s_lower:
-            return "tier_2"
+    try:
+        u = source_url.strip()
+        if not (u.startswith("http://") or u.startswith("https://") or "://" in u):
+            u = "https://" + u
+        parsed = urllib.parse.urlparse(u)
+        netloc = (parsed.hostname or parsed.netloc or "").lower().split(":")[0].strip()
+        if not netloc:
+            return "tier_3"
+        for d in TIER_1_DOMAINS:
+            if netloc == d or netloc.endswith("." + d):
+                return "tier_1"
+        for d in TIER_2_DOMAINS:
+            if netloc == d or netloc.endswith("." + d):
+                return "tier_2"
+    except Exception:
+        pass
     return "tier_3"
+
+
+def _version_sort_key(version: Dict[str, Any]) -> int:
+    """Extracts numeric version number for ordering (e.g. V10 > V2)."""
+    vid = str(version.get("version_id", ""))
+    m = re.search(r'_V(\d+)$', vid, re.IGNORECASE)
+    if m:
+        return int(m.group(1))
+    return 0
 
 
 class StatuteVersionStore:
@@ -127,8 +154,15 @@ class StatuteVersionStore:
         self.staging_dir = staging_dir
         self.staging_file = os.path.join(staging_dir, "statute_currency_staging.json")
         self._ensure_staging_file()
-        self.supabase = supabase_client
-        if self.supabase is None:
+        if supabase_client is False:
+            self.supabase = None
+        elif supabase_client is not None:
+            self.supabase = supabase_client
+        elif self.storage_dir != STATUTE_VERSIONS_DIR:
+            # Custom storage directory (e.g. unit tests / hermetic runs) should not hit remote DB
+            self.supabase = None
+        else:
+            self.supabase = None
             sb_url = os.environ.get("SUPABASE_URL")
             sb_key = os.environ.get("SUPABASE_SERVICE_KEY") or os.environ.get("SUPABASE_KEY")
             if sb_url and sb_key:
@@ -167,11 +201,12 @@ class StatuteVersionStore:
             return []
 
     def get_latest_version(self, act_code: str, canonical_id: str) -> Optional[Dict[str, Any]]:
+        """Returns the latest version ordered numerically by version number (_V1, _V2, _V10)."""
         if self.supabase:
             try:
-                res = self.supabase.table("statute_versions").select("*").eq("canonical_id", canonical_id).order("version_id", desc=True).limit(1).execute()
+                res = self.supabase.table("statute_versions").select("*").eq("canonical_id", canonical_id).execute()
                 if res and res.data:
-                    return res.data[0]
+                    return max(res.data, key=_version_sort_key)
             except Exception as e:
                 logger.debug(f"Supabase statute_versions latest query notice: {e}")
 
@@ -179,7 +214,7 @@ class StatuteVersionStore:
         matching = [v for v in versions if v.get("canonical_id") == canonical_id]
         if not matching:
             return None
-        return matching[-1]
+        return max(matching, key=_version_sort_key)
 
     def batch_import_initial_versions(self, act_code: str, provisions: List[Dict[str, Any]]) -> int:
         """Batch-imports initial provisions with truthful baseline_unverified status."""
@@ -243,6 +278,8 @@ class StatuteVersionStore:
         secondary_num: Optional[str] = None,
         title: str = "Provision",
         verified_by: Optional[str] = None,
+        reviewer_name: Optional[str] = None,
+        sources_checked: Optional[List[str]] = None,
         jurisdiction: str = "federal",
         status: str = "in_force",
         enacted_date: Optional[str] = None,
@@ -261,7 +298,8 @@ class StatuteVersionStore:
         text_available: Optional[bool] = None,
     ) -> Dict[str, Any]:
         """
-        Appends a new immutable version to the store. Only Tier 1 sources can achieve 'verified'.
+        Appends a new immutable version to the store.
+        change_confirmed strictly requires human reviewer_name and sources_checked.
         Validates status against StatuteStatus enum and jurisdiction against VALID_JURISDICTIONS.
         """
         status_clean = str(status).strip().lower()
@@ -280,9 +318,17 @@ class StatuteVersionStore:
         version_id = f"{canonical_id}_V{v_num}"
 
         computed_tier = source_tier if source_tier is not None else (classify_source_tier(source_url) if source_url else None)
-        # Enforce Rule: Only Tier 1 can mark a change "verified"
-        if computed_tier == "tier_1":
-            computed_status = verification_status or "verified"
+        active_reviewer = reviewer_name or verified_by
+        active_sources = sources_checked or []
+
+        # Enforce Rule: Only Tier 1 with named human reviewer can achieve verified/change_confirmed
+        if verification_status in ("change_confirmed", "verified"):
+            if active_reviewer and computed_tier == "tier_1":
+                computed_status = verification_status
+            else:
+                computed_status = "reported_unverified"
+        elif computed_tier == "tier_1":
+            computed_status = verification_status or ("verified" if active_reviewer else "reported_unverified")
         elif computed_tier:
             computed_status = "reported_unverified"
         else:
@@ -315,7 +361,9 @@ class StatuteVersionStore:
             "court_challenges": court_challenges or [],
             "source_url": source_url,
             "source_tier": computed_tier,
-            "verified_by": verified_by,
+            "verified_by": active_reviewer,
+            "reviewer_name": active_reviewer,
+            "sources_checked": active_sources,
             "verification_status": computed_status,
             "fetched_at": datetime.now(timezone.utc).isoformat() if computed_tier else None,
             "previous_version_id": prev_version.get("version_id") if prev_version else None,
@@ -328,7 +376,16 @@ class StatuteVersionStore:
 
         if self.supabase:
             try:
-                self.supabase.table("statute_versions").insert(new_entry).execute()
+                valid_cols = {
+                    'version_id', 'canonical_id', 'act_code', 'provision_type', 'primary_num',
+                    'secondary_num', 'title', 'title_only', 'text', 'text_available', 'jurisdiction',
+                    'status', 'enacted_date', 'assent_date', 'commencement_date', 'valid_from',
+                    'valid_to', 'amending_instrument', 'gazette_reference', 'effective_application',
+                    'ordinance_expiry_date', 'court_challenges', 'source_url', 'source_tier',
+                    'verification_status', 'fetched_at', 'previous_version_id'
+                }
+                sb_payload = {k: new_entry[k] for k in new_entry if k in valid_cols}
+                self.supabase.table("statute_versions").insert(sb_payload).execute()
             except Exception as e:
                 logger.debug(f"Supabase statute_versions insert notice: {e}")
 
@@ -342,30 +399,42 @@ class StatuteVersionStore:
         detected_change: str,
         source_url: str,
         raw_snippet: str = "",
-        effective_application: str = "prospective_only",
-        ordinance_expiry: Optional[str] = None
+        effective_application: str = "pending_and_prospective",
+        ordinance_expiry: Optional[str] = None,
+        signal_term: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Stages an unverified web discovery."""
+        """
+        Stages an unverified web discovery.
+        Status is ALWAYS 'pending_review' (never 'verified' - automated fetchers cannot verify).
+        Hashes query_trigger to prevent leaking client facts.
+        """
         tier = classify_source_tier(source_url)
-        status = "verified" if tier == "tier_1" else "reported_unverified"
+        # Enforce Rule: An automated staged finding is NEVER verified, even from Tier 1!
+        status = "pending_review"
+
+        # Hash query trigger to avoid storing raw client facts
+        query_hash = hashlib.sha256((query_trigger or "").encode("utf-8")).hexdigest()[:16]
 
         stg_id = f"STG_{int(time.time() * 1000)}"
         staged_item = {
             "staging_id": stg_id,
             "canonical_id": canonical_id,
             "act_code": act_code,
-            "query_trigger": query_trigger,
+            "query_hash": query_hash,
             "detected_change": detected_change,
             "source_url": source_url,
             "source_tier": tier,
             "verification_status": status,
             "raw_snippet": raw_snippet,
+            "signal_term": signal_term,
             "effective_application": effective_application,
             "ordinance_expiry": ordinance_expiry,
             "fetched_at": datetime.now(timezone.utc).isoformat(),
             "promoted_to_main": False,
             "admin_review_status": "pending",
             "review_status": "pending_review",
+            "reviewer_name": None,
+            "sources_checked": []
         }
 
         with open(self.staging_file, "r", encoding="utf-8") as f:
@@ -430,9 +499,12 @@ class StatuteVersionStore:
             primary_num="",
             secondary_num=None,
             title=target.get("detected_change", "Amended Provision"),
-            text=target.get("raw_snippet", ""),
-            source_url=tier1_source_url,
+            text=official_text or target.get("raw_snippet", ""),
+            source_url=tier_url,
             source_tier="tier_1",
+            verified_by=promoted_by or "Senior Reviewer",
+            reviewer_name=promoted_by or "Senior Reviewer",
+            sources_checked=[tier_url],
             verification_status="verified",
             effective_application=target.get("effective_application", "pending_and_prospective"),
             ordinance_expiry_date=target.get("ordinance_expiry"),
@@ -459,7 +531,10 @@ def check_statute_currency(
     query_text: str = "",
     cache_window_hours: int = 24,
     mock_web_fetcher: Optional[Any] = None,
-    online_checked: Optional[bool] = None
+    online_checked: Optional[bool] = None,
+    online_sources: Optional[str] = None,
+    online_check_date: Optional[str] = None,
+    search_outcome: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Checks currency for a statutory provision.
@@ -501,14 +576,20 @@ def check_statute_currency(
                     detected_change=finding.get("change", "Recent amendment noted"),
                     source_url=finding.get("source_url", ""),
                     raw_snippet=finding.get("snippet", ""),
-                    effective_application=finding.get("effective_application", "prospective_only"),
+                    effective_application=finding.get("effective_application", "pending_and_prospective"),
                     ordinance_expiry=finding.get("ordinance_expiry")
                 )
         except Exception:
             pass
 
     if not latest:
-        display_tag = "[NOT CHECKED]" if os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() != "off" else ""
+        if os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() == "off":
+            display_tag = ""
+        elif search_outcome in ("no_pages_returned", "search_failed", "still_running"):
+            outcome_msg = search_outcome.replace("_", " ")
+            display_tag = f"[NOT CHECKED: {outcome_msg}]"
+        else:
+            display_tag = "[NOT CHECKED]"
         return {
             "canonical_id": canonical_id,
             "act_code": act_code,
@@ -539,16 +620,20 @@ def check_statute_currency(
 
     # Part 1, Item 4: Strict Display Tags:
     # 1. [CHANGE CONFIRMED]
-    # 2. [CHECKED, NO CHANGE FOUND]
+    # 2. [CHECKED, NO CHANGE FOUND: <source> on <date>] or [CHECKED, NO CHANGE FOUND]
     # 3. [CHANGE FOUND, PENDING REVIEW]
     # 4. [REPORTED, UNVERIFIED]
     # 5. [BILL PENDING]
-    # 6. [NOT CHECKED]
+    # 6. [NOT CHECKED: ...] / [NOT CHECKED]
     # 7. [BASELINE TABLE: not checked online]
     # NEVER use "verified" or "current"!
     if os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() == "off":
         tag = ""
         label = "DISABLED"
+    elif search_outcome in ("no_pages_returned", "search_failed", "still_running"):
+        outcome_msg = search_outcome.replace("_", " ")
+        tag = f"[NOT CHECKED: {outcome_msg}]"
+        label = "NOT CHECKED"
     elif status_val in ("bill", "passed"):
         tag = "[BILL PENDING]"
         label = "BILL PENDING"
@@ -566,11 +651,16 @@ def check_statute_currency(
         elif v_status == "reported_unverified":
             tag = "[REPORTED, UNVERIFIED]"
             label = "REPORTED, UNVERIFIED"
-        elif v_status in ("verified", "change_confirmed") or (status_val in ("amended", "declared_repugnant_appeal_pending") and latest.get("amending_instrument")):
+        elif v_status == "change_confirmed" or (v_status == "verified" and latest.get("reviewer_name") and latest.get("sources_checked")):
             tag = "[CHANGE CONFIRMED]"
             label = "CHANGE CONFIRMED"
         elif is_online_checked:
-            tag = "[CHECKED, NO CHANGE FOUND]"
+            if online_sources or online_check_date:
+                src = online_sources or "Pakistan Code, National Assembly"
+                dt = online_check_date or s_date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+                tag = f"[CHECKED, NO CHANGE FOUND: {src} on {dt}]"
+            else:
+                tag = "[CHECKED, NO CHANGE FOUND]"
             label = "CHECKED, NO CHANGE FOUND"
         elif v_status == "baseline_unverified":
             tag = "[BASELINE TABLE: not checked online]"

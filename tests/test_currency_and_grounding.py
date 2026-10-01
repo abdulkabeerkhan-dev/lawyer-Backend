@@ -62,7 +62,7 @@ class TestStatuteVersionStore(unittest.TestCase):
     def setUp(self):
         self.test_dir = tempfile.mkdtemp()
         self.staging_dir = tempfile.mkdtemp()
-        self.store = StatuteVersionStore(storage_dir=self.test_dir, staging_dir=self.staging_dir)
+        self.store = StatuteVersionStore(storage_dir=self.test_dir, staging_dir=self.staging_dir, supabase_client=False)
 
     def tearDown(self):
         shutil.rmtree(self.test_dir, ignore_errors=True)
@@ -121,10 +121,38 @@ class TestStatuteVersionStore(unittest.TestCase):
         self.assertEqual(v["ordinance_expiry_date"], expiry_date)
 
     def test_source_tiering_and_staging(self):
+        # Tier 1 official domains
         self.assertEqual(classify_source_tier("https://pakistancode.gov.pk/law"), "tier_1")
         self.assertEqual(classify_source_tier("https://punjablaws.gov.pk/act"), "tier_1")
+        self.assertEqual(classify_source_tier("https://federalshariatcourt.gov.pk/decisions"), "tier_1")
+        self.assertEqual(classify_source_tier("https://fsc.gov.pk/judgments"), "tier_1")
+        self.assertEqual(classify_source_tier("https://fcc.gov.pk/orders"), "tier_1")
+
+        # Tier 2 reputable legal reporting
         self.assertEqual(classify_source_tier("https://pakistanlawsite.com/case"), "tier_2")
+
+        # Tier 3 news and blogs
         self.assertEqual(classify_source_tier("https://lawfirmblog.com/update"), "tier_3")
+
+        # Item 3: Source-Tier Spoofing Prevention Tests (Hostname Comparison)
+        self.assertEqual(classify_source_tier("http://evil.com/?ref=na.gov.pk"), "tier_3")
+        self.assertEqual(classify_source_tier("http://na.gov.pk.evil.com/fake-law"), "tier_3")
+        self.assertEqual(classify_source_tier("https://blog.com/pakistancode.gov.pk/fake"), "tier_3")
+        self.assertEqual(classify_source_tier("http://evil.federalshariatcourt.gov.pk.hack.com"), "tier_3")
+
+        # Staging finding from Tier 1 - MUST be pending_review, NEVER verified!
+        staged_t1 = self.store.stage_finding(
+            canonical_id="GENERIC_ACT_SEC_5",
+            act_code="GENERIC_ACT",
+            query_trigger="amendment in section 5",
+            detected_change="Proposed new section",
+            source_url="https://na.gov.pk/bills/2026",
+            raw_snippet="Bill introduced in National Assembly."
+        )
+        self.assertEqual(staged_t1["source_tier"], "tier_1")
+        self.assertEqual(staged_t1["verification_status"], "pending_review")
+        self.assertIn("query_hash", staged_t1)
+        self.assertNotIn("query_trigger", staged_t1)
 
         # Staging unpromoted finding from Tier 2/3
         staged = self.store.stage_finding(
@@ -137,6 +165,7 @@ class TestStatuteVersionStore(unittest.TestCase):
             effective_application="pending_and_prospective"
         )
         self.assertEqual(staged["source_tier"], "tier_3")
+        self.assertEqual(staged["verification_status"], "pending_review")
         self.assertEqual(staged["review_status"], "pending_review")
 
         # Promote finding with Tier 1 official confirmation
@@ -376,7 +405,7 @@ class TestRealCurrencyFetcher(unittest.IsolatedAsyncioTestCase):
         self.test_staging = tempfile.mkdtemp()
         self.cache_file = os.path.join(self.test_staging, "test_cache.json")
         self.cache = CurrencyCache(cache_file=self.cache_file)
-        self.store = StatuteVersionStore(storage_dir=self.test_dir, staging_dir=self.test_staging)
+        self.store = StatuteVersionStore(storage_dir=self.test_dir, staging_dir=self.test_staging, supabase_client=False)
 
     def tearDown(self):
         shutil.rmtree(self.test_dir, ignore_errors=True)
@@ -471,7 +500,7 @@ class TestRealCurrencyFetcher(unittest.IsolatedAsyncioTestCase):
         def mixed_fetch(act_code, query_text, provisions):
             return [
                 {"source_url": "https://unverified-blog.com/news", "title": "Fake change"},
-                {"source_url": "https://pakistancode.gov.pk/valid", "title": "Legit Tier 1 gazette"}
+                {"source_url": "https://pakistancode.gov.pk/valid", "title": "Legit Tier 1 gazette amendment"}
             ]
 
         res = await fetch_currency_signals(
@@ -524,6 +553,128 @@ class TestRealCurrencyFetcher(unittest.IsolatedAsyncioTestCase):
         current_versions = self.store.get_versions("QSO_1984")
         self.assertEqual(len(current_versions), 1)
         self.assertEqual(current_versions[0]["version_id"], "QSO_1984_ART_2_V1")
+
+    async def test_evidence_of_signal_rule_requires_amendment_term(self):
+        # Hit on Tier 1 portal WITHOUT amendment/bill keywords must be dropped
+        def fetch_unrelated(act_code, query_text, provisions):
+            return [{
+                "source_url": "https://na.gov.pk/speeches/general-debate",
+                "title": "General parliamentary discussion on social welfare",
+                "snippet": "Members discussed welfare schemes across the country."
+            }]
+
+        res = await fetch_currency_signals(
+            act_code="PPC_1860",
+            query_text="check PPC",
+            budget_s=5.0,
+            mock_fetcher=fetch_unrelated,
+            cache=self.cache,
+            store=self.store
+        )
+        self.assertEqual(len(res["signals"]), 0)
+        self.assertEqual(res["reason"], "no_signals_found")
+
+        # Hit WITH amendment keyword must be preserved and stage signal_term
+        def fetch_with_term(act_code, query_text, provisions):
+            return [{
+                "source_url": "https://na.gov.pk/bills/criminal-law-amendment-2026",
+                "title": "Criminal Law (Amendment) Bill 2026",
+                "snippet": "An act to amend the Pakistan Penal Code 1860."
+            }]
+
+        self.cache.clear()
+        res2 = await fetch_currency_signals(
+            act_code="PPC_1860",
+            query_text="recent amendment in PPC",
+            budget_s=5.0,
+            mock_fetcher=fetch_with_term,
+            cache=self.cache,
+            store=self.store
+        )
+        self.assertEqual(len(res2["signals"]), 1)
+        self.assertIn("amend", res2["signals"][0].get("signal_term", ""))
+
+    async def test_distinguish_search_failure_and_empty_pages(self):
+        # 1. No pages returned from search engine must NOT produce clean check
+        def empty_search(act_code, query_text, provisions):
+            return {
+                "signals": [],
+                "search_outcome": "no_pages_returned",
+                "total_seen": 0,
+                "sources_checked": ["Pakistan Code", "National Assembly"]
+            }
+
+        res_empty = await fetch_currency_signals(
+            act_code="CPC_1908",
+            query_text="CPC update",
+            budget_s=5.0,
+            mock_fetcher=empty_search,
+            cache=self.cache,
+            store=self.store
+        )
+        self.assertEqual(res_empty["status"], "NOT_CHECKED")
+        self.assertEqual(res_empty["reason"], "no_pages_returned")
+
+        c_tag = check_statute_currency(
+            canonical_id="CPC_1908_O21_R90",
+            act_code="CPC_1908",
+            search_outcome="no_pages_returned"
+        )
+        self.assertEqual(c_tag["label"], "NOT CHECKED")
+        self.assertEqual(c_tag["display_tag"], "[NOT CHECKED: no pages returned]")
+
+        # 2. Genuine clean check with source and date format
+        c_clean = check_statute_currency(
+            canonical_id="PRPA_2009_SEC_13",
+            act_code="PRPA_2009",
+            online_checked=True,
+            online_sources="Pakistan Code, National Assembly",
+            online_check_date="2026-10-01"
+        )
+        self.assertEqual(c_clean["label"], "CHECKED, NO CHANGE FOUND")
+        self.assertEqual(c_clean["display_tag"], "[CHECKED, NO CHANGE FOUND: Pakistan Code, National Assembly on 2026-10-01]")
+
+    def test_numeric_version_sorting_v10_after_v2(self):
+        # Create versions up to V10 to test numeric ordering (V10 > V2)
+        for i in range(1, 11):
+            self.store.append_version(
+                canonical_id="TEST_SORT_SEC_1",
+                act_code="TEST_SORT",
+                title=f"Version {i}",
+                status="in_force"
+            )
+        latest = self.store.get_latest_version("TEST_SORT", "TEST_SORT_SEC_1")
+        self.assertEqual(latest["version_id"], "TEST_SORT_SEC_1_V10")
+        self.assertEqual(latest["title"], "Version 10")
+
+    def test_recency_pattern_excludes_current_and_fresh(self):
+        from core.statute_currency import RECENCY_WORDS_PATTERN
+        self.assertIsNone(RECENCY_WORDS_PATTERN.search("what is the current status?"))
+        self.assertIsNone(RECENCY_WORDS_PATTERN.search("give me a fresh update?"))
+        self.assertIsNotNone(RECENCY_WORDS_PATTERN.search("is there any recent amendment?"))
+        self.assertIsNotNone(RECENCY_WORDS_PATTERN.search("what is the latest rule?"))
+
+    def test_sanitized_mflo_section_4_record(self):
+        workspace_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        mflo_path = os.path.join(workspace_dir, "data", "statute_versions", "MFLO_1961_versions.json")
+        with open(mflo_path, "r", encoding="utf-8") as f:
+            records = json.load(f)
+
+        v3 = next((r for r in records if r["version_id"] == "MFLO_1961_SEC_4_V3"), None)
+        self.assertIsNotNone(v3)
+        self.assertEqual(v3["verification_status"], "reported_unverified")
+        self.assertIsNone(v3["verified_by"])
+        self.assertFalse(v3["text_available"])
+        self.assertIsNone(v3["text"])
+        self.assertEqual(v3["effective_application"], "pending_and_prospective")
+        self.assertEqual(len(v3["court_challenges"]), 1)
+        self.assertEqual(v3["court_challenges"][0]["citation"], "PLD 2000 FSC 1")
+        self.assertNotIn("FCC", str(v3["court_challenges"]))
+
+        v1 = next((r for r in records if r["version_id"] == "MFLO_1961_SEC_4_V1"), None)
+        self.assertIsNotNone(v1)
+        self.assertEqual(v1["verification_status"], "baseline_unverified")
+        self.assertIsNone(v1["commencement_date"])
 
 
 class TestPrecedentTagsAndRetryCap(unittest.TestCase):
@@ -600,7 +751,7 @@ class TestPrecedentTagsAndRetryCap(unittest.TestCase):
         test_dir = tempfile.mkdtemp()
         test_staging = tempfile.mkdtemp()
         try:
-            store = StatuteVersionStore(storage_dir=test_dir, staging_dir=test_staging)
+            store = StatuteVersionStore(storage_dir=test_dir, staging_dir=test_staging, supabase_client=False)
             # V1: baseline
             store.append_version(
                 canonical_id="TEST_ACT_SEC_5",

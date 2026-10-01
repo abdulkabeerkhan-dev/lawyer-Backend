@@ -18,8 +18,10 @@ import logging
 from typing import List, Dict, Any, Optional, Tuple
 
 csv.field_size_limit(sys.maxsize)
-from dotenv import load_dotenv
-from supabase import create_client
+try:
+    from supabase import create_client
+except ImportError:
+    create_client = None
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -31,7 +33,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger("ingest_all_csvs")
 
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except Exception:
+    pass
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY") or os.environ.get("SUPABASE_KEY")
@@ -47,7 +53,12 @@ def check_prod_safety_guard():
         )
 
 
-supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+supabase = None
+if SUPABASE_URL and SUPABASE_SERVICE_KEY and create_client:
+    try:
+        supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+    except Exception as e:
+        logger.warning(f"Could not initialize Supabase client: {e}")
 
 JOURNAL_REGEX = r'(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC\s*\(CS\)|PLC|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)'
 
