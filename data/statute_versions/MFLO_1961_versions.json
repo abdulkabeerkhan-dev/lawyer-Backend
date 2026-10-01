@@ -740,5 +740,51 @@
     "verification_status": "baseline_unverified",
     "fetched_at": null,
     "previous_version_id": "MFLO_1961_SEC_13_V1"
+  },
+  {
+    "version_id": "MFLO_1961_SEC_4_V3",
+    "canonical_id": "MFLO_1961_SEC_4",
+    "act_code": "MFLO_1961",
+    "provision_type": "section",
+    "primary_num": "4",
+    "secondary_num": null,
+    "title": "Succession of grandchildren in case of death of any son or daughter of the propositus",
+    "title_only": "Succession of grandchildren in case of death of any son or daughter of the propositus",
+    "text": "In the event of death of any son or daughter of the propositus before the opening of succession, the children of such son or daughter, if any, living at the time the succession opens, shall per stirpes receive a share equivalent to the share which such son or daughter, as the case may be, would have received if alive.",
+    "text_available": true,
+    "jurisdiction": "federal",
+    "status": "declared_repugnant_appeal_pending",
+    "enacted_date": "1961-03-02",
+    "assent_date": "1961-03-02",
+    "commencement_date": "1961-07-15",
+    "valid_from": "1961-07-15",
+    "valid_to": null,
+    "amending_instrument": "Ordinance VIII of 1961",
+    "gazette_reference": "Gazette of Pakistan, Extraordinary, 2nd March 1961",
+    "effective_application": "in_force_under_suspension_of_shariat_repugnancy",
+    "ordinance_expiry_date": null,
+    "court_challenges": [
+      {
+        "court": "Federal Shariat Court",
+        "year": 2000,
+        "citation": "PLD 2000 FSC 70",
+        "title": "Allah Rakha v. Federation of Pakistan",
+        "ruling": "Declared repugnant to the Injunctions of Islam with effect from March 31, 2000",
+        "appeal_status": "Appeal pending before Supreme Court Shariat Appellate Bench (operation suspended, still in force)"
+      },
+      {
+        "court": "Federal Constitutional Court",
+        "year": 2025,
+        "title": "FCC Ruling on Scope of Section 4 MFLO",
+        "ruling": "Federal Constitutional Court authoritative ruling on constitutional scope and applicability",
+        "appeal_status": "Final judgment entered upon judicial review"
+      }
+    ],
+    "source_url": "https://pakistancode.gov.pk/english/UY2FqaJw1-apaUY2Fqa-apU%3D-sg-jjjjjjjjjjjjj",
+    "source_tier": "tier_1",
+    "verified_by": "manual_review",
+    "verification_status": "change_confirmed",
+    "fetched_at": "2026-10-01T21:40:00+00:00",
+    "previous_version_id": "MFLO_1961_SEC_4_V2"
   }
 ]

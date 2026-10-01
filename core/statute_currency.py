@@ -566,7 +566,7 @@ def check_statute_currency(
         elif v_status == "reported_unverified":
             tag = "[REPORTED, UNVERIFIED]"
             label = "REPORTED, UNVERIFIED"
-        elif v_status == "verified" or (status_val == "amended" and latest.get("amending_instrument")):
+        elif v_status in ("verified", "change_confirmed") or (status_val in ("amended", "declared_repugnant_appeal_pending") and latest.get("amending_instrument")):
             tag = "[CHANGE CONFIRMED]"
             label = "CHANGE CONFIRMED"
         elif is_online_checked:
