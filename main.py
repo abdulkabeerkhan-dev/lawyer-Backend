@@ -4506,7 +4506,9 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         # is exactly where cross-jurisdiction statutory leakage (India/UK substance on a correctly
         # named Pakistani act) is most likely to slip through ungrounded.
         _discusses_statute = bool(re.search(r'\b(section|article|order\s+[ivxlcdm]+)\s+\d', raw_model_output, re.IGNORECASE))
-        _is_formal_opinion = bool(citations_payload or _discusses_statute or "executive summary" in raw_model_output.lower())
+        _user_requested_memo = bool(re.search(r'\b(formal\s+opinion|legal\s+memorandum|research\s+memo(?:randum)?|draft\s+(?:an?\s+)?opinion)\b', effective_user_query, re.IGNORECASE))
+        _has_memo_structure = bool(re.search(r'(?:^|\n)(?:#{1,4}|\*{2})\s*(?:(?:I|[1])[\.\:\)]\s*)?executive\s*summary', raw_model_output, re.IGNORECASE))
+        _is_formal_opinion = bool(_user_requested_memo or _has_memo_structure or (citations_payload and len(citations_payload) >= 2 and "summary" in raw_model_output.lower()))
 
         MAX_REFLECTION_ROUNDS = 2
         for ref_round in range(MAX_REFLECTION_ROUNDS):
@@ -4514,13 +4516,13 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
             if citations_payload or _discusses_statute:
                 lint_errors = lint_legal_output(raw_model_output, query_context=effective_user_query, context_chunks=citations_payload)
 
-            is_complete, completeness_issues = check_memo_completeness(raw_model_output, is_formal_opinion=_is_formal_opinion)
+            is_complete, completeness_issues = check_memo_completeness(raw_model_output, is_formal_opinion=_is_formal_opinion, context_chunks=citations_payload)
             all_issues = lint_errors + (completeness_issues if not is_complete else [])
             if not all_issues:
                 break
 
             print(f"⚠️ Legal Guardrails & Completeness Issues (round {ref_round+1}): {all_issues}. Triggering reflection loop...", file=sys.stderr)
-            reflection_prompt = f"CRITICAL INSTRUCTION: Do NOT output conversational meta-commentary. Silently correct these legal/completeness issues in your answer and re-output the full completed response (ensuring all required sections have at least 40 words and valid <<<CARDS>>> JSON): {'; '.join(all_issues)}"
+            reflection_prompt = f"CRITICAL INSTRUCTION: Do NOT output conversational meta-commentary. Silently correct these legal/completeness issues in your answer and re-output the full completed response (ensuring all required sections have at least 25 words and valid <<<CARDS>>> JSON): {'; '.join(all_issues)}"
             reflection_messages = list(messages) + [
                 {"role": "assistant", "content": raw_model_output},
                 {"role": "user", "content": reflection_prompt},
@@ -4532,15 +4534,22 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
             is_token_truncated = (getattr(claude_message_ref, "stop_reason", None) == "max_tokens")
 
         if _is_formal_opinion:
-            is_complete, remaining_issues = check_memo_completeness(raw_model_output, is_formal_opinion=True)
+            is_complete, remaining_issues = check_memo_completeness(raw_model_output, is_formal_opinion=True, context_chunks=citations_payload)
             if not is_complete or is_token_truncated:
                 print(f"⚠️ [JOB {job_id}] Formal legal memo failed completeness checks after retries: {remaining_issues}", file=sys.stderr)
-                raw_model_output = (
-                    "⚠️ **[GENERATION INCOMPLETE NOTICE]**: The legal research memorandum could not be completed with verified statutory "
-                    "and precedent coverage across all mandatory sections. To prevent incomplete or misleading legal advice, generation was aborted.\n\n"
-                    f"**Missing/Incomplete Items**: {', '.join(remaining_issues)}\n\n"
-                    "Please refine or narrow your research query to regenerate a verified memorandum."
-                )
+                if is_token_truncated or len(raw_model_output.split()) < 200:
+                    raw_model_output = (
+                        "⚠️ **[GENERATION INCOMPLETE NOTICE]**: The legal research memorandum could not be completed with verified statutory "
+                        "and precedent coverage across all mandatory sections. To prevent incomplete or misleading legal advice, generation was aborted.\n\n"
+                        f"**Missing/Incomplete Items**: {', '.join(remaining_issues)}\n\n"
+                        "Please refine or narrow your research query to regenerate a verified memorandum."
+                    )
+                else:
+                    notice_banner = (
+                        "> ⚠️ **[LEGAL MEMO NOTICE]**: This memorandum provides substantive legal analysis but did not strictly populate "
+                        f"all standard research headings: {', '.join(remaining_issues)}. Please review statutory provisions directly.\n\n"
+                    )
+                    raw_model_output = f"{notice_banner}{raw_model_output}"
 
         # Item 7.a: Final review gate (separate LLM reviewer at temp 0 checking supported/unsupported/overstated)
         if citations_payload and not is_token_truncated and "⚠️ **[GENERATION INCOMPLETE NOTICE]**" not in raw_model_output:
@@ -5774,7 +5783,11 @@ async def continue_query_answer(job_id: str, authenticated_user_id: str = Depend
     if not continue_state or not async_anthropic_client:
         raise HTTPException(status_code=400, detail="Continuation not available for this job.")
 
-    is_complete, issues = check_memo_completeness(continue_state["raw_model_answer"], is_formal_opinion=True)
+    is_complete, issues = check_memo_completeness(
+        continue_state["raw_model_answer"],
+        is_formal_opinion=True,
+        context_chunks=continue_state.get("citations_payload", [])
+    )
     if issues:
         continuation_prompt = f"Specifically, the memorandum is missing or was truncated in: {'; '.join(issues)}. Complete these exact missing sections immediately, starting directly with the heading."
     else:

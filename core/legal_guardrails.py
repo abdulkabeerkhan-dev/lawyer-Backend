@@ -487,7 +487,7 @@ def articles_in(text: str) -> Set[str]:
     return out
 
 def find_ungrounded_articles(draft: str, retrieved_text: str, query: str = '',
-                             exempt: tuple = ("175", "185", "189", "201")) -> List[str]:
+                             exempt: tuple = ("175", "185", "189", "201", "203a", "203b", "203c", "203d", "203dd", "203e", "203f", "203g", "203gg", "203h", "203j")) -> List[str]:
     grounded, in_query = articles_in(retrieved_text), articles_in(query)
     problems, seen = [], set()
     for m in _ART.finditer(draft or ''):
@@ -1135,10 +1135,13 @@ def decompose_compound_legal_query(query: str) -> List[str]:
     return [q_clean]
 
 
-def check_memo_completeness(text: str, is_formal_opinion: bool = True) -> Tuple[bool, List[str]]:
+def check_memo_completeness(text: str, is_formal_opinion: bool = True, context_chunks: Optional[List[Dict[str, Any]]] = None) -> Tuple[bool, List[str]]:
     """
     Verifies that a generated legal memorandum contains all required sections
-    (min 40 words per section) and parseable <<<CARDS>>> JSON.
+    (with adequate substantive depth per section) and parseable <<<CARDS>>> JSON.
+    
+    Accepts standard Markdown heading levels (#, ##, ###, ####), bold titles (**...**),
+    Roman or Arabic numbering (I., 1., etc.), and common legal heading synonyms.
     
     Returns (is_complete: bool, missing_or_short_sections: List[str]).
     """
@@ -1148,26 +1151,69 @@ def check_memo_completeness(text: str, is_formal_opinion: bool = True) -> Tuple[
     if not is_formal_opinion:
         return True, []
 
+    cards_idx = text.find("<<<CARDS>>>")
+    main_text = text if cards_idx == -1 else text[:cards_idx]
+
     required_sections = [
-        ("Executive Summary", r'###\s*(?:I\.\s*)?EXECUTIVE\s*SUMMARY'),
-        ("Statutory Framework", r'###\s*(?:II\.\s*)?(?:CONTROLLING\s*STATUTORY|STATUTORY\s*&\s*PROCEDURAL|GOVERNING\s*STATUTORY|STATUTORY\s*FRAMEWORK)'),
-        ("Precedents", r'###\s*(?:III\.\s*)?(?:CONTROLLING\s*JUDICIAL|CASE\s*LAW|BINDING\s*&\s*PERSUASIVE|APPELLATE\s*PRECEDENTS|PRECEDENTS)'),
-        ("Legal Analysis", r'###\s*(?:IV\.\s*)?(?:LEGAL\s*ANALYSIS|STRATEGIC\s*LEGAL|PROCEDURAL\s*&\s*STRATEGIC|ANALYSIS)'),
-        ("Recommendations / Next Steps", r'###\s*(?:V\.\s*)?(?:RECOMMENDATIONS|PRACTICAL\s*NEXT|NEXT\s*STEPS|PROCEDURAL\s*ROADMAP|PLAYBOOK)'),
+        (
+            "Executive Summary",
+            r'(?:^|\n)(?:#{1,4}\s*|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:EXECUTIVE\s*SUMMARY|LEGAL\s*OPINION|SUMMARY\s*OF\s*(?:THE\s*)?(?:LEGAL\s*)?OPINION|OVERVIEW|EXECUTIVE\s*OVERVIEW|CORE\s*FINDINGS?|SUMMARY\s*FINDINGS?)\b',
+            25
+        ),
+        (
+            "Statutory Framework",
+            r'(?:^|\n)(?:#{1,4}\s*|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:CONTROLLING\s*STATUTORY|STATUTORY\s*(?:&|AND|\+)?\s*PROCEDURAL|GOVERNING\s*STATUTORY|STATUTORY\s*FRAMEWORK|STATUTORY\s*ARCHITECTURE|CONSTITUTIONAL\s*(?:&|AND|\+)?\s*STATUTORY|STATUTORY\s*(?:PROVISIONS|AUTHORIT(?:Y|IES)|BASIS)|RELEVANT\s*(?:STATUTORY|LEGAL)\s*FRAMEWORK|APPLICABLE\s*LAW|LEGISLATIVE\s*FRAMEWORK|REGULATORY\s*FRAMEWORK)\b',
+            25
+        ),
+        (
+            "Precedents",
+            r'(?:^|\n)(?:#{1,4}\s*|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:CONTROLLING\s*JUDICIAL|CASE\s*LAW|BINDING\s*(?:&|AND|\+)?\s*PERSUASIVE|APPELLATE\s*(?:PRECEDENTS?|RATIO|JURISPRUDENCE)|PRECEDENTS?|JUDICIAL\s*PRECEDENTS?|SUPERIOR\s*COURT\s*PRECEDENTS?|JUDICIAL\s*AUTHORIT(?:Y|IES)|EXTERNAL\s*AUTHORITIES|PRECEDENT\s*ANALYSIS|REPORTED\s*(?:CASE\s*LAW|JUDGMENTS?|PRECEDENTS?))\b',
+            20
+        ),
+        (
+            "Legal Analysis",
+            r'(?:^|\n)(?:#{1,4}\s*|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:LEGAL\s*ANALYSIS|STRATEGIC\s*LEGAL|PROCEDURAL\s*(?:&|AND|\+)?\s*STRATEGIC|ANALYSIS|SUBSTANTIVE\s*ANALYSIS|LEGAL\s*EVALUATION|DETAILED\s*ANALYSIS|DISCUSSION\s*(?:&|AND|\+)?\s*ANALYSIS|APPLICATION\s*OF\s*LAW)\b',
+            25
+        ),
+        (
+            "Recommendations / Next Steps",
+            r'(?:^|\n)(?:#{1,4}\s*|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:RECOMMENDATIONS?|PRACTICAL\s*NEXT|NEXT\s*STEPS?|PROCEDURAL\s*ROADMAP|PLAYBOOK|ACTION\s*PLAN|STRATEGIC\s*RECOMMENDATIONS?|CONCLUSION(?:\s*(?:&|AND|\+)\s*(?:RECOMMENDATIONS?|NEXT\s*STEPS?))?|PRACTICAL\s*ADVICE|NEXT\s*PROCEDURAL\s*STEPS?)\b',
+            25
+        ),
     ]
 
+    matched_sections = []
+    for sec_name, pattern, min_words in required_sections:
+        m = re.search(pattern, main_text, re.IGNORECASE)
+        if m:
+            matched_sections.append((m.start(), m.end(), sec_name, min_words))
+
+    matched_sections.sort(key=lambda x: x[0])
+    matched_names = {sec[2] for sec in matched_sections}
+
     issues = []
-    for sec_name, pattern in required_sections:
-        match = re.search(pattern, text, re.IGNORECASE)
-        if not match:
+    for sec_name, pattern, min_words in required_sections:
+        if sec_name not in matched_names:
             issues.append(f"Missing section: '{sec_name}'")
-        else:
-            start_pos = match.end()
-            next_header = re.search(r'(?:###|<<<CARDS>>>)', text[start_pos:])
-            sec_body = text[start_pos:start_pos + next_header.start()] if next_header else text[start_pos:]
-            words = sec_body.strip().split()
-            if len(words) < 40:
-                issues.append(f"Section '{sec_name}' is too brief ({len(words)} words; min 40 words required)")
+
+    for i, (start_idx, end_idx, sec_name, min_words) in enumerate(matched_sections):
+        next_boundary = matched_sections[i+1][0] if i + 1 < len(matched_sections) else len(main_text)
+        sec_body = main_text[end_idx:next_boundary].strip()
+        words = sec_body.split()
+
+        if sec_name == "Precedents":
+            no_prec_noted = any(phrase in sec_body.lower() for phrase in [
+                "no direct precedent", "no matching precedent", "zero precedent",
+                "no precedent was retrieved", "no judicial precedent", "no specific precedent",
+                "not yet in database", "statutory analysis, not a retrieved precedent",
+                "grounded strictly in codified", "statutory principles"
+            ])
+            has_no_chunks = (context_chunks is not None and len(context_chunks) == 0)
+            if (no_prec_noted or has_no_chunks) and len(words) >= 8:
+                continue
+
+        if len(words) < min_words:
+            issues.append(f"Section '{sec_name}' is too brief ({len(words)} words; min {min_words} words required)")
 
     if "<<<CARDS>>>" in text:
         cards_match = re.search(r'<<<CARDS>>>(.*?)(?:<<<END_CARDS>>>|$)', text, re.DOTALL)

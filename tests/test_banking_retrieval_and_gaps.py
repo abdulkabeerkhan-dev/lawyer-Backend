@@ -353,6 +353,33 @@ class TestBankingRetrievalAndGaps(unittest.TestCase):
         is_complete, issues = check_memo_completeness(complete_memo, is_formal_opinion=True)
         self.assertTrue(is_complete, f"Completeness check failed with issues: {issues}")
 
+        # H2 numbered memo (Markdown ## 1., ## 2., etc.)
+        h2_memo = (
+            "## 1. Executive Summary & Legal Opinion\n" + ("The court execution sale under Order XXI Rule 90 CPC was analyzed with legal precision. " * 5) + "\n\n"
+            "## 2. Statutory & Procedural Framework\n" + ("The Financial Institutions Recovery of Finances Ordinance 2001 Section 19 governs execution. " * 5) + "\n\n"
+            "## 3. Case Law & Appellate Precedents\n" + ("The Supreme Court in Tariq Zubair Khan 2024 SCMR 1218 settled the 20% deposit rule. " * 5) + "\n\n"
+            "## 4. Legal Analysis & Strategic Risks\n" + ("The judgment-debtor must demonstrate material irregularity and substantial injury resulting. " * 5) + "\n\n"
+            "## 5. Recommendations & Practical Next Steps\n" + ("File the objection petition within thirty days of sale accompanied by verified security. " * 5) + "\n\n"
+        )
+        is_complete_h2, issues_h2 = check_memo_completeness(h2_memo, is_formal_opinion=True)
+        self.assertTrue(is_complete_h2, f"H2 numbered memo completeness check failed: {issues_h2}")
+
+        # Memo with explicit negative precedent statement (Rule 2 statutory grounding)
+        no_prec_memo = (
+            "### 1. Executive Summary\n" + ("The constitutional challenge against the legacy fiscal statute was examined under Article 203D. " * 5) + "\n\n"
+            "### 2. Statutory Framework\n" + ("Article 203D and Article 203F of the Constitution of Pakistan 1973 govern Shariat jurisdiction. " * 5) + "\n\n"
+            "### 3. Case Law & Appellate Precedents\nNo direct precedent was retrieved from the database on this legacy statute; analysis is grounded strictly in codified constitutional provisions.\n\n"
+            "### 4. Legal Analysis\n" + ("Under Article 203D(2) and (3), filing an appeal automatically suspends the operation of the FSC declaration. " * 5) + "\n\n"
+            "### 5. Recommendations & Next Steps\n" + ("File an objection application under Section 47 CPC before the executing court seeking a stay of execution. " * 5) + "\n\n"
+        )
+        is_complete_np, issues_np = check_memo_completeness(no_prec_memo, is_formal_opinion=True, context_chunks=[])
+        self.assertTrue(is_complete_np, f"Negative precedent memo completeness check failed: {issues_np}")
+
+        # Non-formal opinion bypasses completeness structure check
+        is_comp_direct, issues_direct = check_memo_completeness("A concise legal explanation regarding Order XXI Rule 54 CPC.", is_formal_opinion=False)
+        self.assertTrue(is_comp_direct)
+        self.assertEqual(len(issues_direct), 0)
+
     def test_statutory_validator_no_unverified_rules(self):
         statute_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "statute_tables", "CPC_1908.json")
         with open(statute_path, "r", encoding="utf-8") as f:

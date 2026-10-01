@@ -32,12 +32,12 @@ class TestModelFallback(unittest.TestCase):
         mock_client = AsyncMock()
         mock_client.messages.create = AsyncMock(side_effect=Exception("404 model_not_found"))
 
-        env_copy = dict(os.environ)
-        env_copy.pop("ANTHROPIC_FALLBACK_MODEL", None)
-        with patch.dict(os.environ, env_copy, clear=True), patch.object(main, 'async_anthropic_client', mock_client):
-            with self.assertRaises(RuntimeError) as ctx:
-                asyncio.run(main.safe_create_anthropic_message(model="claude-3-7-sonnet-20250219"))
-            self.assertIn("Model 'claude-3-7-sonnet-20250219' is not accessible", str(ctx.exception))
+        with patch.dict(os.environ):
+            os.environ.pop("ANTHROPIC_FALLBACK_MODEL", None)
+            with patch.object(main, 'async_anthropic_client', mock_client):
+                with self.assertRaises(RuntimeError) as ctx:
+                    asyncio.run(main.safe_create_anthropic_message(model="claude-3-7-sonnet-20250219"))
+                self.assertIn("Model 'claude-3-7-sonnet-20250219' is not accessible", str(ctx.exception))
 
     def test_safe_create_anthropic_message_404_with_fallback_success(self):
         import main
