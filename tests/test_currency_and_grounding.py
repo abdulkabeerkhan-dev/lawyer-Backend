@@ -19,6 +19,10 @@ from datetime import datetime, timezone, timedelta
 
 from core.statute_currency import (
     StatuteVersionStore,
+    StatuteStatus,
+    is_law_status,
+    VALID_JURISDICTIONS,
+    global_statute_store,
     check_statute_currency,
     tag_precedent_temporal_amendment,
     detect_statutory_provisions_in_query,
@@ -136,6 +140,98 @@ class TestStatuteVersionStore(unittest.TestCase):
         self.assertEqual(promoted["verification_status"], "verified")
         self.assertEqual(promoted["source_tier"], "tier_1")
 
+    def test_statute_status_enum_and_validation(self):
+        # StatuteStatus contains required legal statuses
+        self.assertEqual(StatuteStatus.IN_FORCE.value, "in_force")
+        self.assertEqual(StatuteStatus.AMENDED.value, "amended")
+        self.assertEqual(StatuteStatus.REPEALED.value, "repealed")
+        self.assertEqual(StatuteStatus.BILL.value, "bill")
+        self.assertEqual(StatuteStatus.PASSED.value, "passed")
+
+        # is_law_status returns True only for assented, notified, commenced, in_force, amended
+        self.assertTrue(is_law_status("assented"))
+        self.assertTrue(is_law_status("notified"))
+        self.assertTrue(is_law_status("commenced"))
+        self.assertTrue(is_law_status("in_force"))
+        self.assertTrue(is_law_status("amended"))
+
+        # Bills and passed items are NEVER law
+        self.assertFalse(is_law_status("bill"))
+        self.assertFalse(is_law_status("passed"))
+        self.assertFalse(is_law_status("repealed"))
+        self.assertFalse(is_law_status(None))
+        self.assertFalse(is_law_status(""))
+
+        # append_version rejects invalid status with ValueError
+        with self.assertRaises(ValueError):
+            self.store.append_version(
+                canonical_id="TEST_SEC_1",
+                act_code="TEST_ACT",
+                text="Text",
+                status="completely_fake_status"
+            )
+
+    def test_jurisdiction_validation(self):
+        # Valid jurisdictions
+        for j in ["federal", "punjab", "sindh", "kp", "balochistan"]:
+            self.assertIn(j, VALID_JURISDICTIONS)
+            v = self.store.append_version(
+                canonical_id=f"TEST_SEC_{j}",
+                act_code="TEST_ACT",
+                jurisdiction=j
+            )
+            self.assertEqual(v["jurisdiction"], j)
+
+        # Invalid jurisdiction raises ValueError
+        with self.assertRaises(ValueError):
+            self.store.append_version(
+                canonical_id="TEST_SEC_INVALID",
+                act_code="TEST_ACT",
+                jurisdiction="mars"
+            )
+
+    def test_null_dates_survive_round_trip(self):
+        # A baseline record with all null dates survives write and read
+        v = self.store.append_version(
+            canonical_id="NULL_DATES_SEC_1",
+            act_code="NULL_DATES_ACT",
+            text=None,
+            title="Null Dates Section",
+            enacted_date=None,
+            assent_date=None,
+            commencement_date=None,
+            valid_from=None,
+            valid_to=None,
+            amending_instrument=None,
+            gazette_reference=None,
+            court_challenges=[],
+            text_available=False
+        )
+        self.assertIsNone(v["enacted_date"])
+        self.assertIsNone(v["assent_date"])
+        self.assertIsNone(v["commencement_date"])
+        self.assertIsNone(v["valid_from"])
+        self.assertIsNone(v["valid_to"])
+        self.assertIsNone(v["amending_instrument"])
+        self.assertIsNone(v["gazette_reference"])
+        self.assertEqual(v["court_challenges"], [])
+        self.assertFalse(v["text_available"])
+        self.assertIsNone(v["text"])
+
+        # Reload from fresh read
+        latest = self.store.get_latest_version("NULL_DATES_ACT", "NULL_DATES_SEC_1")
+        self.assertIsNotNone(latest)
+        self.assertIsNone(latest["enacted_date"])
+        self.assertIsNone(latest["assent_date"])
+        self.assertIsNone(latest["commencement_date"])
+        self.assertIsNone(latest["valid_from"])
+        self.assertIsNone(latest["valid_to"])
+        self.assertIsNone(latest["amending_instrument"])
+        self.assertIsNone(latest["gazette_reference"])
+        self.assertEqual(latest["court_challenges"], [])
+        self.assertFalse(latest["text_available"])
+        self.assertIsNone(latest["text"])
+
 
 class TestStatuteCurrencyCheck(unittest.TestCase):
     """Tests for currency checking, cache windows, recency words, and output labels."""
@@ -171,6 +267,46 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
         )
         self.assertIsNotNone(res)
         self.assertIn(res["label"], ["BASELINE", "NOT-CHECKED"])
+
+    def test_baseline_seeded_record_honesty(self):
+        # A seeded baseline record must have baseline_unverified status, source_tier=None,
+        # fetched_at=None, text_available=False, text=None, and display_tag=[BASELINE TABLE: not checked online]
+        res = check_statute_currency("PPC_1860_SEC_489F", "PPC_1860")
+        self.assertEqual(res["verification_status"], "baseline_unverified")
+        self.assertIsNone(res["tier"])
+        self.assertFalse(res["text_available"])
+        self.assertEqual(res["jurisdiction"], "federal")
+        self.assertEqual(res["display_tag"], "[BASELINE TABLE: not checked online]")
+        self.assertNotIn("VERIFIED", res["display_tag"])
+
+        # Check version store record directly
+        latest = global_statute_store.get_latest_version("PPC_1860", "PPC_1860_SEC_489F")
+        self.assertIsNotNone(latest)
+        self.assertEqual(latest["version_id"], "PPC_1860_SEC_489F_V2")
+        self.assertEqual(latest["previous_version_id"], "PPC_1860_SEC_489F_V1")
+        self.assertEqual(latest["verification_status"], "baseline_unverified")
+        self.assertIsNone(latest["source_tier"])
+        self.assertIsNone(latest["fetched_at"])
+        self.assertIsNone(latest["text"])
+        self.assertFalse(latest["text_available"])
+        self.assertEqual(latest["court_challenges"], [])
+
+    def test_real_statute_baseline_v2_records(self):
+        # PRPA and Pre-emption must be Punjab jurisdiction
+        prpa = global_statute_store.get_latest_version("PRPA_2009", "PRPA_2009_SEC_1")
+        self.assertIsNotNone(prpa)
+        self.assertEqual(prpa["jurisdiction"], "punjab")
+
+        preempt = global_statute_store.get_latest_version("PREEMPTION_1991", "PREEMPTION_1991_SEC_1")
+        self.assertIsNotNone(preempt)
+        self.assertEqual(preempt["jurisdiction"], "punjab")
+
+        # Federal acts must be federal jurisdiction
+        crpc = global_statute_store.get_latest_version("CRPC_1898", "CRPC_1898_SEC_497")
+        self.assertIsNotNone(crpc)
+        self.assertEqual(crpc["jurisdiction"], "federal")
+        self.assertFalse(crpc["text_available"])
+        self.assertIsNone(crpc["text"])
 
 
 class TestPrecedentTagsAndRetryCap(unittest.TestCase):

@@ -9,6 +9,7 @@ import os
 import re
 import json
 import time
+from enum import Enum
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Tuple, Any
 
@@ -16,6 +17,51 @@ WORKSPACE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATUTE_VERSIONS_DIR = os.path.join(WORKSPACE_DIR, "data", "statute_versions")
 STATUTE_STAGING_DIR = os.path.join(WORKSPACE_DIR, "data", "statute_staging")
 TABLES_DIR = os.path.join(WORKSPACE_DIR, "data", "statute_tables")
+
+class StatuteStatus(str, Enum):
+    BILL = "bill"
+    PASSED = "passed"
+    ASSENTED = "assented"
+    NOTIFIED = "notified"
+    COMMENCED = "commenced"
+    IN_FORCE = "in_force"
+    AMENDED = "amended"
+    REPEALED = "repealed"
+    LAPSED = "lapsed"
+    OMITTED = "omitted"
+    DECLARED_REPUGNANT_APPEAL_PENDING = "declared_repugnant_appeal_pending"
+    STRUCK_DOWN = "struck_down"
+
+VALID_STATUSES = {s.value for s in StatuteStatus}
+
+# Only assented, notified, commenced, in_force, and amended count as law.
+# A bill or a "passed" item is never described as law.
+LAW_STATUSES = {
+    StatuteStatus.ASSENTED.value,
+    StatuteStatus.NOTIFIED.value,
+    StatuteStatus.COMMENCED.value,
+    StatuteStatus.IN_FORCE.value,
+    StatuteStatus.AMENDED.value,
+}
+
+def is_law_status(status: Optional[str]) -> bool:
+    """
+    Returns True only if the status qualifies as law.
+    Only assented, notified, commenced, in_force, and amended count as law.
+    A bill or a 'passed' item is never described as law.
+    """
+    if not status:
+        return False
+    return str(status).strip().lower() in LAW_STATUSES
+
+VALID_JURISDICTIONS = {
+    "federal",
+    "punjab",
+    "sindh",
+    "kp",
+    "kpk",
+    "balochistan",
+}
 
 os.makedirs(STATUTE_VERSIONS_DIR, exist_ok=True)
 os.makedirs(STATUTE_STAGING_DIR, exist_ok=True)
@@ -106,17 +152,18 @@ class StatuteVersionStore:
         return matching[-1]
 
     def batch_import_initial_versions(self, act_code: str, provisions: List[Dict[str, Any]]) -> int:
-        """Batch-imports initial provisions if the act version file does not already exist."""
+        """Batch-imports initial provisions with truthful baseline_unverified status."""
         path = self._get_act_file(act_code)
         if os.path.exists(path) and os.path.getsize(path) > 10:
             return 0
-        now_iso = datetime.now(timezone.utc).isoformat()
         records = []
+        clean_act = act_code.upper()
+        default_jurisdiction = "punjab" if clean_act in ("PRPA_2009", "PREEMPTION_1991") else "federal"
         for r in provisions:
             cid = r.get("canonical_id")
             if not cid:
                 continue
-            src_url = r.get("source_citation") or "https://pakistancode.gov.pk"
+            title = r.get("title") or r.get("display_name") or "Provision"
             records.append({
                 "version_id": f"{cid}_V1",
                 "canonical_id": cid,
@@ -124,20 +171,26 @@ class StatuteVersionStore:
                 "provision_type": r.get("provision_type", "section"),
                 "primary_num": str(r.get("primary_num") or ""),
                 "secondary_num": r.get("secondary_num"),
-                "title": r.get("title") or r.get("display_name") or "Provision",
-                "text": r.get("title") or "",
-                "jurisdiction": "federal",
+                "title": title,
+                "title_only": title,
+                "text": None,
+                "text_available": False,
+                "jurisdiction": r.get("jurisdiction", default_jurisdiction),
                 "status": "in_force",
                 "enacted_date": None,
                 "assent_date": None,
-                "commencement_date": r.get("source_verified_date") or "1908-01-01",
+                "commencement_date": None,
+                "valid_from": None,
+                "valid_to": None,
+                "amending_instrument": None,
+                "gazette_reference": None,
                 "effective_application": "pending_and_prospective",
                 "ordinance_expiry_date": None,
                 "court_challenges": [],
-                "source_url": src_url,
-                "source_tier": "tier_1",
-                "verification_status": "verified",
-                "fetched_at": now_iso,
+                "source_url": None,
+                "source_tier": None,
+                "verification_status": "baseline_unverified",
+                "fetched_at": None,
                 "previous_version_id": None
             })
         with open(path, "w", encoding="utf-8") as f:
@@ -148,7 +201,8 @@ class StatuteVersionStore:
         self,
         canonical_id: str,
         act_code: str,
-        text: str,
+        text: Optional[str] = None,
+        title_only: Optional[str] = None,
         provision_type: str = "section",
         primary_num: str = "1",
         secondary_num: Optional[str] = None,
@@ -159,16 +213,30 @@ class StatuteVersionStore:
         enacted_date: Optional[str] = None,
         assent_date: Optional[str] = None,
         commencement_date: Optional[str] = None,
+        valid_from: Optional[str] = None,
+        valid_to: Optional[str] = None,
+        amending_instrument: Optional[str] = None,
+        gazette_reference: Optional[str] = None,
         effective_application: str = "pending_and_prospective",
         ordinance_expiry_date: Optional[str] = None,
         court_challenges: Optional[List[Dict[str, Any]]] = None,
-        source_url: str = "",
+        source_url: Optional[str] = None,
         source_tier: Optional[str] = None,
         verification_status: Optional[str] = None,
+        text_available: Optional[bool] = None,
     ) -> Dict[str, Any]:
         """
         Appends a new immutable version to the store. Only Tier 1 sources can achieve 'verified'.
+        Validates status against StatuteStatus enum and jurisdiction against VALID_JURISDICTIONS.
         """
+        status_clean = str(status).strip().lower()
+        if status_clean not in VALID_STATUSES:
+            raise ValueError(f"Unknown statute status: '{status}'. Must be one of: {sorted(list(VALID_STATUSES))}")
+
+        jurisdiction_clean = str(jurisdiction).strip().lower()
+        if jurisdiction_clean not in VALID_JURISDICTIONS:
+            raise ValueError(f"Unknown jurisdiction: '{jurisdiction}'. Must be one of: {sorted(list(VALID_JURISDICTIONS))}")
+
         existing_versions = self.get_versions(act_code)
         matching = [v for v in existing_versions if v.get("canonical_id") == canonical_id]
         prev_version = matching[-1] if matching else None
@@ -176,12 +244,16 @@ class StatuteVersionStore:
         v_num = len(matching) + 1
         version_id = f"{canonical_id}_V{v_num}"
 
-        computed_tier = source_tier or classify_source_tier(source_url)
+        computed_tier = source_tier if source_tier is not None else (classify_source_tier(source_url) if source_url else None)
         # Enforce Rule: Only Tier 1 can mark a change "verified"
         if computed_tier == "tier_1":
             computed_status = verification_status or "verified"
-        else:
+        elif computed_tier:
             computed_status = "reported_unverified"
+        else:
+            computed_status = verification_status or "baseline_unverified"
+
+        has_text = bool(text) if text_available is None else bool(text_available)
 
         new_entry = {
             "version_id": version_id,
@@ -191,20 +263,26 @@ class StatuteVersionStore:
             "primary_num": primary_num,
             "secondary_num": secondary_num,
             "title": title,
-            "text": text,
-            "jurisdiction": jurisdiction,
-            "status": status,  # in_force | amended | repealed | lapsed | struck_down | challenged
+            "title_only": title_only or title,
+            "text": text if has_text else None,
+            "text_available": has_text,
+            "jurisdiction": jurisdiction_clean,
+            "status": status_clean,
             "enacted_date": enacted_date,
             "assent_date": assent_date,
             "commencement_date": commencement_date,
-            "effective_application": effective_application,  # prospective_only | pending_and_prospective | retrospective
+            "valid_from": valid_from,
+            "valid_to": valid_to,
+            "amending_instrument": amending_instrument,
+            "gazette_reference": gazette_reference,
+            "effective_application": effective_application,
             "ordinance_expiry_date": ordinance_expiry_date,
             "court_challenges": court_challenges or [],
             "source_url": source_url,
             "source_tier": computed_tier,
             "verified_by": verified_by,
             "verification_status": computed_status,
-            "fetched_at": datetime.now(timezone.utc).isoformat(),
+            "fetched_at": datetime.now(timezone.utc).isoformat() if computed_tier else None,
             "previous_version_id": prev_version.get("version_id") if prev_version else None,
         }
 
@@ -377,12 +455,22 @@ def check_statute_currency(
             "verification_status": "unverified",
             "status": "unknown",
             "effective_application": "unknown",
+            "commencement_date": None,
+            "ordinance_expiry_date": None,
+            "title_only": None,
+            "text_available": False,
+            "jurisdiction": "federal",
+            "valid_from": None,
+            "valid_to": None,
+            "amending_instrument": None,
+            "gazette_reference": None,
+            "court_challenges": [],
             "display_tag": display_tag
         }
 
     is_online_checked = bool(latest.get("online_checked", False))
-    tier = latest.get("source_tier") or "tier_3"
-    v_status = latest.get("verification_status") or "reported_unverified"
+    tier = latest.get("source_tier")
+    v_status = latest.get("verification_status") or "baseline_unverified"
     s_date = (latest.get("fetched_at") or "")[:10]
     s_url = latest.get("source_url") or "official repository"
 
@@ -402,7 +490,7 @@ def check_statute_currency(
         tag = f"[VERIFIED: Tier 1, {s_url}, {s_date}]"
         label = "VERIFIED"
     elif v_status == "reported_unverified":
-        tag = f"[REPORTED-UNVERIFIED: {tier.upper()}, {s_url}]"
+        tag = f"[REPORTED-UNVERIFIED: {(tier or 'tier_3').upper()}, {s_url}]"
         label = "REPORTED-UNVERIFIED"
     else:
         tag = f"[NOT-CHECKED: cached {s_date}]"
@@ -417,6 +505,14 @@ def check_statute_currency(
         "effective_application": latest.get("effective_application", "pending_and_prospective"),
         "commencement_date": latest.get("commencement_date"),
         "ordinance_expiry_date": latest.get("ordinance_expiry_date"),
+        "title_only": latest.get("title_only") or latest.get("title"),
+        "text_available": bool(latest.get("text_available", False)),
+        "jurisdiction": latest.get("jurisdiction", "federal"),
+        "valid_from": latest.get("valid_from"),
+        "valid_to": latest.get("valid_to"),
+        "amending_instrument": latest.get("amending_instrument"),
+        "gazette_reference": latest.get("gazette_reference"),
+        "court_challenges": latest.get("court_challenges", []),
         "display_tag": tag
     }
 
