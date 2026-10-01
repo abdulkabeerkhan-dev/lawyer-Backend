@@ -50,7 +50,9 @@ from core.legal_guardrails import (
     detect_conflicting_authorities,
     verify_doctrine_elements,
     check_memo_completeness,
-    lint_legal_output
+    lint_legal_output,
+    find_ungrounded_articles,
+    articles_in
 )
 
 
@@ -827,6 +829,92 @@ class TestMemoCompleteness(unittest.TestCase):
         is_complete_bad, issues_bad = check_memo_completeness(short_memo, is_formal_opinion=True)
         self.assertFalse(is_complete_bad)
         self.assertTrue(any("Missing section" in i for i in issues_bad))
+
+
+class TestConstitutionalArticlesGroundingRule24(unittest.TestCase):
+    """
+    Tests for Rule 24 replacement (Part B): Universal Constitutional Article Grounding.
+    Exercises all 9 test cases from the review:
+    1. Bare Article 25 (query-only) -> flagged
+    2. Article 25 of the Constitution (query-only) -> flagged
+    3. Contention framing: 'You argue the deposit violates Article 25; no retrieved authority...' -> passes
+    4. Grounded: 'Articles 4, 9 and 10-A concern timely justice.' -> passes
+    5. Normalisation: 'Article 10A applies.' -> passes
+    6. Partial grounding: 'See Articles 4, 9 and 14.' -> flags 14 only
+    7. Statutory exemption: 'Article 181 of the Limitation Act applies.' -> passes
+    8. Statutory exemption: 'Article 129 of Qanun-e-Shahadat Order' -> passes
+    9. Unexempt: 'Under Art. 199 writ jurisdiction' -> flagged (199 not exempt)
+    """
+
+    def test_user_part_b_nine_cases(self):
+        retrieved = "Articles 4, 9 & 10-A of the Constitution on delay. Order XXI Rule 90."
+        query_with_25 = "Can deposit be challenged under Article 25?"
+
+        # Case 1: "The deposit may be challenged under Article 25." (query-only) -> flagged
+        p1 = find_ungrounded_articles("The deposit may be challenged under Article 25.", retrieved, query=query_with_25)
+        self.assertEqual(len(p1), 1)
+        self.assertIn("Ungrounded Constitutional Article 25 (raised only in the query)", p1[0])
+
+        # Case 2: "Challenge it under Article 25 of the Constitution." (query-only) -> flagged
+        p2 = find_ungrounded_articles("Challenge it under Article 25 of the Constitution.", retrieved, query=query_with_25)
+        self.assertEqual(len(p2), 1)
+        self.assertIn("Ungrounded Constitutional Article 25 (raised only in the query)", p2[0])
+
+        # Case 3: "You argue the deposit violates Article 25; no retrieved authority addresses this." -> passes
+        p3 = find_ungrounded_articles("You argue the deposit violates Article 25; no retrieved authority addresses this.", retrieved, query=query_with_25)
+        self.assertEqual(len(p3), 0)
+
+        # Case 4: "Articles 4, 9 and 10-A concern timely justice." -> passes
+        p4 = find_ungrounded_articles("Articles 4, 9 and 10-A concern timely justice.", retrieved, query="")
+        self.assertEqual(len(p4), 0)
+
+        # Case 5: "Article 10A applies." -> passes (10-A and 10A normalise)
+        p5 = find_ungrounded_articles("Article 10A applies.", retrieved, query="")
+        self.assertEqual(len(p5), 0)
+
+        # Case 6: "See Articles 4, 9 and 14." -> flags 14 only
+        p6 = find_ungrounded_articles("See Articles 4, 9 and 14.", retrieved, query="")
+        self.assertEqual(len(p6), 1)
+        self.assertIn("Ungrounded Constitutional Article 14 (absent from retrieved text)", p6[0])
+
+        # Case 7: "Article 181 of the Limitation Act applies." -> passes
+        p7 = find_ungrounded_articles("Article 181 of the Limitation Act applies.", retrieved, query="")
+        self.assertEqual(len(p7), 0)
+
+        # Case 8: "Article 129 of Qanun-e-Shahadat Order" -> passes
+        p8 = find_ungrounded_articles("Article 129 of Qanun-e-Shahadat Order", retrieved, query="")
+        self.assertEqual(len(p8), 0)
+
+        # Case 9: "Under Art. 199 writ jurisdiction" -> flagged (199 not exempt)
+        p9 = find_ungrounded_articles("Under Art. 199 writ jurisdiction", retrieved, query="")
+        self.assertEqual(len(p9), 1)
+        self.assertIn("Ungrounded Constitutional Article 199 (absent from retrieved text)", p9[0])
+
+    def test_lint_legal_output_rule_24_integration(self):
+        mock_chunks = [
+            {"metadata": {"text": "Articles 4, 9 & 10-A of the Constitution on delay. Order XXI Rule 90."}}
+        ]
+        query = "Can deposit be challenged under Article 25?"
+
+        # Ungrounded Article 25 without contention framing -> flagged
+        errs = lint_legal_output("The deposit may be challenged under Article 25.", query_context=query, context_chunks=mock_chunks)
+        self.assertTrue(any("Ungrounded Constitutional Article 25" in e for e in errs))
+
+        # Grounded Articles 4, 9 and 10-A -> passes
+        good_errs = lint_legal_output("Articles 4, 9 and 10-A concern timely justice.", query_context=query, context_chunks=mock_chunks)
+        self.assertFalse(any("Ungrounded Constitutional Article" in e for e in good_errs))
+
+        # Contention framing -> passes
+        contention_errs = lint_legal_output("You argue the deposit violates Article 25; no retrieved authority addresses this.", query_context=query, context_chunks=mock_chunks)
+        self.assertFalse(any("Ungrounded Constitutional Article" in e for e in contention_errs))
+
+        # Statutory article (Limitation Act) -> passes
+        stat_errs = lint_legal_output("Article 181 of the Limitation Act applies.", query_context=query, context_chunks=mock_chunks)
+        self.assertFalse(any("Ungrounded Constitutional Article" in e for e in stat_errs))
+
+        # Procedural exempt articles (175, 185, 189, 201) -> pass without grounding
+        exempt_errs = lint_legal_output("Under Article 189 and Article 201, binding precedent must be followed.", query_context=query, context_chunks=mock_chunks)
+        self.assertFalse(any("Ungrounded Constitutional Article" in e for e in exempt_errs))
 
 
 if __name__ == "__main__":

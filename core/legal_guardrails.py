@@ -444,6 +444,67 @@ def is_compiled_headnote(text: str) -> bool:
     return info["detected_type"] == "headnote_only"
 
 
+# ==============================================================================
+# Rule 24: Universal Constitutional Article Grounding (Part B Specification)
+# ==============================================================================
+# Documented Exempt List:
+# - Article 175: Establishment and jurisdiction of courts (general judicial power)
+# - Article 185: Supreme Court appellate jurisdiction (routine procedural invocation)
+# - Article 189: Supreme Court decisions binding on all other courts (stare decisis)
+# - Article 201: High Court decisions binding on subordinate courts (stare decisis)
+#
+# Decision on Article 199:
+# Article 199 stays OUTSIDE the exempt list.
+# Rationale: Article 199 confers extraordinary constitutional writ jurisdiction.
+# Superior court precedent strictly limits Article 199 when alternative remedies exist
+# (e.g. commercial disputes, banking recovery, civil claims). Unchecked invocation
+# without grounded precedent or query contention is a major hallucination vector.
+# Therefore, Article 199 must be grounded in retrieved authorities or raised as contention.
+
+_NUM = r'\d{1,3}(?:-?[A-Za-z])?'
+_ART = re.compile(
+    rf'\b(?:Articles?|Arts?\.?)\s+(?P<first>{_NUM})(?P<rest>(?:\s*(?:,|and|&|or|to)\s*{_NUM})*)',
+    re.IGNORECASE)
+_OTHER_INSTRUMENT = re.compile(
+    r'^\W{0,3}(?:of\s+(?:the\s+)?)?(?:Limitation\s+Act|Qanun[- ]e[- ]Shahadat|QSO\b|Evidence|Schedule|First\s+Schedule|Contract|Companies|Order\b)',
+    re.IGNORECASE)
+_CONTENTION = re.compile(
+    r'(you\s+(?:argue|contend|plead|rely|raise)|your\s+(?:ground|argument|contention)|'
+    r'(?:judgment[- ]debtor|petitioner|applicant|appellant|client)\s+(?:contends?|argues?|pleads?|relies|raises?|claims?)|'
+    r'as\s+(?:pleaded|raised|framed)|query\s+(?:raises|asks))', re.IGNORECASE)
+
+def _norm(n: str) -> str:
+    return re.sub(r'[^0-9a-z]', '', n.lower())
+
+def _numbers(m: Any) -> List[str]:
+    nums = [m.group('first')] + re.findall(_NUM, m.group('rest') or '')
+    return [_norm(n) for n in nums]
+
+def articles_in(text: str) -> Set[str]:
+    out = set()
+    for m in _ART.finditer(text or ''):
+        out.update(_numbers(m))
+    return out
+
+def find_ungrounded_articles(draft: str, retrieved_text: str, query: str = '',
+                             exempt: tuple = ("175", "185", "189", "201")) -> List[str]:
+    grounded, in_query = articles_in(retrieved_text), articles_in(query)
+    problems, seen = [], set()
+    for m in _ART.finditer(draft or ''):
+        if _OTHER_INSTRUMENT.match(draft[m.end(): m.end() + 60]):
+            continue
+        window = draft[max(0, m.start() - 140): m.start()]
+        for n in _numbers(m):
+            if n in exempt or n in grounded or n in seen:
+                continue
+            if n in in_query and _CONTENTION.search(window):
+                continue
+            seen.add(n)
+            kind = "raised only in the query" if n in in_query else "absent from retrieved text"
+            problems.append(f"Ungrounded Constitutional Article {n.upper()} ({kind}).")
+    return problems
+
+
 def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: Optional[List[Any]] = None) -> List[str]:
     """
     Deterministically scans generated legal drafts for severe statutory hallucinations,
@@ -455,6 +516,7 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
 
     # Build comprehensive context string from query_context and context_chunks
     context_parts = [query_context or ""]
+    retrieved_parts = []
     if context_chunks:
         for c in context_chunks:
             if isinstance(c, dict):
@@ -462,10 +524,14 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
                 txt = c.get("full_judgment_body") or c.get("text") or c.get("preview") or meta.get("text") or meta.get("full_text") or ""
                 cit = c.get("citation") or c.get("neutral_citation") or meta.get("citation") or meta.get("neutral_citation") or ""
                 title = c.get("case_name") or c.get("title") or meta.get("title") or meta.get("case_title") or ""
+                chunk_str = " ".join(filter(None, [str(cit), str(title), str(txt)]))
+                retrieved_parts.append(chunk_str)
                 context_parts.extend([str(cit), str(title), str(txt)])
             else:
+                retrieved_parts.append(str(c))
                 context_parts.append(str(c))
     full_context_text = " ".join(context_parts)
+    retrieved_chunk_text = " ".join(retrieved_parts)
 
     # Rule 1: Specific performance limitation checks
     if any(k in query_lower or k in text_lower for k in ["specific performance", "agreement to sell", "sale agreement"]):
@@ -773,26 +839,15 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
                     f"Ungrounded Precedent Citation: '{cit}' appears in generated output but is NOT present in retrieved context chunks."
                 )
 
-    # Rule 24: Universal Constitutional Article Grounding
-    # Substantive Constitutional Articles (e.g., Article 25, 4, 9, 10-A, 199) cited in output
-    # must be grounded in context chunks or query. Articles 189/201/185/175 are standard procedural mentions.
-    if context_chunks is not None and full_context_text.strip():
-        art_matches = re.finditer(r'\bArticle\s+(\d+[A-Za-z]?(?:-\w+)?)\s+(?:of\s+(?:the\s+)?)?Constitution\b', draft_text, re.IGNORECASE)
-        ctx_text_lower = full_context_text.lower()
-        seen_articles = set()
-        for am in art_matches:
-            art_raw = am.group(1)
-            art_num = art_raw.lower()
-            if art_num in seen_articles:
-                continue
-            seen_articles.add(art_num)
-            if art_num in ["189", "201", "185", "175"]:
-                continue
-            art_pattern = rf'\barticle\s*{re.escape(art_num)}\b'
-            if not re.search(art_pattern, ctx_text_lower) and not re.search(art_pattern, query_lower):
-                errors.append(
-                    f"Ungrounded Constitutional Article: 'Article {art_raw}' is cited in generated output but does not appear in retrieved context chunks or query."
-                )
+    # Rule 24: Universal Constitutional Article Grounding (Part B Replacement)
+    # Ground an article ONLY in retrieved text. A query-only article is allowed
+    # only when the sentence frames it as the user's contention.
+    if context_chunks is not None:
+        errors.extend(find_ungrounded_articles(
+            draft=draft_text,
+            retrieved_text=retrieved_chunk_text,
+            query=query_context or ""
+        ))
 
     # Rule 25: Headnote Quote Discipline (Nuanced Quote Rule)
     # Quoting headnote text is permitted ONLY when explicitly introduced as reported headnote text
