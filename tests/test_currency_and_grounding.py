@@ -146,11 +146,21 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
         self.assertEqual(res["label"], "NOT-CHECKED")
         self.assertIn("[NOT-CHECKED:", res["display_tag"])
 
-        # Check existing seeded provision returns [VERIFIED: Tier 1...]
+        # Check existing seeded provision returns [BASELINE TABLE: not checked online]
         res_seeded = check_statute_currency("PRPA_2009_SEC_13", "PRPA_2009")
-        self.assertEqual(res_seeded["label"], "VERIFIED")
-        self.assertEqual(res_seeded["tier"], "tier_1")
-        self.assertIn("[VERIFIED: Tier 1", res_seeded["display_tag"])
+        self.assertEqual(res_seeded["label"], "BASELINE")
+        self.assertEqual(res_seeded["display_tag"], "[BASELINE TABLE: not checked online]")
+        self.assertNotIn("VERIFIED: Tier 1", res_seeded["display_tag"])
+
+    def test_statute_currency_labels_env_off(self):
+        # STATUTE_CURRENCY_LABELS=off suppresses currency display tags
+        os.environ["STATUTE_CURRENCY_LABELS"] = "off"
+        try:
+            res = check_statute_currency("PRPA_2009_SEC_13", "PRPA_2009")
+            self.assertEqual(res["display_tag"], "")
+            self.assertEqual(res["label"], "DISABLED")
+        finally:
+            os.environ.pop("STATUTE_CURRENCY_LABELS", None)
 
     def test_recency_word_triggers_check(self):
         # Query with recency keyword triggers check even if cached
@@ -160,7 +170,7 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
             query_text="latest amendment 2026 in 489-f"
         )
         self.assertIsNotNone(res)
-        self.assertIn(res["label"], ["VERIFIED", "NOT-CHECKED"])
+        self.assertIn(res["label"], ["BASELINE", "NOT-CHECKED"])
 
 
 class TestPrecedentTagsAndRetryCap(unittest.TestCase):

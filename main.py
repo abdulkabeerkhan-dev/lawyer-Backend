@@ -4000,7 +4000,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             # Part 2: Cap retries for new provisions at 2 with explicit negative findings
             if search_call_count["n"] >= 2 and not primary_matches and currency_findings:
-                prov_summary = ", ".join(f"{cf['canonical_id']} ({cf['display_tag']})" for cf in currency_findings)
+                if os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() == "off":
+                    prov_summary = ", ".join(cf['canonical_id'] for cf in currency_findings)
+                else:
+                    prov_summary = ", ".join(f"{cf['canonical_id']} ({cf['display_tag']})" if cf.get("display_tag") else cf['canonical_id'] for cf in currency_findings)
                 return (
                     f"⚠️ **[STATUTORY PROVISION ADJUDICATION]**: New provision found ({prov_summary}); "
                     "no interpreting authority retrieved from verified database.\n\n"
@@ -4009,9 +4012,11 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             if primary_matches:
                 currency_header = ""
-                if currency_findings:
-                    cf_lines = [f"- {cf['canonical_id']}: {cf['display_tag']} (Status: {cf['status']})" for cf in currency_findings]
-                    currency_header = "=== STATUTE CURRENCY & VERIFICATION STATUS ===\n" + "\n".join(cf_lines) + "\n==============================================\n\n"
+                if currency_findings and os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() != "off":
+                    valid_cfs = [cf for cf in currency_findings if cf.get("display_tag")]
+                    if valid_cfs:
+                        cf_lines = [f"- {cf['canonical_id']}: {cf['display_tag']} (Status: {cf['status']})" for cf in valid_cfs]
+                        currency_header = "=== STATUTE CURRENCY & VERIFICATION STATUS ===\n" + "\n".join(cf_lines) + "\n==============================================\n\n"
 
                 conflicts = detect_conflicting_authorities(primary_matches)
                 conflict_header = ""

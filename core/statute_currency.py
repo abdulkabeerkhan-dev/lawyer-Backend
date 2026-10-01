@@ -369,6 +369,7 @@ def check_statute_currency(
             pass
 
     if not latest:
+        display_tag = "[NOT-CHECKED: not in verified store]" if os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() != "off" else ""
         return {
             "canonical_id": canonical_id,
             "label": "NOT-CHECKED",
@@ -376,24 +377,40 @@ def check_statute_currency(
             "verification_status": "unverified",
             "status": "unknown",
             "effective_application": "unknown",
-            "display_tag": "[NOT-CHECKED: not in verified store]"
+            "display_tag": display_tag
         }
 
+    is_online_checked = bool(latest.get("online_checked", False))
     tier = latest.get("source_tier") or "tier_3"
     v_status = latest.get("verification_status") or "reported_unverified"
     s_date = (latest.get("fetched_at") or "")[:10]
     s_url = latest.get("source_url") or "official repository"
 
-    if tier == "tier_1" and v_status == "verified":
+    # INTERIM SAFETY (Item 0):
+    # Seeded records are from baseline tables and were NOT checked online.
+    # Until item 1 and 2 ship, make labels render as:
+    # [BASELINE TABLE: not checked online]
+    # Never render [VERIFIED: Tier 1, ...] for unverified baseline tables!
+    # If STATUTE_CURRENCY_LABELS=off, disable rendering entirely (empty string).
+    if os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() == "off":
+        tag = ""
+        label = "DISABLED"
+    elif not is_online_checked:
+        tag = "[BASELINE TABLE: not checked online]"
+        label = "BASELINE"
+    elif tier == "tier_1" and v_status == "verified":
         tag = f"[VERIFIED: Tier 1, {s_url}, {s_date}]"
+        label = "VERIFIED"
     elif v_status == "reported_unverified":
         tag = f"[REPORTED-UNVERIFIED: {tier.upper()}, {s_url}]"
+        label = "REPORTED-UNVERIFIED"
     else:
         tag = f"[NOT-CHECKED: cached {s_date}]"
+        label = "NOT-CHECKED"
 
     return {
         "canonical_id": canonical_id,
-        "label": "VERIFIED" if (tier == "tier_1" and v_status == "verified") else ("REPORTED-UNVERIFIED" if v_status == "reported_unverified" else "NOT-CHECKED"),
+        "label": label,
         "tier": tier,
         "verification_status": v_status,
         "status": latest.get("status", "in_force"),
