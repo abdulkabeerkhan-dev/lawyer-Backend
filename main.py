@@ -3867,7 +3867,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             for match in primary_matches:
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
                 case_id = str(meta.get('case_id', 'Unknown Docket'))
-                text_content = str(meta.get('text') or meta.get('text_content') or meta.get('text_preview') or meta.get('full_text') or '').strip()
+                full_body_str = str(meta.get("full_text") or meta.get("raw_text") or "").strip()
+                text_content = str(meta.get('text') or meta.get('text_content') or meta.get('text_preview') or '').strip()
+                if full_body_str and len(full_body_str.split()) > len(text_content.split()):
+                    text_content = full_body_str
                 official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
                 neutral_cit = synthesize_canonical_citation(meta)
                 court = infer_court_from_citation(neutral_cit or official_citation, text_content, meta.get('court') or meta.get('court_name') or '')
@@ -3878,10 +3881,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 statutes_val = meta.get("statutes") or []
                 sections_val = meta.get("sections") or []
                 match_score = float(match.get("score", 0.0) if isinstance(match, dict) else getattr(match, "score", 0.0))
-
-                full_body_str = str(meta.get("full_text") or meta.get("raw_text") or "").strip()
-                if full_body_str and len(full_body_str.split()) > len(text_content.split()):
-                    text_content = full_body_str
 
                 has_full_body = (
                     len(text_content.split()) >= 300 or
