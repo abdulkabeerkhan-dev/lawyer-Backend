@@ -711,6 +711,19 @@ class TestRetrievalRelevance(unittest.TestCase):
         )
         self.assertEqual(derive_court_from_judgment_header(sc_text), "Supreme Court of Pakistan")
 
+        fcc_text = (
+            "IN THE FEDERAL CONSTITUTIONAL COURT OF PAKISTAN\n"
+            "Constitutional Petition No. 1 of 2025\n"
+        )
+        self.assertEqual(derive_court_from_judgment_header(fcc_text), "Federal Constitutional Court")
+
+        fsc_text = (
+            "IN THE FEDERAL SHARIAT COURT OF PAKISTAN\n"
+            "(APPELLATE JURISDICTION)\n"
+            "Shariat Petition No. 12 of 2000\n"
+        )
+        self.assertEqual(derive_court_from_judgment_header(fsc_text), "Federal Shariat Court")
+
     def test_count_real_cases_discussed(self):
         text = (
             "The court relied on 2024 SCMR 9999 and PLD 2020 SC 500. "

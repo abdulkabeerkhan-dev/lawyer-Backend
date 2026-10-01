@@ -182,7 +182,6 @@ def find_precedent_status_annotation(
 
     # 2. Check query text specifically for the superseded case
     q_norm = _normalize_key(query_text)
-    # Check known keys for State v. Dosso
     local_data = load_local_annotations()
     for entry in local_data:
         target_keys = [
@@ -192,18 +191,19 @@ def find_precedent_status_annotation(
             _normalize_key(entry.get("case_id", ""))
         ]
         case_name = entry.get("case_name", "")
-        if "dosso" in case_name.lower():
-            target_keys.append("dosso")
+        if case_name:
+            target_keys.append(_normalize_key(case_name))
+        for alias in entry.get("aliases", []):
+            target_keys.append(_normalize_key(alias))
 
         for tk in target_keys:
             if tk and tk in q_norm:
                 return entry
 
-    # 3. Check for specific natural-language doctrine queries regarding revolutionary legality
-    if any(k in query_text.lower() for k in ["revolutionary legality", "doctrine of revolutionary legality"]):
-        dosso_annot = check_precedent_currency("1958_PLD_SC_533") or check_precedent_currency("PLD 1958 SC 533")
-        if dosso_annot:
-            return dosso_annot
+        # Check doctrinal keywords dynamically specified in entry
+        for dk in entry.get("doctrinal_keywords", []):
+            if dk.lower() in query_text.lower():
+                return entry
 
     return None
 

@@ -1276,8 +1276,13 @@ def derive_court_from_judgment_header(text: str, fallback_meta: Optional[str] = 
     is_phc = any(k in header_sample for k in ["PESHAWAR HIGH COURT", "HIGH COURT PESHAWAR", "ABBOTTABAD BENCH"])
     is_bhc = any(k in header_sample for k in ["HIGH COURT OF BALOCHISTAN", "BALOCHISTAN HIGH COURT"])
     is_ihc = "ISLAMABAD HIGH COURT" in header_sample
-    is_fsc = "FEDERAL SHARIAT COURT" in header_sample
-    is_sc = any(k in header_sample for k in ["SUPREME COURT OF PAKISTAN", "IN THE SUPREME COURT"]) and not (is_lhc or is_shc or is_phc or is_bhc or is_ihc)
+    is_fcc = any(k in header_sample for k in ["FEDERAL CONSTITUTIONAL COURT", "CONSTITUTIONAL COURT OF PAKISTAN", "FEDERAL CONSTITUTIONAL"])
+    is_fsc = any(k in header_sample for k in ["FEDERAL SHARIAT COURT", "SHARIAT APPELLATE BENCH", "IN THE FEDERAL SHARIAT COURT"])
+    is_sc = any(k in header_sample for k in ["SUPREME COURT OF PAKISTAN", "IN THE SUPREME COURT"]) and not (is_lhc or is_shc or is_phc or is_bhc or is_ihc or is_fcc or is_fsc)
+    if is_fcc:
+        return "Federal Constitutional Court"
+    if is_fsc:
+        return "Federal Shariat Court"
     if is_sc:
         return "Supreme Court of Pakistan"
     if is_lhc:
@@ -1290,8 +1295,6 @@ def derive_court_from_judgment_header(text: str, fallback_meta: Optional[str] = 
         return "High Court of Balochistan"
     if is_ihc:
         return "Islamabad High Court"
-    if is_fsc:
-        return "Federal Shariat Court"
     if fallback_clean and fallback_clean not in ("Court of Record", "Unknown Court", "Court not identified"):
         if "Supreme Court" in fallback_clean and any(k in header_sample for k in ["HIGH COURT", "WRIT PETITION", "CIVIL REVISION"]):
             return "High Court"

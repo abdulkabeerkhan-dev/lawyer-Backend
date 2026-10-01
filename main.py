@@ -45,6 +45,10 @@ from core.statute_currency import (
     detect_statutory_provisions_in_query, StatuteVersionStore
 )
 from core.currency_fetcher import fetch_currency_signals
+from core.curated_cases import find_curated_case, is_curated_historical_exception
+from core.party_cache import GLOBAL_PARTY_CACHE, PartyFallbackCache
+from core.recent_judgments_search import search_recent_external_judgments, format_external_authorities_section
+from core.final_review_gate import run_final_review_gate
 
 
 try:
@@ -933,8 +937,9 @@ def infer_court_from_citation(citation: str, raw_text: str = "", court_hint: str
             return res
 
     cit_upper = str(citation or "").upper()
-    if ("1958" in cit_upper and "533" in cit_upper) or "DOSSO" in cit_upper:
-        return "Supreme Court of Pakistan"
+    curated_c = find_curated_case(citation=citation, text=raw_text)
+    if curated_c and curated_c.get("court_name"):
+        return curated_c["court_name"]
     if "SCMR" in cit_upper or ("PLD" in cit_upper and (" SC" in cit_upper or "SUPREME COURT" in cit_upper)):
         return "Supreme Court of Pakistan"
     if "FSC" in cit_upper:
@@ -1237,7 +1242,7 @@ if os.path.exists(KNOWN_COLLISIONS_FILE):
     except Exception as _kce:
         print(f"[WARN] Could not load known_collisions.json: {_kce}", flush=True)
 
-_PARTY_FALLBACK_CACHE: Dict[str, Any] = {}
+_PARTY_FALLBACK_CACHE = GLOBAL_PARTY_CACHE
 
 def extract_and_intercept_citation(user_query: str):
     """
@@ -1396,28 +1401,27 @@ def extract_and_intercept_citation(user_query: str):
                 f"Please consult the physical law report (available at Supreme Court/High Court libraries) or your firm's reporter volumes."
             )
 
-            # Verified historical decisions that are served:
-            is_dosso = (yr == 1958 and pg == 533) or (norm_u == "1958_PLD_533" and (req_court in ("SC", None) or "SC" in raw_q.upper()))
-            is_hanover = (yr == 1958 and pg == 138 and (req_court in ("SC", None) or "SC" in raw_q.upper())) or (norm_u == "1958_PLD_138" and (req_court in ("SC", None) or "SC" in raw_q.upper()))
-
-            if is_hanover:
-                hanover_row = {
-                    "id": "1958_PLD_SC_138",
-                    "case_id": "1958_PLD_SC_138",
-                    "supabase_id": "0dbdd7b6-22e2-4b5d-9315-b6931c67e902",
-                    "neutral_citation": "PLD 1958 SC 138",
-                    "case_title": "Havover Fire Insurance Company v. Muralidhar Banechnd",
-                    "court_name": "Supreme Court of Pakistan",
-                    "court": "Supreme Court of Pakistan",
-                    "decision_date": "1957-11-19",
-                    "full_text": "HAVOVER FIRE INSURANCE COMPANY Versus MURALIDHAR BANECHND\nSupreme Court of Pakistan full judgment text on record.",
-                    "status": "full_text"
+            # Verified historical decisions served from curated data:
+            curated_match = find_curated_case(year=yr, journal=clean_j, page=pg, court=req_court, citation=norm_u, text=raw_q)
+            is_curated_hist = bool(curated_match and curated_match.get("is_historical_exception"))
+            if is_curated_hist and curated_match.get("full_text"):
+                hist_row = {
+                    "id": curated_match.get("case_id"),
+                    "case_id": curated_match.get("case_id"),
+                    "supabase_id": curated_match.get("supabase_id", ""),
+                    "neutral_citation": curated_match.get("neutral_citation"),
+                    "case_title": curated_match.get("case_title"),
+                    "court_name": curated_match.get("court_name", "Supreme Court of Pakistan"),
+                    "court": curated_match.get("court", "Supreme Court of Pakistan"),
+                    "decision_date": curated_match.get("decision_date", str(yr)),
+                    "full_text": curated_match.get("full_text"),
+                    "status": curated_match.get("status", "full_text")
                 }
-                found_rows.append(hanover_row)
+                found_rows.append(hist_row)
                 continue
 
             # Deterministic Pre-digitization Boundary gate
-            if is_pre_digitization and not (is_dosso or is_whitelisted):
+            if is_pre_digitization and not (is_curated_hist or is_whitelisted):
                 boundary_row = {
                     "id": f"boundary_{norm_u}",
                     "case_id": norm_u,
@@ -1474,15 +1478,19 @@ def extract_and_intercept_citation(user_query: str):
 
                     stored_court = clean_court_name(r.get("court_name") or "", title=r.get("case_title") or "", case_id=r.get("case_id") or "", text=raw_full)
 
-                    # Explicit guard: State v. Dosso (PLD 1958 SC 533) is an Apex Supreme Court decision
-                    is_dosso = (yr == 1958 and pg == 533) or "DOSSO" in str(r.get("case_title") or "").upper() or "DOSSO" in raw_q.upper()
-                    if is_dosso:
-                        stored_court = "Supreme Court of Pakistan"
-                        r["court_name"] = "Supreme Court of Pakistan"
-                        r["court"] = "Supreme Court of Pakistan"
-                        r["case_id"] = "1958_PLD_SC_533"
-                        r["neutral_citation"] = "PLD 1958 SC 533"
-                        r["case_title"] = "State v. Dosso"
+                    # Check curated historical cases data file for metadata overrides
+                    r_curated = find_curated_case(year=yr, journal=clean_j, page=pg, citation=str(r.get("neutral_citation") or r.get("case_id") or ""), text=str(r.get("case_title") or "") + " " + raw_q)
+                    if r_curated:
+                        if r_curated.get("court_name"):
+                            stored_court = r_curated["court_name"]
+                            r["court_name"] = r_curated["court_name"]
+                            r["court"] = r_curated["court_name"]
+                        if r_curated.get("case_id"):
+                            r["case_id"] = r_curated["case_id"]
+                        if r_curated.get("neutral_citation"):
+                            r["neutral_citation"] = r_curated["neutral_citation"]
+                        if r_curated.get("case_title"):
+                            r["case_title"] = r_curated["case_title"]
 
                     stored_court_code = normalize_court_code(stored_court)
                     r["court_name"] = stored_court
@@ -1490,7 +1498,7 @@ def extract_and_intercept_citation(user_query: str):
                     r["supabase_id"] = r.get("id")
 
                     # Explicit collision mismatch guard
-                    if is_whitelisted or is_dosso:
+                    if is_whitelisted or (r_curated and r_curated.get("is_historical_exception")):
                         is_collision_mismatch = False
                     elif jnl == "YLR":
                         # YLR is a High Court reporter with no Supreme Court edition.
@@ -1589,9 +1597,10 @@ def extract_and_intercept_citation(user_query: str):
 
         # Step 2: Tier 2 - Standalone Party Name Fallback (if Tier 1 yielded 0 rows)
         if not found_rows and clean_party_name:
-            cache_key = clean_party_name.strip().lower()
-            if cache_key in _PARTY_FALLBACK_CACHE:
-                cached_res = _PARTY_FALLBACK_CACHE[cache_key]
+            context_cit = parsed_citations[0]["normalized"] if parsed_citations else None
+            context_cid = parsed_citations[0]["norm_underscore"] if parsed_citations else None
+            is_hit, cached_res = GLOBAL_PARTY_CACHE.get(clean_party_name, citation=context_cit, case_id=context_cid)
+            if is_hit:
                 if cached_res:
                     found_rows.append(cached_res)
             else:
@@ -1612,10 +1621,10 @@ def extract_and_intercept_citation(user_query: str):
                         winning_row = sc_rows[0] if sc_rows else party_rows[0]
                         full_row_res = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("id", winning_row.get("id")).limit(1).execute()
                         winning_full = full_row_res.data[0] if (full_row_res and full_row_res.data) else winning_row
-                        _PARTY_FALLBACK_CACHE[cache_key] = winning_full
+                        GLOBAL_PARTY_CACHE.set(clean_party_name, winning_full, citation=context_cit, case_id=context_cid)
                         found_rows.append(winning_full)
                     else:
-                        _PARTY_FALLBACK_CACHE[cache_key] = None
+                        GLOBAL_PARTY_CACHE.set(clean_party_name, None, citation=context_cit, case_id=context_cid)
                 except Exception as party_err:
                     print(f"⚠️ Tier 2 Standalone party fallback error: {party_err}", file=sys.stderr, flush=True)
 
@@ -2467,24 +2476,35 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
     for k in ["case_name", "citation", "court_name", "court", "holding", "issue", "why_relevant", "operative_result", "raw_judgment_text"]:
         if isinstance(c.get(k), str):
             c[k] = re.sub(r'(?i)\b(?:Citation\s*Name|Case\s*Description|Bookmark\s*this\s*case)\s*:?\s*', '', c[k]).strip()
-    # Force Supreme Court of Pakistan for State v. Dosso / PLD 1958 SC 533
     card_cit = str(c.get("citation") or c.get("case_id") or "").upper()
     card_title = str(c.get("case_name") or c.get("title") or "").upper()
-    if ("1958" in card_cit and "533" in card_cit) or "DOSSO" in card_title or "DOSSO" in card_cit:
-        c["court_name"] = "Supreme Court of Pakistan"
-        c["court"] = "Supreme Court of Pakistan"
-        c["case_id"] = "1958_PLD_SC_533"
-        c["citation"] = "PLD 1958 SC 533"
-        c["case_name"] = "State v. Dosso"
-        c["title"] = "State v. Dosso"
-        c["precedent_status"] = "overruled"
-        c["precedent_status_warning"] = "> ⚠️ **Precedent Status Warning**: State v. Dosso has been overruled by Asma Jilani v. Government of Punjab (PLD 1972 SC 139). The doctrine of revolutionary legality validating extra-constitutional seizure of power was expressly rejected and declared bad law."
-        c["precedent_status_banner"] = c["precedent_status_warning"]
-        c["warning_banner"] = c["precedent_status_warning"]
-        c["superseding_case_name"] = "Asma Jilani v. Government of Punjab"
-        c["superseding_citation"] = "PLD 1972 SC 139"
-        c["precedent_superseded_by"] = "PLD 1972 SC 139"
-        c["doctrinal_note"] = "The doctrine of revolutionary legality validating extra-constitutional seizure of power was expressly rejected and declared bad law."
+
+    # Curated precedent status / metadata annotation from data file
+    card_curated = find_curated_case(citation=c.get("citation") or c.get("case_id"), text=str(c.get("case_name") or c.get("title") or ""))
+    if card_curated:
+        if card_curated.get("court_name"):
+            c["court_name"] = card_curated["court_name"]
+            c["court"] = card_curated["court_name"]
+        if card_curated.get("case_id"):
+            c["case_id"] = card_curated["case_id"]
+        if card_curated.get("neutral_citation"):
+            c["citation"] = card_curated["neutral_citation"]
+        if card_curated.get("case_title"):
+            c["case_name"] = card_curated["case_title"]
+            c["title"] = card_curated["case_title"]
+        if card_curated.get("precedent_status"):
+            c["precedent_status"] = card_curated["precedent_status"]
+            if card_curated.get("precedent_status_warning"):
+                c["precedent_status_warning"] = card_curated["precedent_status_warning"]
+                c["precedent_status_banner"] = card_curated["precedent_status_warning"]
+                c["warning_banner"] = card_curated["precedent_status_warning"]
+            if card_curated.get("superseding_case_name"):
+                c["superseding_case_name"] = card_curated["superseding_case_name"]
+            if card_curated.get("superseding_citation"):
+                c["superseding_citation"] = card_curated["superseding_citation"]
+                c["precedent_superseded_by"] = card_curated["superseding_citation"]
+            if card_curated.get("doctrinal_note"):
+                c["doctrinal_note"] = card_curated["doctrinal_note"]
 
     # Explicit Whitelist & Full Text Enforcement for verified YLR cases
     ylr_verified_keys = [
@@ -3290,12 +3310,19 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         aggregate_citations_payload: List[Dict[str, Any]] = []
         aggregate_additional_authorities: List[Dict[str, Any]] = []
         aggregate_sources_matches: List[Dict[str, Any]] = []
+        aggregate_external_recent_judgments: List[Dict[str, Any]] = []
         _seen_case_ids_global = set()
         search_call_count = {"n": 0}
 
         async def run_case_law_search(raw_search_query: str, court_filter: Optional[str] = None) -> str:
             search_call_count["n"] += 1
             trace_logger = RetrievalTraceLogger(job_id=job_id, raw_query=raw_search_query or effective_user_query)
+
+            # Item 7.b: Always-on search for recent judgments on same issue across official superior court portals
+            external_judgments_task = asyncio.create_task(
+                search_recent_external_judgments(raw_search_query or effective_user_query, budget_s=5.0)
+            )
+
             # Part 1: Parallel Statute Currency Extraction & Check (Items 1 & 3)
             query_provisions = detect_statutory_provisions_in_query(raw_search_query or effective_user_query)
             currency_findings = []
@@ -3894,6 +3921,15 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             if live_currency_task:
                 try:
                     await asyncio.wait_for(asyncio.shield(live_currency_task), timeout=1.5)
+                except Exception:
+                    pass
+
+            # Item 7.b: Await always-on search for recent judgments on same issue
+            if external_judgments_task:
+                try:
+                    ext_recent = await asyncio.wait_for(asyncio.shield(external_judgments_task), timeout=1.5)
+                    if ext_recent:
+                        aggregate_external_recent_judgments.extend(ext_recent)
                 except Exception:
                     pass
 
@@ -4506,6 +4542,44 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     "Please refine or narrow your research query to regenerate a verified memorandum."
                 )
 
+        # Item 7.a: Final review gate (separate LLM reviewer at temp 0 checking supported/unsupported/overstated)
+        if citations_payload and not is_token_truncated and "⚠️ **[GENERATION INCOMPLETE NOTICE]**" not in raw_model_output:
+            gate_res = await run_final_review_gate(raw_model_output, citations_payload)
+            if not gate_res.get("passed", True):
+                gate_issues = gate_res.get("issues", [])
+                print(f"⚠️ [FINAL REVIEW GATE] Detected overstated/unsupported claims: {gate_issues}. Triggering 1 regeneration...", file=sys.stderr)
+                gate_regen_prompt = (
+                    "CRITICAL LEGAL ACCURACY REQUIREMENT: The independent judicial review gate flagged the following "
+                    "propositions in your draft as OVERSTATED or UNSUPPORTED by the cited authorities:\n"
+                    + "\n".join(f"- {iss}" for iss in gate_issues)
+                    + "\n\nRe-draft the memorandum to strictly align every claim with the cited texts. "
+                    "Remove or narrow any proposition that cannot be verified directly from the provided authorities. "
+                    "Do NOT include meta-commentary."
+                )
+                gate_messages = list(messages) + [
+                    {"role": "assistant", "content": raw_model_output},
+                    {"role": "user", "content": gate_regen_prompt}
+                ]
+                claude_message_gate = await safe_create_anthropic_message(
+                    model=CLAUDE_MODEL, max_tokens=8192, max_output_tokens=8192, system=combined_system_prompt, messages=gate_messages
+                )
+                regen_output = "".join(getattr(b, "text", "") for b in claude_message_gate.content if getattr(b, "type", None) == "text").strip()
+                gate_res_round2 = await run_final_review_gate(regen_output, citations_payload)
+                if gate_res_round2.get("passed", True):
+                    raw_model_output = regen_output
+                    print(f"✅ [FINAL REVIEW GATE] Regeneration successfully resolved issues.", flush=True)
+                else:
+                    unverified_issues = gate_res_round2.get("issues", gate_issues)
+                    print(f"⛔ [FINAL REVIEW GATE FAIL-CLOSED] Persisting unverified claims after retry: {unverified_issues}", file=sys.stderr)
+                    raw_model_output = (
+                        "⚠️ **[FAIL-CLOSED REVIEW GATE NOTICE]**: The generated memorandum contained proposition(s) that "
+                        "could not be verified as strictly supported by the cited legal authorities (detected unsupported or overstated claims). "
+                        "In accordance with strict legal accuracy safeguards, this response has been blocked.\n\n"
+                        "**Unverified Propositions**:\n"
+                        + "\n".join(f"- {iss}" for iss in unverified_issues)
+                        + "\n\nPlease refine or narrow your research query to regenerate a verified memorandum."
+                    )
+
         executive_answer = ""
         precedent_cards = []
 
@@ -4529,6 +4603,12 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
             executive_answer = raw_model_output
 
         executive_answer = clean_markdown_formatting(executive_answer)
+
+        # Item 7.b: Append External Authorities (Not Yet in Database) section
+        if aggregate_external_recent_judgments and "⚠️ **[FAIL-CLOSED" not in executive_answer and "⚠️ **[GENERATION INCOMPLETE" not in executive_answer:
+            ext_section = format_external_authorities_section(aggregate_external_recent_judgments)
+            if ext_section:
+                executive_answer = executive_answer + "\n\n" + ext_section
 
         def _norm_key(s: str) -> str:
             return re.sub(r'[^a-z0-9]+', '', str(s or '').lower())

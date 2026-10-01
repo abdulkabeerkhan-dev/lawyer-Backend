@@ -1,0 +1,97 @@
+[
+  {
+    "case_id": "1958_PLD_SC_533",
+    "stored_case_id": "1958_PLD_533",
+    "neutral_citation": "PLD 1958 SC 533",
+    "case_title": "State v. Dosso",
+    "court_name": "Supreme Court of Pakistan",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "1958-10-27",
+    "year": 1958,
+    "page": 533,
+    "journal": "PLD",
+    "court_code": "SC",
+    "status": "full_text",
+    "full_text": "State v. Dosso. Supreme Court judgment on doctrine of revolutionary legality.",
+    "match_keys": [
+      "1958_PLD_533",
+      "1958_PLD_SC_533",
+      "PLD 1958 SC 533",
+      "1958 PLD 533",
+      "1958 PLD SC 533"
+    ],
+    "aliases": [
+      "dosso",
+      "state v dosso",
+      "state v. dosso"
+    ],
+    "doctrinal_keywords": [
+      "revolutionary legality",
+      "doctrine of revolutionary legality"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "overruled",
+    "precedent_status_warning": "> \u26a0\ufe0f **Precedent Status Warning**: State v. Dosso has been overruled by Asma Jilani v. Government of Punjab (PLD 1972 SC 139). The doctrine of revolutionary legality validating extra-constitutional seizure of power was expressly rejected and declared bad law.",
+    "superseding_case_name": "Asma Jilani v. Government of Punjab",
+    "superseding_citation": "PLD 1972 SC 139",
+    "precedent_superseded_by": "PLD 1972 SC 139",
+    "doctrinal_note": "The doctrine of revolutionary legality validating extra-constitutional seizure of power was expressly rejected and declared bad law."
+  },
+  {
+    "case_id": "1958_PLD_SC_138",
+    "stored_case_id": "1958_PLD_138",
+    "neutral_citation": "PLD 1958 SC 138",
+    "case_title": "Havover Fire Insurance Company v. Muralidhar Banechnd",
+    "court_name": "Supreme Court of Pakistan",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "1957-11-19",
+    "year": 1958,
+    "page": 138,
+    "journal": "PLD",
+    "court_code": "SC",
+    "status": "full_text",
+    "full_text": "HAVOVER FIRE INSURANCE COMPANY Versus MURALIDHAR BANECHND\nSupreme Court of Pakistan full judgment text on record.",
+    "match_keys": [
+      "1958_PLD_138",
+      "1958_PLD_SC_138",
+      "PLD 1958 SC 138",
+      "1958 PLD 138",
+      "1958 PLD SC 138"
+    ],
+    "aliases": [
+      "hanover",
+      "havover",
+      "muralidhar",
+      "havover fire insurance"
+    ],
+    "is_historical_exception": true
+  },
+  {
+    "case_id": "2013_SCMR_51",
+    "stored_case_id": "2013_SCMR_51",
+    "neutral_citation": "2013 SCMR 51",
+    "case_title": "Mian Allah Ditta v. The State",
+    "court_name": "Supreme Court of Pakistan",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "2013-01-01",
+    "year": 2013,
+    "page": 51,
+    "journal": "SCMR",
+    "court_code": "SC",
+    "status": "full_text",
+    "match_keys": [
+      "2013_SCMR_51",
+      "2013 SCMR 51"
+    ],
+    "aliases": [
+      "mian allah ditta",
+      "allah ditta"
+    ],
+    "doctrinal_keywords": [
+      "cheque bouncing",
+      "dishonour of cheque",
+      "section 489-f"
+    ],
+    "is_historical_exception": false
+  }
+]

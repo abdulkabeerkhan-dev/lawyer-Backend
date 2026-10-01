@@ -30,6 +30,21 @@ class MockQueryBuilder:
         self._filters.append((column, pattern, "ilike"))
         return self
 
+    def order(self, column: str, desc: bool = False):
+        self._order = (column, desc)
+        return self
+
+    def insert(self, record_or_records: Any):
+        rows = self.db_data.setdefault(self.table_name, [])
+        if isinstance(record_or_records, list):
+            rows.extend(record_or_records)
+        else:
+            rows.append(record_or_records)
+        return self
+
+    def upsert(self, record_or_records: Any, **kwargs):
+        return self.insert(record_or_records)
+
     def limit(self, count: int):
         self._limit = count
         return self
@@ -52,6 +67,9 @@ class MockQueryBuilder:
                         break
             if match:
                 filtered.append(dict(r))
+        if hasattr(self, "_order") and self._order:
+            col, is_desc = self._order
+            filtered.sort(key=lambda x: str(x.get(col, "")), reverse=is_desc)
         if self._limit is not None:
             filtered = filtered[:self._limit]
         return MockSupabaseResult(filtered)

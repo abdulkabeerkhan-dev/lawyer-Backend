@@ -9,9 +9,12 @@ import os
 import re
 import json
 import time
+import logging
 from enum import Enum
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Tuple, Any, Union
+
+logger = logging.getLogger(__name__)
 
 WORKSPACE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATUTE_VERSIONS_DIR = os.path.join(WORKSPACE_DIR, "data", "statute_versions")
@@ -119,11 +122,21 @@ class StatuteVersionStore:
     Never overwrites existing records; always appends a new version referencing previous_version_id.
     """
 
-    def __init__(self, storage_dir: str = STATUTE_VERSIONS_DIR, staging_dir: str = STATUTE_STAGING_DIR):
+    def __init__(self, storage_dir: str = STATUTE_VERSIONS_DIR, staging_dir: str = STATUTE_STAGING_DIR, supabase_client: Optional[Any] = None):
         self.storage_dir = storage_dir
         self.staging_dir = staging_dir
         self.staging_file = os.path.join(staging_dir, "statute_currency_staging.json")
         self._ensure_staging_file()
+        self.supabase = supabase_client
+        if self.supabase is None:
+            sb_url = os.environ.get("SUPABASE_URL")
+            sb_key = os.environ.get("SUPABASE_SERVICE_KEY") or os.environ.get("SUPABASE_KEY")
+            if sb_url and sb_key:
+                try:
+                    from supabase import create_client
+                    self.supabase = create_client(sb_url, sb_key)
+                except Exception:
+                    self.supabase = None
 
     def _ensure_staging_file(self):
         if not os.path.exists(self.staging_file):
@@ -135,6 +148,15 @@ class StatuteVersionStore:
         return os.path.join(self.storage_dir, f"{clean_act}_versions.json")
 
     def get_versions(self, act_code: str) -> List[Dict[str, Any]]:
+        clean_act = act_code.upper()
+        if self.supabase:
+            try:
+                res = self.supabase.table("statute_versions").select("*").eq("act_code", clean_act).order("version_id").execute()
+                if res and res.data:
+                    return res.data
+            except Exception as e:
+                logger.debug(f"Supabase statute_versions query notice: {e}")
+
         path = self._get_act_file(act_code)
         if not os.path.exists(path):
             return []
@@ -145,6 +167,14 @@ class StatuteVersionStore:
             return []
 
     def get_latest_version(self, act_code: str, canonical_id: str) -> Optional[Dict[str, Any]]:
+        if self.supabase:
+            try:
+                res = self.supabase.table("statute_versions").select("*").eq("canonical_id", canonical_id).order("version_id", desc=True).limit(1).execute()
+                if res and res.data:
+                    return res.data[0]
+            except Exception as e:
+                logger.debug(f"Supabase statute_versions latest query notice: {e}")
+
         versions = self.get_versions(act_code)
         matching = [v for v in versions if v.get("canonical_id") == canonical_id]
         if not matching:
@@ -195,6 +225,11 @@ class StatuteVersionStore:
             })
         with open(path, "w", encoding="utf-8") as f:
             json.dump(records, f, indent=2)
+        if self.supabase:
+            try:
+                self.supabase.table("statute_versions").upsert(records, on_conflict="version_id").execute()
+            except Exception as e:
+                logger.debug(f"Supabase statute_versions batch upsert notice: {e}")
         return len(records)
 
     def append_version(
@@ -290,6 +325,12 @@ class StatuteVersionStore:
         path = self._get_act_file(act_code)
         with open(path, "w", encoding="utf-8") as f:
             json.dump(existing_versions, f, indent=2)
+
+        if self.supabase:
+            try:
+                self.supabase.table("statute_versions").insert(new_entry).execute()
+            except Exception as e:
+                logger.debug(f"Supabase statute_versions insert notice: {e}")
 
         return new_entry
 
