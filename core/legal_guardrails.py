@@ -178,6 +178,15 @@ MANDATORY ADJUDICATION RULES:
       * NEVER claim an authority is "directly governing" when it was decided under a completely different statute (e.g. do not cite a Contract Act attorney/principal case as "directly governing" execution of a family maintenance decree).
       * If you apply a case by analogy, you MUST cordone it off under a distinct sub-heading: "### Application by Analogy / Commentary" and explicitly disclose that the cited authority was decided on different statutory facts.
     - "Cases Discussed" counter and section must contain ONLY actual judicial precedents (citations to superior court judgments like SCMR, PLD, CLC), NEVER statutory section cards (like Section 42 SRA or Section 52 TPA).
+
+20. MANDATORY GAP & NEGATIVE FINDING DISCLOSURE (NO HALLUCINATING UNLOCATED LEGAL STANDARDS):
+    - If a user query asks about a specific numerical threshold (e.g. a "50% pre-deposit"), doctrine, or question (e.g. reserve price publication standards under Section 19 FIO 2001) and NO retrieved authority or statute in the context supports that premise:
+      * You are STRICTLY FORBIDDEN from assuming, extrapolating, or pretending the premise is true.
+      * You are STRICTLY FORBIDDEN from asserting that an unverified requirement "has survived constitutional challenge" or "is settled law" without a source directly in the retrieved context.
+      * You MUST explicitly state in your Executive Summary and under a dedicated sub-heading: "### Issues Not Supported by Retrieved Authorities":
+        - State clearly that no statutory provision or precedent was located in the verified database or court portals establishing that requirement.
+        - Identify the actual verified statutory provision (e.g., the statutory deposit requirement under the second proviso to Order XXI Rule 90 CPC is strictly 20% of the sale proceeds, not 50%).
+        - Advise the advocate that the 50% figure appears to be a false premise or an unverified ad-hoc condition from a lower court order.
 """
 
 
@@ -464,6 +473,22 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
             "Attributing a fabricated 'four-part test' to precedent (no superior court precedent formulates a rigid four-part test applying Section 52 TPA to maintenance suits; statutory ingredients must be quoted directly without inventing multi-factor tests)."
         )
 
+    # Rule 22: Unverified 50% Deposit & Banking Auction Hallucination Interception
+    if any(k in text_lower for k in ["50% deposit", "50% pre-deposit", "50 percent deposit", "fifty percent deposit", "50%"]):
+        if any(k in text_lower for k in ["order xxi", "order 21", "rule 90", "auction", "fio 2001", "recovery of finances"]):
+            is_negated_or_corrected = (
+                any(k in text_lower for k in ["no precedent", "not found", "false premise", "unsupported", "not 50%", "no 50%", "does not impose", "neither", "no mandatory 50%"]) or
+                bool(re.search(r'\b(?:neither|nor|not|does\s+not|never|no)\b.{0,60}?\b(?:50%|fifty\s+percent|mandatory\s+50%)\b', text_lower))
+            )
+            is_affirmatively_asserted = (
+                bool(re.search(r'\b(?:survived\s+constitutional|upheld\s+against\s+constitutional|tested\s+and\s+upheld|constitutional\s+challenge|constitutionally\s+valid)\b', text_lower)) or
+                bool(re.search(r'\b(?:is\s+mandatory|must\s+deposit\s+50%|50%\s+(?:is\s+)?mandatory|statutory\s+requirement\s+is\s+50%|must\s+comply\s+with\s+(?:the\s+)?50%)\b', text_lower))
+            )
+            if is_affirmatively_asserted and not is_negated_or_corrected:
+                errors.append(
+                    "Erroneously asserting that a 50% pre-deposit requirement has survived constitutional challenge, is constitutionally valid, or is mandatory under FIO 2001 / Order XXI Rule 90 (The statutory deposit requirement under the second proviso to Order XXI Rule 90 CPC is strictly 20%; no reported precedent establishes a general 50% statutory pre-deposit, and fabricating constitutional approval or statutory status for an ungrounded 50% figure is prohibited)."
+                )
+
     return errors
 
 
@@ -641,5 +666,63 @@ def verify_case_grounding(cited_case_name: str, source_judgment_text: str, model
         "unsupported_propositions": unsupported,
         "reason": reason
     }
+
+
+def decompose_compound_legal_query(query: str) -> List[str]:
+    """
+    Decomposes a compound, multi-issue legal research query into focused sub-queries
+    to prevent semantic vector dilution and ensure every sub-issue retrieves dedicated
+    candidate precedents.
+    
+    If the query is focused on a single topic, returns [query].
+    """
+    if not query or not isinstance(query, str):
+        return [query] if query else []
+
+    q_clean = query.strip()
+    q_lower = q_clean.lower()
+
+    subqueries: List[str] = []
+
+    # 1. Deposit / Pre-deposit aspect
+    if any(k in q_lower for k in ["deposit", "pre-deposit", "20%", "50%", "security deposit"]):
+        statute_ctx = "FIO 2001 Order XXI Rule 90" if any(k in q_lower for k in ["fio", "banking", "auction", "order xxi", "rule 90"]) else ""
+        subqueries.append(f"mandatory pre-deposit auction objection {statute_ctx}".strip())
+
+    # 2. Constitutional validity / challenge aspect
+    if any(k in q_lower for k in ["constitutional", "constitutionality", "vires", "article 199", "ultra vires", "fundamental rights"]):
+        subqueries.append("constitutional challenge vires mandatory deposit auction objection execution")
+
+    # 3. Proclamation / Publication / Notice defect aspect
+    if any(k in q_lower for k in ["proclamation", "sale proclamation", "publication", "rule 66", "rule 67", "material irregularity"]):
+        statute_ctx = "Section 19 FIO 2001 Order XXI Rule 90" if any(k in q_lower for k in ["fio", "banking", "auction"]) else "Order XXI CPC"
+        subqueries.append(f"auction sale proclamation defect publication material irregularity {statute_ctx}".strip())
+
+    # 4. Reserve price / Valuation / Market value aspect
+    if any(k in q_lower for k in ["reserve price", "minimum price", "valuation", "market value", "low price", "inadequate price"]):
+        statute_ctx = "Section 19 FIO 2001 Banking Court" if any(k in q_lower for k in ["fio", "banking"]) else "Order XXI Rule 90"
+        subqueries.append(f"reserve price valuation fixation mortgaged property auction {statute_ctx}".strip())
+
+    # 5. Fraud / Collusion / Stranger aspect
+    if any(k in q_lower for k in ["fraud", "collusion", "fraudulent", "substantial injury"]):
+        subqueries.append("setting aside auction sale fraud substantial injury Order XXI Rule 90")
+
+    # If subqueries were identified and there are at least 2 distinct prongs, return them alongside a normalized core query
+    if len(subqueries) >= 2:
+        result = [q_clean]
+        for sq in subqueries:
+            if sq not in result:
+                result.append(sq)
+        return result
+
+    # Check for sentence or conjunction-separated clauses if long
+    if len(q_clean.split()) >= 14 and any(sep in q_clean for sep in [";", "\n", " and also ", " as well as "]):
+        parts = re.split(r'[;\n]|\band also\b|\bas well as\b', q_clean, flags=re.IGNORECASE)
+        valid_parts = [p.strip() for p in parts if len(p.strip().split()) >= 3]
+        if len(valid_parts) >= 2:
+            return [q_clean] + valid_parts
+
+    return [q_clean]
+
 
 

@@ -30,6 +30,8 @@ from pydantic import BaseModel
 
 from prompts.pleading_generator import PLEADING_SYSTEM_PROMPT
 from core.document_builder import generate_court_docx
+from core.retrieval_logger import RetrievalTraceLogger
+from core.legal_guardrails import decompose_compound_legal_query
 
 
 try:
@@ -1769,32 +1771,57 @@ def sanitize_black_box_characters(text: str) -> str:
     return t.strip()
 
 def determine_case_outcome(full_text: str, existing_outcome: str = None) -> str:
-    # 1. Respect valid non-empty DB column if present and not generic
-    if existing_outcome and str(existing_outcome).lower() not in ["undetermined", "none", "unknown", "verified precedent", "decided", ""]:
-        return str(existing_outcome).strip()
-
     if not full_text:
+        if existing_outcome and str(existing_outcome).lower() not in ["undetermined", "none", "unknown", "verified precedent", "decided", ""]:
+            return str(existing_outcome).strip()
         return "Decided"
 
-    # Search the operative portion (last 3000 chars or full snippet)
     target_text = full_text[-3000:] if len(full_text) > 3000 else full_text
     lower = target_text.lower()
+    tail_text = target_text[-800:] if len(target_text) > 800 else target_text
+    tail_lower = tail_text.lower()
 
     # Bail & Criminal Dispositions
     if re.search(r'\b(?:bail\s+(?:is|was|stands|hereby)?\s*(?:granted|confirmed)|admitted\s+to\s+bail|allowed\s+bail|ad-interim\s+bail\s+confirmed)\b', lower):
         return "Bail Granted"
     if re.search(r'\b(?:bail\s+(?:is|was|stands|hereby)?\s*(?:refused|rejected|declined|dismissed)|cancellation\s+of\s+bail\s+allowed)\b', lower):
         return "Bail Refused"
-
-    # General Appellate & Writ Dispositions
-    if re.search(r'\b(?:petition|appeal|revision|writ\s+petition|application)\b.*?\b(?:allowed|accepted)\b', lower) or re.search(r'\b(?:is|was|stands|hereby)\s+(?:allowed|accepted)\b', lower):
-        return "Allowed"
-    if re.search(r'\b(?:petition|appeal|revision|writ\s+petition|leave|application)\b.*?\b(?:dismissed|refused|rejected)\b', lower) or re.search(r'\b(?:is|was|stands|hereby)\s+(?:dismissed|refused|rejected)\b', lower) or re.search(r'\bdismissed\s+in\s+limine\b', lower):
-        return "Dismissed"
     if re.search(r'\b(?:proceedings\s+quashed|fir\s+quashed)\b', lower):
         return "Quashed"
 
-    # Fallback search across entire document if operative portion missed
+    # Prioritize decisive tail ending (where appellate/superior courts pronounce actual result)
+    # Check Dismissed first at tail to prevent recitals like "trial court allowed" from corrupting appellate dismissals
+    if (
+        re.search(r'\b(?:appeals?|petitions?|revisions?|leave|c\.?p\.?l\.?a\.?|applications?|suits?).{0,60}?\b(?:dismissed|rejected|refused)\b', tail_lower) or
+        re.search(r'\b(?:dismissed\s+(?:in\s+limine|with\s+costs?|on\s+merits?|accordingly)|(?:accordingly|hereby|herewith|herein)\s+dismissed|leave\s+(?:is\s+)?refused)\b', tail_lower) or
+        re.search(r'\b(?:is|are|stands?|hereby|accordingly)\s+(?:dismissed|refused|rejected)\b', tail_lower)
+    ):
+        return "Dismissed"
+    if (
+        re.search(r'\b(?:appeals?|petitions?|revisions?|applications?|suits?).{0,60}?\b(?:allowed|accepted)\b', tail_lower) or
+        re.search(r'\b(?:is|are|stands?|hereby|accordingly)\s+(?:allowed|accepted)\b', tail_lower) or
+        re.search(r'\b(?:allowed\s+with\s+costs?|(?:accordingly|hereby)\s+allowed)\b', tail_lower)
+    ):
+        return "Allowed"
+
+    # Broader search within the operative portion if tail was inconclusive
+    if (
+        re.search(r'\b(?:appeals?|petitions?|revisions?|leave|c\.?p\.?l\.?a\.?|applications?).{0,60}?\b(?:dismissed|rejected|refused)\b', lower) or
+        re.search(r'\b(?:is|was|stands|hereby|accordingly)\s+(?:dismissed|refused|rejected)\b', lower) or
+        re.search(r'\bdismissed\s+(?:in\s+limine|accordingly|with\s+costs?)\b', lower)
+    ):
+        return "Dismissed"
+    if (
+        re.search(r'\b(?:appeals?|petitions?|revisions?|applications?).{0,60}?\b(?:allowed|accepted)\b', lower) or
+        re.search(r'\b(?:is|was|stands|hereby|accordingly)\s+(?:allowed|accepted)\b', lower)
+    ):
+        return "Allowed"
+
+    # If text is inconclusive, respect DB column if present
+    if existing_outcome and str(existing_outcome).lower() not in ["undetermined", "none", "unknown", "verified precedent", "decided", ""]:
+        return str(existing_outcome).strip()
+
+    # Fallback search across entire document
     full_lower = full_text.lower()
     if re.search(r'\b(?:granted\s+bail|bail\s+allowed)\b', full_lower):
         return "Bail Granted"
@@ -2089,6 +2116,10 @@ def extract_clean_ratio_snippet(text: str, max_chars: int = 280) -> str:
     clean_t = re.sub(r'(?i)View\s*Full\s*Judgment[^\n]*', '', clean_t)
     clean_t = re.sub(r'(?i)Related\s*Citations[^\n]*', '', clean_t)
     clean_t = re.sub(r'\([A-Z0-9_\-]+\)', '', clean_t)
+
+    # Strip docket / party fragments like "and others Respondents C.P.L.A. No. 88-P..."
+    clean_t = re.sub(r'(?i)\b(?:and\s+others?|and\s+another)\s+(?:petitioners?|respondents?|appellants?|defendants?)\s*[:\.\-]?\s*', '', clean_t)
+    clean_t = re.sub(r'(?i)\b(?:C\.?P\.?L\.?A\.?|C\.?A\.?|Civil\s+Appeal|Const\.?\s*Pet\.?|W\.?P\.?|Cr\.?\s*Misc|C\.?R\.?)\s*(?:No\.?)?\s*[\d\w\-\/]+.*?(?:ORDER|JUDGMENT|Dated|\:|\.|\n)', '', clean_t)
 
     # Strip portal scraped case lists from holding previews e.g. "[NAME] VS [NAME] [YEAR] [JOURNAL] [PAGE]"
     clean_t = re.sub(r'(?:[A-Z0-9_\-\.\s\(\)]{2,60}?\s+(?:VS\.?|V\.?|VERSUS)\s+[A-Z0-9_\-\.\s\(\)]{2,60}?\s+(?:19|20)\d{2}\s+[A-Za-z]+\s+\d+(?:\s*\([A-Za-z0-9_\-\s]+\))?)', '', clean_t, flags=re.IGNORECASE)
@@ -3238,7 +3269,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
         async def run_case_law_search(raw_search_query: str, court_filter: Optional[str] = None) -> str:
             search_call_count["n"] += 1
+            trace_logger = RetrievalTraceLogger(job_id=job_id, raw_query=raw_search_query or effective_user_query)
             search_query, is_doctrinally_expanded = _expand_legal_shorthand(raw_search_query or effective_user_query, return_flag=True)
+            decomposed_queries = decompose_compound_legal_query(search_query)
+            trace_logger.log_decomposition(decomposed_queries)
             sq_lower = search_query.lower()
             target_source = None
 
@@ -3358,29 +3392,82 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     voyage_model = os.environ.get("VOYAGE_MODEL", "voyage-law-2")
                     if not VOYAGE_API_KEY:
                         return "Search tool unavailable: embedding service is not configured."
+
+                    queries_to_embed = [q for q in (decomposed_queries or [embedding_query]) if q and len(q.strip()) > 3][:4]
+                    if not queries_to_embed:
+                        queries_to_embed = [embedding_query]
+
                     async with httpx.AsyncClient(timeout=30.0) as client:
                         voyage_response = await client.post(
                             VOYAGE_API_URL,
-                            json={"input": embedding_query, "model": voyage_model, "input_type": "query"},
+                            json={"input": queries_to_embed if len(queries_to_embed) > 1 else queries_to_embed[0], "model": voyage_model, "input_type": "query"},
                             headers={"Authorization": f"Bearer {VOYAGE_API_KEY}", "Content-Type": "application/json"}
                         )
                         if voyage_response.status_code != 200:
                             return f"Search tool error: embedding request failed ({voyage_response.status_code})."
-                        query_vector = voyage_response.json()["data"][0]["embedding"]
+                        data_arr = voyage_response.json()["data"]
+                        query_vectors = [item["embedding"] for item in data_arr]
 
                     if not pinecone_index:
                         return "Search tool unavailable: the judgment database is not connected."
 
                     query_top_k = 60 if target_source else global_retriever_config.default_k
-                    raw_matches = global_search_pipeline.search_precedents(
-                        vector_index=pinecone_index,
-                        query_vector=query_vector,
-                        top_k=query_top_k,
-                        namespace=PINECONE_NAMESPACE,
-                        clean_query=search_query,
-                        is_doctrinally_expanded=is_doctrinally_expanded
-                    )
-                    matches_list = raw_matches
+
+                    if len(queries_to_embed) == 1:
+                        raw_matches = global_search_pipeline.search_precedents(
+                            vector_index=pinecone_index,
+                            query_vector=query_vectors[0],
+                            top_k=query_top_k,
+                            namespace=PINECONE_NAMESPACE,
+                            clean_query=queries_to_embed[0],
+                            is_doctrinally_expanded=is_doctrinally_expanded
+                        )
+                        dense_cnt = sum(1 for r in raw_matches if float(r.get("dense_score", 0.0) or 0.0) > 0)
+                        sparse_cnt = sum(1 for r in raw_matches if float(r.get("sparse_score", 0.0) or 0.0) > 0)
+                        trace_logger.log_subquery_results(queries_to_embed[0], dense_cnt, sparse_cnt, raw_matches[:5])
+                        matches_list = raw_matches
+                    else:
+                        sub_score_map = {}
+                        for idx, sub_q in enumerate(queries_to_embed):
+                            sub_vec = query_vectors[idx]
+                            sub_res = global_search_pipeline.search_precedents(
+                                vector_index=pinecone_index,
+                                query_vector=sub_vec,
+                                top_k=30,
+                                namespace=PINECONE_NAMESPACE,
+                                clean_query=sub_q,
+                                is_doctrinally_expanded=is_doctrinally_expanded
+                            )
+                            dense_cnt = sum(1 for r in sub_res if float(r.get("dense_score", 0.0) or 0.0) > 0)
+                            sparse_cnt = sum(1 for r in sub_res if float(r.get("sparse_score", 0.0) or 0.0) > 0)
+                            trace_logger.log_subquery_results(sub_q, dense_cnt, sparse_cnt, sub_res[:5])
+                            for rank, item in enumerate(sub_res):
+                                doc_id = item.get("id") or (item.get("metadata", {}) if isinstance(item, dict) else {}).get("case_id")
+                                if not doc_id:
+                                    continue
+                                rrf_contrib = 1.0 / (60.0 + rank + 1.0)
+                                if doc_id not in sub_score_map:
+                                    sub_score_map[doc_id] = {
+                                        "item": item,
+                                        "rrf_score": rrf_contrib,
+                                        "hits": 1
+                                    }
+                                else:
+                                    sub_score_map[doc_id]["rrf_score"] += rrf_contrib
+                                    sub_score_map[doc_id]["hits"] += 1
+                                    if float(item.get("score", 0.0)) > float(sub_score_map[doc_id]["item"].get("score", 0.0)):
+                                        sub_score_map[doc_id]["item"] = item
+
+                        pooled_sorted = sorted(
+                            sub_score_map.values(),
+                            key=lambda x: (x["hits"], x["rrf_score"]),
+                            reverse=True
+                        )
+                        raw_matches = [c["item"] for c in pooled_sorted]
+                        for idx, c in enumerate(raw_matches):
+                            c["score"] = pooled_sorted[idx]["rrf_score"]
+                        matches_list = raw_matches
+
                     if boosted_matches:
                         matches_list = boosted_matches + matches_list
                 except Exception as search_err:
@@ -3577,6 +3664,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             # Condition 1: When local vector and FTS return zero usable candidates (or only discarded stubs).
             # Condition 2: When candidate(s) are headnote_only / editorial summaries (< 300 words),
             # trigger targeted external search against whitelisted court portals to fetch the full verbatim judgment.
+            # Condition 3: Sub-issue & Forum Sufficiency Check (e.g. user requested LHC or Punjab authority, but 0 LHC precedents retrieved).
             headnote_candidates = [
                 m for m in primary_matches
                 if (
@@ -3584,7 +3672,24 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     len(str(m.get("metadata", {}).get("text") or m.get("text") or "").split()) < 300
                 )
             ]
-            should_trigger_fallback = (not primary_matches) or bool(headnote_candidates)
+
+            user_wants_lhc = (
+                any(k in sq_lower for k in ["lahore high court", "lhc", "lahore"]) or
+                target_source == "Lahore High Court" or
+                provincial_target == "punjab"
+            )
+            has_lhc_primary = any(
+                "lahore" in str((m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}).get("court", "")).lower()
+                for m in primary_matches
+            )
+            forum_gap_lhc = user_wants_lhc and (not has_lhc_primary)
+            if forum_gap_lhc:
+                trace_logger.log_coverage_gap(
+                    "Lahore High Court precedent",
+                    "User requested Lahore High Court authority, but zero LHC precedents were retrieved locally."
+                )
+
+            should_trigger_fallback = (not primary_matches) or bool(headnote_candidates) or forum_gap_lhc
 
             if should_trigger_fallback:
                 hn_cit = ""
@@ -3594,7 +3699,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if not primary_matches:
                     fallback_target_query = search_query
                     print(f"--> [STAGE 2 FALLBACK]: Zero usable local candidates. Firing external web search against whitelisted court domains for '{fallback_target_query}'...", flush=True)
-                else:
+                elif headnote_candidates:
                     top_hn = headnote_candidates[0]
                     hn_meta = top_hn.get("metadata", {}) if isinstance(top_hn, dict) else getattr(top_hn, "metadata", {}) or {}
                     hn_cit = str(hn_meta.get("citation") or hn_meta.get("neutral_citation") or top_hn.get("citation") or "").strip()
@@ -3603,6 +3708,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     hn_portal_url = hn_meta.get("pdf_url") or hn_meta.get("source_url") or hn_meta.get("url") or top_hn.get("pdf_url") or top_hn.get("source_url")
                     fallback_target_query = f"{hn_cit} {hn_title}".strip() or search_query
                     print(f"--> [STAGE 2 HEADNOTE FALLBACK]: Local candidate '{hn_cit}' is headnote-only. Initiating upgrade...", flush=True)
+                elif forum_gap_lhc:
+                    fallback_target_query = f"{search_query} site:lhc.gov.pk"
+                    print(f"--> [STAGE 2 FORUM FALLBACK]: Missing LHC authority for query. Initiating site:lhc.gov.pk search...", flush=True)
 
                 upgraded_directly = False
                 # 1. Prioritize fast blocking fetch if portal URL is present
@@ -3644,13 +3752,18 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             timeout=7.0
                         )
                         if ext_candidates:
+                            trace_logger.log_fallback_event(
+                                fallback_target_query,
+                                ["supremecourt.gov.pk", "lhc.gov.pk", "sys.lhc.gov.pk", "shc.gov.pk", "phc.gov.pk", "ihc.gov.pk"],
+                                len(ext_candidates)
+                            )
                             valid_ext = [ext_c for ext_c in ext_candidates if is_usable_precedent(ext_c)]
                             if valid_ext:
-                                if not primary_matches:
+                                if not primary_matches or forum_gap_lhc:
                                     for ext_c in valid_ext:
                                         primary_matches.append(ext_c)
                                         aggregate_sources_matches.append(ext_c)
-                                    print(f"✅ [STAGE 2 FALLBACK OK]: Successfully retrieved {len(primary_matches)} verified external court precedents.", flush=True)
+                                    print(f"✅ [STAGE 2 FALLBACK OK]: Successfully retrieved {len(valid_ext)} verified external court precedents.", flush=True)
                                 else:
                                     best_ext = valid_ext[0]
                                     upgraded_target = headnote_candidates[0]
@@ -3794,6 +3907,23 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     "MANDATORY DIRECTIVE: You MUST cite, analyze, and ground your legal reasoning in these retrieved precedents.\n"
                     "DO NOT state that the database contains no direct precedent when precedents are provided below.\n\n"
                 )
+
+                if any(p in sq_lower for p in ["50%", "50 percent", "50 per cent", "fifty percent", "50% pre-deposit", "50% deposit"]):
+                    trace_logger.log_negative_disclosure(
+                        "50% mandatory pre-deposit",
+                        "Statutory deposit under Order XXI Rule 90 CPC (second proviso) is 20%, not 50%. Neither FIO 2001 nor CPC prescribes a 50% deposit."
+                    )
+                    statutory_notice = (
+                        "=== STATUTORY VERIFICATION & MANDATORY NEGATIVE FINDINGS ===\n"
+                        "CRITICAL LEGAL VERIFICATION REQUIREMENT (MANDATORY):\n"
+                        "1. UNGROUNDED PREMISE IN QUERY: The user's query inquires about or presumes a '50% mandatory pre-deposit' to challenge a banking court auction sale under Order XXI Rule 90 CPC or Financial Institutions (Recovery of Finances) Ordinance 2001 (FIO 2001).\n"
+                        "2. STATUTORY FACT: The statutory pre-deposit under the second proviso to Order XXI Rule 90 CPC is TWENTY PERCENT (20%), NOT 50% (see Tariq Zubair Khan 2024 SCMR 1085). Neither FIO 2001 nor Order XXI Rule 90 prescribes a 50% deposit to file an objection to an execution sale.\n"
+                        "3. FORBIDDEN ERROR: You MUST NOT confirm or adopt the false 50% figure. You MUST NOT claim that a '50% deposit requirement has been tested and upheld against constitutional challenge'. You MUST explicitly correct the premise and explain that the statutory threshold is 20%.\n"
+                        "4. MANDATORY GAP DISCLOSURE: Explicitly identify any requested issues or forums (such as specific Lahore High Court rulings on reserve price or proclamation defects) that are NOT directly decided by the retrieved precedents below.\n"
+                        "============================================================\n\n"
+                    )
+                    header = statutory_notice + header
+
                 headnote_cases = []
                 fts_cases = []
                 for m in primary_matches:
@@ -3820,8 +3950,12 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         f"The following precedent(s) are indexed as 'headnote_only': {', '.join(headnote_cases)}.\n"
                         "Because full verbatim judicial reasoning is not available in the database for these records, you MUST explicitly state in your visible response (under a clear notice or heading) that this authority is grounded in an editorial headnote summary / short order rather than the court's verbatim full text, and advise the advocate to verify against the certified judgment before relying on it in court pleadings.\n\n"
                     )
+                trace_logger.log_final_context(aggregate_citations_payload)
+                trace_logger.write_trace()
                 return header + "\n\n".join(context_parts)
 
+            trace_logger.log_final_context([])
+            trace_logger.write_trace()
             return (
                 "⚠️ No matching case law found — this is a statutory analysis, not a retrieved precedent.\n\n"
                 "No matching precedents were found in the database for this search. Do not fabricate citations -- answer strictly from settled statutory principles and explicitly state that no precedent on point was retrieved."
@@ -3897,6 +4031,12 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
     - Any extrapolation or conceptual comparison MUST be isolated under a distinct heading titled "Application by Analogy / Legal Commentary", explicitly clarifying to the advocate that the precedent did not directly involve or decide that question.
     - Never invent non-existent ratios, presumptions, or tests (e.g. inventing a "four-part test" or "presumption of fraud on transfers to close relatives after a maintenance suit") not in the source text.
     - "Cases Discussed" counter and section must be restricted STRICTLY to actual judicial precedents (e.g. PLD, SCMR, YLR, CLC, MLD, PCrLJ), never listing statutory sections or acts.
+
+16. MANDATORY GAP & NEGATIVE FINDING DISCLOSURE (NO FABRICATING UNLOCATED STANDARDS):
+    - When a user's question posits an unverified legal requirement or specific number (e.g. a "50% pre-deposit" or specific reserve price disclosure rules) and no retrieved authority in the context confirms it:
+      * NEVER pretend, guess, or extrapolate that the requirement exists, nor claim that it "survived constitutional challenge".
+      * In your Executive Summary and under a dedicated sub-heading "### Issues Not Supported by Retrieved Authorities":
+        State plainly that no statutory provision or reported precedent was found establishing that requirement, explain what the verified statutory rule actually is (e.g. the statutory deposit under Order XXI Rule 90 second proviso is strictly 20%), and advise the advocate that the figure is ungrounded in reported case law.
 """
 
 
