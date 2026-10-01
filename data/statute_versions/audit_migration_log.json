@@ -1,0 +1,47 @@
+[
+  {
+    "migration_id": "MIG_20261001_BASELINE_HONESTY",
+    "date": "2026-10-01T12:30:00Z",
+    "action": "CORRECTION_AND_RESEED",
+    "rationale": "Auditor identified that initial automated scrape had incorrectly assigned verification_status='verified' and source_tier='tier_1' to static baseline tables. All unverified baseline statutory provisions were corrected to verification_status='baseline_unverified', source_tier=null, text_available=false, text=null, fetched_at=null.",
+    "affected_acts": [
+      "PPC_1860",
+      "CRPC_1898",
+      "CPC_1908",
+      "CONST_1973",
+      "QSO_1984",
+      "CNSA_1997",
+      "LIMITATION_1908",
+      "FAMILY_COURTS_1964",
+      "MFLO_1961",
+      "DMMA_1939",
+      "PRPA_2009",
+      "PREEMPTION_1991"
+    ],
+    "records_count": 2292,
+    "reviewed_by": "Independent Legal Codebase Audit",
+    "status": "APPLIED"
+  },
+  {
+    "migration_id": "MIG_20261002_MFLO_SEC_4_SANITIZATION",
+    "date": "2026-10-02T00:30:00Z",
+    "action": "SANITIZATION",
+    "rationale": "Auditor review noted MFLO Section 4 had an unverified citation PLD 2000 FSC 70, speculative FCC 2025 entry, and an invented status enum. Provision was updated: citation corrected to reported_unverified PLD 2000 FSC 1, speculative FCC entry deleted, invented enum removed, text_available=false, text=null.",
+    "affected_records": [
+      "MFLO_1961_SEC_4_V3"
+    ],
+    "reviewed_by": "Auditor Review & Remediation",
+    "status": "APPLIED"
+  },
+  {
+    "migration_id": "MIG_20261002_CPC_ORD_XXI_R_90_SEEDING",
+    "date": "2026-10-02T00:55:00Z",
+    "action": "SEED_BASELINE_PROVISION",
+    "rationale": "Order XXI Rule 90 CPC (Application to set aside sale on ground of irregularity or fraud) was absent from substantive CPC sections 1-158. Seeded as canonical ID CPC_1908_ORD_XXI_R_90_V1 with baseline_unverified status, enabling accurate statutory currency tracking and execution objection analysis.",
+    "affected_records": [
+      "CPC_1908_ORD_XXI_R_90_V1"
+    ],
+    "reviewed_by": "System Operator",
+    "status": "APPLIED"
+  }
+]

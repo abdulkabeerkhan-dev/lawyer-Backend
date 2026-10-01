@@ -623,7 +623,10 @@ async def safe_create_anthropic_message(**kwargs):
         custom_fallback = os.environ.get("ANTHROPIC_FALLBACK_MODEL", "").strip()
         if custom_fallback:
             candidate_models.append(custom_fallback)
-        for m in ["claude-haiku-4-5-20251001", "claude-3-5-haiku-20241022"]:
+        # Note: Anthropic retired claude-3-haiku-20240307 (April 2026) and claude-3-5-haiku-20241022 (February 19, 2026).
+        # Active supported fallback as of October 2026: claude-haiku-4-5-20251001 (retirement not sooner than Oct 15, 2026).
+        # Operators should configure ANTHROPIC_FALLBACK_MODEL for dynamic unpinned fallback.
+        for m in ["claude-haiku-4-5-20251001"]:
             if m not in candidate_models and m != primary_model:
                 candidate_models.append(m)
 

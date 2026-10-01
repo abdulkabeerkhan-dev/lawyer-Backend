@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import hashlib
 from typing import Dict, Any, List, Optional
 
 LOG_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'logs', 'retrieval_traces'))
@@ -10,11 +11,12 @@ os.makedirs(LOG_DIR, exist_ok=True)
 class RetrievalTraceLogger:
     def __init__(self, job_id: str, raw_query: str):
         self.job_id = job_id or f"trace_{int(time.time() * 1000)}"
-        self.raw_query = raw_query
+        self.query_hash = hashlib.sha256((raw_query or "").encode("utf-8")).hexdigest()[:16]
         self.trace = {
             'job_id': self.job_id,
             'timestamp': time.time(),
-            'raw_query': raw_query,
+            'query_hash': self.query_hash,
+            'query_text': f"hash:{self.query_hash}",
             'decomposed_subqueries': [],
             'subquery_retrievals': [],
             'coverage_gaps': [],

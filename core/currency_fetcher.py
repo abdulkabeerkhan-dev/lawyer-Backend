@@ -34,6 +34,12 @@ from core.statute_currency import (
     StatuteVersionStore
 )
 
+from core.domain_whitelist import (
+    ALL_TIER_1_DOMAINS,
+    is_whitelisted_tier1_domain,
+    extract_hostname
+)
+
 logger = logging.getLogger("currency_fetcher")
 logger.setLevel(logging.INFO)
 
@@ -44,8 +50,8 @@ LOG_FILE_PATH = os.path.join(STATUTE_STAGING_DIR, "statute_currency_checks.jsonl
 
 os.makedirs(STATUTE_STAGING_DIR, exist_ok=True)
 
-# Whitelisted Tier 1 domains (single source of truth)
-WHITELISTED_TIER_1_DOMAINS = list(TIER_1_DOMAINS)
+# Whitelisted Tier 1 domains (centralized from core.domain_whitelist)
+WHITELISTED_TIER_1_DOMAINS = sorted(list(ALL_TIER_1_DOMAINS))
 
 # Canonical act full titles for targeted search
 ACT_SEARCH_NAMES = {
@@ -130,20 +136,69 @@ class CurrencyCache:
 global_currency_cache = CurrencyCache()
 
 
-def is_whitelisted_tier1_domain(url: str) -> bool:
-    """Verifies that a URL strictly belongs to a whitelisted Tier 1 portal."""
-    if not url:
-        return False
-    try:
-        parsed = urllib.parse.urlparse(url)
-        domain = (parsed.netloc or "").lower().split(":")[0]
-        return any(domain == d or domain.endswith("." + d) for d in WHITELISTED_TIER_1_DOMAINS)
-    except Exception:
-        return False
+def is_valid_statute_signal(act_code: str, hit_url: str, title: str, snippet: str, detected_change: str = "") -> Optional[str]:
+    """
+    Evaluates whether a search hit represents an actual subsequent modifying instrument,
+    gazette amendment, or pending bill, rather than the principal act's own consolidated text.
+    """
+    clean_act = act_code.upper().strip()
+    m_base = re.search(r'_(\d{4})$', clean_act)
+    base_year = int(m_base.group(1)) if m_base else 0
+
+    combined = f"{title} {snippet} {detected_change} {hit_url}".strip()
+
+    # Rule 1: Exclude consolidated bare acts on Pakistan Code that only describe the base enactment
+    # If the page is the principal act's own text with base enactment notes, discard it.
+    is_base_consolidation = False
+    if clean_act == "MFLO_1961":
+        if "Ordinance VIII of 1961" in combined and not any(f"of {y}" in combined for y in range(1962, 2030)):
+            is_base_consolidation = True
+    elif clean_act == "CPC_1908":
+        if "Act V of 1908" in combined and not any(f"of {y}" in combined for y in range(1909, 2030)):
+            is_base_consolidation = True
+    elif clean_act == "FIO_2001":
+        if "Ordinance XLVI of 2001" in combined and not any(f"of {y}" in combined for y in range(2002, 2030)):
+            is_base_consolidation = True
+
+    if is_base_consolidation:
+        return None
+
+    # Rule 2: Check for explicit pending legislative bills (National Assembly / Senate)
+    bill_pattern = re.compile(
+        r'\b\(?\s*amendment\s*\)?\s+bill\b|\b\(?\s*repeal\s*\)?\s+bill\b|\bbill\s+no\.?\s*\d+(?:\s+of\s+\d{4})?\b',
+        re.IGNORECASE
+    )
+    m_bill = bill_pattern.search(combined)
+    if m_bill:
+        return "amendment bill" if "amend" in m_bill.group(0).lower() else m_bill.group(0).lower()
+
+    # Rule 3: Check for explicit subsequent amending instruments (Act / Ordinance later than base year)
+    inst_pattern = re.compile(
+        r'\b(Act|Ordinance)\s+(?:No\.?\s*)?([IVXLCDM\d]+)\s+of\s+(\d{4})\b',
+        re.IGNORECASE
+    )
+    for m in inst_pattern.finditer(combined):
+        inst_type = m.group(1).title()
+        inst_num = m.group(2).upper()
+        inst_year = int(m.group(3))
+
+        if inst_year > base_year:
+            return f"{inst_type} {inst_num} of {inst_year}"
+
+    # Rule 4: Explicit amendment enactment or gazette amendment
+    amend_pattern = re.compile(
+        r'\b\(?\s*amendment\s*\)?\s+act\s+(\d{4})\b|\b(?:gazette\s+)?amendment\b|\bamended\b',
+        re.IGNORECASE
+    )
+    m_amend = amend_pattern.search(f"{title} {detected_change} {hit_url}")
+    if m_amend:
+        return m_amend.group(0).lower()
+
+    return None
 
 
 SIGNAL_TERMS_PATTERN = re.compile(
-    r"\b(amendment|amended|ordinance|bill|act\s+no\.|repeal|repealed|substituted|omitted)\b",
+    r'\b\(?\s*amendment\s*\)?\s+(?:bill|act|ordinance)\b|\b(Act|Ordinance)\s+[IVXLCDM\d]+\s+of\s+\d{4}\b|\b\(?\s*repeal\s*\)?\s+(?:bill|act)\b',
     re.IGNORECASE
 )
 
@@ -233,21 +288,19 @@ def execute_portal_search_sync(act_code: str, query_text: str, max_results: int 
                     continue
                 total_whitelisted_seen += 1
                 snip = re.sub(r'<[^>]+>', '', snippets[i]).strip() if i < len(snippets) else ""
-                title = f"Recent legislative signal for {act_name}"
+                title = f"Legislative record on {urllib.parse.urlparse(u).netloc}"
 
-                # Enforce Rule: Require signal evidence in title or snippet!
-                combined_text = f"{title} {snip} {u}"
-                match = SIGNAL_TERMS_PATTERN.search(combined_text)
-                if not match:
+                # Enforce Rule: Require affirmative subsequent amendment or bill signal
+                matched_signal = is_valid_statute_signal(act_code=act_code, hit_url=u, title=title, snippet=snip)
+                if not matched_signal:
                     continue
-                matched_term = match.group(0).lower()
 
                 discovered.append({
                     "source_url": u,
                     "title": title,
                     "snippet": snip,
-                    "signal_term": matched_term,
-                    "detected_change": f"Reported amendment/bill signal ({matched_term}) on {urllib.parse.urlparse(u).netloc}",
+                    "signal_term": matched_signal,
+                    "detected_change": f"Reported amendment/bill signal ({matched_signal}) on {urllib.parse.urlparse(u).netloc}",
                     "source_tier": "tier_1",
                     "effective_application": "pending_and_prospective"
                 })
@@ -379,10 +432,10 @@ async def fetch_currency_signals(
 
                 sig_term = item.get("signal_term")
                 if not sig_term:
-                    match = SIGNAL_TERMS_PATTERN.search(f"{item.get('title','')} {item.get('snippet','')} {url}")
+                    match = is_valid_statute_signal(clean_act, url, item.get('title',''), item.get('snippet',''))
                     if not match:
                         continue
-                    sig_term = match.group(0).lower()
+                    sig_term = match
 
                 target_cid = None
                 if provisions:

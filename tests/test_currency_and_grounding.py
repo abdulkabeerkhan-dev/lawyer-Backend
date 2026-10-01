@@ -125,8 +125,8 @@ class TestStatuteVersionStore(unittest.TestCase):
         self.assertEqual(classify_source_tier("https://pakistancode.gov.pk/law"), "tier_1")
         self.assertEqual(classify_source_tier("https://punjablaws.gov.pk/act"), "tier_1")
         self.assertEqual(classify_source_tier("https://federalshariatcourt.gov.pk/decisions"), "tier_1")
-        self.assertEqual(classify_source_tier("https://fsc.gov.pk/judgments"), "tier_1")
-        self.assertEqual(classify_source_tier("https://fcc.gov.pk/orders"), "tier_1")
+        # Speculative FCC domain excluded from Tier 1 -> tier_3
+        self.assertEqual(classify_source_tier("https://fcc.gov.pk/orders"), "tier_3")
 
         # Tier 2 reputable legal reporting
         self.assertEqual(classify_source_tier("https://pakistanlawsite.com/case"), "tier_2")
@@ -675,6 +675,98 @@ class TestRealCurrencyFetcher(unittest.IsolatedAsyncioTestCase):
         self.assertIsNotNone(v1)
         self.assertEqual(v1["verification_status"], "baseline_unverified")
         self.assertIsNone(v1["commencement_date"])
+
+    def test_consolidated_act_page_does_not_trigger_amendment_signal(self):
+        from core.currency_fetcher import is_valid_statute_signal
+        # 1. Base MFLO 1961 page with standard consolidation footnotes must return None
+        mflo_base_snippet = (
+            "Muslim Family Laws Ordinance, 1961 (Ordinance VIII of 1961). "
+            "Section 4: In the event of the death of any son or daughter... "
+            "as amended by Ordinance VIII of 1961, words substituted by Act."
+        )
+        self.assertIsNone(is_valid_statute_signal(
+            act_code="MFLO_1961",
+            hit_url="https://pakistancode.gov.pk/english/UY2FqaJw1-apaUY2Fqa-cJA%3D%3D-sg-jjjjjj",
+            title="Muslim Family Laws Ordinance, 1961",
+            snippet=mflo_base_snippet
+        ))
+
+        # 2. Base CPC 1908 page must return None
+        cpc_base_snippet = "Code of Civil Procedure, 1908 (Act V of 1908). An Act to consolidate and amend the laws."
+        self.assertIsNone(is_valid_statute_signal(
+            act_code="CPC_1908",
+            hit_url="https://pakistancode.gov.pk/english/cpc_1908.html",
+            title="Code of Civil Procedure, 1908",
+            snippet=cpc_base_snippet
+        ))
+
+        # 3. Subsequent amending bill or later enactment must trigger valid signal
+        self.assertEqual(
+            is_valid_statute_signal(
+                act_code="MFLO_1961",
+                hit_url="https://na.gov.pk/bills/mflo_amend_2024.pdf",
+                title="Muslim Family Laws (Amendment) Bill, 2024",
+                snippet="A bill to amend the Muslim Family Laws Ordinance 1961."
+            ),
+            "amendment bill"
+        )
+        self.assertIsNotNone(
+            is_valid_statute_signal(
+                act_code="CPC_1908",
+                hit_url="https://pakistancode.gov.pk/acts/act_xii_2020.pdf",
+                title="Code of Civil Procedure (Amendment) Act 2020",
+                snippet="Act XII of 2020 to amend Act V of 1908."
+            )
+        )
+
+    def test_domain_whitelist_centralized_and_no_fcc(self):
+        from core.domain_whitelist import (
+            ALL_TIER_1_DOMAINS,
+            STATUTORY_TIER_1_DOMAINS,
+            COURT_TIER_1_DOMAINS,
+            is_whitelisted_tier1_domain
+        )
+        # Official domains present
+        self.assertIn("pakistancode.gov.pk", STATUTORY_TIER_1_DOMAINS)
+        self.assertIn("na.gov.pk", STATUTORY_TIER_1_DOMAINS)
+        self.assertIn("supremecourt.gov.pk", COURT_TIER_1_DOMAINS)
+        self.assertIn("federalshariatcourt.gov.pk", COURT_TIER_1_DOMAINS)
+        self.assertIn("lhc.gov.pk", COURT_TIER_1_DOMAINS)
+
+        # Speculative FCC domain strictly excluded
+        self.assertNotIn("fcc.gov.pk", ALL_TIER_1_DOMAINS)
+        self.assertFalse(is_whitelisted_tier1_domain("https://fcc.gov.pk/judgments/123"))
+
+        # Spoofing vectors rejected
+        self.assertFalse(is_whitelisted_tier1_domain("https://evil.com/?ref=na.gov.pk"))
+        self.assertFalse(is_whitelisted_tier1_domain("https://na.gov.pk.evil.com"))
+
+    def test_retrieval_trace_logger_hashes_query(self):
+        from core.retrieval_logger import RetrievalTraceLogger, LOG_DIR
+        raw_client_query = "Confidential client query regarding debt recovery under FIO 2001"
+        logger = RetrievalTraceLogger(job_id="test_client_privacy_trace", raw_query=raw_client_query)
+        logger.write_trace()
+
+        trace_file = os.path.join(LOG_DIR, "test_client_privacy_trace.json")
+        try:
+            self.assertTrue(os.path.exists(trace_file))
+            with open(trace_file, "r", encoding="utf-8") as f:
+                trace_data = json.load(f)
+            # Unhashed raw query must NOT be stored
+            self.assertNotIn("Confidential client query", json.dumps(trace_data))
+            self.assertIn("query_hash", trace_data)
+            self.assertEqual(len(trace_data["query_hash"]), 16)
+        finally:
+            if os.path.exists(trace_file):
+                os.remove(trace_file)
+
+    def test_cpc_order_xxi_rule_90_baseline_seeded(self):
+        from core.statute_currency import check_statute_currency, global_statute_store
+        res = check_statute_currency("CPC_1908_ORD_XXI_R_90", "CPC_1908", query_text="Order XXI Rule 90 deposit")
+        self.assertEqual(res["canonical_id"], "CPC_1908_ORD_XXI_R_90")
+        self.assertEqual(res["verification_status"], "baseline_unverified")
+        self.assertEqual(res["status"], "in_force")
+        self.assertEqual(res["display_tag"], "[BASELINE TABLE: not checked online]")
 
 
 class TestPrecedentTagsAndRetryCap(unittest.TestCase):

@@ -55,17 +55,10 @@ if SUPABASE_URL and SUPABASE_SERVICE_KEY:
     except Exception as e:
         print(f"⚠️ Supabase init notice in fallback_pipeline: {e}")
 
-# Whitelisted court domains (single source of truth)
-WHITELISTED_COURT_DOMAINS = [
-    "supremecourt.gov.pk",
-    "lhc.gov.pk",
-    "sys.lhc.gov.pk",
-    "shc.gov.pk",
-    "phc.gov.pk",
-    "ihc.gov.pk",
-    "balochistanhighcourt.gov.pk",
-    "federalshariatcourt.gov.pk"
-]
+from core.domain_whitelist import COURT_TIER_1_DOMAINS
+
+# Whitelisted court domains (single source of truth from core.domain_whitelist)
+WHITELISTED_COURT_DOMAINS = sorted(list(COURT_TIER_1_DOMAINS))
 
 # Standard browser headers (validated in Stage 0 to bypass WAF)
 BROWSER_HEADERS = {

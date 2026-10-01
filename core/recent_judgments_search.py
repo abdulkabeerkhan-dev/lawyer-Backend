@@ -5,40 +5,23 @@ import urllib.request
 import asyncio
 from typing import List, Dict, Any, Optional
 
-WHITELISTED_COURT_DOMAINS = {
-    "supremecourt.gov.pk": "Supreme Court of Pakistan",
-    "lhc.gov.pk": "Lahore High Court",
-    "sys.lhc.gov.pk": "Lahore High Court",
-    "shc.gov.pk": "High Court of Sindh",
-    "phc.gov.pk": "Peshawar High Court",
-    "ihc.gov.pk": "Islamabad High Court",
-    "balochistanhighcourt.gov.pk": "High Court of Balochistan",
-    "fsc.gov.pk": "Federal Shariat Court",
-}
+from core.domain_whitelist import (
+    COURT_TIER_1_DOMAINS,
+    COURT_DOMAIN_NAMES,
+    is_whitelisted_court_url,
+    derive_court_from_url as _derive_court_from_url
+)
+
+WHITELISTED_COURT_DOMAINS = COURT_DOMAIN_NAMES
 
 BROWSER_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
 }
 
-def is_whitelisted_court_url(url: str) -> bool:
-    if not url:
-        return False
-    try:
-        host = urllib.parse.urlparse(url).netloc.lower()
-        return any(domain in host for domain in WHITELISTED_COURT_DOMAINS)
-    except Exception:
-        return False
-
 def derive_court_from_url(url: str) -> str:
-    try:
-        host = urllib.parse.urlparse(url).netloc.lower()
-        for domain, court_name in WHITELISTED_COURT_DOMAINS.items():
-            if domain in host:
-                return court_name
-    except Exception:
-        pass
-    return "Superior Court"
+    c = _derive_court_from_url(url)
+    return c or "Superior Court"
 
 def _execute_sync_court_search(query_text: str, max_results: int = 3) -> List[Dict[str, Any]]:
     clean_q = re.sub(r'[^A-Za-z0-9\s\-]+', ' ', query_text).strip()

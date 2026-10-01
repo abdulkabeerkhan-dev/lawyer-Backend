@@ -71,27 +71,10 @@ VALID_JURISDICTIONS = {
 os.makedirs(STATUTE_VERSIONS_DIR, exist_ok=True)
 os.makedirs(STATUTE_STAGING_DIR, exist_ok=True)
 
-# TIER 1: Official government, parliament, gazette, and court portals
-TIER_1_DOMAINS = [
-    "pakistancode.gov.pk",
-    "na.gov.pk",
-    "senate.gov.pk",
-    "punjablaws.gov.pk",
-    "pas.gov.pk",
-    "pap.gov.pk",
-    "kpcode.kp.gov.pk",
-    "balochistancode.gob.pk",
-    "pakistan.gov.pk",
-    "supremecourt.gov.pk",
-    "federalshariatcourt.gov.pk",
-    "fsc.gov.pk",
-    "fcc.gov.pk",
-    "lhc.gov.pk",
-    "shc.gov.pk",
-    "phc.gov.pk",
-    "ihc.gov.pk",
-    "balochistanhighcourt.gov.pk",
-]
+from core.domain_whitelist import ALL_TIER_1_DOMAINS, extract_hostname
+
+# TIER 1: Official government, parliament, gazette, and court portals (from core.domain_whitelist)
+TIER_1_DOMAINS = sorted(list(ALL_TIER_1_DOMAINS))
 
 # TIER 2: Established, reputable legal reporting journals/portals
 TIER_2_DOMAINS = [
@@ -116,11 +99,7 @@ def classify_source_tier(source_url: str) -> str:
     if not source_url:
         return "tier_3"
     try:
-        u = source_url.strip()
-        if not (u.startswith("http://") or u.startswith("https://") or "://" in u):
-            u = "https://" + u
-        parsed = urllib.parse.urlparse(u)
-        netloc = (parsed.hostname or parsed.netloc or "").lower().split(":")[0].strip()
+        netloc = extract_hostname(source_url)
         if not netloc:
             return "tier_3"
         for d in TIER_1_DOMAINS:
