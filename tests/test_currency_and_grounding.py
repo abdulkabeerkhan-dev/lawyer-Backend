@@ -245,16 +245,65 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
     """Tests for currency checking, cache windows, recency words, and output labels."""
 
     def test_output_labels(self):
-        # Mock checking a non-existent provision returns [NOT-CHECKED]
+        # 1. Non-existent / not checked returns [NOT CHECKED]
         res = check_statute_currency("NON_EXISTENT_SEC_99", "NON_EXISTENT")
-        self.assertEqual(res["label"], "NOT-CHECKED")
-        self.assertIn("[NOT-CHECKED:", res["display_tag"])
+        self.assertEqual(res["label"], "NOT CHECKED")
+        self.assertEqual(res["display_tag"], "[NOT CHECKED]")
 
-        # Check existing seeded provision returns [BASELINE TABLE: not checked online]
+        # 2. Existing seeded provision returns [BASELINE TABLE: not checked online]
         res_seeded = check_statute_currency("PRPA_2009_SEC_13", "PRPA_2009")
         self.assertEqual(res_seeded["label"], "BASELINE")
         self.assertEqual(res_seeded["display_tag"], "[BASELINE TABLE: not checked online]")
-        self.assertNotIn("VERIFIED: Tier 1", res_seeded["display_tag"])
+        self.assertNotIn("verified", res_seeded["display_tag"].lower())
+        self.assertNotIn("current", res_seeded["display_tag"].lower())
+
+        # 3. Online checked with no change found returns [CHECKED, NO CHANGE FOUND]
+        res_checked = check_statute_currency("PRPA_2009_SEC_13", "PRPA_2009", online_checked=True)
+        self.assertEqual(res_checked["label"], "CHECKED, NO CHANGE FOUND")
+        self.assertEqual(res_checked["display_tag"], "[CHECKED, NO CHANGE FOUND]")
+
+        # 4. Bill pending returns [BILL PENDING]
+        test_dir = tempfile.mkdtemp()
+        test_staging = tempfile.mkdtemp()
+        try:
+            store = StatuteVersionStore(storage_dir=test_dir, staging_dir=test_staging)
+            v_bill = store.append_version(
+                canonical_id="BILL_SEC_1",
+                act_code="BILL_ACT",
+                title="Bill Section",
+                status="bill"
+            )
+            # Check with store
+            latest_bill = store.get_latest_version("BILL_ACT", "BILL_SEC_1")
+            self.assertEqual(latest_bill["status"], "bill")
+
+            # 5. Staged finding pending review returns [CHANGE FOUND, PENDING REVIEW]
+            staged = store.stage_finding(
+                canonical_id="PRPA_2009_SEC_13",
+                act_code="PRPA_2009",
+                query_trigger="rent amendment",
+                detected_change="New rent tribunal rules",
+                source_url="https://punjablaws.gov.pk/gazette"
+            )
+            self.assertEqual(staged["source_tier"], "tier_1")
+        finally:
+            shutil.rmtree(test_dir, ignore_errors=True)
+            shutil.rmtree(test_staging, ignore_errors=True)
+
+        # 6. Strict prohibition check across all allowed tags
+        allowed_tags = [
+            "[CHANGE CONFIRMED]",
+            "[CHECKED, NO CHANGE FOUND]",
+            "[CHANGE FOUND, PENDING REVIEW]",
+            "[REPORTED, UNVERIFIED]",
+            "[BILL PENDING]",
+            "[NOT CHECKED]",
+            "[BASELINE TABLE: not checked online]"
+        ]
+        for tag in allowed_tags:
+            # Rule: NEVER use 'verified' or 'current' in display tags
+            self.assertNotIn("verified", tag.lower().replace("unverified", ""))
+            self.assertNotIn("current", tag.lower())
 
     def test_statute_currency_labels_env_off(self):
         # STATUTE_CURRENCY_LABELS=off suppresses currency display tags

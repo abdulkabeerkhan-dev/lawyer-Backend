@@ -335,6 +335,25 @@ class StatuteVersionStore:
 
         return staged_item
 
+    def get_staged_findings(self, canonical_id: Optional[str] = None, act_code: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Returns unpromoted staged findings matching canonical_id or act_code."""
+        if not os.path.exists(self.staging_file):
+            return []
+        try:
+            with open(self.staging_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            matching = []
+            for item in data:
+                if item.get("promoted_to_main"):
+                    continue
+                if canonical_id and item.get("canonical_id") == canonical_id:
+                    matching.append(item)
+                elif act_code and item.get("act_code") == act_code:
+                    matching.append(item)
+            return matching
+        except Exception:
+            return []
+
     def promote_staged_finding(
         self,
         staging_id: str,
@@ -398,7 +417,8 @@ def check_statute_currency(
     act_code: str,
     query_text: str = "",
     cache_window_hours: int = 24,
-    mock_web_fetcher: Optional[Any] = None
+    mock_web_fetcher: Optional[Any] = None,
+    online_checked: Optional[bool] = None
 ) -> Dict[str, Any]:
     """
     Checks currency for a statutory provision.
@@ -447,11 +467,11 @@ def check_statute_currency(
             pass
 
     if not latest:
-        display_tag = "[NOT-CHECKED: not in verified store]" if os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() != "off" else ""
+        display_tag = "[NOT CHECKED]" if os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() != "off" else ""
         return {
             "canonical_id": canonical_id,
             "act_code": act_code,
-            "label": "NOT-CHECKED",
+            "label": "NOT CHECKED",
             "tier": None,
             "verification_status": "unverified",
             "status": "unknown",
@@ -469,33 +489,54 @@ def check_statute_currency(
             "display_tag": display_tag
         }
 
-    is_online_checked = bool(latest.get("online_checked", False))
+    is_online_checked = bool(online_checked) if online_checked is not None else bool(latest.get("online_checked", False))
     tier = latest.get("source_tier")
     v_status = latest.get("verification_status") or "baseline_unverified"
     s_date = (latest.get("fetched_at") or "")[:10]
     s_url = latest.get("source_url") or "official repository"
+    status_val = str(latest.get("status", "")).strip().lower()
 
-    # INTERIM SAFETY (Item 0):
-    # Seeded records are from baseline tables and were NOT checked online.
-    # Until item 1 and 2 ship, make labels render as:
-    # [BASELINE TABLE: not checked online]
-    # Never render [VERIFIED: Tier 1, ...] for unverified baseline tables!
-    # If STATUTE_CURRENCY_LABELS=off, disable rendering entirely (empty string).
+    # Part 1, Item 4: Strict Display Tags:
+    # 1. [CHANGE CONFIRMED]
+    # 2. [CHECKED, NO CHANGE FOUND]
+    # 3. [CHANGE FOUND, PENDING REVIEW]
+    # 4. [REPORTED, UNVERIFIED]
+    # 5. [BILL PENDING]
+    # 6. [NOT CHECKED]
+    # 7. [BASELINE TABLE: not checked online]
+    # NEVER use "verified" or "current"!
     if os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() == "off":
         tag = ""
         label = "DISABLED"
-    elif not is_online_checked:
-        tag = "[BASELINE TABLE: not checked online]"
-        label = "BASELINE"
-    elif tier == "tier_1" and v_status == "verified":
-        tag = f"[VERIFIED: Tier 1, {s_url}, {s_date}]"
-        label = "VERIFIED"
-    elif v_status == "reported_unverified":
-        tag = f"[REPORTED-UNVERIFIED: {(tier or 'tier_3').upper()}, {s_url}]"
-        label = "REPORTED-UNVERIFIED"
+    elif status_val in ("bill", "passed"):
+        tag = "[BILL PENDING]"
+        label = "BILL PENDING"
     else:
-        tag = f"[NOT-CHECKED: cached {s_date}]"
-        label = "NOT-CHECKED"
+        # Check if there is an unpromoted staged finding for this provision or act
+        staged_items = global_statute_store.get_staged_findings(canonical_id=canonical_id, act_code=act_code)
+        if staged_items:
+            latest_staged = staged_items[-1]
+            if latest_staged.get("source_tier") == "tier_1":
+                tag = "[CHANGE FOUND, PENDING REVIEW]"
+                label = "CHANGE FOUND, PENDING REVIEW"
+            else:
+                tag = "[REPORTED, UNVERIFIED]"
+                label = "REPORTED, UNVERIFIED"
+        elif v_status == "reported_unverified":
+            tag = "[REPORTED, UNVERIFIED]"
+            label = "REPORTED, UNVERIFIED"
+        elif v_status == "verified" or (status_val == "amended" and latest.get("amending_instrument")):
+            tag = "[CHANGE CONFIRMED]"
+            label = "CHANGE CONFIRMED"
+        elif is_online_checked:
+            tag = "[CHECKED, NO CHANGE FOUND]"
+            label = "CHECKED, NO CHANGE FOUND"
+        elif v_status == "baseline_unverified":
+            tag = "[BASELINE TABLE: not checked online]"
+            label = "BASELINE"
+        else:
+            tag = "[NOT CHECKED]"
+            label = "NOT CHECKED"
 
     return {
         "canonical_id": canonical_id,
