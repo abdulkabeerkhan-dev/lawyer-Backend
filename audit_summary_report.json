@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-10-01 15:44:11",
+  "total_active_cases_audited": 3114,
+  "total_supabase_records_scanned": 5000,
+  "bucket_counts": {
+    "bucket_A_mislabelled_full_text": 1389,
+    "bucket_B_mislabelled_headnote": 1395,
+    "bucket_C_mixed_headnote_and_order": 3177,
+    "bucket_D_headnote_only": 1463,
+    "bucket_E_metadata_conflicts": 24,
+    "total_headnote_upgrade_queue": 2852
+  },
+  "top_priority_headnotes_for_scraping": [
+    "2026 CLD 68 - NOOR HAYAT COTTON GINNERS VS The BANK OF PUNJAB - Honorable ",
+    "2026 CLD 681 - HARBIN ELECTRIC INTERNATIONAL COMPANY LIMITED VS NATIONAL PO",
+    "2026 CLD 686 - AL GHAZI TRACTORS LIMITED VS COMPETITION COMMISSION OF PAKIS",
+    "2026 CLD 96 - VITAL CHEMICAL CORPORATION VS MCB BANK LIMITED - Muhammad Su",
+    "2026 SCMR 533 - MCB BANK LIMITED VS UZMA TEHREEM - Honorable Justice Naeem A",
+    "2021 SCMR 1214 - Shahtaj Sugar Mills Ltd. v. Bank Alfalah Ltd.",
+    "1994 SCMR 1031 - Muslim Commercial Bank Limited Employees Union Islamabad, Ra",
+    "2023 SCMR 737 - State Bank Of Pakistan v. Mohammad Naeem",
+    "2023 SCMR 1353 - Bentonite Pakistan Limited v. Bankers Equity Limited",
+    "2023 SCMR 1457 - Barclays Bank Uk Plc v. Philipp"
+  ]
+}

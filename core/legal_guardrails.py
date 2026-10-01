@@ -1,5 +1,11 @@
 import re
 import json
+
+CITATION_REGEX = re.compile(
+    r'\b(?:19\d\d|20\d\d)\s+(?:PLD|SCMR|CLC|MLD|YLR|PCrLJ|PTD|PLC|CLD|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR)(?:\s+\([A-Za-z\s.]+\))?\s+\d+\b'
+    r'|\bPLD\s+(?:19\d\d|20\d\d)\s+[A-Za-z\s.]+\s+\d+\b',
+    re.IGNORECASE
+)
 from typing import List, Dict, Any, Optional, Tuple, Set
 
 SYSTEM_LEGAL_DIRECTIVE = """
@@ -246,50 +252,196 @@ def is_statute_in_source(statute_phrase: str, source_text: str) -> bool:
     return False
 
 
+def parse_outcome_from_tail(text: str) -> Optional[str]:
+    """
+    Parses judicial disposition / outcome from the tail of a precedent text (or order section).
+    Recognizes Pakistani appellate dispositions.
+    """
+    if not text or not isinstance(text, str):
+        return None
+    tail = text[-1500:].lower()
+
+    if re.search(r'\bleave\s+(?:to\s+appeal\s+)?(?:is\s+|was\s+)?refused\b', tail):
+        return "leave_refused"
+    if re.search(r'\bleave\s+(?:to\s+appeal\s+)?(?:is\s+|was\s+)?granted\b', tail):
+        return "leave_granted"
+    if re.search(r'\b(?:appeal|petition|revision)\s+(?:is\s+|was\s+|stands\s+)?dismissed\b', tail):
+        if "appeal" in tail:
+            return "appeal_dismissed"
+        elif "revision" in tail:
+            return "revision_dismissed"
+        return "petition_dismissed"
+    if re.search(r'\b(?:appeal|petition|revision)\s+(?:is\s+|was\s+|stands\s+)?(?:allowed|accepted)\b', tail):
+        if "appeal" in tail:
+            return "appeal_allowed"
+        elif "revision" in tail:
+            return "revision_allowed"
+        return "petition_allowed"
+    if re.search(r'\b(?:matter|case|proceedings?)\s+(?:is\s+|was\s+)?remanded\b|\bremanded\s+(?:back\s+)?to\b', tail):
+        return "remanded"
+    if re.search(r'\b(?:stands?\s+)?disposed\s+of\b', tail):
+        return "disposed_of"
+    return "unknown"
+
+
+def extract_statutes_from_text(text: str) -> Set[str]:
+    """
+    Extracts explicit statute and procedural provisions mentioned in a text.
+    """
+    if not text or not isinstance(text, str):
+        return set()
+    found = set()
+    for m in re.finditer(r'\b(?:Order|O\.)\s*([IVXLCDM\d]+)[,\s]+(?:Rule|R\.)\s*(\d+[A-Za-z\-]*)\b', text, re.IGNORECASE):
+        found.add(f"Order {m.group(1).upper()} Rule {m.group(2).upper()}")
+    for m in re.finditer(r'\b(?:Section|Sec\.|Ss?\.)\s*(\d+[A-Za-z\-]*)', text, re.IGNORECASE):
+        found.add(f"Section {m.group(1)}")
+    for m in re.finditer(r'\b(?:Article|Art\.)\s*(\d+[A-Za-z\-]*(?:\(\d+\)[A-Za-z]*)?)', text, re.IGNORECASE):
+        found.add(f"Article {m.group(1)}")
+    acts = [
+        ("Financial Institutions (Recovery of Finances) Ordinance", "FIO 2001"),
+        ("Civil Procedure Code", "CPC 1908"),
+        ("Constitution of Pakistan", "Constitution 1973"),
+        ("Limitation Act", "Limitation Act 1908"),
+        ("Specific Relief Act", "Specific Relief Act 1877"),
+        ("Court Fees Act", "Court Fees Act 1870"),
+        ("Qanun-e-Shahadat", "QSO 1984")
+    ]
+    for pattern, name in acts:
+        if re.search(r'\b' + re.escape(pattern) + r'\b', text, re.IGNORECASE):
+            found.add(name)
+    return found
+
+
+def classify_judgment_structure(text: str) -> Dict[str, Any]:
+    """
+    Analyzes document text structure to categorize precedent records into:
+    - 'headnote_only': Editorial digest summary without judicial order text
+    - 'order_text': Verbatim judicial order or short order (< 1000 words)
+    - 'full_judgment': Verbatim judicial judgment / multi-page decision (>= 1000 words)
+    - 'mixed': Editorial headnote at top followed by authentic judicial order text
+
+    Identifies split_offset for mixed records, captures structural signals, and parses tail outcome.
+    """
+    if not text or not isinstance(text, str):
+        return {
+            "detected_type": "unknown",
+            "is_headnote": False,
+            "is_order": False,
+            "is_mixed": False,
+            "split_offset": None,
+            "headnote_text": None,
+            "order_text": None,
+            "word_count": 0,
+            "signals": {},
+            "parsed_outcome": None
+        }
+
+    t = text.strip()
+    words = len(t.split())
+
+    # Check for split point: Editorial headnote preceding verbatim judicial order
+    split_offset = None
+    order_heading_match = re.search(r'\n{2,}\s*(?:ORDER|JUDGMENT|SHORT ORDER)\s*\n+', t, re.IGNORECASE)
+    judge_byline_match = re.search(r'\n{2,}\s*[A-Z\s\.]+(?:,?\s*J\.|,?\s*CJ\.|,?\s*JJ\.)---', t)
+
+    candidate_offsets = []
+    if order_heading_match and order_heading_match.start() > 150:
+        candidate_offsets.append(order_heading_match.start())
+    if judge_byline_match and judge_byline_match.start() > 150:
+        candidate_offsets.append(judge_byline_match.start())
+
+    if candidate_offsets:
+        split_offset = min(candidate_offsets)
+
+    head_500 = t[:500]
+
+    has_catchwords = bool(re.search(
+        r'(?:[A-Z][A-Za-z\s\(\)]+\([A-Za-z\d\s]+\)---|\bO\.\s*[IVXLCDM\d]+[,\s]+R\.\s*\d+---|\bSs?\.\s*\d+---|\bArts?\.\s*\d+[^\-\n]*---|\b[A-Za-z\s]+--TERM\b|\bCivil Procedure Code\s*--|\bCriminal Trial\s*--|\bConstitution of Pakistan\s*\d*--)',
+        t
+    ))
+    dash_count = len(re.findall(r'-{2,}', t))
+    has_editorial_markers = bool(re.search(
+        r'\[pp?\.?\s*\d+[^\]]*\]\s*[A-Z]|\([a-z]\)\s+[A-Z][a-z]+|Citation Name:|Bookmark this Case|Copyrights\s+©',
+        t,
+        re.IGNORECASE
+    ))
+    has_held = bool(re.search(r'\b(?:Held|Validity)\s*[:\-]', t, re.IGNORECASE))
+
+    has_order_heading_start = bool(re.match(r'^\s*(?:ORDER|JUDGMENT|SHORT ORDER)\b', head_500, re.IGNORECASE))
+    has_judge_byline_start = bool(re.search(
+        r'^\s*(?:[A-Z\s\.]+(?:,?\s*J\.|,?\s*CJ\.|,?\s*JJ\.)---|Before\s+[A-Za-z\s\.]+,?\s*(?:J|CJ|JJ))',
+        head_500,
+        re.MULTILINE
+    ))
+    has_judicial_openings_start = bool(re.search(
+        r'\b(?:heard\s+(?:the\s+)?learned\s+counsel|through\s+this\s+(?:civil\s+)?(?:petition|appeal|suit|revision)|this\s+(?:civil\s+)?(?:petition|appeal|application)\s+is\s+directed\s+against|leave\s+to\s+appeal\s+was\s+granted)\b',
+        head_500,
+        re.IGNORECASE
+    ))
+
+    is_headnote_struct = (has_catchwords or has_editorial_markers or has_held or dash_count >= 3)
+    is_pure_order_start = (has_order_heading_start or has_judge_byline_start or has_judicial_openings_start)
+
+    headnote_text = None
+    order_text = None
+
+    if split_offset and is_headnote_struct:
+        detected_type = "mixed"
+        is_mixed = True
+        is_headnote = True
+        is_order = True
+        headnote_text = t[:split_offset].strip()
+        order_text = t[split_offset:].strip()
+    elif is_headnote_struct and not is_pure_order_start:
+        detected_type = "headnote_only"
+        is_mixed = False
+        is_headnote = True
+        is_order = False
+        headnote_text = t
+    elif is_pure_order_start:
+        detected_type = "order_text" if words < 1000 else "full_judgment"
+        is_mixed = False
+        is_headnote = False
+        is_order = True
+        order_text = t
+    else:
+        detected_type = "full_judgment" if words >= 1000 else "order_text"
+        is_mixed = False
+        is_headnote = False
+        is_order = True
+        order_text = t
+
+    parsed_outcome = parse_outcome_from_tail(order_text if order_text else t)
+
+    return {
+        "detected_type": detected_type,
+        "is_headnote": is_headnote,
+        "is_order": is_order,
+        "is_mixed": is_mixed,
+        "split_offset": split_offset,
+        "headnote_text": headnote_text,
+        "order_text": order_text,
+        "word_count": words,
+        "signals": {
+            "has_catchwords": has_catchwords,
+            "dash_count": dash_count,
+            "has_editorial_markers": has_editorial_markers,
+            "has_held": has_held,
+            "has_order_heading_start": has_order_heading_start,
+            "has_judge_byline_start": has_judge_byline_start,
+            "has_judicial_openings_start": has_judicial_openings_start,
+        },
+        "parsed_outcome": parsed_outcome
+    }
+
+
 def is_compiled_headnote(text: str) -> bool:
     """
     Detects whether a precedent text is an editorial compiled headnote digest (e.g., from PLD/SCMR/CLD/YLR)
     rather than an actual verbatim judicial order or judgment text.
-    
-    Compiled headnotes exhibit:
-    - Multiple catchword separator dashes ('----' or '---')
-    - Editorial statute catchwords ('Civil Procedure Code (V of 1908)---', 'O. XXI, R. 90---', 'Ss. 15 & 19---')
-    - Repeated editorial 'Held:' / 'Held, that' summaries
-    - Volume/page editorial markers ('[p. 1087] A', '[pp. 1220] B')
-    - Absence of authentic judicial opening preambles ('ORDER', 'JUDGMENT', 'Heard learned counsel', etc.)
     """
-    if not text or not isinstance(text, str):
-        return False
-    t_clean = text.strip()
-    if len(t_clean) < 30:
-        return False
-
-    has_dash_separators = len(re.findall(r'-{3,}', t_clean)) >= 2
-    has_catchword_headers = bool(re.search(r'(?:[A-Z][A-Za-z\s\(\)]+\([A-Za-z\d\s]+\)---|\bO\.\s*[IVXLCDM\d]+[,\s]+R\.\s*\d+---|\bSs?\.\s*\d+---)', t_clean))
-    has_repeated_held = len(re.findall(r'\bHeld\s*[:,]', t_clean, re.IGNORECASE)) >= 2
-    has_editorial_page_pins = bool(re.search(r'\[pp?\.?\s*\d+[^\]]*\]\s*[A-Z]', t_clean))
-
-    judicial_hallmarks = [
-        r'^\s*(?:ORDER|JUDGMENT)\b',
-        r'\b(?:heard\s+(?:the\s+)?learned\s+counsel|through\s+this\s+(?:petition|appeal|suit))\b',
-        r'\b(?:this\s+(?:civil\s+)?(?:petition|appeal|application)\s+is\s+directed\s+against)\b',
-        r'\b(?:leave\s+to\s+appeal\s+was\s+granted)\b',
-        r'\b(?:the\s+impugned\s+(?:judgment|order)\s+dated)\b',
-        r'\b(?:brief\s+facts\s+(?:of\s+the\s+case|are\s+that))\b',
-        r'\b(?:advocate\s+for\s+(?:the\s+)?petitioner|advocate\s+supreme\s+court)\b',
-        r'\b(?:by\s+this\s+(?:common\s+)?order)\b',
-        r'\b(?:we\s+have\s+heard|perused\s+the\s+record)\b',
-    ]
-    t_first_500 = t_clean[:500]
-    has_judicial_hallmark = any(re.search(pat, t_first_500, re.IGNORECASE | re.MULTILINE) for pat in judicial_hallmarks)
-
-    if (has_dash_separators or has_catchword_headers or has_repeated_held or has_editorial_page_pins) and not has_judicial_hallmark:
-        return True
-
-    if (len(re.findall(r'-{3,}', t_clean)) >= 3) and (has_repeated_held or has_editorial_page_pins):
-        return True
-
-    return False
+    info = classify_judgment_structure(text)
+    return info["detected_type"] == "headnote_only"
 
 
 def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: Optional[List[Any]] = None) -> List[str]:
@@ -679,6 +831,12 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
             "Domain Misattribution: Citing partition execution authorities as governing banking mortgage execution under FIO 2001."
         )
 
+    # Rule 27: Speaker Filter / Rejecting Counsel Submissions as Holdings
+    for sent in re.split(r'(?<=[.!?\n])\s+', draft_text):
+        if is_counsel_submission_span(sent):
+            if any(h in sent.lower() for h in ["the court held", "the bench ruled", "established that", "it was held that"]):
+                errors.append(f"Speaker Attribution Violation: Submissions by counsel ('{sent.strip()[:60]}...') cannot be attributed as judicial holdings.")
+
     return errors
 
 
@@ -975,3 +1133,427 @@ def check_memo_completeness(text: str, is_formal_opinion: bool = True) -> Tuple[
 
 
 
+
+
+# ==============================================================================
+# RETRIEVAL RELEVANCE & FAIL-CLOSED GROUNDING GUARDRAILS (PARTS 3 & 4)
+# ==============================================================================
+
+def extract_positive_query_anchors(query: str) -> List[str]:
+    """
+    Extracts positive anchors (named sections, articles, rules, orders, doctrines)
+    from a legal query. Used to replace subject blacklists with positive relevance gating.
+    """
+    if not query or not isinstance(query, str):
+        return []
+    anchors = set()
+    q_clean = query.strip()
+    sec_matches = re.findall(r'\b(?:section|sec\.?|s\.)\s*(\d+[a-z]?(?:\(\d+\))*(?:-[a-z]+)?)\b', q_clean, re.IGNORECASE)
+    for m in sec_matches:
+        anchors.add(f"section {m.lower()}")
+    art_matches = re.findall(r'\b(?:article|art\.?)\s*(\d+[a-z]?(?:\(\d+\))*)\b', q_clean, re.IGNORECASE)
+    for m in art_matches:
+        anchors.add(f"article {m.lower()}")
+    ord_matches = re.findall(r'\b(?:order|ord\.?|o\.)\s*([ivxlcdm\d]+)(?:[\s,]+(?:rule|r\.?)\s*(\d+[a-z]?))?\b', q_clean, re.IGNORECASE)
+    for o, r in ord_matches:
+        if r:
+            anchors.add(f"order {o.lower()} rule {r.lower()}")
+            anchors.add(f"rule {r.lower()}")
+        else:
+            anchors.add(f"order {o.lower()}")
+    r_matches = re.findall(r'\b(?:rule|r\.)\s*(\d+[a-z]?)\b', q_clean, re.IGNORECASE)
+    for r in r_matches:
+        anchors.add(f"rule {r.lower()}")
+    doctrines = [
+        "lis pendens", "res judicata", "promissory estoppel", "tariq bashir",
+        "mesne profits", "specific performance", "pre-emption", "talb-i-muwathibat",
+        "talb-i-ishhad", "zar-i-khula", "khula", "substantial injury",
+        "material irregularity", "bona fide purchaser", "adverse possession",
+        "past and closed transaction", "cheque dishonour", "custody of minor",
+        "leave to defend", "pre-arrest bail", "post-arrest bail"
+    ]
+    q_lower = q_clean.lower()
+    for doc in doctrines:
+        if doc in q_lower:
+            anchors.add(doc)
+    statute_keys = [
+        ("fio 2001", ["fio 2001", "financial institutions ordinance"]),
+        ("prpa 2009", ["prpa 2009", "rented premises act"]),
+        ("ppipa 2012", ["ppipa 2012", "partition of immoveable property act"]),
+        ("cnsa 1997", ["cnsa 1997", "control of narcotic substances"]),
+        ("qso 1984", ["qso 1984", "qanun-e-shahadat"]),
+        ("mflo 1961", ["mflo 1961", "muslim family laws"]),
+    ]
+    for key, terms in statute_keys:
+        if any(t in q_lower for t in terms):
+            anchors.add(key)
+    return sorted(list(anchors))
+
+
+def passes_positive_anchor_test(text: str, anchors: List[str]) -> bool:
+    """
+    Checks if text matches at least one positive anchor extracted from the query.
+    If no anchors were present in the query, returns True (unrestricted).
+    """
+    if not anchors:
+        return True
+    if not text or not isinstance(text, str):
+        return False
+    t_lower = text.lower()
+    for anchor in anchors:
+        esc = re.escape(anchor)
+        esc_flex = esc.replace(r'\ ', r'\s+')
+        if re.search(rf'\b{esc_flex}\b', t_lower) or anchor in t_lower:
+            return True
+    return False
+
+
+def derive_court_from_judgment_header(text: str, fallback_meta: Optional[str] = None) -> str:
+    """
+    Derives the actual court from the first 1,500 characters of the judgment header text.
+    FAIL-SAFE: If bench, bracket, or text indicates High Court (Lahore, Sindh, Peshawar, etc.),
+    it MUST NEVER display as Supreme Court, regardless of index metadata.
+    """
+    header_sample = (text or "")[:1500].upper()
+    fallback_clean = (fallback_meta or "").strip()
+    is_lhc = any(k in header_sample for k in ["LAHORE HIGH COURT", "HIGH COURT LAHORE", "RAWALPINDI BENCH", "MULTAN BENCH", "BAHAWALPUR BENCH"])
+    is_shc = any(k in header_sample for k in ["HIGH COURT OF SINDH", "SINDH HIGH COURT", "BENCH AT SUKKUR", "CIRCUIT COURT HYDERABAD"])
+    is_phc = any(k in header_sample for k in ["PESHAWAR HIGH COURT", "HIGH COURT PESHAWAR", "ABBOTTABAD BENCH"])
+    is_bhc = any(k in header_sample for k in ["HIGH COURT OF BALOCHISTAN", "BALOCHISTAN HIGH COURT"])
+    is_ihc = "ISLAMABAD HIGH COURT" in header_sample
+    is_fsc = "FEDERAL SHARIAT COURT" in header_sample
+    is_sc = any(k in header_sample for k in ["SUPREME COURT OF PAKISTAN", "IN THE SUPREME COURT"]) and not (is_lhc or is_shc or is_phc or is_bhc or is_ihc)
+    if is_sc:
+        return "Supreme Court of Pakistan"
+    if is_lhc:
+        return "Lahore High Court"
+    if is_shc:
+        return "High Court of Sindh"
+    if is_phc:
+        return "Peshawar High Court"
+    if is_bhc:
+        return "High Court of Balochistan"
+    if is_ihc:
+        return "Islamabad High Court"
+    if is_fsc:
+        return "Federal Shariat Court"
+    if fallback_clean and fallback_clean not in ("Court of Record", "Unknown Court", "Court not identified"):
+        if "Supreme Court" in fallback_clean and any(k in header_sample for k in ["HIGH COURT", "WRIT PETITION", "CIVIL REVISION"]):
+            return "High Court"
+        return fallback_clean
+    return "Court of Record"
+
+
+def verify_case_identity(case_id: str, citation: str, record: Dict[str, Any]) -> bool:
+    """
+    2-way case identity verification: verifies that case_id and citation match
+    the same underlying record, preventing cross-contamination or phantom joins.
+    """
+    if not record or not isinstance(record, dict):
+        return False
+    rec_id = str(record.get("case_id") or record.get("id") or "").strip().lower()
+    rec_cit = str(record.get("citation") or record.get("neutral_citation") or "").strip().lower()
+    norm_target_id = re.sub(r'[\s_\-]+', '', (case_id or "").lower())
+    norm_target_cit = re.sub(r'[\s_\-]+', '', (citation or "").lower())
+    norm_rec_id = re.sub(r'[\s_\-]+', '', rec_id)
+    norm_rec_cit = re.sub(r'[\s_\-]+', '', rec_cit)
+    
+    id_matches = bool(norm_target_id and (norm_target_id == norm_rec_id or norm_target_id in norm_rec_id or norm_rec_id in norm_target_id))
+    cit_matches = bool(norm_target_cit and (norm_target_cit == norm_rec_cit or norm_target_cit in norm_rec_cit or norm_rec_cit in norm_target_cit))
+    
+    if norm_target_id and norm_target_cit:
+        if id_matches and cit_matches:
+            return True
+        if id_matches and not norm_rec_cit:
+            return True
+        if cit_matches and not norm_rec_id:
+            return True
+        if id_matches and norm_rec_cit and not cit_matches:
+            return False
+        if cit_matches and norm_rec_id and not id_matches:
+            return False
+        return False
+    return id_matches or cit_matches
+
+
+def is_counsel_submission_span(sentence: str) -> bool:
+    """
+    Identifies whether a statement represents counsel submissions/arguments
+    rather than a judicial holding or finding of the court.
+    """
+    if not sentence or not isinstance(sentence, str):
+        return False
+    s_lower = sentence.lower().strip()
+    counsel_patterns = [
+        r'\b(?:learned\s+)?counsel\s+(?:for\s+the\s+[a-z\s]+)?(?:argued|contended|submitted|pleaded|urged|canvassed|asserted|stated|insisted)\b',
+        r'\b(?:advocate|lawyer|attorney)\s+(?:for\s+the\s+[a-z\s]+)?(?:argued|contended|submitted|pleaded|urged)\b',
+        r'\b(?:it\s+is|it\s+was)\s+(?:contended|submitted|argued|urged|pleaded)\s+by\s+(?:the\s+)?(?:learned\s+)?(?:counsel|advocate|petitioner|appellant|respondent)\b',
+        r'\bthe\s+contention\s+of\s+(?:the\s+)?(?:learned\s+)?counsel\b',
+        r'\blearned\s+counsel\s+submits\s+that\b',
+        r'\blearned\s+counsel\s+further\s+(?:contended|submitted|argued)\b',
+        r'\blearned\s+counsel\s+placed\s+reliance\s+on\b',
+        r'\bthe\s+arguments?\s+(?:advanced|addressed)\s+by\s+(?:the\s+)?learned\s+counsel\b',
+    ]
+    for pat in counsel_patterns:
+        if re.search(pat, s_lower):
+            return True
+    return False
+
+
+def find_supporting_span_in_text(proposition: str, source_text: str, min_overlap: float = 0.50) -> Optional[Tuple[int, int, str]]:
+    """
+    Maps a legal proposition to a source text span pointer.
+    Returns (start_char, end_char, matched_span_text) if found, or None.
+    """
+    if not proposition or not source_text:
+        return None
+    prop_clean = proposition.strip()
+    stopwords = {"that", "this", "with", "from", "have", "were", "been", "which", "their", "there", "about", "under", "shall", "court", "held", "judgment", "ruling"}
+    prop_tokens = set(re.findall(r'\b[a-z0-9\-]{4,}\b', prop_clean.lower())) - stopwords
+    if not prop_tokens:
+        return None
+    sentences = re.split(r'(?<=[.!?\n])\s+', source_text)
+    current_offset = 0
+    best_match = None
+    best_score = 0.0
+    for sent in sentences:
+        start_idx = source_text.find(sent, current_offset)
+        if start_idx == -1:
+            start_idx = current_offset
+        end_idx = start_idx + len(sent)
+        current_offset = end_idx
+        if is_counsel_submission_span(sent):
+            continue
+        sent_tokens = set(re.findall(r'\b[a-z0-9\-]{4,}\b', sent.lower())) - stopwords
+        if not sent_tokens:
+            continue
+        overlap = len(prop_tokens & sent_tokens)
+        score = overlap / float(len(prop_tokens))
+        if score > best_score and score >= min_overlap:
+            best_score = score
+            best_match = (start_idx, end_idx, sent.strip())
+    return best_match
+
+
+def fail_closed_citation_grounding(
+    generated_text: str,
+    retrieved_records: List[Dict[str, Any]],
+    strict_mode: bool = False
+) -> Tuple[str, List[str], List[Dict[str, Any]]]:
+    """
+    Fail-closed citation grounding scanner:
+    - Scans generated legal text for Pakistani law reporter citations.
+    - Grounds them against:
+      1) Primary retrieved records.
+      2) Internal citations physically appearing within retrieved records' text (labelled 'cited within X').
+    - Any citation not grounded in (1) or (2) is flagged as ungrounded.
+    - In strict_mode: strips ungrounded citation sentences.
+    - Otherwise replaces with fail-closed removal notice.
+    Returns (cleaned_text, ungrounded_citations, audit_records).
+    """
+    if not generated_text:
+        return "", [], []
+    grounded_primary = {}
+    internal_citation_map = {}
+    for rec in (retrieved_records or []):
+        meta = rec.get("metadata", {}) if isinstance(rec, dict) else getattr(rec, "metadata", {}) or {}
+        p_cit = rec.get("citation") or rec.get("neutral_citation") or meta.get("citation") or meta.get("neutral_citation") or meta.get("case_id")
+        if p_cit:
+            p_cit_str = str(p_cit).strip()
+            norm_p = re.sub(r'[\s_\-]+', ' ', p_cit_str.lower())
+            grounded_primary[norm_p] = p_cit_str
+        full_txt = rec.get("full_text") or rec.get("text") or meta.get("full_text") or meta.get("text") or ""
+        for int_match in CITATION_REGEX.finditer(full_txt):
+            int_cit = int_match.group(0).strip()
+            norm_int = re.sub(r'[\s_\-]+', ' ', int_cit.lower())
+            if norm_int not in grounded_primary:
+                internal_citation_map[norm_int] = p_cit_str or "Retrieved Case"
+    sentences = re.split(r'(?<=[.!?\n])\s+', generated_text)
+    cleaned_sentences = []
+    ungrounded = []
+    audit_records = []
+    for sent in sentences:
+        sent_cits = [m.group(0).strip() for m in CITATION_REGEX.finditer(sent)]
+        sent_has_ungrounded = False
+        sent_modified = sent
+        for cit in sent_cits:
+            norm_cit = re.sub(r'[\s_\-]+', ' ', cit.lower())
+            is_prim = norm_cit in grounded_primary or any(norm_cit in k or k in norm_cit for k in grounded_primary)
+            is_intern = norm_cit in internal_citation_map or any(norm_cit in k or k in norm_cit for k in internal_citation_map)
+            if is_prim:
+                audit_records.append({
+                    "citation": cit,
+                    "grounding_status": "primary_verified",
+                    "source": "retrieved_record"
+                })
+            elif is_intern:
+                parent_source = internal_citation_map.get(norm_cit, "Retrieved Precedent")
+                audit_records.append({
+                    "citation": cit,
+                    "grounding_status": "internal_cited",
+                    "source": f"cited within {parent_source}"
+                })
+                if "cited within" not in sent_modified.lower() and "quoted in" not in sent_modified.lower():
+                    sent_modified = sent_modified.replace(cit, f"{cit} (cited within {parent_source})")
+            else:
+                sent_has_ungrounded = True
+                ungrounded.append(cit)
+                audit_records.append({
+                    "citation": cit,
+                    "grounding_status": "ungrounded",
+                    "source": None
+                })
+        if sent_has_ungrounded:
+            if strict_mode:
+                continue
+            else:
+                for u_cit in sent_cits:
+                    norm_u = re.sub(r'[\s_\-]+', ' ', u_cit.lower())
+                    if not (norm_u in grounded_primary or norm_u in internal_citation_map):
+                        sent_modified = sent_modified.replace(u_cit, f"[CITATION REMOVED: {u_cit} ungrounded in retrieved records]")
+                cleaned_sentences.append(sent_modified)
+        else:
+            cleaned_sentences.append(sent_modified)
+    result_text = " ".join(cleaned_sentences).strip()
+    return result_text, ungrounded, audit_records
+
+
+def count_real_cases_discussed(text: str) -> int:
+    """
+    Counts unique genuine superior court judicial citations in the text.
+    Rejects non-citation patterns (statute years, dates, Order numbers).
+    """
+    if not text:
+        return 0
+    raw_citations = [m.group(0).strip() for m in CITATION_REGEX.finditer(text)]
+    unique_cits = set()
+    for c in raw_citations:
+        norm = re.sub(r'\s+', ' ', c.upper())
+        if any(rep in norm for rep in ["PLD", "SCMR", "CLD", "PCRLJ", "YLR", "CLC", "MLD", "PTD", "PLC", "PLJ", "NLR", "GBLR", "PTCL"]):
+            unique_cits.add(norm)
+    return len(unique_cits)
+
+
+def strip_agent_narration(text: str) -> str:
+    """
+    Strips internal agent self-narration, reasoning leakage, and meta-commentary.
+    Ensures court-ready clean output.
+    """
+    if not text:
+        return ""
+    t = text
+    t = re.sub(r'<(?:thinking|thought|scratchpad)>.*?</(?:thinking|thought|scratchpad)>', '', t, flags=re.DOTALL | re.IGNORECASE).strip()
+    narration_starters = [
+        r'^(?:Here is (?:the|a) (?:formal|detailed|comprehensive)?\s*(?:legal|procedural)?\s*(?:memo|opinion|pleading|petition|draft).*?:?\n+)',
+        r'^(?:I will now (?:draft|provide|generate|search|analyze).*?:?\n+)',
+        r'^(?:Based on (?:my|the) (?:instructions|research|retrieval|findings).*?:?\n+)',
+        r'^(?:As an AI (?:legal|coding)?\s*(?:assistant|system).*?:?\n+)',
+        r'^(?:Certainly[,!]?\s*(?:Here is|Below is).*?:?\n+)',
+    ]
+    for pat in narration_starters:
+        t = re.sub(pat, '', t, flags=re.IGNORECASE)
+    return t.strip()
+
+
+def check_rule_to_subject_consistency(rule_text: str, subject_domain: str) -> Tuple[bool, Optional[str]]:
+    """
+    Verifies that a stated legal rule or statutory section is consistent with the subject matter.
+    """
+    if not rule_text or not subject_domain:
+        return True, None
+    r_lower = rule_text.lower()
+    d_lower = subject_domain.lower()
+    if "family" in d_lower or "khula" in d_lower or "dower" in d_lower or "maintenance" in d_lower:
+        if re.search(r'\border\s*xxi\b', r_lower) and "family courts act" not in r_lower:
+            return False, "Order XXI CPC cannot be directly applied to Family Court execution without Family Courts Act adoption."
+        if "specific relief act" in r_lower:
+            return False, "Specific Relief Act does not govern matrimonial disputes or Khula claims."
+    if "banking" in d_lower or "fio 2001" in d_lower or "mortgage" in d_lower:
+        if "section 9 cpc" in r_lower and ("ordinary civil suit" in r_lower or "civil judge" in r_lower):
+            return False, "Ordinary Section 9 CPC civil suit is barred by Section 7 FIO 2001 for banking recovery/mortgage disputes."
+    if "pre-emption" in d_lower:
+        if "section 12" in r_lower and "specific relief act" in r_lower:
+            return False, "Pre-emption claims are governed by the Pre-emption Act (Talb requirements), not Section 12 Specific Relief Act."
+    return True, None
+
+
+def detect_conflicting_authorities(precedents: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Identifies conflicting authorities or stare decisis hierarchy divergences among retrieved precedents.
+    """
+    if not precedents or len(precedents) < 2:
+        return []
+    conflicts = []
+    sc_cases = []
+    hc_cases = []
+    for p in precedents:
+        meta = p.get("metadata", {}) if isinstance(p, dict) else getattr(p, "metadata", {}) or {}
+        court = str(meta.get("court") or meta.get("court_name") or "").lower()
+        cit = meta.get("citation") or meta.get("neutral_citation") or meta.get("case_id")
+        outcome = str(meta.get("outcome") or "").lower()
+        is_sc = "supreme court" in court or "scmr" in str(cit).lower() or "pld sc" in str(cit).lower()
+        info = {
+            "citation": cit,
+            "title": meta.get("title") or meta.get("case_title"),
+            "court": meta.get("court") or meta.get("court_name"),
+            "outcome": outcome,
+        }
+        if is_sc:
+            sc_cases.append(info)
+        else:
+            hc_cases.append(info)
+    if sc_cases and hc_cases:
+        for sc in sc_cases:
+            for hc in hc_cases:
+                if sc["outcome"] and hc["outcome"] and sc["outcome"] != hc["outcome"] and sc["outcome"] != "unknown" and hc["outcome"] != "unknown":
+                    conflicts.append({
+                        "type": "hierarchy_conflict",
+                        "superior_precedent": sc["citation"],
+                        "subordinate_precedent": hc["citation"],
+                        "note": f"Supreme Court precedent {sc['citation']} controls over High Court precedent {hc['citation']} under Article 189 of the Constitution of Pakistan."
+                    })
+    return conflicts
+
+
+def verify_doctrine_elements(doctrine_name: str, fact_text: str, memo_text: str) -> Dict[str, Any]:
+    """
+    Verifies that all required legal elements of a cited doctrine are addressed in the analysis.
+    """
+    doc_clean = doctrine_name.lower().strip()
+    memo_lower = (memo_text or "").lower()
+    ELEMENT_REGISTRY = {
+        "talb-i-muwathibat": [
+            ("immediate demand", ["immediate", "jumping demand", "in the same sitting", "without delay"]),
+            ("notice of talb-i-ishhad", ["notice", "talb-i-ishhad", "attesting witnesses", "two witnesses", "14 days", "two truthful"]),
+            ("informer disclosure", ["informer", "who informed", "source of information", "date time and place"])
+        ],
+        "tariq bashir": [
+            ("outside prohibitory clause", ["outside prohibitory clause", "punishable with less than 10 years", "not falling within"]),
+            ("bail is the rule", ["rule and refusal is the exception", "grant of bail is the rule", "bail is the rule"]),
+            ("exceptional refusal grounds", ["repetition", "abscondence", "tampering", "exceptional circumstances"])
+        ],
+        "order xxi rule 90": [
+            ("material irregularity or fraud", ["material irregularity", "fraud", "publishing or conducting"]),
+            ("substantial injury", ["substantial injury", "direct consequence", "prejudice"]),
+            ("deposit requirement", ["deposit", "security", "twenty percent", "20%"])
+        ],
+        "section 12 sra": [
+            ("valid contract", ["agreement to sell", "valid contract", "essential terms", "consideration"]),
+            ("readiness and willingness", ["ready and willing", "readiness and willingness", "performed or has always been ready"]),
+            ("adequacy of pecuniary relief", ["pecuniary compensation", "adequate relief", "presumption"])
+        ]
+    }
+    elements = ELEMENT_REGISTRY.get(doc_clean, [])
+    missing = []
+    present = []
+    for elem_name, patterns in elements:
+        if any(p in memo_lower for p in patterns):
+            present.append(elem_name)
+        else:
+            missing.append(elem_name)
+    return {
+        "doctrine": doctrine_name,
+        "all_elements_present": len(missing) == 0,
+        "present_elements": present,
+        "missing_elements": missing
+    }
