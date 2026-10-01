@@ -14,6 +14,16 @@ from main import extract_and_intercept_citation, PRE_DIGITIZATION_BOUNDARY
 
 class TestPreDigitizationBoundary(unittest.TestCase):
 
+    def setUp(self):
+        import main
+        from tests.mock_supabase import MockSupabaseClient
+        self._orig_supabase = main.supabase
+        main.supabase = MockSupabaseClient()
+
+    def tearDown(self):
+        import main
+        main.supabase = self._orig_supabase
+
     def test_pre_1984_scmr_boundary(self):
         """1971 SCMR 264 (Ch. Muhammad Khan v. Sanaullah) must fire pre_digitization_boundary."""
         card, _ = extract_and_intercept_citation("1971 SCMR 264")

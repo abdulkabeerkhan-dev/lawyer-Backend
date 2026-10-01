@@ -8,7 +8,7 @@ import os
 import json
 import unittest
 
-TABLES_DIR = r"c:\Users\kabeer\Documents\lawyer-Backend-master\lawyer-Backend-master\data\statute_tables"
+TABLES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "statute_tables")
 
 REQUIRED_FIELDS = [
     "act_code", "act_name", "provision_type", "primary_num", "secondary_num",

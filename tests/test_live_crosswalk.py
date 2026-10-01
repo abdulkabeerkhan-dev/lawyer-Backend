@@ -7,9 +7,25 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 RAILWAY_URL = os.environ.get("RAILWAY_URL", "https://lawyer-backend-production-5804.up.railway.app")
+RUN_LIVE_TESTS = os.environ.get("RUN_LIVE_TESTS", "").strip().lower() in ("1", "true", "yes")
+skip_unless_live = unittest.skipUnless(RUN_LIVE_TESTS, "Live network test: set RUN_LIVE_TESTS=1 to run")
+
 
 class TestLiveCrosswalk(unittest.TestCase):
 
+    def setUp(self):
+        if not RUN_LIVE_TESTS:
+            import main
+            from tests.mock_supabase import MockSupabaseClient
+            self._orig_sb = getattr(main, "supabase", None)
+            main.supabase = MockSupabaseClient()
+
+    def tearDown(self):
+        if not RUN_LIVE_TESTS:
+            import main
+            main.supabase = self._orig_sb
+
+    @skip_unless_live
     def test_railway_health_check(self):
         """Test that the live Railway backend health check endpoint returns 200 OK."""
         res = httpx.get(f"{RAILWAY_URL}/health", timeout=15.0)
@@ -29,6 +45,7 @@ class TestLiveCrosswalk(unittest.TestCase):
         fmt = format_neutral_citation("High Court of Sindh", "Lahore High Court, Bahawalpur Bench", "2020")
         self.assertEqual(fmt, "Lahore High Court, Bahawalpur Bench (2020)")
 
+    @skip_unless_live
     def test_direct_citation_lookup_no_refusal(self):
         """Test direct database lookup for 2021 SCMR 2092 in Supabase."""
         import dotenv
@@ -84,6 +101,7 @@ This is paragraph 2 of the judgment text.
         self.assertIn("This is paragraph 1 of the judgment text.", cleaned)
         self.assertIn("This is paragraph 2 of the judgment text.", cleaned)
 
+    @skip_unless_live
     def test_target_source_unbound_error_fix(self):
         """Test non-Supreme Court citation query does not throw target_source UnboundLocalError."""
         from main import extract_and_intercept_citation
@@ -91,6 +109,7 @@ This is paragraph 2 of the judgment text.
         row, clean_topic = extract_and_intercept_citation("2008 PCrLJ 858")
         self.assertEqual(clean_topic, "")
 
+    @skip_unless_live
     def test_2013_scmr_51_direct_lookup(self):
         """Test exact lookup for official apex precedent 2013 SCMR 51 (Mian Allah Ditta v. The State)."""
         from main import extract_and_intercept_citation
@@ -99,6 +118,7 @@ This is paragraph 2 of the judgment text.
         self.assertIn("allah ditta", row.get("case_title", "").lower())
         self.assertEqual(clean_topic, "")
 
+    @skip_unless_live
     def test_party_title_fallback(self):
         """Test unmatched reporter citation with party name falls back to party title ilike search."""
         from main import extract_and_intercept_citation
@@ -112,6 +132,7 @@ This is paragraph 2 of the judgment text.
         row, clean_topic = extract_and_intercept_citation("2013 PCrLJ 1403 Section 489-F PPC guarantee cheque")
         self.assertIn("Section 489-F PPC guarantee cheque", clean_topic)
 
+    @skip_unless_live
     def test_quoted_exact_user_prompt(self):
         """Test exact quoted user prompt: \"Search database for 2013 PCrLJ 1403 Mian Allah Ditta\"."""
         from main import extract_and_intercept_citation

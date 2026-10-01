@@ -20,6 +20,16 @@ from core.precedent_tracker import (
 
 class TestPrecedentTracker(unittest.TestCase):
 
+    def setUp(self):
+        import main
+        from tests.mock_supabase import MockSupabaseClient
+        self._orig_supabase = main.supabase
+        main.supabase = MockSupabaseClient()
+
+    def tearDown(self):
+        import main
+        main.supabase = self._orig_supabase
+
     def test_bare_citation_intercept_dosso(self):
         """PLD 1958 SC 533 (State v. Dosso) must attach overruled banner naming Asma Jilani."""
         card, _ = extract_and_intercept_citation("PLD 1958 SC 533")
