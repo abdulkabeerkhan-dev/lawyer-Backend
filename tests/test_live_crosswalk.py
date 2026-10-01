@@ -41,7 +41,9 @@ class TestLiveCrosswalk(unittest.TestCase):
             self.skipTest("Supabase credentials not configured in environment.")
             
         sb = create_client(url, key)
-        res = sb.table("full_judgments").select("*").eq("neutral_citation", "2021 SCMR 2092").limit(1).execute()
+        res = sb.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").eq("case_id", "2021_SCMR_2092").limit(1).execute()
+        if not res or not res.data:
+            res = sb.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date").eq("neutral_citation", "2021 SCMR 2092").limit(1).execute()
         self.assertTrue(len(res.data) > 0, "Failed to locate 2021 SCMR 2092 in Supabase full_judgments table")
         rec = res.data[0]
         self.assertEqual(rec.get("neutral_citation"), "2021 SCMR 2092")
