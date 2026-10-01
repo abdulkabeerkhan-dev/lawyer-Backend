@@ -310,19 +310,133 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
 
 
 class TestPrecedentTagsAndRetryCap(unittest.TestCase):
-    """Tests for pre/post-amendment tags, warnings, and retry cap on new provisions."""
+    """Tests for pre/post-amendment tags, neutral warnings, and real amendment record requirements."""
 
-    def test_temporal_amendment_tagging(self):
+    def test_temporal_amendment_tagging_requires_real_amendment(self):
+        # 1. Missing amending_instrument returns unknown
+        tag, warn = tag_precedent_temporal_amendment(
+            precedent_year=1998,
+            statute_amendment_date="2002-10-25",
+            amending_instrument=None
+        )
+        self.assertEqual(tag, "unknown")
+        self.assertIsNone(warn)
+
+        # 2. Missing valid_from / amendment date returns unknown
+        tag2, warn2 = tag_precedent_temporal_amendment(
+            precedent_year=1998,
+            statute_amendment_date=None,
+            amending_instrument="Ordinance LXXXV of 2002"
+        )
+        self.assertEqual(tag2, "unknown")
+        self.assertIsNone(warn2)
+
+        # 3. Missing precedent year returns unknown
+        tag3, warn3 = tag_precedent_temporal_amendment(
+            precedent_year=None,
+            statute_amendment_date="2002-10-25",
+            amending_instrument="Ordinance LXXXV of 2002"
+        )
+        self.assertEqual(tag3, "unknown")
+        self.assertIsNone(warn3)
+
+    def test_temporal_amendment_pre_and_post_neutral_wording(self):
         # Precedent from 1998 on an amendment that took effect in 2002
-        tag, warn = tag_precedent_temporal_amendment(1998, "2002-10-25")
+        tag, warn = tag_precedent_temporal_amendment(
+            precedent_year=1998,
+            statute_amendment_date="2002-10-25",
+            amending_instrument="Criminal Law (Amendment) Ordinance, 2002 (LXXXV of 2002)",
+            section_label="Section 489-F"
+        )
         self.assertEqual(tag, "pre_amendment")
         self.assertIsNotNone(warn)
-        self.assertIn("prior to the 2002 statutory amendment", warn)
+        # Neutral wording requirement: "Decided before the <date> amendment of <section>. Check whether the amendment affects this point."
+        self.assertEqual(
+            warn,
+            "Decided before the 2002-10-25 amendment of Section 489-F. Check whether the amendment affects this point."
+        )
+        # NEVER say "interprets repealed language"
+        self.assertNotIn("repealed language", warn.lower())
+        self.assertNotIn("interprets", warn.lower())
 
         # Precedent from 2020 on the 2002 amendment
-        tag_post, warn_post = tag_precedent_temporal_amendment(2020, "2002-10-25")
+        tag_post, warn_post = tag_precedent_temporal_amendment(
+            precedent_year=2020,
+            statute_amendment_date="2002-10-25",
+            amending_instrument="Criminal Law (Amendment) Ordinance, 2002 (LXXXV of 2002)",
+            section_label="Section 489-F"
+        )
         self.assertEqual(tag_post, "post_amendment")
         self.assertIsNone(warn_post)
+
+    def test_temporal_amendment_store_lookup(self):
+        # In baseline store with no amendment record, returns unknown
+        tag_base, warn_base = tag_precedent_temporal_amendment(
+            precedent_year=1995,
+            act_code="PPC_1860",
+            canonical_id="PPC_1860_SEC_489F"
+        )
+        self.assertEqual(tag_base, "unknown")
+        self.assertIsNone(warn_base)
+
+        # In a test store where an amendment version is appended
+        test_dir = tempfile.mkdtemp()
+        test_staging = tempfile.mkdtemp()
+        try:
+            store = StatuteVersionStore(storage_dir=test_dir, staging_dir=test_staging)
+            # V1: baseline
+            store.append_version(
+                canonical_id="TEST_ACT_SEC_5",
+                act_code="TEST_ACT",
+                title="Section 5",
+                status="in_force"
+            )
+            # Check before amendment
+            t0, w0 = tag_precedent_temporal_amendment(
+                precedent_year=2010,
+                act_code="TEST_ACT",
+                canonical_id="TEST_ACT_SEC_5",
+                store=store
+            )
+            self.assertEqual(t0, "unknown")
+            self.assertIsNone(w0)
+
+            # V2: amendment with amending_instrument and valid_from
+            store.append_version(
+                canonical_id="TEST_ACT_SEC_5",
+                act_code="TEST_ACT",
+                title="Section 5",
+                status="amended",
+                amending_instrument="Act XII of 2018",
+                valid_from="2018-05-15",
+                source_tier="tier_1"
+            )
+
+            # Precedent before 2018 amendment
+            t_pre, w_pre = tag_precedent_temporal_amendment(
+                precedent_year=2012,
+                act_code="TEST_ACT",
+                canonical_id="TEST_ACT_SEC_5",
+                store=store
+            )
+            self.assertEqual(t_pre, "pre_amendment")
+            self.assertEqual(
+                w_pre,
+                "Decided before the 2018-05-15 amendment of Section 5. Check whether the amendment affects this point."
+            )
+
+            # Precedent after 2018 amendment
+            t_after, w_after = tag_precedent_temporal_amendment(
+                precedent_year=2021,
+                act_code="TEST_ACT",
+                canonical_id="TEST_ACT_SEC_5",
+                store=store
+            )
+            self.assertEqual(t_after, "post_amendment")
+            self.assertIsNone(w_after)
+        finally:
+            shutil.rmtree(test_dir, ignore_errors=True)
+            shutil.rmtree(test_staging, ignore_errors=True)
 
 
 class TestRetrievalRelevance(unittest.TestCase):

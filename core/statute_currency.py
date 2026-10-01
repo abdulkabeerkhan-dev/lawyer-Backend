@@ -11,7 +11,7 @@ import json
 import time
 from enum import Enum
 from datetime import datetime, timezone, timedelta
-from typing import Dict, List, Optional, Tuple, Any
+from typing import Dict, List, Optional, Tuple, Any, Union
 
 WORKSPACE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATUTE_VERSIONS_DIR = os.path.join(WORKSPACE_DIR, "data", "statute_versions")
@@ -450,6 +450,7 @@ def check_statute_currency(
         display_tag = "[NOT-CHECKED: not in verified store]" if os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() != "off" else ""
         return {
             "canonical_id": canonical_id,
+            "act_code": act_code,
             "label": "NOT-CHECKED",
             "tier": None,
             "verification_status": "unverified",
@@ -498,6 +499,7 @@ def check_statute_currency(
 
     return {
         "canonical_id": canonical_id,
+        "act_code": act_code,
         "label": label,
         "tier": tier,
         "verification_status": v_status,
@@ -518,39 +520,95 @@ def check_statute_currency(
 
 
 def tag_precedent_temporal_amendment(
-    precedent_year: Optional[int],
+    precedent_year: Optional[Union[int, str]],
     statute_amendment_date: Optional[str] = None,
     act_code: Optional[str] = None,
-    canonical_id: Optional[str] = None
+    canonical_id: Optional[str] = None,
+    amending_instrument: Optional[str] = None,
+    section_label: Optional[str] = None,
+    store: Optional[StatuteVersionStore] = None
 ) -> Tuple[str, Optional[str]]:
     """
-    Part 2, Item 1:
+    Part 1, Item 2: Temporal Tagging
     Tags a retrieved precedent as decided under pre-amendment text, post-amendment text, or unknown.
     Returns (temporal_tag, warning_message).
+
+    STRICT RULES:
+    1. Returns 'unknown' unless the provision has a REAL amendment record
+       (amending_instrument present AND valid_from set).
+    2. Neutral warning wording:
+       "Decided before the <date> amendment of <section>. Check whether the amendment affects this point."
+    3. NEVER says "interprets repealed language" or alarmist language.
     """
     if not precedent_year:
         return ("unknown", None)
 
+    # 1. Resolve real amendment record
+    active_store = store or global_statute_store
     amend_date = statute_amendment_date
-    if not amend_date and act_code and canonical_id:
-        latest = global_statute_store.get_latest_version(act_code, canonical_id)
-        if latest:
-            amend_date = latest.get("commencement_date") or latest.get("enacted_date")
+    inst = amending_instrument
 
-    if not amend_date:
+    # If act_code and canonical_id provided, look in version store for real amendment records
+    if act_code and canonical_id:
+        versions = active_store.get_versions(act_code)
+        matching = [v for v in versions if v.get("canonical_id") == canonical_id]
+        # An amendment record is a version that has an amending_instrument AND valid_from
+        amendment_versions = [
+            v for v in matching
+            if v.get("amending_instrument") and v.get("valid_from")
+        ]
+        if amendment_versions:
+            latest_amend = amendment_versions[-1]
+            if not amend_date:
+                amend_date = latest_amend.get("valid_from")
+            if not inst:
+                inst = latest_amend.get("amending_instrument")
+            if not section_label:
+                section_label = latest_amend.get("title_only") or latest_amend.get("title")
+
+    # If still missing either amending_instrument or valid_from (amend_date), we cannot confirm a real amendment
+    if not inst or not amend_date:
         return ("unknown", None)
 
+    # 2. Extract precedent year and amendment year/date
     try:
-        amend_year = int(str(amend_date)[:4])
-        p_year = int(str(precedent_year)[:4])
+        p_str = str(precedent_year).strip()
+        m_py = re.search(r'\b(19\d\d|20\d\d)\b', p_str)
+        if not m_py:
+            return ("unknown", None)
+        p_year = int(m_py.group(1))
+
+        amend_date_str = str(amend_date).strip()
+        m_ay = re.search(r'\b(19\d\d|20\d\d)\b', amend_date_str)
+        if not m_ay:
+            return ("unknown", None)
+        amend_year = int(m_ay.group(1))
     except Exception:
         return ("unknown", None)
 
-    if p_year < amend_year:
-        return (
-            "pre_amendment",
-            f"⚠️ Notice: Decided in {p_year}, prior to the {amend_year} statutory amendment. Verify continued applicability under amended text."
-        )
+    # 3. Resolve section display label
+    if not section_label:
+        if canonical_id:
+            m = re.search(r'_(SEC|ART|RULE|SECTION)_([A-Za-z0-9_\-]+)$', canonical_id, re.IGNORECASE)
+            if m:
+                ptype = "Section" if m.group(1).upper() in ("SEC", "SECTION") else ("Article" if m.group(1).upper() == "ART" else "Rule")
+                sec_num = m.group(2).replace('_', '-')
+                section_label = f"{ptype} {sec_num}"
+            else:
+                section_label = canonical_id
+        else:
+            section_label = "the provision"
+
+    # 4. Compare dates
+    # If both full ISO dates YYYY-MM-DD are present, perform date comparison
+    if len(p_str) >= 10 and len(amend_date_str) >= 10 and re.match(r'^\d{4}-\d{2}-\d{2}', p_str) and re.match(r'^\d{4}-\d{2}-\d{2}', amend_date_str):
+        is_pre = p_str[:10] < amend_date_str[:10]
+    else:
+        is_pre = p_year < amend_year
+
+    if is_pre:
+        warning_msg = f"Decided before the {amend_date_str} amendment of {section_label}. Check whether the amendment affects this point."
+        return ("pre_amendment", warning_msg)
     else:
         return ("post_amendment", None)
 

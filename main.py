@@ -3939,14 +3939,18 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 for cf in (currency_findings or []):
                     t_tag, t_warn = tag_precedent_temporal_amendment(
                         precedent_year=prec_year,
-                        statute_amendment_date=cf.get("commencement_date"),
+                        statute_amendment_date=cf.get("valid_from") or cf.get("commencement_date"),
                         act_code=cf.get("act_code"),
-                        canonical_id=cf.get("canonical_id")
+                        canonical_id=cf.get("canonical_id"),
+                        amending_instrument=cf.get("amending_instrument"),
+                        section_label=cf.get("title_only") or cf.get("title")
                     )
                     if t_warn:
                         temporal_tag = t_tag
                         temporal_warning = t_warn
                         break
+                    elif t_tag != "unknown":
+                        temporal_tag = t_tag
 
                 clean_holding_snip = generate_clean_snippet(text_content, max_words=45)
                 is_full_text = (c_type_val == "full_text")
