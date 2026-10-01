@@ -31,7 +31,7 @@ from pydantic import BaseModel
 from prompts.pleading_generator import PLEADING_SYSTEM_PROMPT
 from core.document_builder import generate_court_docx
 from core.retrieval_logger import RetrievalTraceLogger
-from core.legal_guardrails import decompose_compound_legal_query
+from core.legal_guardrails import decompose_compound_legal_query, is_compiled_headnote, check_memo_completeness
 
 
 try:
@@ -3349,7 +3349,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             c_type = "full_text"
                             c_name = "Lahore High Court"
                         else:
-                            c_type = row.get("content_type") or ("headnote_only" if len(raw_txt_full.split()) < 300 else "full_text")
+                            c_type = "headnote_only" if is_compiled_headnote(raw_txt_full) else (row.get("content_type") or ("headnote_only" if len(raw_txt_full.split()) < 300 else "full_text"))
 
                         boosted_matches.append({
                             "score": 0.99,
@@ -3601,6 +3601,17 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         )
                         if is_state_criminal_case:
                             continue
+
+                    # Strict Banking / Mortgage / FIO 2001 query hygiene: filter out partition/family cases unless specifically queried
+                    is_banking_execution_query = any(k in sq_lower or k in effective_user_query.lower() for k in ["fio 2001", "financial institutions", "mortgage auction", "recovery of finances", "order xxi rule 90"])
+                    if is_banking_execution_query:
+                        haystack_check = f"{case_title_str} {full_text_str}".lower()
+                        is_pure_family_or_partition = (
+                            any(k in haystack_check for k in ["khula", "dower", "maintenance decree", "minor custody", "family court act", "dissolution of marriage", "partition of immoveable property"]) and
+                            not any(k in haystack_check for k in ["banking court", "financial institution", "fio 2001", "mortgaged property", "mortgage auction", "recovery of finances"])
+                        )
+                        if is_pure_family_or_partition and not any(k in effective_user_query.lower() for k in ["family", "khula", "partition", "custody"]):
+                            continue
                 cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
                 cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
                 if cid_key and (cid_key in seen_in_query or cid_key in _seen_case_ids_global):
@@ -3767,16 +3778,34 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                                 else:
                                     best_ext = valid_ext[0]
                                     upgraded_target = headnote_candidates[0]
-                                    if "metadata" in upgraded_target and isinstance(upgraded_target["metadata"], dict):
-                                        upgraded_target["metadata"]["text"] = best_ext["metadata"]["text"]
-                                        upgraded_target["metadata"]["full_text"] = best_ext["metadata"]["text"]
-                                        upgraded_target["metadata"]["content_type"] = "fresh_court_fetch"
-                                        upgraded_target["metadata"]["pdf_url"] = best_ext["metadata"].get("pdf_url")
-                                        upgraded_target["metadata"]["source_url"] = best_ext["metadata"].get("source_url")
-                                        upgraded_target["metadata"]["is_upgraded_from_headnote"] = True
-                                    upgraded_target["content_type"] = "fresh_court_fetch"
-                                    upgraded_target["text"] = best_ext["metadata"]["text"]
-                                    print(f"✅ [HEADNOTE UPGRADE OK]: Upgraded headnote candidate '{fallback_target_query}' to full verbatim court judgment.", flush=True)
+                                    best_meta = best_ext.get("metadata", {}) if isinstance(best_ext, dict) else getattr(best_ext, "metadata", {}) or {}
+
+                                    # Identity verification: check if best_ext actually matches the target headnote's citation or title
+                                    ext_cit = str(best_meta.get("citation") or best_meta.get("neutral_citation") or "").strip().lower()
+                                    ext_title = str(best_meta.get("title") or best_meta.get("case_title") or "").strip().lower()
+                                    ext_text = str(best_meta.get("text") or "").lower()
+
+                                    target_cit_norm = re.sub(r'[^a-z0-9]', '', hn_cit.lower())
+                                    target_words = [w for w in re.sub(r'[^a-z0-9\s]', ' ', hn_title.lower()).split() if len(w) > 3 and w not in ("versus", "petition", "appeal", "application", "others", "another")]
+
+                                    cit_matches = bool(target_cit_norm and target_cit_norm in re.sub(r'[^a-z0-9]', '', ext_cit))
+                                    title_matches = bool(target_words and any(w in ext_title or w in ext_text[:600] for w in target_words))
+
+                                    if cit_matches or title_matches:
+                                        if "metadata" in upgraded_target and isinstance(upgraded_target["metadata"], dict):
+                                            upgraded_target["metadata"]["text"] = best_ext["metadata"]["text"]
+                                            upgraded_target["metadata"]["full_text"] = best_ext["metadata"]["text"]
+                                            upgraded_target["metadata"]["content_type"] = "fresh_court_fetch"
+                                            upgraded_target["metadata"]["pdf_url"] = best_ext["metadata"].get("pdf_url")
+                                            upgraded_target["metadata"]["source_url"] = best_ext["metadata"].get("source_url")
+                                            upgraded_target["metadata"]["is_upgraded_from_headnote"] = True
+                                        upgraded_target["content_type"] = "fresh_court_fetch"
+                                        upgraded_target["text"] = best_ext["metadata"]["text"]
+                                        print(f"✅ [HEADNOTE UPGRADE OK]: Upgraded headnote candidate '{fallback_target_query}' to full verbatim court judgment.", flush=True)
+                                    else:
+                                        print(f"⚠️ [HEADNOTE UPGRADE REJECTED]: External candidate '{ext_cit}' does NOT match target headnote '{hn_cit}'. Preserving original candidate text.", flush=True)
+                                        if headnote_candidates:
+                                            trigger_background_headnote_worker(case_id=hn_case_id, citation=hn_cit, title=hn_title, portal_url=str(hn_portal_url or ""))
                             else:
                                 if headnote_candidates:
                                     trigger_background_headnote_worker(case_id=hn_case_id, citation=hn_cit, title=hn_title, portal_url=str(hn_portal_url or ""))
@@ -3822,12 +3851,14 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     neutral_cit in COLLISION_WHITELIST or
                     any(k in str(case_id).lower() or k in str(neutral_cit).lower() for k in ["2006_ylr_1206", "2006 ylr 1206", "2007_ylr_2827", "2007 ylr 2827", "2006_ylr_3278", "2006 ylr 3278", "2006_ylr_96", "2006 ylr 96"])
                 )
-                if is_whitelisted or raw_c_type == "full_text":
+                if is_compiled_headnote(text_content) or is_compiled_headnote(full_body_str):
+                    c_type_val = "headnote_only"
+                elif is_whitelisted or raw_c_type == "full_text":
                     c_type_val = "full_text"
                     if is_whitelisted:
                         court = "Lahore High Court"
                 elif raw_c_type == "headnote_only":
-                    c_type_val = "headnote_only" if not has_full_body else "full_text"
+                    c_type_val = "headnote_only"
                 elif not raw_c_type or str(raw_c_type).lower() in ("unknown", "none"):
                     c_type_val = "full_text" if has_full_body else "headnote_only"
                 else:
@@ -4017,7 +4048,7 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
 13. CONTENT TYPE & HEADNOTE TRANSPARENCY RULE:
     - Each retrieved precedent indicates CONTENT TYPE: 'full_text', 'headnote_only', or 'unknown'.
     - ALWAYS DISCLOSE HEADNOTE_ONLY: When citing or relying on any precedent tagged as 'headnote_only', you MUST explicitly disclose to the advocate that only the reported headnote summary is currently available in the database.
-    - NEVER QUOTE HEADNOTES AS JUDICIAL REASONING: Never quote headnote text as the court's or judge's verbatim words. Headnotes are editorial summaries, not judicial dictums.
+    - NUANCED QUOTE RULE FOR HEADNOTES: You may quote headnote text ONLY if explicitly introduced as reported headnote wording (e.g., "The reported headnote states: '...'"). NEVER attribute headnote text to judicial speech (e.g., do NOT write "The Court held: '...'" or "The Supreme Court stated: '...'"). Headnotes are editorial summaries, not judicial dictums.
     - ADVISE VERIFICATION: Explicitly advise the advocate to verify the proposition against the certified or official full judgment text before presenting it in pleadings or oral arguments.
     - Treat 'unknown' content type neutrally as an electronic summary, adhering to the same verification principles if text brevity suggests it is not a full verbatim opinion.
 
@@ -4037,6 +4068,14 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
       * NEVER pretend, guess, or extrapolate that the requirement exists, nor claim that it "survived constitutional challenge".
       * In your Executive Summary and under a dedicated sub-heading "### Issues Not Supported by Retrieved Authorities":
         State plainly that no statutory provision or reported precedent was found establishing that requirement, explain what the verified statutory rule actually is (e.g. the statutory deposit under Order XXI Rule 90 second proviso is strictly 20%), and advise the advocate that the figure is ungrounded in reported case law.
+
+17. HOLDING SCOPE & 20%/50% RECONCILIATION:
+    - Ratios must not exceed the source text: A dismissal for failure to comply with an interim direction or warning cannot be stated as a substantive rule of law that 50% is lawful or non-waivable on quantum.
+    - Precedents decided in partition execution or family matters must never be represented as banking execution authorities under FIO 2001.
+    - When a court-directed deposit differs from the statutory 20% proviso under Order XXI Rule 90 CPC, state that the legal basis for demanding an amount exceeding 20% is NOT addressed in the retrieved sources, rather than asserting 50% is a statutory or non-waivable rule.
+
+18. UNIVERSAL CONTEXT GROUNDING (CITATIONS & CONSTITUTIONAL ARTICLES):
+    - Every case citation, statute section, and Constitutional Article (e.g. Arts. 4, 9, 10-A, 25) cited in your opinion MUST appear in the retrieved context chunks. Never cite ungrounded citations or articles from parametric memory.
 """
 
 
@@ -4120,7 +4159,7 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
                 c_type = "full_text"
                 c_name = "Lahore High Court"
             else:
-                c_type = intercepted_card.get("content_type") or ("headnote_only" if len(c_text.split()) < 300 else "full_text")
+                c_type = "headnote_only" if is_compiled_headnote(c_text) else (intercepted_card.get("content_type") or ("headnote_only" if len(c_text.split()) < 300 else "full_text"))
 
             clean_holding_snip = generate_clean_snippet(c_text, max_words=45)
             precedent_card_dict = {
@@ -4294,20 +4333,41 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         # is exactly where cross-jurisdiction statutory leakage (India/UK substance on a correctly
         # named Pakistani act) is most likely to slip through ungrounded.
         _discusses_statute = bool(re.search(r'\b(section|article|order\s+[ivxlcdm]+)\s+\d', raw_model_output, re.IGNORECASE))
-        if citations_payload or _discusses_statute:
-            lint_errors = lint_legal_output(raw_model_output, query_context=effective_user_query, context_chunks=citations_payload)
-            if lint_errors:
-                print(f"⚠️ Legal Guardrails Lint Errors detected: {lint_errors}. Triggering reflection loop...", file=sys.stderr)
-                reflection_prompt = f"CRITICAL INSTRUCTION: Do NOT output conversational meta-commentary about the correction. Silently correct these legal issues in your answer and re-output the full corrected response in the same style: {'; '.join(lint_errors)}"
-                reflection_messages = list(messages) + [
-                    {"role": "assistant", "content": raw_model_output},
-                    {"role": "user", "content": reflection_prompt},
-                ]
-                claude_message_ref = await safe_create_anthropic_message(
-                    model=CLAUDE_MODEL, max_tokens=8192, max_output_tokens=8192, system=combined_system_prompt, messages=reflection_messages
+        _is_formal_opinion = bool(citations_payload or _discusses_statute or "executive summary" in raw_model_output.lower())
+
+        MAX_REFLECTION_ROUNDS = 2
+        for ref_round in range(MAX_REFLECTION_ROUNDS):
+            lint_errors = []
+            if citations_payload or _discusses_statute:
+                lint_errors = lint_legal_output(raw_model_output, query_context=effective_user_query, context_chunks=citations_payload)
+
+            is_complete, completeness_issues = check_memo_completeness(raw_model_output, is_formal_opinion=_is_formal_opinion)
+            all_issues = lint_errors + (completeness_issues if not is_complete else [])
+            if not all_issues:
+                break
+
+            print(f"⚠️ Legal Guardrails & Completeness Issues (round {ref_round+1}): {all_issues}. Triggering reflection loop...", file=sys.stderr)
+            reflection_prompt = f"CRITICAL INSTRUCTION: Do NOT output conversational meta-commentary. Silently correct these legal/completeness issues in your answer and re-output the full completed response (ensuring all required sections have at least 40 words and valid <<<CARDS>>> JSON): {'; '.join(all_issues)}"
+            reflection_messages = list(messages) + [
+                {"role": "assistant", "content": raw_model_output},
+                {"role": "user", "content": reflection_prompt},
+            ]
+            claude_message_ref = await safe_create_anthropic_message(
+                model=CLAUDE_MODEL, max_tokens=8192, max_output_tokens=8192, system=combined_system_prompt, messages=reflection_messages
+            )
+            raw_model_output = "".join(getattr(b, "text", "") for b in claude_message_ref.content if getattr(b, "type", None) == "text").strip()
+            is_token_truncated = (getattr(claude_message_ref, "stop_reason", None) == "max_tokens")
+
+        if _is_formal_opinion:
+            is_complete, remaining_issues = check_memo_completeness(raw_model_output, is_formal_opinion=True)
+            if not is_complete or is_token_truncated:
+                print(f"⚠️ [JOB {job_id}] Formal legal memo failed completeness checks after retries: {remaining_issues}", file=sys.stderr)
+                raw_model_output = (
+                    "⚠️ **[GENERATION INCOMPLETE NOTICE]**: The legal research memorandum could not be completed with verified statutory "
+                    "and precedent coverage across all mandatory sections. To prevent incomplete or misleading legal advice, generation was aborted.\n\n"
+                    f"**Missing/Incomplete Items**: {', '.join(remaining_issues)}\n\n"
+                    "Please refine or narrow your research query to regenerate a verified memorandum."
                 )
-                raw_model_output = "".join(getattr(b, "text", "") for b in claude_message_ref.content if getattr(b, "type", None) == "text").strip()
-                is_token_truncated = (getattr(claude_message_ref, "stop_reason", None) == "max_tokens")
 
         executive_answer = ""
         precedent_cards = []
@@ -4343,10 +4403,30 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         for card in precedent_cards:
             matched = None
             claimed_id = card.get("case_id")
-            if claimed_id and claimed_id in citations_by_id:
-                matched = citations_by_id[claimed_id]
-            elif card.get("citation") and _norm_key(card.get("citation")) in citations_by_citation:
-                matched = citations_by_citation[_norm_key(card["citation"])]
+            claimed_cit_key = _norm_key(card.get("citation")) if card.get("citation") else None
+
+            matched_by_id = citations_by_id.get(claimed_id) if claimed_id else None
+            matched_by_cit = citations_by_citation.get(claimed_cit_key) if claimed_cit_key else None
+
+            if matched_by_id and matched_by_cit:
+                # Two-way check: Both case_id and citation were provided.
+                # Verify they resolve to the SAME underlying case record!
+                id_from_id = str(matched_by_id.get("case_id") or matched_by_id.get("supabase_id") or "").strip().lower()
+                id_from_cit = str(matched_by_cit.get("case_id") or matched_by_cit.get("supabase_id") or "").strip().lower()
+                cit_from_id = _norm_key(matched_by_id.get("citation") or "")
+                cit_from_cit = _norm_key(matched_by_cit.get("citation") or "")
+
+                if id_from_id != id_from_cit and cit_from_id != cit_from_cit:
+                    print(f"⚠️ [JOB {job_id}] Dropping precedent card due to IDENTITY CONFLICT: claimed_id '{claimed_id}' points to '{matched_by_id.get('citation')}' while claimed citation '{card.get('citation')}' points to '{matched_by_cit.get('citation')}'. Dropping card.", file=sys.stderr)
+                    matched = None
+                else:
+                    matched = matched_by_id
+            elif matched_by_id:
+                matched = matched_by_id
+            elif matched_by_cit:
+                matched = matched_by_cit
+            else:
+                matched = None
 
             if matched:
                 # Trust ONLY the backend's own retrieved data for identity/text fields --
@@ -4483,7 +4563,8 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         if not is_missing_doc_response:
             try:
                 from core.statutory_validator import validate_citations_in_text
-                stat_scan = validate_citations_in_text(display_answer)
+                # Scan visible executive answer rather than answer with raw backend sources appended
+                stat_scan = validate_citations_in_text(executive_answer)
                 if stat_scan.get("warning_banner") and "Statutory Citation Notice" not in display_answer:
                     display_answer = f"{stat_scan['warning_banner']}\n\n" + display_answer
             except Exception as stat_banner_err:

@@ -1,4 +1,5 @@
 import re
+import json
 from typing import List, Dict, Any, Optional, Tuple, Set
 
 SYSTEM_LEGAL_DIRECTIVE = """
@@ -190,6 +191,107 @@ MANDATORY ADJUDICATION RULES:
 """
 
 
+ROMAN_NUMERAL_MAP = {
+    "i": 1, "ii": 2, "iii": 3, "iv": 4, "v": 5, "vi": 6, "vii": 7, "viii": 8, "ix": 9, "x": 10,
+    "xi": 11, "xii": 12, "xiii": 13, "xiv": 14, "xv": 15, "xvi": 16, "xvii": 17, "xviii": 18,
+    "xix": 19, "xx": 20, "xxi": 21, "xxii": 22, "xxiii": 23, "xxiv": 24, "xxv": 25, "xxvi": 26,
+    "xxvii": 27, "xxviii": 28, "xxix": 29, "xxx": 30, "xxxix": 39, "xl": 40, "xli": 41
+}
+
+def normalize_statute_citation(cit: str) -> str:
+    """
+    Normalizes statutory citations across formatting conventions:
+    'Order XXI Rule 66' <-> 'O.XXI, R.66' <-> 'Order 21, Rule 66' <-> 'O.21, R.66'
+    'Section 19' <-> 'Sec. 19' <-> 'S. 19' <-> 's. 19'
+    'Article 199' <-> 'Art. 199'
+    """
+    if not cit or not isinstance(cit, str):
+        return ""
+    c = cit.lower().strip()
+    c = re.sub(r'[,;.]', ' ', c)
+    c = re.sub(r'\s+', ' ', c).strip()
+
+    def _sub_order(m):
+        raw_val = m.group(1).lower().strip()
+        num = ROMAN_NUMERAL_MAP.get(raw_val, raw_val)
+        return f"order {num}"
+
+    c = re.sub(r'\b(?:order|ord|o)\s+([ivxlcdm\d]+)', _sub_order, c)
+    c = re.sub(r'\b(?:rule|r)\s+(\d+[a-z]?)', r'rule \1', c)
+    c = re.sub(r'\b(?:section|sec|s)\s+(\d+[a-z]?)', r'section \1', c)
+    c = re.sub(r'\b(?:article|art)\s+(\d+[a-z]?)', r'article \1', c)
+    return c
+
+
+def is_statute_in_source(statute_phrase: str, source_text: str) -> bool:
+    """
+    Checks if a normalized statute citation appears in a source text.
+    """
+    if not statute_phrase or not source_text:
+        return False
+    norm_phrase = normalize_statute_citation(statute_phrase)
+    norm_source = normalize_statute_citation(source_text)
+    if norm_phrase in norm_source:
+        return True
+
+    tokens = norm_phrase.split()
+    if len(tokens) >= 4 and tokens[0] == "order" and tokens[2] == "rule":
+        ord_part = f"order {tokens[1]}"
+        rule_part = f"rule {tokens[3]}"
+        return ord_part in norm_source and rule_part in norm_source
+    if len(tokens) >= 2 and tokens[0] in ("section", "article"):
+        sec_part = f"{tokens[0]} {tokens[1]}"
+        return sec_part in norm_source
+
+    return False
+
+
+def is_compiled_headnote(text: str) -> bool:
+    """
+    Detects whether a precedent text is an editorial compiled headnote digest (e.g., from PLD/SCMR/CLD/YLR)
+    rather than an actual verbatim judicial order or judgment text.
+    
+    Compiled headnotes exhibit:
+    - Multiple catchword separator dashes ('----' or '---')
+    - Editorial statute catchwords ('Civil Procedure Code (V of 1908)---', 'O. XXI, R. 90---', 'Ss. 15 & 19---')
+    - Repeated editorial 'Held:' / 'Held, that' summaries
+    - Volume/page editorial markers ('[p. 1087] A', '[pp. 1220] B')
+    - Absence of authentic judicial opening preambles ('ORDER', 'JUDGMENT', 'Heard learned counsel', etc.)
+    """
+    if not text or not isinstance(text, str):
+        return False
+    t_clean = text.strip()
+    if len(t_clean) < 30:
+        return False
+
+    has_dash_separators = len(re.findall(r'-{3,}', t_clean)) >= 2
+    has_catchword_headers = bool(re.search(r'(?:[A-Z][A-Za-z\s\(\)]+\([A-Za-z\d\s]+\)---|\bO\.\s*[IVXLCDM\d]+[,\s]+R\.\s*\d+---|\bSs?\.\s*\d+---)', t_clean))
+    has_repeated_held = len(re.findall(r'\bHeld\s*[:,]', t_clean, re.IGNORECASE)) >= 2
+    has_editorial_page_pins = bool(re.search(r'\[pp?\.?\s*\d+[^\]]*\]\s*[A-Z]', t_clean))
+
+    judicial_hallmarks = [
+        r'^\s*(?:ORDER|JUDGMENT)\b',
+        r'\b(?:heard\s+(?:the\s+)?learned\s+counsel|through\s+this\s+(?:petition|appeal|suit))\b',
+        r'\b(?:this\s+(?:civil\s+)?(?:petition|appeal|application)\s+is\s+directed\s+against)\b',
+        r'\b(?:leave\s+to\s+appeal\s+was\s+granted)\b',
+        r'\b(?:the\s+impugned\s+(?:judgment|order)\s+dated)\b',
+        r'\b(?:brief\s+facts\s+(?:of\s+the\s+case|are\s+that))\b',
+        r'\b(?:advocate\s+for\s+(?:the\s+)?petitioner|advocate\s+supreme\s+court)\b',
+        r'\b(?:by\s+this\s+(?:common\s+)?order)\b',
+        r'\b(?:we\s+have\s+heard|perused\s+the\s+record)\b',
+    ]
+    t_first_500 = t_clean[:500]
+    has_judicial_hallmark = any(re.search(pat, t_first_500, re.IGNORECASE | re.MULTILINE) for pat in judicial_hallmarks)
+
+    if (has_dash_separators or has_catchword_headers or has_repeated_held or has_editorial_page_pins) and not has_judicial_hallmark:
+        return True
+
+    if (len(re.findall(r'-{3,}', t_clean)) >= 3) and (has_repeated_held or has_editorial_page_pins):
+        return True
+
+    return False
+
+
 def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: Optional[List[Any]] = None) -> List[str]:
     """
     Deterministically scans generated legal drafts for severe statutory hallucinations,
@@ -198,6 +300,20 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
     errors = []
     text_lower = draft_text.lower()
     query_lower = query_context.lower()
+
+    # Build comprehensive context string from query_context and context_chunks
+    context_parts = [query_context or ""]
+    if context_chunks:
+        for c in context_chunks:
+            if isinstance(c, dict):
+                meta = c.get("metadata", {}) if isinstance(c.get("metadata"), dict) else {}
+                txt = c.get("full_judgment_body") or c.get("text") or c.get("preview") or meta.get("text") or meta.get("full_text") or ""
+                cit = c.get("citation") or c.get("neutral_citation") or meta.get("citation") or meta.get("neutral_citation") or ""
+                title = c.get("case_name") or c.get("title") or meta.get("title") or meta.get("case_title") or ""
+                context_parts.extend([str(cit), str(title), str(txt)])
+            else:
+                context_parts.append(str(c))
+    full_context_text = " ".join(context_parts)
 
     # Rule 1: Specific performance limitation checks
     if any(k in query_lower or k in text_lower for k in ["specific performance", "agreement to sell", "sale agreement"]):
@@ -396,7 +512,8 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
         for c in context_chunks:
             meta = c.get("metadata", {}) if isinstance(c, dict) else (getattr(c, "metadata", {}) or {})
             c_type = meta.get("content_type") or (c.get("content_type") if isinstance(c, dict) else None)
-            if c_type == "headnote_only":
+            raw_t = str(c.get("full_judgment_body") or c.get("text") or c.get("preview") or meta.get("text") or meta.get("full_text") or "")
+            if c_type == "headnote_only" or is_compiled_headnote(raw_t):
                 cit = meta.get("citation") or meta.get("neutral_citation") or (c.get("citation") if isinstance(c, dict) else None)
                 if cit:
                     headnote_cits.add(str(cit).strip())
@@ -488,6 +605,79 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
                 errors.append(
                     "Erroneously asserting that a 50% pre-deposit requirement has survived constitutional challenge, is constitutionally valid, or is mandatory under FIO 2001 / Order XXI Rule 90 (The statutory deposit requirement under the second proviso to Order XXI Rule 90 CPC is strictly 20%; no reported precedent establishes a general 50% statutory pre-deposit, and fabricating constitutional approval or statutory status for an ungrounded 50% figure is prohibited)."
                 )
+
+    # Rule 23: Universal Precedent Citation Grounding
+    # Scans for law reporter citations (SCMR, PLD, CLD, YLR, CLC, MLD, PCrLJ, PTD, PLC, GBLR).
+    # If a citation appears in the output, it must appear in the retrieved context chunks (or query_context).
+    if context_chunks is not None and full_context_text.strip():
+        found_cits = set(re.findall(r'\b(?:19\d{2}|20\d{2})\s+(?:SCMR|PLD|CLD|YLR|CLC|MLD|PCrLJ|PTD|PLC|GBLR)\s+\d+\b', draft_text, re.IGNORECASE))
+        found_cits.update(re.findall(r'\bPLD\s+(?:19\d{2}|20\d{2})\s+(?:SC|Lahore|Karachi|Peshawar|Quetta|Supreme Court|High Court)\s+\d+\b', draft_text, re.IGNORECASE))
+
+        ctx_clean = re.sub(r'[^a-z0-9]', '', full_context_text.lower())
+        for cit in sorted(found_cits):
+            cit_clean = re.sub(r'[^a-z0-9]', '', cit.lower())
+            if cit_clean and cit_clean not in ctx_clean:
+                errors.append(
+                    f"Ungrounded Precedent Citation: '{cit}' appears in generated output but is NOT present in retrieved context chunks."
+                )
+
+    # Rule 24: Universal Constitutional Article Grounding
+    # Substantive Constitutional Articles (e.g., Article 25, 4, 9, 10-A, 199) cited in output
+    # must be grounded in context chunks or query. Articles 189/201/185/175 are standard procedural mentions.
+    if context_chunks is not None and full_context_text.strip():
+        art_matches = re.finditer(r'\bArticle\s+(\d+[A-Za-z]?(?:-\w+)?)\s+(?:of\s+(?:the\s+)?)?Constitution\b', draft_text, re.IGNORECASE)
+        ctx_text_lower = full_context_text.lower()
+        seen_articles = set()
+        for am in art_matches:
+            art_raw = am.group(1)
+            art_num = art_raw.lower()
+            if art_num in seen_articles:
+                continue
+            seen_articles.add(art_num)
+            if art_num in ["189", "201", "185", "175"]:
+                continue
+            art_pattern = rf'\barticle\s*{re.escape(art_num)}\b'
+            if not re.search(art_pattern, ctx_text_lower) and not re.search(art_pattern, query_lower):
+                errors.append(
+                    f"Ungrounded Constitutional Article: 'Article {art_raw}' is cited in generated output but does not appear in retrieved context chunks or query."
+                )
+
+    # Rule 25: Headnote Quote Discipline (Nuanced Quote Rule)
+    # Quoting headnote text is permitted ONLY when explicitly introduced as reported headnote text
+    # (e.g., "The reported headnote states: '...'"). Attributing headnote text to judicial speech
+    # ("The Court held: '...'", "The Supreme Court stated: '...'") is strictly forbidden.
+    if headnote_cits:
+        for h_cit in headnote_cits:
+            norm_cit = re.sub(r'[\s_]+', ' ', h_cit).strip().lower()
+            clean_h_cit = re.sub(r'[^a-z0-9]', '', norm_cit)
+            if norm_cit in text_lower or (clean_h_cit and clean_h_cit in re.sub(r'[^a-z0-9]', '', text_lower)):
+                court_speech_patterns = [
+                    rf'{re.escape(norm_cit)}[^\.\n]*?(?:the\s+court|the\s+supreme\s+court|the\s+high\s+court|the\s+bench)\s+(?:held|stated|observed|ruled|noted|declared)\s*[:,]?\s*["“]',
+                    rf'(?:the\s+court|the\s+supreme\s+court|the\s+high\s+court|the\s+bench)\s+(?:held|stated|observed|ruled|noted|declared)\s*[:,]?\s*["“][^"”]+["”][^\.\n]*?{re.escape(norm_cit)}',
+                ]
+                for csp in court_speech_patterns:
+                    if re.search(csp, text_lower):
+                        errors.append(
+                            f"Headnote Quoting Violation: Attributing headnote text to judicial speech for '{h_cit}'. "
+                            f"Precedents indexed as 'headnote_only' may only be quoted if explicitly introduced as reported headnote text ('The reported headnote states: ...')."
+                        )
+                        break
+
+    # Rule 26: Holding Scope & 20%/50% Reconciliation
+    # Ratios must not exceed the source text. Dismissal for failure to comply with a court direction
+    # cannot be framed as a substantive ruling that 50% is lawful or non-waivable on quantum.
+    # Where court-directed deposit differs from the statutory 20% proviso, output must state that the legal
+    # basis for demanding >20% is not addressed in retrieved sources (rather than calling 50% "non-waivable").
+    if any(k in text_lower for k in ["50% deposit", "50% pre-deposit", "fifty percent", "50%"]):
+        if re.search(r'\b50%\s+(?:is\s+)?(?:non-waivable|a\s+substantive\s+rule|statutory\s+quantum|held\s+to\s+be\s+lawful\s+on\s+quantum)\b', text_lower):
+            errors.append(
+                "Over-claiming precedent holding: A dismissal for failure to comply with a court deposit direction cannot be framed as a substantive ruling that a 50% deposit is non-waivable or lawful on quantum."
+            )
+
+    if re.search(r'\bpartition\b', text_lower) and any(k in text_lower for k in ["fio 2001", "banking court", "mortgage execution"]):
+        errors.append(
+            "Domain Misattribution: Citing partition execution authorities as governing banking mortgage execution under FIO 2001."
+        )
 
     return errors
 
@@ -608,11 +798,18 @@ def verify_case_grounding(cited_case_name: str, source_judgment_text: str, model
     assertion_secs = re.findall(r'\b(?:section|sec\.?|s\.)\s*(\d+[a-z]?)\b', assertion_lower)
     for sec in set(assertion_secs):
         sec_num = sec.lower()
-        # Look for section mention in the source text
         pattern = rf'\b(?:section|sec\.?|s\.)\s*{re.escape(sec_num)}\b'
         if not re.search(pattern, src_lower) and not re.search(rf'\b{re.escape(sec_num)}\b', src_lower):
             unsupported.append(
                 f"Assertion claims the court held or applied Section {sec.upper()}, but Section {sec.upper()} does not appear in the source judgment."
+            )
+
+    # 1b. Check for procedural orders/rules asserted as held or applied in the case
+    assertion_orders = re.findall(r'\b(?:order|ord\.?|o\.)\s*[ivxlcdm\d]+[\s,]+(?:rule|r\.?)\s*\d+[a-z]?\b', assertion_lower)
+    for ord_rule in set(assertion_orders):
+        if not is_statute_in_source(ord_rule, source_judgment_text):
+            unsupported.append(
+                f"Assertion claims the court held or applied {ord_rule.title()}, but that provision does not appear in the source judgment."
             )
 
     # 2. Check for asserted subject-matter domains that may be entirely absent from the source judgment
@@ -723,6 +920,58 @@ def decompose_compound_legal_query(query: str) -> List[str]:
             return [q_clean] + valid_parts
 
     return [q_clean]
+
+
+def check_memo_completeness(text: str, is_formal_opinion: bool = True) -> Tuple[bool, List[str]]:
+    """
+    Verifies that a generated legal memorandum contains all required sections
+    (min 40 words per section) and parseable <<<CARDS>>> JSON.
+    
+    Returns (is_complete: bool, missing_or_short_sections: List[str]).
+    """
+    if not text or not isinstance(text, str):
+        return False, ["Memo text is empty"]
+
+    if not is_formal_opinion:
+        return True, []
+
+    required_sections = [
+        ("Executive Summary", r'###\s*(?:I\.\s*)?EXECUTIVE\s*SUMMARY'),
+        ("Statutory Framework", r'###\s*(?:II\.\s*)?(?:CONTROLLING\s*STATUTORY|STATUTORY\s*&\s*PROCEDURAL|GOVERNING\s*STATUTORY|STATUTORY\s*FRAMEWORK)'),
+        ("Precedents", r'###\s*(?:III\.\s*)?(?:CONTROLLING\s*JUDICIAL|CASE\s*LAW|BINDING\s*&\s*PERSUASIVE|APPELLATE\s*PRECEDENTS|PRECEDENTS)'),
+        ("Legal Analysis", r'###\s*(?:IV\.\s*)?(?:LEGAL\s*ANALYSIS|STRATEGIC\s*LEGAL|PROCEDURAL\s*&\s*STRATEGIC|ANALYSIS)'),
+        ("Recommendations / Next Steps", r'###\s*(?:V\.\s*)?(?:RECOMMENDATIONS|PRACTICAL\s*NEXT|NEXT\s*STEPS|PROCEDURAL\s*ROADMAP|PLAYBOOK)'),
+    ]
+
+    issues = []
+    for sec_name, pattern in required_sections:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if not match:
+            issues.append(f"Missing section: '{sec_name}'")
+        else:
+            start_pos = match.end()
+            next_header = re.search(r'(?:###|<<<CARDS>>>)', text[start_pos:])
+            sec_body = text[start_pos:start_pos + next_header.start()] if next_header else text[start_pos:]
+            words = sec_body.strip().split()
+            if len(words) < 40:
+                issues.append(f"Section '{sec_name}' is too brief ({len(words)} words; min 40 words required)")
+
+    if "<<<CARDS>>>" in text:
+        cards_match = re.search(r'<<<CARDS>>>(.*?)(?:<<<END_CARDS>>>|$)', text, re.DOTALL)
+        if not cards_match or not cards_match.group(1).strip():
+            issues.append("Empty <<<CARDS>>> block")
+        else:
+            cards_content = cards_match.group(1).strip()
+            try:
+                parsed = json.loads(cards_content)
+                if not isinstance(parsed, list):
+                    issues.append("<<<CARDS>>> JSON is not an array")
+            except Exception as e:
+                issues.append(f"Invalid <<<CARDS>>> JSON syntax: {e}")
+
+    is_complete = len(issues) == 0
+    return is_complete, issues
+
 
 
 
