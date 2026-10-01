@@ -11,6 +11,7 @@ GENERIC FIXTURES ONLY: Zero real case names in rule logic or test fixtures.
 """
 
 import unittest
+import asyncio
 import tempfile
 import shutil
 import os
@@ -27,6 +28,13 @@ from core.statute_currency import (
     tag_precedent_temporal_amendment,
     detect_statutory_provisions_in_query,
     classify_source_tier
+)
+from core.currency_fetcher import (
+    fetch_currency_signals,
+    CurrencyCache,
+    is_whitelisted_tier1_domain,
+    log_statute_currency_check,
+    WHITELISTED_TIER_1_DOMAINS
 )
 from core.legal_guardrails import (
     extract_positive_query_anchors,
@@ -307,6 +315,164 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
         self.assertEqual(crpc["jurisdiction"], "federal")
         self.assertFalse(crpc["text_available"])
         self.assertIsNone(crpc["text"])
+
+
+class TestRealCurrencyFetcher(unittest.IsolatedAsyncioTestCase):
+    """Tests for Part 1, Item 3: Real Currency Check with caching, budget enforcement, whitelisting, and staging isolation."""
+
+    def setUp(self):
+        self.test_dir = tempfile.mkdtemp()
+        self.test_staging = tempfile.mkdtemp()
+        self.cache_file = os.path.join(self.test_staging, "test_cache.json")
+        self.cache = CurrencyCache(cache_file=self.cache_file)
+        self.store = StatuteVersionStore(storage_dir=self.test_dir, staging_dir=self.test_staging)
+
+    def tearDown(self):
+        shutil.rmtree(self.test_dir, ignore_errors=True)
+        shutil.rmtree(self.test_staging, ignore_errors=True)
+
+    async def test_24h_caching_and_recency_bypass(self):
+        call_count = {"n": 0}
+
+        def mock_fetch(act_code, query_text, provisions):
+            call_count["n"] += 1
+            return [{
+                "source_url": "https://pakistancode.gov.pk/amendment-act-2026",
+                "title": "Act No. I of 2026",
+                "detected_change": "Amendment in statutory threshold",
+                "snippet": "Section 489-F amended"
+            }]
+
+        # Call 1: cold cache -> fetches
+        res1 = await fetch_currency_signals(
+            act_code="PPC_1860",
+            provisions=["PPC_1860_SEC_489F"],
+            query_text="What is the penalty under 489-f?",
+            budget_s=5.0,
+            mock_fetcher=mock_fetch,
+            cache=self.cache,
+            store=self.store
+        )
+        self.assertEqual(res1["status"], "CHECKED")
+        self.assertFalse(res1["cache_hit"])
+        self.assertEqual(call_count["n"], 1)
+        self.assertEqual(len(res1["signals"]), 1)
+
+        # Call 2: ordinary query within 24h -> hits cache, fetcher NOT called
+        res2 = await fetch_currency_signals(
+            act_code="PPC_1860",
+            provisions=["PPC_1860_SEC_489F"],
+            query_text="Explain dishonour of cheques under section 489-f",
+            budget_s=5.0,
+            mock_fetcher=mock_fetch,
+            cache=self.cache,
+            store=self.store
+        )
+        self.assertEqual(res2["status"], "CHECKED")
+        self.assertTrue(res2["cache_hit"])
+        self.assertEqual(call_count["n"], 1)  # Fetcher was NOT called again
+
+        # Call 3: query with recency word ('latest', 'amended', etc.) -> bypasses cache, calls fetcher
+        for recency_word in ["new", "recent", "amendment", "latest", "updated", "ordinance"]:
+            res_rec = await fetch_currency_signals(
+                act_code="PPC_1860",
+                provisions=["PPC_1860_SEC_489F"],
+                query_text=f"What is the {recency_word} position on section 489-f?",
+                budget_s=5.0,
+                mock_fetcher=mock_fetch,
+                cache=self.cache,
+                store=self.store
+            )
+            self.assertFalse(res_rec["cache_hit"])
+
+    async def test_budget_enforcement_fail_open(self):
+        # A slow network call that exceeds budget must fail open with NOT_CHECKED
+        async def slow_fetch(act_code, query_text, provisions):
+            await asyncio.sleep(0.3)
+            return [{"source_url": "https://pakistancode.gov.pk/slow", "title": "Too late"}]
+
+        res = await fetch_currency_signals(
+            act_code="PPC_1860",
+            provisions=["PPC_1860_SEC_489F"],
+            query_text="Section 489-F check",
+            budget_s=0.05,  # Very short budget
+            mock_fetcher=slow_fetch,
+            cache=self.cache,
+            store=self.store
+        )
+        self.assertEqual(res["status"], "NOT_CHECKED")
+        self.assertEqual(res["reason"], "budget_timeout")
+        self.assertEqual(len(res["signals"]), 0)
+
+    async def test_domain_whitelist_enforcement(self):
+        # Whitelisted Tier 1 portals
+        self.assertTrue(is_whitelisted_tier1_domain("https://pakistancode.gov.pk/doc"))
+        self.assertTrue(is_whitelisted_tier1_domain("https://na.gov.pk/bills/2026"))
+        self.assertTrue(is_whitelisted_tier1_domain("https://senate.gov.pk/acts/view"))
+        self.assertTrue(is_whitelisted_tier1_domain("https://punjablaws.gov.pk/laws/123"))
+
+        # Non-whitelisted domains
+        self.assertFalse(is_whitelisted_tier1_domain("https://unverified-blog.com/news"))
+        self.assertFalse(is_whitelisted_tier1_domain("https://newsportal.pk/article"))
+        self.assertFalse(is_whitelisted_tier1_domain("https://randomsite.org/bill"))
+
+        # Mock fetcher returning mixed domains
+        def mixed_fetch(act_code, query_text, provisions):
+            return [
+                {"source_url": "https://unverified-blog.com/news", "title": "Fake change"},
+                {"source_url": "https://pakistancode.gov.pk/valid", "title": "Legit Tier 1 gazette"}
+            ]
+
+        res = await fetch_currency_signals(
+            act_code="CRPC_1898",
+            provisions=["CRPC_1898_SEC_497"],
+            query_text="Bail provision amendments",
+            budget_s=5.0,
+            mock_fetcher=mixed_fetch,
+            cache=self.cache,
+            store=self.store
+        )
+        # Only the whitelisted domain must be accepted and staged
+        self.assertEqual(len(res["signals"]), 1)
+        self.assertEqual(res["signals"][0]["source_url"], "https://pakistancode.gov.pk/valid")
+
+    async def test_staging_isolation_and_no_auto_promotion(self):
+        # Discovered signals must be quarantined into staging ONLY, NEVER auto-promoted to main store
+        self.store.append_version(
+            canonical_id="QSO_1984_ART_2",
+            act_code="QSO_1984",
+            title="Article 2",
+            status="in_force"
+        )
+        initial_versions = self.store.get_versions("QSO_1984")
+        self.assertEqual(len(initial_versions), 1)
+
+        def discover_change(act_code, query_text, provisions):
+            return [{
+                "source_url": "https://pakistancode.gov.pk/qso-amend-2026",
+                "title": "QSO Amendment",
+                "detected_change": "Article 2 definitions expanded"
+            }]
+
+        res = await fetch_currency_signals(
+            act_code="QSO_1984",
+            provisions=["QSO_1984_ART_2"],
+            query_text="recent amendment in QSO Art 2",
+            budget_s=5.0,
+            mock_fetcher=discover_change,
+            cache=self.cache,
+            store=self.store
+        )
+        # Findings are staged
+        self.assertEqual(len(res["signals"]), 1)
+        staged_finding = res["signals"][0]
+        self.assertFalse(staged_finding["promoted_to_main"])
+        self.assertEqual(staged_finding["review_status"], "pending_review")
+
+        # Crucial check: Main store versions are UNCHANGED (never auto-promoted)
+        current_versions = self.store.get_versions("QSO_1984")
+        self.assertEqual(len(current_versions), 1)
+        self.assertEqual(current_versions[0]["version_id"], "QSO_1984_ART_2_V1")
 
 
 class TestPrecedentTagsAndRetryCap(unittest.TestCase):

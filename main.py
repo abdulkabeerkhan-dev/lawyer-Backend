@@ -44,6 +44,7 @@ from core.statute_currency import (
     check_statute_currency, tag_precedent_temporal_amendment,
     detect_statutory_provisions_in_query, StatuteVersionStore
 )
+from core.currency_fetcher import fetch_currency_signals
 
 
 try:
@@ -3295,12 +3296,38 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         async def run_case_law_search(raw_search_query: str, court_filter: Optional[str] = None) -> str:
             search_call_count["n"] += 1
             trace_logger = RetrievalTraceLogger(job_id=job_id, raw_query=raw_search_query or effective_user_query)
-            # Part 1: Parallel Statute Currency Extraction & Check
+            # Part 1: Parallel Statute Currency Extraction & Check (Items 1 & 3)
             query_provisions = detect_statutory_provisions_in_query(raw_search_query or effective_user_query)
             currency_findings = []
             for cid, act_c in query_provisions:
                 c_res = check_statute_currency(canonical_id=cid, act_code=act_c, query_text=raw_search_query or effective_user_query)
                 currency_findings.append(c_res)
+
+            # Item 3: Live Currency Checking via asyncio.gather alongside case-law retrieval
+            live_currency_task = None
+            if query_provisions:
+                act_map = {}
+                for cid, act_c in query_provisions:
+                    act_map.setdefault(act_c, []).append(cid)
+
+                async def _fetch_all_act_signals():
+                    coros = [
+                        fetch_currency_signals(
+                            act_code=act_c,
+                            provisions=provs,
+                            query_text=raw_search_query or effective_user_query,
+                            budget_s=6.0
+                        )
+                        for act_c, provs in act_map.items()
+                    ]
+                    try:
+                        return await asyncio.gather(*coros, return_exceptions=True)
+                    except Exception as ex:
+                        print(f"⚠️ Live currency fetch error: {ex}", file=sys.stderr)
+                        return []
+
+                live_currency_task = asyncio.create_task(_fetch_all_act_signals())
+
             search_query, is_doctrinally_expanded = _expand_legal_shorthand(raw_search_query or effective_user_query, return_flag=True)
             decomposed_queries = decompose_compound_legal_query(search_query)
             trace_logger.log_decomposition(decomposed_queries)
@@ -3862,6 +3889,13 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         print(f"⚠️ Stage 2 external fallback notice: {ext_err}", file=sys.stderr, flush=True)
                         if headnote_candidates:
                             trigger_background_headnote_worker(case_id=hn_case_id, citation=hn_cit, title=hn_title, portal_url=str(hn_portal_url or ""))
+
+            # Await live currency signals gathered concurrently with case-law retrieval (Item 3)
+            if live_currency_task:
+                try:
+                    await asyncio.wait_for(asyncio.shield(live_currency_task), timeout=1.5)
+                except Exception:
+                    pass
 
             context_parts = []
             for match in primary_matches:

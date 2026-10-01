@@ -50,4 +50,6 @@ reindex_queue*.json.bak
 target_fetch_queue.json
 baseline_queue_overlap.json
 skipped_stubs.csv
+data/statute_staging/*.jsonl
+data/statute_staging/currency_cache.json
 
