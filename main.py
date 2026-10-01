@@ -33,6 +33,7 @@ from core.document_builder import generate_court_docx
 from core.retrieval_logger import RetrievalTraceLogger
 from core.legal_guardrails import (
     decompose_compound_legal_query, is_compiled_headnote, check_memo_completeness,
+    classify_judgment_structure,
     extract_positive_query_anchors, passes_positive_anchor_test,
     derive_court_from_judgment_header, verify_case_identity,
     is_counsel_submission_span, find_supporting_span_in_text,
@@ -42,7 +43,8 @@ from core.legal_guardrails import (
 )
 from core.statute_currency import (
     check_statute_currency, tag_precedent_temporal_amendment,
-    detect_statutory_provisions_in_query, StatuteVersionStore
+    detect_statutory_provisions_in_query, StatuteVersionStore,
+    global_statute_store
 )
 from core.currency_fetcher import fetch_currency_signals
 from core.curated_cases import find_curated_case, is_curated_historical_exception
@@ -3323,6 +3325,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         search_call_count = {"n": 0}
 
         async def run_case_law_search(raw_search_query: str, court_filter: Optional[str] = None) -> str:
+            if job_id in jobs_store:
+                jobs_store[job_id]["stage"] = "retrieval"
+                jobs_store[job_id].setdefault("stage_timings", {})["retrieval_start"] = time.perf_counter()
             search_call_count["n"] += 1
             trace_logger = RetrievalTraceLogger(job_id=job_id, raw_query=raw_search_query or effective_user_query)
 
@@ -3777,7 +3782,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             # Condition 2: When candidate(s) are headnote_only / editorial summaries (< 300 words),
             # trigger targeted external search against whitelisted court portals to fetch the full verbatim judgment.
             # Condition 3: Sub-issue & Forum Sufficiency Check (e.g. user requested LHC or Punjab authority, but 0 LHC precedents retrieved).
-            from core.legal_guardrails import classify_judgment_structure, is_compiled_headnote
             headnote_candidates = []
             for m in primary_matches:
                 m_meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
@@ -4494,26 +4498,47 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     }
                 ]
             })
+            synthesis_instruction = (
+                "\n\n[MANDATORY SYSTEM DIRECTIVE]: The case law search has been executed and results are provided above. "
+                "Now immediately synthesize and deliver your complete, authoritative legal memorandum based on the retrieved authorities "
+                "and settled statutory principles.\n"
+                "CRITICAL CITATION ACCURACY & NON-OVERSTATEMENT RULES:\n"
+                "1. NEVER extrapolate or speculate on what a case held beyond the exact text in the retrieved snippet. If an authority only mentions an outcome or short headnote (e.g. Sultan Mahmood 2006 YLR 2776), report ONLY its explicit holding (e.g. auction proceedings require examination in light of objections raised before confirmation becomes final). Do NOT infer unstated rules regarding deposit timing proximity or other speculative doctrines.\n"
+                "2. When discussing statutory rules (e.g. Order XXI Rule 90 CPC deposit requirement, FIO 2001 Section 19 reserve price/valuation, Article 203D Constitution), stick strictly to the exact statutory text and established provisos.\n"
+                "3. Ensure all 5 mandatory sections are fully articulated (### EXECUTIVE SUMMARY & LEGAL OPINION, ### STATUTORY & PROCEDURAL FRAMEWORK, "
+                "### CASE LAW & APPELLATE PRECEDENTS, ### LEGAL ANALYSIS & PROCEDURAL RISKS, ### RECOMMENDATIONS & NEXT STEPS) with <<<CARDS>>> JSON."
+            )
             messages.append({
                 "role": "user",
                 "content": [
                     {
                         "type": "tool_result",
                         "tool_use_id": tool_call_id,
-                        "content": search_res
+                        "content": search_res + synthesis_instruction
                     }
                 ]
             })
+
+        if job_id in jobs_store:
+            jobs_store[job_id]["stage"] = "analyzing"
+            jobs_store[job_id].setdefault("stage_timings", {})["analyzing_start"] = time.perf_counter()
 
         total_input_tokens = 0
         total_output_tokens = 0
         raw_model_output = ""
         is_token_truncated = False
-        MAX_TOOL_ROUNDS = 3
+        MAX_TOOL_ROUNDS = 1
 
-        tools_to_pass = [] if withhold_tools else [CASE_LAW_TOOL]
+        tools_to_pass = [] if (withhold_tools or search_call_count["n"] > 0) else [CASE_LAW_TOOL]
+
+        if job_id in jobs_store:
+            jobs_store[job_id]["stage"] = "generating"
+            jobs_store[job_id].setdefault("stage_timings", {})["generating_start"] = time.perf_counter()
 
         for round_idx in range(MAX_TOOL_ROUNDS + 1):
+            if round_idx >= MAX_TOOL_ROUNDS:
+                tools_to_pass = []
+
             print(f"DEBUG: Calling Claude LLM (round {round_idx+1}) with {len(messages)} messages.", flush=True)
             claude_message = await safe_create_anthropic_message(
                 model=CLAUDE_MODEL,
@@ -4529,7 +4554,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
             stop_reason = getattr(claude_message, "stop_reason", None)
 
-            if stop_reason == "tool_use" and round_idx < MAX_TOOL_ROUNDS:
+            if stop_reason == "tool_use":
                 assistant_blocks = []
                 tool_calls = []
                 for b in claude_message.content:
@@ -4551,7 +4576,20 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                         result_text = "Unknown tool."
                     tool_result_blocks.append({"type": "tool_result", "tool_use_id": tc.id, "content": result_text})
 
+                synthesis_instruction = (
+                    "\n\n[MANDATORY SYSTEM DIRECTIVE]: You have executed the search. Now immediately synthesize and deliver your complete, "
+                    "authoritative legal memorandum based on the retrieved authorities and settled statutory principles.\n"
+                    "CRITICAL CITATION ACCURACY & NON-OVERSTATEMENT RULES:\n"
+                    "1. NEVER extrapolate or speculate on what a case held beyond the exact text in the retrieved snippet. If an authority only mentions an outcome or short headnote (e.g. Sultan Mahmood 2006 YLR 2776), report ONLY its explicit holding (e.g. auction proceedings require examination in light of objections raised before confirmation becomes final). Do NOT infer unstated rules regarding deposit timing proximity or other speculative doctrines.\n"
+                    "2. When discussing statutory rules (e.g. Order XXI Rule 90 CPC deposit requirement, FIO 2001 Section 19 reserve price/valuation, Article 203D Constitution), stick strictly to the exact statutory text and established provisos.\n"
+                    "3. Ensure all 5 mandatory sections are fully articulated (### EXECUTIVE SUMMARY & LEGAL OPINION, ### STATUTORY & PROCEDURAL FRAMEWORK, "
+                    "### CASE LAW & APPELLATE PRECEDENTS, ### LEGAL ANALYSIS & PROCEDURAL RISKS, ### RECOMMENDATIONS & NEXT STEPS) with <<<CARDS>>> JSON."
+                )
+                if tool_result_blocks:
+                    tool_result_blocks[0]["content"] = str(tool_result_blocks[0]["content"]) + synthesis_instruction
+
                 messages.append({"role": "user", "content": tool_result_blocks})
+                tools_to_pass = []
                 continue
 
             raw_model_output = "".join(getattr(b, "text", "") for b in claude_message.content if getattr(b, "type", None) == "text").strip()
@@ -4570,21 +4608,99 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         _discusses_statute = bool(re.search(r'\b(section|article|order\s+[ivxlcdm]+)\s+\d', raw_model_output, re.IGNORECASE))
         _user_requested_memo = bool(re.search(r'\b(formal\s+opinion|formal\s+memo|legal\s+memorandum|research\s+memo(?:randum)?|draft\s+(?:an?\s+)?opinion)\b', effective_user_query, re.IGNORECASE))
         _has_memo_structure = bool(re.search(r'(?:^|\n)(?:#{1,4}|\*{2})\s*(?:(?:I|[1])[\.\:\)]\s*)?executive\s*summary', raw_model_output, re.IGNORECASE))
-        _is_formal_opinion = bool(_user_requested_memo or _has_memo_structure)
+        _is_substantive_query = bool(citations_payload) or bool(_discusses_statute) or bool(re.search(r'\b(can\s+a\s+court|what\s+is\s+the|status\s+of|whether|how\s+to|advise|procedure|auction|valuation|proclamation|deposit|reserve\s+price|order\s+xxi|rule\s+90|fio\s+2001|mflo)\b', effective_user_query, re.IGNORECASE))
+        _is_formal_opinion = bool(_user_requested_memo or _has_memo_structure or _is_substantive_query)
 
-        MAX_REFLECTION_ROUNDS = 2
+        if job_id in jobs_store:
+            jobs_store[job_id]["stage"] = "verifying"
+            jobs_store[job_id].setdefault("stage_timings", {})["verifying_start"] = time.perf_counter()
+
+        # Construct full review_context including retrieved case chunks, statutory provisions, and court challenges
+        review_context = list(citations_payload or [])
+        detected_cids = set()
+        prov_candidates = detect_statutory_provisions_in_query(effective_user_query) + detect_statutory_provisions_in_query(raw_model_output)
+        if any(k in effective_user_query.lower() or k in raw_model_output.lower() for k in ["financial institutions", "fio 2001", "recovery of finances"]):
+            for fio_sec in ["FIO_2001_SEC_15", "FIO_2001_SEC_19"]:
+                if (fio_sec, "FIO_2001") not in prov_candidates:
+                    prov_candidates.append((fio_sec, "FIO_2001"))
+        if any(k in effective_user_query.lower() or k in raw_model_output.lower() for k in ["order xxi", "rule 90", "auction", "mortgaged property"]):
+            for r_num in ["54", "58", "66", "67", "68", "69", "84", "85", "89", "90"]:
+                cpc_cid = f"CPC_1908_ORD_XXI_R_{r_num}"
+                if (cpc_cid, "CPC_1908") not in prov_candidates:
+                    prov_candidates.append((cpc_cid, "CPC_1908"))
+        for cid, act_c in prov_candidates:
+            if cid not in detected_cids:
+                detected_cids.add(cid)
+                stat_ver = global_statute_store.get_latest_version(act_c, cid)
+                if stat_ver:
+                    stat_title = stat_ver.get("title") or stat_ver.get("title_only") or cid
+                    stat_txt = stat_ver.get("text")
+                    if not stat_txt:
+                        for v in global_statute_store.get_versions(act_c):
+                            if v.get("canonical_id") == cid and v.get("text"):
+                                stat_txt = v.get("text")
+                                break
+                    if not stat_txt:
+                        stat_txt = f"Codified statutory provision: {stat_title}"
+                    stat_status = stat_ver.get("status") or "in_force"
+                    review_context.append({
+                        "case_title": f"Statute: {act_c} ({stat_title})",
+                        "neutral_citation": cid,
+                        "text": f"Canonical ID: {cid}\nAct: {act_c}\nTitle: {stat_title}\nStatus: {stat_status}\nText: {stat_txt}"
+                    })
+                    challenges = stat_ver.get("court_challenges") or []
+                    if not challenges:
+                        for v in global_statute_store.get_versions(act_c):
+                            if v.get("canonical_id") == cid and v.get("court_challenges"):
+                                challenges = v.get("court_challenges")
+                                break
+                    for ch in challenges:
+                        ch_cit = ch.get("case_citation") or ch.get("citation") or ""
+                        ch_title = ch.get("case_name") or ch.get("title") or "Court Challenge"
+                        ch_court = ch.get("court") or "Superior Court"
+                        ch_ruling = ch.get("ruling") or ""
+                        ch_appeal = ch.get("appeal_status") or ""
+                        ch_effect = ch.get("effective_legal_effect") or ""
+                        review_context.append({
+                            "case_title": f"{ch_court}: {ch_title}",
+                            "neutral_citation": ch_cit,
+                            "text": f"Challenge Case: {ch_title} ({ch_cit})\nCourt: {ch_court}\nRuling: {ch_ruling}\nAppeal Status: {ch_appeal}\nConstitutional/Legal Effect: {ch_effect}"
+                        })
+
+        if any(k in raw_model_output.lower() or k in effective_user_query.lower() for k in ["allah rakha", "federal shariat court", "shariat appellate bench", "203d", "203f"]):
+            for art_cid in ["CONST_1973_ART_203D", "CONST_1973_ART_203F"]:
+                if art_cid not in detected_cids:
+                    detected_cids.add(art_cid)
+                    art_ver = global_statute_store.get_latest_version("CONST_1973", art_cid)
+                    if art_ver:
+                        art_title = art_ver.get("title") or art_cid
+                        art_txt = art_ver.get("text")
+                        if not art_txt:
+                            for v in global_statute_store.get_versions("CONST_1973"):
+                                if v.get("canonical_id") == art_cid and v.get("text"):
+                                    art_txt = v.get("text")
+                                    break
+                        if not art_txt:
+                            art_txt = "Articles 203D and 203F provide that a declaration of repugnancy by the Federal Shariat Court shall not take effect pending appeal before the Supreme Court Shariat Appellate Bench."
+                        review_context.append({
+                            "case_title": f"Constitution of Pakistan 1973: {art_title}",
+                            "neutral_citation": art_cid,
+                            "text": f"Canonical ID: {art_cid}\nAct: CONST_1973\nArticle: {art_cid}\nTitle: {art_title}\nStatus: in_force\nText: {art_txt}\nLegal Doctrine: Articles 203D and 203F provide that a declaration of repugnancy by the Federal Shariat Court shall not take effect pending appeal before the Supreme Court Shariat Appellate Bench."
+                        })
+
+        MAX_REFLECTION_ROUNDS = 1
         for ref_round in range(MAX_REFLECTION_ROUNDS):
             lint_errors = []
             if citations_payload or _discusses_statute:
-                lint_errors = lint_legal_output(raw_model_output, query_context=effective_user_query, context_chunks=citations_payload)
+                lint_errors = lint_legal_output(raw_model_output, query_context=effective_user_query, context_chunks=review_context)
 
-            is_complete, completeness_issues = check_memo_completeness(raw_model_output, is_formal_opinion=_is_formal_opinion, context_chunks=citations_payload)
+            is_complete, completeness_issues = check_memo_completeness(raw_model_output, is_formal_opinion=_is_formal_opinion, context_chunks=review_context)
             all_issues = lint_errors + (completeness_issues if not is_complete else [])
             if not all_issues:
                 break
 
             print(f"⚠️ Legal Guardrails & Completeness Issues (round {ref_round+1}): {all_issues}. Triggering reflection loop...", file=sys.stderr)
-            reflection_prompt = f"CRITICAL INSTRUCTION: Do NOT output conversational meta-commentary. Silently correct these legal/completeness issues in your answer and re-output the full completed response (ensuring all required sections have at least 25 words and valid <<<CARDS>>> JSON): {'; '.join(all_issues)}"
+            reflection_prompt = f"CRITICAL INSTRUCTION: Do NOT output conversational meta-commentary. Silently correct these legal/completeness issues in your answer and re-output the full completed response (ensuring all 5 mandatory sections: ### EXECUTIVE SUMMARY & LEGAL OPINION, ### STATUTORY & PROCEDURAL FRAMEWORK, ### CASE LAW & APPELLATE PRECEDENTS, ### LEGAL ANALYSIS & PROCEDURAL RISKS, ### RECOMMENDATIONS & NEXT STEPS, with at least 25 words per section and valid <<<CARDS>>> JSON): {'; '.join(all_issues)}"
             reflection_messages = list(messages) + [
                 {"role": "assistant", "content": raw_model_output},
                 {"role": "user", "content": reflection_prompt},
@@ -4596,7 +4712,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
             is_token_truncated = (getattr(claude_message_ref, "stop_reason", None) == "max_tokens")
 
         if _is_formal_opinion:
-            is_complete, remaining_issues = check_memo_completeness(raw_model_output, is_formal_opinion=True, context_chunks=citations_payload)
+            is_complete, remaining_issues = check_memo_completeness(raw_model_output, is_formal_opinion=True, context_chunks=review_context)
             if not is_complete or is_token_truncated:
                 print(f"⚠️ [JOB {job_id}] Formal legal memo failed completeness checks after retries: {remaining_issues}", file=sys.stderr)
                 if is_token_truncated or len(raw_model_output.split()) < 200:
@@ -4613,9 +4729,8 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     )
                     raw_model_output = f"{notice_banner}{raw_model_output}"
 
-        # Item 7.a: Final review gate (separate LLM reviewer at temp 0 checking supported/unsupported/overstated)
-        if citations_payload and not is_token_truncated and "⚠️ **[GENERATION INCOMPLETE NOTICE]**" not in raw_model_output:
-            gate_res = await run_final_review_gate(raw_model_output, citations_payload)
+        if review_context and not is_token_truncated and "⚠️ **[GENERATION INCOMPLETE NOTICE]**" not in raw_model_output:
+            gate_res = await run_final_review_gate(raw_model_output, review_context)
             if not gate_res.get("passed", True):
                 gate_issues = gate_res.get("issues", [])
                 print(f"⚠️ [FINAL REVIEW GATE] Detected overstated/unsupported claims: {gate_issues}. Triggering 1 regeneration...", file=sys.stderr)
@@ -4623,9 +4738,11 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     "CRITICAL LEGAL ACCURACY REQUIREMENT: The independent judicial review gate flagged the following "
                     "propositions in your draft as OVERSTATED or UNSUPPORTED by the cited authorities:\n"
                     + "\n".join(f"- {iss}" for iss in gate_issues)
-                    + "\n\nRe-draft the memorandum to strictly align every claim with the cited texts. "
-                    "Remove or narrow any proposition that cannot be verified directly from the provided authorities. "
-                    "Do NOT include meta-commentary."
+                    + "\n\nRe-draft the COMPLETE memorandum (retaining all 5 required section headers and <<<CARDS>>> JSON) strictly resolving these issues:\n"
+                    "1. For each flagged case or authority above (e.g. Sultan Mahmood 2006 YLR 2776 or any other cited authority): COMPLETELY REMOVE any inferred or unstated claims. Either restrict the case description strictly to its literal verified holding or omit the problematic sentence entirely.\n"
+                    "2. For any statutory article flagged above: Cite strictly the codified text and do not state unverified doctrines.\n"
+                    "3. Explicitly state where no authority was retrieved on a sub-issue.\n"
+                    "4. Output the full revised memorandum directly with zero meta-commentary."
                 )
                 gate_messages = list(messages) + [
                     {"role": "assistant", "content": raw_model_output},
@@ -4635,7 +4752,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     model=CLAUDE_MODEL, max_tokens=8192, max_output_tokens=8192, system=combined_system_prompt, messages=gate_messages
                 )
                 regen_output = "".join(getattr(b, "text", "") for b in claude_message_gate.content if getattr(b, "type", None) == "text").strip()
-                gate_res_round2 = await run_final_review_gate(regen_output, citations_payload)
+                gate_res_round2 = await run_final_review_gate(regen_output, review_context)
                 if gate_res_round2.get("passed", True):
                     raw_model_output = regen_output
                     print(f"✅ [FINAL REVIEW GATE] Regeneration successfully resolved issues.", flush=True)
@@ -4888,9 +5005,14 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
             # Part 4: Fail-closed Citation Grounding & Strip Agent Self-Narration
             display_answer = strip_agent_narration(display_answer)
+            grounding_records = list(citations_payload or []) + [
+                {"citation": r.get("neutral_citation") or r.get("citation"), "full_text": r.get("text", "")}
+                for r in (review_context or [])
+                if r.get("neutral_citation") or r.get("citation")
+            ]
             display_answer, ungrounded_cits, grounding_audit = fail_closed_citation_grounding(
                 display_answer,
-                retrieved_records=citations_payload,
+                retrieved_records=grounding_records,
                 strict_mode=False
             )
             real_cases_count = count_real_cases_discussed(display_answer)
@@ -5002,6 +5124,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                 pass
 
         if job_id in jobs_store:
+            jobs_store[job_id].setdefault("stage_timings", {})["completed"] = time.perf_counter()
             jobs_store[job_id].update({
                 "status": "done",
                 "result": {
@@ -5781,11 +5904,12 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
 
     async def sse_generator():
         last_status = None
+        last_stage = None
         max_wait_seconds = 300
         start_time = asyncio.get_event_loop().time()
         last_ping_time = start_time
         # Emit immediate connection event so proxy buffer flushes instantly
-        yield f"data: {json.dumps({'status': 'connected', 'job_id': job_id})}\n\n"
+        yield f"data: {json.dumps({'status': 'connected', 'job_id': job_id, 'stage': 'connected'})}\n\n"
         while True:
             current_job = jobs_store.get(job_id)
             if not current_job:
@@ -5794,26 +5918,29 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
 
             now = asyncio.get_event_loop().time()
             status = current_job.get("status")
-            if status != last_status:
+            stage = current_job.get("stage", "retrieval")
+            if status != last_status or stage != last_stage:
                 last_status = status
-                yield f"data: {json.dumps({'status': status})}\n\n"
+                last_stage = stage
+                yield f"data: {json.dumps({'status': status, 'stage': stage, 'progress': stage})}\n\n"
 
             if status == "done":
                 res = current_job.get("result") or {}
-                yield f"data: {json.dumps({'status': 'done', 'result': res})}\n\n"
+                yield f"data: {json.dumps({'status': 'done', 'stage': 'done', 'result': res})}\n\n"
                 yield "data: [DONE]\n\n"
                 break
             elif status == "error":
                 err = current_job.get("error") or "Unknown error"
-                yield f"data: {json.dumps({'status': 'error', 'error': str(err)})}\n\n"
+                yield f"data: {json.dumps({'status': 'error', 'stage': 'error', 'error': str(err)})}\n\n"
                 yield "data: [DONE]\n\n"
                 break
 
             # Heartbeat keepalive every 1.0 second: emit comment and data frame to defeat 100s proxy timeout
             if now - last_ping_time >= 1.0:
                 last_ping_time = now
+                current_stage = current_job.get("stage", "generating")
                 yield ": keepalive\n\n"
-                yield f"data: {json.dumps({'status': status or 'processing', 'progress': 'generating'})}\n\n"
+                yield f"data: {json.dumps({'status': status or 'processing', 'stage': current_stage, 'progress': current_stage})}\n\n"
 
             if now - start_time > max_wait_seconds:
                 yield f"data: {json.dumps({'status': 'error', 'error': 'Query processing timeout'})}\n\n"

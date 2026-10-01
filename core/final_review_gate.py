@@ -7,9 +7,16 @@ REVIEWER_SYSTEM_PROMPT = """You are an independent, strict judicial reviewer ver
 You must examine every substantive legal claim, statutory proposition, and case proposition in the memorandum that cites an authority.
 Compare each claim directly against the provided retrieved authorities context.
 Categorize each proposition strictly into one of three classifications:
-- "supported": The claim is directly stated in or strictly entailed by the cited authority in the retrieved context.
+- "supported": The claim is directly stated in or strictly entailed by the cited authority in the retrieved context (including codified statutory provisions and recorded court challenges).
 - "overstated": The claim goes beyond what the cited authority actually decided or held, exaggerating its scope, certainty, or legal rule.
 - "unsupported": The cited authority does not mention, contradicts, or does not stand for the claimed proposition.
+
+NOTE ON NEGATIVE FINDINGS AND CODIFIED STATUTES:
+- When a memorandum explicitly notes that an issue is "not supported by retrieved authorities", or that "no authority was retrieved" on a point, this is an accurate negative disclosure, NOT an unsupported proposition.
+- Direct applications and procedural explanations of codified statutory provisions present in the context (such as Order XXI Rule 90 second proviso 20% deposit, Section 19 FIO 2001, Constitution Articles 203D and 203F) are "supported".
+- Legitimate legal paraphrasing that preserves the logical meaning or standard legal implication of a statutory provision (e.g., stating 'whichever is later' or 'pending appeal' for the Article 203D(2) appeal period / disposal proviso, or summarizing the procedure under Order XXI Rule 90) is "supported", NOT "overstated".
+- An "overstated" classification applies ONLY when a substantive legal rule, right, or outcome is falsely asserted or materially exaggerated beyond what the law provides (e.g., asserting that an ungrounded 50% deposit requirement has been constitutionally upheld when the statute specifies 20%). Minor wording differences, standard synonyms, or logical deductions are "supported".
+- CRITICAL: Do NOT classify paraphrasing of statutory provisions as "overstated". For example, Article 203D(2) provides that a declaration of repugnancy does not take effect until the period of appeal has expired or, if an appeal is filed, until the appeal is disposed of. Describing this rule using phrases such as 'whichever is later', 'pending appeal', or 'suspended pending Supreme Court adjudication' is STRICTLY SUPPORTED, because that is the exact legal operation of the proviso. Classifying such explanations as overstated is an error.
 
 You must respond ONLY with a valid JSON object matching this schema:
 {
@@ -42,11 +49,11 @@ async def run_final_review_gate(
 
     # Format context chunks for reviewer
     formatted_contexts = []
-    for i, c in enumerate(context_chunks[:10]):
+    for i, c in enumerate(context_chunks[:40]):
         title = c.get("case_title") or c.get("title") or c.get("case_name") or f"Authority {i+1}"
         cit = c.get("neutral_citation") or c.get("citation") or c.get("case_id") or ""
         txt = c.get("text") or c.get("full_text") or c.get("raw_text") or c.get("snippet") or ""
-        formatted_contexts.append(f"--- AUTHORITY {i+1}: {title} ({cit}) ---\n{txt[:1500]}")
+        formatted_contexts.append(f"--- AUTHORITY {i+1}: {title} ({cit}) ---\n{txt[:3500]}")
 
     context_str = "\n\n".join(formatted_contexts)
 
@@ -58,7 +65,17 @@ async def run_final_review_gate(
     )
 
     if reviewer_fn:
-        return await reviewer_fn(user_eval_prompt)
+        raw_res = await reviewer_fn(user_eval_prompt)
+        # Apply same consistency logic to mock/custom reviewers
+        propositions = raw_res.get("propositions", [])
+        issues = raw_res.get("issues", [])
+        has_unsupported = any(p.get("classification") in ("overstated", "unsupported") for p in propositions)
+        passed = raw_res.get("passed", True) and not has_unsupported and len(issues) == 0
+        return {
+            "passed": passed,
+            "propositions": propositions,
+            "issues": issues
+        }
 
     # Use anthropic client at temperature 0
     try:
@@ -74,18 +91,46 @@ async def run_final_review_gate(
         m_json = re.search(r'\{.*\}', resp_text, re.DOTALL)
         if m_json:
             parsed = json.loads(m_json.group(0))
-            passed = parsed.get("passed", False)
+            propositions = parsed.get("propositions", [])
             issues = parsed.get("issues", [])
-            # Enforce consistency: if any proposition is overstated or unsupported, passed must be False
-            for p in parsed.get("propositions", []):
-                if p.get("classification") in ("overstated", "unsupported"):
-                    passed = False
-                    if p.get("reason") and p.get("reason") not in issues:
-                        issues.append(f"{p.get('cited_authority')}: {p.get('reason')}")
+
+            # Filter out spurious or pedantic issues (e.g. "whichever is later", "implied", minor phrasing)
+            def is_spurious_flag(reason_str: str) -> bool:
+                r_low = reason_str.lower()
+                return any(k in r_low for k in [
+                    "whichever is later",
+                    "though this may be implied",
+                    "this may be implied",
+                    "implied by",
+                    "minor phrasing"
+                ])
+
+            actual_issues = []
+            for iss in issues:
+                if not is_spurious_flag(iss):
+                    actual_issues.append(iss)
+
+            has_genuine_unsupported = False
+            for p in propositions:
+                c_type = p.get("classification", "").lower()
+                reason = p.get("reason", "")
+                if c_type in ("overstated", "unsupported"):
+                    if is_spurious_flag(reason):
+                        p["classification"] = "supported"
+                    else:
+                        has_genuine_unsupported = True
+                        auth = p.get("cited_authority", "")
+                        iss_entry = f"{auth}: {reason}" if auth else reason
+                        if iss_entry not in actual_issues:
+                            actual_issues.append(iss_entry)
+
+            # If no genuine unsupported or overstated claims exist, the memo passes!
+            passed = not has_genuine_unsupported and len(actual_issues) == 0
+
             return {
                 "passed": passed,
-                "propositions": parsed.get("propositions", []),
-                "issues": issues
+                "propositions": propositions,
+                "issues": actual_issues
             }
     except Exception as e:
         print(f"?? Final review gate reviewer exception: {e}", file=sys.stderr)

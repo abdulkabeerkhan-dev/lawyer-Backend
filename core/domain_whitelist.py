@@ -22,9 +22,9 @@ PROVENANCE & DOCUMENTARY SOURCES:
    - balochistanhighcourt.gov.pk and bhc.gov.pk: High Court of Balochistan.
 
 NOTE ON FCC:
-The Federal Constitutional Court was established under the 26th Constitutional Amendment (October 2024).
-No official standalone 'fcc.gov.pk' portal is currently delegated in PKNIC/NTC as an active digital repository.
-Speculative hostnames like 'fcc.gov.pk' are strictly excluded from Tier 1 whitelists until verified live.
+The Federal Constitutional Court was established under the 27th Constitutional Amendment (passed late 2025, hearing cases Nov 2025), not the 26th (which reformed judicial appointments, suo motu powers, and constitutional benches).
+The real reason for excluding 'fcc.gov.pk' is that the hostname has not been confirmed or delegated on PKNIC / NTC as an active digital repository.
+Speculative hostnames like 'fcc.gov.pk' are strictly excluded from Tier 1 whitelists until verified live with official registry delegation.
 """
 
 import urllib.parse

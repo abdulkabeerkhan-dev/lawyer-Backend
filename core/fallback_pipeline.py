@@ -55,7 +55,11 @@ if SUPABASE_URL and SUPABASE_SERVICE_KEY:
     except Exception as e:
         print(f"⚠️ Supabase init notice in fallback_pipeline: {e}")
 
-from core.domain_whitelist import COURT_TIER_1_DOMAINS
+from core.domain_whitelist import COURT_TIER_1_DOMAINS, is_whitelisted_court_url
+from core.search_provider import (
+    BaseProvider,
+    build_provider_from_env,
+)
 
 # Whitelisted court domains (single source of truth from core.domain_whitelist)
 WHITELISTED_COURT_DOMAINS = sorted(list(COURT_TIER_1_DOMAINS))
@@ -523,11 +527,15 @@ def process_court_pdf_pipeline(url: str) -> Dict[str, Any]:
 # ==============================================================================
 # STAGE 2: EXTERNAL COURT DISCOVERY FALLBACK SEARCH
 # ==============================================================================
-def search_whitelisted_court_precedents(query: str, max_results: int = 2) -> List[Dict[str, Any]]:
+def search_whitelisted_court_precedents(
+    query: str,
+    max_results: int = 2,
+    provider: Optional[BaseProvider] = None
+) -> List[Dict[str, Any]]:
     """
     Stage 2 External Court Discovery:
     When local vector and full-text searches return zero qualifying candidates (or only stubs),
-    this function executes a targeted web search against WHITELISTED_COURT_DOMAINS.
+    this function executes a targeted web search against WHITELISTED_COURT_DOMAINS using search_provider.
     Discovered PDF URLs are processed through Stages 4 -> 5 -> 6 -> 7 and returned as verified candidate dicts.
     """
     if not query:
@@ -539,53 +547,24 @@ def search_whitelisted_court_precedents(query: str, max_results: int = 2) -> Lis
         return []
 
     discovered_pdf_urls: List[str] = []
-    
-    # 1. Apex Court Priority: Query Supreme Court portal first
-    sc_search_str = f"{' '.join(terms)} filetype:pdf site:supremecourt.gov.pk"
-    encoded_sc_query = urllib.parse.quote(sc_search_str)
-    sc_search_url = f"https://html.duckduckgo.com/html/?q={encoded_sc_query}"
 
-    try:
-        req = urllib.request.Request(sc_search_url, headers=BROWSER_HEADERS)
-        with urllib.request.urlopen(req, timeout=8) as resp:
-            html = resp.read().decode("utf-8", errors="ignore")
-            uddg_matches = re.findall(r'uddg=([^&]+)', html)
-            for raw_u in uddg_matches:
-                u = urllib.parse.unquote(raw_u)
-                parsed = urllib.parse.urlparse(u)
-                domain = parsed.netloc.lower()
-                if "supremecourt.gov.pk" in domain:
-                    if u.lower().endswith(".pdf") or "judgment" in u.lower() or "order" in u.lower():
-                        if u not in discovered_pdf_urls:
-                            discovered_pdf_urls.append(u)
-                            if len(discovered_pdf_urls) >= max_results:
-                                break
-    except Exception as e:
-        print(f"⚠️ External Supreme Court discovery notice: {e}", file=sys.stderr, flush=True)
+    if provider is None:
+        allowed_hosts = sorted(list(COURT_TIER_1_DOMAINS))
+        provider = build_provider_from_env(os.environ, allowed_hosts)
 
-    # 2. Provincial High Court Fallback: Only if Supreme Court yielded fewer than max_results
-    if len(discovered_pdf_urls) < max_results:
-        hc_sites = " OR ".join([f"site:{d}" for d in ["sys.lhc.gov.pk", "lhc.gov.pk", "shc.gov.pk", "phc.gov.pk", "ihc.gov.pk", "balochistanhighcourt.gov.pk"]])
-        hc_search_str = f"{' '.join(terms)} filetype:pdf ({hc_sites})"
-        encoded_hc_query = urllib.parse.quote(hc_search_str)
-        hc_search_url = f"https://html.duckduckgo.com/html/?q={encoded_hc_query}"
-        try:
-            req = urllib.request.Request(hc_search_url, headers=BROWSER_HEADERS)
-            with urllib.request.urlopen(req, timeout=8) as resp:
-                html = resp.read().decode("utf-8", errors="ignore")
-                uddg_matches = re.findall(r'uddg=([^&]+)', html)
-                for raw_u in uddg_matches:
-                    u = urllib.parse.unquote(raw_u)
-                    parsed = urllib.parse.urlparse(u)
-                    domain = parsed.netloc.lower()
-                    if any(domain == wd or domain.endswith("." + wd) for wd in WHITELISTED_COURT_DOMAINS):
-                        if u.lower().endswith(".pdf") or "judgment" in u.lower() or "order" in u.lower():
-                            if u not in discovered_pdf_urls:
-                                discovered_pdf_urls.append(u)
-                                if len(discovered_pdf_urls) >= max_results:
-                                    break
-        except Exception as e:
-            print(f"⚠️ External High Court discovery notice: {e}", file=sys.stderr, flush=True)
+    search_terms = f"{' '.join(terms)} (judgment OR order)"
+    resp = provider.search(search_terms, max_results=max_results * 2)
+
+    if resp.usable:
+        for hit in resp.results:
+            u = hit.get("url") or ""
+            if not is_whitelisted_court_url(u):
+                continue
+            if u.lower().endswith(".pdf") or "judgment" in u.lower() or "order" in u.lower():
+                if u not in discovered_pdf_urls:
+                    discovered_pdf_urls.append(u)
+                    if len(discovered_pdf_urls) >= max_results:
+                        break
 
     candidates: List[Dict[str, Any]] = []
     for pdf_url in discovered_pdf_urls:

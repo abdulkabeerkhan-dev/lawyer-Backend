@@ -40,6 +40,25 @@ from core.domain_whitelist import (
     extract_hostname
 )
 
+from core.search_provider import (
+    BaseProvider,
+    build_provider_from_env,
+    to_outcome,
+    OK,
+    EMPTY,
+    FAILED,
+    BLOCKED,
+    RATE_LIMITED,
+    CIRCUIT_OPEN,
+    QUOTA_EXHAUSTED,
+    NOT_CONFIGURED,
+)
+from core.signal_rule import (
+    SignalContext,
+    evaluate_signal,
+    instrument_key,
+)
+
 logger = logging.getLogger("currency_fetcher")
 logger.setLevel(logging.INFO)
 
@@ -247,76 +266,98 @@ def log_statute_currency_check(
     return record
 
 
-def execute_portal_search_sync(act_code: str, query_text: str, max_results: int = 4) -> Dict[str, Any]:
+def execute_portal_search_sync(
+    act_code: str,
+    query_text: str,
+    max_results: int = 4,
+    provider: Optional[BaseProvider] = None
+) -> Dict[str, Any]:
     """
-    Executes a web search against whitelisted Tier 1 portals and NA/Senate bill pages.
-    Runs synchronously (wrapped by asyncio.to_thread in the caller).
-    Requires positive evidence of an amendment/bill term in the title or snippet.
+    Executes a web search against whitelisted Tier 1 portals and NA/Senate bill pages using search_provider.
+    Evaluates discovered hits using signal_rule against since_year and known/base instruments.
+    Never sends client facts into search queries.
     Distinguishes:
     - 'no_pages_returned' when search yields 0 results.
     - 'no_signals_found' when pages exist on Tier 1 portals but none contain amendment terms.
     - 'signals_found' when legitimate amendment/bill signals are detected.
-    - 'search_failed' on network or HTTP error.
+    - 'search_failed' on network or HTTP error, quota exhaustion, or unconfigured provider.
     """
-    act_name = ACT_SEARCH_NAMES.get(act_code.upper(), act_code.replace("_", " "))
-    search_terms = f'"{act_name}" (amendment OR ordinance OR bill) site:pakistancode.gov.pk OR site:na.gov.pk OR site:senate.gov.pk'
-    encoded_q = urllib.parse.quote(search_terms)
-    search_url = f"https://html.duckduckgo.com/html/?q={encoded_q}"
+    clean_act = act_code.upper().strip()
+    act_name = ACT_SEARCH_NAMES.get(clean_act, clean_act.replace("_", " "))
+    search_terms = f'"{act_name}" (amendment OR ordinance OR bill)'
+
+    if provider is None:
+        provider = build_provider_from_env(os.environ, WHITELISTED_TIER_1_DOMAINS)
+
+    resp = provider.search(search_terms, max_results=max_results)
+
+    if not resp.usable:
+        outcome = to_outcome(resp)
+        return {
+            "signals": [],
+            "search_outcome": outcome["state"],
+            "total_seen": resp.raw_count,
+            "sources_checked": ["Pakistan Code", "National Assembly", "Senate"],
+            "error": resp.error
+        }
+
+    # Prepare SignalContext for evaluating discovered legislative signals
+    m_base = re.search(r'_(\d{4})$', clean_act)
+    base_year = int(m_base.group(1)) if m_base else 1900
+    base_instrs = set()
+    if clean_act == "MFLO_1961":
+        base_instrs.add(instrument_key("ordinance", "VIII", 1961))
+    elif clean_act == "CPC_1908":
+        base_instrs.add(instrument_key("act", "V", 1908))
+    elif clean_act == "FIO_2001":
+        base_instrs.add(instrument_key("ordinance", "XLVI", 2001))
+
+    ctx = SignalContext(
+        act_code=clean_act,
+        since_year=base_year + 1 if base_year > 1900 else 1900,
+        base_titles=[act_name, f"{act_name}, {base_year}" if base_year else act_name],
+        base_instruments=base_instrs
+    )
 
     discovered: List[Dict[str, Any]] = []
     total_whitelisted_seen = 0
-    search_outcome = "no_pages_returned"
 
-    try:
-        req = urllib.request.Request(search_url, headers=BROWSER_HEADERS)
-        with urllib.request.urlopen(req, timeout=5.0) as resp:
-            html = resp.read().decode("utf-8", errors="ignore")
-            uddg_matches = re.findall(r'uddg=([^&]+)', html)
-            snippets = re.findall(r'class="result__snippet[^"]*">(.*?)</a>', html, re.DOTALL)
+    for hit in resp.results:
+        u = hit.get("url") or ""
+        if not is_whitelisted_tier1_domain(u):
+            continue
+        total_whitelisted_seen += 1
 
-            if not uddg_matches:
-                return {
-                    "signals": [],
-                    "search_outcome": "no_pages_returned",
-                    "total_seen": 0,
-                    "sources_checked": ["Pakistan Code", "National Assembly", "Senate"]
-                }
+        sig = evaluate_signal(hit, ctx)
+        if not sig.get("is_signal"):
+            # Also allow fallback check with is_valid_statute_signal if positive bill detected
+            matched_signal = is_valid_statute_signal(act_code=clean_act, hit_url=u, title=hit.get("title", ""), snippet=hit.get("snippet", ""))
+            if not matched_signal:
+                continue
+            sig_term = matched_signal
+            kind = "bill" if "bill" in matched_signal.lower() else "instrument"
+        else:
+            sig_term = ", ".join(sig.get("instrument_keys", [])) or sig.get("kind", "instrument")
+            kind = sig.get("kind", "instrument")
 
-            for i, raw_u in enumerate(uddg_matches):
-                u = urllib.parse.unquote(raw_u)
-                if not is_whitelisted_tier1_domain(u):
-                    continue
-                total_whitelisted_seen += 1
-                snip = re.sub(r'<[^>]+>', '', snippets[i]).strip() if i < len(snippets) else ""
-                title = f"Legislative record on {urllib.parse.urlparse(u).netloc}"
+        discovered.append({
+            "source_url": u,
+            "title": hit.get("title", f"Legislative record on {urllib.parse.urlparse(u).netloc}"),
+            "snippet": hit.get("snippet", ""),
+            "signal_term": sig_term,
+            "detected_change": f"Reported {kind} ({sig_term}) on {urllib.parse.urlparse(u).netloc}",
+            "source_tier": "tier_1",
+            "effective_application": "pending_and_prospective"
+        })
+        if len(discovered) >= max_results:
+            break
 
-                # Enforce Rule: Require affirmative subsequent amendment or bill signal
-                matched_signal = is_valid_statute_signal(act_code=act_code, hit_url=u, title=title, snippet=snip)
-                if not matched_signal:
-                    continue
-
-                discovered.append({
-                    "source_url": u,
-                    "title": title,
-                    "snippet": snip,
-                    "signal_term": matched_signal,
-                    "detected_change": f"Reported amendment/bill signal ({matched_signal}) on {urllib.parse.urlparse(u).netloc}",
-                    "source_tier": "tier_1",
-                    "effective_application": "pending_and_prospective"
-                })
-                if len(discovered) >= max_results:
-                    break
-
-            if discovered:
-                search_outcome = "signals_found"
-            elif total_whitelisted_seen > 0:
-                search_outcome = "no_signals_found"
-            else:
-                search_outcome = "no_pages_returned"
-
-    except Exception as e:
-        logger.debug(f"Tier 1 portal search notice: {e}")
-        search_outcome = "search_failed"
+    if discovered:
+        search_outcome = "signals_found"
+    elif total_whitelisted_seen > 0 or len(resp.results) > 0:
+        search_outcome = "no_signals_found"
+    else:
+        search_outcome = "no_pages_returned"
 
     return {
         "signals": discovered,
@@ -333,7 +374,8 @@ async def fetch_currency_signals(
     budget_s: float = 6.0,
     mock_fetcher: Optional[Callable[..., Any]] = None,
     cache: Optional[CurrencyCache] = None,
-    store: Optional[StatuteVersionStore] = None
+    store: Optional[StatuteVersionStore] = None,
+    provider: Optional[BaseProvider] = None
 ) -> Dict[str, Any]:
     """
     Part 1, Item 3:
@@ -390,7 +432,7 @@ async def fetch_currency_signals(
                 )
         else:
             raw_res = await asyncio.wait_for(
-                asyncio.to_thread(execute_portal_search_sync, clean_act, query_text),
+                asyncio.to_thread(execute_portal_search_sync, clean_act, query_text, 4, provider),
                 timeout=budget_s
             )
 

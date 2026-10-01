@@ -5320,7 +5320,7 @@
     "primary_num": "203D",
     "secondary_num": null,
     "title": "Powers, jurisdiction and functions of the Court",
-    "text": "Powers, jurisdiction and functions of the Court",
+    "text": "Article 203D: Powers, jurisdiction and functions of the Court:\n(1) The Court may, either of its own motion or on the petition of a citizen of Pakistan or the Federal Government or a Provincial Government, examine and decide the question whether or not any law or provision of law is repugnant to the Injunctions of Islam, as laid down in the Holy Quran and Sunnah of the Holy Prophet (peace be upon him).\n(2) If the Court decides that any law or provision of law is repugnant to the Injunctions of Islam, it shall set out in its decision:\n(a) the reasons for its holding that opinion; and\n(b) the extent to which such law or provision is so repugnant;\nand specify the day on which the decision shall take effect:\nProvided that no such decision shall be deemed to take effect before the expiration of the period within which an appeal therefrom may be preferred to the Supreme Court or, where an appeal has been so preferred, before the disposal of such appeal.\n(3) If any law or provision of law is declared by the Court to be repugnant to the Injunctions of Islam:\n(a) the President in the case of a Federal law, or the Governor in the case of a Provincial law, shall take steps to amend the law so as to bring such law or provision into conformity with the Injunctions of Islam; and\n(b) such law or provision shall, to the extent to which it is declared to be so repugnant, cease to have effect on the day on which the decision of the Court takes effect.",
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5333,7 +5333,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.977742+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": true
   },
   {
     "version_id": "CONST_1973_ART_203E_V1",
@@ -5366,7 +5367,7 @@
     "primary_num": "203F",
     "secondary_num": null,
     "title": "Appeal to Supreme Court",
-    "text": "Appeal to Supreme Court",
+    "text": "Article 203F: Appeal to Supreme Court:\n(1) Any party to any proceedings before the Court under Article 203D may, within sixty days of the decision of the Court, prefer an appeal to the Supreme Court.\n(2) An appeal to the Supreme Court against a decision of the Court under Article 203D shall be heard by a Bench of that Court, to be called the Shariat Appellate Bench.\n(2A) The Shariat Appellate Bench shall consist of three Muslim Judges of the Supreme Court and not more than two Ulema to be appointed by the President to attend sittings of the Bench as ad hoc members thereof.\n(3) A decision of the Supreme Court Shariat Appellate Bench on appeal shall have final effect, and upon the disposal of such appeal, the decision of the Federal Shariat Court shall take effect only to the extent upheld by the Supreme Court.",
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5379,7 +5380,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:38.095591+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": true
   },
   {
     "version_id": "CONST_1973_ART_203G_V1",
@@ -14482,8 +14484,8 @@
     "secondary_num": null,
     "title": "Powers, jurisdiction and functions of the Court",
     "title_only": "Powers, jurisdiction and functions of the Court",
-    "text": null,
-    "text_available": false,
+    "text": "Article 203D: Powers, jurisdiction and functions of the Court:\n(1) The Court may, either of its own motion or on the petition of a citizen of Pakistan or the Federal Government or a Provincial Government, examine and decide the question whether or not any law or provision of law is repugnant to the Injunctions of Islam, as laid down in the Holy Quran and Sunnah of the Holy Prophet (peace be upon him).\n(2) If the Court decides that any law or provision of law is repugnant to the Injunctions of Islam, it shall set out in its decision:\n(a) the reasons for its holding that opinion; and\n(b) the extent to which such law or provision is so repugnant;\nand specify the day on which the decision shall take effect:\nProvided that no such decision shall be deemed to take effect before the expiration of the period within which an appeal therefrom may be preferred to the Supreme Court or, where an appeal has been so preferred, before the disposal of such appeal.\n(3) If any law or provision of law is declared by the Court to be repugnant to the Injunctions of Islam:\n(a) the President in the case of a Federal law, or the Governor in the case of a Provincial law, shall take steps to amend the law so as to bring such law or provision into conformity with the Injunctions of Islam; and\n(b) such law or provision shall, to the extent to which it is declared to be so repugnant, cease to have effect on the day on which the decision of the Court takes effect.",
+    "text_available": true,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -14542,8 +14544,8 @@
     "secondary_num": null,
     "title": "Appeal to Supreme Court",
     "title_only": "Appeal to Supreme Court",
-    "text": null,
-    "text_available": false,
+    "text": "Article 203F: Appeal to Supreme Court:\n(1) Any party to any proceedings before the Court under Article 203D may, within sixty days of the decision of the Court, prefer an appeal to the Supreme Court.\n(2) An appeal to the Supreme Court against a decision of the Court under Article 203D shall be heard by a Bench of that Court, to be called the Shariat Appellate Bench.\n(2A) The Shariat Appellate Bench shall consist of three Muslim Judges of the Supreme Court and not more than two Ulema to be appointed by the President to attend sittings of the Bench as ad hoc members thereof.\n(3) A decision of the Supreme Court Shariat Appellate Bench on appeal shall have final effect, and upon the disposal of such appeal, the decision of the Federal Shariat Court shall take effect only to the extent upheld by the Supreme Court.",
+    "text_available": true,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,

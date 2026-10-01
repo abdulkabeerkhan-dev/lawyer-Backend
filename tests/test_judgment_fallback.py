@@ -2,12 +2,17 @@ import unittest
 import os
 import sys
 
-# Add project root to sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
+import main
 from main import find_judgment_by_id_or_canonical
 
 class TestJudgmentFallback(unittest.TestCase):
+    def setUp(self):
+        self._orig_sb = main.supabase
+        main.supabase = None
+
+    def tearDown(self):
+        main.supabase = self._orig_sb
+
     def test_find_judgment_fallback_unknown_id(self):
         unknown_id = "2099_TEST_9999"
         res = find_judgment_by_id_or_canonical(unknown_id)

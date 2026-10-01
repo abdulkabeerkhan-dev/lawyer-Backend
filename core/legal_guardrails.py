@@ -530,6 +530,7 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
             else:
                 retrieved_parts.append(str(c))
                 context_parts.append(str(c))
+    context_parts.append(SYSTEM_LEGAL_DIRECTIVE)
     full_context_text = " ".join(context_parts)
     retrieved_chunk_text = " ".join(retrieved_parts)
 
@@ -1151,8 +1152,9 @@ def check_memo_completeness(text: str, is_formal_opinion: bool = True, context_c
     if not is_formal_opinion:
         return True, []
 
-    cards_idx = text.find("<<<CARDS>>>")
-    main_text = text if cards_idx == -1 else text[:cards_idx]
+    main_text = re.sub(r'<<<CARDS>>>.*?<<<END_CARDS>>>', '', text, flags=re.DOTALL)
+    if "<<<CARDS>>>" in main_text:
+        main_text = main_text.split("<<<CARDS>>>")[0]
 
     required_sections = [
         (

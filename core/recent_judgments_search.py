@@ -11,6 +11,10 @@ from core.domain_whitelist import (
     is_whitelisted_court_url,
     derive_court_from_url as _derive_court_from_url
 )
+from core.search_provider import (
+    BaseProvider,
+    build_provider_from_env,
+)
 
 WHITELISTED_COURT_DOMAINS = COURT_DOMAIN_NAMES
 
@@ -23,54 +27,56 @@ def derive_court_from_url(url: str) -> str:
     c = _derive_court_from_url(url)
     return c or "Superior Court"
 
-def _execute_sync_court_search(query_text: str, max_results: int = 3) -> List[Dict[str, Any]]:
+def _execute_sync_court_search(
+    query_text: str,
+    max_results: int = 3,
+    provider: Optional[BaseProvider] = None
+) -> List[Dict[str, Any]]:
     clean_q = re.sub(r'[^A-Za-z0-9\s\-]+', ' ', query_text).strip()
     words = [w for w in clean_q.split() if len(w) > 3][:5]
     issue_terms = " ".join(words) if words else clean_q[:40]
 
-    site_filter = " OR ".join([f"site:{d}" for d in ["supremecourt.gov.pk", "lhc.gov.pk", "shc.gov.pk", "phc.gov.pk", "ihc.gov.pk", "fsc.gov.pk"]])
-    search_q = f'"{issue_terms}" (judgment OR order) ({site_filter})'
-    encoded_q = urllib.parse.quote(search_q)
-    search_url = f"https://html.duckduckgo.com/html/?q={encoded_q}"
+    allowed_court_hosts = sorted(list(COURT_TIER_1_DOMAINS))
+    if provider is None:
+        provider = build_provider_from_env(os.environ, allowed_court_hosts)
+
+    search_q = f'"{issue_terms}" (judgment OR order)'
+    resp = provider.search(search_q, max_results=max_results)
+    if not resp.usable:
+        return []
 
     results: List[Dict[str, Any]] = []
-    try:
-        req = urllib.request.Request(search_url, headers=BROWSER_HEADERS)
-        with urllib.request.urlopen(req, timeout=4.0) as resp:
-            html = resp.read().decode("utf-8", errors="ignore")
-            uddg_matches = re.findall(r'uddg=([^&]+)', html)
-            snippets = re.findall(r'class="result__snippet[^"]*">(.*?)</a>', html, re.DOTALL)
-            titles = re.findall(r'class="result__title[^"]*">(.*?)</h2>', html, re.DOTALL)
+    for hit in resp.results:
+        u = hit.get("url") or ""
+        if not is_whitelisted_court_url(u):
+            continue
 
-            for i, raw_u in enumerate(uddg_matches):
-                u = urllib.parse.unquote(raw_u)
-                if not is_whitelisted_court_url(u):
-                    continue
+        raw_title = hit.get("title") or "Recent Judgment / Order"
+        raw_snip = hit.get("snippet") or ""
 
-                raw_title = re.sub(r'<[^>]+>', '', titles[i]).strip() if i < len(titles) else "Recent Judgment / Order"
-                raw_snip = re.sub(r'<[^>]+>', '', snippets[i]).strip() if i < len(snippets) else ""
+        date_match = re.search(r'\b(202[0-6]|201[0-9])[-/\.](0[1-9]|1[0-2])[-/\.](0[1-9]|[12]\d|3[01])\b', raw_snip + " " + raw_title)
+        decision_date = hit.get("date") or (date_match.group(0) if date_match else "Recent")
+        content_type = "judgment" if ("judgment" in (raw_title + raw_snip).lower()) else "order"
 
-                date_match = re.search(r'\b(202[0-6]|201[0-9])[-/\.](0[1-9]|1[0-2])[-/\.](0[1-9]|[12]\d|3[01])\b', raw_snip + " " + raw_title)
-                decision_date = date_match.group(0) if date_match else "Recent"
-
-                content_type = "judgment" if ("judgment" in (raw_title + raw_snip).lower()) else "order"
-
-                results.append({
-                    "url": u,
-                    "title": raw_title,
-                    "court": derive_court_from_url(u),
-                    "date": decision_date,
-                    "content_type": content_type,
-                    "snippet": raw_snip[:300] if raw_snip else "Judgment or order available on portal."
-                })
-                if len(results) >= max_results:
-                    break
-    except Exception:
-        pass
+        results.append({
+            "url": u,
+            "title": raw_title,
+            "court": derive_court_from_url(u),
+            "date": str(decision_date),
+            "content_type": content_type,
+            "snippet": raw_snip[:300] if raw_snip else "Judgment or order available on portal."
+        })
+        if len(results) >= max_results:
+            break
 
     return results
 
-async def search_recent_external_judgments(query_text: str, budget_s: float = 5.0, mock_fetcher: Optional[Any] = None) -> List[Dict[str, Any]]:
+async def search_recent_external_judgments(
+    query_text: str,
+    budget_s: float = 5.0,
+    mock_fetcher: Optional[Any] = None,
+    provider: Optional[BaseProvider] = None
+) -> List[Dict[str, Any]]:
     """
     Always-on search for recent judgments on the same issue across official court portals.
     Isolated from primary corpus: nothing enters the database without approval.
@@ -83,7 +89,7 @@ async def search_recent_external_judgments(query_text: str, budget_s: float = 5.
 
     try:
         return await asyncio.wait_for(
-            asyncio.to_thread(_execute_sync_court_search, query_text, max_results=3),
+            asyncio.to_thread(_execute_sync_court_search, query_text, 3, provider),
             timeout=budget_s
         )
     except Exception:

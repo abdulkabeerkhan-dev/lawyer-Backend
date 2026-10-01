@@ -99,7 +99,20 @@ ACT_ALIASES = {
     "punjab pre-emption act 1991": "PREEMPTION_1991",
     "punjab preemption act": "PREEMPTION_1991",
     "pre-emption act": "PREEMPTION_1991",
-    "preemption act": "PREEMPTION_1991"
+    "preemption act": "PREEMPTION_1991",
+
+    # FIO 2001
+    "fio": "FIO_2001",
+    "fio 2001": "FIO_2001",
+    "fio, 2001": "FIO_2001",
+    "financial institutions (recovery of finances) ordinance": "FIO_2001",
+    "financial institutions (recovery of finances) ordinance 2001": "FIO_2001",
+    "financial institutions (recovery of finances) ordinance, 2001": "FIO_2001",
+    "recovery of finances ordinance": "FIO_2001",
+    "recovery of finances ordinance 2001": "FIO_2001",
+    "financial institutions ordinance": "FIO_2001",
+    "financial institutions ordinance 2001": "FIO_2001",
+    "ordinance xlvi of 2001": "FIO_2001"
 }
 
 # Roman to Integer mapping
@@ -297,7 +310,7 @@ def parse_statutory_citation(text: str) -> Dict[str, Any]:
         return {
             "is_valid": True,
             "status": "parsed",
-            "act_code": act_code or "CPC_1908",
+            "act_code": "CPC_1908",
             "provision_type": "order_rule",
             "primary_num": normalize_roman(ord_num),
             "subsection": None,
@@ -502,7 +515,7 @@ def validate_citations_in_text(text: str) -> Dict[str, Any]:
         # Article
         r'\b(?:article|art\.?)\s*\d+[a-zA-Z]?(?:\s*\(\s*\d+\s*\))?(?:\s*\(\s*[a-zA-Z]\s*\))?(?:\s*(?:of\s+the\s+)?(?:constitution|qso))?\b',
         # Section with Act
-        r'\b(?:section|sec\.?|s\.?)\s*\d+(?:-[A-Za-z]+|[A-Za-z])?(?:\s*\(\s*\d+\s*\))?(?:\s*\(\s*[a-zA-Z]\s*\))?(?:\s*(?:of\s+the\s+)?(?:cpc|ppc|crpc|cnsa|prpa|mflo|limitation\s+act))?\b'
+        r'(?<![\w\'])\b(?:section|sec\.?|s\.)\s*\d+(?:-[A-Za-z]+|[A-Za-z])?(?:\s*\(\s*\d+\s*\))?(?:\s*\(\s*[a-zA-Z]\s*\))?(?:\s*(?:of\s+the\s+)?(?:cpc|ppc|crpc|cnsa|prpa|mflo|limitation\s+act))?\b'
     ]
 
     all_matches = set()
