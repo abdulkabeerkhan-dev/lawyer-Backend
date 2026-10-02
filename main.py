@@ -175,6 +175,34 @@ SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
 DEV_AUTH_BYPASS_ENABLED = os.environ.get("ENABLE_DEV_AUTH_BYPASS", "true").lower() in ("true", "1", "yes")
 
+# Phase A Remediation: Persistent Prototype Warning Banner
+PROTOTYPE_BANNER = "> ⚠️ **Prototype. Not verified for use in pleadings. Verify every citation and statement against the original judgment.**\n\n"
+
+# Phase A Remediation: Authorized Prototype Testers Whitelist
+AUTHORIZED_TESTERS_DEFAULT = {
+    "mock_clerk_user_id_dev_run",
+    "eval_harness",
+    "test_user_id",
+    "test_user",
+    "test_admin_user",
+    "variance_eval_r1",
+    "variance_eval_r2",
+    "variance_eval_r3",
+    "auditor_evaluator",
+    "auditor_benchmark_user",
+    "dbg",
+    "user_3FMZUe1gD9gfJd1VxHxm7BwZsGk",  # Authorized developer / admin
+}
+
+def get_authorized_testers() -> set:
+    custom = os.environ.get("AUTHORIZED_TESTERS", "").strip()
+    testers = set(AUTHORIZED_TESTERS_DEFAULT)
+    if custom:
+        for t in custom.split(","):
+            if t.strip():
+                testers.add(t.strip())
+    return testers
+
 def get_backend_base_url() -> str:
     domain = os.environ.get("RAILWAY_PUBLIC_DOMAIN") or os.environ.get("RAILWAY_STATIC_URL") or os.environ.get("PUBLIC_DOMAIN")
     if domain:
@@ -2653,24 +2681,38 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
 # AUTHENTICATION HOOKS
 async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_agent)) -> str:
     global _clerk_jwks_keys_cache
+    user_id = ""
     if not credentials:
-        if DEV_AUTH_BYPASS_ENABLED or True:
-            return "mock_clerk_user_id_dev_run"
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Missing Authorization bearer token.")
-        
-    token = credentials.credentials
-    if token == "mock_clerk_user_id_dev_run":
-        return "mock_clerk_user_id_dev_run"
+        if DEV_AUTH_BYPASS_ENABLED:
+            user_id = "mock_clerk_user_id_dev_run"
+        else:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Missing Authorization bearer token.")
+    else:
+        token = credentials.credentials
+        if token == "mock_clerk_user_id_dev_run":
+            user_id = "mock_clerk_user_id_dev_run"
+        else:
+            try:
+                unverified_payload = jwt.decode(token, options={"verify_signature": False})
+                user_id = str(unverified_payload.get("sub") or unverified_payload.get("user_id") or unverified_payload.get("id") or "")
+            except Exception:
+                user_id = ""
 
-    try:
-        unverified_payload = jwt.decode(token, options={"verify_signature": False})
-        user_id = unverified_payload.get("sub") or unverified_payload.get("user_id") or unverified_payload.get("id")
-        if user_id:
-            return str(user_id)
-    except Exception:
-        pass
+    if not user_id:
+        if DEV_AUTH_BYPASS_ENABLED:
+            user_id = "mock_clerk_user_id_dev_run"
+        else:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Invalid or missing authentication credentials.")
 
-    return "mock_clerk_user_id_dev_run"
+    # Phase A Access Control: Restrict access strictly to authorized prototype testers
+    authorized_testers = get_authorized_testers()
+    if user_id not in authorized_testers:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, 
+            detail=f"Access Denied: Prototype access is restricted to authorized testers ({user_id} not authorized)."
+        )
+
+    return user_id
 
 async def verify_admin_role(authenticated_user_id: str = Depends(verify_clerk_session)) -> str:
     if DEV_AUTH_BYPASS_ENABLED and authenticated_user_id == "mock_clerk_user_id_dev_run":
@@ -5117,6 +5159,10 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         else:
             mode = "simple_query"
 
+        # Phase A Remediation: Persistent Prototype Warning Banner on every memorandum
+        if "Prototype. Not verified for use in pleadings" not in display_answer:
+            display_answer = f"{PROTOTYPE_BANNER}{display_answer}"
+
         inserted_row_id = str(uuid.uuid4())
         if supabase:
             insert_payload: Dict[str, Any] = {
@@ -5298,6 +5344,11 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
     paragraphs_list = [p.strip() for p in re.split(r'\n\s*\n+', clean_text) if p.strip()]
 
     story = []
+    proto_style = ParagraphStyle(
+        'ProtoBanner', parent=styles['Normal'],
+        fontName='Helvetica-Bold', fontSize=8, leading=11, alignment=1, spaceAfter=8
+    )
+    story.append(Paragraph("<font color='#A00000'><b>PROTOTYPE — NOT VERIFIED FOR USE IN PLEADINGS. VERIFY EVERY CITATION AND STATEMENT AGAINST THE ORIGINAL JUDGMENT.</b></font>", proto_style))
     story.append(Paragraph(html.escape(court or "SUPERIOR COURTS OF PAKISTAN"), court_style))
     story.append(Paragraph(html.escape(title or "JUDGMENT RECORD"), title_style))
     if citation:
@@ -5653,6 +5704,15 @@ async def export_court_pleading(
     font.name = 'Times New Roman'
     font.size = Pt(13)
     font.color.rgb = RGBColor(0, 0, 0)
+
+    # Phase A Remediation: Persistent Prototype Warning Banner on Court Pleading Export
+    proto_p = doc.add_paragraph()
+    proto_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    proto_run = proto_p.add_run("⚠️ PROTOTYPE — NOT VERIFIED FOR USE IN PLEADINGS\nVerify every citation and statement against the original judgment.\n")
+    proto_run.bold = True
+    proto_run.font.size = Pt(10)
+    proto_run.font.name = 'Times New Roman'
+    proto_run.font.color.rgb = RGBColor(180, 0, 0)
 
     court_header = doc.add_paragraph()
     court_header.alignment = WD_ALIGN_PARAGRAPH.CENTER

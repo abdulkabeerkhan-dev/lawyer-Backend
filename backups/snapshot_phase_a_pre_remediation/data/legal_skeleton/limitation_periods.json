@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-10-02",
+  "entries": [
+    {
+      "id": "LIM-001",
+      "proceeding": "Banking Court Appeal to High Court",
+      "statutory_source": "Financial Institutions (Recovery of Finances) Ordinance 2001, Section 22(1)",
+      "limitation_period": "30 days",
+      "starts_from": "Date of the judgment, decree, sentence or final order of Banking Court",
+      "status": "Unreviewed",
+      "reviewer": null,
+      "review_date": null,
+      "lawyer_review_flag": "needs lawyer review: s.22 30-day limitation period for interlocutory appeals vs final decrees. Source: FIO 2001 s.22(1); 2017 CLD 1145.",
+      "notes": "30 days limitation. Lies to High Court Division Bench."
+    },
+    {
+      "id": "LIM-002",
+      "proceeding": "Application to set aside execution sale under Order XXI Rule 90 CPC",
+      "statutory_source": "Limitation Act 1908, Schedule I, Article 166",
+      "limitation_period": "30 days",
+      "starts_from": "Date of the sale",
+      "status": "Unreviewed",
+      "reviewer": null,
+      "review_date": null,
+      "notes": "30 days from auction date under Article 166."
+    },
+    {
+      "id": "LIM-003",
+      "proceeding": "Application to set aside arbitration award under Section 30 / 33 Arbitration Act 1940",
+      "statutory_source": "Limitation Act 1908, Schedule I, Article 158",
+      "limitation_period": "30 days",
+      "starts_from": "Date of service of the notice of filing of the award in court",
+      "status": "Unreviewed",
+      "reviewer": null,
+      "review_date": null,
+      "notes": "30 days from formal notice of filing, not award date."
+    },
+    {
+      "id": "LIM-004",
+      "proceeding": "Appeal to Service Tribunal (FST / PST)",
+      "statutory_source": "Service Tribunals Act 1973, Section 4",
+      "limitation_period": "30 days",
+      "starts_from": "Communication of final departmental order or 90 days after departmental appeal if undecided",
+      "status": "Unreviewed",
+      "reviewer": null,
+      "review_date": null,
+      "notes": "Departmental remedy must be exhausted first."
+    }
+  ]
+}

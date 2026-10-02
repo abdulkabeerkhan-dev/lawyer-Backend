@@ -1,0 +1,302 @@
+{
+  "data/curated_historical_cases.json": {
+    "sha256": "596f0b7896c3a4911fdb2acadf39083e041e376fabaf421830245ab44141a3a6",
+    "size_bytes": 3730
+  },
+  "data/precedent_annotations.json": {
+    "sha256": "5b7b8fafe0d6006e4bd0b12051f1fdd2ff0377c6cdb808bc82f04b491d39e371",
+    "size_bytes": 1676
+  },
+  "data/legal_skeleton/court_hierarchy_and_appeals.json": {
+    "sha256": "6499292c85102d6fdc31751644e61e560604b4c0fb9e369cc5ae79ddfb8ae09f",
+    "size_bytes": 6098
+  },
+  "data/legal_skeleton/doctrine_elements.json": {
+    "sha256": "093ce7f4771197709091b39e250e0839d965312f7d7491e266a575159d59c9bd",
+    "size_bytes": 3436
+  },
+  "data/legal_skeleton/limitation_periods.json": {
+    "sha256": "df85ff60791dacc84907273af1f87afb8419640713e65aa30be38204125f582d",
+    "size_bytes": 2153
+  },
+  "data/legal_skeleton/procedure_maps.json": {
+    "sha256": "ea3d34240623a6b527835ea93c19229eefef68291291d89f65ebd7676e4caa6b",
+    "size_bytes": 2305
+  },
+  "data/legal_skeleton/reporter_to_court.json": {
+    "sha256": "99ced615a69edceb23728bc76999958c61cdc760b2f91a2401399cf8994be1c5",
+    "size_bytes": 2697
+  },
+  "data/legal_skeleton/statute_section_directory.json": {
+    "sha256": "25dd243f9aa32bce1eaa1e89707affbf90aa4b50342ebb38e3e2e4ef9643fb83",
+    "size_bytes": 6569
+  },
+  "data/statute_staging/currency_cache.json": {
+    "sha256": "4001a7716b70aabcd3de743aff1272f27f51edcca748cb54d2488cad316ea0c0",
+    "size_bytes": 4239
+  },
+  "data/statute_staging/statute_currency_checks.jsonl": {
+    "sha256": "8a7f2583f597537408732b0abfa350025aeb9d57c8e71704af5e47db1689110c",
+    "size_bytes": 297345
+  },
+  "data/statute_staging/statute_currency_staging.json": {
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "size_bytes": 2
+  },
+  "data/statute_tables/CNSA_1997.csv": {
+    "sha256": "21623c09be4c05bba55558041d2922441480317a9c68028d9cc617aff26b438d",
+    "size_bytes": 37100
+  },
+  "data/statute_tables/CNSA_1997.json": {
+    "sha256": "a01f2754cbd92684cca3b1f73aa3839972fb6d36f96442e0120420bc8043b217",
+    "size_bytes": 63681
+  },
+  "data/statute_tables/CONST_1973.csv": {
+    "sha256": "17f4e9f76dbae72c0563e52ef1cd39c10116b556bae92b04aae5a4591d59fe13",
+    "size_bytes": 157532
+  },
+  "data/statute_tables/CONST_1973.json": {
+    "sha256": "da70cd92f673df52aa2cc33e8896e82d8e173afab436a81340648aa3ceb421c9",
+    "size_bytes": 260580
+  },
+  "data/statute_tables/CPC_1908.csv": {
+    "sha256": "9fe5e9846c5406e09eb35731a1318269478ef01de39d914187ed10174d3c29c4",
+    "size_bytes": 341799
+  },
+  "data/statute_tables/CPC_1908.json": {
+    "sha256": "030948d363fa092181652f8c15e2113d7d23ece5763973b8d14b1709f00e42f4",
+    "size_bytes": 577530
+  },
+  "data/statute_tables/CRPC_1898.csv": {
+    "sha256": "c184179f7fcee816f05d6ee34481a9a059b7398461efcd20d27cd8810564e036",
+    "size_bytes": 224436
+  },
+  "data/statute_tables/CRPC_1898.json": {
+    "sha256": "240de712ea84d5194d794b7091893d2f9eadf687cb3ff873ac0cf4a8425642eb",
+    "size_bytes": 390199
+  },
+  "data/statute_tables/DMMA_1939.csv": {
+    "sha256": "d4d0351bccb100ff28ae6bf7b4cc3e8f89491d024d2ac77984d84ac6eac5a98b",
+    "size_bytes": 3131
+  },
+  "data/statute_tables/DMMA_1939.json": {
+    "sha256": "cc1a2563310331846bf8c8783e165efb51054b886bd6342ecc1234d5e8fa5c49",
+    "size_bytes": 4863
+  },
+  "data/statute_tables/FAMILY_COURTS_1964.csv": {
+    "sha256": "cdeaf53e72bef43cd58d407e41cc99f3594c00b0057cad406defc1d65fa7c02a",
+    "size_bytes": 14313
+  },
+  "data/statute_tables/FAMILY_COURTS_1964.json": {
+    "sha256": "fc6c081eea91a5325c3b6fcaa6cca7fe144a87396c5ffc5c91479d6a2e5cbbba",
+    "size_bytes": 24548
+  },
+  "data/statute_tables/FIO_2001.json": {
+    "sha256": "67ca5a114ed0628fa97cf05fee53b2b516d17faecc19b62128b23e41018bbd7f",
+    "size_bytes": 5311
+  },
+  "data/statute_tables/LIMITATION_1908.csv": {
+    "sha256": "6fe6f39bd5ea1ac4cb906d9c0029bc6e844eadf1464b99630808d28696637f71",
+    "size_bytes": 94895
+  },
+  "data/statute_tables/LIMITATION_1908.json": {
+    "sha256": "fc39eb9141fcad9ec9f48dd52985c78d34db37a29704d7b811042b8ad31cf918",
+    "size_bytes": 162392
+  },
+  "data/statute_tables/MFLO_1961.csv": {
+    "sha256": "5ed73b574593d1c7790db864b92a594f738e3a626000536394a7f7e1adb0ea69",
+    "size_bytes": 6368
+  },
+  "data/statute_tables/MFLO_1961.json": {
+    "sha256": "29cdee495cb38ae0b06f1ac506bb127a1a55c1392bccec27d949132ff94ac7b3",
+    "size_bytes": 10616
+  },
+  "data/statute_tables/PPC_1860.csv": {
+    "sha256": "45891eeebc8c736bfe13d6a40791b3747d800caf00d75c8d3ef1e15e6abf2139",
+    "size_bytes": 273589
+  },
+  "data/statute_tables/PPC_1860.json": {
+    "sha256": "0e369e007700b686100d11ad75437c70702206c0aa6090f13bcfd2a1119ff39f",
+    "size_bytes": 476629
+  },
+  "data/statute_tables/PREEMPTION_1991.csv": {
+    "sha256": "05ed4fe34e80d2e0907b3e103d50c25335cffc06c822ae01634838bbdbcf339f",
+    "size_bytes": 14938
+  },
+  "data/statute_tables/PREEMPTION_1991.json": {
+    "sha256": "364cebe434fd4443b549d9ac853efbd4558f365351238fe778365d979da70179",
+    "size_bytes": 26427
+  },
+  "data/statute_tables/PRPA_2009.csv": {
+    "sha256": "782e1384b8fba8d05574ad65411e3b1af30e497bf0ac03ec2c72b66627ea4179",
+    "size_bytes": 14194
+  },
+  "data/statute_tables/PRPA_2009.json": {
+    "sha256": "eee4d35d31c52d279d3ee46fa249299857a1938468089f98bbb3d8da8c1c66cd",
+    "size_bytes": 25051
+  },
+  "data/statute_tables/QSO_1984.csv": {
+    "sha256": "22b86c281f1dc4e64541ef5a64c8c68d25edd5645bcb9e8475639db3fda7f9d6",
+    "size_bytes": 78801
+  },
+  "data/statute_tables/QSO_1984.json": {
+    "sha256": "44825260ecb0cc3881245a1b52c5d086c376d0e7550811a6b9e404a4ff375377",
+    "size_bytes": 130205
+  },
+  "data/statute_versions/audit_migration_log.json": {
+    "sha256": "2b4775af6360e6c697e2ab8e176a5637b395f1a6ac40c2dc5ab8da0d63db9bd7",
+    "size_bytes": 2106
+  },
+  "data/statute_versions/CNSA_1997_versions.json": {
+    "sha256": "0b25a6796ba2ae2deffbb4a43c19fe628d4d32a4a70e1fb3b42cc4584a00c71b",
+    "size_bytes": 161625
+  },
+  "data/statute_versions/CONST_1973_versions.json": {
+    "sha256": "c08040b7322ded7726dfcf841ea932d343833c4ba11416e7cc6722b2257a9fc3",
+    "size_bytes": 630952
+  },
+  "data/statute_versions/CPC_1908_versions.json": {
+    "sha256": "67f43106f69ccf13ae656ef414e154be14a7523d306d6bd1a6c8fd79ad271954",
+    "size_bytes": 385192
+  },
+  "data/statute_versions/CRPC_1898_versions.json": {
+    "sha256": "78c05eac9d45491bcfb0f83be8e36a86d1571a49c5104c6730bf98c74f069d46",
+    "size_bytes": 1002421
+  },
+  "data/statute_versions/DMMA_1939_versions.json": {
+    "sha256": "b8b2ff820e90cedaad0c4fceac4d5479592896a3e36d775def576fd0f79d15b1",
+    "size_bytes": 12489
+  },
+  "data/statute_versions/FAMILY_COURTS_1964_versions.json": {
+    "sha256": "2026448ec584ebf280171fb5a452015d395eff5df396350f259b3152253edb10",
+    "size_bytes": 64138
+  },
+  "data/statute_versions/FIO_2001_versions.json": {
+    "sha256": "eb9fb9fdb136625f6bf576ad71c55dddb87461337259d85dd99bd70974c5f6a9",
+    "size_bytes": 8451
+  },
+  "data/statute_versions/LIMITATION_1908_versions.json": {
+    "sha256": "53ab45b3e02f35c6c9e0377b694f1e9ac3810ed0e9da2b500285f80fcb64018d",
+    "size_bytes": 427514
+  },
+  "data/statute_versions/MFLO_1961_versions.json": {
+    "sha256": "66fd03e41d2d21dc7c81e80310e0fc88ef96af4da4f2bc343b28a783061500d7",
+    "size_bytes": 26556
+  },
+  "data/statute_versions/PPC_1860_versions.json": {
+    "sha256": "90da495a8920570a47f5e5755b5b6013780ae940e90c25b2a1051c61e2750f06",
+    "size_bytes": 1235255
+  },
+  "data/statute_versions/PREEMPTION_1991_versions.json": {
+    "sha256": "ce12656de1ff6798a2e6c17ba71b6aa74597c10ddd7eb08d19e03fd881fed717",
+    "size_bytes": 70672
+  },
+  "data/statute_versions/PRPA_2009_versions.json": {
+    "sha256": "0cef730d6239800776c0ac37b58acfcb85cdc54c11ea7cd5fed7d468305dc105",
+    "size_bytes": 65330
+  },
+  "data/statute_versions/QSO_1984_versions.json": {
+    "sha256": "4adc0c5eb1411e1041ba6f2f94a84cc3c90daa4deb5f53f391e002705a0921c5",
+    "size_bytes": 319887
+  },
+  "data/statute_versions/supabase_cleanup_manifest.json": {
+    "sha256": "54fe3da5fc8bcfb33137397d32a867b79506d856dd2f25e33a5053743478f971",
+    "size_bytes": 1779
+  },
+  "bm25_index.pkl": {
+    "sha256": "b66429c55e0d43170ff2ed9c717de592ee8c948ea0d67cca5b8d21bb8a95d747",
+    "size_bytes": 74100551
+  },
+  "eval/results/corpus_verification_audit.json": {
+    "sha256": "f2a439c5972b9f3365a0e714c359d9e6226ab55fb62e2b5b7c8b5fe791722829",
+    "size_bytes": 51544
+  },
+  "eval/results/corpus_verification_audit.md": {
+    "sha256": "6428f63cdc580836bd44cccb10713eefb9be0fa6b9d86077a62bfa42de60540c",
+    "size_bytes": 21622
+  },
+  "eval/results/eval_report_20261002_095338.json": {
+    "sha256": "f294f17835612f59ad14dbc037b38e68797b394b0cc1e9c4cb5cf52f7bece1dc",
+    "size_bytes": 37440
+  },
+  "eval/results/eval_report_20261002_095338.md": {
+    "sha256": "c1968fd00d728ba4ca965d038fc4d21a30906fe028449dc66fbe689b06d08631",
+    "size_bytes": 1823
+  },
+  "eval/results/eval_report_20261002_152943.json": {
+    "sha256": "6c7cf4104e7a8fcb559ed53d8c1018943c3d26bc4eb13912911f0e94e3df64b8",
+    "size_bytes": 42455
+  },
+  "eval/results/eval_report_20261002_152943.md": {
+    "sha256": "ba16abb0aaaaa3b6ca1931687f04015c773d3d60422c74121720601c92903a4b",
+    "size_bytes": 2367
+  },
+  "eval/results/eval_report_20261002_162018.json": {
+    "sha256": "a0d4eab1ebac60cd43e6085585418b89eb4ca10376604b5989d29f1f68d09965",
+    "size_bytes": 39956
+  },
+  "eval/results/eval_report_20261002_162018.md": {
+    "sha256": "5613e92efbe12026101db8db1c2f5913357be7a04260fe96b64cd8d051da53a4",
+    "size_bytes": 2298
+  },
+  "eval/results/eval_report_20261002_163822.json": {
+    "sha256": "1639aac0d0881c05429f5af943e3e19373c9ea5bdd9c91420c1c3ce689939e89",
+    "size_bytes": 45189
+  },
+  "eval/results/eval_report_20261002_163822.md": {
+    "sha256": "a0dcb61e004e5d77610e232008fe0afd43849247e4f7a1bb0f32b23e8f131352",
+    "size_bytes": 2400
+  },
+  "eval/results/eval_report_phase4.json": {
+    "sha256": "ad2ee4450697b7d883daa354fb632974184ed4444ef26645af60147132651a68",
+    "size_bytes": 43418
+  },
+  "eval/results/eval_report_phase4.md": {
+    "sha256": "52d49a4f75a52ada0182a19fdb23f2f166f127c544376f63c0cc79c60d826793",
+    "size_bytes": 1612
+  },
+  "eval/results/judge_calibration_report.json": {
+    "sha256": "00cf87599990dbbf1e1f4782aeac6bc475de8fcca19b86b2da81d010e3a714cb",
+    "size_bytes": 3563
+  },
+  "eval/results/memo_GS-001.md": {
+    "sha256": "885c811679f7484609804eae4fc4a21da47723a1b7ae92ca6781850af2301cf9",
+    "size_bytes": 24409
+  },
+  "eval/results/memo_GS-003.md": {
+    "sha256": "d6d339041e6879fc85a80acf0ffb3f37900be9e905032c827d4e18aa410f812c",
+    "size_bytes": 3631
+  },
+  "eval/results/statutes_and_skeleton_audit.md": {
+    "sha256": "997a2295ae0b442cbfbbe116b2963f3bae51eb371f247bbb1e4d0e7ec5f0941c",
+    "size_bytes": 1237
+  },
+  "eval/results/variance_eval_progress.json": {
+    "sha256": "1a3cd5241aec3b85e7f69d974ff91f548cb68e6d48c9a98ca45b5de0dd931f31",
+    "size_bytes": 130424
+  },
+  "eval/results/variance_eval_report.json": {
+    "sha256": "5418233d5dbbd83698c5e746018874a5f86651291311459c811a5c1811289867",
+    "size_bytes": 10855
+  },
+  "eval/results/variance_eval_report.md": {
+    "sha256": "3b057b66256dbf78ca62dd62cccf7829ae958abd0abc7c034a02d20a92a2ee0b",
+    "size_bytes": 2730
+  },
+  "eval/gold_set_examples.json": {
+    "sha256": "5649477f90d6abf3071bb2376238e9036709fde72474c8ffc08f3a23df2a7009",
+    "size_bytes": 18277
+  },
+  "eval/golden_qa.json": {
+    "sha256": "e3cc6b754df5027a7ca68a1f16f0999f4df8e9647fcc7a85f06b2c95a17afdd8",
+    "size_bytes": 1917
+  },
+  "eval/baseline_results.json": {
+    "sha256": "f294f17835612f59ad14dbc037b38e68797b394b0cc1e9c4cb5cf52f7bece1dc",
+    "size_bytes": 37440
+  },
+  "eval/calibration_samples.json": {
+    "sha256": "bdf8bdbae59ef7b32638fb52887c1c358d9e707d07bd21d960826361f094ab75",
+    "size_bytes": 20329
+  }
+}

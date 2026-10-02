@@ -1,5 +1,5 @@
 from docx import Document
-from docx.shared import Inches, Pt
+from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 import io
 
@@ -13,6 +13,15 @@ def generate_court_docx(case_title, court_name, pleading_text):
         section.right_margin = Inches(1.0)
         section.top_margin = Inches(1.0)
         section.bottom_margin = Inches(1.0)
+
+    # Persistent Prototype Warning Banner (Phase A Remediation)
+    banner_p = doc.add_paragraph()
+    banner_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    banner_run = banner_p.add_run("⚠️ PROTOTYPE — NOT VERIFIED FOR USE IN PLEADINGS\nVerify every citation and statement against the original judgment.\n")
+    banner_run.bold = True
+    banner_run.font.size = Pt(10)
+    banner_run.font.name = 'Times New Roman'
+    banner_run.font.color.rgb = RGBColor(180, 0, 0)
 
     # Court Name Header (Centered, Bold)
     court_p = doc.add_paragraph()

@@ -1,0 +1,145 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-10-02",
+  "notes": "Post-27th Constitutional Amendment (Nov 2025) hierarchy and appellate routing.",
+  "courts": [
+    {
+      "id": "COURT-FCC",
+      "name": "Federal Constitutional Court of Pakistan",
+      "abbreviations": [
+        "FCC"
+      ],
+      "rank": 4,
+      "status": "Unreviewed",
+      "reviewer": null,
+      "review_date": null,
+      "lawyer_review_flag": "needs lawyer review: 27th Amendment relative apex rank between FCC and SC, jurisdiction delineation, and bench composition. Source: 27th Amendment Act (Nov 2025).",
+      "source": "Constitution of Pakistan, 27th Amendment Act (Nov 2025), Art. 175A / Part VII",
+      "span_pointer": "27th Amendment Act 2025, establishing Federal Constitutional Court as apex constitutional court",
+      "jurisdiction": "Apex constitutional court; exclusive jurisdiction over constitutional disputes between governments, constitutional interpretation, and challenges to constitutional amendments.",
+      "appeal_route_to": null,
+      "appeals_from": [
+        "High Courts (Constitutional benches)"
+      ]
+    },
+    {
+      "id": "COURT-SC",
+      "name": "Supreme Court of Pakistan",
+      "abbreviations": [
+        "SC",
+        "SCP"
+      ],
+      "rank": 4,
+      "status": "Unreviewed",
+      "reviewer": null,
+      "review_date": null,
+      "lawyer_review_flag": "needs lawyer review: FCC/Supreme Court equal-rank entry and jurisdictional boundaries post-27th Amendment. Source: Constitution of Pakistan 1973, Arts. 175A, 184, 185.",
+      "source": "Constitution of Pakistan 1973, Arts. 184, 185, 186, 187, 188",
+      "span_pointer": "Constitution of Pakistan 1973, Chapter 2, Part VII (Arts. 176-191)",
+      "jurisdiction": "Apex appellate court for general, civil, criminal, and commercial matters.",
+      "appeal_route_to": null,
+      "appeals_from": [
+        "High Courts",
+        "Federal Service Tribunal"
+      ]
+    },
+    {
+      "id": "COURT-SC-SAB",
+      "name": "Supreme Court Shariat Appellate Bench",
+      "abbreviations": [
+        "SAB",
+        "SC Shariat Appellate Bench"
+      ],
+      "rank": 4,
+      "status": "Unreviewed",
+      "reviewer": null,
+      "review_date": null,
+      "source": "Constitution of Pakistan 1973, Art. 203F, Art. 203D(2) proviso",
+      "span_pointer": "Art. 203F & Art. 203D(2) proviso: An appeal lies to the Supreme Court from any decision of the Federal Shariat Court. Pendency of appeal suspends FSC declaration of repugnance.",
+      "jurisdiction": "Appeals against decisions and repugnancy declarations of the Federal Shariat Court.",
+      "appeal_route_to": null,
+      "appeals_from": [
+        "Federal Shariat Court"
+      ]
+    },
+    {
+      "id": "COURT-FSC",
+      "name": "Federal Shariat Court",
+      "abbreviations": [
+        "FSC"
+      ],
+      "rank": 3,
+      "status": "Unreviewed",
+      "reviewer": null,
+      "review_date": null,
+      "source": "Constitution of Pakistan 1973, Chapter 3A, Arts. 203A-203J",
+      "span_pointer": "Art. 203D: Court may examine whether any law is repugnant to Islamic Injunctions. Proviso to 203D(2): Decision takes effect only after appeal period expires or appeal is disposed of.",
+      "jurisdiction": "Examines whether laws conform to the injunctions of Islam; Hudood revisional and appellate jurisdiction.",
+      "appeal_route_to": "Supreme Court Shariat Appellate Bench (Art. 203F)",
+      "appeals_from": [
+        "Sessions Courts (Hudood cases)"
+      ]
+    },
+    {
+      "id": "COURT-HC",
+      "name": "High Courts (Lahore, Sindh, Peshawar, Balochistan, Islamabad)",
+      "abbreviations": [
+        "LHC",
+        "SHC",
+        "PHC",
+        "BHC",
+        "IHC"
+      ],
+      "rank": 2,
+      "status": "Unreviewed",
+      "reviewer": null,
+      "review_date": null,
+      "source": "Constitution of Pakistan 1973, Arts. 192-203; CPC s.96, s.100, s.115; FIO 2001 s.22",
+      "span_pointer": "Constitution Art. 199 (Writ jurisdiction); FIO 2001 s.22 (Banking Appeals)",
+      "jurisdiction": "Provincial constitutional writs (Art. 199), first appeals, second appeals, civil and criminal revisions.",
+      "appeal_route_to": "Supreme Court / Federal Constitutional Court",
+      "appeals_from": [
+        "District Courts",
+        "Banking Courts (s.22 FIO)",
+        "Sessions Courts"
+      ]
+    },
+    {
+      "id": "COURT-BANKING",
+      "name": "Banking Court",
+      "abbreviations": [
+        "BC"
+      ],
+      "rank": 1,
+      "status": "Unreviewed",
+      "reviewer": null,
+      "review_date": null,
+      "source": "Financial Institutions (Recovery of Finances) Ordinance 2001, Sections 5, 9, 10, 19, 22",
+      "span_pointer": "Section 22 FIO 2001: Aggrieved party may prefer appeal to High Court. Bar on appeals to District Judge or under s.109 CPC.",
+      "jurisdiction": "Exclusive civil and criminal jurisdiction over financial institution recovery suits and execution of mortgage decrees.",
+      "appeal_route_to": "High Court (Section 22 FIO 2001; Division Bench)",
+      "appeals_from": []
+    },
+    {
+      "id": "COURT-SERVICE-TRIBUNAL",
+      "name": "Service Tribunals (Federal Service Tribunal / Provincial Service Tribunals)",
+      "abbreviations": [
+        "FST",
+        "PST",
+        "SST",
+        "KPST"
+      ],
+      "rank": 2,
+      "status": "Unreviewed",
+      "reviewer": null,
+      "review_date": null,
+      "source": "Constitution of Pakistan 1973, Art. 212; Service Tribunals Act 1973, Section 4",
+      "span_pointer": "Art. 212(2): Exclusive jurisdiction over civil servant terms and conditions. Civil court suits and Art. 199 writ petitions are barred.",
+      "jurisdiction": "Exclusive jurisdiction over terms and conditions of civil servants.",
+      "appeal_route_to": "Supreme Court of Pakistan (Art. 212(3) Civil Petition for Leave to Appeal)",
+      "appeals_from": [
+        "Departmental appellate authorities"
+      ]
+    }
+  ]
+}

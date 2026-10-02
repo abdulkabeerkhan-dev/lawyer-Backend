@@ -1,0 +1,895 @@
+{
+  "summary": {
+    "timestamp": "20261002_162018",
+    "git_commit": "51def047e252ee5006aa8ac2e1ccf1edb3d61582",
+    "total_evaluated": 7,
+    "overall_pass_rate": 0.0,
+    "citation_precision": 1.0,
+    "claim_support_rate": 0.2619,
+    "key_authority_recall": 0.0,
+    "negative_finding_correctness": 0.7143,
+    "forum_limitation_accuracy": 0.8571,
+    "advice_risk_compliance": 0.2857,
+    "currency_label_coverage": 1.0,
+    "currency_actual_check_rate": 0.0,
+    "scope_violations_count": 4,
+    "avg_latency_s": 121.01,
+    "area_breakdown": {
+      "Civil execution & recovery": {
+        "count": 1,
+        "pass_rate": 0.0,
+        "avg_claim_support": 0.0
+      },
+      "Family & succession": {
+        "count": 1,
+        "pass_rate": 0.0,
+        "avg_claim_support": 0.0
+      },
+      "Banking & finance": {
+        "count": 1,
+        "pass_rate": 0.0,
+        "avg_claim_support": 0.3333
+      },
+      "Civil procedure": {
+        "count": 1,
+        "pass_rate": 0.0,
+        "avg_claim_support": 1.0
+      },
+      "Agency & power of attorney": {
+        "count": 1,
+        "pass_rate": 0.0,
+        "avg_claim_support": 0.5
+      },
+      "Arbitration": {
+        "count": 1,
+        "pass_rate": 0.0,
+        "avg_claim_support": 0.0
+      },
+      "Constitutional & writs": {
+        "count": 1,
+        "pass_rate": 0.0,
+        "avg_claim_support": 0.0
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "GS-001",
+      "area": "Civil execution & recovery",
+      "passed": false,
+      "failed_reasons": [
+        "Claim support rate 0.0% below 80%",
+        "Key authority recall 0.0% below 50%",
+        "Forum / limitation check failed"
+      ],
+      "metrics": {
+        "claim_support_rate": 0.0,
+        "scope_violations_count": 0,
+        "key_authority_recall": 0.0,
+        "citation_precision": 1.0,
+        "negative_finding_correctness": 0.0,
+        "forum_limitation_accuracy": 0.0,
+        "advice_risk_passed": false,
+        "currency_check_passed": true,
+        "currency_label_coverage": 1.0,
+        "currency_actual_check_rate": 0.0
+      },
+      "details": {
+        "required_points": [
+          {
+            "point": "S.52 applies only if the specific immovable property is directly and specifically in question in the pending suit. A maintenance or money suit usually does not put a house in issue, so the memo must test this threshold against the facts.",
+            "passed": false,
+            "evidence": "The memorandum was not completed. The generation was aborted with notice '[GENERATION INCOMPLETE NOTICE]: The legal research memorandum could not be completed with verified statutory and precedent coverage across all mandatory sections.' No analysis of S.52 application or testing against facts was provided."
+          },
+          {
+            "point": "Where s.52 does apply, a transferee takes subject to the outcome of the suit even if bona fide and without notice.",
+            "passed": false,
+            "evidence": "No substantive content addressing this point. The memorandum contains only an incomplete notice and no legal analysis."
+          },
+          {
+            "point": "Memo must flag that Tabassum Shaheen and Muhammad Iqbal point different ways on s.41 versus lis pendens, and explain Iqbal's special facts (collusive consent decree, unimpleaded earlier purchaser).",
+            "passed": false,
+            "evidence": "No case law analysis or comparison between Tabassum Shaheen and Muhammad Iqbal is present in the memorandum."
+          },
+          {
+            "point": "S.41 requires a transfer for consideration, so a gift mutation cannot qualify. A mutation is only a record of title.",
+            "passed": false,
+            "evidence": "No discussion of S.41 requirements, consideration, or the distinction between gift mutations and transfers for consideration."
+          },
+          {
+            "point": "S.53 TPA (transfer to defeat or delay creditors) is the more apt basis, with intent judged on the totality of circumstances.",
+            "passed": false,
+            "evidence": "No analysis of S.53 TPA or the test for intent based on totality of circumstances."
+          },
+          {
+            "point": "S.47 CPC covers parties and their representatives. O.XXI r.58 is the specific route for objections to attachment, and the order is open to a separate suit (lawyer to confirm rule numbers).",
+            "passed": false,
+            "evidence": "The memorandum header references 'CPC_1908_ORD_XXI_R_58' but marks it '[NOT CHECKED]' and provides no substantive analysis of S.47 CPC, O.XXI r.58, or the procedure for objections."
+          }
+        ],
+        "forbidden_claims": [
+          {
+            "forbidden_claim": "Saying Tabassum Shaheen requires 'full compliance with all four s.41 elements' or that it declared the sale void.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Citing Tabassum Shaheen as a family-court or maintenance authority.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Treating 2025 PLD 63 (attorney selling to his sons) as lis pendens or execution authority.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Describing O.XXI r.96 as attachment, or s.54 Specific Relief Act as cancellation of instruments.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Attributing to Muhammad Iqbal a presumption of fraud for transfers to relatives.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Labelling Lahore High Court decisions 'Supreme Court'.",
+            "violated": false,
+            "quote": ""
+          }
+        ],
+        "deterministic_violations": [],
+        "authorities": [
+          {
+            "citation": "2012 SCMR 983",
+            "target_normalized": "2012 SCMR 983",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "s.52 ingredients; transferee bound even if bona fide"
+          },
+          {
+            "citation": "2014 SCMR 33",
+            "target_normalized": "2014 SCMR 33",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "s.41 elements; s.53 totality-of-circumstances test"
+          },
+          {
+            "citation": "2006 YLR 1060",
+            "target_normalized": "2006 YLR 1060",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "s.41 elements including consideration; mutation is a record of title"
+          }
+        ],
+        "negative_findings": [
+          {
+            "finding": "No retrieved authority that a maintenance suit alone triggers s.52 over an unrelated house.",
+            "present": false
+          },
+          {
+            "finding": "No retrieved authority that an executing court finally decides a stranger's title under s.47.",
+            "present": false
+          }
+        ],
+        "advice_risk": {
+          "passed": false,
+          "has_dismissal_warning": false,
+          "has_stay_or_mod": false,
+          "has_counsel_notice": false
+        },
+        "currency_check": {
+          "passed": true,
+          "has_labels": true,
+          "labels_found": [
+            "NOT CHECKED"
+          ],
+          "has_actual_checks": false,
+          "actual_checks_found": []
+        },
+        "forum_limitation": {
+          "passed": false,
+          "forum_passed": false,
+          "limitation_passed": null,
+          "limitation_status": "unverified_unfilled",
+          "is_independent_check": false,
+          "has_s109_district_error": false,
+          "has_banking_hc_appeal": false,
+          "has_30_day_limitation": false
+        }
+      },
+      "latency_s": 156.84
+    },
+    {
+      "id": "GS-002",
+      "area": "Family & succession",
+      "passed": false,
+      "failed_reasons": [
+        "Claim support rate 0.0% below 80%",
+        "Scope violations: ['Omitting the pending appeal.', 'Deleting or hiding the Allah Rakha citation.']",
+        "Key authority recall 0.0% below 50%"
+      ],
+      "metrics": {
+        "claim_support_rate": 0.0,
+        "scope_violations_count": 2,
+        "key_authority_recall": 0.0,
+        "citation_precision": 1.0,
+        "negative_finding_correctness": 1.0,
+        "forum_limitation_accuracy": 1.0,
+        "advice_risk_passed": false,
+        "currency_check_passed": true,
+        "currency_label_coverage": 1.0,
+        "currency_actual_check_rate": 0.0
+      },
+      "details": {
+        "required_points": [
+          {
+            "point": "S.4 MFLO 1961 gives children of a predeceased son or daughter, living when succession opens, a share equal to what their parent would have received (lawyer to confirm exact wording, including per stirpes).",
+            "passed": false,
+            "evidence": "The memo does not cite or discuss S.4 MFLO 1961 at all. It relies instead on Section 32 of the Succession Act 1925 and does not address the per stirpes mechanism or the specific share allocation under MFLO 1961."
+          },
+          {
+            "point": "The Federal Shariat Court declared s.4 repugnant in Allah Rakha v Federation of Pakistan (PLD 2000 FSC 1).",
+            "passed": false,
+            "evidence": "The memo does not cite Allah Rakha v Federation of Pakistan or any Federal Shariat Court judgment. No reference to the repugnancy declaration appears anywhere in the memorandum."
+          },
+          {
+            "point": "The appeal is pending before the Shariat Appellate Bench of the Supreme Court, so the declaration has not taken effect and s.4 remains in force.",
+            "passed": false,
+            "evidence": "The memo does not mention any pending appeal, the Shariat Appellate Bench, or the status of any repugnancy declaration. It states 'No recent legislative amendments to the succession framework have been located' but does not address the pending appeal status."
+          },
+          {
+            "point": "Courts have confined s.4 to descendants of the predeceased child.",
+            "passed": false,
+            "evidence": "The memo does not discuss any court confinement of S.4 MFLO 1961. It does not cite case law establishing the scope of S.4."
+          },
+          {
+            "point": "The memo must print a currency label with the check date. Any claim of a recent change needs an official source or must be labelled unverified.",
+            "passed": false,
+            "evidence": "The memo contains headers stating '[BASELINE TABLE: not checked online]' and '[NOT CHECKED]' but does not provide a clear currency label with a specific check date. The memo states 'No recent legislative amendments to the succession framework have been located in the retrieved authorities' but does not label this as unverified or provide a check date."
+          }
+        ],
+        "forbidden_claims": [
+          {
+            "forbidden_claim": "Saying the statute survives only because Parliament has not amended it within a set time.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Omitting the pending appeal.",
+            "violated": true,
+            "quote": "The memo states 'No recent legislative amendments to the succession framework have been located in the retrieved authorities' and discusses Section 32 of the Succession Act 1925 without mentioning any pending appeal before the Shariat Appellate Bench regarding the Allah Rakha repugnancy declaration."
+          },
+          {
+            "forbidden_claim": "Deleting or hiding the Allah Rakha citation.",
+            "violated": true,
+            "quote": "The memo makes no reference to Allah Rakha v Federation of Pakistan (PLD 2000 FSC 1) anywhere in its text."
+          },
+          {
+            "forbidden_claim": "Calling a headnote-only record 'the latest appellate authority' or telling the lawyer to 'rely confidently' on it.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Asserting a recent amendment without an official source.",
+            "violated": false,
+            "quote": ""
+          }
+        ],
+        "deterministic_violations": [],
+        "authorities": [
+          {
+            "citation": "PLD 2000 FSC 1",
+            "target_normalized": "PLD 2000 FSC 1",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "repugnancy declaration"
+          },
+          {
+            "citation": "A High Court or Supreme Court decision applying s.4 while the appeal is pending",
+            "target_normalized": "A HIGH COURT OR SC DECISION APPLYING S.4 WHILE THE APPEAL IS PENDING",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "cite with full text"
+          }
+        ],
+        "negative_findings": [
+          {
+            "finding": "If nothing newer is found: label 'CHECKED: NO CHANGE FOUND' with sources and date.",
+            "present": true
+          }
+        ],
+        "advice_risk": {
+          "passed": false,
+          "has_dismissal_warning": false,
+          "has_stay_or_mod": true,
+          "has_counsel_notice": false
+        },
+        "currency_check": {
+          "passed": true,
+          "has_labels": true,
+          "labels_found": [
+            "BASELINE TABLE",
+            "NOT CHECKED"
+          ],
+          "has_actual_checks": false,
+          "actual_checks_found": []
+        },
+        "forum_limitation": {
+          "passed": true,
+          "forum_passed": true,
+          "limitation_passed": true,
+          "limitation_status": "verified",
+          "is_independent_check": true,
+          "has_s109_district_error": false,
+          "has_banking_hc_appeal": false,
+          "has_30_day_limitation": false
+        }
+      },
+      "latency_s": 137.84
+    },
+    {
+      "id": "GS-003",
+      "area": "Banking & finance",
+      "passed": false,
+      "failed_reasons": [
+        "Claim support rate 33.3% below 80%",
+        "Scope violations: [\"Calling a 50% direction 'ultra vires' or 'unlawful' unless a retrieved source says so.\"]",
+        "Deterministic violations: ['Claiming 50% court direction is unlawful, ultra vires, or exceeds statutory authority without qualifying retrieved source holding']",
+        "Key authority recall 0.0% below 50%"
+      ],
+      "metrics": {
+        "claim_support_rate": 0.3333,
+        "scope_violations_count": 2,
+        "key_authority_recall": 0.0,
+        "citation_precision": 1.0,
+        "negative_finding_correctness": 0.0,
+        "forum_limitation_accuracy": 1.0,
+        "advice_risk_passed": true,
+        "currency_check_passed": true,
+        "currency_label_coverage": 1.0,
+        "currency_actual_check_rate": 0.0
+      },
+      "details": {
+        "required_points": [
+          {
+            "point": "State the 20% deposit proviso to O.XXI r.90 with its source.",
+            "passed": true,
+            "evidence": "Evaluated by judge"
+          },
+          {
+            "point": "Say plainly when the retrieved sources do not address the legal basis for a court-directed amount above 20%.",
+            "passed": false,
+            "evidence": "Evaluated by judge"
+          },
+          {
+            "point": "Describe each retrieved case at its actual scope. A dismissal for not complying with a court direction is not a holding that 50% is lawful.",
+            "passed": false,
+            "evidence": "Evaluated by judge"
+          },
+          {
+            "point": "Warn that non-compliance with a court-directed deposit risks dismissal. Recommend a prompt application for stay, modification or review, or compliance under protest.",
+            "passed": true,
+            "evidence": "Evaluated by judge"
+          },
+          {
+            "point": "Give the appeal route from the Banking Court with its statutory source.",
+            "passed": false,
+            "evidence": "Evaluated by judge"
+          },
+          {
+            "point": "Separate points on valuation, reserve price and proclamation that retrieved cases support from those they do not.",
+            "passed": false,
+            "evidence": "Evaluated by judge"
+          }
+        ],
+        "forbidden_claims": [
+          {
+            "forbidden_claim": "Calling a 50% direction 'ultra vires' or 'unlawful' unless a retrieved source says so.",
+            "violated": true,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Saying 'no precedent exists' about all case law. The correct wording is 'not found in the retrieved sources'.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Advising the client to pay only 20% against a 50% direction without the dismissal warning.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Sending the appeal to a District Judge under s.109 CPC.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "FIO 2001 section numbers that conflict with the statute store.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Presenting a paraphrase as 'Statutory Text'.",
+            "violated": false,
+            "quote": ""
+          }
+        ],
+        "deterministic_violations": [
+          "Claiming 50% court direction is unlawful, ultra vires, or exceeds statutory authority without qualifying retrieved source holding"
+        ],
+        "authorities": [
+          {
+            "citation": "CANDIDATES, LAWYER TO CONFIRM: 2024 SCMR 1218",
+            "target_normalized": "2024 SCMR 1218",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "20% deposit proviso"
+          },
+          {
+            "citation": "2026 CLD 96",
+            "target_normalized": "2026 CLD 96",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "reserve price, valuation, proclamation"
+          },
+          {
+            "citation": "2023 SCMR 890",
+            "target_normalized": "2023 SCMR 890",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "Banking Courts and Order XXI"
+          }
+        ],
+        "negative_findings": [
+          {
+            "finding": "Basis for a deposit above 20%: not addressed in retrieved sources (if none found).",
+            "present": false
+          },
+          {
+            "finding": "Fraud authority: state explicitly if none retrieved.",
+            "present": false
+          }
+        ],
+        "advice_risk": {
+          "passed": true,
+          "has_dismissal_warning": true,
+          "has_stay_or_mod": true,
+          "has_counsel_notice": false
+        },
+        "currency_check": {
+          "passed": true,
+          "has_labels": true,
+          "labels_found": [
+            "BASELINE TABLE",
+            "NOT CHECKED",
+            "NOT CHECKED",
+            "NOT CHECKED",
+            "NOT CHECKED",
+            "NOT CHECKED",
+            "NOT CHECKED",
+            "BASELINE TABLE"
+          ],
+          "has_actual_checks": false,
+          "actual_checks_found": []
+        },
+        "forum_limitation": {
+          "passed": true,
+          "forum_passed": true,
+          "limitation_passed": null,
+          "limitation_status": "unverified_unfilled",
+          "is_independent_check": false,
+          "has_s109_district_error": false,
+          "has_banking_hc_appeal": true,
+          "has_30_day_limitation": false
+        }
+      },
+      "latency_s": 173.74
+    },
+    {
+      "id": "GS-004",
+      "area": "Civil procedure",
+      "passed": false,
+      "failed_reasons": [
+        "Key authority recall 0.0% below 50%"
+      ],
+      "metrics": {
+        "claim_support_rate": 1.0,
+        "scope_violations_count": 0,
+        "key_authority_recall": 0.0,
+        "citation_precision": 1.0,
+        "negative_finding_correctness": 1.0,
+        "forum_limitation_accuracy": 1.0,
+        "advice_risk_passed": false,
+        "currency_check_passed": true,
+        "currency_label_coverage": 1.0,
+        "currency_actual_check_rate": 0.0
+      },
+      "details": {
+        "required_points": [
+          {
+            "point": "Courts may allow amendment at any stage but must exercise the discretion with caution.",
+            "passed": true,
+            "evidence": "'The rule grants the trial court discretionary power to allow amendments at any stage of the suit' and 'the ultimate discretion to allow or disallow the amendment rests with the trial court under Order VII Rule 6 CPC, which requires it to weigh whether the amendment will (1) prejudice the defendant; (2) delay the trial; and (3) cause injustice.'"
+          },
+          {
+            "point": "An amendment is refused if it alters the nature of the suit, withdraws admissions, is mala fide, prejudices the other side, or tries to overcome evidentiary contradictions.",
+            "passed": true,
+            "evidence": "'if the added location detail materially alters the defendant's legal position (e.g., creates evidentiary complications, contradicts the defendant's pleaded version, or fundamentally reframes the narrative of negotiations), it may be treated as introducing a substantially modified claim warranting refusal' and 'amendments designed to circumvent clarity or to re-plead a deficient claim after delay has destroyed countervailing evidence are disfavored.'"
+          },
+          {
+            "point": "A belated amendment adding a new factual assertion needs heightened scrutiny.",
+            "passed": true,
+            "evidence": "'A delay of ten years creates presumptive prejudice to the defendant' and 'A belated amendment adding a new factual assertion needs heightened scrutiny' is reflected in the analysis of Risk 2 and Risk 3, particularly: 'Adding a specific location (e.g., in the defendant's office on X Street) creates a new factual assertion requiring the defendant to meet with evidence.'"
+          },
+          {
+            "point": "A ten-year delay without a credible explanation weighs heavily against the applicant.",
+            "passed": true,
+            "evidence": "'Unless the plaintiff can explain the delay with credible justification (e.g., the location detail was unknown to the plaintiff until recently, discovery of new documentary evidence, or legitimate inability to access records), the court will view the lateness itself as evidence of lack of bona fides or negligent case management' and 'the Court should ordinarily REFUSE the amendment, as the application arrives ten years after the suit was filed, well outside the reasonable temporal bounds.'"
+          },
+          {
+            "point": "Correcting a typographical error is treated differently from adding a key disputed fact.",
+            "passed": true,
+            "evidence": "'A factual detail (such as the location where an oral agreement was negotiated) is generally NOT a new cause of action' but 'if the added location detail materially alters the defendant's legal position...it may be treated as introducing a substantially modified claim warranting refusal,' distinguishing between minor corrections and substantive factual additions."
+          }
+        ],
+        "forbidden_claims": [
+          {
+            "forbidden_claim": "Saying amendments are barred after any fixed period.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Saying delay alone is always conclusive.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Saying the court cannot allow amendment after evidence has started.",
+            "violated": false,
+            "quote": ""
+          }
+        ],
+        "deterministic_violations": [],
+        "authorities": [
+          {
+            "citation": "2025 PLD 691",
+            "target_normalized": "2025 PLD 691",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "O.VI r.17 principles and delay"
+          }
+        ],
+        "negative_findings": [],
+        "advice_risk": {
+          "passed": false,
+          "has_dismissal_warning": false,
+          "has_stay_or_mod": false,
+          "has_counsel_notice": false
+        },
+        "currency_check": {
+          "passed": true,
+          "has_labels": true,
+          "labels_found": [
+            "NOT CHECKED"
+          ],
+          "has_actual_checks": false,
+          "actual_checks_found": []
+        },
+        "forum_limitation": {
+          "passed": true,
+          "forum_passed": true,
+          "limitation_passed": true,
+          "limitation_status": "verified",
+          "is_independent_check": true,
+          "has_s109_district_error": false,
+          "has_banking_hc_appeal": false,
+          "has_30_day_limitation": false
+        }
+      },
+      "latency_s": 63.7
+    },
+    {
+      "id": "GS-005",
+      "area": "Agency & power of attorney",
+      "passed": false,
+      "failed_reasons": [
+        "Claim support rate 50.0% below 80%",
+        "Key authority recall 0.0% below 50%"
+      ],
+      "metrics": {
+        "claim_support_rate": 0.5,
+        "scope_violations_count": 0,
+        "key_authority_recall": 0.0,
+        "citation_precision": 1.0,
+        "negative_finding_correctness": 1.0,
+        "forum_limitation_accuracy": 1.0,
+        "advice_risk_passed": true,
+        "currency_check_passed": true,
+        "currency_label_coverage": 1.0,
+        "currency_actual_check_rate": 0.0
+      },
+      "details": {
+        "required_points": [
+          {
+            "point": "A general attorney needs the principal's prior special permission to transfer property to himself or close relatives.",
+            "passed": true,
+            "evidence": "The memo states: 'The fundamental question is whether the power of attorney deed itself contains language permitting the attorney to sell to himself or his family members. If the power of attorney is silent on this point, or contains only general language (\"to sell the property\"), the validity of the sale to the sons is highly questionable.' Also: 'If it is entirely silent on sales to the attorney or his family: The presumption is that the power does not extend to self-dealing, and the sale is voidable.'"
+          },
+          {
+            "point": "If no such permission is shown, the sale's legality is highly doubtful.",
+            "passed": true,
+            "evidence": "The memo explicitly states: 'If the power of attorney is silent on this point, or contains only general language (\"to sell the property\"), the validity of the sale to the sons is highly questionable and your father retains the right to challenge it.' And: 'If it is entirely silent on sales to the attorney or his family: The presumption is that the power does not extend to self-dealing, and the sale is voidable.'"
+          },
+          {
+            "point": "A deed running over several pages needs signatures on each page or proof connecting the pages.",
+            "passed": false,
+            "evidence": "The memorandum does not address the requirement for signatures on each page of a multi-page deed or proof connecting pages. This issue is not discussed anywhere in the document."
+          },
+          {
+            "point": "The Supreme Court seldom disturbs concurrent findings unless perverse, arbitrary, fanciful or capricious.",
+            "passed": false,
+            "evidence": "The memorandum does not discuss the Supreme Court's standard of review for concurrent findings of fact by lower courts. This principle is not mentioned in the document."
+          }
+        ],
+        "forbidden_claims": [
+          {
+            "forbidden_claim": "Applying this case to lis pendens or judgment-debtors.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Saying the Court created a presumption of fraud against judgment-debtors.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Listing PLD 2003 SC 31 as 'reviewed' when it is only cited within another judgment.",
+            "violated": false,
+            "quote": ""
+          }
+        ],
+        "deterministic_violations": [],
+        "authorities": [
+          {
+            "citation": "2025 PLD 63",
+            "target_normalized": "2025 PLD 63",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "attorney's special permission"
+          },
+          {
+            "citation": "PLD 2003 SC 31 and PLD 2003 SC 494",
+            "target_normalized": "PLD 2003 SC 31 AND PLD 2003 SC 494",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "cited within 2025 PLD 63"
+          }
+        ],
+        "negative_findings": [],
+        "advice_risk": {
+          "passed": true,
+          "has_dismissal_warning": true,
+          "has_stay_or_mod": true,
+          "has_counsel_notice": true
+        },
+        "currency_check": {
+          "passed": true,
+          "has_labels": true,
+          "labels_found": [
+            "NOT CHECKED",
+            "NOT CHECKED",
+            "BASELINE TABLE",
+            "BASELINE TABLE",
+            "NOT CHECKED"
+          ],
+          "has_actual_checks": false,
+          "actual_checks_found": []
+        },
+        "forum_limitation": {
+          "passed": true,
+          "forum_passed": true,
+          "limitation_passed": null,
+          "limitation_status": "unverified_unfilled",
+          "is_independent_check": false,
+          "has_s109_district_error": false,
+          "has_banking_hc_appeal": false,
+          "has_30_day_limitation": false
+        }
+      },
+      "latency_s": 153.96
+    },
+    {
+      "id": "GS-006",
+      "area": "Arbitration",
+      "passed": false,
+      "failed_reasons": [
+        "Claim support rate 0.0% below 80%",
+        "Key authority recall 0.0% below 50%"
+      ],
+      "metrics": {
+        "claim_support_rate": 0.0,
+        "scope_violations_count": 0,
+        "key_authority_recall": 0.0,
+        "citation_precision": 1.0,
+        "negative_finding_correctness": 1.0,
+        "forum_limitation_accuracy": 1.0,
+        "advice_risk_passed": false,
+        "currency_check_passed": true,
+        "currency_label_coverage": 1.0,
+        "currency_actual_check_rate": 0.0
+      },
+      "details": {
+        "required_points": [
+          {
+            "point": "Courts deciding objections to an award should avoid framing issues and recording evidence unless absolutely necessary.",
+            "passed": false,
+            "evidence": "The memo states 'This memorandum cannot authoritatively state whether the civil court's framing of issues and calling for evidence is correct, incorrect, or a procedural defect' and explicitly disclaims authority to address this question due to missing statutory text and precedent. No affirmative statement that courts should avoid framing issues and recording evidence is made."
+          },
+          {
+            "point": "An order framing issues must show why it is necessary, and the issues must be specific.",
+            "passed": false,
+            "evidence": "The memo does not address the requirement that an order framing issues must show necessity or that issues must be specific. This point is not substantively addressed in the memorandum."
+          },
+          {
+            "point": "Courts are not appellate forums over awards. Interference is limited to jurisdictional error, proven misconduct or a patent legal error on the face of the record.",
+            "passed": false,
+            "evidence": "The memo states 'The scope of review available to a civil court in an objection petition is narrower than the scope of review in an ordinary civil suit' but does not specify the actual grounds for interference (jurisdictional error, misconduct, patent legal error). The memo explicitly disclaims authority: 'Without the actual statutory language, this memorandum cannot state with authority whether civil court issue-framing and evidence-calling fall within or outside the statutory mandate.'"
+          },
+          {
+            "point": "The memo must confirm which arbitration statute governs the dispute.",
+            "passed": false,
+            "evidence": "The memo does not confirm which arbitration statute governs the dispute. It states 'The only retrieved authority addresses family law arbitration jurisdiction under the Muslim Family Laws Ordinance 1961 and Family Courts Act 1964, not Section 34 of the Arbitration Act 1940' but does not definitively state which statute applies to the user's dispute. The memo notes 'Critical Gap: The statutory text of the Arbitration Act 1940 (specifically, Section 34 and any procedural rules governing objections) is not present in the retrieved authorities context.'"
+          }
+        ],
+        "forbidden_claims": [
+          {
+            "forbidden_claim": "Saying courts may re-appraise the evidence like a first appellate court.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Saying issues can never be framed (the Court said avoid unless necessary).",
+            "violated": false,
+            "quote": ""
+          }
+        ],
+        "deterministic_violations": [],
+        "authorities": [
+          {
+            "citation": "2025 PLD 706",
+            "target_normalized": "2025 PLD 706",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "limits on issues and evidence at the objection stage"
+          }
+        ],
+        "negative_findings": [],
+        "advice_risk": {
+          "passed": false,
+          "has_dismissal_warning": false,
+          "has_stay_or_mod": true,
+          "has_counsel_notice": true
+        },
+        "currency_check": {
+          "passed": true,
+          "has_labels": true,
+          "labels_found": [
+            "NOT CHECKED",
+            "NOT CHECKED",
+            "NOT CHECKED",
+            "NOT CHECKED"
+          ],
+          "has_actual_checks": false,
+          "actual_checks_found": []
+        },
+        "forum_limitation": {
+          "passed": true,
+          "forum_passed": true,
+          "limitation_passed": null,
+          "limitation_status": "unverified_unfilled",
+          "is_independent_check": false,
+          "has_s109_district_error": false,
+          "has_banking_hc_appeal": false,
+          "has_30_day_limitation": false
+        }
+      },
+      "latency_s": 106.39
+    },
+    {
+      "id": "GS-007",
+      "area": "Constitutional & writs",
+      "passed": false,
+      "failed_reasons": [
+        "Claim support rate 0.0% below 80%",
+        "Key authority recall 0.0% below 50%"
+      ],
+      "metrics": {
+        "claim_support_rate": 0.0,
+        "scope_violations_count": 0,
+        "key_authority_recall": 0.0,
+        "citation_precision": 1.0,
+        "negative_finding_correctness": 1.0,
+        "forum_limitation_accuracy": 1.0,
+        "advice_risk_passed": false,
+        "currency_check_passed": true,
+        "currency_label_coverage": 1.0,
+        "currency_actual_check_rate": 0.0
+      },
+      "details": {
+        "required_points": [
+          {
+            "point": "The 3\u20132 majority in 2025 PLD 516 held that transfers under Art. 200 were within the Constitution and remitted seniority and the nature of the transfer to the President.",
+            "passed": false,
+            "evidence": "The memo explicitly states: 'The retrieved database contains zero precedents addressing Article 200 or Article 209 of the Constitution regarding High Court judge transfers or seniority determination.' The memo does not cite, reference, or analyze 2025 PLD 516. No majority holding on Art. 200 transfers is presented."
+          },
+          {
+            "point": "The memo must state that the 27th Amendment (November 2025) changed Art. 200 and created the Federal Constitutional Court, so the 2025 position cannot be presented as current without a check.",
+            "passed": false,
+            "evidence": "The memo contains no reference to the 27th Amendment, November 2025, or the Federal Constitutional Court. The memo states it cannot analyze constitutional provisions that do not appear in retrieved context and explicitly disclaims fabricating statutory text."
+          },
+          {
+            "point": "A currency label with the check date must appear.",
+            "passed": false,
+            "evidence": "While the memo contains a notice '[LEGAL MEMO NOTICE]' and '[NOT CHECKED: search failed]' for CONST_1973_ART_200, no explicit currency label with a specific check date is provided. The memo acknowledges missing statutory currency verification but does not supply a dated currency certification."
+          }
+        ],
+        "forbidden_claims": [
+          {
+            "forbidden_claim": "Presenting the 2025 majority as the unqualified present law of Art. 200.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Describing the Federal Constitutional Court as merely 'proposed'.",
+            "violated": false,
+            "quote": ""
+          },
+          {
+            "forbidden_claim": "Ignoring the two dissenting judges.",
+            "violated": false,
+            "quote": ""
+          }
+        ],
+        "deterministic_violations": [],
+        "authorities": [
+          {
+            "citation": "2025 PLD 516",
+            "target_normalized": "2025 PLD 516",
+            "found": false,
+            "court_ok": true,
+            "needed_for": "majority and dissent on Art. 200"
+          }
+        ],
+        "negative_findings": [],
+        "advice_risk": {
+          "passed": false,
+          "has_dismissal_warning": false,
+          "has_stay_or_mod": true,
+          "has_counsel_notice": true
+        },
+        "currency_check": {
+          "passed": true,
+          "has_labels": true,
+          "labels_found": [
+            "NOT CHECKED"
+          ],
+          "has_actual_checks": false,
+          "actual_checks_found": []
+        },
+        "forum_limitation": {
+          "passed": true,
+          "forum_passed": true,
+          "limitation_passed": true,
+          "limitation_status": "verified",
+          "is_independent_check": true,
+          "has_s109_district_error": false,
+          "has_banking_hc_appeal": false,
+          "has_30_day_limitation": false
+        }
+      },
+      "latency_s": 54.63
+    }
+  ]
+}

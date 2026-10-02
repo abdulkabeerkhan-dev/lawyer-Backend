@@ -1,0 +1,122 @@
+[
+  {
+    "act_code": "DMMA_1939",
+    "act_name": "Dissolution of Muslim Marriages Act, 1939",
+    "provision_type": "section",
+    "primary_num": "1",
+    "secondary_num": null,
+    "canonical_id": "DMMA_1939_SEC_1",
+    "display_name": "Section 1",
+    "title": "Short title and extent",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. VIII of 1939; https://pakistancode.gov.pk/pdffiles/administratorfb32d6015ae887e6d6b85018961842ea.pdf",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "DMMA_1939",
+    "act_name": "Dissolution of Muslim Marriages Act, 1939",
+    "provision_type": "section",
+    "primary_num": "2",
+    "secondary_num": null,
+    "canonical_id": "DMMA_1939_SEC_2",
+    "display_name": "Section 2",
+    "title": "Grounds for decree for dissolution of marriage (disappearance of husband, neglect/failure to provide maintenance, imprisonment, failure to perform marital obligations, impotency, insanity/leprosy/venereal disease, repudiation of marriage before attaining 18 years, cruelty, unequal treatment of co-wives, or any other ground recognized by Muslim Law including Khula)",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. VIII of 1939; https://pakistancode.gov.pk/pdffiles/administratorfb32d6015ae887e6d6b85018961842ea.pdf",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "DMMA_1939",
+    "act_name": "Dissolution of Muslim Marriages Act, 1939",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "canonical_id": "DMMA_1939_SEC_3",
+    "display_name": "Section 3",
+    "title": "Notice to be served on heirs of the husband when the husband's whereabouts are not known",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. VIII of 1939; https://pakistancode.gov.pk/pdffiles/administratorfb32d6015ae887e6d6b85018961842ea.pdf",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "DMMA_1939",
+    "act_name": "Dissolution of Muslim Marriages Act, 1939",
+    "provision_type": "section",
+    "primary_num": "4",
+    "secondary_num": null,
+    "canonical_id": "DMMA_1939_SEC_4",
+    "display_name": "Section 4",
+    "title": "Effect of conversion to another faith by a married Muslim woman",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. VIII of 1939; https://pakistancode.gov.pk/pdffiles/administratorfb32d6015ae887e6d6b85018961842ea.pdf",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "DMMA_1939",
+    "act_name": "Dissolution of Muslim Marriages Act, 1939",
+    "provision_type": "section",
+    "primary_num": "5",
+    "secondary_num": null,
+    "canonical_id": "DMMA_1939_SEC_5",
+    "display_name": "Section 5",
+    "title": "Rights to dower not to be affected by decree of dissolution",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. VIII of 1939; https://pakistancode.gov.pk/pdffiles/administratorfb32d6015ae887e6d6b85018961842ea.pdf",
+    "source_verified_date": "2026-09-23"
+  },
+  {
+    "act_code": "DMMA_1939",
+    "act_name": "Dissolution of Muslim Marriages Act, 1939",
+    "provision_type": "section",
+    "primary_num": "6",
+    "secondary_num": null,
+    "canonical_id": "DMMA_1939_SEC_6",
+    "display_name": "Section 6",
+    "title": "[Repealed by the Repealing and Amending Act, 1942]",
+    "status": {
+      "federal": "repealed",
+      "punjab": "repealed",
+      "sindh": "repealed",
+      "kp": "repealed",
+      "balochistan": "repealed"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. VIII of 1939; https://pakistancode.gov.pk/pdffiles/administratorfb32d6015ae887e6d6b85018961842ea.pdf",
+    "source_verified_date": "2026-09-23"
+  }
+]

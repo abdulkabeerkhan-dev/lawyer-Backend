@@ -1,0 +1,56 @@
+{
+  "deletion_date": "2026-10-01T19:37:48Z",
+  "deletion_reason": "Purged transient unit test artifacts created during live database test execution",
+  "deletion_criteria": "table == 'statute_versions' AND act_code == 'TEST_ACT'",
+  "count_deleted": 8,
+  "deleted_records": [
+    {
+      "version_id": "TEST_ACT_SEC_5_V1",
+      "canonical_id": "TEST_ACT_SEC_5",
+      "act_code": "TEST_ACT",
+      "created_at": "2026-10-01T19:31:52.942854+00:00"
+    },
+    {
+      "version_id": "TEST_ACT_SEC_5_V2",
+      "canonical_id": "TEST_ACT_SEC_5",
+      "act_code": "TEST_ACT",
+      "created_at": "2026-10-01T19:31:54.400838+00:00"
+    },
+    {
+      "version_id": "TEST_SEC_federal_V1",
+      "canonical_id": "TEST_SEC_federal",
+      "act_code": "TEST_ACT",
+      "created_at": "2026-10-01T19:32:22.570298+00:00"
+    },
+    {
+      "version_id": "TEST_SEC_punjab_V1",
+      "canonical_id": "TEST_SEC_punjab",
+      "act_code": "TEST_ACT",
+      "created_at": "2026-10-01T19:32:22.823298+00:00"
+    },
+    {
+      "version_id": "TEST_SEC_sindh_V1",
+      "canonical_id": "TEST_SEC_sindh",
+      "act_code": "TEST_ACT",
+      "created_at": "2026-10-01T19:32:23.881925+00:00"
+    },
+    {
+      "version_id": "TEST_SEC_kp_V1",
+      "canonical_id": "TEST_SEC_kp",
+      "act_code": "TEST_ACT",
+      "created_at": "2026-10-01T19:32:24.153377+00:00"
+    },
+    {
+      "version_id": "TEST_SEC_balochistan_V1",
+      "canonical_id": "TEST_SEC_balochistan",
+      "act_code": "TEST_ACT",
+      "created_at": "2026-10-01T19:32:24.714389+00:00"
+    },
+    {
+      "version_id": "TEST_ACT_SEC_5_V3",
+      "canonical_id": "TEST_ACT_SEC_5",
+      "act_code": "TEST_ACT",
+      "created_at": "2026-10-01T19:35:46.514031+00:00"
+    }
+  ]
+}

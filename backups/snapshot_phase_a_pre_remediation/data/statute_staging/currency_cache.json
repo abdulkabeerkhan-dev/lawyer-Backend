@@ -1,0 +1,101 @@
+{
+  "MFLO_1961": {
+    "timestamp": 1790873003.3384116,
+    "data": {
+      "status": "CHECKED",
+      "act_code": "MFLO_1961",
+      "signals": [
+        {
+          "staging_id": "STG_1790873002642",
+          "canonical_id": "MFLO_1961_SEC_4",
+          "act_code": "MFLO_1961",
+          "query_trigger": "What is the status of Section 4 of the Muslim Family Laws Ordinance?",
+          "detected_change": "Reported amendment or bill signal on www.pakistancode.gov.pk",
+          "source_url": "https://www.pakistancode.gov.pk/pdffiles/administratoreecaf3b490e2d43d2e3b50c0c068b5d7.pdf",
+          "source_tier": "tier_1",
+          "verification_status": "verified",
+          "raw_snippet": "",
+          "effective_application": "pending_and_prospective",
+          "ordinance_expiry": null,
+          "fetched_at": "2026-10-01T16:43:22.642295+00:00",
+          "promoted_to_main": false,
+          "admin_review_status": "pending",
+          "review_status": "pending_review"
+        },
+        {
+          "staging_id": "STG_1790873002643",
+          "canonical_id": "MFLO_1961_SEC_4",
+          "act_code": "MFLO_1961",
+          "query_trigger": "What is the status of Section 4 of the Muslim Family Laws Ordinance?",
+          "detected_change": "Reported amendment or bill signal on www.pakistancode.gov.pk",
+          "source_url": "https://www.pakistancode.gov.pk/pdffiles/administratoreecaf3b490e2d43d2e3b50c0c068b5d7.pdf",
+          "source_tier": "tier_1",
+          "verification_status": "verified",
+          "raw_snippet": "",
+          "effective_application": "pending_and_prospective",
+          "ordinance_expiry": null,
+          "fetched_at": "2026-10-01T16:43:22.643408+00:00",
+          "promoted_to_main": false,
+          "admin_review_status": "pending",
+          "review_status": "pending_review"
+        },
+        {
+          "staging_id": "STG_1790873003168",
+          "canonical_id": "MFLO_1961_SEC_4",
+          "act_code": "MFLO_1961",
+          "query_trigger": "What is the status of Section 4 of the Muslim Family Laws Ordinance?",
+          "detected_change": "Reported amendment or bill signal on www.pakistancode.gov.pk",
+          "source_url": "https://www.pakistancode.gov.pk/pdffiles/administratoreecaf3b490e2d43d2e3b50c0c068b5d7.pdf",
+          "source_tier": "tier_1",
+          "verification_status": "verified",
+          "raw_snippet": "",
+          "effective_application": "pending_and_prospective",
+          "ordinance_expiry": null,
+          "fetched_at": "2026-10-01T16:43:23.168838+00:00",
+          "promoted_to_main": false,
+          "admin_review_status": "pending",
+          "review_status": "pending_review"
+        },
+        {
+          "staging_id": "STG_1790873003317",
+          "canonical_id": "MFLO_1961_SEC_4",
+          "act_code": "MFLO_1961",
+          "query_trigger": "What is the status of Section 4 of the Muslim Family Laws Ordinance?",
+          "detected_change": "Reported amendment or bill signal on www.pakistancode.gov.pk",
+          "source_url": "https://www.pakistancode.gov.pk/pdffiles/administratoreecaf3b490e2d43d2e3b50c0c068b5d7.pdf",
+          "source_tier": "tier_1",
+          "verification_status": "verified",
+          "raw_snippet": "",
+          "effective_application": "pending_and_prospective",
+          "ordinance_expiry": null,
+          "fetched_at": "2026-10-01T16:43:23.317150+00:00",
+          "promoted_to_main": false,
+          "admin_review_status": "pending",
+          "review_status": "pending_review"
+        }
+      ],
+      "cache_hit": false,
+      "reason": null,
+      "duration_ms": 1589,
+      "checked_at": "2026-10-01T16:43:23.338294+00:00"
+    }
+  },
+  "CPC_1908": {
+    "timestamp": 1790884928.7419944,
+    "data": {
+      "status": "CHECKED",
+      "act_code": "CPC_1908",
+      "signals": [],
+      "search_outcome": "no_signals_found",
+      "sources_checked": [
+        "Pakistan Code",
+        "National Assembly",
+        "Senate"
+      ],
+      "cache_hit": false,
+      "reason": "no_signals_found",
+      "duration_ms": 1071,
+      "checked_at": "2026-10-01T20:02:08.741982+00:00"
+    }
+  }
+}
