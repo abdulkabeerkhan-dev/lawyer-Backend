@@ -18,6 +18,9 @@ NOTE ON NEGATIVE FINDINGS AND CODIFIED STATUTES:
 - An "overstated" classification applies ONLY when a substantive legal rule, right, or outcome is falsely asserted or materially exaggerated beyond what the law provides (e.g., asserting that an ungrounded 50% deposit requirement has been constitutionally upheld when the statute specifies 20%). Minor wording differences, standard synonyms, or logical deductions are "supported".
 - CRITICAL: Do NOT classify paraphrasing of statutory provisions as "overstated". For example, Article 203D(2) provides that a declaration of repugnancy does not take effect until the period of appeal has expired or, if an appeal is filed, until the appeal is disposed of. Describing this rule using phrases such as 'whichever is later', 'pending appeal', or 'suspended pending Supreme Court adjudication' is STRICTLY SUPPORTED, because that is the exact legal operation of the proviso. Classifying such explanations as overstated is an error.
 
+NOTE ON CAPTION-ONLY OR THIN SOURCES:
+- When a retrieved authority contains ONLY caption metadata (parties, court, date, appeal numbers) or thin text without substantive judicial reasoning, ANY substantive legal rule, ratio decidendi, multi-point holding, or factual test attributed to that authority is STRICTLY UNSUPPORTED. The memorandum may ONLY state that the case was decided on that date between those parties, and must disclose that the text is caption-only in the database. Generating holdings, legal principles, or tests from model memory for caption-only records is an immediate verification failure.
+
 You must respond ONLY with a valid JSON object matching this schema:
 {
   "passed": <true if all claims are supported and zero claims are overstated or unsupported, else false>,

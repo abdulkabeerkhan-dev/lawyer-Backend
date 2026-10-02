@@ -504,6 +504,14 @@ class StatuteVersionStore:
 global_statute_store = StatuteVersionStore()
 
 
+# Baseline acts with official ground-truth bare-act tables in data/statute_tables
+SUPPORTED_STATUTE_TABLES = {
+    "CNSA_1997", "CONST_1973", "CPC_1908", "CRPC_1898", "DMMA_1939",
+    "FAMILY_COURTS_1964", "FIO_2001", "LIMITATION_1908", "MFLO_1961",
+    "PPC_1860", "PREEMPTION_1991", "PRPA_2009", "QSO_1984"
+}
+
+
 def check_statute_currency(
     canonical_id: str,
     act_code: str,
@@ -521,6 +529,33 @@ def check_statute_currency(
     triggers a currency check.
     Returns currency label, status, and effective dates.
     """
+    # If the statute itself is not in the official baseline bare-act tables:
+    if act_code not in SUPPORTED_STATUTE_TABLES:
+        if os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() == "off":
+            display_tag = ""
+        else:
+            display_tag = "[NOT CHECKED: statute not in tables]"
+        return {
+            "canonical_id": canonical_id,
+            "act_code": act_code,
+            "label": "NOT CHECKED",
+            "tier": None,
+            "verification_status": "statute_not_in_tables",
+            "status": "not_in_tables",
+            "effective_application": "unknown",
+            "commencement_date": None,
+            "ordinance_expiry_date": None,
+            "title_only": None,
+            "text_available": False,
+            "jurisdiction": "federal",
+            "valid_from": None,
+            "valid_to": None,
+            "amending_instrument": None,
+            "gazette_reference": None,
+            "court_challenges": [],
+            "display_tag": display_tag
+        }
+
     latest = global_statute_store.get_latest_version(act_code, canonical_id)
     now = datetime.now(timezone.utc)
 
@@ -772,9 +807,28 @@ def detect_statutory_provisions_in_query(query: str) -> List[Tuple[str, str]]:
     """
     if not query:
         return []
-    from core.statutory_validator import parse_statutory_citation, generate_canonical_id
+    from core.statutory_validator import parse_statutory_citation, generate_canonical_id, ACT_ALIASES
     provisions = []
     seen = set()
+
+    # Detect any explicitly mentioned act in the whole query to establish primary context
+    query_lower = query.lower()
+    context_act_code = None
+    for alias, code in sorted(ACT_ALIASES.items(), key=lambda x: len(x[0]), reverse=True):
+        if re.search(rf'\b{re.escape(alias)}\b', query_lower):
+            context_act_code = code
+            break
+
+    if not context_act_code:
+        m_dyn = re.search(
+            r'\b(?:of\s+(?:the\s+)?)([a-z\s]+(?:act|ordinance|code|order))(?:\s*,\s*(\d{4}))?\b',
+            query_lower
+        )
+        if m_dyn:
+            raw_act_name = m_dyn.group(1).strip()
+            act_yr = m_dyn.group(2)
+            norm_name = re.sub(r'[^a-z0-9]+', '_', raw_act_name).strip('_').upper()
+            context_act_code = f"{norm_name}_{act_yr}" if act_yr else norm_name
 
     clauses = re.split(r'[,;.\n]|\band\b', query)
     clauses = [query] + clauses
@@ -784,11 +838,18 @@ def detect_statutory_provisions_in_query(query: str) -> List[Tuple[str, str]]:
         if len(clause_clean) < 4:
             continue
         parsed = parse_statutory_citation(clause_clean)
-        if parsed and parsed.get("is_valid") and parsed.get("act_code"):
-            act_code = parsed["act_code"]
+        if parsed and parsed.get("is_valid"):
+            act_code = parsed.get("act_code") or context_act_code
+            if not act_code:
+                continue
             prov_type = parsed.get("provision_type", "section")
             primary_num = parsed.get("primary_num")
             rule_num = parsed.get("rule_num")
+
+            # CPC substantive sections only go up to 158
+            if act_code == "CPC_1908" and prov_type == "section" and primary_num and primary_num.isdigit() and int(primary_num) > 158:
+                continue
+
             if primary_num or rule_num:
                 cid = generate_canonical_id(
                     act_code=act_code,

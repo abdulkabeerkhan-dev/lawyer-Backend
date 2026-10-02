@@ -276,10 +276,15 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
     """Tests for currency checking, cache windows, recency words, and output labels."""
 
     def test_output_labels(self):
-        # 1. Non-existent / not checked returns [NOT CHECKED]
+        # 1. Non-existent statute returns [NOT CHECKED: statute not in tables]
         res = check_statute_currency("NON_EXISTENT_SEC_99", "NON_EXISTENT")
         self.assertEqual(res["label"], "NOT CHECKED")
-        self.assertEqual(res["display_tag"], "[NOT CHECKED]")
+        self.assertEqual(res["display_tag"], "[NOT CHECKED: statute not in tables]")
+
+        # Non-seeded provision in supported act returns [NOT CHECKED]
+        res_unseeded = check_statute_currency("PRPA_2009_SEC_9999", "PRPA_2009")
+        self.assertEqual(res_unseeded["label"], "NOT CHECKED")
+        self.assertEqual(res_unseeded["display_tag"], "[NOT CHECKED]")
 
         # 2. Existing seeded provision returns [BASELINE TABLE: not checked online]
         res_seeded = check_statute_currency("PRPA_2009_SEC_13", "PRPA_2009")

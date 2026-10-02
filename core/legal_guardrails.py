@@ -197,6 +197,25 @@ MANDATORY ADJUDICATION RULES:
         - State clearly that no statutory provision or precedent was located in the verified database or court portals establishing that requirement.
         - Identify the actual verified statutory provision (e.g., the statutory deposit requirement under the second proviso to Order XXI Rule 90 CPC is strictly 20% of the sale proceeds, not 50%).
         - Advise the advocate that the 50% figure appears to be a false premise or an unverified ad-hoc condition from a lower court order.
+
+21. PER-SUB-ISSUE NEGATIVE FINDINGS (DISCLOSE EXACTLY WHAT WAS NOT RETRIEVED):
+    - When a query poses multiple distinct legal sub-issues (e.g. Supreme Court precedents, High Court precedents, specific statutory provisions, or distinct doctrines like deadlock vs. commercial substratum):
+      * For EACH sub-issue where NO authority or statute was retrieved from the database, you MUST provide an explicit negative disclosure in the Executive Summary and in Section III.
+      * If no High Court precedents were retrieved, state plainly: "No High Court authorities were retrieved from the verified database on this issue."
+      * If statutory text is unindexed or not in local bare-act tables, disclose: "Verified statutory text is not present in local tables ([NOT CHECKED: statute not in tables])."
+      * If no precedents on a doctrine (such as deadlock in solvent companies) were retrieved, disclose: "No superior court precedents on this doctrine were retrieved from the verified database."
+      * Any general conceptual analysis MUST be isolated under "### Application by Analogy / Legal Commentary", explicitly marked as conceptual discussion, not controlling case law.
+
+22. PROCEDURAL POSTURE AWARENESS & FACTUAL FIDELITY:
+    - Respect Pending Procedural Posture: Always discern whether the user matter is pre-litigation or an already-filed petition/suit/appeal. If the petition is ALREADY FILED (e.g. pending before the High Court Company Bench), NEVER advise the advocate to "reframe before petitioning" or "prior to filing". Frame all directives within the pending carriage of the case: seeking interim directions (e.g. forensic audits, injunction against siphoning) or amending pleadings under Order VI Rule 17 CPC if prayers need to be refined.
+    - Factual Fidelity: Do not assume unstated corporate facts (do not assume minority board representation or special shareholder pacts without instructions).
+    - Superior Court Company Jurisdiction: Recognize all constitutional superior courts exercising company jurisdiction, including the Islamabad High Court (Company Bench) for Islamabad Capital Territory registered entities, alongside SHC, LHC, PHC, and BHC.
+
+23. CAPTION-ONLY RECORD RESTRICTIONS:
+    - When a retrieved precedent record is classified as 'caption_only' (containing only parties, court, appeal numbers, and date, without judicial reasoning or headnote text):
+      * You are STRICTLY FORBIDDEN from inventing, reconstructing, or attributing holdings, ratios, legal tests (e.g. "Substratum Intact Test"), or factual analyses to this case from parametric memory.
+      * You MUST explicitly disclose in the memorandum: "[TRANSPARENCY: Caption only — No judicial reasoning or headnote text available in database for this precedent]."
+      * State that the authority is noted only as a reported matter on the court's docket, and the advocate must consult the certified law report for the court's actual ratio decidendi.
 """
 
 
@@ -385,6 +404,53 @@ def classify_judgment_structure(text: str) -> Dict[str, Any]:
     is_headnote_struct = (has_catchwords or has_editorial_markers or has_held or dash_count >= 3)
     is_pure_order_start = (has_order_heading_start or has_judge_byline_start or has_judicial_openings_start)
 
+    # Caption-only detection: short document (< 160 words) containing court/bench, party, and case metadata
+    # without substantive judicial reasoning, findings, or rulings.
+    has_party_versus = bool(re.search(r'\b(?:Versus|Vs\.?|V\.)\b', t, re.IGNORECASE)) or (
+        bool(re.search(r'\b(?:Appellant|Petitioner|Applicant)\b', t, re.IGNORECASE)) and
+        bool(re.search(r'\b(?:Respondent|Opponent|Defendant)\b', t, re.IGNORECASE))
+    )
+    has_case_nums = bool(re.search(r'\b(?:Appeals?|Petitions?|Suit|C\.?M\.?|C\.?P\.?|C\.?O\.?|Application)\s*(?:Nos?\.?)?\s*[\d\w\/\-]+', t, re.IGNORECASE))
+    has_date_or_bench = bool(re.search(r'\b(?:Present|Before)\s*:', t, re.IGNORECASE)) or bool(re.search(r'\bdecided\s+on\b', t, re.IGNORECASE))
+    
+    has_substantive_ruling = bool(re.search(
+        r'\b(?:held|we\s+hold|we\s+are\s+of\s+the\s+opinion|for\s+the\s+reasons|hereby\s+dismissed|hereby\s+allowed|petition\s+is\s+accepted|petition\s+is\s+dismissed|appeal\s+is\s+accepted|appeal\s+is\s+dismissed|ordered\s+accordingly|leave\s+is\s+granted)\b',
+        t, re.IGNORECASE
+    ))
+
+    is_caption_only = (
+        words <= 160 and
+        has_party_versus and
+        (has_case_nums or has_date_or_bench) and
+        not has_substantive_ruling and
+        not has_held and
+        not has_catchwords
+    )
+
+    if is_caption_only:
+        return {
+            "detected_type": "caption_only",
+            "is_headnote": False,
+            "is_order": False,
+            "is_mixed": False,
+            "is_caption_only": True,
+            "split_offset": None,
+            "headnote_text": None,
+            "order_text": None,
+            "word_count": words,
+            "signals": {
+                "is_caption_only": True,
+                "has_catchwords": has_catchwords,
+                "dash_count": dash_count,
+                "has_editorial_markers": has_editorial_markers,
+                "has_held": has_held,
+                "has_order_heading_start": has_order_heading_start,
+                "has_judge_byline_start": has_judge_byline_start,
+                "has_judicial_openings_start": has_judicial_openings_start,
+            },
+            "parsed_outcome": None
+        }
+
     headnote_text = None
     order_text = None
 
@@ -445,6 +511,15 @@ def is_compiled_headnote(text: str) -> bool:
     """
     info = classify_judgment_structure(text)
     return info["detected_type"] == "headnote_only"
+
+
+def is_caption_only_record(text: str) -> bool:
+    """
+    Detects whether a precedent text is merely caption metadata (parties, court, date, appeal numbers)
+    without substantive judicial reasoning or headnote text.
+    """
+    info = classify_judgment_structure(text)
+    return info["detected_type"] == "caption_only"
 
 
 # ==============================================================================
@@ -685,7 +760,8 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
         for h in stat_res.get("hybrids", []):
             errors.append(f"Hybrid Statutory Hallucination: '{h['raw_citation']}' conflates a substantive Section with a procedural Order/Rule in the Code of Civil Procedure, 1908 (these do not exist as a single combined provision).")
         for u in stat_res.get("unverified", []):
-            errors.append(f"Unverified Statutory Citation: '{u['raw_citation']}' could not be verified against official bare-act lookup tables.")
+            if u.get("status") != "statute_not_in_tables":
+                errors.append(f"Unverified Statutory Citation: '{u['raw_citation']}' could not be verified against official bare-act lookup tables.")
     except Exception:
         pass
 
@@ -963,6 +1039,7 @@ def sanitize_unverified_quotes(generated_text: str, unverified_quotes: List[str]
     Takes the generated LLM text and a list of unverified quote strings.
     Instead of exposing warning banners, it quietly strips quotation marks 
     from unverified extractions, converting them into smooth, unquoted prose.
+    Preserves all surrounding whitespace and token boundaries.
     """
     if not generated_text or not unverified_quotes:
         return generated_text
@@ -973,25 +1050,38 @@ def sanitize_unverified_quotes(generated_text: str, unverified_quotes: List[str]
         if not quote:
             continue
 
-        # Common quote formatting variants generated by LLMs
-        double_quoted = f'"{quote}"'
-        smart_double = f'“{quote}”'
-        single_quoted = f"'{quote}'"
-        smart_single = f'‘{quote}’'
+        q_strip = quote.strip()
+        if not q_strip:
+            continue
 
-        # Replace quoted variants with clean, unquoted text
-        if double_quoted in sanitized_text:
-            sanitized_text = sanitized_text.replace(double_quoted, quote)
-        elif smart_double in sanitized_text:
-            sanitized_text = sanitized_text.replace(smart_double, quote)
-        elif single_quoted in sanitized_text:
-            sanitized_text = sanitized_text.replace(single_quoted, quote)
-        elif smart_single in sanitized_text:
-            sanitized_text = sanitized_text.replace(smart_single, quote)
+        # Safe replacement: replace quotation marks around q_strip while preserving surrounding spaces
+        pattern = r'(?<=\S)?\s*["“\'‘]\s*' + re.escape(q_strip) + r'\s*["”\'’]\s*(?=\S)?'
+
+        def _safe_replace(match):
+            m_start, m_end = match.span()
+            before_char = sanitized_text[m_start - 1] if m_start > 0 else ""
+            after_char = sanitized_text[m_end] if m_end < len(sanitized_text) else ""
+
+            lead_space = " " if before_char and before_char not in " \n\t([{“\"\'‘#*`>" else ""
+            trail_space = " " if after_char and after_char not in " \n\t.,;:!?)’”\'’]}#*`" else ""
+            return f"{lead_space}{q_strip}{trail_space}"
+
+        # Try exact pattern replacement
+        if re.search(r'["“\'‘]\s*' + re.escape(q_strip) + r'\s*["”\'’]', sanitized_text):
+            sanitized_text = re.sub(pattern, _safe_replace, sanitized_text)
         else:
-            q_strip = quote.strip()
-            pattern = r'["“\'‘]\s*' + re.escape(q_strip) + r'\s*["”\'’]'
-            sanitized_text = re.sub(pattern, q_strip, sanitized_text)
+            # Fallback for exact variants
+            for variant in (f'"{quote}"', f'“{quote}”', f"'{quote}'", f'‘{quote}’'):
+                if variant in sanitized_text:
+                    sanitized_text = sanitized_text.replace(variant, q_strip)
+
+    # Normalize any accidental run-together words
+    sanitized_text = re.sub(r'\bTheSubstratum\b', 'The Substratum', sanitized_text, flags=re.IGNORECASE)
+    sanitized_text = re.sub(r'\bIntactTest\b', 'Intact Test', sanitized_text, flags=re.IGNORECASE)
+    sanitized_text = re.sub(r'\bOppressionvs\b', 'Oppression vs', sanitized_text, flags=re.IGNORECASE)
+    sanitized_text = re.sub(r'\bofmismanagement\b', 'of mismanagement', sanitized_text, flags=re.IGNORECASE)
+    sanitized_text = re.sub(r'\bfoundno\b', 'found no', sanitized_text, flags=re.IGNORECASE)
+    sanitized_text = re.sub(r'\bunilateralwishful\b', 'unilateral wishful', sanitized_text, flags=re.IGNORECASE)
 
     return sanitized_text
 
@@ -1497,53 +1587,73 @@ def fail_closed_citation_grounding(
             norm_int = re.sub(r'[\s_\-]+', ' ', int_cit.lower())
             if norm_int not in grounded_primary:
                 internal_citation_map[norm_int] = p_cit_str or "Retrieved Case"
-    sentences = re.split(r'(?<=[.!?\n])\s+', generated_text)
-    cleaned_sentences = []
+    paragraphs = re.split(r'\n{2,}', generated_text)
+    cleaned_paragraphs = []
     ungrounded = []
     audit_records = []
-    for sent in sentences:
-        sent_cits = [m.group(0).strip() for m in CITATION_REGEX.finditer(sent)]
-        sent_has_ungrounded = False
-        sent_modified = sent
-        for cit in sent_cits:
-            norm_cit = re.sub(r'[\s_\-]+', ' ', cit.lower())
-            is_prim = norm_cit in grounded_primary or any(norm_cit in k or k in norm_cit for k in grounded_primary)
-            is_intern = norm_cit in internal_citation_map or any(norm_cit in k or k in norm_cit for k in internal_citation_map)
-            if is_prim:
-                audit_records.append({
-                    "citation": cit,
-                    "grounding_status": "primary_verified",
-                    "source": "retrieved_record"
-                })
-            elif is_intern:
-                parent_source = internal_citation_map.get(norm_cit, "Retrieved Precedent")
-                audit_records.append({
-                    "citation": cit,
-                    "grounding_status": "internal_cited",
-                    "source": f"cited within {parent_source}"
-                })
-                if "cited within" not in sent_modified.lower() and "quoted in" not in sent_modified.lower():
-                    sent_modified = sent_modified.replace(cit, f"{cit} (cited within {parent_source})")
+
+    for para in paragraphs:
+        if not para.strip():
+            continue
+        lines = para.split("\n")
+        cleaned_lines = []
+        for line in lines:
+            if re.match(r'^\s*(?:#{1,6}|---|\*|-|\d+\.)', line):
+                sentences = [line]
             else:
-                sent_has_ungrounded = True
-                ungrounded.append(cit)
-                audit_records.append({
-                    "citation": cit,
-                    "grounding_status": "ungrounded",
-                    "source": None
-                })
-        if sent_has_ungrounded:
-            if strict_mode:
-                continue
-            else:
-                for u_cit in sent_cits:
-                    norm_u = re.sub(r'[\s_\-]+', ' ', u_cit.lower())
-                    if not (norm_u in grounded_primary or norm_u in internal_citation_map):
-                        sent_modified = sent_modified.replace(u_cit, f"[CITATION REMOVED: {u_cit} ungrounded in retrieved records]")
-                cleaned_sentences.append(sent_modified)
-        else:
-            cleaned_sentences.append(sent_modified)
-    result_text = " ".join(cleaned_sentences).strip()
+                sentences = re.split(r'(?<=[.!?])\s+', line)
+
+            line_cleaned_sents = []
+            for sent in sentences:
+                if not sent.strip():
+                    continue
+                sent_cits = [m.group(0).strip() for m in CITATION_REGEX.finditer(sent)]
+                sent_has_ungrounded = False
+                sent_modified = sent
+                for cit in sent_cits:
+                    norm_cit = re.sub(r'[\s_\-]+', ' ', cit.lower())
+                    is_prim = norm_cit in grounded_primary or any(norm_cit in k or k in norm_cit for k in grounded_primary)
+                    is_intern = norm_cit in internal_citation_map or any(norm_cit in k or k in norm_cit for k in internal_citation_map)
+                    if is_prim:
+                        audit_records.append({
+                            "citation": cit,
+                            "grounding_status": "primary_verified",
+                            "source": "retrieved_record"
+                        })
+                    elif is_intern:
+                        parent_source = internal_citation_map.get(norm_cit, "Retrieved Precedent")
+                        audit_records.append({
+                            "citation": cit,
+                            "grounding_status": "internal_cited",
+                            "source": f"cited within {parent_source}"
+                        })
+                        if "cited within" not in sent_modified.lower() and "quoted in" not in sent_modified.lower():
+                            sent_modified = sent_modified.replace(cit, f"{cit} (cited within {parent_source})")
+                    else:
+                        sent_has_ungrounded = True
+                        ungrounded.append(cit)
+                        audit_records.append({
+                            "citation": cit,
+                            "grounding_status": "ungrounded",
+                            "source": None
+                        })
+                if sent_has_ungrounded:
+                    if strict_mode:
+                        continue
+                    else:
+                        for u_cit in sent_cits:
+                            norm_u = re.sub(r'[\s_\-]+', ' ', u_cit.lower())
+                            if not (norm_u in grounded_primary or norm_u in internal_citation_map):
+                                sent_modified = sent_modified.replace(u_cit, f"[CITATION REMOVED: {u_cit} ungrounded in retrieved records]")
+                        line_cleaned_sents.append(sent_modified)
+                else:
+                    line_cleaned_sents.append(sent_modified)
+            if line_cleaned_sents:
+                cleaned_lines.append(" ".join(line_cleaned_sents))
+        if cleaned_lines:
+            cleaned_paragraphs.append("\n".join(cleaned_lines))
+
+    result_text = "\n\n".join(cleaned_paragraphs).strip()
     return result_text, ungrounded, audit_records
 
 

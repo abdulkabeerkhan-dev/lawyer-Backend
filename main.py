@@ -33,7 +33,7 @@ from core.document_builder import generate_court_docx
 from core.retrieval_logger import RetrievalTraceLogger
 from core.legal_guardrails import (
     decompose_compound_legal_query, is_compiled_headnote, check_memo_completeness,
-    classify_judgment_structure,
+    classify_judgment_structure, is_caption_only_record,
     extract_positive_query_anchors, passes_positive_anchor_test,
     derive_court_from_judgment_header, verify_case_identity,
     is_counsel_submission_span, find_supporting_span_in_text,
@@ -1737,7 +1737,15 @@ def clean_markdown_formatting(text: str) -> str:
     text = re.sub(r'#*\s*II\.\s*CONTROLLING\s*STATUTORY.*', '### II. CONTROLLING STATUTORY ARCHITECTURE', text, flags=re.IGNORECASE)
     text = re.sub(r'#*\s*III\.\s*CONTROLLING\s*JUDICIAL.*', '### III. CONTROLLING JUDICIAL PRECEDENTS & APPELLATE RATIO', text, flags=re.IGNORECASE)
     text = re.sub(r'#*\s*IV\.\s*PROCEDURAL.*', '### IV. PROCEDURAL & STRATEGIC LITIGATION PLAYBOOK', text, flags=re.IGNORECASE)
-    
+
+    # Normalize any accidental run-together words from quote stripping
+    text = re.sub(r'\bTheSubstratum\b', 'The Substratum', text, flags=re.IGNORECASE)
+    text = re.sub(r'\bIntactTest\b', 'Intact Test', text, flags=re.IGNORECASE)
+    text = re.sub(r'\bOppressionvs\b', 'Oppression vs', text, flags=re.IGNORECASE)
+    text = re.sub(r'\bofmismanagement\b', 'of mismanagement', text, flags=re.IGNORECASE)
+    text = re.sub(r'\bfoundno\b', 'found no', text, flags=re.IGNORECASE)
+    text = re.sub(r'\bunilateralwishful\b', 'unilateral wishful', text, flags=re.IGNORECASE)
+
     return text.strip()
 
 def strip_copyright_and_branding(text: str) -> str:
@@ -4077,7 +4085,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 struct_res = classify_judgment_structure(full_body_str or text_content)
                 det_type = struct_res.get("detected_type")
 
-                if det_type == "headnote_only":
+                if det_type == "caption_only":
+                    c_type_val = "caption_only"
+                elif det_type == "headnote_only":
                     c_type_val = "headnote_only"
                 elif is_whitelisted or raw_c_type == "full_text":
                     c_type_val = "full_text"
@@ -4090,8 +4100,20 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 else:
                     c_type_val = str(raw_c_type) if raw_c_type and str(raw_c_type).lower() not in ("unknown", "none") else "headnote_only"
 
+                if c_type_val == "caption_only":
+                    context_precedent_notice = (
+                        "[TRANSPARENCY: Caption only — No judicial reasoning or headnote text available in database]\n"
+                        "STRICT RULE: This record contains ONLY case title, bench, and procedural metadata. "
+                        "The judicial reasoning, ratio decidendi, and legal tests are NOT available in the database. "
+                        "Do NOT invent, attribute, or synthesize any legal holding, doctrine, test, or rule to this case. "
+                        "State clearly that the substantive text is missing from the database.\n"
+                    )
+                else:
+                    context_precedent_notice = ""
+
                 context_parts.append(
                     f"=== RETRIEVED PRECEDENT #{len(context_parts)+1} ===\n"
+                    f"{context_precedent_notice}"
                     f"CASE_ID: {case_id}\n"
                     f"CASE TITLE: {title}\n"
                     f"NEUTRAL CITATION: {neutral_cit}\n"
@@ -4134,10 +4156,15 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         temporal_tag = t_tag
 
                 clean_holding_snip = generate_clean_snippet(text_content, max_words=45)
+                card_outcome = outcome_val
+                if c_type_val == "caption_only":
+                    clean_holding_snip = "Holding not verified in retrieved database (caption only)"
+                    card_outcome = "Not stated in caption (caption only)"
+
                 is_full_text = (c_type_val == "full_text")
                 aggregate_citations_payload.append({
                     "verified_source": is_full_text,
-                    "source_badge": "Verified Source" if is_full_text else ("Editorial Headnote" if c_type_val == "headnote_only" else "Reported Authority"),
+                    "source_badge": "Verified Source" if is_full_text else ("Caption Only" if c_type_val == "caption_only" else ("Editorial Headnote" if c_type_val == "headnote_only" else "Reported Authority")),
                     "temporal_tag": temporal_tag,
                     "temporal_warning": temporal_warning,
                     "supabase_id": meta.get("supabase_id") or meta.get("id") or "",
@@ -4145,7 +4172,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     "preview": clean_holding_snip,
                     "holding": clean_holding_snip,
                     "Holding": clean_holding_snip,
-                    "title": title, "citation": neutral_cit, "score": match_score, "outcome": outcome_val,
+                    "title": title, "citation": neutral_cit, "score": match_score, "outcome": card_outcome,
                     "statutes": statutes_val, "sections": sections_val, "pdf_url": pdf_url_val,
                     "content_type": c_type_val,
                     "is_headnote": (c_type_val == "headnote_only"),
@@ -4219,6 +4246,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
                 headnote_cases = []
                 fts_cases = []
+                caption_only_cases = []
                 for m in primary_matches:
                     meta_m = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
                     m_text = str(meta_m.get('text') or meta_m.get('text_content') or meta_m.get('text_preview') or meta_m.get('full_text') or '').strip()
@@ -4226,11 +4254,20 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     m_cid_val = str(meta_m.get("citation") or meta_m.get("neutral_citation") or meta_m.get("case_id") or m.get("id") or "")
                     if any(k in m_cid_val.lower() for k in ["2006_ylr_1206", "2006 ylr 1206", "2007_ylr_2827", "2007 ylr 2827", "2006_ylr_3278", "2006 ylr 3278", "2006_ylr_96", "2006 ylr 96"]) or m_cid_val in COLLISION_WHITELIST:
                         continue
-                    if m.get("is_fts_fallback") or meta_m.get("is_fts_fallback") or m_ctype == "postgres_fts_fallback":
+                    if m_ctype == "caption_only" or is_caption_only_record(m_text):
+                        caption_only_cases.append(m_cid_val)
+                    elif m.get("is_fts_fallback") or meta_m.get("is_fts_fallback") or m_ctype == "postgres_fts_fallback":
                         fts_cases.append(m_cid_val)
                     elif m_ctype == "headnote_only" or (m_ctype in ("", "unknown", "none") and len(m_text.split()) < 300):
                         headnote_cases.append(m_cid_val)
 
+                if caption_only_cases:
+                    header += (
+                        f"CRITICAL CAPTION-ONLY TRANSPARENCY REQUIREMENT (MANDATORY):\n"
+                        f"The following precedent(s) are indexed as 'caption_only': {', '.join(caption_only_cases)}.\n"
+                        "[TRANSPARENCY: Caption only — No judicial reasoning or headnote text available in database]\n"
+                        "Because these records contain ONLY case title, bench, and procedural metadata without substantive reasoning, you MUST NOT invent, attribute, or synthesize any legal holding, ratio, doctrine, or test to these citations. You MUST explicitly state that the text of these decisions is unavailable in the database.\n\n"
+                    )
                 if fts_cases:
                     header += (
                         f"CRITICAL TRANSPARENCY REQUIREMENT (MANDATORY):\n"
@@ -4424,7 +4461,9 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
                 c_name = "Lahore High Court"
             else:
                 struct_c = classify_judgment_structure(c_text)
-                if struct_c.get("detected_type") == "headnote_only":
+                if struct_c.get("detected_type") == "caption_only":
+                    c_type = "caption_only"
+                elif struct_c.get("detected_type") == "headnote_only":
                     c_type = "headnote_only"
                 elif struct_c.get("detected_type") in ("order_text", "mixed"):
                     c_type = "full_text"
@@ -4432,6 +4471,12 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
                     c_type = intercepted_card.get("content_type") or ("headnote_only" if len(c_text.split()) < 300 else "full_text")
 
             clean_holding_snip = generate_clean_snippet(c_text, max_words=45)
+            if c_type == "caption_only":
+                clean_holding_snip = "Holding not verified in retrieved database (caption only)"
+                card_outcome = "Not stated in caption (caption only)"
+            else:
+                card_outcome = determine_case_outcome(c_text, intercepted_card.get("disposition") or intercepted_card.get("outcome"))
+
             precedent_card_dict = {
                 "case_id": c_id,
                 "supabase_id": c_supabase_id,
@@ -4445,7 +4490,7 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
                 "citation": c_cit,
                 "score": 0.99,
                 "content_type": c_type,
-                "outcome": determine_case_outcome(c_text, intercepted_card.get("disposition") or intercepted_card.get("outcome")),
+                "outcome": card_outcome,
                 "statutes": [],
                 "sections": [],
                 "pdf_url": pdf_url,
@@ -4480,7 +4525,16 @@ MANDATORY INSTRUCTIONS:
 3. In "Sources Searched", reflect the actual source forum ({c_name}).
 4. When summarizing each discussed case, use the exact Outcome provided in the context (e.g. 'Outcome: {intercepted_outcome}'). Do NOT default to 'Outcome: Decided'.
 """
-            if c_type == "headnote_only":
+            if c_type == "caption_only":
+                grounding_message += f"""
+5. MANDATORY CAPTION-ONLY TRANSPARENCY NOTICE:
+[TRANSPARENCY: Caption only — No judicial reasoning or headnote text available in database for {c_cit}]
+This precedent card contains ONLY case title, bench, and procedural metadata. The database DOES NOT contain the substantive judicial reasoning, headnote, or holding for this case.
+STRICT CONSTRAINT:
+You MUST NOT invent, attribute, or synthesize any substantive legal test, ratio decidendi, or holding to {c_cit}.
+You MUST explicitly state in the memorandum that while {c_cit} was retrieved by title/citation, its substantive text is unavailable in the database, and NO legal holding or test is derived from it.
+"""
+            elif c_type == "headnote_only":
                 grounding_message += f"""
 5. MANDATORY HEADNOTE TRANSPARENCY NOTICE:
 This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summary). You MUST explicitly disclose to the advocate in your visible reply (under a prominent notice or within the Executive Summary) that this authority is grounded in a reported headnote summary / short order rather than the court's verbatim full text, and advise verifying against the official certified judgment before citing in court.

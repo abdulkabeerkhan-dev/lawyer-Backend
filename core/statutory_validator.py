@@ -112,7 +112,49 @@ ACT_ALIASES = {
     "recovery of finances ordinance 2001": "FIO_2001",
     "financial institutions ordinance": "FIO_2001",
     "financial institutions ordinance 2001": "FIO_2001",
-    "ordinance xlvi of 2001": "FIO_2001"
+    "ordinance xlvi of 2001": "FIO_2001",
+
+    # Companies Act 2017 & Companies Ordinance 1984
+    "companies act": "COMPANIES_ACT_2017",
+    "companies act 2017": "COMPANIES_ACT_2017",
+    "companies act, 2017": "COMPANIES_ACT_2017",
+    "the companies act, 2017": "COMPANIES_ACT_2017",
+    "the companies act 2017": "COMPANIES_ACT_2017",
+    "companies ordinance": "COMPANIES_ORD_1984",
+    "companies ordinance 1984": "COMPANIES_ORD_1984",
+    "companies ordinance, 1984": "COMPANIES_ORD_1984",
+    "the companies ordinance, 1984": "COMPANIES_ORD_1984",
+    "the companies ordinance 1984": "COMPANIES_ORD_1984",
+
+    # Contract Act 1872
+    "contract act": "CONTRACT_1872",
+    "contract act 1872": "CONTRACT_1872",
+    "contract act, 1872": "CONTRACT_1872",
+    "the contract act, 1872": "CONTRACT_1872",
+    "the contract act 1872": "CONTRACT_1872",
+
+    # Specific Relief Act 1877
+    "specific relief act": "SRA_1877",
+    "specific relief act 1877": "SRA_1877",
+    "specific relief act, 1877": "SRA_1877",
+    "the specific relief act, 1877": "SRA_1877",
+    "the specific relief act 1877": "SRA_1877",
+    "sra": "SRA_1877",
+    "sra 1877": "SRA_1877",
+
+    # Arbitration Act 1940
+    "arbitration act": "ARBITRATION_1940",
+    "arbitration act 1940": "ARBITRATION_1940",
+    "arbitration act, 1940": "ARBITRATION_1940",
+    "the arbitration act, 1940": "ARBITRATION_1940",
+
+    # Transfer of Property Act 1882
+    "transfer of property act": "TPA_1882",
+    "transfer of property act 1882": "TPA_1882",
+    "transfer of property act, 1882": "TPA_1882",
+    "the transfer of property act, 1882": "TPA_1882",
+    "tpa": "TPA_1882",
+    "tpa 1882": "TPA_1882"
 }
 
 # Roman to Integer mapping
@@ -282,6 +324,21 @@ def parse_statutory_citation(text: str) -> Dict[str, Any]:
             act_code = code
             break
 
+    # Dynamic act detection from text like "of the Companies Act, 2017" or "Companies Act"
+    if not act_code:
+        m_dynamic_act = re.search(
+            r'\b(?:of\s+(?:the\s+)?)([a-z\s]+(?:act|ordinance|code|order))(?:\s*,\s*(\d{4}))?\b',
+            lower_text
+        )
+        if m_dynamic_act:
+            raw_act_name = m_dynamic_act.group(1).strip()
+            act_yr = m_dynamic_act.group(2)
+            norm_name = re.sub(r'[^a-z0-9]+', '_', raw_act_name).strip('_').upper()
+            if act_yr:
+                act_code = f"{norm_name}_{act_yr}"
+            else:
+                act_code = norm_name
+
     # If no act identified, check for default cues
     if not act_code:
         if "order" in lower_text and ("rule" in lower_text or "cpc" in lower_text):
@@ -294,7 +351,7 @@ def parse_statutory_citation(text: str) -> Dict[str, Any]:
             else:
                 act_code = "CONST_1973"
 
-    # Default fallback to CPC_1908 if Order/Rule is present
+    # Default fallback to CPC_1908 ONLY if Order/Rule is present
     if not act_code and re.search(r'\border\s+[ivxlcdm\d]+', lower_text):
         act_code = "CPC_1908"
 
@@ -378,7 +435,7 @@ def parse_statutory_citation(text: str) -> Dict[str, Any]:
         return {
             "is_valid": True,
             "status": "parsed",
-            "act_code": act_code or "CPC_1908",
+            "act_code": act_code,  # Never default bare section to CPC_1908
             "explicit_act": explicit_act,
             "provision_type": "section",
             "primary_num": raw_prim,
@@ -492,6 +549,16 @@ def validate_statutory_citation(citation: str, default_act: str = None) -> Dict[
             "message": f"The base provision '{base_record.get('display_name')}' exists, but specific sub-provision ({parsed.get('subsection') or parsed.get('clause') or parsed.get('sub_rule')}) could not be verified in official text."
         }
 
+    if not registry.has_act(act_code):
+        return {
+            "is_valid": False,
+            "status": "statute_not_in_tables",
+            "canonical_id": canonical_id,
+            "act_code": act_code,
+            "raw_citation": citation,
+            "message": f"Statute '{act_code}' is not present in verified statutory lookup tables."
+        }
+
     return {
         "is_valid": False,
         "status": "unverified_provision",
@@ -515,7 +582,7 @@ def validate_citations_in_text(text: str) -> Dict[str, Any]:
         # Article
         r'\b(?:article|art\.?)\s*\d+[a-zA-Z]?(?:\s*\(\s*\d+\s*\))?(?:\s*\(\s*[a-zA-Z]\s*\))?(?:\s*(?:of\s+the\s+)?(?:constitution|qso))?\b',
         # Section with Act
-        r'(?<![\w\'])\b(?:section|sec\.?|s\.)\s*\d+(?:-[A-Za-z]+|[A-Za-z])?(?:\s*\(\s*\d+\s*\))?(?:\s*\(\s*[a-zA-Z]\s*\))?(?:\s*(?:of\s+the\s+)?(?:cpc|ppc|crpc|cnsa|prpa|mflo|limitation\s+act))?\b'
+        r'(?<![\w\'])\b(?:section|sec\.?|s\.)\s*\d+(?:-[A-Za-z]+|[A-Za-z])?(?:\s*\(\s*\d+\s*\))?(?:\s*\(\s*[a-zA-Z]\s*\))?(?:\s*(?:of\s+(?:the\s+)?)?(?:code\s+of\s+civil\s+procedure(?:\s*,\s*\d{4})?|code\s+of\s+criminal\s+procedure(?:\s*,\s*\d{4})?|pakistan\s+penal\s+code(?:\s*,\s*\d{4})?|[a-zA-Z\s]+(?:act|ordinance|order)(?:\s*,\s*\d{4})?|cpc|ppc|crpc|cnsa|prpa|mflo|limitation\s+act|qso))?\b'
     ]
 
     all_matches = set()
