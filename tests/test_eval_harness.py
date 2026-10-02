@@ -69,17 +69,21 @@ class TestEvalHarness(unittest.TestCase):
         self.assertFalse(res_none["passed"])
 
     def test_release_gate_enforces_100_percent_precision(self):
-        # Passes with 100% precision and no regressions
-        curr = {"citation_precision": 1.0, "overall_pass_rate": 0.9, "claim_support_rate": 0.85, "scope_violations_count": 0}
-        base = {"citation_precision": 1.0, "overall_pass_rate": 0.85, "claim_support_rate": 0.80, "scope_violations_count": 0}
-        self.assertTrue(check_release_gate(curr, base))
+        # Passes with 100% precision, total_evaluated >= min_cases, and no regressions
+        curr = {"total_evaluated": 5, "citation_precision": 1.0, "overall_pass_rate": 0.9, "claim_support_rate": 0.85, "scope_violations_count": 0}
+        base = {"total_evaluated": 5, "citation_precision": 1.0, "overall_pass_rate": 0.85, "claim_support_rate": 0.80, "scope_violations_count": 0}
+        self.assertTrue(check_release_gate(curr, base, min_cases=1))
+
+        # Fails when scored cases < min_cases (no vacuous pass on 0 cases)
+        zero_cases_curr = {"total_evaluated": 0, "citation_precision": 1.0, "overall_pass_rate": 1.0}
+        self.assertFalse(check_release_gate(zero_cases_curr, base, min_cases=1))
 
         # Fails when citation precision is below 100%
-        imperfect_curr = {"citation_precision": 0.95, "overall_pass_rate": 0.9}
+        imperfect_curr = {"total_evaluated": 5, "citation_precision": 0.95, "overall_pass_rate": 0.9}
         self.assertFalse(check_release_gate(imperfect_curr, base))
 
         # Fails when pass rate regresses
-        regressed_curr = {"citation_precision": 1.0, "overall_pass_rate": 0.7, "claim_support_rate": 0.85}
+        regressed_curr = {"total_evaluated": 5, "citation_precision": 1.0, "overall_pass_rate": 0.7, "claim_support_rate": 0.85}
         self.assertFalse(check_release_gate(regressed_curr, base))
 
     def test_judge_calibration(self):

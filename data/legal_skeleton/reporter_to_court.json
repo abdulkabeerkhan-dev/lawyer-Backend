@@ -1,0 +1,111 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-10-02",
+  "notes": "Mapping from Pakistani law reporter abbreviations and formats to court tiers.",
+  "reporters": [
+    {
+      "prefix": "PLD SC",
+      "court": "Supreme Court of Pakistan",
+      "rank": 4,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    },
+    {
+      "prefix": "SCMR",
+      "court": "Supreme Court of Pakistan",
+      "rank": 4,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    },
+    {
+      "prefix": "PLD FSC",
+      "court": "Federal Shariat Court",
+      "rank": 3,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    },
+    {
+      "prefix": "PLD Lahore",
+      "court": "Lahore High Court",
+      "rank": 2,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    },
+    {
+      "prefix": "PLD Karachi",
+      "court": "Sindh High Court",
+      "rank": 2,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    },
+    {
+      "prefix": "PLD Peshawar",
+      "court": "Peshawar High Court",
+      "rank": 2,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    },
+    {
+      "prefix": "PLD Quetta",
+      "court": "Balochistan High Court",
+      "rank": 2,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    },
+    {
+      "prefix": "PLD Islamabad",
+      "court": "Islamabad High Court",
+      "rank": 2,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    },
+    {
+      "prefix": "CLD",
+      "court": "Commercial Law Decisions (Superior Courts / Banking Courts)",
+      "rank": 2,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    },
+    {
+      "prefix": "YLR",
+      "court": "Yearly Law Reporter (High Courts)",
+      "rank": 2,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    },
+    {
+      "prefix": "CLC",
+      "court": "Civil Law Cases (High Courts)",
+      "rank": 2,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    },
+    {
+      "prefix": "PCrLJ",
+      "court": "Pakistan Criminal Law Journal (High Courts)",
+      "rank": 2,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    },
+    {
+      "prefix": "PLC (C.S.)",
+      "court": "Pakistan Labour Cases (Service Tribunals / High Court / SC)",
+      "rank": 2,
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02"
+    }
+  ]
+}

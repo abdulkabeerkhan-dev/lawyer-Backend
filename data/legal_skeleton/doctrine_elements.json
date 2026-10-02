@@ -1,0 +1,61 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-10-02",
+  "doctrines": [
+    {
+      "id": "DOC-LIS-PENDENS",
+      "name": "Lis Pendens",
+      "statutory_source": "Transfer of Property Act, 1882, Section 52",
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02",
+      "span_pointer": "TPA s.52: During pendency in any court having authority of any suit or proceeding which is not collusive and in which any right to immovable property is directly and specifically in question, property cannot be transferred so as to affect the rights of any other party.",
+      "mandatory_ingredients": [
+        "Pendency of a active suit or proceeding in a court of competent jurisdiction",
+        "Suit is bona fide and not collusive",
+        "A right to specific immovable property must be directly and specifically in question in the suit",
+        "Transfer is made during pendency and affects the rights of any party under any decree or order made therein"
+      ],
+      "exceptions_and_limits": [
+        "Does not apply to general money suits or maintenance suits where the immovable property is not specifically claimed, scheduled, or charged in the plaint",
+        "Does not void the transfer ab initio; makes transfer subject to the ultimate decree"
+      ]
+    },
+    {
+      "id": "DOC-BONA-FIDE-PURCHASER",
+      "name": "Bona Fide Purchaser for Value (Ostensible Ownership)",
+      "statutory_source": "Transfer of Property Act, 1882, Section 41",
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02",
+      "span_pointer": "TPA s.41: Transfer by ostensible owner with consent, express or implied, of interested persons, for consideration, where transferee took reasonable care to ascertain power of transfer.",
+      "mandatory_ingredients": [
+        "Transferor is ostensible owner with express or implied consent of true owner",
+        "Transfer is for valuable consideration",
+        "Transferee acted in good faith after taking reasonable care to ascertain title",
+        "Gift without consideration CANNOT claim s.41 protection"
+      ],
+      "exceptions_and_limits": [
+        "A donee (recipient of gift) cannot claim s.41 protection (consideration missing)",
+        "Subordinate to lis pendens where s.52 applies"
+      ]
+    },
+    {
+      "id": "DOC-ARBITRATION-INTERFERENCE",
+      "name": "Supervisory Jurisdiction over Domestic Arbitration Awards",
+      "statutory_source": "Arbitration Act, 1940, Sections 17, 30, 33",
+      "status": "Approved",
+      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
+      "review_date": "2026-10-02",
+      "span_pointer": "Arbitration Act 1940 s.30: Grounds for setting aside award: arbitrator misconduct, award improperly procured, or award is invalid.",
+      "mandatory_ingredients": [
+        "Court cannot sit as a court of appeal over findings of fact or evaluation of evidence",
+        "Award can only be set aside on narrow grounds of Section 30 (misconduct, invalidity, improper procurement)",
+        "Objection must be filed within 30 days under Article 158 Limitation Act 1908"
+      ],
+      "exceptions_and_limits": [
+        "Appellate re-appreciation of evidence on merits is strictly impermissible"
+      ]
+    }
+  ]
+}

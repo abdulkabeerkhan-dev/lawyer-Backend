@@ -12,16 +12,28 @@ Independent LLM judge that evaluates a legal memorandum against a Gold Set row:
 - advice_risk: evaluates whether consequence of non-compliance and proper procedural advice appear.
 - expected_negative_findings: checks for explicit "not found in retrieved sources" statements.
 
-Also includes calibration harness to measure agreement rate against hand-labeled samples.
+Decoupled from main.py writer pipeline:
+- Uses dedicated JUDGE_MODEL (defaults to claude-sonnet-4-5-20250929; distinct from writer claude-haiku-4-5-20251001)
+- Prompt version: v1.0-pak-legal-eval
+- Independent system prompt and calibration runner.
 """
 
+import os
 import json
 import re
 import sys
 import asyncio
 from typing import Dict, Any, List, Optional
+from dotenv import load_dotenv
+
+load_dotenv()
+
+JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "claude-sonnet-4-5-20250929")
+JUDGE_PROMPT_VERSION = "v1.0-pak-legal-eval"
 
 LLM_JUDGE_SYSTEM_PROMPT = """You are an objective legal evaluation judge for Pakistani legal research memoranda.
+Prompt Version: v1.0-pak-legal-eval
+
 You will be provided:
 1. A generated legal research memorandum.
 2. A list of required legal points that MUST be supported.
@@ -89,20 +101,46 @@ async def judge_memo_against_gold_case(
         return await llm_client_fn(user_prompt)
 
     try:
-        from main import safe_create_anthropic_message, CLAUDE_MODEL
-        resp = await safe_create_anthropic_message(
-            model=CLAUDE_MODEL,
+        import anthropic
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            raise ValueError("ANTHROPIC_API_KEY not configured in environment or .env")
+        
+        workspace_id = os.environ.get("ANTHROPIC_WORKSPACE_ID")
+        default_headers = {}
+        if workspace_id:
+            default_headers["anthropic-workspace-id"] = workspace_id
+
+        client = anthropic.AsyncAnthropic(
+            api_key=api_key,
+            default_headers=default_headers if default_headers else None
+        )
+        resp = await client.messages.create(
+            model=JUDGE_MODEL,
             max_tokens=4096,
             temperature=0.0,
             system=LLM_JUDGE_SYSTEM_PROMPT,
             messages=[{"role": "user", "content": user_prompt}]
         )
         resp_text = "".join(getattr(b, "text", "") for b in resp.content if getattr(b, "type", None) == "text").strip()
-        m_json = re.search(r'\{.*\}', resp_text, re.DOTALL)
-        if m_json:
-            return json.loads(m_json.group(0))
+        candidate = None
+        m_codeblock = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', resp_text, re.DOTALL)
+        if m_codeblock:
+            candidate = m_codeblock.group(1)
+        else:
+            m_brace = re.search(r'\{.*\}', resp_text, re.DOTALL)
+            if m_brace:
+                candidate = m_brace.group(0)
+        
+        if candidate:
+            try:
+                return json.loads(candidate)
+            except Exception:
+                # Remove unescaped internal control characters
+                cleaned = re.sub(r'[\x00-\x1f]', ' ', candidate)
+                return json.loads(cleaned)
     except Exception as e:
-        print(f"[WARN] LLM Judge exception: {e}", file=sys.stderr)
+        print(f"[WARN] LLM Judge exception ({JUDGE_MODEL}): {e}", file=sys.stderr)
 
     # Fallback default empty structure
     return {
@@ -123,43 +161,61 @@ async def calibrate_judge(
     - gold_case: dict
     - expected_required_passed: list of bool
     - expected_forbidden_violated: list of bool
-    Returns agreement rate statistics.
+    Returns agreement rate statistics, model used, and prompt version.
     """
     total_checks = 0
     agreements = 0
     details = []
 
-    for i, sample in enumerate(samples):
-        res = await judge_memo_against_gold_case(
-            memo_text=sample["memo_text"],
-            gold_case=sample["gold_case"],
-            llm_client_fn=llm_client_fn
-        )
+    sem = asyncio.Semaphore(5)
+    async def eval_sample(i, sample):
+        async with sem:
+            res = await judge_memo_against_gold_case(
+                memo_text=sample["memo_text"],
+                gold_case=sample["gold_case"],
+                llm_client_fn=llm_client_fn
+            )
+            return i, sample, res
+
+    evaluated = await asyncio.gather(*(eval_sample(i, s) for i, s in enumerate(samples)))
+    evaluated.sort(key=lambda x: x[0])
+
+    for i, sample, res in evaluated:
         # Check required points agreement
         exp_req = sample.get("expected_required_passed", [])
         actual_req = [r.get("passed", False) for r in res.get("required_points_results", [])]
+        sample_req_agreed = 0
+        sample_req_total = len(exp_req)
         for exp, act in zip(exp_req, actual_req):
             total_checks += 1
             if exp == act:
                 agreements += 1
+                sample_req_agreed += 1
 
         # Check forbidden claims agreement
         exp_forb = sample.get("expected_forbidden_violated", [])
         actual_forb = [f.get("violated", False) for f in res.get("forbidden_claims_results", [])]
+        sample_forb_agreed = 0
+        sample_forb_total = len(exp_forb)
         for exp, act in zip(exp_forb, actual_forb):
             total_checks += 1
             if exp == act:
                 agreements += 1
+                sample_forb_agreed += 1
 
         details.append({
             "sample_index": i,
             "sample_id": sample.get("gold_case", {}).get("id", f"sample_{i}"),
-            "req_agreed": exp_req == actual_req[:len(exp_req)],
-            "forb_agreed": exp_forb == actual_forb[:len(exp_forb)]
+            "req_agreed_ratio": f"{sample_req_agreed}/{sample_req_total}" if sample_req_total else "N/A",
+            "forb_agreed_ratio": f"{sample_forb_agreed}/{sample_forb_total}" if sample_forb_total else "N/A",
+            "all_agreed": (sample_req_agreed == sample_req_total and sample_forb_agreed == sample_forb_total)
         })
 
     rate = (agreements / total_checks) if total_checks > 0 else 1.0
     return {
+        "judge_model": JUDGE_MODEL,
+        "prompt_version": JUDGE_PROMPT_VERSION,
+        "total_samples": len(samples),
         "total_checks": total_checks,
         "agreements": agreements,
         "agreement_rate": round(rate, 4),

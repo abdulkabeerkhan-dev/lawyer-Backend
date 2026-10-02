@@ -893,6 +893,25 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
             if any(h in sent.lower() for h in ["the court held", "the bench ruled", "established that", "it was held that"]):
                 errors.append(f"Speaker Attribution Violation: Submissions by counsel ('{sent.strip()[:60]}...') cannot be attributed as judicial holdings.")
 
+    # Rule 28: Curated Legal Skeleton & Forbidden Claim Enforcement (Phase 2)
+    try:
+        from core.legal_skeleton import skeleton
+        skeleton_violations = skeleton.validate_memo_claims(draft_text)
+        errors.extend(skeleton_violations)
+    except Exception:
+        pass
+
+    # Residual fail-closed marker check
+    if "[[citation removed" in text_lower:
+        errors.append("Residual fail-closed marker '[[CITATION REMOVED...]]' found in draft. Cleanly omit ungrounded citations or state that authority was not found in retrieved sources instead of outputting developer placeholders.")
+
+    # Order XXI Rule 90 Deposit Advice Risk Check:
+    # If the draft advises tendering 20% or challenging a deposit order, it MUST warn that non-compliance risks dismissal of the objection.
+    if ("order xxi" in text_lower or "o.xxi" in text_lower) and ("deposit" in text_lower) and ("20%" in text_lower or "50%" in text_lower):
+        if any(w in text_lower for w in ["pay only 20%", "tender only 20%", "deposit only 20%", "pay 20%", "tender 20%", "challenge the 50%"]):
+            if not any(w in text_lower for w in ["dismiss", "dismissal", "rejection", "summary dismissal", "risk"]):
+                errors.append("Advice Risk Omission: Advising a client to pay only 20% against a higher court-ordered deposit without warning that failure to deposit the amount ordered risks immediate summary dismissal of the objection petition.")
+
     return errors
 
 

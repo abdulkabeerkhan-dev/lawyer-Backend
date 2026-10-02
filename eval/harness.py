@@ -3,21 +3,24 @@ try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 except Exception:
     pass
+
 """
 eval/harness.py
 
 Evaluation harness for Pakistani Legal Research & Verification System:
 - Loads gold set JSON produced by convert_gold_set.py
-- Scores only rows with status "Approved" (unless --all-status is explicitly passed for staging checks)
-- Strictly excludes split "Held-out" in development runs
+- By default scores only rows with status "Approved"
+- Supports explicit --include-drafts flag for baseline benchmarking
+- Strictly isolates held-out rows: real held-out rows are loaded ONLY from
+  external environment variable HELD_OUT_GOLD_SET_PATH outside version control
 - Evaluates:
-  * required_points (must be supported)
-  * required_authorities (must be retrieved at/above min_court and used)
+  * required_points (judge-based claim support)
+  * required_authorities (retrieval at/above min_court & purpose)
   * forbidden_claims (none may appear in any wording)
-  * expected_negative_findings (must be explicitly stated)
-  * expected_forum_route and expected_limitation (must match skeleton)
+  * expected_negative_findings (explicit negative statements)
+  * expected_forum_route and expected_limitation (forum/limitation accuracy)
   * advice_risk (consequence of non-compliance + stay/modification + "verify with counsel")
-  * currency_check (dated label must appear for listed provisions)
+  * currency_check (dated label coverage)
 - Outputs detailed JSON and Markdown reports with area breakdown and version pinning
 """
 
@@ -99,12 +102,38 @@ def check_advice_risk_in_text(memo_text: str, advice_risk_spec: str) -> Dict[str
     }
 
 def check_currency_labels_in_text(memo_text: str, provisions_to_check: Optional[str] = None) -> Dict[str, Any]:
-    # Look for [CHECKED, NO CHANGE FOUND...], [NOT CHECKED...], or [DECLARED REPUGNANT...]
     pattern = re.compile(r'\[(CHECKED, NO CHANGE FOUND|NOT CHECKED|DECLARED REPUGNANT)[^\]]*\]', re.IGNORECASE)
     matches = pattern.findall(memo_text)
     return {
         "passed": len(matches) > 0,
         "labels_found": matches
+    }
+
+def check_forum_limitation_accuracy(memo_text: str, exp_forum: str, exp_lim: str) -> Dict[str, Any]:
+    text_lower = memo_text.lower()
+    
+    # Check for forbidden forum routing errors (advising s.109 CPC appeal to District Judge)
+    s109_claim = bool(
+        re.search(r'(?:appeal|remedy|petition|file).*?(?:section\s+109|s\.?\s*109).*?(?:district\s+judge|district\s+court)', text_lower) or
+        re.search(r'(?:section\s+109|s\.?\s*109).*?(?:to|before).*?(?:district\s+judge|district\s+court)', text_lower)
+    )
+    # Exclude if it's explicitly negated ("not lie to the district judge", "not under section 109")
+    if s109_claim and ("not lie" in text_lower or "does not" in text_lower or "do not" in text_lower):
+        s109_claim = False
+
+    has_s109_district_error = s109_claim
+    has_banking_hc_appeal = ("section 22" in text_lower and "high court" in text_lower) or ("fio" in text_lower and "high court" in text_lower)
+    has_30_day_limitation = ("30 days" in text_lower or "thirty days" in text_lower)
+
+    passed = not has_s109_district_error
+    if "s.22" in (exp_forum or "").lower():
+        passed = passed and has_banking_hc_appeal
+
+    return {
+        "passed": passed,
+        "has_s109_district_error": has_s109_district_error,
+        "has_banking_hc_appeal": has_banking_hc_appeal,
+        "has_30_day_limitation": has_30_day_limitation
     }
 
 async def evaluate_single_case(
@@ -115,7 +144,8 @@ async def evaluate_single_case(
 ) -> Dict[str, Any]:
     case_id = gold_case["id"]
     area = gold_case.get("area", "General")
-    
+    memo_lower = memo_text.lower()
+
     # 1. LLM Judge evaluation for required points & forbidden claims
     judge_res = await judge_memo_against_gold_case(memo_text, gold_case, llm_client_fn=llm_judge_fn)
     req_results = judge_res.get("required_points_results", [])
@@ -128,30 +158,33 @@ async def evaluate_single_case(
     scope_violations = [f for f in forb_results if f.get("violated", False)]
     
     # Deterministic backup check for high-risk forbidden terms
-    memo_lower = memo_text.lower()
     deterministic_violations = []
     if "ultra vires" in memo_lower and any("ultra vires" in c.lower() for c in gold_case.get("forbidden_claims", [])):
         deterministic_violations.append("ultra vires")
     if "no precedent exists" in memo_lower and any("no precedent exists" in c.lower() for c in gold_case.get("forbidden_claims", [])):
         deterministic_violations.append("no precedent exists")
-    if "section 109 cpc" in memo_lower and "district judge" in memo_lower and any("s.109" in c.lower() for c in gold_case.get("forbidden_claims", [])):
-        deterministic_violations.append("s.109 appeal to District Judge")
+    if ("section 109 cpc" in memo_lower or "section 109" in memo_lower) and "district judge" in memo_lower:
+        if not ("not lie" in memo_lower or "does not" in memo_lower or "do not" in memo_lower):
+            deterministic_violations.append("s.109 appeal to District Judge")
+    if "[[citation removed" in memo_lower:
+        deterministic_violations.append("[[CITATION REMOVED]] residual marker")
 
     # 2. Key authority recall & min court
     retrieved_cits = [normalize_citation(c.get("citation") or c.get("case_id") or "") for c in citations_returned]
     auth_results = []
     for req_auth in gold_case.get("required_authorities", []):
-        target_cit = normalize_citation(req_auth.get("citation", ""))
+        raw_cit = req_auth.get("citation", "")
+        # Clean candidates text if marked 'LAWYER TO CONFIRM'
+        cleaned_cit = re.sub(r'^(?:CANDIDATES[,\s]+)?(?:LAWYER TO CONFIRM:?\s*)?', '', raw_cit, flags=re.IGNORECASE).strip()
+        target_cit = normalize_citation(cleaned_cit)
         min_court = req_auth.get("min_court", "")
         min_weight = court_rank(min_court)
         
-        # Check if cited in memo or retrieved
         found_in_retrieval = any(target_cit in rc or rc in target_cit for rc in retrieved_cits) if target_cit else False
         found_in_memo = (target_cit.lower() in memo_lower) if target_cit else False
         
-        # Check court rank
         court_ok = True
-        if min_court:
+        if min_court and found_in_retrieval:
             for c in citations_returned:
                 if target_cit in normalize_citation(c.get("citation") or ""):
                     c_name = c.get("court") or c.get("court_name") or ""
@@ -159,7 +192,8 @@ async def evaluate_single_case(
                         court_ok = False
         
         auth_results.append({
-            "citation": req_auth.get("citation"),
+            "citation": raw_cit,
+            "target_normalized": target_cit,
             "found": found_in_retrieval or found_in_memo,
             "court_ok": court_ok,
             "needed_for": req_auth.get("needed_for")
@@ -169,9 +203,8 @@ async def evaluate_single_case(
     auth_passed = sum(1 for a in auth_results if a["found"] and a["court_ok"])
     auth_recall = (auth_passed / auth_total) if auth_total > 0 else 1.0
 
-    # 3. Citation precision (check against spurious or hallucinated citations)
-    # Target 100% precision: citations in memo must not have ungrounded markers or invented citations
-    has_removed_markers = "[[CITATION REMOVED" in memo_text
+    # 3. Citation precision (Target 100%: no ungrounded markers or deleted placeholders)
+    has_removed_markers = "[[citation removed" in memo_lower
     citation_precision = 0.0 if has_removed_markers else 1.0
 
     # 4. Advice risk compliance
@@ -180,10 +213,16 @@ async def evaluate_single_case(
     # 5. Currency check compliance
     curr_check = check_currency_labels_in_text(memo_text, gold_case.get("currency_check", ""))
 
-    # 6. Negative findings correctness
+    # 6. Forum & Limitation accuracy
+    fl_check = check_forum_limitation_accuracy(
+        memo_text,
+        gold_case.get("expected_forum_route", ""),
+        gold_case.get("expected_limitation", "")
+    )
+
+    # 7. Negative findings correctness
     neg_results = []
     for neg in gold_case.get("expected_negative_findings", []):
-        # Look for explicit disclosure of absence
         neg_lower = neg.lower()
         key_kws = [w for w in neg_lower.split() if len(w) > 4][:3]
         explicit_found = any(k in memo_lower for k in [
@@ -206,19 +245,36 @@ async def evaluate_single_case(
         len(scope_violations) == 0 and
         len(deterministic_violations) == 0 and
         citation_precision == 1.0 and
-        (auth_recall >= 0.5 or auth_total == 0)
+        (auth_recall >= 0.5 or auth_total == 0) and
+        fl_check["passed"]
     )
+
+    failed_reasons = []
+    if req_support_rate < 0.8:
+        failed_reasons.append(f"Claim support rate {req_support_rate*100:.1f}% below 80%")
+    if scope_violations:
+        failed_reasons.append(f"Scope violations: {[f.get('forbidden_claim') for f in scope_violations]}")
+    if deterministic_violations:
+        failed_reasons.append(f"Deterministic violations: {deterministic_violations}")
+    if citation_precision < 1.0:
+        failed_reasons.append("Citation precision below 100% (residual removal marker)")
+    if auth_total > 0 and auth_recall < 0.5:
+        failed_reasons.append(f"Key authority recall {auth_recall*100:.1f}% below 50%")
+    if not fl_check["passed"]:
+        failed_reasons.append("Forum / limitation check failed")
 
     return {
         "id": case_id,
         "area": area,
         "passed": case_passed,
+        "failed_reasons": failed_reasons,
         "metrics": {
             "claim_support_rate": round(req_support_rate, 4),
             "scope_violations_count": len(scope_violations) + len(deterministic_violations),
             "key_authority_recall": round(auth_recall, 4),
             "citation_precision": round(citation_precision, 4),
             "negative_finding_correctness": round(neg_correctness, 4),
+            "forum_limitation_accuracy": 1.0 if fl_check["passed"] else 0.0,
             "advice_risk_passed": adv_check["passed"],
             "currency_check_passed": curr_check["passed"]
         },
@@ -229,44 +285,54 @@ async def evaluate_single_case(
             "authorities": auth_results,
             "negative_findings": neg_results,
             "advice_risk": adv_check,
-            "currency_check": curr_check
+            "currency_check": curr_check,
+            "forum_limitation": fl_check
         }
     }
 
 async def run_harness(
     gold_json_path: str,
     approved_only: bool = True,
+    include_drafts: bool = False,
     include_held_out: bool = False,
     results_dir: Optional[str] = None
 ) -> Dict[str, Any]:
     with open(gold_json_path, "r", encoding="utf-8") as f:
         all_cases = json.load(f)
 
-    # Filtering logic
+    # Optional held-out loading from environment variable path (outside git repo)
+    held_out_env_path = os.environ.get("HELD_OUT_GOLD_SET_PATH")
+    if include_held_out and held_out_env_path and os.path.exists(held_out_env_path):
+        try:
+            with open(held_out_env_path, "r", encoding="utf-8") as f_ho:
+                ho_cases = json.load(f_ho)
+                all_cases.extend(ho_cases)
+                print(f"[INFO] Loaded {len(ho_cases)} external held-out cases from {held_out_env_path}")
+        except Exception as e:
+            print(f"[WARN] Failed loading external held-out set: {e}", file=sys.stderr)
+
     filtered_cases = []
     for c in all_cases:
-        # Status filter
-        if approved_only and c.get("status") != "Approved":
-            continue
-        # Held-out split isolation
+        # Held-out isolation in dev runs
         if not include_held_out and c.get("split") == "Held-out":
+            continue
+        # Status filter
+        if approved_only and not include_drafts and c.get("status") != "Approved":
             continue
         filtered_cases.append(c)
 
     print(f"Loaded {len(all_cases)} total gold set cases. Filtered to {len(filtered_cases)} for execution.")
-    print(f"(Approved only: {approved_only}, Include held-out: {include_held_out})")
+    print(f"(Approved only: {approved_only and not include_drafts}, Include drafts: {include_drafts}, Include held-out: {include_held_out})")
 
-    # If 0 approved cases, report status cleanly
     if not filtered_cases:
         print("[INFO] Note: 0 cases matched the filter. Lawyer review is in progress.")
         return {
             "total_cases": len(all_cases),
-            "evaluated_cases": 0,
+            "total_evaluated": 0,
             "approved_count": sum(1 for c in all_cases if c.get("status") == "Approved"),
             "draft_count": sum(1 for c in all_cases if c.get("status") == "Draft"),
-            "held_out_count": sum(1 for c in all_cases if c.get("split") == "Held-out"),
             "results": [],
-            "summary": {}
+            "summary": {"total_evaluated": 0, "overall_pass_rate": 0.0, "citation_precision": 0.0}
         }
 
     out_dir = results_dir or os.path.join(WORKSPACE_DIR, "eval", "results")
@@ -280,7 +346,6 @@ async def run_harness(
     for c in filtered_cases:
         cid = c["id"]
         print(f"\n--- Evaluating Case {cid}: {c.get('query')[:70]}... ---", flush=True)
-        # Execute query or retrieve test memo
         from main import process_query_job, jobs_store, QueryRequest
         job_id = f"eval_job_{cid}_{int(time.time())}"
         jobs_store[job_id] = {
@@ -307,15 +372,18 @@ async def run_harness(
         eval_res["latency_s"] = round(t_total, 2)
         results.append(eval_res)
 
-        # Aggregate area metrics
         area = c.get("area", "General")
         area_metrics.setdefault(area, []).append(eval_res)
 
-    # Compute overall metrics
     total_eval = len(results)
     avg_claim_support = sum(r["metrics"]["claim_support_rate"] for r in results) / max(1, total_eval)
     avg_authority_recall = sum(r["metrics"]["key_authority_recall"] for r in results) / max(1, total_eval)
     avg_citation_precision = sum(r["metrics"]["citation_precision"] for r in results) / max(1, total_eval)
+    avg_neg_correctness = sum(r["metrics"]["negative_finding_correctness"] for r in results) / max(1, total_eval)
+    avg_fl_accuracy = sum(r["metrics"]["forum_limitation_accuracy"] for r in results) / max(1, total_eval)
+    avg_advice_risk = sum(1.0 if r["metrics"]["advice_risk_passed"] else 0.0 for r in results) / max(1, total_eval)
+    avg_curr_coverage = sum(1.0 if r["metrics"]["currency_check_passed"] else 0.0 for r in results) / max(1, total_eval)
+    avg_latency = sum(r.get("latency_s", 0.0) for r in results) / max(1, total_eval)
     total_scope_violations = sum(r["metrics"]["scope_violations_count"] for r in results)
     overall_pass_rate = sum(1 for r in results if r["passed"]) / max(1, total_eval)
 
@@ -327,7 +395,12 @@ async def run_harness(
         "citation_precision": round(avg_citation_precision, 4),
         "claim_support_rate": round(avg_claim_support, 4),
         "key_authority_recall": round(avg_authority_recall, 4),
+        "negative_finding_correctness": round(avg_neg_correctness, 4),
+        "forum_limitation_accuracy": round(avg_fl_accuracy, 4),
+        "advice_risk_compliance": round(avg_advice_risk, 4),
+        "currency_label_coverage": round(avg_curr_coverage, 4),
         "scope_violations_count": total_scope_violations,
+        "avg_latency_s": round(avg_latency, 2),
         "area_breakdown": {
             area: {
                 "count": len(recs),
@@ -338,13 +411,11 @@ async def run_harness(
         }
     }
 
-    # Save JSON report
     json_path = os.path.join(out_dir, f"eval_report_{ts}.json")
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump({"summary": summary, "cases": results}, f, indent=2)
     print(f"\n[PASS] Saved JSON eval report to {json_path}")
 
-    # Save Markdown report
     md_path = os.path.join(out_dir, f"eval_report_{ts}.md")
     with open(md_path, "w", encoding="utf-8") as f:
         f.write(f"# Legal Evaluation Benchmark Report ({ts})\n\n")
@@ -352,14 +423,25 @@ async def run_harness(
         f.write(f"- **Cases Evaluated**: {total_eval}\n")
         f.write(f"- **Overall Pass Rate**: {summary['overall_pass_rate']*100:.1f}%\n")
         f.write(f"- **Citation Precision**: {summary['citation_precision']*100:.1f}% (Target: 100%)\n")
-        f.write(f"- **Claim Support Rate**: {summary['claim_support_rate']*100:.1f}%\n")
+        f.write(f"- **Claim Support Rate (Judge-based)**: {summary['claim_support_rate']*100:.1f}%\n")
         f.write(f"- **Key Authority Recall**: {summary['key_authority_recall']*100:.1f}%\n")
-        f.write(f"- **Scope Violations**: {summary['scope_violations_count']}\n\n")
+        f.write(f"- **Negative Finding Correctness**: {summary['negative_finding_correctness']*100:.1f}%\n")
+        f.write(f"- **Forum & Limitation Accuracy**: {summary['forum_limitation_accuracy']*100:.1f}%\n")
+        f.write(f"- **Advice Risk Compliance**: {summary['advice_risk_compliance']*100:.1f}%\n")
+        f.write(f"- **Currency Label Coverage**: {summary['currency_label_coverage']*100:.1f}%\n")
+        f.write(f"- **Scope Violations**: {summary['scope_violations_count']}\n")
+        f.write(f"- **Average Latency**: {summary['avg_latency_s']}s\n\n")
         f.write("## Area Breakdown\n\n")
         f.write("| Practice Area | Cases | Pass Rate | Claim Support Rate |\n")
         f.write("| :--- | :--- | :--- | :--- |\n")
         for area, d in summary["area_breakdown"].items():
             f.write(f"| {area} | {d['count']} | {d['pass_rate']*100:.1f}% | {d['avg_claim_support']*100:.1f}% |\n")
+        f.write("\n## Failed Requirements Detail\n\n")
+        for r in results:
+            if not r["passed"]:
+                f.write(f"### Case {r['id']} ({r['area']}) - FAILED\n")
+                for reason in r.get("failed_reasons", []):
+                    f.write(f"- {reason}\n")
     print(f"[PASS] Saved Markdown eval report to {md_path}")
 
     return {"summary": summary, "cases": results}
@@ -367,10 +449,8 @@ async def run_harness(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run legal eval harness.")
     parser.add_argument("--gold-file", default=os.path.join(WORKSPACE_DIR, "eval", "gold_set_examples.json"), help="Path to gold set JSON.")
-    parser.add_argument("--approved-only", action="store_true", default=True, help="Evaluate only approved cases.")
-    parser.add_argument("--all-status", action="store_true", help="Evaluate all cases regardless of approval status (for staging/testing).")
+    parser.add_argument("--include-drafts", action="store_true", default=False, help="Include draft cases for baseline benchmarking.")
     parser.add_argument("--include-held-out", action="store_true", default=False, help="Include held-out split cases.")
     args = parser.parse_args()
 
-    appr = not args.all_status
-    asyncio.run(run_harness(args.gold_file, approved_only=appr, include_held_out=args.include_held_out))
+    asyncio.run(run_harness(args.gold_file, approved_only=not args.include_drafts, include_drafts=args.include_drafts, include_held_out=args.include_held_out))
