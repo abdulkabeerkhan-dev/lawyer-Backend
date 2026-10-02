@@ -7,7 +7,7 @@
     "primary_num": "1",
     "secondary_num": null,
     "title": "Short title, extent and commencement",
-    "text": "Short title, extent and commencement",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -20,7 +20,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_2_V1",
@@ -30,7 +31,7 @@
     "primary_num": "2",
     "secondary_num": null,
     "title": "Interpretation",
-    "text": "Interpretation",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -43,7 +44,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_3_V1",
@@ -53,7 +55,7 @@
     "primary_num": "3",
     "secondary_num": null,
     "title": "Who may testify",
-    "text": "Who may testify",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -66,7 +68,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_4_V1",
@@ -76,7 +79,7 @@
     "primary_num": "4",
     "secondary_num": null,
     "title": "Judges and Magistrates",
-    "text": "Judges and Magistrates",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -89,7 +92,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_5_V1",
@@ -99,7 +103,7 @@
     "primary_num": "5",
     "secondary_num": null,
     "title": "Communications during marriage",
-    "text": "Communications during marriage",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -112,7 +116,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_6_V1",
@@ -122,7 +127,7 @@
     "primary_num": "6",
     "secondary_num": null,
     "title": "Evidence as to affairs of State",
-    "text": "Evidence as to affairs of State",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -135,7 +140,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_7_V1",
@@ -145,7 +151,7 @@
     "primary_num": "7",
     "secondary_num": null,
     "title": "Official communications",
-    "text": "Official communications",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -158,7 +164,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_8_V1",
@@ -168,7 +175,7 @@
     "primary_num": "8",
     "secondary_num": null,
     "title": "Information as to commission of offences",
-    "text": "Information as to commission of offences",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -181,7 +188,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_9_V1",
@@ -191,7 +199,7 @@
     "primary_num": "9",
     "secondary_num": null,
     "title": "Professional communications",
-    "text": "Professional communications",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -204,7 +212,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_10_V1",
@@ -214,7 +223,7 @@
     "primary_num": "10",
     "secondary_num": null,
     "title": "Article 9 to apply to interpreters, etc.",
-    "text": "Article 9 to apply to interpreters, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -227,7 +236,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_11_V1",
@@ -237,7 +247,7 @@
     "primary_num": "11",
     "secondary_num": null,
     "title": "Privilege not waived by volunteering evidence",
-    "text": "Privilege not waived by volunteering evidence",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -250,7 +260,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_12_V1",
@@ -260,7 +271,7 @@
     "primary_num": "12",
     "secondary_num": null,
     "title": "Confidential communications with legal advisers",
-    "text": "Confidential communications with legal advisers",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -273,7 +284,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_13_V1",
@@ -283,7 +295,7 @@
     "primary_num": "13",
     "secondary_num": null,
     "title": "Production of title deed of witness, not a party",
-    "text": "Production of title deed of witness, not a party",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -296,7 +308,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_14_V1",
@@ -306,7 +319,7 @@
     "primary_num": "14",
     "secondary_num": null,
     "title": "Production of documents which another person, having possession, could refuse to produce",
-    "text": "Production of documents which another person, having possession, could refuse to produce",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -319,7 +332,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_15_V1",
@@ -329,7 +343,7 @@
     "primary_num": "15",
     "secondary_num": null,
     "title": "Witness not excused from answering on ground that answer will criminate",
-    "text": "Witness not excused from answering on ground that answer will criminate",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -342,7 +356,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_16_V1",
@@ -352,7 +367,7 @@
     "primary_num": "16",
     "secondary_num": null,
     "title": "Accomplice",
-    "text": "Accomplice",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -365,7 +380,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_17_V1",
@@ -375,7 +391,7 @@
     "primary_num": "17",
     "secondary_num": null,
     "title": "Competence and number of witnesses",
-    "text": "Competence and number of witnesses",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -388,7 +404,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_18_V1",
@@ -398,7 +415,7 @@
     "primary_num": "18",
     "secondary_num": null,
     "title": "Evidence may be given of facts in issue and relevant facts",
-    "text": "Evidence may be given of facts in issue and relevant facts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -411,7 +428,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_19_V1",
@@ -421,7 +439,7 @@
     "primary_num": "19",
     "secondary_num": null,
     "title": "Relevancy of facts forming part of same transaction",
-    "text": "Relevancy of facts forming part of same transaction",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -434,7 +452,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_20_V1",
@@ -444,7 +463,7 @@
     "primary_num": "20",
     "secondary_num": null,
     "title": "Facts which are the occasion, cause or effect of facts in issue",
-    "text": "Facts which are the occasion, cause or effect of facts in issue",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -457,7 +476,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_21_V1",
@@ -467,7 +487,7 @@
     "primary_num": "21",
     "secondary_num": null,
     "title": "Motive, preparation and previous or subsequent conduct",
-    "text": "Motive, preparation and previous or subsequent conduct",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -480,7 +500,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_22_V1",
@@ -490,7 +511,7 @@
     "primary_num": "22",
     "secondary_num": null,
     "title": "Facts necessary to explain or introduce relevant facts",
-    "text": "Facts necessary to explain or introduce relevant facts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -503,7 +524,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_23_V1",
@@ -513,7 +535,7 @@
     "primary_num": "23",
     "secondary_num": null,
     "title": "Things said or done by conspirator in reference to common design",
-    "text": "Things said or done by conspirator in reference to common design",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -526,7 +548,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_24_V1",
@@ -536,7 +559,7 @@
     "primary_num": "24",
     "secondary_num": null,
     "title": "When facts not otherwise relevant become relevant",
-    "text": "When facts not otherwise relevant become relevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -549,7 +572,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_25_V1",
@@ -559,7 +583,7 @@
     "primary_num": "25",
     "secondary_num": null,
     "title": "In suits for damages facts tending to enable Court to determine amount are relevant",
-    "text": "In suits for damages facts tending to enable Court to determine amount are relevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -572,7 +596,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_26_V1",
@@ -582,7 +607,7 @@
     "primary_num": "26",
     "secondary_num": null,
     "title": "Facts relevant when right or custom is in question",
-    "text": "Facts relevant when right or custom is in question",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -595,7 +620,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_27_V1",
@@ -605,7 +631,7 @@
     "primary_num": "27",
     "secondary_num": null,
     "title": "Facts showing existence of state of mind, or of body, or bodily feeling",
-    "text": "Facts showing existence of state of mind, or of body, or bodily feeling",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -618,7 +644,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_28_V1",
@@ -628,7 +655,7 @@
     "primary_num": "28",
     "secondary_num": null,
     "title": "Facts bearing on question whether act was accidental or intentional",
-    "text": "Facts bearing on question whether act was accidental or intentional",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -641,7 +668,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_29_V1",
@@ -651,7 +679,7 @@
     "primary_num": "29",
     "secondary_num": null,
     "title": "Existence of course of business when relevant",
-    "text": "Existence of course of business when relevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -664,7 +692,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_30_V1",
@@ -674,7 +703,7 @@
     "primary_num": "30",
     "secondary_num": null,
     "title": "Admission defined",
-    "text": "Admission defined",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -687,7 +716,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_31_V1",
@@ -697,7 +727,7 @@
     "primary_num": "31",
     "secondary_num": null,
     "title": "Admission by party to proceeding or his agent, etc.",
-    "text": "Admission by party to proceeding or his agent, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -710,7 +740,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_32_V1",
@@ -720,7 +751,7 @@
     "primary_num": "32",
     "secondary_num": null,
     "title": "Admission by persons whose position must be proved as against party to suit",
-    "text": "Admission by persons whose position must be proved as against party to suit",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -733,7 +764,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_33_V1",
@@ -743,7 +775,7 @@
     "primary_num": "33",
     "secondary_num": null,
     "title": "Admission by persons expressly referred to by party to suit",
-    "text": "Admission by persons expressly referred to by party to suit",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -756,7 +788,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_34_V1",
@@ -766,7 +799,7 @@
     "primary_num": "34",
     "secondary_num": null,
     "title": "Proof of admissions against persons making them, and by or on their behalf",
-    "text": "Proof of admissions against persons making them, and by or on their behalf",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -779,7 +812,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_35_V1",
@@ -789,7 +823,7 @@
     "primary_num": "35",
     "secondary_num": null,
     "title": "When oral admissions as to contents of documents are relevant",
-    "text": "When oral admissions as to contents of documents are relevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -802,7 +836,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_36_V1",
@@ -812,7 +847,7 @@
     "primary_num": "36",
     "secondary_num": null,
     "title": "Admissions in civil cases when relevant",
-    "text": "Admissions in civil cases when relevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -825,7 +860,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_37_V1",
@@ -835,7 +871,7 @@
     "primary_num": "37",
     "secondary_num": null,
     "title": "Confession caused by inducement, threat or promise, when irrelevant in criminal proceeding",
-    "text": "Confession caused by inducement, threat or promise, when irrelevant in criminal proceeding",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -848,7 +884,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_38_V1",
@@ -858,7 +895,7 @@
     "primary_num": "38",
     "secondary_num": null,
     "title": "Confession to police\u00adofficer not to be proved",
-    "text": "Confession to police\u00adofficer not to be proved",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -871,7 +908,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_39_V1",
@@ -881,7 +919,7 @@
     "primary_num": "39",
     "secondary_num": null,
     "title": "Confession by accused while in custody of police not to be proved against him",
-    "text": "Confession by accused while in custody of police not to be proved against him",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -894,7 +932,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_40_V1",
@@ -904,7 +943,7 @@
     "primary_num": "40",
     "secondary_num": null,
     "title": "How much of information received from accused may be proved",
-    "text": "How much of information received from accused may be proved",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -917,7 +956,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_41_V1",
@@ -927,7 +967,7 @@
     "primary_num": "41",
     "secondary_num": null,
     "title": "Confession made after removal of impression caused by inducement, threat or promise,",
-    "text": "Confession made after removal of impression caused by inducement, threat or promise,",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -940,7 +980,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_42_V1",
@@ -950,7 +991,7 @@
     "primary_num": "42",
     "secondary_num": null,
     "title": "Confession otherwise relevant not to become irrelevant because of promise of secrecy, etc.",
-    "text": "Confession otherwise relevant not to become irrelevant because of promise of secrecy, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -963,7 +1004,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_43_V1",
@@ -973,7 +1015,7 @@
     "primary_num": "43",
     "secondary_num": null,
     "title": "Consideration of proved confession affecting person making it and others jointly under trial for",
-    "text": "Consideration of proved confession affecting person making it and others jointly under trial for",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -986,7 +1028,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_44_V1",
@@ -996,7 +1039,7 @@
     "primary_num": "44",
     "secondary_num": null,
     "title": "Accused persons to be liable to cross\u00adexamination",
-    "text": "Accused persons to be liable to cross\u00adexamination",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1009,7 +1052,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_45_V1",
@@ -1019,7 +1063,7 @@
     "primary_num": "45",
     "secondary_num": null,
     "title": "Admission not conclusive proof but may estop.",
-    "text": "Admission not conclusive proof but may estop.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1032,7 +1076,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_46_V1",
@@ -1042,7 +1087,7 @@
     "primary_num": "46",
     "secondary_num": null,
     "title": "Cases in which statement of relevant fact by person who is dead or cannot be found, etc., is",
-    "text": "Cases in which statement of relevant fact by person who is dead or cannot be found, etc., is",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1055,7 +1100,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_47_V1",
@@ -1065,7 +1111,7 @@
     "primary_num": "47",
     "secondary_num": null,
     "title": "Relevancy of certain evidence for proving, in subsequent proceeding, the truth of facts therein",
-    "text": "Relevancy of certain evidence for proving, in subsequent proceeding, the truth of facts therein",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1078,7 +1124,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_48_V1",
@@ -1088,7 +1135,7 @@
     "primary_num": "48",
     "secondary_num": null,
     "title": "Entries in books of account when relevent",
-    "text": "Entries in books of account when relevent",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1101,7 +1148,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_49_V1",
@@ -1111,7 +1159,7 @@
     "primary_num": "49",
     "secondary_num": null,
     "title": "Relevancy of entry in public record made in performance of duty",
-    "text": "Relevancy of entry in public record made in performance of duty",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1124,7 +1172,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_50_V1",
@@ -1134,7 +1183,7 @@
     "primary_num": "50",
     "secondary_num": null,
     "title": "Relevancy of statements in maps, charts and plans",
-    "text": "Relevancy of statements in maps, charts and plans",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1147,7 +1196,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_51_V1",
@@ -1157,7 +1207,7 @@
     "primary_num": "51",
     "secondary_num": null,
     "title": "Relevancy of statements as to fact of public nature, contained in certain Acts or notifications",
-    "text": "Relevancy of statements as to fact of public nature, contained in certain Acts or notifications",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1170,7 +1220,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_52_V1",
@@ -1180,7 +1231,7 @@
     "primary_num": "52",
     "secondary_num": null,
     "title": "Relevancy of statements as to any law contained in law\u00adbooks",
-    "text": "Relevancy of statements as to any law contained in law\u00adbooks",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1193,7 +1244,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_53_V1",
@@ -1203,7 +1255,7 @@
     "primary_num": "53",
     "secondary_num": null,
     "title": "What evidence to be given when statement forms part of a conversation, document, book or",
-    "text": "What evidence to be given when statement forms part of a conversation, document, book or",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1216,7 +1268,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_54_V1",
@@ -1226,7 +1279,7 @@
     "primary_num": "54",
     "secondary_num": null,
     "title": "Previous judgments relevant to bar a second suit or trial",
-    "text": "Previous judgments relevant to bar a second suit or trial",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1239,7 +1292,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_55_V1",
@@ -1249,7 +1303,7 @@
     "primary_num": "55",
     "secondary_num": null,
     "title": "Relevancy of certain judgments in probate, etc., jurisdiction",
-    "text": "Relevancy of certain judgments in probate, etc., jurisdiction",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1262,7 +1316,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_56_V1",
@@ -1272,7 +1327,7 @@
     "primary_num": "56",
     "secondary_num": null,
     "title": "Relevancy and effect of judgments, orders or decrees, other than those mentioned in Article 55",
-    "text": "Relevancy and effect of judgments, orders or decrees, other than those mentioned in Article 55",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1285,7 +1340,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_57_V1",
@@ -1295,7 +1351,7 @@
     "primary_num": "57",
     "secondary_num": null,
     "title": "Judgments, etc., other than those mentioned in Articles 54 to 56, when relevant",
-    "text": "Judgments, etc., other than those mentioned in Articles 54 to 56, when relevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1308,7 +1364,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_58_V1",
@@ -1318,7 +1375,7 @@
     "primary_num": "58",
     "secondary_num": null,
     "title": "Fraud or collusion in obtaining judgment, or Incompetency of Court, may be proved",
-    "text": "Fraud or collusion in obtaining judgment, or Incompetency of Court, may be proved",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1331,7 +1388,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_59_V1",
@@ -1341,7 +1399,7 @@
     "primary_num": "59",
     "secondary_num": null,
     "title": "Opinions of experts",
-    "text": "Opinions of experts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1354,7 +1412,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_60_V1",
@@ -1364,7 +1423,7 @@
     "primary_num": "60",
     "secondary_num": null,
     "title": "Facts bearing upon opinions of experts",
-    "text": "Facts bearing upon opinions of experts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1377,7 +1436,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_61_V1",
@@ -1387,7 +1447,7 @@
     "primary_num": "61",
     "secondary_num": null,
     "title": "Opinion as to hand\u00adwriting when relevant",
-    "text": "Opinion as to hand\u00adwriting when relevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1400,7 +1460,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_62_V1",
@@ -1410,7 +1471,7 @@
     "primary_num": "62",
     "secondary_num": null,
     "title": "Opinion as to existence of right or custom, when relevant",
-    "text": "Opinion as to existence of right or custom, when relevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1423,7 +1484,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_63_V1",
@@ -1433,7 +1495,7 @@
     "primary_num": "63",
     "secondary_num": null,
     "title": "Opinion as to usages, tenets, etc., when relevant",
-    "text": "Opinion as to usages, tenets, etc., when relevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1446,7 +1508,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_64_V1",
@@ -1456,7 +1519,7 @@
     "primary_num": "64",
     "secondary_num": null,
     "title": "Opinion on relationship when relevant",
-    "text": "Opinion on relationship when relevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1469,7 +1532,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_65_V1",
@@ -1479,7 +1543,7 @@
     "primary_num": "65",
     "secondary_num": null,
     "title": "Grounds of opinion when relevant",
-    "text": "Grounds of opinion when relevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1492,7 +1556,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_66_V1",
@@ -1502,7 +1567,7 @@
     "primary_num": "66",
     "secondary_num": null,
     "title": "In civil cases character to prove conduct imputed irrelevant",
-    "text": "In civil cases character to prove conduct imputed irrelevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1515,7 +1580,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_67_V1",
@@ -1525,7 +1591,7 @@
     "primary_num": "67",
     "secondary_num": null,
     "title": "In criminal cases previous good character relevant",
-    "text": "In criminal cases previous good character relevant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1538,7 +1604,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_68_V1",
@@ -1548,7 +1615,7 @@
     "primary_num": "68",
     "secondary_num": null,
     "title": "Previous bad character not relevant, except in reply",
-    "text": "Previous bad character not relevant, except in reply",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1561,7 +1628,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_69_V1",
@@ -1571,7 +1639,7 @@
     "primary_num": "69",
     "secondary_num": null,
     "title": "Character as affecting damages",
-    "text": "Character as affecting damages",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1584,7 +1652,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_70_V1",
@@ -1594,7 +1663,7 @@
     "primary_num": "70",
     "secondary_num": null,
     "title": "Proof of facts by oral evidence",
-    "text": "Proof of facts by oral evidence",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1607,7 +1676,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_71_V1",
@@ -1617,7 +1687,7 @@
     "primary_num": "71",
     "secondary_num": null,
     "title": "Oral evidence must be direct",
-    "text": "Oral evidence must be direct",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1630,7 +1700,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_72_V1",
@@ -1640,7 +1711,7 @@
     "primary_num": "72",
     "secondary_num": null,
     "title": "Proof of contents of documents",
-    "text": "Proof of contents of documents",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1653,7 +1724,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_73_V1",
@@ -1663,7 +1735,7 @@
     "primary_num": "73",
     "secondary_num": null,
     "title": "Primary evidence",
-    "text": "Primary evidence",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1676,7 +1748,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_74_V1",
@@ -1686,7 +1759,7 @@
     "primary_num": "74",
     "secondary_num": null,
     "title": "Secondary evidence",
-    "text": "Secondary evidence",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1699,7 +1772,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_75_V1",
@@ -1709,7 +1783,7 @@
     "primary_num": "75",
     "secondary_num": null,
     "title": "Proof of documents by primary evidence",
-    "text": "Proof of documents by primary evidence",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1722,7 +1796,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_76_V1",
@@ -1732,7 +1807,7 @@
     "primary_num": "76",
     "secondary_num": null,
     "title": "Cases in which secondary evidence relating to documents may be given",
-    "text": "Cases in which secondary evidence relating to documents may be given",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1745,7 +1820,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_77_V1",
@@ -1755,7 +1831,7 @@
     "primary_num": "77",
     "secondary_num": null,
     "title": "Rules as to notice to produce",
-    "text": "Rules as to notice to produce",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1768,7 +1844,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_78_V1",
@@ -1778,7 +1855,7 @@
     "primary_num": "78",
     "secondary_num": null,
     "title": "Proof of signature and handwriting of person alleged to have signed or written document",
-    "text": "Proof of signature and handwriting of person alleged to have signed or written document",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1791,7 +1868,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_79_V1",
@@ -1801,7 +1879,7 @@
     "primary_num": "79",
     "secondary_num": null,
     "title": "Proof of execution of document required by law to be attested",
-    "text": "Proof of execution of document required by law to be attested",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1814,7 +1892,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_80_V1",
@@ -1824,7 +1903,7 @@
     "primary_num": "80",
     "secondary_num": null,
     "title": "Proof where no attesting witness found",
-    "text": "Proof where no attesting witness found",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1837,7 +1916,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_81_V1",
@@ -1847,7 +1927,7 @@
     "primary_num": "81",
     "secondary_num": null,
     "title": "Admission of execution by party to attested document",
-    "text": "Admission of execution by party to attested document",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1860,7 +1940,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_82_V1",
@@ -1870,7 +1951,7 @@
     "primary_num": "82",
     "secondary_num": null,
     "title": "Proof when attesting witness denies the execution",
-    "text": "Proof when attesting witness denies the execution",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1883,7 +1964,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_83_V1",
@@ -1893,7 +1975,7 @@
     "primary_num": "83",
     "secondary_num": null,
     "title": "Proof of document not required by law to be attested",
-    "text": "Proof of document not required by law to be attested",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1906,7 +1988,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_84_V1",
@@ -1916,7 +1999,7 @@
     "primary_num": "84",
     "secondary_num": null,
     "title": "Comparison of signature, writing or seal with others admitted or proved",
-    "text": "Comparison of signature, writing or seal with others admitted or proved",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1929,7 +2012,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_85_V1",
@@ -1939,7 +2023,7 @@
     "primary_num": "85",
     "secondary_num": null,
     "title": "Public documents",
-    "text": "Public documents",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1952,7 +2036,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_86_V1",
@@ -1962,7 +2047,7 @@
     "primary_num": "86",
     "secondary_num": null,
     "title": "Private documents",
-    "text": "Private documents",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1975,7 +2060,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_87_V1",
@@ -1985,7 +2071,7 @@
     "primary_num": "87",
     "secondary_num": null,
     "title": "Certified copies of public documents",
-    "text": "Certified copies of public documents",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1998,7 +2084,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_88_V1",
@@ -2008,7 +2095,7 @@
     "primary_num": "88",
     "secondary_num": null,
     "title": "Proof of documents by production of certified copies",
-    "text": "Proof of documents by production of certified copies",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2021,7 +2108,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_89_V1",
@@ -2031,7 +2119,7 @@
     "primary_num": "89",
     "secondary_num": null,
     "title": "Proof of other public documents",
-    "text": "Proof of other public documents",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2044,7 +2132,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_90_V1",
@@ -2054,7 +2143,7 @@
     "primary_num": "90",
     "secondary_num": null,
     "title": "Presumption as to genuineness of certified copies",
-    "text": "Presumption as to genuineness of certified copies",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2067,7 +2156,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_91_V1",
@@ -2077,7 +2167,7 @@
     "primary_num": "91",
     "secondary_num": null,
     "title": "Presumption as to documents produced as record of evidence",
-    "text": "Presumption as to documents produced as record of evidence",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2090,7 +2180,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_92_V1",
@@ -2100,7 +2191,7 @@
     "primary_num": "92",
     "secondary_num": null,
     "title": "Presumption as to genuineness of documents kept under any law",
-    "text": "Presumption as to genuineness of documents kept under any law",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2113,7 +2204,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_93_V1",
@@ -2123,7 +2215,7 @@
     "primary_num": "93",
     "secondary_num": null,
     "title": "Presumption as to maps or plans made by authority of Government",
-    "text": "Presumption as to maps or plans made by authority of Government",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2136,7 +2228,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_94_V1",
@@ -2146,7 +2239,7 @@
     "primary_num": "94",
     "secondary_num": null,
     "title": "Presumption as to collections of laws and reports of decision",
-    "text": "Presumption as to collections of laws and reports of decision",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2159,7 +2252,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_95_V1",
@@ -2169,7 +2263,7 @@
     "primary_num": "95",
     "secondary_num": null,
     "title": "Presumption as to powers\u00adof\u00adattorney",
-    "text": "Presumption as to powers\u00adof\u00adattorney",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2182,7 +2276,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_96_V1",
@@ -2192,7 +2287,7 @@
     "primary_num": "96",
     "secondary_num": null,
     "title": "Presumption as to certified copies of foreign judicial records",
-    "text": "Presumption as to certified copies of foreign judicial records",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2205,7 +2300,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_97_V1",
@@ -2215,7 +2311,7 @@
     "primary_num": "97",
     "secondary_num": null,
     "title": "Presumption as to books, maps and charts",
-    "text": "Presumption as to books, maps and charts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2228,7 +2324,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_98_V1",
@@ -2238,7 +2335,7 @@
     "primary_num": "98",
     "secondary_num": null,
     "title": "Presumption as to telegraphic messages",
-    "text": "Presumption as to telegraphic messages",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2251,7 +2348,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_99_V1",
@@ -2261,7 +2359,7 @@
     "primary_num": "99",
     "secondary_num": null,
     "title": "Presumption as to due execution, etc., of documents not produced",
-    "text": "Presumption as to due execution, etc., of documents not produced",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2274,7 +2372,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_100_V1",
@@ -2284,7 +2383,7 @@
     "primary_num": "100",
     "secondary_num": null,
     "title": "Presumption as to documents thirty years old",
-    "text": "Presumption as to documents thirty years old",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2297,7 +2396,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_101_V1",
@@ -2307,7 +2407,7 @@
     "primary_num": "101",
     "secondary_num": null,
     "title": "Certified copies of documents thirty years old",
-    "text": "Certified copies of documents thirty years old",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2320,7 +2420,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_102_V1",
@@ -2330,7 +2431,7 @@
     "primary_num": "102",
     "secondary_num": null,
     "title": "Evidence of terms of contracts, grants and other disposition of p roperty reduced to form of",
-    "text": "Evidence of terms of contracts, grants and other disposition of p roperty reduced to form of",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2343,7 +2444,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_103_V1",
@@ -2353,7 +2455,7 @@
     "primary_num": "103",
     "secondary_num": null,
     "title": "Exclusion of evidence of oral agreement",
-    "text": "Exclusion of evidence of oral agreement",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2366,7 +2468,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_104_V1",
@@ -2376,7 +2479,7 @@
     "primary_num": "104",
     "secondary_num": null,
     "title": "Exclusion of evidence against application of document to existing facts",
-    "text": "Exclusion of evidence against application of document to existing facts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2389,7 +2492,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_105_V1",
@@ -2399,7 +2503,7 @@
     "primary_num": "105",
     "secondary_num": null,
     "title": "Evidence as to document unmeaning in reference to existing facts",
-    "text": "Evidence as to document unmeaning in reference to existing facts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2412,7 +2516,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_106_V1",
@@ -2422,7 +2527,7 @@
     "primary_num": "106",
     "secondary_num": null,
     "title": "Evidence as to application of language which can apply to one only of several persons",
-    "text": "Evidence as to application of language which can apply to one only of several persons",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2435,7 +2540,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_107_V1",
@@ -2445,7 +2551,7 @@
     "primary_num": "107",
     "secondary_num": null,
     "title": "Evidence as to application of language to one of two sets of facts to neither of which the whole",
-    "text": "Evidence as to application of language to one of two sets of facts to neither of which the whole",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2458,7 +2564,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_108_V1",
@@ -2468,7 +2575,7 @@
     "primary_num": "108",
     "secondary_num": null,
     "title": "Evidence as to meaning of illegible characters, etc.",
-    "text": "Evidence as to meaning of illegible characters, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2481,7 +2588,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_109_V1",
@@ -2491,7 +2599,7 @@
     "primary_num": "109",
     "secondary_num": null,
     "title": "Who may give evidence of agreement varying terms of document",
-    "text": "Who may give evidence of agreement varying terms of document",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2504,7 +2612,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_110_V1",
@@ -2514,7 +2623,7 @@
     "primary_num": "110",
     "secondary_num": null,
     "title": "Saving of provisions of Succession Act relating to wills",
-    "text": "Saving of provisions of Succession Act relating to wills",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2527,7 +2636,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_111_V1",
@@ -2537,7 +2647,7 @@
     "primary_num": "111",
     "secondary_num": null,
     "title": "Fact judicially noticeable need not be proved",
-    "text": "Fact judicially noticeable need not be proved",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2550,7 +2660,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_112_V1",
@@ -2560,7 +2671,7 @@
     "primary_num": "112",
     "secondary_num": null,
     "title": "Facts of which Court must take judicial notice",
-    "text": "Facts of which Court must take judicial notice",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2573,7 +2684,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_113_V1",
@@ -2583,7 +2695,7 @@
     "primary_num": "113",
     "secondary_num": null,
     "title": "Facts admitted need not be proved",
-    "text": "Facts admitted need not be proved",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2596,7 +2708,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_114_V1",
@@ -2606,7 +2719,7 @@
     "primary_num": "114",
     "secondary_num": null,
     "title": "Estoppel",
-    "text": "Estoppel",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2619,7 +2732,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_115_V1",
@@ -2629,7 +2743,7 @@
     "primary_num": "115",
     "secondary_num": null,
     "title": "Estoppel of tenant and of licensee of person in possession",
-    "text": "Estoppel of tenant and of licensee of person in possession",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2642,7 +2756,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_116_V1",
@@ -2652,7 +2767,7 @@
     "primary_num": "116",
     "secondary_num": null,
     "title": "Estoppel of acceptor of bill of exchange, bailee or licensee",
-    "text": "Estoppel of acceptor of bill of exchange, bailee or licensee",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2665,7 +2780,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_117_V1",
@@ -2675,7 +2791,7 @@
     "primary_num": "117",
     "secondary_num": null,
     "title": "Burden of proof",
-    "text": "Burden of proof",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2688,7 +2804,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_118_V1",
@@ -2698,7 +2815,7 @@
     "primary_num": "118",
     "secondary_num": null,
     "title": "On whom burden of proof lies",
-    "text": "On whom burden of proof lies",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2711,7 +2828,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_119_V1",
@@ -2721,7 +2839,7 @@
     "primary_num": "119",
     "secondary_num": null,
     "title": "Burden of proof as to particular fact",
-    "text": "Burden of proof as to particular fact",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2734,7 +2852,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_120_V1",
@@ -2744,7 +2863,7 @@
     "primary_num": "120",
     "secondary_num": null,
     "title": "Burden of proving fact to be proved to make evidence admissible",
-    "text": "Burden of proving fact to be proved to make evidence admissible",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2757,7 +2876,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_121_V1",
@@ -2767,7 +2887,7 @@
     "primary_num": "121",
     "secondary_num": null,
     "title": "Burden of proving that case of accused comes within exceptions",
-    "text": "Burden of proving that case of accused comes within exceptions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2780,7 +2900,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_122_V1",
@@ -2790,7 +2911,7 @@
     "primary_num": "122",
     "secondary_num": null,
     "title": "Burden of proving fact especially within knowledge",
-    "text": "Burden of proving fact especially within knowledge",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2803,7 +2924,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_123_V1",
@@ -2813,7 +2935,7 @@
     "primary_num": "123",
     "secondary_num": null,
     "title": "Burden of proving death of person known to have been alive within thirty years",
-    "text": "Burden of proving death of person known to have been alive within thirty years",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2826,7 +2948,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_124_V1",
@@ -2836,7 +2959,7 @@
     "primary_num": "124",
     "secondary_num": null,
     "title": "Burden of proving that person is alive who has not been heard of for seven years",
-    "text": "Burden of proving that person is alive who has not been heard of for seven years",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2849,7 +2972,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_125_V1",
@@ -2859,7 +2983,7 @@
     "primary_num": "125",
     "secondary_num": null,
     "title": "Burden of proof as to relationship in the cases of partners, landlord and tenant, principal and",
-    "text": "Burden of proof as to relationship in the cases of partners, landlord and tenant, principal and",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2872,7 +2996,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_126_V1",
@@ -2882,7 +3007,7 @@
     "primary_num": "126",
     "secondary_num": null,
     "title": "Burden of proof as to ownership",
-    "text": "Burden of proof as to ownership",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2895,7 +3020,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_127_V1",
@@ -2905,7 +3031,7 @@
     "primary_num": "127",
     "secondary_num": null,
     "title": "Proof of good faith in transactions where one party is in relation of active confidence",
-    "text": "Proof of good faith in transactions where one party is in relation of active confidence",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2918,7 +3044,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_128_V1",
@@ -2928,7 +3055,7 @@
     "primary_num": "128",
     "secondary_num": null,
     "title": "Birth during marriage conclusive proof of legitimacy",
-    "text": "Birth during marriage conclusive proof of legitimacy",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2941,7 +3068,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_129_V1",
@@ -2951,7 +3079,7 @@
     "primary_num": "129",
     "secondary_num": null,
     "title": "Court may presume existence of certain facts",
-    "text": "Court may presume existence of certain facts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2964,7 +3092,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_130_V1",
@@ -2974,7 +3103,7 @@
     "primary_num": "130",
     "secondary_num": null,
     "title": "Order of production and examination of witnesses",
-    "text": "Order of production and examination of witnesses",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2987,7 +3116,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_131_V1",
@@ -2997,7 +3127,7 @@
     "primary_num": "131",
     "secondary_num": null,
     "title": "Judge to decide as to admissibility of evidence",
-    "text": "Judge to decide as to admissibility of evidence",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3010,7 +3140,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_132_V1",
@@ -3020,7 +3151,7 @@
     "primary_num": "132",
     "secondary_num": null,
     "title": "Examination\u00adin\u00adchief, etc.",
-    "text": "Examination\u00adin\u00adchief, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3033,7 +3164,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_133_V1",
@@ -3043,7 +3175,7 @@
     "primary_num": "133",
     "secondary_num": null,
     "title": "Order of examinations",
-    "text": "Order of examinations",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3056,7 +3188,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_134_V1",
@@ -3066,7 +3199,7 @@
     "primary_num": "134",
     "secondary_num": null,
     "title": "Cross\u00adexamination of person called to produce a document",
-    "text": "Cross\u00adexamination of person called to produce a document",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3079,7 +3212,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_135_V1",
@@ -3089,7 +3223,7 @@
     "primary_num": "135",
     "secondary_num": null,
     "title": "Witnesses to character",
-    "text": "Witnesses to character",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3102,7 +3236,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_136_V1",
@@ -3112,7 +3247,7 @@
     "primary_num": "136",
     "secondary_num": null,
     "title": "Leading questions",
-    "text": "Leading questions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3125,7 +3260,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_137_V1",
@@ -3135,7 +3271,7 @@
     "primary_num": "137",
     "secondary_num": null,
     "title": "When leading questions must not be asked",
-    "text": "When leading questions must not be asked",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3148,7 +3284,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_138_V1",
@@ -3158,7 +3295,7 @@
     "primary_num": "138",
     "secondary_num": null,
     "title": "When leading questions may be asked",
-    "text": "When leading questions may be asked",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3171,7 +3308,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_139_V1",
@@ -3181,7 +3319,7 @@
     "primary_num": "139",
     "secondary_num": null,
     "title": "Evidence as to matters in writing",
-    "text": "Evidence as to matters in writing",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3194,7 +3332,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_140_V1",
@@ -3204,7 +3343,7 @@
     "primary_num": "140",
     "secondary_num": null,
     "title": "Cross\u00adexamination as to previous statements in writing",
-    "text": "Cross\u00adexamination as to previous statements in writing",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3217,7 +3356,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_141_V1",
@@ -3227,7 +3367,7 @@
     "primary_num": "141",
     "secondary_num": null,
     "title": "Questions lawful in cross\u00adexamination",
-    "text": "Questions lawful in cross\u00adexamination",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3240,7 +3380,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_142_V1",
@@ -3250,7 +3391,7 @@
     "primary_num": "142",
     "secondary_num": null,
     "title": "When witness to be compelled to answer",
-    "text": "When witness to be compelled to answer",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3263,7 +3404,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_143_V1",
@@ -3273,7 +3415,7 @@
     "primary_num": "143",
     "secondary_num": null,
     "title": "Court to decide when question shall be asked and when witness compelled to answer",
-    "text": "Court to decide when question shall be asked and when witness compelled to answer",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3286,7 +3428,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_144_V1",
@@ -3296,7 +3439,7 @@
     "primary_num": "144",
     "secondary_num": null,
     "title": "Question not to be asked without reasonable grounds",
-    "text": "Question not to be asked without reasonable grounds",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3309,7 +3452,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_145_V1",
@@ -3319,7 +3463,7 @@
     "primary_num": "145",
     "secondary_num": null,
     "title": "Procedure of Court in case of question being asked without reasonable grounds",
-    "text": "Procedure of Court in case of question being asked without reasonable grounds",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3332,7 +3476,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_146_V1",
@@ -3342,7 +3487,7 @@
     "primary_num": "146",
     "secondary_num": null,
     "title": "Indecent and scandalous question",
-    "text": "Indecent and scandalous question",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3355,7 +3500,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_147_V1",
@@ -3365,7 +3511,7 @@
     "primary_num": "147",
     "secondary_num": null,
     "title": "Procedure of Court in cases of defamation, libel and slander",
-    "text": "Procedure of Court in cases of defamation, libel and slander",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3378,7 +3524,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_148_V1",
@@ -3388,7 +3535,7 @@
     "primary_num": "148",
     "secondary_num": null,
     "title": "Questions intended to insult or annoy",
-    "text": "Questions intended to insult or annoy",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3401,7 +3548,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_149_V1",
@@ -3411,7 +3559,7 @@
     "primary_num": "149",
     "secondary_num": null,
     "title": "Exclusion of evidence to contradict answers to questions testing veracity",
-    "text": "Exclusion of evidence to contradict answers to questions testing veracity",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3424,7 +3572,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_150_V1",
@@ -3434,7 +3583,7 @@
     "primary_num": "150",
     "secondary_num": null,
     "title": "Question by party to his own witness",
-    "text": "Question by party to his own witness",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3447,7 +3596,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_151_V1",
@@ -3457,7 +3607,7 @@
     "primary_num": "151",
     "secondary_num": null,
     "title": "Impeaching credit of witness",
-    "text": "Impeaching credit of witness",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3470,7 +3620,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_152_V1",
@@ -3480,7 +3631,7 @@
     "primary_num": "152",
     "secondary_num": null,
     "title": "Questions tending to corroborate evidence of relevant fact admissible",
-    "text": "Questions tending to corroborate evidence of relevant fact admissible",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3493,7 +3644,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_153_V1",
@@ -3503,7 +3655,7 @@
     "primary_num": "153",
     "secondary_num": null,
     "title": "Former statements of witness may be proved to corroborate later testimony as to same fact",
-    "text": "Former statements of witness may be proved to corroborate later testimony as to same fact",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3516,7 +3668,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_154_V1",
@@ -3526,7 +3679,7 @@
     "primary_num": "154",
     "secondary_num": null,
     "title": "What matters may be proved in connection with proved statement relevant under Article 46 or",
-    "text": "What matters may be proved in connection with proved statement relevant under Article 46 or",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3539,7 +3692,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_155_V1",
@@ -3549,7 +3703,7 @@
     "primary_num": "155",
     "secondary_num": null,
     "title": "Refreshing memory",
-    "text": "Refreshing memory",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3562,7 +3716,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_156_V1",
@@ -3572,7 +3727,7 @@
     "primary_num": "156",
     "secondary_num": null,
     "title": "Testimony to facts stated in document mentioned in Article 155",
-    "text": "Testimony to facts stated in document mentioned in Article 155",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3585,7 +3740,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_157_V1",
@@ -3595,7 +3751,7 @@
     "primary_num": "157",
     "secondary_num": null,
     "title": "Right of adverse party as to writing used to refresh memory",
-    "text": "Right of adverse party as to writing used to refresh memory",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3608,7 +3764,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_158_V1",
@@ -3618,7 +3775,7 @@
     "primary_num": "158",
     "secondary_num": null,
     "title": "Production of documents",
-    "text": "Production of documents",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3631,7 +3788,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_159_V1",
@@ -3641,7 +3799,7 @@
     "primary_num": "159",
     "secondary_num": null,
     "title": "Giving, as evidence, of document called for and produced on notice",
-    "text": "Giving, as evidence, of document called for and produced on notice",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3654,7 +3812,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_160_V1",
@@ -3664,7 +3823,7 @@
     "primary_num": "160",
     "secondary_num": null,
     "title": "Using, as evidence, of document production of which was refused on notice",
-    "text": "Using, as evidence, of document production of which was refused on notice",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3677,7 +3836,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_161_V1",
@@ -3687,7 +3847,7 @@
     "primary_num": "161",
     "secondary_num": null,
     "title": "Judge\u2019s power to put questions or order production",
-    "text": "Judge\u2019s power to put questions or order production",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3700,7 +3860,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_162_V1",
@@ -3710,7 +3871,7 @@
     "primary_num": "162",
     "secondary_num": null,
     "title": "No new trial for improper admission or rejection of evidence",
-    "text": "No new trial for improper admission or rejection of evidence",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3723,7 +3884,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_163_V1",
@@ -3733,7 +3895,7 @@
     "primary_num": "163",
     "secondary_num": null,
     "title": "Acceptance or denial of claim on oath",
-    "text": "Acceptance or denial of claim on oath",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3746,7 +3908,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_164_V1",
@@ -3756,7 +3919,7 @@
     "primary_num": "164",
     "secondary_num": null,
     "title": "Production of evidence that has become available because of modern devices, etc.",
-    "text": "Production of evidence that has become available because of modern devices, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3769,7 +3932,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_165_V1",
@@ -3779,7 +3943,7 @@
     "primary_num": "165",
     "secondary_num": null,
     "title": "Order to override other laws",
-    "text": "Order to override other laws",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3792,7 +3956,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_166_V1",
@@ -3802,7 +3967,7 @@
     "primary_num": "166",
     "secondary_num": null,
     "title": "Repeal",
-    "text": "Repeal",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3815,7 +3980,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.125507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "QSO_1984_ART_1_V2",

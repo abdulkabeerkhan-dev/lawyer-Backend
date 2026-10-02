@@ -202,5 +202,38 @@ class TestEvalNegativeControls(unittest.TestCase):
         # Currency check must pass
         self.assertTrue(eval_result["details"]["currency_check"]["passed"])
 
+    def test_gs003_paraphrase_variants_all_flagged(self):
+        """
+        Requirement 10: Test that all paraphrase variants of '50% is unlawful'
+        are deterministically flagged as scope violations.
+        """
+        gold_case = self.gold_cases["GS-003"]
+        retrieved_citations = [{"citation": "2006 YLR 2776", "court": "Lahore High Court"}]
+        
+        variants = [
+            "The Banking Court's order demanding a 50% deposit violates the express terms of Order XXI Rule 90.",
+            "The direction to pre-deposit 50% is without statutory sanction under the Ordinance.",
+            "Demanding a 50% pre-deposit is legally unsustainable.",
+            "Any court order imposing a 50% pre-deposit is ultra vires and immediately challengeable.",
+            "The Banking Court exceeds statutory authority by requiring a 50% deposit before hearing objections.",
+            "The condition of 50% deposit is unlawful under the second proviso.",
+            "Requiring a 50% pre-deposit from the judgment debtor is contrary to law."
+        ]
+        
+        for variant in variants:
+            memo = f"# LEGAL MEMORANDUM\n{variant}\nAppellate remedies: appeal to High Court under s.22 FIO 2001."
+            res = asyncio.run(evaluate_single_case(
+                gold_case,
+                memo,
+                retrieved_citations,
+                llm_judge_fn=hermetic_mock_judge
+            ))
+            det_v = res["details"]["deterministic_violations"]
+            self.assertTrue(
+                any("50%" in v and ("ultra vires" in v.lower() or "unlawful" in v.lower()) for v in det_v),
+                f"Variant failed to be flagged: '{variant}'. Violations: {det_v}"
+            )
+            self.assertFalse(res["passed"], f"Memo containing variant must fail: '{variant}'")
+
 if __name__ == "__main__":
     unittest.main()

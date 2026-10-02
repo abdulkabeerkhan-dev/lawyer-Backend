@@ -1,0 +1,948 @@
+{
+  "total_audited": 8000,
+  "valid_count": 3148,
+  "retrievable_count": 3148,
+  "headnote_count": 2779,
+  "provenance_missing_count": 8000,
+  "category_counts": {
+    "court": 2087,
+    "citation": 3996,
+    "title": 133,
+    "year": 77
+  },
+  "samples": {
+    "court": [
+      {
+        "case_id": "2006_YLR_3082",
+        "citation": "2006 YLR 3082",
+        "case_title": "1061\t2006 YLR 3082\tIDARA-E-TULOO-E-ISLAM through Chairman VS GOVERNMENT OF SINDH through Chief Secretary, Sindh - Honorable Justice RAHMAT HUSSAIN JAFFERI - Samiuddin Sami , Habib Ahmed\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3082' (journal 'ylr' or page '3082') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3085",
+        "citation": "2006 YLR 3085",
+        "case_title": "1062\t2006 YLR 3085\tSyed AHMAD SHAH HASHMI VS State - Honorable Justice Ijaz Ahmad Chaudhry - Zafar Iqbal Chohan , Ms. Raeesa Sarwar\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3085' (journal 'ylr' or page '3085') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3087",
+        "citation": "2006 YLR 3087",
+        "case_title": "1063\t2006 YLR 3087\tKAREEM BUX VS State - Honorable Justice Khiliji Arif Hussain - Muhammad Ayaz Soomro , Muhammad Ismail Bhutto\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3087' (journal 'ylr' or page '3087') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3088",
+        "citation": "2006 YLR 3088",
+        "case_title": "1064\t2006 YLR 3088\tMANU alias MANTHAR VS State - Honorable Justice Mrs. Qaisar Iqbal - Khadim Hussain D.Solangi , Rasheed A. Qureshi\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3088' (journal 'ylr' or page '3088') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3089",
+        "citation": "2006 YLR 3089",
+        "case_title": "1065\t2006 YLR 3089\tSAIFULLAH VS State - Honorable Justice Ijaz Ahmad Chaudhry - Kh. Basit Waheed and Rai Haider Ali Khan Kharal , Muhammad Azam, Mian Abdul Qayyum Anjum and Abdul Majeed Chishti\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3089' (journal 'ylr' or page '3089') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3094",
+        "citation": "2006 YLR 3094",
+        "case_title": "1066\t2006 YLR 3094\tABDUL MAJEED VS State - Honorable Justice Khiliji Arif Hussain - Muhammad Ayaz Soomro , Muhammad Ismail Bhutto\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3094' (journal 'ylr' or page '3094') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3098",
+        "citation": "2006 YLR 3098",
+        "case_title": "1069\t2006 YLR 3098\tFAROOQ-E-AZAM VS CUSTOMS AND INTELLIGENCE DEPARTMENT - Honorable Justice Syed Zawwar Hussain Jafri - Sohail Muzaffar , Muhammad Shafi Muhammadi\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3098' (journal 'ylr' or page '3098') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3113",
+        "citation": "2006 YLR 3113",
+        "case_title": "1072\t2006 YLR 3113\tGHULAM AKBER VS State - Honorable Justice Mrs. Yasmin Abbasey - Aamir Mansoob Qureshi , Shahida Jatoi\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3113' (journal 'ylr' or page '3113') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3114",
+        "citation": "2006 YLR 3114",
+        "case_title": "1073\t2006 YLR 3114\tLIAQAT ALI VS State - Honorable Justice Asif Saeed Khan Khosa - Ijaz Ahmad Khan , Faisal Naseem Chaudhry\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3114' (journal 'ylr' or page '3114') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3140",
+        "citation": "2006 YLR 3140",
+        "case_title": "1087\t2006 YLR 3140\tAKHTIAR ALI VS State - Honorable Justice Azizullah M. Memon - Ali Nawaz Ghanghro , Asif Ali Abdul Razak Soomro\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3140' (journal 'ylr' or page '3140') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3119",
+        "citation": "2006 YLR 3119",
+        "case_title": "1076\t2006 YLR 3119\tALI KHAN VS State - Honorable Justice Khilji Arif Hussain - Jai Jai Veshnu Mange Ram , Muhammad Ismail Bhutto\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3119' (journal 'ylr' or page '3119') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3121",
+        "citation": "2006 YLR 3121",
+        "case_title": "1078\t2006 YLR 3121\tMURTAZA VS State - Honorable Justice Muhammad Afzal Soomro - Jai Jai Veshnu Mange Ram , Mushtaque Ahmad Korejo\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3121' (journal 'ylr' or page '3121') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3123",
+        "citation": "2006 YLR 3123",
+        "case_title": "1079\t2006 YLR 3123\tMUHAMMAD AKBAR VS MUHAMMAD AKHTAR - Honorable Justice Ijaz Ahmad Chaudhry - Khalid Ikram Khatana , Mehr Ahmad Bakhsh Bharwana\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3123' (journal 'ylr' or page '3123') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3126",
+        "citation": "2006 YLR 3126",
+        "case_title": "1080\t2006 YLR 3126\tSHAHBAZ DINO VS State - Honorable Justice Rahmat Hussain Jafferi - Athar Iqbal Shaikh , Muhammad Mahmood S. Khan Yousfi\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3126' (journal 'ylr' or page '3126') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3132",
+        "citation": "2006 YLR 3132",
+        "case_title": "1084\t2006 YLR 3132\tMessrs NAJMA SUGAR MILLS LIMITED VS FEDERATION OF PAKSITAN - Honorable Justice Muhammad Mujeebullah Siddiqui and Sajjad Ali Shah - Ch. A. Rasheed , Shakeel Ahmed\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3132' (journal 'ylr' or page '3132') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3142",
+        "citation": "2006 YLR 3142",
+        "case_title": "1088\t2006 YLR 3142\tMUHAMMAD FAROOQ UMAR VS GOVERNMENT OF PAKISTAN - Honorable Justice Saiyed Saeed Ashhad - Khalid Mahmood Siddiqui\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3142' (journal 'ylr' or page '3142') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3147",
+        "citation": "2006 YLR 3147",
+        "case_title": "1089\t2006 YLR 3147\tMUHAMMAD YAKOOB VS State - Honorable Justice Rahmat Hussain Jafferi - Nizamuddin Baloch , Habib-ur-Rehman Shaikh\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3147' (journal 'ylr' or page '3147') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3155",
+        "citation": "2006 YLR 3155",
+        "case_title": "1090\t2006 YLR 3155\tMUKHTIAR ALI VS State - Honorable Justice Azizullah M. Memon - Aftab Ahmed Gorar , Muhammad Saleem Jessar\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3155' (journal 'ylr' or page '3155') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3164",
+        "citation": "2006 YLR 3164",
+        "case_title": "1093\t2006 YLR 3164\tMUHAMMAD PUNHAL VS State - Honorable Justice S. Sajjad Ali Shah - Muhammad Ayaz Soomro , Mushtaque Ahmed Abbasi\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3164' (journal 'ylr' or page '3164') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3167",
+        "citation": "2006 YLR 3167",
+        "case_title": "1094\t2006 YLR 3167\tSHEHZORE VS State - Honorable Justice Khiliji Arif Hussain - Muhammad Ayaz Soomro , Mushtaque Ahmed Kerojo\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3167' (journal 'ylr' or page '3167') not found in header."
+        ]
+      }
+    ],
+    "citation": [
+      {
+        "case_id": "2006_YLR_3082",
+        "citation": "2006 YLR 3082",
+        "case_title": "1061\t2006 YLR 3082\tIDARA-E-TULOO-E-ISLAM through Chairman VS GOVERNMENT OF SINDH through Chief Secretary, Sindh - Honorable Justice RAHMAT HUSSAIN JAFFERI - Samiuddin Sami , Habib Ahmed\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3082' (journal 'ylr' or page '3082') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3085",
+        "citation": "2006 YLR 3085",
+        "case_title": "1062\t2006 YLR 3085\tSyed AHMAD SHAH HASHMI VS State - Honorable Justice Ijaz Ahmad Chaudhry - Zafar Iqbal Chohan , Ms. Raeesa Sarwar\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3085' (journal 'ylr' or page '3085') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3087",
+        "citation": "2006 YLR 3087",
+        "case_title": "1063\t2006 YLR 3087\tKAREEM BUX VS State - Honorable Justice Khiliji Arif Hussain - Muhammad Ayaz Soomro , Muhammad Ismail Bhutto\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3087' (journal 'ylr' or page '3087') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3088",
+        "citation": "2006 YLR 3088",
+        "case_title": "1064\t2006 YLR 3088\tMANU alias MANTHAR VS State - Honorable Justice Mrs. Qaisar Iqbal - Khadim Hussain D.Solangi , Rasheed A. Qureshi\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3088' (journal 'ylr' or page '3088') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3089",
+        "citation": "2006 YLR 3089",
+        "case_title": "1065\t2006 YLR 3089\tSAIFULLAH VS State - Honorable Justice Ijaz Ahmad Chaudhry - Kh. Basit Waheed and Rai Haider Ali Khan Kharal , Muhammad Azam, Mian Abdul Qayyum Anjum and Abdul Majeed Chishti\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3089' (journal 'ylr' or page '3089') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3094",
+        "citation": "2006 YLR 3094",
+        "case_title": "1066\t2006 YLR 3094\tABDUL MAJEED VS State - Honorable Justice Khiliji Arif Hussain - Muhammad Ayaz Soomro , Muhammad Ismail Bhutto\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3094' (journal 'ylr' or page '3094') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3095",
+        "citation": "2006 YLR 3095",
+        "case_title": "1067\t2006 YLR 3095\tMUHAMMAD RAMZAN VS State - Honorable Justice ASIF SAEED KHAN KHOSA - Ahmad Baksh Bharwana , Muhammad Afzal Butt\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Citation '2006 YLR 3095' (journal 'ylr' or page '3095') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3097",
+        "citation": "2006 YLR 3097",
+        "case_title": "1068\t2006 YLR 3097\tMUHAMMAD HASHIM VS PRESIDING OFFICER, SPECIAL BANKING COURT, SINDH - Honorable Justice Mushir Alam and Azizullah M. Memon - Syed Muhammad Kazim , Nemo\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Citation '2006 YLR 3097' (journal 'ylr' or page '3097') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3098",
+        "citation": "2006 YLR 3098",
+        "case_title": "1069\t2006 YLR 3098\tFAROOQ-E-AZAM VS CUSTOMS AND INTELLIGENCE DEPARTMENT - Honorable Justice Syed Zawwar Hussain Jafri - Sohail Muzaffar , Muhammad Shafi Muhammadi\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3098' (journal 'ylr' or page '3098') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3106",
+        "citation": "2006 YLR 3106",
+        "case_title": "1070\t2006 YLR 3106\tABDUL KHALIQ VS ABDUL MALIK - Honorable Justice Raja Fayyaz Ahmed, C.J. and Akhtar Zaman Malghani - Muhammad Zafar and Baz Muhammad Kakar , Ehsan-ul-Haq and Naeem Akhtar\tQUETTA-HIGH-COURT-BALOCHISTAN",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Citation '2006 YLR 3106' (journal 'ylr' or page '3106') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3111",
+        "citation": "2006 YLR 3111",
+        "case_title": "1071\t2006 YLR 3111\tMUHAMMAD RAFIQUE VS SAROO - Honorable Justice Jawwad S. Khawaja - Nazir A. Javed , Muhammad Yousaf Khan\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Lahore High Court",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Citation '2006 YLR 3111' (journal 'ylr' or page '3111') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3113",
+        "citation": "2006 YLR 3113",
+        "case_title": "1072\t2006 YLR 3113\tGHULAM AKBER VS State - Honorable Justice Mrs. Yasmin Abbasey - Aamir Mansoob Qureshi , Shahida Jatoi\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3113' (journal 'ylr' or page '3113') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3114",
+        "citation": "2006 YLR 3114",
+        "case_title": "1073\t2006 YLR 3114\tLIAQAT ALI VS State - Honorable Justice Asif Saeed Khan Khosa - Ijaz Ahmad Khan , Faisal Naseem Chaudhry\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3114' (journal 'ylr' or page '3114') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3139",
+        "citation": "2006 YLR 3139",
+        "case_title": "1086\t2006 YLR 3139\tRUKAN-UD-DIN VS GOVERNMENT OF SINDH through Secretary, Home Department - Honorable Justice Syed Zawwar Hussain Jaffery and Amir Hani Muslim - Ghulam Shabeer Khoso , Anwar Mansoor Khan\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Citation '2006 YLR 3139' (journal 'ylr' or page '3139') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3140",
+        "citation": "2006 YLR 3140",
+        "case_title": "1087\t2006 YLR 3140\tAKHTIAR ALI VS State - Honorable Justice Azizullah M. Memon - Ali Nawaz Ghanghro , Asif Ali Abdul Razak Soomro\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3140' (journal 'ylr' or page '3140') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3116",
+        "citation": "2006 YLR 3116",
+        "case_title": "1074\t2006 YLR 3116\tHASAN SOHAIL VS State - Honorable Justice Amir Hani Muslim - Aamir Mansoob Qureshi\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Citation '2006 YLR 3116' (journal 'ylr' or page '3116') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3117",
+        "citation": "2006 YLR 3117",
+        "case_title": "1075\t2006 YLR 3117\tRIAZ BEGUM VS PROVINCE OF PUNJAB through Collector District, Khushab - Honorable Justice Sheikh Azmat Saeed - Muhammad Iftikhar Ahmed Awan , Arif Chaudhry\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Lahore High Court",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Citation '2006 YLR 3117' (journal 'ylr' or page '3117') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3119",
+        "citation": "2006 YLR 3119",
+        "case_title": "1076\t2006 YLR 3119\tALI KHAN VS State - Honorable Justice Khilji Arif Hussain - Jai Jai Veshnu Mange Ram , Muhammad Ismail Bhutto\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'high court of sindh' contradicts document header (High Court not found).",
+          "Citation '2006 YLR 3119' (journal 'ylr' or page '3119') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3120",
+        "citation": "2006 YLR 3120",
+        "case_title": "1077\t2006 YLR 3120\tMst. SAIRA SHAUKAT through Special Attorney VS DISTRICT AND SESSIONS JUDGE, ISALAMABAD - Honorable Justice Maulvi Anwarul Haq - Syed M. Tayyab , S.M. Ayub Bukhari\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Lahore High Court",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Citation '2006 YLR 3120' (journal 'ylr' or page '3120') not found in header."
+        ]
+      },
+      {
+        "case_id": "2006_YLR_3121",
+        "citation": "2006 YLR 3121",
+        "case_title": "1078\t2006 YLR 3121\tMURTAZA VS State - Honorable Justice Muhammad Afzal Soomro - Jai Jai Veshnu Mange Ram , Mushtaque Ahmad Korejo\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2006-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2006 YLR 3121' (journal 'ylr' or page '3121') not found in header."
+        ]
+      }
+    ],
+    "title": [
+      {
+        "case_id": "2004_YLR_457",
+        "citation": "2004 YLR 457",
+        "case_title": "127\t2004 YLR 457\tKHALID MEHMOOD VS NAJEEB KHAN - Honorable Justice Muhammad Yunus Surakhvi, C.J. and Chaudhary Muhammad Taj - Abdul Majid Mallick and Raja Muhammad Siddique Khan\tSUPREME-COURT-AZAD-KASHMIR",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2004-01-01",
+        "reasons": [
+          "Case title party token(s) from 'KHALID MEHMOOD VS NAJEEB KHAN' not found in source document header.",
+          "Citation '2004 YLR 457' (journal 'ylr' or page '457') not found in header."
+        ]
+      },
+      {
+        "case_id": "2004_YLR_487",
+        "citation": "2004 YLR 487",
+        "case_title": "135\t2004 YLR 487\tQADIR BAKHSH VS DIN MUHAMMAD - Honorable Justice Farrukh Latif - Abdul Rafique Sheikh\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Lahore High Court",
+        "decision_date": "2004-01-01",
+        "reasons": [
+          "Case title party token(s) from 'QADIR BAKHSH VS DIN MUHAMMAD' not found in source document header.",
+          "Citation '2004 YLR 487' (journal 'ylr' or page '487') not found in header."
+        ]
+      },
+      {
+        "case_id": "2004_YLR_493",
+        "citation": "2004 YLR 493",
+        "case_title": "137\t2004 YLR 493\tMUKHTAR AHMAD VS FATIMA BIBI - Honorable Justice M. Javed Buttar - Qazi Zahid Hussain , Shuja-ud-Din Hashmi and Mian Muhammad Aslam\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Lahore High Court",
+        "decision_date": "2004-01-01",
+        "reasons": [
+          "Case title party token(s) from 'MUKHTAR AHMAD VS FATIMA BIBI' not found in source document header.",
+          "Citation '2004 YLR 493' (journal 'ylr' or page '493') not found in header."
+        ]
+      },
+      {
+        "case_id": "2004_YLR_775",
+        "citation": "2004 YLR 775",
+        "case_title": "205\t2004 YLR 775\tHaji MUHAMMAD IJAZ VS GOVERNMENT OF PAKISTAN - Honorable Justice Maulvi Anwarul Haq - Razzaq A. Mirza , Nemo AND Waqar-ul-Haq Sheikh\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Lahore High Court",
+        "decision_date": "2004-01-01",
+        "reasons": [
+          "Case title party token(s) from 'Haji MUHAMMAD IJAZ VS GOVERNMENT OF PAKISTAN' not found in source document header.",
+          "Citation '2004 YLR 775' (journal 'ylr' or page '775') not found in header."
+        ]
+      },
+      {
+        "case_id": "2004_YLR_782",
+        "citation": "2004 YLR 782",
+        "case_title": "207\t2004 YLR 782\tMUHAMMAD YOUNUS VS THE STATE - Honorable Justice Raja Muhammad Sabir - Maqbool Ahmed Bhatti , Tasawar Hussain Qureshi , Ghulam Asghar\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Lahore High Court",
+        "decision_date": "2004-01-01",
+        "reasons": [
+          "Case title party token(s) from 'MUHAMMAD YOUNUS VS THE STATE' not found in source document header.",
+          "Citation '2004 YLR 782' (journal 'ylr' or page '782') not found in header."
+        ]
+      },
+      {
+        "case_id": "2004_YLR_1941",
+        "citation": "2004 YLR 1941",
+        "case_title": "533\t2004 YLR 1941\tSARDAR BIBI VS ABDUL AZIZ and 15 others - Honorable Justice Muhammad Muzammal Khan - Arshad Mehmood , Miam Muhammad Athar\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2004-01-01",
+        "reasons": [
+          "Case title party token(s) from 'SARDAR BIBI VS ABDUL AZIZ and 15 others' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2004 YLR 1941' (journal 'ylr' or page '1941') not found in header.",
+          "Year '2004' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2004_YLR_2184",
+        "citation": "2004 YLR 2184",
+        "case_title": "606\t2004 YLR 2184\tMst. NASREEN AKHTAR VS THE STATE - Honorable Justice Muhammad Akram Baitu - Tahir Mahmood , A.A,.-G\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2004-01-01",
+        "reasons": [
+          "Case title party token(s) from 'Mst. NASREEN AKHTAR VS THE STATE' not found in source document header.",
+          "Citation '2004 YLR 2184' (journal 'ylr' or page '2184') not found in header.",
+          "Year '2004' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2004_YLR_2393",
+        "citation": "2004 YLR 2393",
+        "case_title": "676\t2004 YLR 2393\tMst. SHAMSHAD AKHTAR VS THE STATE - Honorable Justice Ch. Iftikhar Hussain - Syed Ijaz Qutab , Malik Muhammad Akbar Awan\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2004-01-01",
+        "reasons": [
+          "Case title party token(s) from 'Mst. SHAMSHAD AKHTAR VS THE STATE' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2004 YLR 2393' (journal 'ylr' or page '2393') not found in header.",
+          "Year '2004' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2002_YLR_1473",
+        "citation": "2002 YLR 1473",
+        "case_title": "LIMITED VS KARACHI PORT TRUST - Honorable Justice Muhammad Moosa K. Leghari - Agha Faqir Muhammad , Salman Hamid\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2002-01-01",
+        "reasons": [
+          "Case title party token(s) from 'KARACHI-HIGH-COURT-SINDH' not found in source document header.",
+          "Citation '2002 YLR 1473' (journal 'ylr' or page '1473') not found in header."
+        ]
+      },
+      {
+        "case_id": "2002_YLR_3410",
+        "citation": "2002 YLR 3410",
+        "case_title": "869\t2002 YLR 3410\tMst. AMINA BIBI VS MUSHTAQ AHMAD - Honorable Justice Pervaiz Ahmad - Rafiq Javed Butt , Ch. Arshad Mehmood\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2002-01-01",
+        "reasons": [
+          "Case title party token(s) from 'Mst. AMINA BIBI VS MUSHTAQ AHMAD' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2002 YLR 3410' (journal 'ylr' or page '3410') not found in header.",
+          "Year '2002' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2002_YLR_3412",
+        "citation": "2002 YLR 3412",
+        "case_title": "870\t2002 YLR 3412\tMUHAMMAD SHARIF VS Mst. SHARIFAN BIBI - Honorable Justice Sakhi Hussain Bokhari - Ch. Anwaar-ul-Haq Pannun\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2002-01-01",
+        "reasons": [
+          "Case title party token(s) from 'MUHAMMAD SHARIF VS Mst. SHARIFAN BIBI' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2002 YLR 3412' (journal 'ylr' or page '3412') not found in header.",
+          "Year '2002' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2002_YLR_3427",
+        "citation": "2002 YLR 3427",
+        "case_title": "876\t2002 YLR 3427\tIMTIAZ ALI VS MUHARRAM - Honorable Justice S. Ali Aslam Jafri - Ali Nawaz Ghanghro , Roshan Ali Solangi , Sher Muhammad Shar\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2002-01-01",
+        "reasons": [
+          "Case title party token(s) from 'IMTIAZ ALI VS MUHARRAM' not found in source document header.",
+          "Citation '2002 YLR 3427' (journal 'ylr' or page '3427') not found in header.",
+          "Year '2002' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2002_YLR_3707",
+        "citation": "2002 YLR 3707",
+        "case_title": "989\t2002 YLR 3707\tProf. Mian EJAZ-UL- HASSAN VS LAHORE DEVELOPMENT AUTHORITY - Honorable Justice Ch. Ijaz Ahmad - Pervaiz Inayat Malik , Mian Muzaffar Hussain\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2002-01-01",
+        "reasons": [
+          "Case title party token(s) from 'Prof. Mian EJAZ-UL- HASSAN VS LAHORE DEVELOPMENT AUTHORITY' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2002 YLR 3707' (journal 'ylr' or page '3707') not found in header."
+        ]
+      },
+      {
+        "case_id": "2001_YLR_77",
+        "citation": "2001 YLR 77",
+        "case_title": "16\t2001 YLR 77\tLIFE PAPER STORE VS BANK OF PUNJAB - \tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2001-01-01",
+        "reasons": [
+          "Case title party token(s) from 'LIFE PAPER STORE VS BANK OF PUNJAB - ' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2001 YLR 77' (journal 'ylr' or page '77') not found in header.",
+          "Year '2001' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2001_YLR_91",
+        "citation": "2001 YLR 91",
+        "case_title": "20\t2001 YLR 91\tLATIF ULLAH VS STATE - \tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2001-01-01",
+        "reasons": [
+          "Case title party token(s) from 'LATIF ULLAH VS STATE - ' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2001 YLR 91' (journal 'ylr' or page '91') not found in header.",
+          "Year '2001' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2001_YLR_169",
+        "citation": "2001 YLR 169",
+        "case_title": "34\t2001 YLR 169\tV. H. PAGE VS RUTHANN BIG - \tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2001-01-01",
+        "reasons": [
+          "Case title party token(s) from 'V. H. PAGE VS RUTHANN BIG - ' not found in source document header.",
+          "Citation '2001 YLR 169' (journal 'ylr' or page '169') not found in header.",
+          "Year '2001' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2001_YLR_295",
+        "citation": "2001 YLR 295",
+        "case_title": "73\t2001 YLR 295\tRALILF VS STATE - \tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2001-01-01",
+        "reasons": [
+          "Case title party token(s) from 'RALILF VS STATE - ' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2001 YLR 295' (journal 'ylr' or page '295') not found in header."
+        ]
+      },
+      {
+        "case_id": "2001_YLR_356",
+        "citation": "2001 YLR 356",
+        "case_title": "102\t2001 YLR 356\tPERVEEN BIBI VS STATE - \tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Lahore High Court",
+        "decision_date": "2001-01-01",
+        "reasons": [
+          "Case title party token(s) from 'PERVEEN BIBI VS STATE - ' not found in source document header.",
+          "Citation '2001 YLR 356' (journal 'ylr' or page '356') not found in header.",
+          "Year '2001' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2000_YLR_2133",
+        "citation": "2000 YLR 2133",
+        "case_title": "556\t2000 YLR 2133\tINSPECTOR-GENERAL PRISONS, AZAD JAMMU AND KASHMIR, MUZAFFARABAD VS GHULAM MUHAMMAD LOLABI - \tSUPREME-COURT-AZAD-KASHMIR",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2000-01-01",
+        "reasons": [
+          "Case title party token(s) from 'INSPECTOR-GENERAL PRISONS, AZAD JAMMU AND KASHMIR, MUZAFFARABAD VS GHULAM MUHAMMAD LOLABI - ' not found in source document header.",
+          "Citation '2000 YLR 2133' (journal 'ylr' or page '2133') not found in header."
+        ]
+      },
+      {
+        "case_id": "2000_YLR_2139",
+        "citation": "2000 YLR 2139",
+        "case_title": "557\t2000 YLR 2139\tAL-KHAIR-UNIVERSITY, AZAD JAMMU AND KASHMIR VS AI-KHAIR TRUST PAKISTAN - \tSUPREME-COURT-AZAD-KASHMIR",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2000-01-01",
+        "reasons": [
+          "Case title party token(s) from 'AL-KHAIR-UNIVERSITY, AZAD JAMMU AND KASHMIR VS AI-KHAIR TRUST PAKISTAN - ' not found in source document header.",
+          "Citation '2000 YLR 2139' (journal 'ylr' or page '2139') not found in header."
+        ]
+      }
+    ],
+    "year": [
+      {
+        "case_id": "2004_YLR_1941",
+        "citation": "2004 YLR 1941",
+        "case_title": "533\t2004 YLR 1941\tSARDAR BIBI VS ABDUL AZIZ and 15 others - Honorable Justice Muhammad Muzammal Khan - Arshad Mehmood , Miam Muhammad Athar\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2004-01-01",
+        "reasons": [
+          "Case title party token(s) from 'SARDAR BIBI VS ABDUL AZIZ and 15 others' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2004 YLR 1941' (journal 'ylr' or page '1941') not found in header.",
+          "Year '2004' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2004_YLR_2184",
+        "citation": "2004 YLR 2184",
+        "case_title": "606\t2004 YLR 2184\tMst. NASREEN AKHTAR VS THE STATE - Honorable Justice Muhammad Akram Baitu - Tahir Mahmood , A.A,.-G\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2004-01-01",
+        "reasons": [
+          "Case title party token(s) from 'Mst. NASREEN AKHTAR VS THE STATE' not found in source document header.",
+          "Citation '2004 YLR 2184' (journal 'ylr' or page '2184') not found in header.",
+          "Year '2004' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2004_YLR_2393",
+        "citation": "2004 YLR 2393",
+        "case_title": "676\t2004 YLR 2393\tMst. SHAMSHAD AKHTAR VS THE STATE - Honorable Justice Ch. Iftikhar Hussain - Syed Ijaz Qutab , Malik Muhammad Akbar Awan\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2004-01-01",
+        "reasons": [
+          "Case title party token(s) from 'Mst. SHAMSHAD AKHTAR VS THE STATE' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2004 YLR 2393' (journal 'ylr' or page '2393') not found in header.",
+          "Year '2004' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2002_YLR_3410",
+        "citation": "2002 YLR 3410",
+        "case_title": "869\t2002 YLR 3410\tMst. AMINA BIBI VS MUSHTAQ AHMAD - Honorable Justice Pervaiz Ahmad - Rafiq Javed Butt , Ch. Arshad Mehmood\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2002-01-01",
+        "reasons": [
+          "Case title party token(s) from 'Mst. AMINA BIBI VS MUSHTAQ AHMAD' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2002 YLR 3410' (journal 'ylr' or page '3410') not found in header.",
+          "Year '2002' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2002_YLR_3412",
+        "citation": "2002 YLR 3412",
+        "case_title": "870\t2002 YLR 3412\tMUHAMMAD SHARIF VS Mst. SHARIFAN BIBI - Honorable Justice Sakhi Hussain Bokhari - Ch. Anwaar-ul-Haq Pannun\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2002-01-01",
+        "reasons": [
+          "Case title party token(s) from 'MUHAMMAD SHARIF VS Mst. SHARIFAN BIBI' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2002 YLR 3412' (journal 'ylr' or page '3412') not found in header.",
+          "Year '2002' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2002_YLR_3427",
+        "citation": "2002 YLR 3427",
+        "case_title": "876\t2002 YLR 3427\tIMTIAZ ALI VS MUHARRAM - Honorable Justice S. Ali Aslam Jafri - Ali Nawaz Ghanghro , Roshan Ali Solangi , Sher Muhammad Shar\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2002-01-01",
+        "reasons": [
+          "Case title party token(s) from 'IMTIAZ ALI VS MUHARRAM' not found in source document header.",
+          "Citation '2002 YLR 3427' (journal 'ylr' or page '3427') not found in header.",
+          "Year '2002' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2001_YLR_77",
+        "citation": "2001 YLR 77",
+        "case_title": "16\t2001 YLR 77\tLIFE PAPER STORE VS BANK OF PUNJAB - \tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2001-01-01",
+        "reasons": [
+          "Case title party token(s) from 'LIFE PAPER STORE VS BANK OF PUNJAB - ' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2001 YLR 77' (journal 'ylr' or page '77') not found in header.",
+          "Year '2001' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2001_YLR_91",
+        "citation": "2001 YLR 91",
+        "case_title": "20\t2001 YLR 91\tLATIF ULLAH VS STATE - \tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2001-01-01",
+        "reasons": [
+          "Case title party token(s) from 'LATIF ULLAH VS STATE - ' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2001 YLR 91' (journal 'ylr' or page '91') not found in header.",
+          "Year '2001' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2001_YLR_169",
+        "citation": "2001 YLR 169",
+        "case_title": "34\t2001 YLR 169\tV. H. PAGE VS RUTHANN BIG - \tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "High Court of Sindh",
+        "decision_date": "2001-01-01",
+        "reasons": [
+          "Case title party token(s) from 'V. H. PAGE VS RUTHANN BIG - ' not found in source document header.",
+          "Citation '2001 YLR 169' (journal 'ylr' or page '169') not found in header.",
+          "Year '2001' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2001_YLR_356",
+        "citation": "2001 YLR 356",
+        "case_title": "102\t2001 YLR 356\tPERVEEN BIBI VS STATE - \tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Lahore High Court",
+        "decision_date": "2001-01-01",
+        "reasons": [
+          "Case title party token(s) from 'PERVEEN BIBI VS STATE - ' not found in source document header.",
+          "Citation '2001 YLR 356' (journal 'ylr' or page '356') not found in header.",
+          "Year '2001' not found in document header."
+        ]
+      },
+      {
+        "case_id": "1996_MLD_92",
+        "citation": "1996 MLD 92",
+        "case_title": "20\t1996 MLD 92\tHABIBULLAH QURESHI VS FAROOQUE - \tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "1996-01-01",
+        "reasons": [
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '1996 MLD 92' (journal 'mld' or page '92') not found in header.",
+          "Year '1996' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2021_MLD_408",
+        "citation": "2021 MLD 408",
+        "case_title": "73\t2021 MLD 408\tASADULLAH VS State - Honorable Justice Muhammad Kamran Khan Mulakhail - Shabir Ahmed Rajput and Muhammad Din , Muhammad Younas Mengal\tQUETTA-HIGH-COURT-BALOCHISTAN",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2021-01-01",
+        "reasons": [
+          "Case title party token(s) from 'ASADULLAH VS State' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2021 MLD 408' (journal 'mld' or page '408') not found in header.",
+          "Year '2021' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2021_MLD_413",
+        "citation": "2021 MLD 413",
+        "case_title": "74\t2021 MLD 413\tASIF NASIR VS The DEPUTY DIRECTOR NAB",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2021-01-01",
+        "reasons": [
+          "Case title party token(s) from 'ASIF NASIR VS The DEPUTY DIRECTOR NAB' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2021 MLD 413' (journal 'mld' or page '413') not found in header.",
+          "Year '2021' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2021_MLD_416",
+        "citation": "2021 MLD 416",
+        "case_title": "75\t2021 MLD 416\tSHAFI MOHAMMAD KHAN VS ABDUL REHMAN - Honorable Justice Adnan Iqbal Chaudhry - Tariq G. Mangi , Abdul Rehman\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2021-01-01",
+        "reasons": [
+          "Case title party token(s) from 'SHAFI MOHAMMAD KHAN VS ABDUL REHMAN' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2021 MLD 416' (journal 'mld' or page '416') not found in header.",
+          "Year '2021' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2021_MLD_420",
+        "citation": "2021 MLD 420",
+        "case_title": "76\t2021 MLD 420\tNASEER AHMED VS SUMEYYA - Honorable Justice Rozi Khan Barrech - \tQUETTA-HIGH-COURT-BALOCHISTAN",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2021-01-01",
+        "reasons": [
+          "Case title party token(s) from 'NASEER AHMED VS SUMEYYA' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2021 MLD 420' (journal 'mld' or page '420') not found in header.",
+          "Year '2021' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2021_MLD_424",
+        "citation": "2021 MLD 424",
+        "case_title": "77\t2021 MLD 424\tSANA ULLAH KHAN VS PRESIDENT PAKISTAN VETERINARY MEDICAL COUNCIL",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2021-01-01",
+        "reasons": [
+          "Case title party token(s) from 'SANA ULLAH KHAN VS PRESIDENT PAKISTAN VETERINARY MEDICAL COUNCIL' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2021 MLD 424' (journal 'mld' or page '424') not found in header.",
+          "Year '2021' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2021_MLD_429",
+        "citation": "2021 MLD 429",
+        "case_title": "78\t2021 MLD 429\tRASHID AHMED VS GOVERNMENT OF GILGIT-BALTISTAN - Honorable Justice Malik Haq Nawaz, C.J and Ali Baig - Raja Shakeel Ahmed , Muhammad Amin Khan\tGilgit-Baltistan Chief Court",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2021-01-01",
+        "reasons": [
+          "Case title party token(s) from 'RASHID AHMED VS GOVERNMENT OF GILGIT-BALTISTAN' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2021 MLD 429' (journal 'mld' or page '429') not found in header.",
+          "Year '2021' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2021_MLD_433",
+        "citation": "2021 MLD 433",
+        "case_title": "79\t2021 MLD 433\tMOHAMMAD SHAHID MURTAZA VS WARID TELECOM PRIVATE LIMITED - Honorable Justice Agha Faisal - Khawaja Naveed Ahmed , Rajendar Kumar Chhabria\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2021-01-01",
+        "reasons": [
+          "Case title party token(s) from 'MOHAMMAD SHAHID MURTAZA VS WARID TELECOM PRIVATE LIMITED' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2021 MLD 433' (journal 'mld' or page '433') not found in header.",
+          "Year '2021' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2021_MLD_442",
+        "citation": "2021 MLD 442",
+        "case_title": "80\t2021 MLD 442\tKHAWAR HUSSAIN VS GOVERNMENT OF PUNJAB - Rana Sher Afzal , Saad Ghazi\tLAHORE-HIGH-COURT-LAHORE",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2021-01-01",
+        "reasons": [
+          "Case title party token(s) from 'KHAWAR HUSSAIN VS GOVERNMENT OF PUNJAB - Rana Sher Afzal , Saad Ghazi' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2021 MLD 442' (journal 'mld' or page '442') not found in header.",
+          "Year '2021' not found in document header."
+        ]
+      },
+      {
+        "case_id": "2021_MLD_444",
+        "citation": "2021 MLD 444",
+        "case_title": "81\t2021 MLD 444\tWAHEED ALI VS Syed ALI TAQI SHAH - Honorable Justice Irshad Ali Shah - Safdar Ali Ghouri , Athar Abbas Solangi\tKARACHI-HIGH-COURT-SINDH",
+        "court_name": "Supreme Court of Pakistan",
+        "decision_date": "2021-01-01",
+        "reasons": [
+          "Case title party token(s) from 'WAHEED ALI VS Syed ALI TAQI SHAH' not found in source document header.",
+          "Claimed court 'supreme court of pakistan' contradicts document header (Supreme Court not found).",
+          "Citation '2021 MLD 444' (journal 'mld' or page '444') not found in header.",
+          "Year '2021' not found in document header."
+        ]
+      }
+    ]
+  }
+}

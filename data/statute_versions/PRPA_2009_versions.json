@@ -7,7 +7,7 @@
     "primary_num": "1",
     "secondary_num": null,
     "title": "Short title, extent and commencement",
-    "text": "Short title, extent and commencement",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -20,7 +20,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_2_V1",
@@ -30,7 +31,7 @@
     "primary_num": "2",
     "secondary_num": null,
     "title": "Definitions (building, final order, landlord, pagri, premises, prescribed, rent, Rent Registrar, Rent Tribunal, sub-tenant, tenancy agreement, tenant)",
-    "text": "Definitions (building, final order, landlord, pagri, premises, prescribed, rent, Rent Registrar, Rent Tribunal, sub-tenant, tenancy agreement, tenant)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -43,7 +44,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_3_V1",
@@ -53,7 +55,7 @@
     "primary_num": "3",
     "secondary_num": null,
     "title": "Exemption of premises owned by Federal Government, Provincial Government or local authority",
-    "text": "Exemption of premises owned by Federal Government, Provincial Government or local authority",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -66,7 +68,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_4_V1",
@@ -76,7 +79,7 @@
     "primary_num": "4",
     "secondary_num": null,
     "title": "Act to override other laws",
-    "text": "Act to override other laws",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -89,7 +92,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_5_V1",
@@ -99,7 +103,7 @@
     "primary_num": "5",
     "secondary_num": null,
     "title": "Agreement between landlord and tenant in writing and registered with Rent Registrar",
-    "text": "Agreement between landlord and tenant in writing and registered with Rent Registrar",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -112,7 +116,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_6_V1",
@@ -122,7 +127,7 @@
     "primary_num": "6",
     "secondary_num": null,
     "title": "Contents of tenancy agreement",
-    "text": "Contents of tenancy agreement",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -135,7 +140,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_7_V1",
@@ -145,7 +151,7 @@
     "primary_num": "7",
     "secondary_num": null,
     "title": "Payment of rent by bank deposit, cheque or receipt",
-    "text": "Payment of rent by bank deposit, cheque or receipt",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -158,7 +164,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_8_V1",
@@ -168,7 +175,7 @@
     "primary_num": "8",
     "secondary_num": null,
     "title": "Existing tenancy without written agreement to be regularized within two years",
-    "text": "Existing tenancy without written agreement to be regularized within two years",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -181,7 +188,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_9_V1",
@@ -191,7 +199,7 @@
     "primary_num": "9",
     "secondary_num": null,
     "title": "Effect of non-compliance with registration; fine",
-    "text": "Effect of non-compliance with registration; fine",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -204,7 +212,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_10_V1",
@@ -214,7 +223,7 @@
     "primary_num": "10",
     "secondary_num": null,
     "title": "Effect of other agreements",
-    "text": "Effect of other agreements",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -227,7 +236,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_11_V1",
@@ -237,7 +247,7 @@
     "primary_num": "11",
     "secondary_num": null,
     "title": "Subletting not allowed without written consent of landlord",
-    "text": "Subletting not allowed without written consent of landlord",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -250,7 +260,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_12_V1",
@@ -260,7 +271,7 @@
     "primary_num": "12",
     "secondary_num": null,
     "title": "Obligations of landlord (maintenance, taxes, essential services)",
-    "text": "Obligations of landlord (maintenance, taxes, essential services)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -273,7 +284,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_13_V1",
@@ -283,7 +295,7 @@
     "primary_num": "13",
     "secondary_num": null,
     "title": "Obligations of tenant (timely payment of rent, reasonable care, surrender of possession)",
-    "text": "Obligations of tenant (timely payment of rent, reasonable care, surrender of possession)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -296,7 +308,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_14_V1",
@@ -306,7 +319,7 @@
     "primary_num": "14",
     "secondary_num": null,
     "title": "Reimbursement of expenses incurred on repairs",
-    "text": "Reimbursement of expenses incurred on repairs",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -319,7 +332,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_15_V1",
@@ -329,7 +343,7 @@
     "primary_num": "15",
     "secondary_num": null,
     "title": "Grounds for eviction (expiry of tenancy, default in rent, subletting, breach of agreement, misuse, destruction)",
-    "text": "Grounds for eviction (expiry of tenancy, default in rent, subletting, breach of agreement, misuse, destruction)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -342,7 +356,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_16_V1",
@@ -352,7 +367,7 @@
     "primary_num": "16",
     "secondary_num": null,
     "title": "Establishment of Rent Tribunal",
-    "text": "Establishment of Rent Tribunal",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -365,7 +380,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_17_V1",
@@ -375,7 +391,7 @@
     "primary_num": "17",
     "secondary_num": null,
     "title": "Rent Registrar; appointment and functions",
-    "text": "Rent Registrar; appointment and functions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -388,7 +404,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_18_V1",
@@ -398,7 +415,7 @@
     "primary_num": "18",
     "secondary_num": null,
     "title": "Staff and establishment of Rent Tribunal",
-    "text": "Staff and establishment of Rent Tribunal",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -411,7 +428,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_19_V1",
@@ -421,7 +439,7 @@
     "primary_num": "19",
     "secondary_num": null,
     "title": "Filing of application for eviction or other relief",
-    "text": "Filing of application for eviction or other relief",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -434,7 +452,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_20_V1",
@@ -444,7 +463,7 @@
     "primary_num": "20",
     "secondary_num": null,
     "title": "Application for deposit of rent",
-    "text": "Application for deposit of rent",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -457,7 +476,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_21_V1",
@@ -467,7 +487,7 @@
     "primary_num": "21",
     "secondary_num": null,
     "title": "Appearance of parties and consequences of non-appearance",
-    "text": "Appearance of parties and consequences of non-appearance",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -480,7 +500,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_22_V1",
@@ -490,7 +511,7 @@
     "primary_num": "22",
     "secondary_num": null,
     "title": "Leave to contest eviction application; affidavit showing reasonable grounds",
-    "text": "Leave to contest eviction application; affidavit showing reasonable grounds",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -503,7 +524,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_23_V1",
@@ -513,7 +535,7 @@
     "primary_num": "23",
     "secondary_num": null,
     "title": "Written reply upon grant of leave to contest",
-    "text": "Written reply upon grant of leave to contest",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -526,7 +548,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_24_V1",
@@ -536,7 +559,7 @@
     "primary_num": "24",
     "secondary_num": null,
     "title": "Payment of rent and other dues pending proceedings",
-    "text": "Payment of rent and other dues pending proceedings",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -549,7 +572,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_25_V1",
@@ -559,7 +583,7 @@
     "primary_num": "25",
     "secondary_num": null,
     "title": "Recording of evidence by Rent Tribunal",
-    "text": "Recording of evidence by Rent Tribunal",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -572,7 +596,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_26_V1",
@@ -582,7 +607,7 @@
     "primary_num": "26",
     "secondary_num": null,
     "title": "Rent Tribunal to exercise powers of Civil Court",
-    "text": "Rent Tribunal to exercise powers of Civil Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -595,7 +620,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_27_V1",
@@ -605,7 +631,7 @@
     "primary_num": "27",
     "secondary_num": null,
     "title": "Period for disposal of application within four months",
-    "text": "Period for disposal of application within four months",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -618,7 +644,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_28_V1",
@@ -628,7 +655,7 @@
     "primary_num": "28",
     "secondary_num": null,
     "title": "Appeal to District Judge within thirty days against final order",
-    "text": "Appeal to District Judge within thirty days against final order",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -641,7 +668,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_29_V1",
@@ -651,7 +679,7 @@
     "primary_num": "29",
     "secondary_num": null,
     "title": "General power of transfer of cases",
-    "text": "General power of transfer of cases",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -664,7 +692,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_30_V1",
@@ -674,7 +703,7 @@
     "primary_num": "30",
     "secondary_num": null,
     "title": "Transfer of ownership during tenancy",
-    "text": "Transfer of ownership during tenancy",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -687,7 +716,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_31_V1",
@@ -697,7 +727,7 @@
     "primary_num": "31",
     "secondary_num": null,
     "title": "Execution of orders of Rent Tribunal",
-    "text": "Execution of orders of Rent Tribunal",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -710,7 +740,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_32_V1",
@@ -720,7 +751,7 @@
     "primary_num": "32",
     "secondary_num": null,
     "title": "Indemnity for acts done in good faith",
-    "text": "Indemnity for acts done in good faith",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -733,7 +764,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_33_V1",
@@ -743,7 +775,7 @@
     "primary_num": "33",
     "secondary_num": null,
     "title": "Power to make rules",
-    "text": "Power to make rules",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -756,7 +788,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_34_V1",
@@ -766,7 +799,7 @@
     "primary_num": "34",
     "secondary_num": null,
     "title": "Provisions of Qanun-e-Shahadat Order and Code of Civil Procedure not to apply",
-    "text": "Provisions of Qanun-e-Shahadat Order and Code of Civil Procedure not to apply",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -779,7 +812,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_35_V1",
@@ -789,7 +823,7 @@
     "primary_num": "35",
     "secondary_num": null,
     "title": "Repeal of Punjab Urban Rent Restriction Ordinance 1959 and savings",
-    "text": "Repeal of Punjab Urban Rent Restriction Ordinance 1959 and savings",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -802,7 +836,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.105504+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PRPA_2009_SEC_1_V2",

@@ -7,7 +7,7 @@
     "primary_num": "1",
     "secondary_num": null,
     "title": "Short title, commencement and extent",
-    "text": "Short title, commencement and extent",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -20,7 +20,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.366161+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_2_V1",
@@ -30,7 +31,7 @@
     "primary_num": "2",
     "secondary_num": null,
     "title": "Definitions",
-    "text": "Definitions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -43,7 +44,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.391052+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_3_V1",
@@ -53,7 +55,7 @@
     "primary_num": "3",
     "secondary_num": null,
     "title": "Subordination of Courts",
-    "text": "Subordination of Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -66,7 +68,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.412973+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_4_V1",
@@ -76,7 +79,7 @@
     "primary_num": "4",
     "secondary_num": null,
     "title": "Savings",
-    "text": "Savings",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -89,7 +92,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.437774+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_5_V1",
@@ -99,7 +103,7 @@
     "primary_num": "5",
     "secondary_num": null,
     "title": "Application of the Code to the Revenue Courts",
-    "text": "Application of the Code to the Revenue Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -112,7 +116,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.460174+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_6_V1",
@@ -122,7 +127,7 @@
     "primary_num": "6",
     "secondary_num": null,
     "title": "Pecuniary Jurisdiction",
-    "text": "Pecuniary Jurisdiction",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -135,7 +140,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.482475+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_7_V1",
@@ -145,7 +151,7 @@
     "primary_num": "7",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -158,7 +164,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.510562+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_8_V1",
@@ -168,7 +175,7 @@
     "primary_num": "8",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -181,7 +188,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.536672+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_9_V1",
@@ -191,7 +199,7 @@
     "primary_num": "9",
     "secondary_num": null,
     "title": "Courts to try all civil suits unless barred",
-    "text": "Courts to try all civil suits unless barred",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -204,7 +212,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.562972+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_10_V1",
@@ -214,7 +223,7 @@
     "primary_num": "10",
     "secondary_num": null,
     "title": "Stay of suit",
-    "text": "Stay of suit",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -227,7 +236,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.587936+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_11_V1",
@@ -237,7 +247,7 @@
     "primary_num": "11",
     "secondary_num": null,
     "title": "Res Judicata",
-    "text": "Res Judicata",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -250,7 +260,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.612337+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_12_V1",
@@ -260,7 +271,7 @@
     "primary_num": "12",
     "secondary_num": null,
     "title": "Bar to further suits",
-    "text": "Bar to further suits",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -273,7 +284,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.636526+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_13_V1",
@@ -283,7 +295,7 @@
     "primary_num": "13",
     "secondary_num": null,
     "title": "When foreign judgment not conclusive",
-    "text": "When foreign judgment not conclusive",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -296,7 +308,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.659098+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_14_V1",
@@ -306,7 +319,7 @@
     "primary_num": "14",
     "secondary_num": null,
     "title": "Presumption as to foreign judgment",
-    "text": "Presumption as to foreign judgment",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -319,7 +332,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.687030+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_15_V1",
@@ -329,7 +343,7 @@
     "primary_num": "15",
     "secondary_num": null,
     "title": "Court in which suits to be instituted",
-    "text": "Court in which suits to be instituted",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -342,7 +356,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.715940+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_16_V1",
@@ -352,7 +367,7 @@
     "primary_num": "16",
     "secondary_num": null,
     "title": "Suits to be instituted where subject\u00admatter situate",
-    "text": "Suits to be instituted where subject\u00admatter situate",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -365,7 +380,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.752912+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_17_V1",
@@ -375,7 +391,7 @@
     "primary_num": "17",
     "secondary_num": null,
     "title": "Suits for immoveable property situate within jurisdiction of different Courts",
-    "text": "Suits for immoveable property situate within jurisdiction of different Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -388,7 +404,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.786302+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_18_V1",
@@ -398,7 +415,7 @@
     "primary_num": "18",
     "secondary_num": null,
     "title": "Place of institution of suit where local limits of jurisdiction, of Courts are uncertain",
-    "text": "Place of institution of suit where local limits of jurisdiction, of Courts are uncertain",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -411,7 +428,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.811996+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_19_V1",
@@ -421,7 +439,7 @@
     "primary_num": "19",
     "secondary_num": null,
     "title": "Suits for compensation for wrongs to person or moveables",
-    "text": "Suits for compensation for wrongs to person or moveables",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -434,7 +452,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.840727+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_20_V1",
@@ -444,7 +463,7 @@
     "primary_num": "20",
     "secondary_num": null,
     "title": "Other suits to be instituted where defendants reside or cause of action arises",
-    "text": "Other suits to be instituted where defendants reside or cause of action arises",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -457,7 +476,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.872316+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_21_V1",
@@ -467,7 +487,7 @@
     "primary_num": "21",
     "secondary_num": null,
     "title": "Objections to jurisdiction",
-    "text": "Objections to jurisdiction",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -480,7 +500,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.903943+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_22_V1",
@@ -490,7 +511,7 @@
     "primary_num": "22",
     "secondary_num": null,
     "title": "Power to transfer suits which may be instituted in more than one Court",
-    "text": "Power to transfer suits which may be instituted in more than one Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -503,7 +524,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.937460+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_23_V1",
@@ -513,7 +535,7 @@
     "primary_num": "23",
     "secondary_num": null,
     "title": "To what Court application lies",
-    "text": "To what Court application lies",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -526,7 +548,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.990146+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_24_V1",
@@ -536,7 +559,7 @@
     "primary_num": "24",
     "secondary_num": null,
     "title": "General power of transfer and withdrawal",
-    "text": "General power of transfer and withdrawal",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -549,7 +572,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.028359+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_24A_V1",
@@ -559,7 +583,7 @@
     "primary_num": "24A",
     "secondary_num": null,
     "title": "Appearance of parties on transfer of suit, etc",
-    "text": "Appearance of parties on transfer of suit, etc",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -572,7 +596,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.066665+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_25_V1",
@@ -582,7 +607,7 @@
     "primary_num": "25",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -595,7 +620,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.107884+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_26_V1",
@@ -605,7 +631,7 @@
     "primary_num": "26",
     "secondary_num": null,
     "title": "Institution of suit",
-    "text": "Institution of suit",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -618,7 +644,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.147673+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_27_V1",
@@ -628,7 +655,7 @@
     "primary_num": "27",
     "secondary_num": null,
     "title": "Summons to defendants",
-    "text": "Summons to defendants",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -641,7 +668,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.188879+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_28_V1",
@@ -651,7 +679,7 @@
     "primary_num": "28",
     "secondary_num": null,
     "title": "Service of summons where defendant resides, in another Province",
-    "text": "Service of summons where defendant resides, in another Province",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -664,7 +692,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.226721+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_29_V1",
@@ -674,7 +703,7 @@
     "primary_num": "29",
     "secondary_num": null,
     "title": "Service of foreign summonses",
-    "text": "Service of foreign summonses",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -687,7 +716,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.266322+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_30_V1",
@@ -697,7 +727,7 @@
     "primary_num": "30",
     "secondary_num": null,
     "title": "Power to order discovery and the like",
-    "text": "Power to order discovery and the like",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -710,7 +740,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.301624+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_31_V1",
@@ -720,7 +751,7 @@
     "primary_num": "31",
     "secondary_num": null,
     "title": "Summons to witness",
-    "text": "Summons to witness",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -733,7 +764,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.351254+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_32_V1",
@@ -743,7 +775,7 @@
     "primary_num": "32",
     "secondary_num": null,
     "title": "Penalty for default",
-    "text": "Penalty for default",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -756,7 +788,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.393245+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_33_V1",
@@ -766,7 +799,7 @@
     "primary_num": "33",
     "secondary_num": null,
     "title": "Judgment and decree",
-    "text": "Judgment and decree",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -779,7 +812,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.431964+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_34_V1",
@@ -789,7 +823,7 @@
     "primary_num": "34",
     "secondary_num": null,
     "title": "Interest",
-    "text": "Interest",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -802,7 +836,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.473220+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_34A_V1",
@@ -812,7 +847,7 @@
     "primary_num": "34A",
     "secondary_num": null,
     "title": "Interest on public dues",
-    "text": "Interest on public dues",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -825,7 +860,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.510493+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_34B_V1",
@@ -835,7 +871,7 @@
     "primary_num": "34B",
     "secondary_num": null,
     "title": "Interest, etc. on dues of banking company",
-    "text": "Interest, etc. on dues of banking company",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -848,7 +884,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.556126+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_35_V1",
@@ -858,7 +895,7 @@
     "primary_num": "35",
     "secondary_num": null,
     "title": "Costs",
-    "text": "Costs",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -871,7 +908,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.600947+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_35A_V1",
@@ -881,7 +919,7 @@
     "primary_num": "35A",
     "secondary_num": null,
     "title": "Adjournment cost",
-    "text": "Adjournment cost",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -894,7 +932,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.641574+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_35B_V1",
@@ -904,7 +943,7 @@
     "primary_num": "35B",
     "secondary_num": null,
     "title": "Special costs",
-    "text": "Special costs",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -917,7 +956,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.678147+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_35C_V1",
@@ -927,7 +967,7 @@
     "primary_num": "35C",
     "secondary_num": null,
     "title": "General provisions as to costs",
-    "text": "General provisions as to costs",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -940,7 +980,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.721097+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_36_V1",
@@ -950,7 +991,7 @@
     "primary_num": "36",
     "secondary_num": null,
     "title": "Application to orders",
-    "text": "Application to orders",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -963,7 +1004,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.762807+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_37_V1",
@@ -973,7 +1015,7 @@
     "primary_num": "37",
     "secondary_num": null,
     "title": "Definition of Court which passed a decree",
-    "text": "Definition of Court which passed a decree",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -986,7 +1028,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.803638+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_38_V1",
@@ -996,7 +1039,7 @@
     "primary_num": "38",
     "secondary_num": null,
     "title": "Court by which decree may be executed",
-    "text": "Court by which decree may be executed",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1009,7 +1052,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.842874+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_39_V1",
@@ -1019,7 +1063,7 @@
     "primary_num": "39",
     "secondary_num": null,
     "title": "Transfer of decree",
-    "text": "Transfer of decree",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1032,7 +1076,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.883681+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_40_V1",
@@ -1042,7 +1087,7 @@
     "primary_num": "40",
     "secondary_num": null,
     "title": "Transfer of decree to Court in another Province",
-    "text": "Transfer of decree to Court in another Province",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1055,7 +1100,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.923125+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_41_V1",
@@ -1065,7 +1111,7 @@
     "primary_num": "41",
     "secondary_num": null,
     "title": "Results of execution proceeding to be certified",
-    "text": "Results of execution proceeding to be certified",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1078,7 +1124,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:46.965620+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_42_V1",
@@ -1088,7 +1135,7 @@
     "primary_num": "42",
     "secondary_num": null,
     "title": "Powers of Court in executing transferred decree",
-    "text": "Powers of Court in executing transferred decree",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1101,7 +1148,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.006537+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_43_V1",
@@ -1111,7 +1159,7 @@
     "primary_num": "43",
     "secondary_num": null,
     "title": "Execution of decrees passed by British Courts in places to which this Part does not extend or",
-    "text": "Execution of decrees passed by British Courts in places to which this Part does not extend or",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1124,7 +1172,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.060092+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_44_V1",
@@ -1134,7 +1183,7 @@
     "primary_num": "44",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1147,7 +1196,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.108507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_44A_V1",
@@ -1157,7 +1207,7 @@
     "primary_num": "44A",
     "secondary_num": null,
     "title": "Execution of decrees passed by Courts in the United Kingdom and other reciprocating territory",
-    "text": "Execution of decrees passed by Courts in the United Kingdom and other reciprocating territory",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1170,7 +1220,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.142222+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_45_V1",
@@ -1180,7 +1231,7 @@
     "primary_num": "45",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1193,7 +1244,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.181623+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_46_V1",
@@ -1203,7 +1255,7 @@
     "primary_num": "46",
     "secondary_num": null,
     "title": "Precepts",
-    "text": "Precepts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1216,7 +1268,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.222722+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_47_V1",
@@ -1226,7 +1279,7 @@
     "primary_num": "47",
     "secondary_num": null,
     "title": "Questions to be determined by the Court executing decree",
-    "text": "Questions to be determined by the Court executing decree",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1239,7 +1292,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.267198+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_48_V1",
@@ -1249,7 +1303,7 @@
     "primary_num": "48",
     "secondary_num": null,
     "title": "Execution barred in certain cases",
-    "text": "Execution barred in certain cases",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1262,7 +1316,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.309589+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_49_V1",
@@ -1272,7 +1327,7 @@
     "primary_num": "49",
     "secondary_num": null,
     "title": "Transferee",
-    "text": "Transferee",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1285,7 +1340,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.343509+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_50_V1",
@@ -1295,7 +1351,7 @@
     "primary_num": "50",
     "secondary_num": null,
     "title": "Legal representative",
-    "text": "Legal representative",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1308,7 +1364,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.378468+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_51_V1",
@@ -1318,7 +1375,7 @@
     "primary_num": "51",
     "secondary_num": null,
     "title": "Powers of Court to enforce execution",
-    "text": "Powers of Court to enforce execution",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1331,7 +1388,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.425767+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_52_V1",
@@ -1341,7 +1399,7 @@
     "primary_num": "52",
     "secondary_num": null,
     "title": "Enforcement of decree against legal representative",
-    "text": "Enforcement of decree against legal representative",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1354,7 +1412,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.463924+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_53_V1",
@@ -1364,7 +1423,7 @@
     "primary_num": "53",
     "secondary_num": null,
     "title": "Liability of ancestral property",
-    "text": "Liability of ancestral property",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1377,7 +1436,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.508266+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_54_V1",
@@ -1387,7 +1447,7 @@
     "primary_num": "54",
     "secondary_num": null,
     "title": "Partition of estate of separation of share",
-    "text": "Partition of estate of separation of share",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1400,7 +1460,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.550348+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_55_V1",
@@ -1410,7 +1471,7 @@
     "primary_num": "55",
     "secondary_num": null,
     "title": "Arrest and detention",
-    "text": "Arrest and detention",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1423,7 +1484,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.597955+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_56_V1",
@@ -1433,7 +1495,7 @@
     "primary_num": "56",
     "secondary_num": null,
     "title": "Prohibition of arrest or detention of women in execution of decree for money",
-    "text": "Prohibition of arrest or detention of women in execution of decree for money",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1446,7 +1508,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.638082+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_57_V1",
@@ -1456,7 +1519,7 @@
     "primary_num": "57",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1469,7 +1532,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.672702+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_58_V1",
@@ -1479,7 +1543,7 @@
     "primary_num": "58",
     "secondary_num": null,
     "title": "Release from detention",
-    "text": "Release from detention",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1492,7 +1556,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.713015+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_59_V1",
@@ -1502,7 +1567,7 @@
     "primary_num": "59",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1515,7 +1580,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.751846+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_60_V1",
@@ -1525,7 +1591,7 @@
     "primary_num": "60",
     "secondary_num": null,
     "title": "Property liable to attachment and sale in execution of decree",
-    "text": "Property liable to attachment and sale in execution of decree",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1538,7 +1604,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.793701+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_61_V1",
@@ -1548,7 +1615,7 @@
     "primary_num": "61",
     "secondary_num": null,
     "title": "Partial exemption of agricultural produce",
-    "text": "Partial exemption of agricultural produce",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1561,7 +1628,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.835961+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_62_V1",
@@ -1571,7 +1639,7 @@
     "primary_num": "62",
     "secondary_num": null,
     "title": "Seizure of property in dwelling\u00adhouse",
-    "text": "Seizure of property in dwelling\u00adhouse",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1584,7 +1652,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.876606+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_63_V1",
@@ -1594,7 +1663,7 @@
     "primary_num": "63",
     "secondary_num": null,
     "title": "Property attached in execution of decrees of several Courts",
-    "text": "Property attached in execution of decrees of several Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1607,7 +1676,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.917893+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_64_V1",
@@ -1617,7 +1687,7 @@
     "primary_num": "64",
     "secondary_num": null,
     "title": "Private alienation of property after attachment to be void",
-    "text": "Private alienation of property after attachment to be void",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1630,7 +1700,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.958191+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_65_V1",
@@ -1640,7 +1711,7 @@
     "primary_num": "65",
     "secondary_num": null,
     "title": "Purchaser\u2019s title",
-    "text": "Purchaser\u2019s title",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1653,7 +1724,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:47.996359+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_66_V1",
@@ -1663,7 +1735,7 @@
     "primary_num": "66",
     "secondary_num": null,
     "title": "Suit against purchaser not maintainable on ground of purchase being on behalf of plaintiff",
-    "text": "Suit against purchaser not maintainable on ground of purchase being on behalf of plaintiff",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1676,7 +1748,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.034430+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_67_V1",
@@ -1686,7 +1759,7 @@
     "primary_num": "67",
     "secondary_num": null,
     "title": "Power for Provincial Government to make rules as to sales of land in execution of decrees for",
-    "text": "Power for Provincial Government to make rules as to sales of land in execution of decrees for",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1699,7 +1772,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.070804+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_68_V1",
@@ -1709,7 +1783,7 @@
     "primary_num": "68",
     "secondary_num": null,
     "title": "Power to prescribe rules for transferring to Collector execution of certain decrees",
-    "text": "Power to prescribe rules for transferring to Collector execution of certain decrees",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1722,7 +1796,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.124037+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_69_V1",
@@ -1732,7 +1807,7 @@
     "primary_num": "69",
     "secondary_num": null,
     "title": "Provisions of Third Schedule to apply",
-    "text": "Provisions of Third Schedule to apply",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1745,7 +1820,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.168008+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_70_V1",
@@ -1755,7 +1831,7 @@
     "primary_num": "70",
     "secondary_num": null,
     "title": "Rules of procedure",
-    "text": "Rules of procedure",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1768,7 +1844,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.211525+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_71_V1",
@@ -1778,7 +1855,7 @@
     "primary_num": "71",
     "secondary_num": null,
     "title": "Collector deemed to be acting judicially",
-    "text": "Collector deemed to be acting judicially",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1791,7 +1868,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.252508+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_72_V1",
@@ -1801,7 +1879,7 @@
     "primary_num": "72",
     "secondary_num": null,
     "title": "Where Court may authroise Collector to stay public sale of land",
-    "text": "Where Court may authroise Collector to stay public sale of land",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1814,7 +1892,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.298704+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_73_V1",
@@ -1824,7 +1903,7 @@
     "primary_num": "73",
     "secondary_num": null,
     "title": "Proceeds of execution sale to be rateably distributed among decree\u00adholders",
-    "text": "Proceeds of execution sale to be rateably distributed among decree\u00adholders",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1837,7 +1916,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.343562+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_74_V1",
@@ -1847,7 +1927,7 @@
     "primary_num": "74",
     "secondary_num": null,
     "title": "Resistance to execution",
-    "text": "Resistance to execution",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1860,7 +1940,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.484401+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_75_V1",
@@ -1870,7 +1951,7 @@
     "primary_num": "75",
     "secondary_num": null,
     "title": "Power of Court to issue commissions",
-    "text": "Power of Court to issue commissions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1883,7 +1964,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.530423+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_75A_V1",
@@ -1893,7 +1975,7 @@
     "primary_num": "75A",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1906,7 +1988,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.614302+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_76_V1",
@@ -1916,7 +1999,7 @@
     "primary_num": "76",
     "secondary_num": null,
     "title": "Commission to another Court",
-    "text": "Commission to another Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1929,7 +2012,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.654001+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_77_V1",
@@ -1939,7 +2023,7 @@
     "primary_num": "77",
     "secondary_num": null,
     "title": "Letter of request",
-    "text": "Letter of request",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1952,7 +2036,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.746356+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_78_V1",
@@ -1962,7 +2047,7 @@
     "primary_num": "78",
     "secondary_num": null,
     "title": "Commissions issued by foreign Courts",
-    "text": "Commissions issued by foreign Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1975,7 +2060,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.790335+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_79_V1",
@@ -1985,7 +2071,7 @@
     "primary_num": "79",
     "secondary_num": null,
     "title": "Suits by or against the Government",
-    "text": "Suits by or against the Government",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1998,7 +2084,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.833361+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_80_V1",
@@ -2008,7 +2095,7 @@
     "primary_num": "80",
     "secondary_num": null,
     "title": "Notice",
-    "text": "Notice",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2021,7 +2108,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.878430+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_81_V1",
@@ -2031,7 +2119,7 @@
     "primary_num": "81",
     "secondary_num": null,
     "title": "Exemption from arrest and personal appearance",
-    "text": "Exemption from arrest and personal appearance",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2044,7 +2132,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.927328+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_82_V1",
@@ -2054,7 +2143,7 @@
     "primary_num": "82",
     "secondary_num": null,
     "title": "Execution of decree",
-    "text": "Execution of decree",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2067,7 +2156,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:48.972358+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_83_V1",
@@ -2077,7 +2167,7 @@
     "primary_num": "83",
     "secondary_num": null,
     "title": "When aliens may sue",
-    "text": "When aliens may sue",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2090,7 +2180,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.017277+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_84_V1",
@@ -2100,7 +2191,7 @@
     "primary_num": "84",
     "secondary_num": null,
     "title": "When foreign States may sue",
-    "text": "When foreign States may sue",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2113,7 +2204,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.067605+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_85_V1",
@@ -2123,7 +2215,7 @@
     "primary_num": "85",
     "secondary_num": null,
     "title": "Persons specially appointed by Government to prosecute or defend for Ruler of foreign State",
-    "text": "Persons specially appointed by Government to prosecute or defend for Ruler of foreign State",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2136,7 +2228,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.110884+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_86_V1",
@@ -2146,7 +2239,7 @@
     "primary_num": "86",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2159,7 +2252,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.154454+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_86A_V1",
@@ -2169,7 +2263,7 @@
     "primary_num": "86A",
     "secondary_num": null,
     "title": "Suits against diplomatic agents",
-    "text": "Suits against diplomatic agents",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2182,7 +2276,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.198715+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_87_V1",
@@ -2192,7 +2287,7 @@
     "primary_num": "87",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2205,7 +2300,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.240547+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_87A_V1",
@@ -2215,7 +2311,7 @@
     "primary_num": "87A",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2228,7 +2324,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.294600+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_88_V1",
@@ -2238,7 +2335,7 @@
     "primary_num": "88",
     "secondary_num": null,
     "title": "Where inter pleader suit may be instituted",
-    "text": "Where inter pleader suit may be instituted",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2251,7 +2348,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.346495+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_89_V1",
@@ -2261,7 +2359,7 @@
     "primary_num": "89",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2274,7 +2372,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.390362+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_89A_V1",
@@ -2284,7 +2383,7 @@
     "primary_num": "89A",
     "secondary_num": null,
     "title": "Alternate dispute resolution",
-    "text": "Alternate dispute resolution",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2297,7 +2396,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.438725+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_90_V1",
@@ -2307,7 +2407,7 @@
     "primary_num": "90",
     "secondary_num": null,
     "title": "Power to state case for opinion of Court",
-    "text": "Power to state case for opinion of Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2320,7 +2420,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.481083+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_91_V1",
@@ -2330,7 +2431,7 @@
     "primary_num": "91",
     "secondary_num": null,
     "title": "Public nuisances",
-    "text": "Public nuisances",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2343,7 +2444,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.532090+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_92_V1",
@@ -2353,7 +2455,7 @@
     "primary_num": "92",
     "secondary_num": null,
     "title": "Public charities",
-    "text": "Public charities",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2366,7 +2468,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.576497+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_93_V1",
@@ -2376,7 +2479,7 @@
     "primary_num": "93",
     "secondary_num": null,
     "title": "Exercise of powers of Advocate General",
-    "text": "Exercise of powers of Advocate General",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2389,7 +2492,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.627705+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_94_V1",
@@ -2399,7 +2503,7 @@
     "primary_num": "94",
     "secondary_num": null,
     "title": "Supplemental Proceedings",
-    "text": "Supplemental Proceedings",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2412,7 +2516,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.675377+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_95_V1",
@@ -2422,7 +2527,7 @@
     "primary_num": "95",
     "secondary_num": null,
     "title": "Compensation, for obtaining arrest, attachment or injunction on in sufficient grounds",
-    "text": "Compensation, for obtaining arrest, attachment or injunction on in sufficient grounds",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2435,7 +2540,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.729381+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_96_V1",
@@ -2445,7 +2551,7 @@
     "primary_num": "96",
     "secondary_num": null,
     "title": "Appeal from original decree",
-    "text": "Appeal from original decree",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2458,7 +2564,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.775365+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_97_V1",
@@ -2468,7 +2575,7 @@
     "primary_num": "97",
     "secondary_num": null,
     "title": "Appeal from final decree where no appeal from preliminary decree",
-    "text": "Appeal from final decree where no appeal from preliminary decree",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2481,7 +2588,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.822139+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_98_V1",
@@ -2491,7 +2599,7 @@
     "primary_num": "98",
     "secondary_num": null,
     "title": "Decision where appeal heard by two or more Judges",
-    "text": "Decision where appeal heard by two or more Judges",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2504,7 +2612,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.873777+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_99_V1",
@@ -2514,7 +2623,7 @@
     "primary_num": "99",
     "secondary_num": null,
     "title": "No decree to be reversed or modified for error or irregularity not affecting merits or jurisdiction",
-    "text": "No decree to be reversed or modified for error or irregularity not affecting merits or jurisdiction",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2527,7 +2636,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.907113+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_100_V1",
@@ -2537,7 +2647,7 @@
     "primary_num": "100",
     "secondary_num": null,
     "title": "Second appeal",
-    "text": "Second appeal",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2550,7 +2660,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.949778+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_101_V1",
@@ -2560,7 +2671,7 @@
     "primary_num": "101",
     "secondary_num": null,
     "title": "Second appeal on no other grounds",
-    "text": "Second appeal on no other grounds",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2573,7 +2684,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:49.989888+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_102_V1",
@@ -2583,7 +2695,7 @@
     "primary_num": "102",
     "secondary_num": null,
     "title": "No second appeal in certain cases",
-    "text": "No second appeal in certain cases",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2596,7 +2708,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.024132+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_103_V1",
@@ -2606,7 +2719,7 @@
     "primary_num": "103",
     "secondary_num": null,
     "title": "Power of High Court to determine issues of fact",
-    "text": "Power of High Court to determine issues of fact",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2619,7 +2732,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.073486+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_104_V1",
@@ -2629,7 +2743,7 @@
     "primary_num": "104",
     "secondary_num": null,
     "title": "Orders from which appeal lies",
-    "text": "Orders from which appeal lies",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2642,7 +2756,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.126838+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_105_V1",
@@ -2652,7 +2767,7 @@
     "primary_num": "105",
     "secondary_num": null,
     "title": "Others order",
-    "text": "Others order",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2665,7 +2780,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.179077+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_106_V1",
@@ -2675,7 +2791,7 @@
     "primary_num": "106",
     "secondary_num": null,
     "title": "What Courts to hear appeals",
-    "text": "What Courts to hear appeals",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2688,7 +2804,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.231141+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_107_V1",
@@ -2698,7 +2815,7 @@
     "primary_num": "107",
     "secondary_num": null,
     "title": "Powers of Appellate Court",
-    "text": "Powers of Appellate Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2711,7 +2828,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.277010+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_108_V1",
@@ -2721,7 +2839,7 @@
     "primary_num": "108",
     "secondary_num": null,
     "title": "Procedure in appeals from appellate decrees and orders",
-    "text": "Procedure in appeals from appellate decrees and orders",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2734,7 +2852,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.331339+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_109_V1",
@@ -2744,7 +2863,7 @@
     "primary_num": "109",
     "secondary_num": null,
     "title": "When appeals, lie to the Supreme Court",
-    "text": "When appeals, lie to the Supreme Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2757,7 +2876,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.377671+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_110_V1",
@@ -2767,7 +2887,7 @@
     "primary_num": "110",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2780,7 +2900,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.424981+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_111_V1",
@@ -2790,7 +2911,7 @@
     "primary_num": "111",
     "secondary_num": null,
     "title": "Bar of certain appeals",
-    "text": "Bar of certain appeals",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2803,7 +2924,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.473482+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_111A_V1",
@@ -2813,7 +2935,7 @@
     "primary_num": "111A",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2826,7 +2948,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.529637+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_112_V1",
@@ -2836,7 +2959,7 @@
     "primary_num": "112",
     "secondary_num": null,
     "title": "Savings",
-    "text": "Savings",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2849,7 +2972,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.581038+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_113_V1",
@@ -2859,7 +2983,7 @@
     "primary_num": "113",
     "secondary_num": null,
     "title": "Reference to High Court",
-    "text": "Reference to High Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2872,7 +2996,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.634055+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_114_V1",
@@ -2882,7 +3007,7 @@
     "primary_num": "114",
     "secondary_num": null,
     "title": "Review",
-    "text": "Review",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2895,7 +3020,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.683189+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_115_V1",
@@ -2905,7 +3031,7 @@
     "primary_num": "115",
     "secondary_num": null,
     "title": "Revision",
-    "text": "Revision",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2918,7 +3044,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.740015+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_116_V1",
@@ -2928,7 +3055,7 @@
     "primary_num": "116",
     "secondary_num": null,
     "title": "Part to apply only to certain High Courts",
-    "text": "Part to apply only to certain High Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2941,7 +3068,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.792907+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_117_V1",
@@ -2951,7 +3079,7 @@
     "primary_num": "117",
     "secondary_num": null,
     "title": "Application of Code to High Courts",
-    "text": "Application of Code to High Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2964,7 +3092,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.847193+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_118_V1",
@@ -2974,7 +3103,7 @@
     "primary_num": "118",
     "secondary_num": null,
     "title": "Execution of decree before ascertainment of costs",
-    "text": "Execution of decree before ascertainment of costs",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2987,7 +3116,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.895339+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_119_V1",
@@ -2997,7 +3127,7 @@
     "primary_num": "119",
     "secondary_num": null,
     "title": "Unauthorised persons not to address Courts",
-    "text": "Unauthorised persons not to address Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3010,7 +3140,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.942591+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_120_V1",
@@ -3020,7 +3151,7 @@
     "primary_num": "120",
     "secondary_num": null,
     "title": "Provisions not applicable to High Court in original   civil jurisdiction",
-    "text": "Provisions not applicable to High Court in original   civil jurisdiction",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3033,7 +3164,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:50.990298+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_121_V1",
@@ -3043,7 +3175,7 @@
     "primary_num": "121",
     "secondary_num": null,
     "title": "Effect of rules in First Schedule",
-    "text": "Effect of rules in First Schedule",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3056,7 +3188,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.041022+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_122_V1",
@@ -3066,7 +3199,7 @@
     "primary_num": "122",
     "secondary_num": null,
     "title": "Power of certain High Courts to make rules",
-    "text": "Power of certain High Courts to make rules",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3079,7 +3212,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.097116+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_123_V1",
@@ -3089,7 +3223,7 @@
     "primary_num": "123",
     "secondary_num": null,
     "title": "Constitution of Rules Committees in certain Provinces",
-    "text": "Constitution of Rules Committees in certain Provinces",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3102,7 +3236,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.141448+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_124_V1",
@@ -3112,7 +3247,7 @@
     "primary_num": "124",
     "secondary_num": null,
     "title": "Committee to report to High Court",
-    "text": "Committee to report to High Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3125,7 +3260,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.196911+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_125_V1",
@@ -3135,7 +3271,7 @@
     "primary_num": "125",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3148,7 +3284,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.252693+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_126_V1",
@@ -3158,7 +3295,7 @@
     "primary_num": "126",
     "secondary_num": null,
     "title": "Rules to be subject to approval",
-    "text": "Rules to be subject to approval",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3171,7 +3308,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.309277+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_127_V1",
@@ -3181,7 +3319,7 @@
     "primary_num": "127",
     "secondary_num": null,
     "title": "Publication of rules",
-    "text": "Publication of rules",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3194,7 +3332,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.364683+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_128_V1",
@@ -3204,7 +3343,7 @@
     "primary_num": "128",
     "secondary_num": null,
     "title": "Matters for which rules may provide",
-    "text": "Matters for which rules may provide",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3217,7 +3356,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.429964+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_129_V1",
@@ -3227,7 +3367,7 @@
     "primary_num": "129",
     "secondary_num": null,
     "title": "Power of the High Courts to make rules as to their original civil procedure",
-    "text": "Power of the High Courts to make rules as to their original civil procedure",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3240,7 +3380,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.490769+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_130_V1",
@@ -3250,7 +3391,7 @@
     "primary_num": "130",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3263,7 +3404,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.551371+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_131_V1",
@@ -3273,7 +3415,7 @@
     "primary_num": "131",
     "secondary_num": null,
     "title": "Publication of rules",
-    "text": "Publication of rules",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3286,7 +3428,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.621815+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_132_V1",
@@ -3296,7 +3439,7 @@
     "primary_num": "132",
     "secondary_num": null,
     "title": "Exemption of certain women from personal appearance",
-    "text": "Exemption of certain women from personal appearance",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3309,7 +3452,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.687187+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_133_V1",
@@ -3319,7 +3463,7 @@
     "primary_num": "133",
     "secondary_num": null,
     "title": "Exemption of other persons",
-    "text": "Exemption of other persons",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3332,7 +3476,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.745300+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_134_V1",
@@ -3342,7 +3487,7 @@
     "primary_num": "134",
     "secondary_num": null,
     "title": "Arrest other than in execution of decree",
-    "text": "Arrest other than in execution of decree",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3355,7 +3500,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.805492+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_135_V1",
@@ -3365,7 +3511,7 @@
     "primary_num": "135",
     "secondary_num": null,
     "title": "Exemption from arrest under civil process",
-    "text": "Exemption from arrest under civil process",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3378,7 +3524,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.866292+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_135A_V1",
@@ -3388,7 +3535,7 @@
     "primary_num": "135A",
     "secondary_num": null,
     "title": "Exemption of members of Legislative bodies from arrest and detention under civil process",
-    "text": "Exemption of members of Legislative bodies from arrest and detention under civil process",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3401,7 +3548,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.924460+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_136_V1",
@@ -3411,7 +3559,7 @@
     "primary_num": "136",
     "secondary_num": null,
     "title": "Procedure where person to be arrested or property to be attached is outside district",
-    "text": "Procedure where person to be arrested or property to be attached is outside district",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3424,7 +3572,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:51.990721+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_137_V1",
@@ -3434,7 +3583,7 @@
     "primary_num": "137",
     "secondary_num": null,
     "title": "Language of subordinate Courts",
-    "text": "Language of subordinate Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3447,7 +3596,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.044137+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_138_V1",
@@ -3457,7 +3607,7 @@
     "primary_num": "138",
     "secondary_num": null,
     "title": "Power of High Court to require evidence to be recorded in English",
-    "text": "Power of High Court to require evidence to be recorded in English",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3470,7 +3620,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.105418+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_139_V1",
@@ -3480,7 +3631,7 @@
     "primary_num": "139",
     "secondary_num": null,
     "title": "Oath on affidavit by whom to be administered",
-    "text": "Oath on affidavit by whom to be administered",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3493,7 +3644,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.164002+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_140_V1",
@@ -3503,7 +3655,7 @@
     "primary_num": "140",
     "secondary_num": null,
     "title": "Assessors in causes of savages, etc",
-    "text": "Assessors in causes of savages, etc",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3516,7 +3668,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.218658+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_141_V1",
@@ -3526,7 +3679,7 @@
     "primary_num": "141",
     "secondary_num": null,
     "title": "Miscellaneous proceedings",
-    "text": "Miscellaneous proceedings",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3539,7 +3692,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.267643+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_142_V1",
@@ -3549,7 +3703,7 @@
     "primary_num": "142",
     "secondary_num": null,
     "title": "Orders and notices to be in writing",
-    "text": "Orders and notices to be in writing",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3562,7 +3716,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.325398+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_143_V1",
@@ -3572,7 +3727,7 @@
     "primary_num": "143",
     "secondary_num": null,
     "title": "Postage",
-    "text": "Postage",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3585,7 +3740,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.381465+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_144_V1",
@@ -3595,7 +3751,7 @@
     "primary_num": "144",
     "secondary_num": null,
     "title": "Application for restitution",
-    "text": "Application for restitution",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3608,7 +3764,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.439149+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_145_V1",
@@ -3618,7 +3775,7 @@
     "primary_num": "145",
     "secondary_num": null,
     "title": "Enforcement of liability of surety",
-    "text": "Enforcement of liability of surety",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3631,7 +3788,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.489285+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_146_V1",
@@ -3641,7 +3799,7 @@
     "primary_num": "146",
     "secondary_num": null,
     "title": "Proceedings by or against representatives",
-    "text": "Proceedings by or against representatives",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3654,7 +3812,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.544169+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_147_V1",
@@ -3664,7 +3823,7 @@
     "primary_num": "147",
     "secondary_num": null,
     "title": "Consent or agreement by person under disability",
-    "text": "Consent or agreement by person under disability",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3677,7 +3836,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.610144+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_148_V1",
@@ -3687,7 +3847,7 @@
     "primary_num": "148",
     "secondary_num": null,
     "title": "Enlargement of time",
-    "text": "Enlargement of time",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3700,7 +3860,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.673310+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_149_V1",
@@ -3710,7 +3871,7 @@
     "primary_num": "149",
     "secondary_num": null,
     "title": "Power to make up deficiency of court\u00adfees",
-    "text": "Power to make up deficiency of court\u00adfees",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3723,7 +3884,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.731416+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_150_V1",
@@ -3733,7 +3895,7 @@
     "primary_num": "150",
     "secondary_num": null,
     "title": "Transfer of business",
-    "text": "Transfer of business",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3746,7 +3908,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.787436+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_151_V1",
@@ -3756,7 +3919,7 @@
     "primary_num": "151",
     "secondary_num": null,
     "title": "Saving of inherent powers of Court",
-    "text": "Saving of inherent powers of Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3769,7 +3932,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.844532+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_152_V1",
@@ -3779,7 +3943,7 @@
     "primary_num": "152",
     "secondary_num": null,
     "title": "Amendment of judgments, decrees or orders",
-    "text": "Amendment of judgments, decrees or orders",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3792,7 +3956,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.909328+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_153_V1",
@@ -3802,7 +3967,7 @@
     "primary_num": "153",
     "secondary_num": null,
     "title": "General power to amend",
-    "text": "General power to amend",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3815,7 +3980,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:52.977355+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_154_V1",
@@ -3825,7 +3991,7 @@
     "primary_num": "154",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3838,7 +4004,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.025081+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_155_V1",
@@ -3848,7 +4015,7 @@
     "primary_num": "155",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3861,7 +4028,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.082145+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_156_V1",
@@ -3871,7 +4039,7 @@
     "primary_num": "156",
     "secondary_num": null,
     "title": "[Repealed]",
-    "text": "[Repealed]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3884,7 +4052,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.136493+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_157_V1",
@@ -3894,7 +4063,7 @@
     "primary_num": "157",
     "secondary_num": null,
     "title": "Continuance of orders under repealed enactments",
-    "text": "Continuance of orders under repealed enactments",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3907,7 +4076,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.191525+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_158_V1",
@@ -3917,7 +4087,7 @@
     "primary_num": "158",
     "secondary_num": null,
     "title": "Reference to Code of Civil Procedure and other repealed enactments",
-    "text": "Reference to Code of Civil Procedure and other repealed enactments",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3930,7 +4100,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.240887+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_159_V1",
@@ -3940,7 +4111,7 @@
     "primary_num": "159",
     "secondary_num": null,
     "title": "Saving of proceedings",
-    "text": "Saving of proceedings",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3953,7 +4124,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.297545+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_12_2_V1",
@@ -3963,7 +4135,7 @@
     "primary_num": "12",
     "secondary_num": "2",
     "title": "Bar to further suit; application challenging validity of judgment, decree or order on ground of fraud, misrepresentation, or want of jurisdiction",
-    "text": "Bar to further suit; application challenging validity of judgment, decree or order on ground of fraud, misrepresentation, or want of jurisdiction",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3976,7 +4148,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.346393+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_1_V1",
@@ -3986,7 +4159,7 @@
     "primary_num": "I",
     "secondary_num": "1",
     "title": "PARTIES TO SUITS: Who may be joined as plaintiffs",
-    "text": "PARTIES TO SUITS: Who may be joined as plaintiffs",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3999,7 +4172,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.395521+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_2_V1",
@@ -4009,7 +4183,7 @@
     "primary_num": "I",
     "secondary_num": "2",
     "title": "PARTIES TO SUITS: Power of Court to order separate trials",
-    "text": "PARTIES TO SUITS: Power of Court to order separate trials",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4022,7 +4196,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.442217+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_3_V1",
@@ -4032,7 +4207,7 @@
     "primary_num": "I",
     "secondary_num": "3",
     "title": "PARTIES TO SUITS: Who may be joined as defendants",
-    "text": "PARTIES TO SUITS: Who may be joined as defendants",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4045,7 +4220,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.491199+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_4_V1",
@@ -4055,7 +4231,7 @@
     "primary_num": "I",
     "secondary_num": "4",
     "title": "PARTIES TO SUITS: Court may give judgement for or against one or more of joint parties",
-    "text": "PARTIES TO SUITS: Court may give judgement for or against one or more of joint parties",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4068,7 +4244,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.541244+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_5_V1",
@@ -4078,7 +4255,7 @@
     "primary_num": "I",
     "secondary_num": "5",
     "title": "PARTIES TO SUITS: Defendant need not be interested in all the relief claimed",
-    "text": "PARTIES TO SUITS: Defendant need not be interested in all the relief claimed",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4091,7 +4268,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.585979+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_6_V1",
@@ -4101,7 +4279,7 @@
     "primary_num": "I",
     "secondary_num": "6",
     "title": "PARTIES TO SUITS: Joinder of parties liable on same contract",
-    "text": "PARTIES TO SUITS: Joinder of parties liable on same contract",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4114,7 +4292,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.637057+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_7_V1",
@@ -4124,7 +4303,7 @@
     "primary_num": "I",
     "secondary_num": "7",
     "title": "PARTIES TO SUITS: When plaintiff in doubt from whom redress is to be sought",
-    "text": "PARTIES TO SUITS: When plaintiff in doubt from whom redress is to be sought",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4137,7 +4316,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.682963+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_8_V1",
@@ -4147,7 +4327,7 @@
     "primary_num": "I",
     "secondary_num": "8",
     "title": "PARTIES TO SUITS: One person may sue or defend on behalf of all in same interest.",
-    "text": "PARTIES TO SUITS: One person may sue or defend on behalf of all in same interest.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4160,7 +4340,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.727293+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_9_V1",
@@ -4170,7 +4351,7 @@
     "primary_num": "I",
     "secondary_num": "9",
     "title": "PARTIES TO SUITS: Misjoinder and nonjoinder",
-    "text": "PARTIES TO SUITS: Misjoinder and nonjoinder",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4183,7 +4364,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.775415+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_10_V1",
@@ -4193,7 +4375,7 @@
     "primary_num": "I",
     "secondary_num": "10",
     "title": "PARTIES TO SUITS: Suit  in  name  of wrong plaintiff",
-    "text": "PARTIES TO SUITS: Suit  in  name  of wrong plaintiff",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4206,7 +4388,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.825399+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_11_V1",
@@ -4216,7 +4399,7 @@
     "primary_num": "I",
     "secondary_num": "11",
     "title": "PARTIES TO SUITS: Conduct of suit",
-    "text": "PARTIES TO SUITS: Conduct of suit",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4229,7 +4412,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.871581+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_12_V1",
@@ -4239,7 +4423,7 @@
     "primary_num": "I",
     "secondary_num": "12",
     "title": "PARTIES TO SUITS: Appearance of one of several plaintiffs of defendants for others",
-    "text": "PARTIES TO SUITS: Appearance of one of several plaintiffs of defendants for others",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4252,7 +4436,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.920414+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_I_R_13_V1",
@@ -4262,7 +4447,7 @@
     "primary_num": "I",
     "secondary_num": "13",
     "title": "PARTIES TO SUITS: Objections as to non\u00adjoinder or misjoinder",
-    "text": "PARTIES TO SUITS: Objections as to non\u00adjoinder or misjoinder",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4275,7 +4460,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:53.970167+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_II_R_1_V1",
@@ -4285,7 +4471,7 @@
     "primary_num": "II",
     "secondary_num": "1",
     "title": "FRAME OF SUIT: Frame of suit",
-    "text": "FRAME OF SUIT: Frame of suit",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4298,7 +4484,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.020625+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_II_R_2_V1",
@@ -4308,7 +4495,7 @@
     "primary_num": "II",
     "secondary_num": "2",
     "title": "FRAME OF SUIT: Suit to include the whole claim",
-    "text": "FRAME OF SUIT: Suit to include the whole claim",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4321,7 +4508,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.066894+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_II_R_3_V1",
@@ -4331,7 +4519,7 @@
     "primary_num": "II",
     "secondary_num": "3",
     "title": "FRAME OF SUIT: Joinder of causes of action.",
-    "text": "FRAME OF SUIT: Joinder of causes of action.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4344,7 +4532,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.118367+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_II_R_4_V1",
@@ -4354,7 +4543,7 @@
     "primary_num": "II",
     "secondary_num": "4",
     "title": "FRAME OF SUIT: Only certain claims to be joined for recovery of immoveable property",
-    "text": "FRAME OF SUIT: Only certain claims to be joined for recovery of immoveable property",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4367,7 +4556,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.163419+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_II_R_5_V1",
@@ -4377,7 +4567,7 @@
     "primary_num": "II",
     "secondary_num": "5",
     "title": "FRAME OF SUIT: Claims by or against executor, administrator or heir",
-    "text": "FRAME OF SUIT: Claims by or against executor, administrator or heir",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4390,7 +4580,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.215415+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_II_R_6_V1",
@@ -4400,7 +4591,7 @@
     "primary_num": "II",
     "secondary_num": "6",
     "title": "FRAME OF SUIT: Power of Court to order separate trials",
-    "text": "FRAME OF SUIT: Power of Court to order separate trials",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4413,7 +4604,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.258281+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_II_R_7_V1",
@@ -4423,7 +4615,7 @@
     "primary_num": "II",
     "secondary_num": "7",
     "title": "FRAME OF SUIT: Objections as to misjoinder",
-    "text": "FRAME OF SUIT: Objections as to misjoinder",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4436,7 +4628,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.320811+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_III_R_1_V1",
@@ -4446,7 +4639,7 @@
     "primary_num": "III",
     "secondary_num": "1",
     "title": "RECOGNIZED AGENTS AND PLEADERS: Appearances etc., may be in person, by recognized agent or by pleader",
-    "text": "RECOGNIZED AGENTS AND PLEADERS: Appearances etc., may be in person, by recognized agent or by pleader",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4459,7 +4652,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.377954+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_III_R_2_V1",
@@ -4469,7 +4663,7 @@
     "primary_num": "III",
     "secondary_num": "2",
     "title": "RECOGNIZED AGENTS AND PLEADERS: Recognized agents",
-    "text": "RECOGNIZED AGENTS AND PLEADERS: Recognized agents",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4482,7 +4676,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.438262+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_III_R_3_V1",
@@ -4492,7 +4687,7 @@
     "primary_num": "III",
     "secondary_num": "3",
     "title": "RECOGNIZED AGENTS AND PLEADERS: Service of process on recognized agent",
-    "text": "RECOGNIZED AGENTS AND PLEADERS: Service of process on recognized agent",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4505,7 +4700,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.494241+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_III_R_4_V1",
@@ -4515,7 +4711,7 @@
     "primary_num": "III",
     "secondary_num": "4",
     "title": "RECOGNIZED AGENTS AND PLEADERS: Appointment of pleader",
-    "text": "RECOGNIZED AGENTS AND PLEADERS: Appointment of pleader",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4528,7 +4724,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.545232+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_III_R_5_V1",
@@ -4538,7 +4735,7 @@
     "primary_num": "III",
     "secondary_num": "5",
     "title": "RECOGNIZED AGENTS AND PLEADERS: Service of process on pleader",
-    "text": "RECOGNIZED AGENTS AND PLEADERS: Service of process on pleader",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4551,7 +4748,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.600526+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_III_R_6_V1",
@@ -4561,7 +4759,7 @@
     "primary_num": "III",
     "secondary_num": "6",
     "title": "RECOGNIZED AGENTS AND PLEADERS: Agent to accept service",
-    "text": "RECOGNIZED AGENTS AND PLEADERS: Agent to accept service",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4574,7 +4772,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.642104+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_ORD_IV_R_1_V1",
@@ -4584,7 +4783,7 @@
     "primary_num": "IV",
     "secondary_num": "1",
     "title": "INSTITUTION OF SUITS: Suit to be commenced by plaint",
-    "text": "INSTITUTION OF SUITS: Suit to be commenced by plaint",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4597,7 +4796,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:54.693541+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CPC_1908_SEC_1_V2",
@@ -10608,8 +10808,8 @@
     "secondary_num": "Order XXI",
     "title": "Order XXI Rule 90: Application to set aside sale on ground of irregularity or fraud",
     "title_only": "Application to set aside sale on ground of irregularity or fraud",
-    "text": "Order XXI Rule 90: Application to set aside sale on ground of irregularity or fraud:\n(1) Where any immovable property has been sold in execution of a decree, the decree-holder, or any person entitled to share in a rateable distribution of assets, or whose interests are affected by the sale, may apply to the Court to set aside the sale on the ground of a material irregularity or fraud in publishing or conducting it:\nProvided that no sale shall be set aside on the ground of irregularity or fraud unless, upon the facts proved, the Court is satisfied that the applicant has sustained substantial injury by reason of such irregularity or fraud:\nProvided further that no such application shall be entertained unless the applicant deposits such amount, not exceeding twenty per cent of the sum realized at the sale, or furnishes such security as the Court may direct:\nProvided further that no such application shall be entertained on any ground which the applicant could have taken on or before the date of drawing up of the proclamation of sale.",
-    "text_available": true,
+    "text": null,
+    "text_available": false,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -10621,16 +10821,7 @@
     "gazette_reference": null,
     "effective_application": "pending_and_prospective",
     "ordinance_expiry_date": null,
-    "court_challenges": [
-      {
-        "court": "Supreme Court of Pakistan",
-        "case_citation": "2024 SCMR 1218",
-        "case_name": "Tariq Zubair Khan v. Federation of Pakistan",
-        "ruling": "Upheld the constitutionality of the second proviso to Order XXI Rule 90 CPC requiring a deposit not exceeding twenty per cent of the sum realized at the sale.",
-        "appeal_status": "Final Apex Ruling",
-        "effective_legal_effect": "The statutory deposit under the second proviso to Order XXI Rule 90 CPC is strictly up to 20% of the sale proceeds, not 50%; courts have no jurisdiction to demand a 50% deposit as a condition precedent."
-      }
-    ],
+    "court_challenges": [],
     "source_url": "https://pakistancode.gov.pk",
     "source_tier": null,
     "verification_status": "baseline_unverified",
@@ -10646,8 +10837,8 @@
     "secondary_num": "Order XXI",
     "title": "Order XXI Rule 54: Attachment of immoveable  property",
     "title_only": "Attachment of immoveable  property",
-    "text": "Order XXI Rule 54: Attachment of immovable property:\n(1) Where the property is immovable, the attachment shall be made by an order prohibiting the judgment-debtor from transferring or charging the property in any way, and all persons from taking any benefit from such transfer or charge.\n(2) The order shall be proclaimed at some place on or adjacent to such property by beat of drum or other customary mode, and a copy of the order shall be affixed on a conspicuous part of the property and then upon a conspicuous part of the court-house.",
-    "text_available": true,
+    "text": null,
+    "text_available": false,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -10675,8 +10866,8 @@
     "secondary_num": "Order XXI",
     "title": "Order XXI Rule 58: Investigation of claims to, and objections to attachment of, attached property",
     "title_only": "Investigation of claims to, and objections to attachment of, attached property",
-    "text": "Order XXI Rule 58: Investigation of claims to, and objections to attachment of, attached property:\n(1) Where any claim is preferred to, or any objection is made to the attachment of, any property attached in execution of a decree on the ground that such property is not liable to such attachment, the Court shall proceed to investigate the claim or objection with the like power as to the examination of the claimant or objector, and in all other respects, as if he was a party to the suit.",
-    "text_available": true,
+    "text": null,
+    "text_available": false,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -10704,8 +10895,8 @@
     "secondary_num": "Order XXI",
     "title": "Order XXI Rule 66: Proclamation of sales by public auction.",
     "title_only": "Proclamation of sales by public auction.",
-    "text": "Order XXI Rule 66: Proclamation of sales by public auction:\n(1) Where any property is ordered to be sold by public auction in execution of a decree, the Court shall cause a proclamation of the intended sale to be made in the language of such Court.\n(2) Such proclamation shall be drawn up after notice to the decree-holder and the judgment-debtor and shall state the time and place of sale, and specify as fairly and accurately as possible: (a) the property to be sold; (b) the revenue assessed upon the estate; (c) any incumbrance to which the property is liable; (d) the amount for the recovery of which the sale is ordered; and (e) every other thing which the Court considers material for a purchaser to know in order to judge of the nature and value of the property, including reserve price and fresh valuation where directed by the court.",
-    "text_available": true,
+    "text": null,
+    "text_available": false,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -10733,8 +10924,8 @@
     "secondary_num": "Order XXI",
     "title": "Order XXI Rule 67: Mode of making proclamation",
     "title_only": "Mode of making proclamation",
-    "text": "Order XXI Rule 67: Mode of making proclamation:\n(1) Every proclamation shall be made and published, as nearly as may be, in the manner prescribed by rule 54, sub-rule (2).\n(2) Where the Court so directs, such proclamation shall also be published in the Official Gazette or in a local newspaper, or in both, and the costs of such publication shall be deemed to be costs of the sale.",
-    "text_available": true,
+    "text": null,
+    "text_available": false,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -10762,8 +10953,8 @@
     "secondary_num": "Order XXI",
     "title": "Order XXI Rule 68: Time of sale",
     "title_only": "Time of sale",
-    "text": "Order XXI Rule 68: Time of sale:\nNo sale hereunder shall, without the consent in writing of the judgment-debtor, take place until after the expiration of at least thirty days in the case of immovable property, calculated from the date on which the copy of the proclamation has been affixed on the court-house of the Judge ordering the sale.",
-    "text_available": true,
+    "text": null,
+    "text_available": false,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -10791,8 +10982,8 @@
     "secondary_num": "Order XXI",
     "title": "Order XXI Rule 69: Adjournment or stoppage of sale",
     "title_only": "Adjournment or stoppage of sale",
-    "text": "Order XXI Rule 69: Adjournment or stoppage of sale:\n(1) The Court may, in its discretion, adjourn any sale hereunder to a specified day and hour, and the officer conducting any such sale may in his discretion adjourn the sale, recording his reasons for such adjournment.\n(2) Where a sale is adjourned under sub-rule (1) for a longer period than fourteen days, a fresh proclamation under rule 67 shall be made, unless the judgment-debtor consents to waive it.",
-    "text_available": true,
+    "text": null,
+    "text_available": false,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -10820,8 +11011,8 @@
     "secondary_num": "Order XXI",
     "title": "Order XXI Rule 84: Deposit by purchaser and re\u00adsale on default",
     "title_only": "Deposit by purchaser and re\u00adsale on default",
-    "text": "Order XXI Rule 84: Deposit by purchaser and re-sale on default:\n(1) On every sale of immovable property the person declared to be the purchaser shall pay immediately after such declaration a deposit of twenty-five per cent on the amount of his purchase-money to the officer or other person conducting the sale, and in default of such deposit, the property shall forthwith be re-sold.",
-    "text_available": true,
+    "text": null,
+    "text_available": false,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -10849,8 +11040,8 @@
     "secondary_num": "Order XXI",
     "title": "Order XXI Rule 85: Time for payment in full of purchase money",
     "title_only": "Time for payment in full of purchase money",
-    "text": "Order XXI Rule 85: Time for payment in full of purchase-money:\nThe full amount of purchase-money payable shall be paid by the purchaser into Court before the Court closes on the fifteenth day from the sale of the property.",
-    "text_available": true,
+    "text": null,
+    "text_available": false,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -10878,8 +11069,8 @@
     "secondary_num": "Order XXI",
     "title": "Order XXI Rule 89: Application to set aside sale on deposit",
     "title_only": "Application to set aside sale on deposit",
-    "text": "Order XXI Rule 89: Application to set aside sale on deposit:\n(1) Where immovable property has been sold in execution of a decree, any person, either owning such property or holding an interest therein by virtue of a title acquired before such sale, may apply to have the sale set aside on his depositing in Court: (a) for payment to the purchaser, a sum equal to five per cent of the purchase-money, and (b) for payment to the decree-holder, the amount specified in the proclamation of sale as that for the recovery of which the sale was ordered.",
-    "text_available": true,
+    "text": null,
+    "text_available": false,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,

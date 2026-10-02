@@ -7,7 +7,7 @@
     "primary_num": "1",
     "secondary_num": null,
     "title": "Short title, extent and commencement",
-    "text": "Short title, extent and commencement",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -20,7 +20,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_2_V1",
@@ -30,7 +31,7 @@
     "primary_num": "2",
     "secondary_num": null,
     "title": "Definitions (immovable property, pre-emptor, right of pre-emption, sale, Shafi Sharik, Shafi Khalit, Shafi Jar)",
-    "text": "Definitions (immovable property, pre-emptor, right of pre-emption, sale, Shafi Sharik, Shafi Khalit, Shafi Jar)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -43,7 +44,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_3_V1",
@@ -53,7 +55,7 @@
     "primary_num": "3",
     "secondary_num": null,
     "title": "Interpretation in conformity with Injunctions of Islam",
-    "text": "Interpretation in conformity with Injunctions of Islam",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -66,7 +68,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_4_V1",
@@ -76,7 +79,7 @@
     "primary_num": "4",
     "secondary_num": null,
     "title": "Act to override other laws",
-    "text": "Act to override other laws",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -89,7 +92,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_5_V1",
@@ -99,7 +103,7 @@
     "primary_num": "5",
     "secondary_num": null,
     "title": "Right of pre-emption arising on sale of immovable property",
-    "text": "Right of pre-emption arising on sale of immovable property",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -112,7 +116,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_6_V1",
@@ -122,7 +127,7 @@
     "primary_num": "6",
     "secondary_num": null,
     "title": "Persons in whom right of pre-emption vests (Shafi Sharik, Shafi Khalit, Shafi Jar)",
-    "text": "Persons in whom right of pre-emption vests (Shafi Sharik, Shafi Khalit, Shafi Jar)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -135,7 +140,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_7_V1",
@@ -145,7 +151,7 @@
     "primary_num": "7",
     "secondary_num": null,
     "title": "Priorities in right of pre-emption",
-    "text": "Priorities in right of pre-emption",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -158,7 +164,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_8_V1",
@@ -168,7 +175,7 @@
     "primary_num": "8",
     "secondary_num": null,
     "title": "Joint right of pre-emption how exercised",
-    "text": "Joint right of pre-emption how exercised",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -181,7 +188,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_9_V1",
@@ -191,7 +199,7 @@
     "primary_num": "9",
     "secondary_num": null,
     "title": "Method of distribution of property where more than one person is equally entitled",
-    "text": "Method of distribution of property where more than one person is equally entitled",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -204,7 +212,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_10_V1",
@@ -214,7 +223,7 @@
     "primary_num": "10",
     "secondary_num": null,
     "title": "Withdrawal of claim by one of several pre-emptors",
-    "text": "Withdrawal of claim by one of several pre-emptors",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -227,7 +236,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_11_V1",
@@ -237,7 +247,7 @@
     "primary_num": "11",
     "secondary_num": null,
     "title": "Sale of appurtenances of land",
-    "text": "Sale of appurtenances of land",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -250,7 +260,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_12_V1",
@@ -260,7 +271,7 @@
     "primary_num": "12",
     "secondary_num": null,
     "title": "Right to revoke sale",
-    "text": "Right to revoke sale",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -273,7 +284,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_13_V1",
@@ -283,7 +295,7 @@
     "primary_num": "13",
     "secondary_num": null,
     "title": "Demand of pre-emption (Talb-i-Muwathibat immediate demand, Talb-i-Ishhad confirmatory notice within two weeks attested by two witnesses, and Talb-i-Khusumat institution of suit)",
-    "text": "Demand of pre-emption (Talb-i-Muwathibat immediate demand, Talb-i-Ishhad confirmatory notice within two weeks attested by two witnesses, and Talb-i-Khusumat institution of suit)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -296,7 +308,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_14_V1",
@@ -306,7 +319,7 @@
     "primary_num": "14",
     "secondary_num": null,
     "title": "Demand by guardian or agent",
-    "text": "Demand by guardian or agent",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -319,7 +332,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_15_V1",
@@ -329,7 +343,7 @@
     "primary_num": "15",
     "secondary_num": null,
     "title": "Waiver of right of pre-emption by express consent or acquiescence",
-    "text": "Waiver of right of pre-emption by express consent or acquiescence",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -342,7 +356,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_16_V1",
@@ -352,7 +367,7 @@
     "primary_num": "16",
     "secondary_num": null,
     "title": "Death of pre-emptor; transmission of right to legal heirs after making demands",
-    "text": "Death of pre-emptor; transmission of right to legal heirs after making demands",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -365,7 +380,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_17_V1",
@@ -375,7 +391,7 @@
     "primary_num": "17",
     "secondary_num": null,
     "title": "Abatement of right of pre-emption",
-    "text": "Abatement of right of pre-emption",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -388,7 +404,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_18_V1",
@@ -398,7 +415,7 @@
     "primary_num": "18",
     "secondary_num": null,
     "title": "Exercise of right of pre-emption by a Muslim and a non-Muslim against each other",
-    "text": "Exercise of right of pre-emption by a Muslim and a non-Muslim against each other",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -411,7 +428,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_19_V1",
@@ -421,7 +439,7 @@
     "primary_num": "19",
     "secondary_num": null,
     "title": "Right of pre-emption non-transferable and indivisible",
-    "text": "Right of pre-emption non-transferable and indivisible",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -434,7 +452,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_20_V1",
@@ -444,7 +463,7 @@
     "primary_num": "20",
     "secondary_num": null,
     "title": "Where pre-emptor and vendee are equally entitled",
-    "text": "Where pre-emptor and vendee are equally entitled",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -457,7 +476,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_21_V1",
@@ -467,7 +487,7 @@
     "primary_num": "21",
     "secondary_num": null,
     "title": "Improvements made by the vendee on pre-empted property",
-    "text": "Improvements made by the vendee on pre-empted property",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -480,7 +500,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_22_V1",
@@ -490,7 +511,7 @@
     "primary_num": "22",
     "secondary_num": null,
     "title": "Improvement made in the status of vendee-defendant after institution of suit",
-    "text": "Improvement made in the status of vendee-defendant after institution of suit",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -503,7 +524,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_23_V1",
@@ -513,7 +535,7 @@
     "primary_num": "23",
     "secondary_num": null,
     "title": "No right of pre-emption in respect of certain properties (dower, waqf, public auction)",
-    "text": "No right of pre-emption in respect of certain properties (dower, waqf, public auction)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -526,7 +548,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_24_V1",
@@ -536,7 +559,7 @@
     "primary_num": "24",
     "secondary_num": null,
     "title": "Plaintiff to deposit sale price of property (one-third in cash and two-thirds bank guarantee/security within thirty days)",
-    "text": "Plaintiff to deposit sale price of property (one-third in cash and two-thirds bank guarantee/security within thirty days)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -549,7 +572,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_25_V1",
@@ -559,7 +583,7 @@
     "primary_num": "25",
     "secondary_num": null,
     "title": "Deposit or refund of excess price",
-    "text": "Deposit or refund of excess price",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -572,7 +596,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_26_V1",
@@ -582,7 +607,7 @@
     "primary_num": "26",
     "secondary_num": null,
     "title": "Sum deposited by pre-emptor not to be attached in execution of decree against him",
-    "text": "Sum deposited by pre-emptor not to be attached in execution of decree against him",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -595,7 +620,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_27_V1",
@@ -605,7 +631,7 @@
     "primary_num": "27",
     "secondary_num": null,
     "title": "Determination of price by Court where price stated in deed is fictitious or disputed",
-    "text": "Determination of price by Court where price stated in deed is fictitious or disputed",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -618,7 +644,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_28_V1",
@@ -628,7 +655,7 @@
     "primary_num": "28",
     "secondary_num": null,
     "title": "Market value how to be determined",
-    "text": "Market value how to be determined",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -641,7 +668,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_29_V1",
@@ -651,7 +679,7 @@
     "primary_num": "29",
     "secondary_num": null,
     "title": "Government may exclude areas from pre-emption",
-    "text": "Government may exclude areas from pre-emption",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -664,7 +692,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_30_V1",
@@ -674,7 +703,7 @@
     "primary_num": "30",
     "secondary_num": null,
     "title": "Limitation: four months from date of registration of sale deed, attestation of mutation, or taking physical possession",
-    "text": "Limitation: four months from date of registration of sale deed, attestation of mutation, or taking physical possession",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -687,7 +716,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_31_V1",
@@ -697,7 +727,7 @@
     "primary_num": "31",
     "secondary_num": null,
     "title": "Notice of intended sale",
-    "text": "Notice of intended sale",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -710,7 +740,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_32_V1",
@@ -720,7 +751,7 @@
     "primary_num": "32",
     "secondary_num": null,
     "title": "Matters ancillary or akin to provisions of this Act",
-    "text": "Matters ancillary or akin to provisions of this Act",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -733,7 +764,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_33_V1",
@@ -743,7 +775,7 @@
     "primary_num": "33",
     "secondary_num": null,
     "title": "Application of Civil Procedure Code and Qanun-e-Shahadat Order",
-    "text": "Application of Civil Procedure Code and Qanun-e-Shahadat Order",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -756,7 +788,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_34_V1",
@@ -766,7 +799,7 @@
     "primary_num": "34",
     "secondary_num": null,
     "title": "Repeal of Punjab Pre-emption Act 1913 (Act I of 1913)",
-    "text": "Repeal of Punjab Pre-emption Act 1913 (Act I of 1913)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -779,7 +812,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_35_V1",
@@ -789,7 +823,7 @@
     "primary_num": "35",
     "secondary_num": null,
     "title": "Saving of pending suits instituted under previous laws",
-    "text": "Saving of pending suits instituted under previous laws",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -802,7 +836,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_36_V1",
@@ -812,7 +847,7 @@
     "primary_num": "36",
     "secondary_num": null,
     "title": "Rules",
-    "text": "Rules",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -825,7 +860,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_37_V1",
@@ -835,7 +871,7 @@
     "primary_num": "37",
     "secondary_num": null,
     "title": "Repeal of Punjab Pre-emption Ordinance 1991 (IX of 1991)",
-    "text": "Repeal of Punjab Pre-emption Ordinance 1991 (IX of 1991)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -848,7 +884,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:22.084499+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "PREEMPTION_1991_SEC_1_V2",

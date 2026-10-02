@@ -12,8 +12,13 @@
     "journal": "PLD",
     "court_code": "SC",
     "tier": 4,
-    "status": "full_text",
-    "full_text": "State v. Dosso. Supreme Court judgment on doctrine of revolutionary legality.",
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-02",
+    "content_hash": null,
     "match_keys": [
       "1958_PLD_533",
       "1958_PLD_SC_533",
@@ -32,7 +37,7 @@
     ],
     "is_historical_exception": true,
     "precedent_status": "overruled",
-    "precedent_status_warning": "> \u26a0\ufe0f **Precedent Status Warning**: State v. Dosso has been overruled by Asma Jilani v. Government of Punjab (PLD 1972 SC 139). The doctrine of revolutionary legality validating extra-constitutional seizure of power was expressly rejected and declared bad law.",
+    "precedent_status_warning": "> ⚠️ **Precedent Status Warning**: State v. Dosso has been overruled by Asma Jilani v. Government of Punjab (PLD 1972 SC 139). The doctrine of revolutionary legality validating extra-constitutional seizure of power was expressly rejected and declared bad law.",
     "superseding_case_name": "Asma Jilani v. Government of Punjab",
     "superseding_citation": "PLD 1972 SC 139",
     "precedent_superseded_by": "PLD 1972 SC 139",
@@ -51,8 +56,13 @@
     "journal": "PLD",
     "court_code": "SC",
     "tier": 4,
-    "status": "full_text",
-    "full_text": "HAVOVER FIRE INSURANCE COMPANY Versus MURALIDHAR BANECHND\\nSupreme Court of Pakistan full judgment text on record.",
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-02",
+    "content_hash": null,
     "match_keys": [
       "1958_PLD_138",
       "1958_PLD_SC_138",
@@ -86,8 +96,13 @@
     "journal": "SCMR",
     "court_code": "SC",
     "tier": 4,
-    "status": "full_text",
-    "full_text": "MIAN ALLAH DITTA Versus The STATE\\nSupreme Court of Pakistan judgment on post-arrest bail under section 497 Cr.P.C.",
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-02",
+    "content_hash": null,
     "match_keys": [
       "2013_SCMR_51",
       "2013 SCMR 51"
@@ -102,438 +117,5 @@
     ],
     "is_historical_exception": false,
     "precedent_status": "in_force"
-  },
-  {
-    "case_id": "2000_PLD_FSC_1",
-    "stored_case_id": "2000_PLD_FSC_1",
-    "neutral_citation": "PLD 2000 FSC 1",
-    "case_title": "Dr. Mahmood-ur-Rahman Faisal and others v. Federation of Pakistan (Allah Rakha Case)",
-    "court_name": "Federal Shariat Court",
-    "court": "Federal Shariat Court",
-    "decision_date": "1999-12-23",
-    "year": 2000,
-    "page": 1,
-    "journal": "PLD",
-    "court_code": "FSC",
-    "tier": 3,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): FEDERAL SHARIAT COURT: Dr. Mahmood-ur-Rahman Faisal and others v. Federation of Pakistan (commonly cited as Allah Rakha v. Federation of Pakistan), PLD 2000 FSC 1.\\n\\nHeld:\\n1. Section 4 of the Muslim Family Laws Ordinance, 1961 (MFLO) was declared repugnant to the Injunctions of Islam as laid down in the Holy Quran and Sunnah. The Court examined the Islamic law of inheritance (Mirath) and held that Section 4 violated established Shariah principles by creating an absolute per stirpes right of inheritance for orphaned grandchildren equal to living children.\\n2. EFFECT OF APPEAL UNDER ARTICLE 203D CONSTITUTION: Under Article 203D(2) proviso and Article 203F of the Constitution of Pakistan, 1973, a declaration of repugnancy by the Federal Shariat Court shall NOT take effect pending an appeal before the Supreme Court Shariat Appellate Bench.\\n3. Because the Federal Government preferred Shariat Appeal No. 1/2000 before the Supreme Court of Pakistan Shariat Appellate Bench, the operation of the FSC declaration of repugnancy is suspended by constitutional operation of law.\\n4. Section 4 MFLO remains operative and enforceable law in all civil courts, family courts, and revenue mutation proceedings until the Shariat Appellate Bench of the Supreme Court finally decides the appeal. Section 4 survives NOT because of parliamentary inaction, but because of the pendency of the appeal under the constitutional proviso to Article 203D(2).",
-    "match_keys": [
-      "2000_PLD_FSC_1",
-      "2000_PLD_1",
-      "PLD 2000 FSC 1",
-      "2000 PLD FSC 1",
-      "2000 PLD 1"
-    ],
-    "aliases": [
-      "allah rakha",
-      "allah rakha case",
-      "allah rakha v federation",
-      "pld 2000 fsc 1"
-    ],
-    "doctrinal_keywords": [
-      "orphaned grandchildren",
-      "father died before him",
-      "section 4 mflo",
-      "muslim family laws ordinance"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "doctrinal_note": "Section 4 MFLO remains operative law pending appeal in the Supreme Court Shariat Appellate Bench under Art. 203D(2) proviso.",
-    "is_editorial": true
-  },
-  {
-    "case_id": "2021_PLD_SC_498",
-    "stored_case_id": "2021_PLD_SC_498",
-    "neutral_citation": "PLD 2021 SC 498",
-    "case_title": "Farah Naz v. Muhammad Bashir",
-    "court_name": "Supreme Court of Pakistan",
-    "court": "Supreme Court of Pakistan",
-    "decision_date": "2021-03-24",
-    "year": 2021,
-    "page": 498,
-    "journal": "PLD",
-    "court_code": "SC",
-    "tier": 4,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): SUPREME COURT OF PAKISTAN: Farah Naz v. Muhammad Bashir, PLD 2021 SC 498.\\n\\nHeld:\\nMuslim Family Laws Ordinance, 1961, Section 4: Applying Section 4 MFLO during the pendency of Shariat Appeal before the Supreme Court Shariat Appellate Bench. The Supreme Court confirmed that the declaration of repugnancy in Allah Rakha (PLD 2000 FSC 1) has not taken effect by virtue of the constitutional proviso to Article 203D(2). Orphaned grandchildren whose father died before their grandfather are legally entitled to receive their father's share in the grandfather's estate under Section 4 MFLO, and revenue authorities and family courts must enforce their rights accordingly.",
-    "match_keys": [
-      "2021_PLD_SC_498",
-      "PLD 2021 SC 498",
-      "2021 PLD SC 498"
-    ],
-    "aliases": [
-      "farah naz v muhammad bashir",
-      "farah naz",
-      "pld 2021 sc 498"
-    ],
-    "doctrinal_keywords": [
-      "orphaned grandchildren",
-      "father died before him"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "is_editorial": true
-  },
-  {
-    "case_id": "2024_SCMR_1218",
-    "stored_case_id": "2024_SCMR_1218",
-    "neutral_citation": "2024 SCMR 1218",
-    "case_title": "Tariq Zubair Khan and others v. Banking Court-I, Multan and others",
-    "court_name": "Supreme Court of Pakistan",
-    "court": "Supreme Court of Pakistan",
-    "decision_date": "2024-03-14",
-    "year": 2024,
-    "page": 1218,
-    "journal": "SCMR",
-    "court_code": "SC",
-    "tier": 4,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): SUPREME COURT OF PAKISTAN: Tariq Zubair Khan v. Banking Court, 2024 SCMR 1218.\\n\\nHeld:\\n1. PRE-DEPOSIT REQUIREMENT UNDER ORDER XXI RULE 90 CPC: In execution proceedings against mortgaged properties under Section 19 of the Financial Institutions (Recovery of Finances) Ordinance, 2001 (FIO 2001), the second proviso to Order XXI Rule 90 CPC explicitly mandates that no application to set aside an execution sale shall be entertained unless the applicant deposits in Court twenty percent (20%) of the sum realized at the auction sale or gives such security as the Court may direct.\\n2. QUANTUM OF PRE-DEPOSIT: The statutory pre-deposit requirement is strictly twenty percent (20%). Neither the CPC nor FIO 2001 establishes a 50% pre-deposit requirement. Directing a deposit beyond the statutory 20% threshold without statutory authorization is legally erroneous.\\n3. ADVICE RISK WARNING: However, where the executing court has passed an order directing a deposit, an objector cannot unilaterally tender only 20% or ignore the judicial order. Failure to comply with the deposit amount ordered by the executing court risks immediate summary dismissal or rejection of the objection petition. The proper legal course is to file an urgent application for modification or prefer an appeal under Section 22 FIO 2001 before the High Court.",
-    "match_keys": [
-      "2024_SCMR_1218",
-      "2024 SCMR 1218"
-    ],
-    "aliases": [
-      "tariq zubair khan",
-      "tariq zubair",
-      "2024 scmr 1218"
-    ],
-    "doctrinal_keywords": [
-      "50% deposit",
-      "banking court directed a 50%",
-      "statute as 20%",
-      "20% deposit"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "is_editorial": true
-  },
-  {
-    "case_id": "2026_CLD_96",
-    "stored_case_id": "2026_CLD_96",
-    "neutral_citation": "2026 CLD 96",
-    "case_title": "Vital Chemicals (Pvt.) Ltd. v. National Bank of Pakistan",
-    "court_name": "Lahore High Court",
-    "court": "Lahore High Court",
-    "decision_date": "2026-01-18",
-    "year": 2026,
-    "page": 96,
-    "journal": "CLD",
-    "court_code": "LHC",
-    "tier": 2,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): LAHORE HIGH COURT (Division Bench): Vital Chemicals (Pvt.) Ltd. v. National Bank of Pakistan, 2026 CLD 96.\\n\\nHeld:\\n1. AUCTION EXECUTION & VALUATION DEFECTS: In an execution proceeding under Section 19 FIO 2001, where an objection petition challenges an auction sale on grounds of material irregularity, non-disclosure of reserve price, or inadequate valuation, the executing court must assess whether substantial injury resulted to the judgment-debtor.\\n2. APPELLATE ROUTE & FORUM: An appeal against any final order or decree passed by a Banking Court lies strictly and exclusively to a Division Bench of the High Court under Section 22 of the Financial Institutions (Recovery of Finances) Ordinance, 2001 within thirty (30) days from the date of the order. An appeal NEVER lies to the District Judge. Section 109 CPC governs appeals from High Courts to the Supreme Court and has no application to appeals from Banking Courts.",
-    "match_keys": [
-      "2026_CLD_96",
-      "2026 CLD 96"
-    ],
-    "aliases": [
-      "vital chemicals",
-      "2026 cld 96"
-    ],
-    "doctrinal_keywords": [
-      "auction of mortgaged",
-      "reserve price and proclamation",
-      "reserve price"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "is_editorial": true
-  },
-  {
-    "case_id": "2023_SCMR_890",
-    "stored_case_id": "2023_SCMR_890",
-    "neutral_citation": "2023 SCMR 890",
-    "case_title": "Noor Hayat v. Allied Bank Limited",
-    "court_name": "Supreme Court of Pakistan",
-    "court": "Supreme Court of Pakistan",
-    "decision_date": "2023-05-12",
-    "year": 2023,
-    "page": 890,
-    "journal": "SCMR",
-    "court_code": "SC",
-    "tier": 4,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): SUPREME COURT OF PAKISTAN: Noor Hayat v. Allied Bank Limited, 2023 SCMR 890.\\n\\nHeld:\\nExecution sale objections under Order XXI Rule 90 CPC: Deposit requirement in the proviso is an indispensable statutory condition precedent. If the judgment-debtor or objector fails to satisfy the deposit or security requirement ordered by the executing court, the objection petition cannot be entertained and is liable to summary dismissal without inquiry into allegations of procedural irregularity.",
-    "match_keys": [
-      "2023_SCMR_890",
-      "2023 SCMR 890"
-    ],
-    "aliases": [
-      "noor hayat",
-      "2023 scmr 890"
-    ],
-    "doctrinal_keywords": [
-      "banking court directed",
-      "objection to the auction"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "is_editorial": true
-  },
-  {
-    "case_id": "2012_SCMR_983",
-    "stored_case_id": "2012_SCMR_983",
-    "neutral_citation": "2012 SCMR 983",
-    "case_title": "Mst. Sakina Bibi v. Muhammad Sharif and others",
-    "court_name": "Supreme Court of Pakistan",
-    "court": "Supreme Court of Pakistan",
-    "decision_date": "2012-04-10",
-    "year": 2012,
-    "page": 983,
-    "journal": "SCMR",
-    "court_code": "SC",
-    "tier": 4,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): SUPREME COURT OF PAKISTAN: Mst. Sakina Bibi v. Muhammad Sharif, 2012 SCMR 983.\\n\\nHeld:\\n1. SECTION 52 TPA (LIS PENDENS) THRESHOLD: The doctrine of lis pendens codified under Section 52 of the Transfer of Property Act, 1882 applies strictly when a right to specific immovable property is directly and specifically in question in a pending suit.\\n2. MAINTENANCE SUIT NOT AN AUTOMATIC CHARGE: In a routine suit for maintenance or recovery of money against a spouse, the property of the husband is not directly and specifically in question unless a specific charge on particular immovable property was claimed in the plaint and granted by the court. Therefore, a gift or transfer made during a routine maintenance suit does not automatically fall under Section 52 TPA unless the specific house was directly in issue.\\n3. SECTION 41 & 53 TPA: Where s.52 does not apply, the transferee may plead bona fide purchase under Section 41 TPA, but the executing court must scrutinize whether the transfer was a fraudulent conveyance under Section 53 TPA designed to defeat and delay creditors.",
-    "match_keys": [
-      "2012_SCMR_983",
-      "2012 SCMR 983"
-    ],
-    "aliases": [
-      "sakina bibi",
-      "2012 scmr 983"
-    ],
-    "doctrinal_keywords": [
-      "s.52 tpa",
-      "section 52 tpa",
-      "lis pendens"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "is_editorial": true
-  },
-  {
-    "case_id": "2014_SCMR_33",
-    "stored_case_id": "2014_SCMR_33",
-    "neutral_citation": "2014 SCMR 33",
-    "case_title": "Muhammad Ali v. Mst. Nasreen and others",
-    "court_name": "Supreme Court of Pakistan",
-    "court": "Supreme Court of Pakistan",
-    "decision_date": "2013-11-20",
-    "year": 2014,
-    "page": 33,
-    "journal": "SCMR",
-    "court_code": "SC",
-    "tier": 4,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): SUPREME COURT OF PAKISTAN: Muhammad Ali v. Mst. Nasreen, 2014 SCMR 33.\\n\\nHeld:\\n1. ORDER XXI RULE 58 & SECTION 47 CPC: All questions relating to title, right, or interest in property attached in execution must be investigated and decided by the executing court itself under Order XXI Rule 58 CPC read with Section 47 CPC.\\n2. BARRING OF SEPARATE SUIT: A separate regular civil suit by the third-party objector is barred under Section 47 CPC. The executing court acts with plenary jurisdiction to determine whether the objector is a bona fide owner or a collusive transferee.",
-    "match_keys": [
-      "2014_SCMR_33",
-      "2014 SCMR 33"
-    ],
-    "aliases": [
-      "muhammad ali v nasreen",
-      "2014 scmr 33"
-    ],
-    "doctrinal_keywords": [
-      "o.xxi r.58",
-      "order xxi rule 58",
-      "s.47 cpc",
-      "section 47 cpc"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "is_editorial": true
-  },
-  {
-    "case_id": "2006_YLR_1060",
-    "stored_case_id": "2006_YLR_1060",
-    "neutral_citation": "2006 YLR 1060",
-    "case_title": "Rashid Ahmad v. Mst. Bilqees Begum",
-    "court_name": "Lahore High Court",
-    "court": "Lahore High Court",
-    "decision_date": "2006-03-22",
-    "year": 2006,
-    "page": 1060,
-    "journal": "YLR",
-    "court_code": "LHC",
-    "tier": 2,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): LAHORE HIGH COURT: Rashid Ahmad v. Mst. Bilqees Begum, 2006 YLR 1060.\\n\\nHeld:\\nTransfer to brother through mutation during pendency of maintenance litigation: Where a husband gifts or transfers his residential house to his real brother via oral gift or revenue mutation without consideration while family maintenance claims are pending, the transfer is presumed collusive under Section 53 of the Transfer of Property Act, 1882 to defeat the wife's decree. The executing court under Order XXI Rule 58 CPC is fully entitled to reject the brother's objection and attach the property to recover maintenance arrears.",
-    "match_keys": [
-      "2006_YLR_1060",
-      "2006 YLR 1060"
-    ],
-    "aliases": [
-      "rashid ahmad v bilqees",
-      "2006 ylr 1060"
-    ],
-    "doctrinal_keywords": [
-      "gifted his house to his brother",
-      "brother through a mutation",
-      "maintenance suit"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "is_editorial": true
-  },
-  {
-    "case_id": "2025_PLD_SC_691",
-    "stored_case_id": "2025_PLD_691",
-    "neutral_citation": "2025 PLD 691",
-    "case_title": "Pakistan Telecommunication Company Ltd. v. Federation of Pakistan",
-    "court_name": "Supreme Court of Pakistan",
-    "court": "Supreme Court of Pakistan",
-    "decision_date": "2025-02-14",
-    "year": 2025,
-    "page": 691,
-    "journal": "PLD",
-    "court_code": "SC",
-    "tier": 4,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): SUPREME COURT OF PAKISTAN: PTCL v. Federation of Pakistan, 2025 PLD 691.\\n\\nHeld:\\nOrder VI Rule 17 CPC (Amendment of Pleadings): The cardinal test for allowing an amendment of the plaint or written statement at any stage of proceedings is whether the amendment is necessary for the determination of the real questions in controversy between the parties. Amendments should be liberally allowed unless the opposite party would suffer an injustice that cannot be compensated by costs or where a completely new and inconsistent case is set up.",
-    "match_keys": [
-      "2025_PLD_691",
-      "2025 PLD 691",
-      "2025_PLD_SC_691",
-      "PLD 2025 SC 691"
-    ],
-    "aliases": [
-      "2025 pld 691",
-      "ptcl v federation"
-    ],
-    "doctrinal_keywords": [
-      "amend the plaint",
-      "amendment of plaint",
-      "order vi rule 17"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "is_editorial": true
-  },
-  {
-    "case_id": "2025_PLD_SC_63",
-    "stored_case_id": "2025_PLD_63",
-    "neutral_citation": "2025 PLD 63",
-    "case_title": "Muhammad Aslam v. Bashir Ahmad and others",
-    "court_name": "Supreme Court of Pakistan",
-    "court": "Supreme Court of Pakistan",
-    "decision_date": "2024-11-28",
-    "year": 2025,
-    "page": 63,
-    "journal": "PLD",
-    "court_code": "SC",
-    "tier": 4,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): SUPREME COURT OF PAKISTAN: Muhammad Aslam v. Bashir Ahmad, 2025 PLD 63.\\n\\nHeld:\\nGeneral Power of Attorney and fiduciary duties under Sections 214 & 215 Contract Act, 1872: An agent appointed under a General Power of Attorney stands in a fiduciary position of utmost trust. An attorney cannot transfer, sell, or alienate the property of the principal in favor of his own sons, wife, or close relatives without the express, written consent and knowledge of the principal. Any sale by an agent to his own sons without explicit authorization is an act of fraud on the principal and void ab initio.",
-    "match_keys": [
-      "2025_PLD_63",
-      "2025 PLD 63",
-      "2025_PLD_SC_63",
-      "PLD 2025 SC 63"
-    ],
-    "aliases": [
-      "2025 pld 63",
-      "muhammad aslam v bashir"
-    ],
-    "doctrinal_keywords": [
-      "general attorney sold",
-      "sold my father's land to his own sons"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "is_editorial": true
-  },
-  {
-    "case_id": "2003_PLD_SC_31",
-    "stored_case_id": "2003_PLD_31",
-    "neutral_citation": "PLD 2003 SC 31",
-    "case_title": "Fida Muhammad v. Pir Muhammad Khan",
-    "court_name": "Supreme Court of Pakistan",
-    "court": "Supreme Court of Pakistan",
-    "decision_date": "2002-10-18",
-    "year": 2003,
-    "page": 31,
-    "journal": "PLD",
-    "court_code": "SC",
-    "tier": 4,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): SUPREME COURT OF PAKISTAN: Fida Muhammad v. Pir Muhammad Khan, PLD 2003 SC 31.\\n\\nHeld:\\nPowers of Attorney Act, 1882: A power of attorney must be construed strictly. General words of authorization do not confer an unfettered power to dispose of property. An attorney executing a conveyance in favor of his own family members without explicit authority acts ultra vires the power of attorney.",
-    "match_keys": [
-      "2003_PLD_31",
-      "PLD 2003 SC 31",
-      "2003 PLD SC 31"
-    ],
-    "aliases": [
-      "fida muhammad",
-      "pld 2003 sc 31"
-    ],
-    "doctrinal_keywords": [
-      "power of attorney",
-      "general attorney"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "is_editorial": true
-  },
-  {
-    "case_id": "2025_PLD_SC_706",
-    "stored_case_id": "2025_PLD_706",
-    "neutral_citation": "2025 PLD 706",
-    "case_title": "Frontier Works Organization v. Joint Venture Consortium",
-    "court_name": "Supreme Court of Pakistan",
-    "court": "Supreme Court of Pakistan",
-    "decision_date": "2025-03-05",
-    "year": 2025,
-    "page": 706,
-    "journal": "PLD",
-    "court_code": "SC",
-    "tier": 4,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): SUPREME COURT OF PAKISTAN: Frontier Works Organization v. Joint Venture Consortium, 2025 PLD 706.\n\nHeld:\nArbitration Act, 1940 (Sections 17 and 30):\n1. Courts deciding objections to an arbitral award should avoid framing issues and recording evidence unless absolutely necessary. The proceedings on objections under Section 30 are summary in nature and should not be converted into a regular trial.\n2. An order framing issues must show why it is necessary, and the issues framed must be specific to the statutory grounds.\n3. Courts are not appellate forums over arbitral awards. Interference with an arbitral award is strictly limited to jurisdictional error, proven misconduct of the arbitrator, corruption, or a patent legal error on the face of the record.\n4. Under Article 158 of the Limitation Act, 1908, the period of limitation to challenge or set aside an award is strictly thirty (30) days from the service of notice of the filing of the award. An objection filed after 30 days is barred by limitation and the court is bound to pronounce judgment according to the award under Section 17.",
-    "match_keys": [
-      "2025_PLD_706",
-      "2025 PLD 706",
-      "2025_PLD_SC_706",
-      "PLD 2025 SC 706"
-    ],
-    "aliases": [
-      "2025 pld 706",
-      "fwo v jv"
-    ],
-    "doctrinal_keywords": [
-      "objections to an arbitration award",
-      "arbitration award in the civil court",
-      "framed issues and called for evidence"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "is_editorial": true
-  },
-  {
-    "case_id": "2025_PLD_SC_516",
-    "stored_case_id": "2025_PLD_516",
-    "neutral_citation": "2025 PLD 516",
-    "case_title": "Islamabad High Court Bar Association v. Federation of Pakistan",
-    "court_name": "Supreme Court of Pakistan",
-    "court": "Supreme Court of Pakistan",
-    "decision_date": "2025-01-22",
-    "year": 2025,
-    "page": 516,
-    "journal": "PLD",
-    "court_code": "SC",
-    "tier": 4,
-    "status": "editorial, unreviewed",
-    "full_text": "[EDITORIAL SUMMARY - UNREVIEWED] (AI-authored provisional summary; NOT verbatim court text): SUPREME COURT OF PAKISTAN: Islamabad High Court Bar Association v. Federation of Pakistan, 2025 PLD 516.\n\nHeld:\nConstitutional law and judicial independence under Articles 175A and 200 of the Constitution of Pakistan, 1973:\n1. The 3-2 majority in 2025 PLD 516 held that the transfer of High Court judges to the Islamabad High Court under Article 200 was within the constitutional framework, and remitted the questions of seniority determination and the nature/tenure of the transfer to the President.\n2. Two dissenting judges held that transfers without meaningful, consultative consent violated the constitutional independence of the judiciary under Article 175A and amounted to executive interference.\n3. Essential Note on Constitutional Currency: Following the 27th Constitutional Amendment (November 2025), Article 200 was amended and the Federal Constitutional Court was established. Therefore, the 2025 majority decision cannot be presented as unqualified current law without verifying the post-27th Amendment text and new forum rules.",
-    "match_keys": [
-      "2025_PLD_516",
-      "2025 PLD 516",
-      "2025_PLD_SC_516",
-      "PLD 2025 SC 516"
-    ],
-    "aliases": [
-      "2025 pld 516",
-      "ihc bar association"
-    ],
-    "doctrinal_keywords": [
-      "transfer high court judges",
-      "article 200",
-      "islamabad high court under article 200"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force",
-    "is_editorial": true
   }
 ]

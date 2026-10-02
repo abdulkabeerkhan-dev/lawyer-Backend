@@ -102,11 +102,18 @@ def check_advice_risk_in_text(memo_text: str, advice_risk_spec: str) -> Dict[str
     }
 
 def check_currency_labels_in_text(memo_text: str, provisions_to_check: Optional[str] = None) -> Dict[str, Any]:
-    pattern = re.compile(r'\[(CHECKED, NO CHANGE FOUND|NOT CHECKED|DECLARED REPUGNANT)[^\]]*\]', re.IGNORECASE)
-    matches = pattern.findall(memo_text)
+    label_pattern = re.compile(r'\[(CHECKED, NO CHANGE FOUND|NOT CHECKED|BASELINE TABLE|DECLARED REPUGNANT)[^\]]*\]', re.IGNORECASE)
+    labels = label_pattern.findall(memo_text)
+    
+    actual_pattern = re.compile(r'\[CHECKED, NO CHANGE FOUND:[^\]]*(?:pakistancode|punjablaws|senate|na\.gov)[^\]]*\]', re.IGNORECASE)
+    actual_checks = actual_pattern.findall(memo_text)
+    
     return {
-        "passed": len(matches) > 0,
-        "labels_found": matches
+        "passed": len(labels) > 0,
+        "has_labels": len(labels) > 0,
+        "labels_found": labels,
+        "has_actual_checks": len(actual_checks) > 0,
+        "actual_checks_found": actual_checks
     }
 
 def check_forum_limitation_accuracy(memo_text: str, exp_forum: str, exp_lim: str) -> Dict[str, Any]:
@@ -183,16 +190,24 @@ async def evaluate_single_case(
 
     scope_violations = [f for f in forb_results if f.get("violated", False)]
     
-    # Deterministic backup check for high-risk forbidden terms
+    # Claim-level checks for forbidden assertions
     deterministic_violations = []
-    if "ultra vires" in memo_lower and any("ultra vires" in c.lower() for c in gold_case.get("forbidden_claims", [])):
-        deterministic_violations.append("ultra vires")
+    # 1. Claim that 50% court direction is unlawful, ultra vires, or exceeds authority without qualifying retrieved holding
+    if any("50%" in c and ("ultra vires" in c.lower() or "unlawful" in c.lower()) for c in gold_case.get("forbidden_claims", [])):
+        unlawful_50_patterns = [
+            r'50%[^\.\n]*?(?:ultra\s+vires|unlawful|without\s+jurisdiction|without\s+statutory|exceeds\s+statutory|violates\s+the\s+express|legally\s+unsustainable|contrary\s+to\s+law|illegal|void)',
+            r'(?:ultra\s+vires|unlawful|without\s+jurisdiction|without\s+statutory|exceeds\s+statutory|violates\s+the\s+express|legally\s+unsustainable|contrary\s+to\s+law|illegal|void)[^\.\n]*?50%',
+            r'demanding\s+50%[^\.\n]*?(?:exceeds|violates|without\s+statutory|unlawful|illegal|unsustainable|contrary)',
+            r'condition\s+of\s+50%[^\.\n]*?(?:without\s+statutory|unlawful|vitiates|illegal|contrary|unsustainable)'
+        ]
+        if any(re.search(pat, memo_lower) for pat in unlawful_50_patterns):
+            deterministic_violations.append("Claiming 50% court direction is unlawful, ultra vires, or exceeds statutory authority without qualifying retrieved source holding")
     if "no precedent exists" in memo_lower and any("no precedent exists" in c.lower() for c in gold_case.get("forbidden_claims", [])):
         deterministic_violations.append("no precedent exists")
     if ("section 109 cpc" in memo_lower or "section 109" in memo_lower) and "district judge" in memo_lower:
         if not ("not lie" in memo_lower or "does not" in memo_lower or "do not" in memo_lower):
             deterministic_violations.append("s.109 appeal to District Judge")
-    if "[[citation removed" in memo_lower:
+    if "[[citation removed" in memo_lower or "[citation removed:" in memo_lower:
         deterministic_violations.append("[[CITATION REMOVED]] residual marker")
 
     # 2. Key authority recall & min court
@@ -302,7 +317,9 @@ async def evaluate_single_case(
             "negative_finding_correctness": round(neg_correctness, 4),
             "forum_limitation_accuracy": 1.0 if fl_check["passed"] else 0.0,
             "advice_risk_passed": adv_check["passed"],
-            "currency_check_passed": curr_check["passed"]
+            "currency_check_passed": curr_check["passed"],
+            "currency_label_coverage": 1.0 if curr_check.get("has_labels") else 0.0,
+            "currency_actual_check_rate": 1.0 if curr_check.get("has_actual_checks") else 0.0
         },
         "details": {
             "required_points": req_results,
@@ -409,7 +426,8 @@ async def run_harness(
     avg_neg_correctness = sum(r["metrics"]["negative_finding_correctness"] for r in results) / max(1, total_eval)
     avg_fl_accuracy = sum(r["metrics"]["forum_limitation_accuracy"] for r in results) / max(1, total_eval)
     avg_advice_risk = sum(1.0 if r["metrics"]["advice_risk_passed"] else 0.0 for r in results) / max(1, total_eval)
-    avg_curr_coverage = sum(1.0 if r["metrics"]["currency_check_passed"] else 0.0 for r in results) / max(1, total_eval)
+    avg_curr_coverage = sum(r["metrics"]["currency_label_coverage"] for r in results) / max(1, total_eval)
+    avg_actual_check_rate = sum(r["metrics"]["currency_actual_check_rate"] for r in results) / max(1, total_eval)
     avg_latency = sum(r.get("latency_s", 0.0) for r in results) / max(1, total_eval)
     total_scope_violations = sum(r["metrics"]["scope_violations_count"] for r in results)
     overall_pass_rate = sum(1 for r in results if r["passed"]) / max(1, total_eval)
@@ -426,6 +444,7 @@ async def run_harness(
         "forum_limitation_accuracy": round(avg_fl_accuracy, 4),
         "advice_risk_compliance": round(avg_advice_risk, 4),
         "currency_label_coverage": round(avg_curr_coverage, 4),
+        "currency_actual_check_rate": round(avg_actual_check_rate, 4),
         "scope_violations_count": total_scope_violations,
         "avg_latency_s": round(avg_latency, 2),
         "area_breakdown": {
@@ -456,6 +475,7 @@ async def run_harness(
         f.write(f"- **Forum & Limitation Accuracy**: {summary['forum_limitation_accuracy']*100:.1f}%\n")
         f.write(f"- **Advice Risk Compliance**: {summary['advice_risk_compliance']*100:.1f}%\n")
         f.write(f"- **Currency Label Coverage**: {summary['currency_label_coverage']*100:.1f}%\n")
+        f.write(f"- **Currency Actual Check Rate (sources_queried not null)**: {summary['currency_actual_check_rate']*100:.1f}%\n")
         f.write(f"- **Scope Violations**: {summary['scope_violations_count']}\n")
         f.write(f"- **Average Latency**: {summary['avg_latency_s']}s\n\n")
         f.write("## Area Breakdown\n\n")

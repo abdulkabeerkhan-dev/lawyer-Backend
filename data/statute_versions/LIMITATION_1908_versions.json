@@ -7,7 +7,7 @@
     "primary_num": "1",
     "secondary_num": null,
     "title": "Short title, extent and commencement",
-    "text": "Short title, extent and commencement",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -20,7 +20,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_2_V1",
@@ -30,7 +31,7 @@
     "primary_num": "2",
     "secondary_num": null,
     "title": "Definitions",
-    "text": "Definitions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -43,7 +44,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_3_V1",
@@ -53,7 +55,7 @@
     "primary_num": "3",
     "secondary_num": null,
     "title": "Dismissal of suits, etc., instituted, etc., after period of limitation",
-    "text": "Dismissal of suits, etc., instituted, etc., after period of limitation",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -66,7 +68,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_4_V1",
@@ -76,7 +79,7 @@
     "primary_num": "4",
     "secondary_num": null,
     "title": "Where Court is closed when period expires",
-    "text": "Where Court is closed when period expires",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -89,7 +92,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_5_V1",
@@ -99,7 +103,7 @@
     "primary_num": "5",
     "secondary_num": null,
     "title": "Extension of period in certain cases",
-    "text": "Extension of period in certain cases",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -112,7 +116,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_6_V1",
@@ -122,7 +127,7 @@
     "primary_num": "6",
     "secondary_num": null,
     "title": "Legal disability",
-    "text": "Legal disability",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -135,7 +140,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_7_V1",
@@ -145,7 +151,7 @@
     "primary_num": "7",
     "secondary_num": null,
     "title": "Disability of one of several plaintiffs or applicants",
-    "text": "Disability of one of several plaintiffs or applicants",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -158,7 +164,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_8_V1",
@@ -168,7 +175,7 @@
     "primary_num": "8",
     "secondary_num": null,
     "title": "Special exceptions",
-    "text": "Special exceptions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -181,7 +188,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_9_V1",
@@ -191,7 +199,7 @@
     "primary_num": "9",
     "secondary_num": null,
     "title": "Continuous running of time",
-    "text": "Continuous running of time",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -204,7 +212,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_10_V1",
@@ -214,7 +223,7 @@
     "primary_num": "10",
     "secondary_num": null,
     "title": "Suits against express trustees and their representatives",
-    "text": "Suits against express trustees and their representatives",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -227,7 +236,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_11_V1",
@@ -237,7 +247,7 @@
     "primary_num": "11",
     "secondary_num": null,
     "title": "Suits on foreign contracts",
-    "text": "Suits on foreign contracts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -250,7 +260,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_12_V1",
@@ -260,7 +271,7 @@
     "primary_num": "12",
     "secondary_num": null,
     "title": "Exclusion of time in legal proceedings",
-    "text": "Exclusion of time in legal proceedings",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -273,7 +284,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_13_V1",
@@ -283,7 +295,7 @@
     "primary_num": "13",
     "secondary_num": null,
     "title": "Exclusion of time of defendants, absence from Pakistan and certain other territories",
-    "text": "Exclusion of time of defendants, absence from Pakistan and certain other territories",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -296,7 +308,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_14_V1",
@@ -306,7 +319,7 @@
     "primary_num": "14",
     "secondary_num": null,
     "title": "Exclusion of time of proceeding bona fide in Court without jurisdiction",
-    "text": "Exclusion of time of proceeding bona fide in Court without jurisdiction",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -319,7 +332,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_15_V1",
@@ -329,7 +343,7 @@
     "primary_num": "15",
     "secondary_num": null,
     "title": "Exclusion of time during which proceedings are suspended",
-    "text": "Exclusion of time during which proceedings are suspended",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -342,7 +356,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_16_V1",
@@ -352,7 +367,7 @@
     "primary_num": "16",
     "secondary_num": null,
     "title": "Exclusion of time during which proceedings to set aside execution-sale are pending",
-    "text": "Exclusion of time during which proceedings to set aside execution-sale are pending",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -365,7 +380,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_17_V1",
@@ -375,7 +391,7 @@
     "primary_num": "17",
     "secondary_num": null,
     "title": "Effect of death before right to sue accrues",
-    "text": "Effect of death before right to sue accrues",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -388,7 +404,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_18_V1",
@@ -398,7 +415,7 @@
     "primary_num": "18",
     "secondary_num": null,
     "title": "Effect of fraud",
-    "text": "Effect of fraud",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -411,7 +428,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_19_V1",
@@ -421,7 +439,7 @@
     "primary_num": "19",
     "secondary_num": null,
     "title": "Effect of acknowledgment in writing",
-    "text": "Effect of acknowledgment in writing",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -434,7 +452,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_20_V1",
@@ -444,7 +463,7 @@
     "primary_num": "20",
     "secondary_num": null,
     "title": "Effect of payment on account of debt or of interest on legacy.",
-    "text": "Effect of payment on account of debt or of interest on legacy.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -457,7 +476,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_21_V1",
@@ -467,7 +487,7 @@
     "primary_num": "21",
     "secondary_num": null,
     "title": "Agent of person under disability",
-    "text": "Agent of person under disability",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -480,7 +500,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_22_V1",
@@ -490,7 +511,7 @@
     "primary_num": "22",
     "secondary_num": null,
     "title": "Effect of substituting or adding new plaintiff or defendant",
-    "text": "Effect of substituting or adding new plaintiff or defendant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -503,7 +524,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_23_V1",
@@ -513,7 +535,7 @@
     "primary_num": "23",
     "secondary_num": null,
     "title": "Continuing breaches and wrongs",
-    "text": "Continuing breaches and wrongs",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -526,7 +548,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_24_V1",
@@ -536,7 +559,7 @@
     "primary_num": "24",
     "secondary_num": null,
     "title": "Suit for compensation for act not actionable without special Damage",
-    "text": "Suit for compensation for act not actionable without special Damage",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -549,7 +572,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_25_V1",
@@ -559,7 +583,7 @@
     "primary_num": "25",
     "secondary_num": null,
     "title": "Computation of time mentioned in instruments",
-    "text": "Computation of time mentioned in instruments",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -572,7 +596,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_26_V1",
@@ -582,7 +607,7 @@
     "primary_num": "26",
     "secondary_num": null,
     "title": "Acquisition of right to easements",
-    "text": "Acquisition of right to easements",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -595,7 +620,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_27_V1",
@@ -605,7 +631,7 @@
     "primary_num": "27",
     "secondary_num": null,
     "title": "Exclusion in favour of reversioner of servient tenement",
-    "text": "Exclusion in favour of reversioner of servient tenement",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -618,7 +644,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_28_V1",
@@ -628,7 +655,7 @@
     "primary_num": "28",
     "secondary_num": null,
     "title": "Extinguishment of right to property [omitted]",
-    "text": "Extinguishment of right to property [omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -641,7 +668,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_29_V1",
@@ -651,7 +679,7 @@
     "primary_num": "29",
     "secondary_num": null,
     "title": "Savings",
-    "text": "Savings",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -664,7 +692,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_30_V1",
@@ -674,7 +703,7 @@
     "primary_num": "30",
     "secondary_num": null,
     "title": "[Repealed.]",
-    "text": "[Repealed.]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -687,7 +716,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_31_V1",
@@ -697,7 +727,7 @@
     "primary_num": "31",
     "secondary_num": null,
     "title": "[Repealed by the Repealing and Amending Act, 1930 (VIII of 1930)]",
-    "text": "[Repealed by the Repealing and Amending Act, 1930 (VIII of 1930)]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -710,7 +740,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_32_V1",
@@ -720,7 +751,7 @@
     "primary_num": "32",
     "secondary_num": null,
     "title": "[Repealed by the Repealing and Amending Act, 1930 (VIII of 1930)]",
-    "text": "[Repealed by the Repealing and Amending Act, 1930 (VIII of 1930)]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -733,7 +764,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_1_V1",
@@ -743,7 +775,7 @@
     "primary_num": "1",
     "secondary_num": null,
     "title": "To contest an award of the Thirty days .. When notice of the award is",
-    "text": "To contest an award of the Thirty days .. When notice of the award is",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -756,7 +788,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_2_V1",
@@ -766,7 +799,7 @@
     "primary_num": "2",
     "secondary_num": null,
     "title": "For compensation for doing Ninety days. .. When the act or omission takes",
-    "text": "For compensation for doing Ninety days. .. When the act or omission takes",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -779,7 +812,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_3_V1",
@@ -789,7 +823,7 @@
     "primary_num": "3",
     "secondary_num": null,
     "title": "[Repealed by the Repealing and Amending Act, 1925 (XXXVII of 1925)]",
-    "text": "[Repealed by the Repealing and Amending Act, 1925 (XXXVII of 1925)]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -802,7 +836,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_4_V1",
@@ -812,7 +847,7 @@
     "primary_num": "4",
     "secondary_num": null,
     "title": "[Repealed by the Repealing and Amending Act, 1925 (XXXVII of 1925)]",
-    "text": "[Repealed by the Repealing and Amending Act, 1925 (XXXVII of 1925)]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -825,7 +860,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_5_V1",
@@ -835,7 +871,7 @@
     "primary_num": "5",
     "secondary_num": null,
     "title": "Under the summary 4[One year] .. When the debt or liquidated",
-    "text": "Under the summary 4[One year] .. When the debt or liquidated",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -848,7 +884,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_6_V1",
@@ -858,7 +895,7 @@
     "primary_num": "6",
     "secondary_num": null,
     "title": "Upon a Statute, Act, One year .. When the penalty or forfeiture is",
-    "text": "Upon a Statute, Act, One year .. When the penalty or forfeiture is",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -871,7 +908,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_7_V1",
@@ -881,7 +919,7 @@
     "primary_num": "7",
     "secondary_num": null,
     "title": "For the wages of a 7[One year] .. When the wages accrue due.",
-    "text": "For the wages of a 7[One year] .. When the wages accrue due.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -894,7 +932,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_8_V1",
@@ -904,7 +943,7 @@
     "primary_num": "8",
     "secondary_num": null,
     "title": "For the price of food or 7[One year] .. When the food or drink is",
-    "text": "For the price of food or 7[One year] .. When the food or drink is",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -917,7 +956,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_9_V1",
@@ -927,7 +967,7 @@
     "primary_num": "9",
     "secondary_num": null,
     "title": "For the price of lodging. 1[One year] .. When the price becomes payable.",
-    "text": "For the price of lodging. 1[One year] .. When the price becomes payable.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -940,7 +980,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_10_V1",
@@ -950,7 +991,7 @@
     "primary_num": "10",
     "secondary_num": null,
     "title": "To enforce a right of pre- 1[One year]. .. When the purchaser takes, under",
-    "text": "To enforce a right of pre- 1[One year]. .. When the purchaser takes, under",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -963,7 +1004,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_11_V1",
@@ -973,7 +1015,7 @@
     "primary_num": "11",
     "secondary_num": null,
     "title": "By a person, against whom 1[One year]. .. The date of the order.",
-    "text": "By a person, against whom 1[One year]. .. The date of the order.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -986,7 +1028,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_12_V1",
@@ -996,7 +1039,7 @@
     "primary_num": "12",
     "secondary_num": null,
     "title": "To set aside any of the 1[One year] .. When the sale is confirmed, or",
-    "text": "To set aside any of the 1[One year] .. When the sale is confirmed, or",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1009,7 +1052,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_13_V1",
@@ -1019,7 +1063,7 @@
     "primary_num": "13",
     "secondary_num": null,
     "title": "To alter or set aside a 1[One year]. .. The date of the final decision or",
-    "text": "To alter or set aside a 1[One year]. .. The date of the final decision or",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1032,7 +1076,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_14_V1",
@@ -1042,7 +1087,7 @@
     "primary_num": "14",
     "secondary_num": null,
     "title": "To set aside any act or order 1[One year]. .. The date of the act or order.",
-    "text": "To set aside any act or order 1[One year]. .. The date of the act or order.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1055,7 +1100,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_15_V1",
@@ -1065,7 +1111,7 @@
     "primary_num": "15",
     "secondary_num": null,
     "title": "Against Government to set 1[One year]. .. When the attachment, lease or",
-    "text": "Against Government to set 1[One year]. .. When the attachment, lease or",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1078,7 +1124,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_16_V1",
@@ -1088,7 +1135,7 @@
     "primary_num": "16",
     "secondary_num": null,
     "title": "Against Government to 1[One year]. .. When the payment is made.",
-    "text": "Against Government to 1[One year]. .. When the payment is made.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1101,7 +1148,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_17_V1",
@@ -1111,7 +1159,7 @@
     "primary_num": "17",
     "secondary_num": null,
     "title": "Against Government for 1[One year]. .. The date of determining the",
-    "text": "Against Government for 1[One year]. .. The date of determining the",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1124,7 +1172,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_18_V1",
@@ -1134,7 +1183,7 @@
     "primary_num": "18",
     "secondary_num": null,
     "title": "Like suit for compensation 1[One year]. .. The date of the refusal to",
-    "text": "Like suit for compensation 1[One year]. .. The date of the refusal to",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1147,7 +1196,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_19_V1",
@@ -1157,7 +1207,7 @@
     "primary_num": "19",
     "secondary_num": null,
     "title": "For compensation for false 1[One year]. .. When the imprisonment ends.",
-    "text": "For compensation for false 1[One year]. .. When the imprisonment ends.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1170,7 +1220,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_20_V1",
@@ -1180,7 +1231,7 @@
     "primary_num": "20",
     "secondary_num": null,
     "title": "By executors, administrators The date of the death of the person",
-    "text": "By executors, administrators The date of the death of the person",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1193,7 +1244,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_21_V1",
@@ -1203,7 +1255,7 @@
     "primary_num": "21",
     "secondary_num": null,
     "title": "By executors, administrators 1[One year]. .. The date of the death of the person",
-    "text": "By executors, administrators 1[One year]. .. The date of the death of the person",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1216,7 +1268,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_22_V1",
@@ -1226,7 +1279,7 @@
     "primary_num": "22",
     "secondary_num": null,
     "title": "For compensation for any 1[One year]. .. When the injury is committed.",
-    "text": "For compensation for any 1[One year]. .. When the injury is committed.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1239,7 +1292,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_23_V1",
@@ -1249,7 +1303,7 @@
     "primary_num": "23",
     "secondary_num": null,
     "title": "For compensation for a 1[One year] .. When the plaintiff is acquitted, or",
-    "text": "For compensation for a 1[One year] .. When the plaintiff is acquitted, or",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1262,7 +1316,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_24_V1",
@@ -1272,7 +1327,7 @@
     "primary_num": "24",
     "secondary_num": null,
     "title": "For compensation for libel. 1[One year] .. When the libel is published.",
-    "text": "For compensation for libel. 1[One year] .. When the libel is published.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1285,7 +1340,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_25_V1",
@@ -1295,7 +1351,7 @@
     "primary_num": "25",
     "secondary_num": null,
     "title": "For compensation for 1[One year] .. When the words are spoken, or, if",
-    "text": "For compensation for 1[One year] .. When the words are spoken, or, if",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1308,7 +1364,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_26_V1",
@@ -1318,7 +1375,7 @@
     "primary_num": "26",
     "secondary_num": null,
     "title": "For compensation for loss of 1[One year] .. When the loss occurs.",
-    "text": "For compensation for loss of 1[One year] .. When the loss occurs.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1331,7 +1388,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_27_V1",
@@ -1341,7 +1399,7 @@
     "primary_num": "27",
     "secondary_num": null,
     "title": "For compensation for 1[One year] .. The date of the breach.",
-    "text": "For compensation for 1[One year] .. The date of the breach.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1354,7 +1412,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_28_V1",
@@ -1364,7 +1423,7 @@
     "primary_num": "28",
     "secondary_num": null,
     "title": "For compensation for and 1[One year] .. The date of the distress.",
-    "text": "For compensation for and 1[One year] .. The date of the distress.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1377,7 +1436,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_29_V1",
@@ -1387,7 +1447,7 @@
     "primary_num": "29",
     "secondary_num": null,
     "title": "For compensation for 1[One year] .. The date of the seizure.",
-    "text": "For compensation for 1[One year] .. The date of the seizure.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1400,7 +1460,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_30_V1",
@@ -1410,7 +1471,7 @@
     "primary_num": "30",
     "secondary_num": null,
     "title": "Against a carrier for 1[One year] .. When the loss or injury occurs.",
-    "text": "Against a carrier for 1[One year] .. When the loss or injury occurs.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1423,7 +1484,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_31_V1",
@@ -1433,7 +1495,7 @@
     "primary_num": "31",
     "secondary_num": null,
     "title": "Against a carrier for 1[One year] .. When the goods ought to be",
-    "text": "Against a carrier for 1[One year] .. When the goods ought to be",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1446,7 +1508,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_32_V1",
@@ -1456,7 +1519,7 @@
     "primary_num": "32",
     "secondary_num": null,
     "title": "Against one who having a Two years .. When the perversion first becomes",
-    "text": "Against one who having a Two years .. When the perversion first becomes",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1469,7 +1532,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_33_V1",
@@ -1479,7 +1543,7 @@
     "primary_num": "33",
     "secondary_num": null,
     "title": "Under the Legal 1[Two years] .. When the wrong complained of is",
-    "text": "Under the Legal 1[Two years] .. When the wrong complained of is",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1492,7 +1556,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_34_V1",
@@ -1502,7 +1567,7 @@
     "primary_num": "34",
     "secondary_num": null,
     "title": "Under the same Act against 1[Two years] .. Ditto.",
-    "text": "Under the same Act against 1[Two years] .. Ditto.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1515,7 +1580,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_35_V1",
@@ -1525,7 +1591,7 @@
     "primary_num": "35",
     "secondary_num": null,
     "title": "Under the same Act against 1[Two years] .. Ditto.",
-    "text": "Under the same Act against 1[Two years] .. Ditto.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1538,7 +1604,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_36_V1",
@@ -1548,7 +1615,7 @@
     "primary_num": "36",
     "secondary_num": null,
     "title": "For compensation for any 1[Two years] .. When the malfeasance,",
-    "text": "For compensation for any 1[Two years] .. When the malfeasance,",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1561,7 +1628,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_37_V1",
@@ -1571,7 +1639,7 @@
     "primary_num": "37",
     "secondary_num": null,
     "title": "For compensation for Three years .. The date of the obstruction.",
-    "text": "For compensation for Three years .. The date of the obstruction.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1584,7 +1652,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_38_V1",
@@ -1594,7 +1663,7 @@
     "primary_num": "38",
     "secondary_num": null,
     "title": "For compensation for 1[Three years] The date of the diversion.",
-    "text": "For compensation for 1[Three years] The date of the diversion.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1607,7 +1676,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_39_V1",
@@ -1617,7 +1687,7 @@
     "primary_num": "39",
     "secondary_num": null,
     "title": "For compensation for 1[Three years] The date of the trespass.",
-    "text": "For compensation for 1[Three years] The date of the trespass.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1630,7 +1700,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_40_V1",
@@ -1640,7 +1711,7 @@
     "primary_num": "40",
     "secondary_num": null,
     "title": "For compensation for 1[Three years] The date of the infringement.",
-    "text": "For compensation for 1[Three years] The date of the infringement.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1653,7 +1724,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_41_V1",
@@ -1663,7 +1735,7 @@
     "primary_num": "41",
     "secondary_num": null,
     "title": "To restrain waste .. 1[Three years] When the waste begins.",
-    "text": "To restrain waste .. 1[Three years] When the waste begins.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1676,7 +1748,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_42_V1",
@@ -1686,7 +1759,7 @@
     "primary_num": "42",
     "secondary_num": null,
     "title": "For compensation for injury 1[Three years] When the injunction ceases.",
-    "text": "For compensation for injury 1[Three years] When the injunction ceases.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1699,7 +1772,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_43_V1",
@@ -1709,7 +1783,7 @@
     "primary_num": "43",
     "secondary_num": null,
     "title": "Under the 2[Succession Act, 1[Three years] The date of the payment or",
-    "text": "Under the 2[Succession Act, 1[Three years] The date of the payment or",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1722,7 +1796,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_44_V1",
@@ -1732,7 +1807,7 @@
     "primary_num": "44",
     "secondary_num": null,
     "title": "By a ward who has attained 1[Three years] When the ward attains majority.",
-    "text": "By a ward who has attained 1[Three years] When the ward attains majority.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1745,7 +1820,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_45_V1",
@@ -1755,7 +1831,7 @@
     "primary_num": "45",
     "secondary_num": null,
     "title": "[Repealed by the Repealing and Amending Act, 1925 (XXXVII of 1925)]",
-    "text": "[Repealed by the Repealing and Amending Act, 1925 (XXXVII of 1925)]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1768,7 +1844,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_46_V1",
@@ -1778,7 +1855,7 @@
     "primary_num": "46",
     "secondary_num": null,
     "title": "[Repealed by the Repealing and Amending Act, 1925 (XXXVII of 1925)]",
-    "text": "[Repealed by the Repealing and Amending Act, 1925 (XXXVII of 1925)]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1791,7 +1868,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_47_V1",
@@ -1801,7 +1879,7 @@
     "primary_num": "47",
     "secondary_num": null,
     "title": "By any person bound by an",
-    "text": "By any person bound by an",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1814,7 +1892,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_48_V1",
@@ -1824,7 +1903,7 @@
     "primary_num": "48",
     "secondary_num": null,
     "title": "For specific moveable 1[Three years] When the person having the right",
-    "text": "For specific moveable 1[Three years] When the person having the right",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1837,7 +1916,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_49_V1",
@@ -1847,7 +1927,7 @@
     "primary_num": "49",
     "secondary_num": null,
     "title": "For other specific moveable 1[Three years] When the property is wrongfully",
-    "text": "For other specific moveable 1[Three years] When the property is wrongfully",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1860,7 +1940,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_50_V1",
@@ -1870,7 +1951,7 @@
     "primary_num": "50",
     "secondary_num": null,
     "title": "For the hired of animals, 1[Three years] When the hire becomes payable.",
-    "text": "For the hired of animals, 1[Three years] When the hire becomes payable.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1883,7 +1964,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_51_V1",
@@ -1893,7 +1975,7 @@
     "primary_num": "51",
     "secondary_num": null,
     "title": "For the balance of money 1[Three years] When the goods ought to be",
-    "text": "For the balance of money 1[Three years] When the goods ought to be",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1906,7 +1988,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_52_V1",
@@ -1916,7 +1999,7 @@
     "primary_num": "52",
     "secondary_num": null,
     "title": "For the price of goods sold 1[Three years] The date of the delivery of the goods.",
-    "text": "For the price of goods sold 1[Three years] The date of the delivery of the goods.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1929,7 +2012,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_53_V1",
@@ -1939,7 +2023,7 @@
     "primary_num": "53",
     "secondary_num": null,
     "title": "For the price of goods sold 1[Three years]",
-    "text": "For the price of goods sold 1[Three years]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1952,7 +2036,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_54_V1",
@@ -1962,7 +2047,7 @@
     "primary_num": "54",
     "secondary_num": null,
     "title": "For the price of goods sold 1[Three years] elapses.",
-    "text": "For the price of goods sold 1[Three years] elapses.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1975,7 +2060,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_55_V1",
@@ -1985,7 +2071,7 @@
     "primary_num": "55",
     "secondary_num": null,
     "title": "For the price of trees or 1[Three years]",
-    "text": "For the price of trees or 1[Three years]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1998,7 +2084,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_56_V1",
@@ -2008,7 +2095,7 @@
     "primary_num": "56",
     "secondary_num": null,
     "title": "For the price of work done 1[Three years]",
-    "text": "For the price of work done 1[Three years]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2021,7 +2108,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_57_V1",
@@ -2031,7 +2119,7 @@
     "primary_num": "57",
     "secondary_num": null,
     "title": "For money payable for 1[Three years]",
-    "text": "For money payable for 1[Three years]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2044,7 +2132,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_58_V1",
@@ -2054,7 +2143,7 @@
     "primary_num": "58",
     "secondary_num": null,
     "title": "Like suit when the lender 1[Three years] When the cheque is paid.",
-    "text": "Like suit when the lender 1[Three years] When the cheque is paid.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2067,7 +2156,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_59_V1",
@@ -2077,7 +2167,7 @@
     "primary_num": "59",
     "secondary_num": null,
     "title": "For money lent under an 1[Three years] When the loan is made.",
-    "text": "For money lent under an 1[Three years] When the loan is made.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2090,7 +2180,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_60_V1",
@@ -2100,7 +2191,7 @@
     "primary_num": "60",
     "secondary_num": null,
     "title": "For money deposited under 1[Three years] When the demand is made.",
-    "text": "For money deposited under 1[Three years] When the demand is made.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2113,7 +2204,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_61_V1",
@@ -2123,7 +2215,7 @@
     "primary_num": "61",
     "secondary_num": null,
     "title": "For money payable to the 1[Three years] When the money is paid.",
-    "text": "For money payable to the 1[Three years] When the money is paid.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2136,7 +2228,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_62_V1",
@@ -2146,7 +2239,7 @@
     "primary_num": "62",
     "secondary_num": null,
     "title": "For money payable by the",
-    "text": "For money payable by the",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2159,7 +2252,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_63_V1",
@@ -2169,7 +2263,7 @@
     "primary_num": "63",
     "secondary_num": null,
     "title": "For money payable for 1[Three years]",
-    "text": "For money payable for 1[Three years]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2182,7 +2276,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_64_V1",
@@ -2192,7 +2287,7 @@
     "primary_num": "64",
     "secondary_num": null,
     "title": "For money payable to the 1[Three years] When the accounts are stated in",
-    "text": "For money payable to the 1[Three years] When the accounts are stated in",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2205,7 +2300,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_65_V1",
@@ -2215,7 +2311,7 @@
     "primary_num": "65",
     "secondary_num": null,
     "title": "For compensation for breach 1[Three years] When the time specified arrives or",
-    "text": "For compensation for breach 1[Three years] When the time specified arrives or",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2228,7 +2324,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_66_V1",
@@ -2238,7 +2335,7 @@
     "primary_num": "66",
     "secondary_num": null,
     "title": "On a single bond, where a 1[Three years] The day so specified.",
-    "text": "On a single bond, where a 1[Three years] The day so specified.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2251,7 +2348,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_67_V1",
@@ -2261,7 +2359,7 @@
     "primary_num": "67",
     "secondary_num": null,
     "title": "On a single bond, where no 1[Three years] The date of executing the bond.",
-    "text": "On a single bond, where no 1[Three years] The date of executing the bond.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2274,7 +2372,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_68_V1",
@@ -2284,7 +2383,7 @@
     "primary_num": "68",
     "secondary_num": null,
     "title": "On a bond subject to a 1[Three years] When the condition is broken.",
-    "text": "On a bond subject to a 1[Three years] When the condition is broken.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2297,7 +2396,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_69_V1",
@@ -2307,7 +2407,7 @@
     "primary_num": "69",
     "secondary_num": null,
     "title": "On a bill of exchange or 1[Three years] When the bill or note falls due.",
-    "text": "On a bill of exchange or 1[Three years] When the bill or note falls due.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2320,7 +2420,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_70_V1",
@@ -2330,7 +2431,7 @@
     "primary_num": "70",
     "secondary_num": null,
     "title": "On a bill of exchange 1[Three years] When the bill is presented.",
-    "text": "On a bill of exchange 1[Three years] When the bill is presented.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2343,7 +2444,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_71_V1",
@@ -2353,7 +2455,7 @@
     "primary_num": "71",
     "secondary_num": null,
     "title": "On a bill of exchange 1[Three years] When the bill is presented at that",
-    "text": "On a bill of exchange 1[Three years] When the bill is presented at that",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2366,7 +2468,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_72_V1",
@@ -2376,7 +2479,7 @@
     "primary_num": "72",
     "secondary_num": null,
     "title": "On a bill of exchange or 1[Three years] When the fixed time expires.",
-    "text": "On a bill of exchange or 1[Three years] When the fixed time expires.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2389,7 +2492,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_73_V1",
@@ -2399,7 +2503,7 @@
     "primary_num": "73",
     "secondary_num": null,
     "title": "On a bill of exchange or 1[Three years] The date of the bill or note.",
-    "text": "On a bill of exchange or 1[Three years] The date of the bill or note.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2412,7 +2516,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_74_V1",
@@ -2422,7 +2527,7 @@
     "primary_num": "74",
     "secondary_num": null,
     "title": "On a promissory note or 1[Three years] The expiration of the first term of",
-    "text": "On a promissory note or 1[Three years] The expiration of the first term of",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2435,7 +2540,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_75_V1",
@@ -2445,7 +2551,7 @@
     "primary_num": "75",
     "secondary_num": null,
     "title": "On a promissory note or 1[Three years] When the default is made, unless",
-    "text": "On a promissory note or 1[Three years] When the default is made, unless",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2458,7 +2564,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_76_V1",
@@ -2468,7 +2575,7 @@
     "primary_num": "76",
     "secondary_num": null,
     "title": "On a bill of exchange payable after sight [omitted/merged]",
-    "text": "On a bill of exchange payable after sight [omitted/merged]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2481,7 +2588,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_77_V1",
@@ -2491,7 +2599,7 @@
     "primary_num": "77",
     "secondary_num": null,
     "title": "On a bill of exchange at sight [omitted/merged]",
-    "text": "On a bill of exchange at sight [omitted/merged]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2504,7 +2612,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_78_V1",
@@ -2514,7 +2623,7 @@
     "primary_num": "78",
     "secondary_num": null,
     "title": "On a bill of exchange accepted payable at a particular place [omitted/merged]",
-    "text": "On a bill of exchange accepted payable at a particular place [omitted/merged]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2527,7 +2636,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_79_V1",
@@ -2537,7 +2647,7 @@
     "primary_num": "79",
     "secondary_num": null,
     "title": "On a bill of exchange not payable at a particular place [omitted/merged]",
-    "text": "On a bill of exchange not payable at a particular place [omitted/merged]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2550,7 +2660,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_80_V1",
@@ -2560,7 +2671,7 @@
     "primary_num": "80",
     "secondary_num": null,
     "title": "On a bill of exchange or promissory note payable on a contingency [omitted/merged]",
-    "text": "On a bill of exchange or promissory note payable on a contingency [omitted/merged]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2573,7 +2684,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_81_V1",
@@ -2583,7 +2695,7 @@
     "primary_num": "81",
     "secondary_num": null,
     "title": "By a surety against .. the 1[Three years] When the surety pays the creditor.",
-    "text": "By a surety against .. the 1[Three years] When the surety pays the creditor.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2596,7 +2708,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_82_V1",
@@ -2606,7 +2719,7 @@
     "primary_num": "82",
     "secondary_num": null,
     "title": "By a surety against a co- 1[Three years] When the surety pays any thing in",
-    "text": "By a surety against a co- 1[Three years] When the surety pays any thing in",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2619,7 +2732,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_83_V1",
@@ -2629,7 +2743,7 @@
     "primary_num": "83",
     "secondary_num": null,
     "title": "Upon any other contract to 1[Three years] When the plaintiff is actually",
-    "text": "Upon any other contract to 1[Three years] When the plaintiff is actually",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2642,7 +2756,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_84_V1",
@@ -2652,7 +2767,7 @@
     "primary_num": "84",
     "secondary_num": null,
     "title": "By an attorney or vakil for 1[Three years] The date of the termination of the",
-    "text": "By an attorney or vakil for 1[Three years] The date of the termination of the",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2665,7 +2780,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_85_V1",
@@ -2675,7 +2791,7 @@
     "primary_num": "85",
     "secondary_num": null,
     "title": "For the balance due on a 1[Three years] The close of the year in which the",
-    "text": "For the balance due on a 1[Three years] The close of the year in which the",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2688,7 +2804,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_86_V1",
@@ -2698,7 +2815,7 @@
     "primary_num": "86",
     "secondary_num": null,
     "title": "2[(a) On a policy of 1[Three years] 2[(a) The date of the death of the",
-    "text": "2[(a) On a policy of 1[Three years] 2[(a) The date of the death of the",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2711,7 +2828,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_87_V1",
@@ -2721,7 +2839,7 @@
     "primary_num": "87",
     "secondary_num": null,
     "title": "By the assured to recover 1[Three years] When the insurers elect to avoid",
-    "text": "By the assured to recover 1[Three years] When the insurers elect to avoid",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2734,7 +2852,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_88_V1",
@@ -2744,7 +2863,7 @@
     "primary_num": "88",
     "secondary_num": null,
     "title": "Against a factor for an 1[Three years] When the account is during the",
-    "text": "Against a factor for an 1[Three years] When the account is during the",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2757,7 +2876,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_89_V1",
@@ -2767,7 +2887,7 @@
     "primary_num": "89",
     "secondary_num": null,
     "title": "By a principal against his 1[Three years] Ditto.",
-    "text": "By a principal against his 1[Three years] Ditto.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2780,7 +2900,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_90_V1",
@@ -2790,7 +2911,7 @@
     "primary_num": "90",
     "secondary_num": null,
     "title": "Other suits by principals 1[Three years] When the neglect or misconduct",
-    "text": "Other suits by principals 1[Three years] When the neglect or misconduct",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2803,7 +2924,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_91_V1",
@@ -2813,7 +2935,7 @@
     "primary_num": "91",
     "secondary_num": null,
     "title": "To cancel or set aside an 1[Three years] When the facts entitling the",
-    "text": "To cancel or set aside an 1[Three years] When the facts entitling the",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2826,7 +2948,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_92_V1",
@@ -2836,7 +2959,7 @@
     "primary_num": "92",
     "secondary_num": null,
     "title": "To declare the forgery of an 1[Three years] When the issue or registration",
-    "text": "To declare the forgery of an 1[Three years] When the issue or registration",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2849,7 +2972,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_93_V1",
@@ -2859,7 +2983,7 @@
     "primary_num": "93",
     "secondary_num": null,
     "title": "To declare the forgery of an 1[Three years] The date of the attempt.",
-    "text": "To declare the forgery of an 1[Three years] The date of the attempt.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2872,7 +2996,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_94_V1",
@@ -2882,7 +3007,7 @@
     "primary_num": "94",
     "secondary_num": null,
     "title": "For property which the 1[Three years] When the plaintiff is restored to",
-    "text": "For property which the 1[Three years] When the plaintiff is restored to",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2895,7 +3020,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_95_V1",
@@ -2905,7 +3031,7 @@
     "primary_num": "95",
     "secondary_num": null,
     "title": "To set aside a decree 1[Three years] When the fraud becomes known to",
-    "text": "To set aside a decree 1[Three years] When the fraud becomes known to",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2918,7 +3044,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_96_V1",
@@ -2928,7 +3055,7 @@
     "primary_num": "96",
     "secondary_num": null,
     "title": "For relief on the ground of 1[Three years] When the mistake becomes known",
-    "text": "For relief on the ground of 1[Three years] When the mistake becomes known",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2941,7 +3068,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_97_V1",
@@ -2951,7 +3079,7 @@
     "primary_num": "97",
     "secondary_num": null,
     "title": "For money paid upon an 1[Three years] The date of the failure.",
-    "text": "For money paid upon an 1[Three years] The date of the failure.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2964,7 +3092,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_98_V1",
@@ -2974,7 +3103,7 @@
     "primary_num": "98",
     "secondary_num": null,
     "title": "To make good out of the 1[Three years] The date of the trustee\u2019s death, or,",
-    "text": "To make good out of the 1[Three years] The date of the trustee\u2019s death, or,",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2987,7 +3116,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_99_V1",
@@ -2997,7 +3127,7 @@
     "primary_num": "99",
     "secondary_num": null,
     "title": "For contribution by a party 1[Three years] The date of the payment in excess",
-    "text": "For contribution by a party 1[Three years] The date of the payment in excess",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3010,7 +3140,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_100_V1",
@@ -3020,7 +3151,7 @@
     "primary_num": "100",
     "secondary_num": null,
     "title": "By a co-trustee to enforce 1[Three years] When the right to contribution",
-    "text": "By a co-trustee to enforce 1[Three years] When the right to contribution",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3033,7 +3164,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_101_V1",
@@ -3043,7 +3175,7 @@
     "primary_num": "101",
     "secondary_num": null,
     "title": "For a seaman\u2019s wages. 1[Three years] The end of the voyage during",
-    "text": "For a seaman\u2019s wages. 1[Three years] The end of the voyage during",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3056,7 +3188,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_102_V1",
@@ -3066,7 +3199,7 @@
     "primary_num": "102",
     "secondary_num": null,
     "title": "For wages not other wise 1[Three years] When the wages accrue due.",
-    "text": "For wages not other wise 1[Three years] When the wages accrue due.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3079,7 +3212,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_103_V1",
@@ -3089,7 +3223,7 @@
     "primary_num": "103",
     "secondary_num": null,
     "title": "By a 2[Muslim] for 1[Three years] When the dower is demanded and",
-    "text": "By a 2[Muslim] for 1[Three years] When the dower is demanded and",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3102,7 +3236,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_104_V1",
@@ -3112,7 +3247,7 @@
     "primary_num": "104",
     "secondary_num": null,
     "title": "By a 1[Muslim] for 2[Three years] When the marriage is dissolved by",
-    "text": "By a 1[Muslim] for 2[Three years] When the marriage is dissolved by",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3125,7 +3260,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_105_V1",
@@ -3135,7 +3271,7 @@
     "primary_num": "105",
     "secondary_num": null,
     "title": "By a mortgagor after the 2[Three years] When the mortgagor re-enters on",
-    "text": "By a mortgagor after the 2[Three years] When the mortgagor re-enters on",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3148,7 +3284,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_106_V1",
@@ -3158,7 +3295,7 @@
     "primary_num": "106",
     "secondary_num": null,
     "title": "For an account and a share 2[Three years] The date of the dissolution.",
-    "text": "For an account and a share 2[Three years] The date of the dissolution.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3171,7 +3308,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_107_V1",
@@ -3181,7 +3319,7 @@
     "primary_num": "107",
     "secondary_num": null,
     "title": "By the manager of a joint 2[Three years] The date of the payment.",
-    "text": "By the manager of a joint 2[Three years] The date of the payment.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3194,7 +3332,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_108_V1",
@@ -3204,7 +3343,7 @@
     "primary_num": "108",
     "secondary_num": null,
     "title": "By a lessor for the value of 2[Three years] When the trees are cut down.",
-    "text": "By a lessor for the value of 2[Three years] When the trees are cut down.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3217,7 +3356,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_109_V1",
@@ -3227,7 +3367,7 @@
     "primary_num": "109",
     "secondary_num": null,
     "title": "For the profits of 2[Three years] When the profits are received.",
-    "text": "For the profits of 2[Three years] When the profits are received.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3240,7 +3380,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_110_V1",
@@ -3250,7 +3391,7 @@
     "primary_num": "110",
     "secondary_num": null,
     "title": "For arrears of rent .. 111.\u2014 2[Three years] When the arrears become due.",
-    "text": "For arrears of rent .. 111.\u2014 2[Three years] When the arrears become due.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3263,7 +3404,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_111_V1",
@@ -3273,7 +3415,7 @@
     "primary_num": "111",
     "secondary_num": null,
     "title": "By a vendor of immoveable property to enforce his lien for unpaid purchase-money",
-    "text": "By a vendor of immoveable property to enforce his lien for unpaid purchase-money",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3286,7 +3428,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_112_V1",
@@ -3296,7 +3439,7 @@
     "primary_num": "112",
     "secondary_num": null,
     "title": "For a call by a company 2[Three years] When the call is payable.",
-    "text": "For a call by a company 2[Three years] When the call is payable.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3309,7 +3452,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_113_V1",
@@ -3319,7 +3463,7 @@
     "primary_num": "113",
     "secondary_num": null,
     "title": "For specific performance of a 1[Three years] The date fixed for the performance, or,",
-    "text": "For specific performance of a 1[Three years] The date fixed for the performance, or,",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3332,7 +3476,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_114_V1",
@@ -3342,7 +3487,7 @@
     "primary_num": "114",
     "secondary_num": null,
     "title": "For the rescission of a 1[Three years] When the facts entitling the plaintiff to",
-    "text": "For the rescission of a 1[Three years] When the facts entitling the plaintiff to",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3355,7 +3500,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_115_V1",
@@ -3365,7 +3511,7 @@
     "primary_num": "115",
     "secondary_num": null,
     "title": "For compensation for the 1[Three years] When the contract is broken, or (where",
-    "text": "For compensation for the 1[Three years] When the contract is broken, or (where",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3378,7 +3524,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_116_V1",
@@ -3388,7 +3535,7 @@
     "primary_num": "116",
     "secondary_num": null,
     "title": "For compensation for the Six years .. .. When the period of limitation would",
-    "text": "For compensation for the Six years .. .. When the period of limitation would",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3401,7 +3548,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_117_V1",
@@ -3411,7 +3559,7 @@
     "primary_num": "117",
     "secondary_num": null,
     "title": "Upon a foreign judgment as 1[Six years] The date of the judgment.",
-    "text": "Upon a foreign judgment as 1[Six years] The date of the judgment.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3424,7 +3572,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_118_V1",
@@ -3434,7 +3583,7 @@
     "primary_num": "118",
     "secondary_num": null,
     "title": "To obtain a declaration that 1[Six years] When the alleged adoption becomes",
-    "text": "To obtain a declaration that 1[Six years] When the alleged adoption becomes",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3447,7 +3596,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_119_V1",
@@ -3457,7 +3607,7 @@
     "primary_num": "119",
     "secondary_num": null,
     "title": "To obtain a declaration that 1[Six years] When the rights of the adopted son, as",
-    "text": "To obtain a declaration that 1[Six years] When the rights of the adopted son, as",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3470,7 +3620,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_120_V1",
@@ -3480,7 +3631,7 @@
     "primary_num": "120",
     "secondary_num": null,
     "title": "Suit for which no period of 1[Six years] When the right to sue accrues.",
-    "text": "Suit for which no period of 1[Six years] When the right to sue accrues.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3493,7 +3644,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_121_V1",
@@ -3503,7 +3655,7 @@
     "primary_num": "121",
     "secondary_num": null,
     "title": "To avoid incumbrances or 1[Twelve years]",
-    "text": "To avoid incumbrances or 1[Twelve years]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3516,7 +3668,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_122_V1",
@@ -3526,7 +3679,7 @@
     "primary_num": "122",
     "secondary_num": null,
     "title": "Upon a judgment obtained",
-    "text": "Upon a judgment obtained",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3539,7 +3692,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_123_V1",
@@ -3549,7 +3703,7 @@
     "primary_num": "123",
     "secondary_num": null,
     "title": "For a legacy or for a share",
-    "text": "For a legacy or for a share",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3562,7 +3716,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_124_V1",
@@ -3572,7 +3727,7 @@
     "primary_num": "124",
     "secondary_num": null,
     "title": "For possession of an",
-    "text": "For possession of an",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3585,7 +3740,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_125_V1",
@@ -3595,7 +3751,7 @@
     "primary_num": "125",
     "secondary_num": null,
     "title": "Suit during the life of a",
-    "text": "Suit during the life of a",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3608,7 +3764,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_126_V1",
@@ -3618,7 +3775,7 @@
     "primary_num": "126",
     "secondary_num": null,
     "title": "By a Hindu governed by 1[Twelve years] When the alience takes possession",
-    "text": "By a Hindu governed by 1[Twelve years] When the alience takes possession",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3631,7 +3788,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_127_V1",
@@ -3641,7 +3799,7 @@
     "primary_num": "127",
     "secondary_num": null,
     "title": "By a person excluded from 1[Twelve years] When the exclusion becomes",
-    "text": "By a person excluded from 1[Twelve years] When the exclusion becomes",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3654,7 +3812,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_128_V1",
@@ -3664,7 +3823,7 @@
     "primary_num": "128",
     "secondary_num": null,
     "title": "By a Hindu for arrears of 1[Twelve years]",
-    "text": "By a Hindu for arrears of 1[Twelve years]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3677,7 +3836,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_129_V1",
@@ -3687,7 +3847,7 @@
     "primary_num": "129",
     "secondary_num": null,
     "title": "By a Hindu for a 1[Twelve years]",
-    "text": "By a Hindu for a 1[Twelve years]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3700,7 +3860,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_130_V1",
@@ -3710,7 +3871,7 @@
     "primary_num": "130",
     "secondary_num": null,
     "title": "For the resumption or 1[Twelve years] When the right to resume or assess",
-    "text": "For the resumption or 1[Twelve years] When the right to resume or assess",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3723,7 +3884,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_131_V1",
@@ -3733,7 +3895,7 @@
     "primary_num": "131",
     "secondary_num": null,
     "title": "To establish a periodically 1[Twelve years] When the plaintiff is first refused",
-    "text": "To establish a periodically 1[Twelve years] When the plaintiff is first refused",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3746,7 +3908,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_132_V1",
@@ -3756,7 +3919,7 @@
     "primary_num": "132",
     "secondary_num": null,
     "title": "To enforce payment of 1[Twelve years] When the money sued for becomes",
-    "text": "To enforce payment of 1[Twelve years] When the money sued for becomes",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3769,7 +3932,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_133_V1",
@@ -3779,7 +3943,7 @@
     "primary_num": "133",
     "secondary_num": null,
     "title": "[Repealed by the Repealing and Amending Act, 1925 (XXXVII of 1925)]",
-    "text": "[Repealed by the Repealing and Amending Act, 1925 (XXXVII of 1925)]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3792,7 +3956,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_134_V1",
@@ -3802,7 +3967,7 @@
     "primary_num": "134",
     "secondary_num": null,
     "title": "To recover possession of 2[Twelve years] 3[When the transfer becomes known",
-    "text": "To recover possession of 2[Twelve years] 3[When the transfer becomes known",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3815,7 +3980,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_135_V1",
@@ -3825,7 +3991,7 @@
     "primary_num": "135",
     "secondary_num": null,
     "title": "Suit instituted in a Court 3[Twelve years] When the mortgagor\u2019s right to",
-    "text": "Suit instituted in a Court 3[Twelve years] When the mortgagor\u2019s right to",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3838,7 +4004,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_136_V1",
@@ -3848,7 +4015,7 @@
     "primary_num": "136",
     "secondary_num": null,
     "title": "By a purchaser at a private",
-    "text": "By a purchaser at a private",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3861,7 +4028,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_137_V1",
@@ -3871,7 +4039,7 @@
     "primary_num": "137",
     "secondary_num": null,
     "title": "Like suit by a purchaser at",
-    "text": "Like suit by a purchaser at",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3884,7 +4052,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_138_V1",
@@ -3894,7 +4063,7 @@
     "primary_num": "138",
     "secondary_num": null,
     "title": "Like suit by a purchaser at 3[Twelve years] The date when the sale becomes",
-    "text": "Like suit by a purchaser at 3[Twelve years] The date when the sale becomes",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3907,7 +4076,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_139_V1",
@@ -3917,7 +4087,7 @@
     "primary_num": "139",
     "secondary_num": null,
     "title": "By a landlord to recover 3[Twelve years] When the tenancy is determined.",
-    "text": "By a landlord to recover 3[Twelve years] When the tenancy is determined.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3930,7 +4100,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_140_V1",
@@ -3940,7 +4111,7 @@
     "primary_num": "140",
     "secondary_num": null,
     "title": "By a remainderman, a 1[Twelve years] When his estate falls into",
-    "text": "By a remainderman, a 1[Twelve years] When his estate falls into",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3953,7 +4124,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_141_V1",
@@ -3963,7 +4135,7 @@
     "primary_num": "141",
     "secondary_num": null,
     "title": "Like suits by a Hindu or 1[Twelve years] When the female dies.",
-    "text": "Like suits by a Hindu or 1[Twelve years] When the female dies.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3976,7 +4148,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_142_V1",
@@ -3986,7 +4159,7 @@
     "primary_num": "142",
     "secondary_num": null,
     "title": "For possession of 1[Twelve years] The date of the dispossession or",
-    "text": "For possession of 1[Twelve years] The date of the dispossession or",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3999,7 +4172,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_143_V1",
@@ -4009,7 +4183,7 @@
     "primary_num": "143",
     "secondary_num": null,
     "title": "Like suit, when the 1[Twelve years]",
-    "text": "Like suit, when the 1[Twelve years]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4022,7 +4196,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_144_V1",
@@ -4032,7 +4207,7 @@
     "primary_num": "144",
     "secondary_num": null,
     "title": "For possession of immoveable property or any interest therein not hereby otherwise specially provided for (adverse possession)",
-    "text": "For possession of immoveable property or any interest therein not hereby otherwise specially provided for (adverse possession)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4045,7 +4220,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_145_V1",
@@ -4055,7 +4231,7 @@
     "primary_num": "145",
     "secondary_num": null,
     "title": "Against a depositary or Thirty years The date of the deposit or pawn.",
-    "text": "Against a depositary or Thirty years The date of the deposit or pawn.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4068,7 +4244,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_146_V1",
@@ -4078,7 +4255,7 @@
     "primary_num": "146",
     "secondary_num": null,
     "title": "Before a 1[High Court] in 2[Thirty years] When any part of the principal or",
-    "text": "Before a 1[High Court] in 2[Thirty years] When any part of the principal or",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4091,7 +4268,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_147_V1",
@@ -4101,7 +4279,7 @@
     "primary_num": "147",
     "secondary_num": null,
     "title": "By a mortgagor for Sixty years When the money secured by the",
-    "text": "By a mortgagor for Sixty years When the money secured by the",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4114,7 +4292,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_148_V1",
@@ -4124,7 +4303,7 @@
     "primary_num": "148",
     "secondary_num": null,
     "title": "Against a mortgagee to 2[Sixty years] When the right to redeem or to",
-    "text": "Against a mortgagee to 2[Sixty years] When the right to redeem or to",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4137,7 +4316,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_149_V1",
@@ -4147,7 +4327,7 @@
     "primary_num": "149",
     "secondary_num": null,
     "title": "1[Any suit by or on behalf 2[Sixty years] .. When the period of limitation",
-    "text": "1[Any suit by or on behalf 2[Sixty years] .. When the period of limitation",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4160,7 +4340,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_150_V1",
@@ -4170,7 +4351,7 @@
     "primary_num": "150",
     "secondary_num": null,
     "title": "Under the Code of 7[Thirty days] .. The date of the sentence.",
-    "text": "Under the Code of 7[Thirty days] .. The date of the sentence.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4183,7 +4364,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_151_V1",
@@ -4193,7 +4375,7 @@
     "primary_num": "151",
     "secondary_num": null,
     "title": "From a decree or order Twenty days .. The date of the decree or order.",
-    "text": "From a decree or order Twenty days .. The date of the decree or order.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4206,7 +4388,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_152_V1",
@@ -4216,7 +4399,7 @@
     "primary_num": "152",
     "secondary_num": null,
     "title": "Under the Code of Civil Thirty days .. The date of the decree or order",
-    "text": "Under the Code of Civil Thirty days .. The date of the decree or order",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4229,7 +4412,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_153_V1",
@@ -4239,7 +4423,7 @@
     "primary_num": "153",
     "secondary_num": null,
     "title": "Under the same Code to 3[Thirty days] The date of the order.",
-    "text": "Under the same Code to 3[Thirty days] The date of the order.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4252,7 +4436,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_154_V1",
@@ -4262,7 +4447,7 @@
     "primary_num": "154",
     "secondary_num": null,
     "title": "Under the Code of",
-    "text": "Under the Code of",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4275,7 +4460,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_155_V1",
@@ -4285,7 +4471,7 @@
     "primary_num": "155",
     "secondary_num": null,
     "title": "Under the same Code to Sixty days .. The date of the sentence or order",
-    "text": "Under the same Code to Sixty days .. The date of the sentence or order",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4298,7 +4484,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_156_V1",
@@ -4308,7 +4495,7 @@
     "primary_num": "156",
     "secondary_num": null,
     "title": "Under the Code of Civil Ninety days .. The date of the decree or order",
-    "text": "Under the Code of Civil Ninety days .. The date of the decree or order",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4321,7 +4508,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_157_V1",
@@ -4331,7 +4519,7 @@
     "primary_num": "157",
     "secondary_num": null,
     "title": "Under the Code of Six months .. The date of the order appealed",
-    "text": "Under the Code of Six months .. The date of the order appealed",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4344,7 +4532,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_158_V1",
@@ -4354,7 +4543,7 @@
     "primary_num": "158",
     "secondary_num": null,
     "title": "[Repealed by the Arbitration Act, 1940 (X of 1940)]",
-    "text": "[Repealed by the Arbitration Act, 1940 (X of 1940)]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4367,7 +4556,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_159_V1",
@@ -4377,7 +4567,7 @@
     "primary_num": "159",
     "secondary_num": null,
     "title": "For leave to appear and",
-    "text": "For leave to appear and",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4390,7 +4580,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_160_V1",
@@ -4400,7 +4591,7 @@
     "primary_num": "160",
     "secondary_num": null,
     "title": "For an order under the",
-    "text": "For an order under the",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4413,7 +4604,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_161_V1",
@@ -4423,7 +4615,7 @@
     "primary_num": "161",
     "secondary_num": null,
     "title": "For a review of 3[Fifteen days] The date of the decree or order.",
-    "text": "For a review of 3[Fifteen days] The date of the decree or order.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4436,7 +4628,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_162_V1",
@@ -4446,7 +4639,7 @@
     "primary_num": "162",
     "secondary_num": null,
     "title": "For a review of Twenty days The date of the decree or order.",
-    "text": "For a review of Twenty days The date of the decree or order.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4459,7 +4652,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_163_V1",
@@ -4469,7 +4663,7 @@
     "primary_num": "163",
     "secondary_num": null,
     "title": "By a plaintiff, for an",
-    "text": "By a plaintiff, for an",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4482,7 +4676,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_164_V1",
@@ -4492,7 +4687,7 @@
     "primary_num": "164",
     "secondary_num": null,
     "title": "By a defendant, for an 2[Thirty days] .. The date of the decree or where",
-    "text": "By a defendant, for an 2[Thirty days] .. The date of the decree or where",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4505,7 +4700,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_165_V1",
@@ -4515,7 +4711,7 @@
     "primary_num": "165",
     "secondary_num": null,
     "title": "Under the Code of Civil 2[Thirty days] .. The date of the dispossession.",
-    "text": "Under the Code of Civil 2[Thirty days] .. The date of the dispossession.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4528,7 +4724,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_166_V1",
@@ -4538,7 +4735,7 @@
     "primary_num": "166",
     "secondary_num": null,
     "title": "Under the same Code to 2[Thirty days] .. The date of the sale.",
-    "text": "Under the same Code to 2[Thirty days] .. The date of the sale.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4551,7 +4748,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_167_V1",
@@ -4561,7 +4759,7 @@
     "primary_num": "167",
     "secondary_num": null,
     "title": "Complaining of 2[Thirty days] .. The date of the resistance or",
-    "text": "Complaining of 2[Thirty days] .. The date of the resistance or",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4574,7 +4772,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_168_V1",
@@ -4584,7 +4783,7 @@
     "primary_num": "168",
     "secondary_num": null,
     "title": "For the readmission of an 2[Thirty days] .. The date of the dismissal.",
-    "text": "For the readmission of an 2[Thirty days] .. The date of the dismissal.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4597,7 +4796,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_169_V1",
@@ -4607,7 +4807,7 @@
     "primary_num": "169",
     "secondary_num": null,
     "title": "For the re-hearing of an",
-    "text": "For the re-hearing of an",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4620,7 +4820,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_170_V1",
@@ -4630,7 +4831,7 @@
     "primary_num": "170",
     "secondary_num": null,
     "title": "For leave to appeal as a 2[Thirty days] .. The date of the decree appealed from.",
-    "text": "For leave to appeal as a 2[Thirty days] .. The date of the decree appealed from.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4643,7 +4844,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_171_V1",
@@ -4653,7 +4855,7 @@
     "primary_num": "171",
     "secondary_num": null,
     "title": "Under the Code of Civil Sixty days.. 4[The date of the order or judgment]",
-    "text": "Under the Code of Civil Sixty days.. 4[The date of the order or judgment]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4666,7 +4868,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_172_V1",
@@ -4676,7 +4879,7 @@
     "primary_num": "172",
     "secondary_num": null,
     "title": "Under the same Code by 2[Sixty days] .. The date of the order of dismissal.",
-    "text": "Under the same Code by 2[Sixty days] .. The date of the order of dismissal.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4689,7 +4892,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_173_V1",
@@ -4699,7 +4903,7 @@
     "primary_num": "173",
     "secondary_num": null,
     "title": "For a review of Ninety days .. The date of the decree or order.",
-    "text": "For a review of Ninety days .. The date of the decree or order.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4712,7 +4916,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_174_V1",
@@ -4722,7 +4927,7 @@
     "primary_num": "174",
     "secondary_num": null,
     "title": "For the issue of a notice 1[Ninety days] When the payment or adjustment",
-    "text": "For the issue of a notice 1[Ninety days] When the payment or adjustment",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4735,7 +4940,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_175_V1",
@@ -4745,7 +4951,7 @@
     "primary_num": "175",
     "secondary_num": null,
     "title": "For payment of the Six months .. The date of the decree.",
-    "text": "For payment of the Six months .. The date of the decree.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4758,7 +4964,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_176_V1",
@@ -4768,7 +4975,7 @@
     "primary_num": "176",
     "secondary_num": null,
     "title": "Under the same Code to 2[Ninety days] The date of the death of the",
-    "text": "Under the same Code to 2[Ninety days] The date of the death of the",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4781,7 +4988,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_177_V1",
@@ -4791,7 +4999,7 @@
     "primary_num": "177",
     "secondary_num": null,
     "title": "Under the same Code to 1[Ninety days] The date of the death of the",
-    "text": "Under the same Code to 1[Ninety days] The date of the death of the",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4804,7 +5012,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_178_V1",
@@ -4814,7 +5023,7 @@
     "primary_num": "178",
     "secondary_num": null,
     "title": "[Repealed by the Arbitration Act, 1940 (X of 1940)]",
-    "text": "[Repealed by the Arbitration Act, 1940 (X of 1940)]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4827,7 +5036,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_179_V1",
@@ -4837,7 +5047,7 @@
     "primary_num": "179",
     "secondary_num": null,
     "title": "By a person desiring to 3[Ninety days] The date of the decree appealed",
-    "text": "By a person desiring to 3[Ninety days] The date of the decree appealed",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4850,7 +5060,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_180_V1",
@@ -4860,7 +5071,7 @@
     "primary_num": "180",
     "secondary_num": null,
     "title": "By a purchaser of Three years .. When the sale becomes absolute.",
-    "text": "By a purchaser of Three years .. When the sale becomes absolute.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4873,7 +5084,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_181_V1",
@@ -4883,7 +5095,7 @@
     "primary_num": "181",
     "secondary_num": null,
     "title": "Applications for which 4[Three years]",
-    "text": "Applications for which 4[Three years]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4896,7 +5108,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_182_V1",
@@ -4906,7 +5119,7 @@
     "primary_num": "182",
     "secondary_num": null,
     "title": "[Omitted by the Law Reforms Ordinance, 1972 (XII of 1972), s. 2 and Sch.]",
-    "text": "[Omitted by the Law Reforms Ordinance, 1972 (XII of 1972), s. 2 and Sch.]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4919,7 +5132,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_ART_183_V1",
@@ -4929,7 +5143,7 @@
     "primary_num": "183",
     "secondary_num": null,
     "title": "To enforce a judgment, 7[Six years] .. When a present right to enforce",
-    "text": "To enforce a judgment, 7[Six years] .. When a present right to enforce",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4942,7 +5156,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:14:21.994707+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "LIMITATION_1908_SEC_1_V2",

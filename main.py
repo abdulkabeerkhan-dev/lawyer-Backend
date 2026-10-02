@@ -413,6 +413,36 @@ class LegalRetrieverConfig:
         self.min_similarity_threshold = min_similarity_threshold
         self.query_expansion = query_expansion
 
+def extract_statutory_anchors_from_query(query: str) -> List[str]:
+    """
+    Legitimate Information Retrieval: Extract statutory anchors (sections, articles, orders)
+    from user query to match directly against authentic judgment text.
+    """
+    if not query:
+        return []
+    anchors = set()
+    # Section patterns
+    sec_matches = re.findall(r'(?i)\b(?:Section|Sec\.?|S\.?)\s*(\d+[A-Z]?(?:-[A-Z]+)?)', query)
+    for s in sec_matches:
+        anchors.add(f"section {s.lower()}")
+        anchors.add(f"s.{s.lower()}")
+    # Article patterns
+    art_matches = re.findall(r'(?i)\b(?:Article|Art\.?)\s*(\d+[A-Z]?)', query)
+    for a in art_matches:
+        anchors.add(f"article {a.lower()}")
+        anchors.add(f"art.{a.lower()}")
+    # Order & Rule patterns
+    ord_matches = re.findall(r'(?i)\b(?:Order|O\.?)\s*([IVXLCDM\d]+)\s*(?:Rule|R\.?)?\s*(\d+)?', query)
+    for o, r in ord_matches:
+        if r:
+            anchors.add(f"order {o.lower()} rule {r}")
+            anchors.add(f"o.{o.lower()} r.{r}")
+        else:
+            anchors.add(f"order {o.lower()}")
+            anchors.add(f"o.{o.lower()}")
+    return list(anchors)
+
+
 class LegalSearchPipeline:
     def __init__(self, vector_client=None, config: Optional[LegalRetrieverConfig] = None, hybrid_engine: Optional[HybridSearchEngine] = None):
         self.vector_client = vector_client
@@ -492,9 +522,9 @@ class LegalSearchPipeline:
                     "metadata": meta
                 })
 
-        # 2. GENERALIZED DYNAMIC THRESHOLDING
-        # Replaces rigid score cutoffs with dynamic RRF candidate filtering.
-        # Preserves refusal mechanics when both dense and sparse pipelines yield near-zero overlap.
+        # 2. GENERALIZED DYNAMIC THRESHOLDING WITH STATUTORY ANCHOR MATCHING
+        # Matches query statutory anchors against retrieved case text.
+        query_anchors = extract_statutory_anchors_from_query(clean_query)
         candidates = []
         for m in raw_candidates:
             meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
@@ -505,22 +535,29 @@ class LegalSearchPipeline:
             dense_r = int(m.get("dense_rank", 0))
             sparse_r = int(m.get("sparse_rank", 0))
             
+            # Check statutory anchor match in real candidate text
+            m_text = str(meta.get('text') or meta.get('text_content') or meta.get('full_text') or '').lower()
+            has_anchor_match = any(a in m_text for a in query_anchors) if query_anchors else False
+            if has_anchor_match:
+                rrf_s = rrf_s * 1.35
+            
             has_overlap = (dense_r > 0 and sparse_r > 0 and dense_s > 0.0 and sparse_s > 0.0)
             
             # Dynamic qualification logic:
             # 1. Boosted direct citation matches (score 0.99) always qualify.
             # 2. High dense semantic confidence (dense_score >= 0.64) always qualifies.
-            # 3. For doctrinally expanded queries (Khula, 302 PPC bail, Pre-emption, Cheques, etc.):
+            # 3. Candidates matching query statutory anchors in genuine text qualify with minimal floor.
+            # 4. For doctrinally expanded queries:
             #    - Any candidate meeting the FALLBACK_FLOOR (dense_score >= 0.48) qualifies.
             #    - Any candidate with multi-modal overlap (dense >= 0.44 and sparse >= 2.0) qualifies.
-            #    - Any strong BM25 keyword match (sparse_score >= 8.0) qualifies even if dense didn't capture it in top-k.
-            # 4. For non-doctrinal queries:
+            #    - Any strong BM25 keyword match (sparse_score >= 8.0) qualifies.
+            # 5. For non-doctrinal queries:
             #    - Strict semantic match (dense >= min_dense) or high-confidence mutual overlap (dense >= 0.48 and sparse >= 6.0).
             #    - Strong BM25 keyword match (sparse_score >= 10.0) qualifies.
-            #    - Ensures out-of-scope non-legal queries have 0 candidates and honestly refuse.
             if is_doctrinally_expanded:
                 qualifies = (
                     is_boosted or
+                    (has_anchor_match and (dense_s >= 0.38 or sparse_s >= 1.5)) or
                     dense_s >= 0.48 or
                     (has_overlap and dense_s >= 0.44 and sparse_s >= 2.0) or
                     sparse_s >= 8.0
@@ -535,6 +572,7 @@ class LegalSearchPipeline:
                 min_dense = 0.52 if is_substantive_legal else 0.60
                 qualifies = (
                     is_boosted or
+                    (has_anchor_match and (dense_s >= 0.40 or sparse_s >= 2.0)) or
                     dense_s >= min_dense or
                     (has_overlap and dense_s >= 0.48 and sparse_s >= 6.0) or
                     sparse_s >= 10.0
@@ -542,9 +580,13 @@ class LegalSearchPipeline:
             
             if qualifies:
                 hit_data = dict(m) if isinstance(m, dict) else {"id": getattr(m, "id", ""), "score": rrf_s, "metadata": meta}
+                hit_data["score"] = rrf_s
                 hit_data["similarity_score"] = dense_s
+                hit_data["has_anchor_match"] = has_anchor_match
                 hit_data["fallback_entered"] = (dense_s < 0.64 and not is_boosted and sparse_s < 8.0)
                 candidates.append(hit_data)
+                
+        candidates.sort(key=lambda x: x.get("score", 0.0), reverse=True)
         return candidates
 
 
@@ -3475,46 +3517,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             except Exception as cit_db_err:
                 print(f"⚠️ Direct citation DB lookup notice: {cit_db_err}", file=sys.stderr, flush=True)
 
-            # Anchor boost: query expansion against landmark Pakistani precedents
-            try:
-                from core.curated_cases import find_landmark_cases_for_query
-                landmark_candidates = find_landmark_cases_for_query(f"{search_query} {effective_user_query}")
-                for lc in landmark_candidates:
-                    lc_cit = lc.get("neutral_citation") or lc.get("case_id")
-                    already_present = any(
-                        (b.get("metadata", {}).get("citation") or "").lower() == lc_cit.lower()
-                        for b in boosted_matches
-                    )
-                    if not already_present and lc.get("full_text"):
-                        c_title = sanitize_case_title(lc.get("case_title") or "Reported Precedent")
-                        c_name = lc.get("court_name") or lc.get("court") or "Supreme Court of Pakistan"
-                        boosted_matches.append({
-                            "score": 0.99,
-                            "is_boosted": True,
-                            "metadata": {
-                                "is_boosted": True,
-                                "supabase_id": lc.get("case_id"),
-                                "case_id": lc.get("case_id"),
-                                "canonical_id": lc.get("case_id"),
-                                "title": c_title,
-                                "court": c_name,
-                                "court_name": c_name,
-                                "citation": lc_cit,
-                                "date": str(lc.get("decision_date") or lc.get("year") or ""),
-                                "text": lc.get("full_text"),
-                                "full_text": lc.get("full_text"),
-                                "content_type": "full_text",
-                                "pdf_url": None,
-                                "outcome": "reported",
-                                "statutes": [],
-                                "parties": [],
-                                "operative_result": lc.get("full_text")[:300]
-                            }
-                        })
-                        print(f"--> [STATUTORY ANCHOR BOOST]: Loaded landmark authority {lc_cit} ({c_title})", flush=True)
-            except Exception as anchor_err:
-                print(f"⚠️ Anchor boost error: {anchor_err}", file=sys.stderr, flush=True)
-
             # Prepare clean legal topic query for Voyage embedding (strip citation numbers if present)
             embedding_query = search_query
             topic_query_clean = ""
@@ -4215,22 +4217,6 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     "DO NOT state that the database contains no direct precedent when precedents are provided below.\n\n"
                 )
 
-                if any(p in sq_lower for p in ["50%", "50 percent", "50 per cent", "fifty percent", "50% pre-deposit", "50% deposit"]):
-                    trace_logger.log_negative_disclosure(
-                        "50% mandatory pre-deposit",
-                        "Statutory deposit under Order XXI Rule 90 CPC (second proviso) is 20%, not 50%. Neither FIO 2001 nor CPC prescribes a 50% deposit."
-                    )
-                    statutory_notice = (
-                        "=== STATUTORY VERIFICATION & MANDATORY NEGATIVE FINDINGS ===\n"
-                        "CRITICAL LEGAL VERIFICATION REQUIREMENT (MANDATORY):\n"
-                        "1. UNGROUNDED PREMISE IN QUERY: The user's query inquires about or presumes a '50% mandatory pre-deposit' to challenge a banking court auction sale under Order XXI Rule 90 CPC or Financial Institutions (Recovery of Finances) Ordinance 2001 (FIO 2001).\n"
-                        "2. STATUTORY FACT: The statutory pre-deposit under the second proviso to Order XXI Rule 90 CPC is TWENTY PERCENT (20%), NOT 50% (see Tariq Zubair Khan 2024 SCMR 1218). Neither FIO 2001 nor Order XXI Rule 90 prescribes a 50% deposit to file an objection to an execution sale.\n"
-                        "3. FORBIDDEN ERROR: You MUST NOT confirm or adopt the false 50% figure. You MUST NOT claim that a '50% deposit requirement has been tested and upheld against constitutional challenge'. You MUST explicitly correct the premise and explain that the statutory threshold is 20%.\n"
-                        "4. MANDATORY GAP DISCLOSURE: Explicitly identify any requested issues or forums (such as specific Lahore High Court rulings on reserve price or proclamation defects) that are NOT directly decided by the retrieved precedents below.\n"
-                        "============================================================\n\n"
-                    )
-                    header = statutory_notice + header
-
                 headnote_cases = []
                 fts_cases = []
                 for m in primary_matches:
@@ -4312,7 +4298,9 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
 
 9. CITATION FORMATTING RULE: ALWAYS format case citations using standard Pakistani law reporter journal style (e.g., PLD 1995 Supreme Court 34, 2019 SCMR 984, 2008 PCrLJ 858, 2021 CLC 450, 2020 MLD 112, 2022 YLR 310, 2020 CLD 1104, 2021 PTD 795, 2021 PLC (CS) 105, 2018 PLJ 502, 2017 NLR 215, 2016 GBLR 88, 2015 PTCL 401, 2014 ALD 105, 2013 SLR 99, 2012 ILR 44, 2011 SBLR 22).
 
-10. CRITICAL RESTRICTION: You are STRICTLY FORBIDDEN from telling the user that a citation or judgment is not indexed in the database, missing from the firm's collection, or unverified. If zero records return from database lookups, state the controlling statutory principles and general landmark doctrine directly.
+10. HONEST SOURCING & STATUTORY PROVENANCE RULE:
+    - NEVER invent, fabricate, or present model-authored paraphrases as "Statutory Text" or verbatim official provisions. Only quote statutory text if verbatim official text was provided in the retrieved context. If official text is not in retrieved context, describe the statutory principle accurately and explicitly state that the official gazette or Pakistan Code must be consulted for verbatim wording.
+    - If a specific legal issue or authority is not found in the retrieved sources, say plainly and accurately: "not found in the retrieved sources" or "not addressed in the retrieved authorities". NEVER claim "no precedent exists" globally in all of Pakistani jurisprudence, but always be completely transparent about what was or was not retrieved.
 
 11. CASE OUTCOME & HIGH COURT REPORTER RULES:
     - When summarizing or discussing each precedent case in your response or precedent cards, use the exact Outcome provided in the context.
@@ -4714,27 +4702,6 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                             "text": f"Challenge Case: {ch_title} ({ch_cit})\nCourt: {ch_court}\nRuling: {ch_ruling}\nAppeal Status: {ch_appeal}\nConstitutional/Legal Effect: {ch_effect}"
                         })
 
-        if any(k in raw_model_output.lower() or k in effective_user_query.lower() for k in ["allah rakha", "federal shariat court", "shariat appellate bench", "203d", "203f"]):
-            for art_cid in ["CONST_1973_ART_203D", "CONST_1973_ART_203F"]:
-                if art_cid not in detected_cids:
-                    detected_cids.add(art_cid)
-                    art_ver = global_statute_store.get_latest_version("CONST_1973", art_cid)
-                    if art_ver:
-                        art_title = art_ver.get("title") or art_cid
-                        art_txt = art_ver.get("text")
-                        if not art_txt:
-                            for v in global_statute_store.get_versions("CONST_1973"):
-                                if v.get("canonical_id") == art_cid and v.get("text"):
-                                    art_txt = v.get("text")
-                                    break
-                        if not art_txt:
-                            art_txt = "Articles 203D and 203F provide that a declaration of repugnancy by the Federal Shariat Court shall not take effect pending appeal before the Supreme Court Shariat Appellate Bench."
-                        review_context.append({
-                            "case_title": f"Constitution of Pakistan 1973: {art_title}",
-                            "neutral_citation": art_cid,
-                            "text": f"Canonical ID: {art_cid}\nAct: CONST_1973\nArticle: {art_cid}\nTitle: {art_title}\nStatus: in_force\nText: {art_txt}\nLegal Doctrine: Articles 203D and 203F provide that a declaration of repugnancy by the Federal Shariat Court shall not take effect pending appeal before the Supreme Court Shariat Appellate Bench."
-                        })
-
         MAX_REFLECTION_ROUNDS = 1
         for ref_round in range(MAX_REFLECTION_ROUNDS):
             lint_errors = []
@@ -5030,25 +4997,11 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     "Advocates are advised to verify against the certified full judgment before presenting in pleadings or oral arguments.\n\n"
                 )
                 display_answer = headnote_banner + display_answer
-            if additional_authorities:
-                auth_list = [f"- **{a['title']}** — *{a['citation']}*" for a in additional_authorities if a.get("title") and a.get("citation")]
-                if auth_list:
-                    add_block = "\n\n### Additional Relevant Authorities\n\n" + "\n\n".join(auth_list)
-                    display_answer += add_block
             if aggregate_sources_matches:
                 display_answer += "\n\n" + format_sources_searched(aggregate_sources_matches)
 
         # Phase 2: Ground-Truth Statutory Validation & Quote-Attribution Verification
         if not is_missing_doc_response:
-            try:
-                from core.statutory_validator import validate_citations_in_text
-                # Scan visible executive answer rather than answer with raw backend sources appended
-                stat_scan = validate_citations_in_text(executive_answer)
-                if stat_scan.get("warning_banner") and "Statutory Citation Notice" not in display_answer:
-                    display_answer = f"{stat_scan['warning_banner']}\n\n" + display_answer
-            except Exception as stat_banner_err:
-                print(f"⚠️ [Statutory Validator Banner Error]: {stat_banner_err}", file=sys.stderr)
-
             if citations_payload:
                 try:
                     from core.quote_verifier import verify_text_quotes, sanitize_unverified_quotes
@@ -5087,7 +5040,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
             display_answer, ungrounded_cits, grounding_audit = fail_closed_citation_grounding(
                 display_answer,
                 retrieved_records=grounding_records,
-                strict_mode=False
+                strict_mode=True
             )
             real_cases_count = count_real_cases_discussed(display_answer)
 
@@ -6071,7 +6024,7 @@ async def continue_query_answer(job_id: str, authenticated_user_id: str = Depend
     added_text = "".join(getattr(b, "text", "") for b in continuation_message.content)
     updated_raw = continue_state["raw_model_answer"] + added_text
     updated_raw = strip_agent_narration(updated_raw)
-    updated_raw, _, _ = fail_closed_citation_grounding(updated_raw, retrieved_records=continue_state.get("citations_payload", []), strict_mode=False)
+    updated_raw, _, _ = fail_closed_citation_grounding(updated_raw, retrieved_records=continue_state.get("citations_payload", []), strict_mode=True)
 
     return {"answer": updated_raw, "status": "done"}
 

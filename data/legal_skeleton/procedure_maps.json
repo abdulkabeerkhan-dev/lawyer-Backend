@@ -14,13 +14,13 @@
           "step_number": 1,
           "name": "Valuation of Mortgaged Property",
           "rule": "Must be conducted by independent evaluators from Pakistan Banks' Association (PBA) approved panel",
-          "authorities": "FIO 2001 s.19, 2026 CLD 96"
+          "authorities": "FIO 2001 s.19"
         },
         {
           "step_number": 2,
           "name": "Fixing Reserve Price",
           "rule": "Banking Court fixes reserve price based on PBA valuation. Grossly inadequate reserve price without valuation constitutes material irregularity.",
-          "authorities": "FIO 2001 s.19, 2023 SCMR 890"
+          "authorities": "FIO 2001 s.19"
         },
         {
           "step_number": 3,
@@ -32,13 +32,13 @@
           "step_number": 4,
           "name": "Objection Petition under Order XXI Rule 90 CPC",
           "rule": "Must be filed within 30 days of auction (Art. 166 Limitation Act). 20% deposit requirement (second proviso) subject to court order. Non-compliance risks summary dismissal.",
-          "authorities": "Order XXI Rule 90 CPC, 2024 SCMR 1218"
+          "authorities": "Order XXI Rule 90 CPC"
         },
         {
           "step_number": 5,
           "name": "Adjudication of Objections Before Confirmation",
           "rule": "Auction confirmation is conditional upon substantive examination of objections on merits; auction cannot be confirmed while objections are pending.",
-          "authorities": "2006 YLR 2776"
+          "authorities": "Order XXI Rule 90 CPC"
         },
         {
           "step_number": 6,

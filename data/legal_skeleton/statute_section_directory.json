@@ -82,7 +82,7 @@
           "status": "Unreviewed",
           "reviewer": null,
           "review_date": null,
-          "lawyer_review_flag": "needs lawyer review: 20% deposit requirement (second proviso) across provincial amendments. Source: CPC 1908 O.XXI r.90; 2024 SCMR 1218.",
+          "lawyer_review_flag": "needs lawyer review: 20% deposit requirement (second proviso) across provincial amendments.",
           "source": "CPC 1908, Order XXI Rule 90 (Second Proviso)",
           "span_pointer": "O.XXI r.90 Second Proviso: 20% deposit requirement (second proviso) - Court may require applicant to deposit an amount not exceeding twenty per cent (20%) of the sum realized at the sale, or furnish security, before entertaining the application.",
           "notes": "20% deposit requirement (second proviso). Non-compliance with court order risks summary dismissal. Client must seek stay/modification or pay under protest."
@@ -109,8 +109,8 @@
           "status": "Unreviewed",
           "reviewer": null,
           "review_date": null,
-          "source": "MFLO 1961, Section 4; PLD 2000 FSC 1 (Allah Rakha); Constitution Art. 203D(2) proviso",
-          "span_pointer": "MFLO s.4: In the event of death of any son or daughter of the propositus before opening of succession, children of such son or daughter receive share parent would have received per stirpes. Remains valid operative law because Allah Rakha appeal is pending in SC Shariat Appellate Bench.",
+          "source": "MFLO 1961, Section 4; Constitution Art. 203D(2) proviso",
+          "span_pointer": "MFLO s.4: In the event of death of any son or daughter of the propositus before opening of succession, children of such son or daughter receive share parent would have received per stirpes.",
           "notes": "Survives due to pending appeal in Supreme Court, NOT because Parliament failed to amend."
         }
       ]

@@ -7,7 +7,7 @@
     "primary_num": "1",
     "secondary_num": null,
     "title": "The Republic and its territories",
-    "text": "The Republic and its territories",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -20,7 +20,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.111123+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_2_V1",
@@ -30,7 +31,7 @@
     "primary_num": "2",
     "secondary_num": null,
     "title": "Islam to be State religion",
-    "text": "Islam to be State religion",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -43,7 +44,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.134821+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_2A_V1",
@@ -53,7 +55,7 @@
     "primary_num": "2A",
     "secondary_num": null,
     "title": "The Objectives Resolution to form part of substantive provisions",
-    "text": "The Objectives Resolution to form part of substantive provisions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -66,7 +68,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.153586+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_3_V1",
@@ -76,7 +79,7 @@
     "primary_num": "3",
     "secondary_num": null,
     "title": "Elimination of exploitation",
-    "text": "Elimination of exploitation",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -89,7 +92,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.179914+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_4_V1",
@@ -99,7 +103,7 @@
     "primary_num": "4",
     "secondary_num": null,
     "title": "Right of individuals to be dealt with in accordance with law, etc.",
-    "text": "Right of individuals to be dealt with in accordance with law, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -112,7 +116,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.203352+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_5_V1",
@@ -122,7 +127,7 @@
     "primary_num": "5",
     "secondary_num": null,
     "title": "Loyalty to State and obedience to Constitution and law",
-    "text": "Loyalty to State and obedience to Constitution and law",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -135,7 +140,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.231799+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_6_V1",
@@ -145,7 +151,7 @@
     "primary_num": "6",
     "secondary_num": null,
     "title": "High treason",
-    "text": "High treason",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -158,7 +164,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.274497+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_7_V1",
@@ -168,7 +175,7 @@
     "primary_num": "7",
     "secondary_num": null,
     "title": "Definition of the State",
-    "text": "Definition of the State",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -181,7 +188,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.311717+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_8_V1",
@@ -191,7 +199,7 @@
     "primary_num": "8",
     "secondary_num": null,
     "title": "Laws inconsistent with or in derogation of Fundamental Rights to be void",
-    "text": "Laws inconsistent with or in derogation of Fundamental Rights to be void",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -204,7 +212,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.336236+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_9_V1",
@@ -214,7 +223,7 @@
     "primary_num": "9",
     "secondary_num": null,
     "title": "Security of person",
-    "text": "Security of person",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -227,7 +236,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.365430+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_9A_V1",
@@ -237,7 +247,7 @@
     "primary_num": "9A",
     "secondary_num": null,
     "title": "Clean and healthy environment",
-    "text": "Clean and healthy environment",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -250,7 +260,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.391088+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_10_V1",
@@ -260,7 +271,7 @@
     "primary_num": "10",
     "secondary_num": null,
     "title": "Safeguards as to arrest and detention",
-    "text": "Safeguards as to arrest and detention",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -273,7 +284,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.414453+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_10A_V1",
@@ -283,7 +295,7 @@
     "primary_num": "10A",
     "secondary_num": null,
     "title": "Right to fair trial",
-    "text": "Right to fair trial",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -296,7 +308,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.437890+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_11_V1",
@@ -306,7 +319,7 @@
     "primary_num": "11",
     "secondary_num": null,
     "title": "Slavery, forced labour, etc., prohibited",
-    "text": "Slavery, forced labour, etc., prohibited",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -319,7 +332,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.464565+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_12_V1",
@@ -329,7 +343,7 @@
     "primary_num": "12",
     "secondary_num": null,
     "title": "Protection against retrospective punishment",
-    "text": "Protection against retrospective punishment",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -342,7 +356,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.494510+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_13_V1",
@@ -352,7 +367,7 @@
     "primary_num": "13",
     "secondary_num": null,
     "title": "Protection against double punishment and self-incrimination",
-    "text": "Protection against double punishment and self-incrimination",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -365,7 +380,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.522401+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_14_V1",
@@ -375,7 +391,7 @@
     "primary_num": "14",
     "secondary_num": null,
     "title": "Inviolability of dignity of man, etc.",
-    "text": "Inviolability of dignity of man, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -388,7 +404,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.544713+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_15_V1",
@@ -398,7 +415,7 @@
     "primary_num": "15",
     "secondary_num": null,
     "title": "Freedom of movement, etc.",
-    "text": "Freedom of movement, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -411,7 +428,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.574188+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_16_V1",
@@ -421,7 +439,7 @@
     "primary_num": "16",
     "secondary_num": null,
     "title": "Freedom of assembly",
-    "text": "Freedom of assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -434,7 +452,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.597338+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_17_V1",
@@ -444,7 +463,7 @@
     "primary_num": "17",
     "secondary_num": null,
     "title": "Freedom of association",
-    "text": "Freedom of association",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -457,7 +476,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.629102+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_18_V1",
@@ -467,7 +487,7 @@
     "primary_num": "18",
     "secondary_num": null,
     "title": "Freedom of trade, business or profession",
-    "text": "Freedom of trade, business or profession",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -480,7 +500,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.654208+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_19_V1",
@@ -490,7 +511,7 @@
     "primary_num": "19",
     "secondary_num": null,
     "title": "Freedom of speech, etc.",
-    "text": "Freedom of speech, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -503,7 +524,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.682976+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_19A_V1",
@@ -513,7 +535,7 @@
     "primary_num": "19A",
     "secondary_num": null,
     "title": "Right to information",
-    "text": "Right to information",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -526,7 +548,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.710322+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_20_V1",
@@ -536,7 +559,7 @@
     "primary_num": "20",
     "secondary_num": null,
     "title": "Freedom to profess religion and to manage religious institutions",
-    "text": "Freedom to profess religion and to manage religious institutions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -549,7 +572,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.731528+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_21_V1",
@@ -559,7 +583,7 @@
     "primary_num": "21",
     "secondary_num": null,
     "title": "Safeguard against taxation for purposes of any particular religion",
-    "text": "Safeguard against taxation for purposes of any particular religion",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -572,7 +596,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.758161+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_22_V1",
@@ -582,7 +607,7 @@
     "primary_num": "22",
     "secondary_num": null,
     "title": "Safeguards as to educational institutions in respect of religion, etc.",
-    "text": "Safeguards as to educational institutions in respect of religion, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -595,7 +620,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.783772+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_23_V1",
@@ -605,7 +631,7 @@
     "primary_num": "23",
     "secondary_num": null,
     "title": "Provision as to property",
-    "text": "Provision as to property",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -618,7 +644,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.807124+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_24_V1",
@@ -628,7 +655,7 @@
     "primary_num": "24",
     "secondary_num": null,
     "title": "Protection of property rights",
-    "text": "Protection of property rights",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -641,7 +668,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.834401+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_25_V1",
@@ -651,7 +679,7 @@
     "primary_num": "25",
     "secondary_num": null,
     "title": "Equality of citizens",
-    "text": "Equality of citizens",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -664,7 +692,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.862938+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_25A_V1",
@@ -674,7 +703,7 @@
     "primary_num": "25A",
     "secondary_num": null,
     "title": "Right to education",
-    "text": "Right to education",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -687,7 +716,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.900625+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_26_V1",
@@ -697,7 +727,7 @@
     "primary_num": "26",
     "secondary_num": null,
     "title": "Non-discrimination in respect of access to public places",
-    "text": "Non-discrimination in respect of access to public places",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -710,7 +740,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.926742+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_27_V1",
@@ -720,7 +751,7 @@
     "primary_num": "27",
     "secondary_num": null,
     "title": "Safeguard against discrimination in services",
-    "text": "Safeguard against discrimination in services",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -733,7 +764,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.951899+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_28_V1",
@@ -743,7 +775,7 @@
     "primary_num": "28",
     "secondary_num": null,
     "title": "Preservation of language, script and culture",
-    "text": "Preservation of language, script and culture",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -756,7 +788,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:27.976916+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_29_V1",
@@ -766,7 +799,7 @@
     "primary_num": "29",
     "secondary_num": null,
     "title": "Principles of Policy",
-    "text": "Principles of Policy",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -779,7 +812,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.003238+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_30_V1",
@@ -789,7 +823,7 @@
     "primary_num": "30",
     "secondary_num": null,
     "title": "Responsibility with respect to Principles of Policy",
-    "text": "Responsibility with respect to Principles of Policy",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -802,7 +836,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.027697+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_31_V1",
@@ -812,7 +847,7 @@
     "primary_num": "31",
     "secondary_num": null,
     "title": "Islamic way of life",
-    "text": "Islamic way of life",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -825,7 +860,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.054488+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_32_V1",
@@ -835,7 +871,7 @@
     "primary_num": "32",
     "secondary_num": null,
     "title": "Promotion of local Government institutions",
-    "text": "Promotion of local Government institutions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -848,7 +884,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.083861+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_33_V1",
@@ -858,7 +895,7 @@
     "primary_num": "33",
     "secondary_num": null,
     "title": "Parochial and other similar prejudices to be discouraged",
-    "text": "Parochial and other similar prejudices to be discouraged",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -871,7 +908,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.113643+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_34_V1",
@@ -881,7 +919,7 @@
     "primary_num": "34",
     "secondary_num": null,
     "title": "Full participation of women in national life",
-    "text": "Full participation of women in national life",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -894,7 +932,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.146089+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_35_V1",
@@ -904,7 +943,7 @@
     "primary_num": "35",
     "secondary_num": null,
     "title": "Protection of family, etc.",
-    "text": "Protection of family, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -917,7 +956,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.166582+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_36_V1",
@@ -927,7 +967,7 @@
     "primary_num": "36",
     "secondary_num": null,
     "title": "Protection of minorities",
-    "text": "Protection of minorities",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -940,7 +980,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.191460+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_37_V1",
@@ -950,7 +991,7 @@
     "primary_num": "37",
     "secondary_num": null,
     "title": "Promotion of social justice and eradication of social evils",
-    "text": "Promotion of social justice and eradication of social evils",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -963,7 +1004,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.213306+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_38_V1",
@@ -973,7 +1015,7 @@
     "primary_num": "38",
     "secondary_num": null,
     "title": "Promotion of social and economic well-being of the people",
-    "text": "Promotion of social and economic well-being of the people",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -986,7 +1028,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.246554+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_39_V1",
@@ -996,7 +1039,7 @@
     "primary_num": "39",
     "secondary_num": null,
     "title": "Participation of people in Armed Forces",
-    "text": "Participation of people in Armed Forces",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1009,7 +1052,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.275620+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_40_V1",
@@ -1019,7 +1063,7 @@
     "primary_num": "40",
     "secondary_num": null,
     "title": "Strengthening bonds with Muslim world and promoting international peace",
-    "text": "Strengthening bonds with Muslim world and promoting international peace",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1032,7 +1076,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.302052+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_41_V1",
@@ -1042,7 +1087,7 @@
     "primary_num": "41",
     "secondary_num": null,
     "title": "The President",
-    "text": "The President",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1055,7 +1100,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.325547+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_42_V1",
@@ -1065,7 +1111,7 @@
     "primary_num": "42",
     "secondary_num": null,
     "title": "Oath of President",
-    "text": "Oath of President",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1078,7 +1124,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.350906+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_43_V1",
@@ -1088,7 +1135,7 @@
     "primary_num": "43",
     "secondary_num": null,
     "title": "Conditions of President\u2019s office",
-    "text": "Conditions of President\u2019s office",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1101,7 +1148,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.373387+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_44_V1",
@@ -1111,7 +1159,7 @@
     "primary_num": "44",
     "secondary_num": null,
     "title": "Term of office of President",
-    "text": "Term of office of President",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1124,7 +1172,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.398765+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_45_V1",
@@ -1134,7 +1183,7 @@
     "primary_num": "45",
     "secondary_num": null,
     "title": "President\u2019s power to grant pardon, etc.",
-    "text": "President\u2019s power to grant pardon, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1147,7 +1196,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.422323+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_46_V1",
@@ -1157,7 +1207,7 @@
     "primary_num": "46",
     "secondary_num": null,
     "title": "President to be kept informed",
-    "text": "President to be kept informed",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1170,7 +1220,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.450634+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_47_V1",
@@ -1180,7 +1231,7 @@
     "primary_num": "47",
     "secondary_num": null,
     "title": "Removal or impeachment of President",
-    "text": "Removal or impeachment of President",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1193,7 +1244,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.483701+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_48_V1",
@@ -1203,7 +1255,7 @@
     "primary_num": "48",
     "secondary_num": null,
     "title": "President to act on advice, etc.",
-    "text": "President to act on advice, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1216,7 +1268,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.533294+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_49_V1",
@@ -1226,7 +1279,7 @@
     "primary_num": "49",
     "secondary_num": null,
     "title": "Chairman or Speaker to act as, or perform functions of, President",
-    "text": "Chairman or Speaker to act as, or perform functions of, President",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1239,7 +1292,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.587353+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_50_V1",
@@ -1249,7 +1303,7 @@
     "primary_num": "50",
     "secondary_num": null,
     "title": "Majlis-e-Shoora (Parliament)",
-    "text": "Majlis-e-Shoora (Parliament)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1262,7 +1316,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.618219+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_51_V1",
@@ -1272,7 +1327,7 @@
     "primary_num": "51",
     "secondary_num": null,
     "title": "National Assembly",
-    "text": "National Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1285,7 +1340,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.646923+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_52_V1",
@@ -1295,7 +1351,7 @@
     "primary_num": "52",
     "secondary_num": null,
     "title": "Duration of National Assembly",
-    "text": "Duration of National Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1308,7 +1364,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.672351+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_53_V1",
@@ -1318,7 +1375,7 @@
     "primary_num": "53",
     "secondary_num": null,
     "title": "Speaker and Deputy Speaker of National Assembly",
-    "text": "Speaker and Deputy Speaker of National Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1331,7 +1388,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.701559+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_54_V1",
@@ -1341,7 +1399,7 @@
     "primary_num": "54",
     "secondary_num": null,
     "title": "Summoning and prorogation of Majlis-e-Shoora (Parliament)",
-    "text": "Summoning and prorogation of Majlis-e-Shoora (Parliament)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1354,7 +1412,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.727852+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_55_V1",
@@ -1364,7 +1423,7 @@
     "primary_num": "55",
     "secondary_num": null,
     "title": "Voting in Assembly and quorum",
-    "text": "Voting in Assembly and quorum",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1377,7 +1436,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.765462+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_56_V1",
@@ -1387,7 +1447,7 @@
     "primary_num": "56",
     "secondary_num": null,
     "title": "Address by President",
-    "text": "Address by President",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1400,7 +1460,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.793043+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_57_V1",
@@ -1410,7 +1471,7 @@
     "primary_num": "57",
     "secondary_num": null,
     "title": "Right to speak in Majlis-e-Shoora (Parliament)",
-    "text": "Right to speak in Majlis-e-Shoora (Parliament)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1423,7 +1484,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.824409+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_58_V1",
@@ -1433,7 +1495,7 @@
     "primary_num": "58",
     "secondary_num": null,
     "title": "Dissolution of the National Assembly",
-    "text": "Dissolution of the National Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1446,7 +1508,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.853055+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_59_V1",
@@ -1456,7 +1519,7 @@
     "primary_num": "59",
     "secondary_num": null,
     "title": "The Senate",
-    "text": "The Senate",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1469,7 +1532,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.885502+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_60_V1",
@@ -1479,7 +1543,7 @@
     "primary_num": "60",
     "secondary_num": null,
     "title": "Chairman and Deputy Chairman",
-    "text": "Chairman and Deputy Chairman",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1492,7 +1556,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.910842+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_61_V1",
@@ -1502,7 +1567,7 @@
     "primary_num": "61",
     "secondary_num": null,
     "title": "Other provisions relating to Senate",
-    "text": "Other provisions relating to Senate",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1515,7 +1580,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.934879+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_62_V1",
@@ -1525,7 +1591,7 @@
     "primary_num": "62",
     "secondary_num": null,
     "title": "Qualifications for membership of Majlis-e-Shoora (Parliament)",
-    "text": "Qualifications for membership of Majlis-e-Shoora (Parliament)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1538,7 +1604,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:28.965693+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_63_V1",
@@ -1548,7 +1615,7 @@
     "primary_num": "63",
     "secondary_num": null,
     "title": "Disqualifications for membership of Majlis-e-Shoora (Parliament)",
-    "text": "Disqualifications for membership of Majlis-e-Shoora (Parliament)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1561,7 +1628,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.000720+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_63A_V1",
@@ -1571,7 +1639,7 @@
     "primary_num": "63A",
     "secondary_num": null,
     "title": "Disqualification on grounds of defection, etc.",
-    "text": "Disqualification on grounds of defection, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1584,7 +1652,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.030160+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_64_V1",
@@ -1594,7 +1663,7 @@
     "primary_num": "64",
     "secondary_num": null,
     "title": "Vacation of seats",
-    "text": "Vacation of seats",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1607,7 +1676,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.059283+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_65_V1",
@@ -1617,7 +1687,7 @@
     "primary_num": "65",
     "secondary_num": null,
     "title": "Oath of members",
-    "text": "Oath of members",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1630,7 +1700,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.088019+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_66_V1",
@@ -1640,7 +1711,7 @@
     "primary_num": "66",
     "secondary_num": null,
     "title": "Privileges of members, etc.",
-    "text": "Privileges of members, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1653,7 +1724,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.113632+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_67_V1",
@@ -1663,7 +1735,7 @@
     "primary_num": "67",
     "secondary_num": null,
     "title": "Rules of procedure, etc.",
-    "text": "Rules of procedure, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1676,7 +1748,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.145094+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_68_V1",
@@ -1686,7 +1759,7 @@
     "primary_num": "68",
     "secondary_num": null,
     "title": "Restriction on discussion in Majlis-e-Shoora (Parliament)",
-    "text": "Restriction on discussion in Majlis-e-Shoora (Parliament)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1699,7 +1772,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.178725+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_69_V1",
@@ -1709,7 +1783,7 @@
     "primary_num": "69",
     "secondary_num": null,
     "title": "Courts not to inquire into proceedings of Majlis-e-Shoora (Parliament)",
-    "text": "Courts not to inquire into proceedings of Majlis-e-Shoora (Parliament)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1722,7 +1796,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.213933+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_70_V1",
@@ -1732,7 +1807,7 @@
     "primary_num": "70",
     "secondary_num": null,
     "title": "Introduction and passing of Bills",
-    "text": "Introduction and passing of Bills",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1745,7 +1820,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.240485+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_71_V1",
@@ -1755,7 +1831,7 @@
     "primary_num": "71",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1768,7 +1844,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.270659+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_72_V1",
@@ -1778,7 +1855,7 @@
     "primary_num": "72",
     "secondary_num": null,
     "title": "Procedure at joint sittings",
-    "text": "Procedure at joint sittings",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1791,7 +1868,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.298786+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_73_V1",
@@ -1801,7 +1879,7 @@
     "primary_num": "73",
     "secondary_num": null,
     "title": "Procedure with respect to Money Bills",
-    "text": "Procedure with respect to Money Bills",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1814,7 +1892,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.330401+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_74_V1",
@@ -1824,7 +1903,7 @@
     "primary_num": "74",
     "secondary_num": null,
     "title": "Federal Government\u2019s consent required for financial measures",
-    "text": "Federal Government\u2019s consent required for financial measures",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1837,7 +1916,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.363844+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_75_V1",
@@ -1847,7 +1927,7 @@
     "primary_num": "75",
     "secondary_num": null,
     "title": "President\u2019s assent to Bills",
-    "text": "President\u2019s assent to Bills",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1860,7 +1940,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.396698+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_76_V1",
@@ -1870,7 +1951,7 @@
     "primary_num": "76",
     "secondary_num": null,
     "title": "Bill not to lapse on prorogation, etc.",
-    "text": "Bill not to lapse on prorogation, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1883,7 +1964,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.434403+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_77_V1",
@@ -1893,7 +1975,7 @@
     "primary_num": "77",
     "secondary_num": null,
     "title": "Tax to be levied by law only",
-    "text": "Tax to be levied by law only",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1906,7 +1988,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.463587+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_78_V1",
@@ -1916,7 +1999,7 @@
     "primary_num": "78",
     "secondary_num": null,
     "title": "Federal Consolidated Fund and Public Account",
-    "text": "Federal Consolidated Fund and Public Account",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1929,7 +2012,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.496330+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_79_V1",
@@ -1939,7 +2023,7 @@
     "primary_num": "79",
     "secondary_num": null,
     "title": "Custody, etc., of Federal Consolidated Fund and Public Account",
-    "text": "Custody, etc., of Federal Consolidated Fund and Public Account",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1952,7 +2036,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.528445+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_80_V1",
@@ -1962,7 +2047,7 @@
     "primary_num": "80",
     "secondary_num": null,
     "title": "Annual Budget Statement",
-    "text": "Annual Budget Statement",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1975,7 +2060,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.567110+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_81_V1",
@@ -1985,7 +2071,7 @@
     "primary_num": "81",
     "secondary_num": null,
     "title": "Expenditure charged upon Federal Consolidated Fund",
-    "text": "Expenditure charged upon Federal Consolidated Fund",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -1998,7 +2084,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.599741+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_82_V1",
@@ -2008,7 +2095,7 @@
     "primary_num": "82",
     "secondary_num": null,
     "title": "Procedure relating to Annual Budget Statement",
-    "text": "Procedure relating to Annual Budget Statement",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2021,7 +2108,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.636037+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_83_V1",
@@ -2031,7 +2119,7 @@
     "primary_num": "83",
     "secondary_num": null,
     "title": "Authentication of schedule of authorised expenditure",
-    "text": "Authentication of schedule of authorised expenditure",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2044,7 +2132,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.669509+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_84_V1",
@@ -2054,7 +2143,7 @@
     "primary_num": "84",
     "secondary_num": null,
     "title": "Supplementary and excess grants",
-    "text": "Supplementary and excess grants",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2067,7 +2156,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.712238+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_85_V1",
@@ -2077,7 +2167,7 @@
     "primary_num": "85",
     "secondary_num": null,
     "title": "Votes on account",
-    "text": "Votes on account",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2090,7 +2180,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.746958+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_86_V1",
@@ -2100,7 +2191,7 @@
     "primary_num": "86",
     "secondary_num": null,
     "title": "Power to authorize expenditure when Assembly stands dissolved",
-    "text": "Power to authorize expenditure when Assembly stands dissolved",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2113,7 +2204,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.771149+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_87_V1",
@@ -2123,7 +2215,7 @@
     "primary_num": "87",
     "secondary_num": null,
     "title": "Secretariats of Majlis-e-Shoora (Parliament)",
-    "text": "Secretariats of Majlis-e-Shoora (Parliament)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2136,7 +2228,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.805552+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_88_V1",
@@ -2146,7 +2239,7 @@
     "primary_num": "88",
     "secondary_num": null,
     "title": "Finance Committees",
-    "text": "Finance Committees",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2159,7 +2252,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.850702+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_89_V1",
@@ -2169,7 +2263,7 @@
     "primary_num": "89",
     "secondary_num": null,
     "title": "Power of President to promulgate Ordinances",
-    "text": "Power of President to promulgate Ordinances",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2182,7 +2276,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.891655+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_90_V1",
@@ -2192,7 +2287,7 @@
     "primary_num": "90",
     "secondary_num": null,
     "title": "The Federal Government",
-    "text": "The Federal Government",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2205,7 +2300,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.935903+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_91_V1",
@@ -2215,7 +2311,7 @@
     "primary_num": "91",
     "secondary_num": null,
     "title": "The Cabinet",
-    "text": "The Cabinet",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2228,7 +2324,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:29.981808+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_92_V1",
@@ -2238,7 +2335,7 @@
     "primary_num": "92",
     "secondary_num": null,
     "title": "Federal Ministers and Ministers of State",
-    "text": "Federal Ministers and Ministers of State",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2251,7 +2348,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.022067+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_93_V1",
@@ -2261,7 +2359,7 @@
     "primary_num": "93",
     "secondary_num": null,
     "title": "Advisers",
-    "text": "Advisers",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2274,7 +2372,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.063837+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_94_V1",
@@ -2284,7 +2383,7 @@
     "primary_num": "94",
     "secondary_num": null,
     "title": "Prime Minister continuing in office",
-    "text": "Prime Minister continuing in office",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2297,7 +2396,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.101887+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_95_V1",
@@ -2307,7 +2407,7 @@
     "primary_num": "95",
     "secondary_num": null,
     "title": "Vote of no-confidence against Prime Minister",
-    "text": "Vote of no-confidence against Prime Minister",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2320,7 +2420,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.126158+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_96_V1",
@@ -2330,7 +2431,7 @@
     "primary_num": "96",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2343,7 +2444,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.152200+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_96A_V1",
@@ -2353,7 +2455,7 @@
     "primary_num": "96A",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2366,7 +2468,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.181910+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_97_V1",
@@ -2376,7 +2479,7 @@
     "primary_num": "97",
     "secondary_num": null,
     "title": "Extent of executive authority of Federation",
-    "text": "Extent of executive authority of Federation",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2389,7 +2492,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.215387+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_98_V1",
@@ -2399,7 +2503,7 @@
     "primary_num": "98",
     "secondary_num": null,
     "title": "Conferring of functions on subordinate authorities",
-    "text": "Conferring of functions on subordinate authorities",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2412,7 +2516,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.249106+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_99_V1",
@@ -2422,7 +2527,7 @@
     "primary_num": "99",
     "secondary_num": null,
     "title": "Conduct of business of Federal Government",
-    "text": "Conduct of business of Federal Government",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2435,7 +2540,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.285776+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_100_V1",
@@ -2445,7 +2551,7 @@
     "primary_num": "100",
     "secondary_num": null,
     "title": "Attorney-General for Pakistan",
-    "text": "Attorney-General for Pakistan",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2458,7 +2564,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.318730+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_101_V1",
@@ -2468,7 +2575,7 @@
     "primary_num": "101",
     "secondary_num": null,
     "title": "Appointment of Governor",
-    "text": "Appointment of Governor",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2481,7 +2588,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.342893+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_102_V1",
@@ -2491,7 +2599,7 @@
     "primary_num": "102",
     "secondary_num": null,
     "title": "Oath of Office",
-    "text": "Oath of Office",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2504,7 +2612,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.385805+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_103_V1",
@@ -2514,7 +2623,7 @@
     "primary_num": "103",
     "secondary_num": null,
     "title": "Conditions of Governor\u2019s office",
-    "text": "Conditions of Governor\u2019s office",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2527,7 +2636,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.427321+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_104_V1",
@@ -2537,7 +2647,7 @@
     "primary_num": "104",
     "secondary_num": null,
     "title": "Speaker Provincial Assembly to act as, or perform functions of Governor in his absence",
-    "text": "Speaker Provincial Assembly to act as, or perform functions of Governor in his absence",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2550,7 +2660,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.473216+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_105_V1",
@@ -2560,7 +2671,7 @@
     "primary_num": "105",
     "secondary_num": null,
     "title": "Governor to act on advice, etc.",
-    "text": "Governor to act on advice, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2573,7 +2684,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.523488+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_106_V1",
@@ -2583,7 +2695,7 @@
     "primary_num": "106",
     "secondary_num": null,
     "title": "Constitution of Provincial Assemblies",
-    "text": "Constitution of Provincial Assemblies",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2596,7 +2708,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.576008+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_107_V1",
@@ -2606,7 +2719,7 @@
     "primary_num": "107",
     "secondary_num": null,
     "title": "Duration of Provincial Assembly",
-    "text": "Duration of Provincial Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2619,7 +2732,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.619388+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_108_V1",
@@ -2629,7 +2743,7 @@
     "primary_num": "108",
     "secondary_num": null,
     "title": "Speaker and Deputy Speaker",
-    "text": "Speaker and Deputy Speaker",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2642,7 +2756,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.667941+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_109_V1",
@@ -2652,7 +2767,7 @@
     "primary_num": "109",
     "secondary_num": null,
     "title": "Summoning and prorogation of Provincial Assembly",
-    "text": "Summoning and prorogation of Provincial Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2665,7 +2780,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.713694+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_110_V1",
@@ -2675,7 +2791,7 @@
     "primary_num": "110",
     "secondary_num": null,
     "title": "Right of Governor to address Provincial Assembly",
-    "text": "Right of Governor to address Provincial Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2688,7 +2804,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.755185+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_111_V1",
@@ -2698,7 +2815,7 @@
     "primary_num": "111",
     "secondary_num": null,
     "title": "Right to speak in Provincial Assembly",
-    "text": "Right to speak in Provincial Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2711,7 +2828,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.797253+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_112_V1",
@@ -2721,7 +2839,7 @@
     "primary_num": "112",
     "secondary_num": null,
     "title": "Dissolution of Provincial Assembly",
-    "text": "Dissolution of Provincial Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2734,7 +2852,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.839052+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_113_V1",
@@ -2744,7 +2863,7 @@
     "primary_num": "113",
     "secondary_num": null,
     "title": "Qualifications and disqualifications for membership of Provincial Assembly",
-    "text": "Qualifications and disqualifications for membership of Provincial Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2757,7 +2876,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.880772+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_114_V1",
@@ -2767,7 +2887,7 @@
     "primary_num": "114",
     "secondary_num": null,
     "title": "Restriction on discussion in Provincial Assembly",
-    "text": "Restriction on discussion in Provincial Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2780,7 +2900,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.924940+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_115_V1",
@@ -2790,7 +2911,7 @@
     "primary_num": "115",
     "secondary_num": null,
     "title": "Provincial Government\u2019s consent required for financial measures",
-    "text": "Provincial Government\u2019s consent required for financial measures",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2803,7 +2924,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:30.966615+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_116_V1",
@@ -2813,7 +2935,7 @@
     "primary_num": "116",
     "secondary_num": null,
     "title": "Governor\u2019s assent to Bills",
-    "text": "Governor\u2019s assent to Bills",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2826,7 +2948,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.011217+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_117_V1",
@@ -2836,7 +2959,7 @@
     "primary_num": "117",
     "secondary_num": null,
     "title": "Bill not to lapse on prorogation, etc.",
-    "text": "Bill not to lapse on prorogation, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2849,7 +2972,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.060871+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_118_V1",
@@ -2859,7 +2983,7 @@
     "primary_num": "118",
     "secondary_num": null,
     "title": "Provincial Consolidated Fund and Public Account",
-    "text": "Provincial Consolidated Fund and Public Account",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2872,7 +2996,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.097949+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_119_V1",
@@ -2882,7 +3007,7 @@
     "primary_num": "119",
     "secondary_num": null,
     "title": "Custody, etc., of Provincial Consolidated Fund and Public Account",
-    "text": "Custody, etc., of Provincial Consolidated Fund and Public Account",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2895,7 +3020,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.148816+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_120_V1",
@@ -2905,7 +3031,7 @@
     "primary_num": "120",
     "secondary_num": null,
     "title": "Annual Budget Statement",
-    "text": "Annual Budget Statement",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2918,7 +3044,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.200851+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_121_V1",
@@ -2928,7 +3055,7 @@
     "primary_num": "121",
     "secondary_num": null,
     "title": "Expenditure charged upon Provincial Consolidated Fund",
-    "text": "Expenditure charged upon Provincial Consolidated Fund",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2941,7 +3068,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.246234+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_122_V1",
@@ -2951,7 +3079,7 @@
     "primary_num": "122",
     "secondary_num": null,
     "title": "Procedure relating to Annual Budget Statement",
-    "text": "Procedure relating to Annual Budget Statement",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2964,7 +3092,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.302148+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_123_V1",
@@ -2974,7 +3103,7 @@
     "primary_num": "123",
     "secondary_num": null,
     "title": "Authentication of schedule of authorized expenditure",
-    "text": "Authentication of schedule of authorized expenditure",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -2987,7 +3116,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.349200+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_124_V1",
@@ -2997,7 +3127,7 @@
     "primary_num": "124",
     "secondary_num": null,
     "title": "Supplementary and excess grant",
-    "text": "Supplementary and excess grant",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3010,7 +3140,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.402340+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_125_V1",
@@ -3020,7 +3151,7 @@
     "primary_num": "125",
     "secondary_num": null,
     "title": "Votes on account",
-    "text": "Votes on account",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3033,7 +3164,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.456729+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_126_V1",
@@ -3043,7 +3175,7 @@
     "primary_num": "126",
     "secondary_num": null,
     "title": "Power to authorize expenditure when Assembly stands dissolved",
-    "text": "Power to authorize expenditure when Assembly stands dissolved",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3056,7 +3188,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.504527+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_127_V1",
@@ -3066,7 +3199,7 @@
     "primary_num": "127",
     "secondary_num": null,
     "title": "Provisions relating to National Assembly, etc., to apply to Provincial Assembly, etc.",
-    "text": "Provisions relating to National Assembly, etc., to apply to Provincial Assembly, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3079,7 +3212,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.556566+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_128_V1",
@@ -3089,7 +3223,7 @@
     "primary_num": "128",
     "secondary_num": null,
     "title": "Power of Governor to promulgate Ordinances",
-    "text": "Power of Governor to promulgate Ordinances",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3102,7 +3236,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.599655+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_129_V1",
@@ -3112,7 +3247,7 @@
     "primary_num": "129",
     "secondary_num": null,
     "title": "The Provincial Government",
-    "text": "The Provincial Government",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3125,7 +3260,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.644833+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_130_V1",
@@ -3135,7 +3271,7 @@
     "primary_num": "130",
     "secondary_num": null,
     "title": "The Cabinet",
-    "text": "The Cabinet",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3148,7 +3284,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.685854+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_131_V1",
@@ -3158,7 +3295,7 @@
     "primary_num": "131",
     "secondary_num": null,
     "title": "Governor to be kept informed",
-    "text": "Governor to be kept informed",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3171,7 +3308,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.731763+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_132_V1",
@@ -3181,7 +3319,7 @@
     "primary_num": "132",
     "secondary_num": null,
     "title": "Provincial Ministers",
-    "text": "Provincial Ministers",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3194,7 +3332,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.771942+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_133_V1",
@@ -3204,7 +3343,7 @@
     "primary_num": "133",
     "secondary_num": null,
     "title": "Chief Minister continuing in office",
-    "text": "Chief Minister continuing in office",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3217,7 +3356,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.820128+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_134_V1",
@@ -3227,7 +3367,7 @@
     "primary_num": "134",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3240,7 +3380,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.865746+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_135_V1",
@@ -3250,7 +3391,7 @@
     "primary_num": "135",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3263,7 +3404,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.905089+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_136_V1",
@@ -3273,7 +3415,7 @@
     "primary_num": "136",
     "secondary_num": null,
     "title": "Vote of no-confidence against Chief Minister",
-    "text": "Vote of no-confidence against Chief Minister",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3286,7 +3428,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:31.959015+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_137_V1",
@@ -3296,7 +3439,7 @@
     "primary_num": "137",
     "secondary_num": null,
     "title": "Extent of executive authority of Province",
-    "text": "Extent of executive authority of Province",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3309,7 +3452,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.010284+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_138_V1",
@@ -3319,7 +3463,7 @@
     "primary_num": "138",
     "secondary_num": null,
     "title": "Conferring of functions on subordinate authorities",
-    "text": "Conferring of functions on subordinate authorities",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3332,7 +3476,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.054479+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_139_V1",
@@ -3342,7 +3487,7 @@
     "primary_num": "139",
     "secondary_num": null,
     "title": "Conduct of business of Provincial Government",
-    "text": "Conduct of business of Provincial Government",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3355,7 +3500,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.091205+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_140_V1",
@@ -3365,7 +3511,7 @@
     "primary_num": "140",
     "secondary_num": null,
     "title": "Advocate General for a Province",
-    "text": "Advocate General for a Province",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3378,7 +3524,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.128031+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_140A_V1",
@@ -3388,7 +3535,7 @@
     "primary_num": "140A",
     "secondary_num": null,
     "title": "Local Government",
-    "text": "Local Government",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3401,7 +3548,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.178106+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_141_V1",
@@ -3411,7 +3559,7 @@
     "primary_num": "141",
     "secondary_num": null,
     "title": "Extent of Federal and Provincial laws",
-    "text": "Extent of Federal and Provincial laws",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3424,7 +3572,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.226884+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_142_V1",
@@ -3434,7 +3583,7 @@
     "primary_num": "142",
     "secondary_num": null,
     "title": "Subject-matter of Federal and Provincial laws",
-    "text": "Subject-matter of Federal and Provincial laws",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3447,7 +3596,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.272693+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_143_V1",
@@ -3457,7 +3607,7 @@
     "primary_num": "143",
     "secondary_num": null,
     "title": "Inconsistency between Federal and Provincial law",
-    "text": "Inconsistency between Federal and Provincial law",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3470,7 +3620,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.323759+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_144_V1",
@@ -3480,7 +3631,7 @@
     "primary_num": "144",
     "secondary_num": null,
     "title": "Power of Majlis-e-Shoora (Parliament) to legislate for one or more Provinces by consent",
-    "text": "Power of Majlis-e-Shoora (Parliament) to legislate for one or more Provinces by consent",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3493,7 +3644,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.377917+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_145_V1",
@@ -3503,7 +3655,7 @@
     "primary_num": "145",
     "secondary_num": null,
     "title": "Power of President to direct Governor to discharge certain functions as his Agent",
-    "text": "Power of President to direct Governor to discharge certain functions as his Agent",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3516,7 +3668,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.434858+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_146_V1",
@@ -3526,7 +3679,7 @@
     "primary_num": "146",
     "secondary_num": null,
     "title": "Power of Federation to confer powers, etc., on Provinces, in certain cases",
-    "text": "Power of Federation to confer powers, etc., on Provinces, in certain cases",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3539,7 +3692,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.485990+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_147_V1",
@@ -3549,7 +3703,7 @@
     "primary_num": "147",
     "secondary_num": null,
     "title": "Power of the Provinces to entrust functions to the Federation",
-    "text": "Power of the Provinces to entrust functions to the Federation",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3562,7 +3716,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.540941+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_148_V1",
@@ -3572,7 +3727,7 @@
     "primary_num": "148",
     "secondary_num": null,
     "title": "Obligation of Provinces and Federation",
-    "text": "Obligation of Provinces and Federation",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3585,7 +3740,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.607120+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_149_V1",
@@ -3595,7 +3751,7 @@
     "primary_num": "149",
     "secondary_num": null,
     "title": "Directions to Provinces in certain cases",
-    "text": "Directions to Provinces in certain cases",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3608,7 +3764,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.657257+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_150_V1",
@@ -3618,7 +3775,7 @@
     "primary_num": "150",
     "secondary_num": null,
     "title": "Full faith and credit for public acts, etc.",
-    "text": "Full faith and credit for public acts, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3631,7 +3788,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.711078+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_151_V1",
@@ -3641,7 +3799,7 @@
     "primary_num": "151",
     "secondary_num": null,
     "title": "Inter-Provincial trade",
-    "text": "Inter-Provincial trade",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3654,7 +3812,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.760032+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_152_V1",
@@ -3664,7 +3823,7 @@
     "primary_num": "152",
     "secondary_num": null,
     "title": "Acquisition of land for Federal purposes",
-    "text": "Acquisition of land for Federal purposes",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3677,7 +3836,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.815355+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_152A_V1",
@@ -3687,7 +3847,7 @@
     "primary_num": "152A",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3700,7 +3860,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.875190+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_153_V1",
@@ -3710,7 +3871,7 @@
     "primary_num": "153",
     "secondary_num": null,
     "title": "Council of Common Interests",
-    "text": "Council of Common Interests",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3723,7 +3884,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.926508+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_154_V1",
@@ -3733,7 +3895,7 @@
     "primary_num": "154",
     "secondary_num": null,
     "title": "Functions and rules of procedure",
-    "text": "Functions and rules of procedure",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3746,7 +3908,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:32.983335+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_155_V1",
@@ -3756,7 +3919,7 @@
     "primary_num": "155",
     "secondary_num": null,
     "title": "Complaints as to interference with water supplies",
-    "text": "Complaints as to interference with water supplies",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3769,7 +3932,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.022048+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_156_V1",
@@ -3779,7 +3943,7 @@
     "primary_num": "156",
     "secondary_num": null,
     "title": "National Economic Council",
-    "text": "National Economic Council",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3792,7 +3956,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.067505+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_157_V1",
@@ -3802,7 +3967,7 @@
     "primary_num": "157",
     "secondary_num": null,
     "title": "Electricity",
-    "text": "Electricity",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3815,7 +3980,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.105568+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_158_V1",
@@ -3825,7 +3991,7 @@
     "primary_num": "158",
     "secondary_num": null,
     "title": "Priority of requirements of natural gas",
-    "text": "Priority of requirements of natural gas",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3838,7 +4004,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.139978+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_159_V1",
@@ -3848,7 +4015,7 @@
     "primary_num": "159",
     "secondary_num": null,
     "title": "Broadcasting and telecasting",
-    "text": "Broadcasting and telecasting",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3861,7 +4028,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.180432+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_160_V1",
@@ -3871,7 +4039,7 @@
     "primary_num": "160",
     "secondary_num": null,
     "title": "National Finance Commission",
-    "text": "National Finance Commission",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3884,7 +4052,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.219923+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_161_V1",
@@ -3894,7 +4063,7 @@
     "primary_num": "161",
     "secondary_num": null,
     "title": "Natural gas and hydro-electric power",
-    "text": "Natural gas and hydro-electric power",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3907,7 +4076,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.260013+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_162_V1",
@@ -3917,7 +4087,7 @@
     "primary_num": "162",
     "secondary_num": null,
     "title": "Prior sanction of President required to Bills affecting taxation in which Provinces are interested",
-    "text": "Prior sanction of President required to Bills affecting taxation in which Provinces are interested",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3930,7 +4100,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.306549+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_163_V1",
@@ -3940,7 +4111,7 @@
     "primary_num": "163",
     "secondary_num": null,
     "title": "Provincial taxes in respect of professions, etc.",
-    "text": "Provincial taxes in respect of professions, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3953,7 +4124,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.341652+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_164_V1",
@@ -3963,7 +4135,7 @@
     "primary_num": "164",
     "secondary_num": null,
     "title": "Grants out of Consolidated Fund",
-    "text": "Grants out of Consolidated Fund",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3976,7 +4148,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.381172+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_165_V1",
@@ -3986,7 +4159,7 @@
     "primary_num": "165",
     "secondary_num": null,
     "title": "Exemption of certain public property from taxation",
-    "text": "Exemption of certain public property from taxation",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -3999,7 +4172,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.415977+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_165A_V1",
@@ -4009,7 +4183,7 @@
     "primary_num": "165A",
     "secondary_num": null,
     "title": "Power of Majlis -e-Shoora (Parliament) to impose tax on the income of certain corporations,",
-    "text": "Power of Majlis -e-Shoora (Parliament) to impose tax on the income of certain corporations,",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4022,7 +4196,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.463676+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_166_V1",
@@ -4032,7 +4207,7 @@
     "primary_num": "166",
     "secondary_num": null,
     "title": "Borrowing by Federal Government",
-    "text": "Borrowing by Federal Government",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4045,7 +4220,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.515380+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_167_V1",
@@ -4055,7 +4231,7 @@
     "primary_num": "167",
     "secondary_num": null,
     "title": "Borrowing by Provincial Government",
-    "text": "Borrowing by Provincial Government",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4068,7 +4244,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.558315+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_168_V1",
@@ -4078,7 +4255,7 @@
     "primary_num": "168",
     "secondary_num": null,
     "title": "Auditor-General of Pakistan",
-    "text": "Auditor-General of Pakistan",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4091,7 +4268,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.611062+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_169_V1",
@@ -4101,7 +4279,7 @@
     "primary_num": "169",
     "secondary_num": null,
     "title": "Functions and powers of Auditor-General",
-    "text": "Functions and powers of Auditor-General",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4114,7 +4292,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.668559+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_170_V1",
@@ -4124,7 +4303,7 @@
     "primary_num": "170",
     "secondary_num": null,
     "title": "Power of Auditor-General to give directions as to accounts",
-    "text": "Power of Auditor-General to give directions as to accounts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4137,7 +4316,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.729211+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_171_V1",
@@ -4147,7 +4327,7 @@
     "primary_num": "171",
     "secondary_num": null,
     "title": "Reports of Auditor-General",
-    "text": "Reports of Auditor-General",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4160,7 +4340,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.783584+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_172_V1",
@@ -4170,7 +4351,7 @@
     "primary_num": "172",
     "secondary_num": null,
     "title": "Ownerless property",
-    "text": "Ownerless property",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4183,7 +4364,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.838601+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_173_V1",
@@ -4193,7 +4375,7 @@
     "primary_num": "173",
     "secondary_num": null,
     "title": "Power to acquire property and to make contracts, etc",
-    "text": "Power to acquire property and to make contracts, etc",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4206,7 +4388,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.897538+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_174_V1",
@@ -4216,7 +4399,7 @@
     "primary_num": "174",
     "secondary_num": null,
     "title": "Suits and proceedings",
-    "text": "Suits and proceedings",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4229,7 +4412,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:33.957876+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175_V1",
@@ -4239,7 +4423,7 @@
     "primary_num": "175",
     "secondary_num": null,
     "title": "Establishment and jurisdiction of courts",
-    "text": "Establishment and jurisdiction of courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4252,7 +4436,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.021205+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175A_V1",
@@ -4262,7 +4447,7 @@
     "primary_num": "175A",
     "secondary_num": null,
     "title": "Appointment of Judges to the Federal Constitutional Court, the Supreme Court, High Courts",
-    "text": "Appointment of Judges to the Federal Constitutional Court, the Supreme Court, High Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4275,7 +4460,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.076125+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175B_V1",
@@ -4285,7 +4471,7 @@
     "primary_num": "175B",
     "secondary_num": null,
     "title": "Constitution of Federal Constitutional Court",
-    "text": "Constitution of Federal Constitutional Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4298,7 +4484,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.136972+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175C_V1",
@@ -4308,7 +4495,7 @@
     "primary_num": "175C",
     "secondary_num": null,
     "title": "Appointment of Federal Constitutional Court Judges",
-    "text": "Appointment of Federal Constitutional Court Judges",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4321,7 +4508,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.197202+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175D_V1",
@@ -4331,7 +4519,7 @@
     "primary_num": "175D",
     "secondary_num": null,
     "title": "Oath of Office of the Chief Justice and other Judges of the Federal Constitutional Court",
-    "text": "Oath of Office of the Chief Justice and other Judges of the Federal Constitutional Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4344,7 +4532,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.369381+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175E_V1",
@@ -4354,7 +4543,7 @@
     "primary_num": "175E",
     "secondary_num": null,
     "title": "Original jurisdiction of Federal Constitutional Court",
-    "text": "Original jurisdiction of Federal Constitutional Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4367,7 +4556,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.439649+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175F_V1",
@@ -4377,7 +4567,7 @@
     "primary_num": "175F",
     "secondary_num": null,
     "title": "Appellate jurisdiction of the Federal Constitutional Court",
-    "text": "Appellate jurisdiction of the Federal Constitutional Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4390,7 +4580,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.499035+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175G_V1",
@@ -4400,7 +4591,7 @@
     "primary_num": "175G",
     "secondary_num": null,
     "title": "Review of judgements or orders by the Federal Constitutional Court",
-    "text": "Review of judgements or orders by the Federal Constitutional Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4413,7 +4604,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.562080+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175H_V1",
@@ -4423,7 +4615,7 @@
     "primary_num": "175H",
     "secondary_num": null,
     "title": "Advisory jurisdiction",
-    "text": "Advisory jurisdiction",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4436,7 +4628,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.661950+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175I_V1",
@@ -4446,7 +4639,7 @@
     "primary_num": "175I",
     "secondary_num": null,
     "title": "Retiring age of the Chief Justice and other Judges of the Federal Constitutional Court",
-    "text": "Retiring age of the Chief Justice and other Judges of the Federal Constitutional Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4459,7 +4652,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.731883+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175J_V1",
@@ -4469,7 +4663,7 @@
     "primary_num": "175J",
     "secondary_num": null,
     "title": "Acting Chief Justice of the Federal Constitutional Court",
-    "text": "Acting Chief Justice of the Federal Constitutional Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4482,7 +4676,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.797480+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175K_V1",
@@ -4492,7 +4687,7 @@
     "primary_num": "175K",
     "secondary_num": null,
     "title": "Acting Judges of the Federal Constitutional Court",
-    "text": "Acting Judges of the Federal Constitutional Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4505,7 +4700,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.900836+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_175L_V1",
@@ -4515,7 +4711,7 @@
     "primary_num": "175L",
     "secondary_num": null,
     "title": "Seat of the Federal Constitutional Court",
-    "text": "Seat of the Federal Constitutional Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4528,7 +4724,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:34.966416+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_176_V1",
@@ -4538,7 +4735,7 @@
     "primary_num": "176",
     "secondary_num": null,
     "title": "Constitution of Supreme Court",
-    "text": "Constitution of Supreme Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4551,7 +4748,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:35.028335+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_177_V1",
@@ -4561,7 +4759,7 @@
     "primary_num": "177",
     "secondary_num": null,
     "title": "Appointment of Supreme Court Judges",
-    "text": "Appointment of Supreme Court Judges",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4574,7 +4772,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:35.184090+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_178_V1",
@@ -4584,7 +4783,7 @@
     "primary_num": "178",
     "secondary_num": null,
     "title": "Oath of Office",
-    "text": "Oath of Office",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4597,7 +4796,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:35.247782+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_179_V1",
@@ -4607,7 +4807,7 @@
     "primary_num": "179",
     "secondary_num": null,
     "title": "Retiring age",
-    "text": "Retiring age",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4620,7 +4820,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:35.308692+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_180_V1",
@@ -4630,7 +4831,7 @@
     "primary_num": "180",
     "secondary_num": null,
     "title": "Acting Chief Justice",
-    "text": "Acting Chief Justice",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4643,7 +4844,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:35.569683+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_181_V1",
@@ -4653,7 +4855,7 @@
     "primary_num": "181",
     "secondary_num": null,
     "title": "Acting Judges",
-    "text": "Acting Judges",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4666,7 +4868,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:35.632575+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_182_V1",
@@ -4676,7 +4879,7 @@
     "primary_num": "182",
     "secondary_num": null,
     "title": "Appointment of ad-hoc Judges",
-    "text": "Appointment of ad-hoc Judges",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4689,7 +4892,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:35.687809+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_183_V1",
@@ -4699,7 +4903,7 @@
     "primary_num": "183",
     "secondary_num": null,
     "title": "Seat of the Supreme Court",
-    "text": "Seat of the Supreme Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4712,7 +4916,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:35.750849+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_184_V1",
@@ -4722,7 +4927,7 @@
     "primary_num": "184",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4735,7 +4940,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:35.820335+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_185_V1",
@@ -4745,7 +4951,7 @@
     "primary_num": "185",
     "secondary_num": null,
     "title": "Appellate jurisdiction of the Supreme Court",
-    "text": "Appellate jurisdiction of the Supreme Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4758,7 +4964,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:35.886344+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_186_V1",
@@ -4768,7 +4975,7 @@
     "primary_num": "186",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4781,7 +4988,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:35.949171+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_186A_V1",
@@ -4791,7 +4999,7 @@
     "primary_num": "186A",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4804,7 +5012,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:36.016682+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_187_V1",
@@ -4814,7 +5023,7 @@
     "primary_num": "187",
     "secondary_num": null,
     "title": "Issue and execution of processes of Federal Constitutional Court and Supreme Court",
-    "text": "Issue and execution of processes of Federal Constitutional Court and Supreme Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4827,7 +5036,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:36.287960+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_188_V1",
@@ -4837,7 +5047,7 @@
     "primary_num": "188",
     "secondary_num": null,
     "title": "Review of judgments or orders by the Supreme Court",
-    "text": "Review of judgments or orders by the Supreme Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4850,7 +5060,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:36.390790+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_189_V1",
@@ -4860,7 +5071,7 @@
     "primary_num": "189",
     "secondary_num": null,
     "title": "Decisions of Federal Constitutional Court and Supreme Court binding on other courts",
-    "text": "Decisions of Federal Constitutional Court and Supreme Court binding on other courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4873,7 +5084,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:36.469849+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_190_V1",
@@ -4883,7 +5095,7 @@
     "primary_num": "190",
     "secondary_num": null,
     "title": "Action in aid of Federal Constitutional Court and Supreme Court",
-    "text": "Action in aid of Federal Constitutional Court and Supreme Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4896,7 +5108,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:36.531938+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_191_V1",
@@ -4906,7 +5119,7 @@
     "primary_num": "191",
     "secondary_num": null,
     "title": "Rules of procedure",
-    "text": "Rules of procedure",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4919,7 +5132,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:36.597059+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_191A_V1",
@@ -4929,7 +5143,7 @@
     "primary_num": "191A",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4942,7 +5156,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:36.653048+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_192_V1",
@@ -4952,7 +5167,7 @@
     "primary_num": "192",
     "secondary_num": null,
     "title": "Constitution of High Court",
-    "text": "Constitution of High Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4965,7 +5180,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:36.745951+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_193_V1",
@@ -4975,7 +5191,7 @@
     "primary_num": "193",
     "secondary_num": null,
     "title": "Appointment of High Court Judges",
-    "text": "Appointment of High Court Judges",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -4988,7 +5204,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:36.854767+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_194_V1",
@@ -4998,7 +5215,7 @@
     "primary_num": "194",
     "secondary_num": null,
     "title": "Oath of Office",
-    "text": "Oath of Office",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5011,7 +5228,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:36.938097+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_195_V1",
@@ -5021,7 +5239,7 @@
     "primary_num": "195",
     "secondary_num": null,
     "title": "Retiring age",
-    "text": "Retiring age",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5034,7 +5252,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.014377+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_196_V1",
@@ -5044,7 +5263,7 @@
     "primary_num": "196",
     "secondary_num": null,
     "title": "Acting Chief Justice",
-    "text": "Acting Chief Justice",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5057,7 +5276,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.104967+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_197_V1",
@@ -5067,7 +5287,7 @@
     "primary_num": "197",
     "secondary_num": null,
     "title": "Additional Judges",
-    "text": "Additional Judges",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5080,7 +5300,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.176008+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_198_V1",
@@ -5090,7 +5311,7 @@
     "primary_num": "198",
     "secondary_num": null,
     "title": "Seat of the High Court",
-    "text": "Seat of the High Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5103,7 +5324,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.254786+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_199_V1",
@@ -5113,7 +5335,7 @@
     "primary_num": "199",
     "secondary_num": null,
     "title": "Jurisdiction of High Court",
-    "text": "Jurisdiction of High Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5126,7 +5348,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.329542+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_200_V1",
@@ -5136,7 +5359,7 @@
     "primary_num": "200",
     "secondary_num": null,
     "title": "Transfer of High Court Judges",
-    "text": "Transfer of High Court Judges",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5149,7 +5372,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.416931+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_201_V1",
@@ -5159,7 +5383,7 @@
     "primary_num": "201",
     "secondary_num": null,
     "title": "Decision of High Court binding on subordinate Courts",
-    "text": "Decision of High Court binding on subordinate Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5172,7 +5396,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.500514+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_202_V1",
@@ -5182,7 +5407,7 @@
     "primary_num": "202",
     "secondary_num": null,
     "title": "Rules of procedure",
-    "text": "Rules of procedure",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5195,7 +5420,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.564199+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_202A_V1",
@@ -5205,7 +5431,7 @@
     "primary_num": "202A",
     "secondary_num": null,
     "title": "Constitutional Benches of High Courts",
-    "text": "Constitutional Benches of High Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5218,7 +5444,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.635851+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_203_V1",
@@ -5228,7 +5455,7 @@
     "primary_num": "203",
     "secondary_num": null,
     "title": "High Court to superintend subordinate Courts",
-    "text": "High Court to superintend subordinate Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5241,7 +5468,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.701644+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_203A_V1",
@@ -5251,7 +5479,7 @@
     "primary_num": "203A",
     "secondary_num": null,
     "title": "Provisions of Chapter to override other provisions of Constitution",
-    "text": "Provisions of Chapter to override other provisions of Constitution",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5264,7 +5492,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.769045+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_203B_V1",
@@ -5274,7 +5503,7 @@
     "primary_num": "203B",
     "secondary_num": null,
     "title": "Definitions",
-    "text": "Definitions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5287,7 +5516,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.838016+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_203C_V1",
@@ -5297,7 +5527,7 @@
     "primary_num": "203C",
     "secondary_num": null,
     "title": "The Federal Shariat Court",
-    "text": "The Federal Shariat Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5310,7 +5540,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.915322+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_203D_V1",
@@ -5320,7 +5551,7 @@
     "primary_num": "203D",
     "secondary_num": null,
     "title": "Powers, jurisdiction and functions of the Court",
-    "text": "Article 203D: Powers, jurisdiction and functions of the Court:\n(1) The Court may, either of its own motion or on the petition of a citizen of Pakistan or the Federal Government or a Provincial Government, examine and decide the question whether or not any law or provision of law is repugnant to the Injunctions of Islam, as laid down in the Holy Quran and Sunnah of the Holy Prophet (peace be upon him).\n(2) If the Court decides that any law or provision of law is repugnant to the Injunctions of Islam, it shall set out in its decision:\n(a) the reasons for its holding that opinion; and\n(b) the extent to which such law or provision is so repugnant;\nand specify the day on which the decision shall take effect:\nProvided that no such decision shall be deemed to take effect before the expiration of the period within which an appeal therefrom may be preferred to the Supreme Court or, where an appeal has been so preferred, before the disposal of such appeal.\n(3) If any law or provision of law is declared by the Court to be repugnant to the Injunctions of Islam:\n(a) the President in the case of a Federal law, or the Governor in the case of a Provincial law, shall take steps to amend the law so as to bring such law or provision into conformity with the Injunctions of Islam; and\n(b) such law or provision shall, to the extent to which it is declared to be so repugnant, cease to have effect on the day on which the decision of the Court takes effect.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5334,7 +5565,7 @@
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:37.977742+00:00",
     "previous_version_id": null,
-    "text_available": true
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_203E_V1",
@@ -5344,7 +5575,7 @@
     "primary_num": "203E",
     "secondary_num": null,
     "title": "Powers and procedure of the Court",
-    "text": "Powers and procedure of the Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5357,7 +5588,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:38.039404+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_203F_V1",
@@ -5367,7 +5599,7 @@
     "primary_num": "203F",
     "secondary_num": null,
     "title": "Appeal to Supreme Court",
-    "text": "Article 203F: Appeal to Supreme Court:\n(1) Any party to any proceedings before the Court under Article 203D may, within sixty days of the decision of the Court, prefer an appeal to the Supreme Court.\n(2) An appeal to the Supreme Court against a decision of the Court under Article 203D shall be heard by a Bench of that Court, to be called the Shariat Appellate Bench.\n(2A) The Shariat Appellate Bench shall consist of three Muslim Judges of the Supreme Court and not more than two Ulema to be appointed by the President to attend sittings of the Bench as ad hoc members thereof.\n(3) A decision of the Supreme Court Shariat Appellate Bench on appeal shall have final effect, and upon the disposal of such appeal, the decision of the Federal Shariat Court shall take effect only to the extent upheld by the Supreme Court.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5381,7 +5613,7 @@
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:38.095591+00:00",
     "previous_version_id": null,
-    "text_available": true
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_203G_V1",
@@ -5391,7 +5623,7 @@
     "primary_num": "203G",
     "secondary_num": null,
     "title": "Bar of jurisdiction",
-    "text": "Bar of jurisdiction",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5404,7 +5636,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:38.270053+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_203H_V1",
@@ -5414,7 +5647,7 @@
     "primary_num": "203H",
     "secondary_num": null,
     "title": "Pending proceedings to continue, etc.",
-    "text": "Pending proceedings to continue, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5427,7 +5660,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:38.469021+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_203I_V1",
@@ -5437,7 +5671,7 @@
     "primary_num": "203I",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5450,7 +5684,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:38.532513+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_203J_V1",
@@ -5460,7 +5695,7 @@
     "primary_num": "203J",
     "secondary_num": null,
     "title": "Power to make rules",
-    "text": "Power to make rules",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5473,7 +5708,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:38.592876+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_204_V1",
@@ -5483,7 +5719,7 @@
     "primary_num": "204",
     "secondary_num": null,
     "title": "Contempt of Court",
-    "text": "Contempt of Court",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5496,7 +5732,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:38.680688+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_205_V1",
@@ -5506,7 +5743,7 @@
     "primary_num": "205",
     "secondary_num": null,
     "title": "Remuneration etc., of Judges",
-    "text": "Remuneration etc., of Judges",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5519,7 +5756,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:38.769316+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_206_V1",
@@ -5529,7 +5767,7 @@
     "primary_num": "206",
     "secondary_num": null,
     "title": "Resignation",
-    "text": "Resignation",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5542,7 +5780,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:38.845546+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_207_V1",
@@ -5552,7 +5791,7 @@
     "primary_num": "207",
     "secondary_num": null,
     "title": "Judge not to hold office of profit, etc.",
-    "text": "Judge not to hold office of profit, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5565,7 +5804,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:38.915451+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_208_V1",
@@ -5575,7 +5815,7 @@
     "primary_num": "208",
     "secondary_num": null,
     "title": "Officers and servants of Courts",
-    "text": "Officers and servants of Courts",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5588,7 +5828,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.095849+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_209_V1",
@@ -5598,7 +5839,7 @@
     "primary_num": "209",
     "secondary_num": null,
     "title": "Supreme Judicial Council",
-    "text": "Supreme Judicial Council",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5611,7 +5852,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.163416+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_210_V1",
@@ -5621,7 +5863,7 @@
     "primary_num": "210",
     "secondary_num": null,
     "title": "Power of Council to enforce attendance of persons, etc.",
-    "text": "Power of Council to enforce attendance of persons, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5634,7 +5876,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.232093+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_211_V1",
@@ -5644,7 +5887,7 @@
     "primary_num": "211",
     "secondary_num": null,
     "title": "Bar of jurisdiction",
-    "text": "Bar of jurisdiction",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5657,7 +5900,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.305177+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_212_V1",
@@ -5667,7 +5911,7 @@
     "primary_num": "212",
     "secondary_num": null,
     "title": "Administrative Courts and Tribunals",
-    "text": "Administrative Courts and Tribunals",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5680,7 +5924,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.377127+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_212A_V1",
@@ -5690,7 +5935,7 @@
     "primary_num": "212A",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5703,7 +5948,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.447356+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_212B_V1",
@@ -5713,7 +5959,7 @@
     "primary_num": "212B",
     "secondary_num": null,
     "title": "[Repealed]",
-    "text": "[Repealed]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5726,7 +5972,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.515137+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_213_V1",
@@ -5736,7 +5983,7 @@
     "primary_num": "213",
     "secondary_num": null,
     "title": "Chief Election Commissioner",
-    "text": "Chief Election Commissioner",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5749,7 +5996,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.579446+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_214_V1",
@@ -5759,7 +6007,7 @@
     "primary_num": "214",
     "secondary_num": null,
     "title": "Oath of Office",
-    "text": "Oath of Office",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5772,7 +6020,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.651094+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_215_V1",
@@ -5782,7 +6031,7 @@
     "primary_num": "215",
     "secondary_num": null,
     "title": "Term of office of Commissioner [and members]",
-    "text": "Term of office of Commissioner [and members]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5795,7 +6044,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.721003+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_216_V1",
@@ -5805,7 +6055,7 @@
     "primary_num": "216",
     "secondary_num": null,
     "title": "Commissioner and members not to hold office of profit",
-    "text": "Commissioner and members not to hold office of profit",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5818,7 +6068,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.792022+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_217_V1",
@@ -5828,7 +6079,7 @@
     "primary_num": "217",
     "secondary_num": null,
     "title": "Acting Commissioner",
-    "text": "Acting Commissioner",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5841,7 +6092,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.866889+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_218_V1",
@@ -5851,7 +6103,7 @@
     "primary_num": "218",
     "secondary_num": null,
     "title": "Election Commission",
-    "text": "Election Commission",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5864,7 +6116,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:39.938101+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_219_V1",
@@ -5874,7 +6127,7 @@
     "primary_num": "219",
     "secondary_num": null,
     "title": "Duties of Commission",
-    "text": "Duties of Commission",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5887,7 +6140,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.012395+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_220_V1",
@@ -5897,7 +6151,7 @@
     "primary_num": "220",
     "secondary_num": null,
     "title": "Executive authorities to assist Commission, etc.",
-    "text": "Executive authorities to assist Commission, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5910,7 +6164,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.084082+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_221_V1",
@@ -5920,7 +6175,7 @@
     "primary_num": "221",
     "secondary_num": null,
     "title": "Officers and staff",
-    "text": "Officers and staff",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5933,7 +6188,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.158158+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_222_V1",
@@ -5943,7 +6199,7 @@
     "primary_num": "222",
     "secondary_num": null,
     "title": "Electoral laws",
-    "text": "Electoral laws",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5956,7 +6212,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.226638+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_223_V1",
@@ -5966,7 +6223,7 @@
     "primary_num": "223",
     "secondary_num": null,
     "title": "Bar against double membership",
-    "text": "Bar against double membership",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -5979,7 +6236,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.301541+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_224_V1",
@@ -5989,7 +6247,7 @@
     "primary_num": "224",
     "secondary_num": null,
     "title": "Time of Election and bye-election",
-    "text": "Time of Election and bye-election",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6002,7 +6260,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.368084+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_224A_V1",
@@ -6012,7 +6271,7 @@
     "primary_num": "224A",
     "secondary_num": null,
     "title": "Resolution by Committee or Election Commission",
-    "text": "Resolution by Committee or Election Commission",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6025,7 +6284,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.436063+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_225_V1",
@@ -6035,7 +6295,7 @@
     "primary_num": "225",
     "secondary_num": null,
     "title": "Election dispute",
-    "text": "Election dispute",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6048,7 +6308,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.501022+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_226_V1",
@@ -6058,7 +6319,7 @@
     "primary_num": "226",
     "secondary_num": null,
     "title": "Election by secret ballot",
-    "text": "Election by secret ballot",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6071,7 +6332,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.566482+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_227_V1",
@@ -6081,7 +6343,7 @@
     "primary_num": "227",
     "secondary_num": null,
     "title": "Provisions relating to the Holy Quran and Sunnah",
-    "text": "Provisions relating to the Holy Quran and Sunnah",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6094,7 +6356,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.637680+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_228_V1",
@@ -6104,7 +6367,7 @@
     "primary_num": "228",
     "secondary_num": null,
     "title": "Composition, etc., of Islamic Council",
-    "text": "Composition, etc., of Islamic Council",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6117,7 +6380,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.712660+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_229_V1",
@@ -6127,7 +6391,7 @@
     "primary_num": "229",
     "secondary_num": null,
     "title": "Reference by Majlis-e-Shoora (Parliament), etc., to Islamic Council",
-    "text": "Reference by Majlis-e-Shoora (Parliament), etc., to Islamic Council",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6140,7 +6404,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.786193+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_230_V1",
@@ -6150,7 +6415,7 @@
     "primary_num": "230",
     "secondary_num": null,
     "title": "Functions of the Islamic Council",
-    "text": "Functions of the Islamic Council",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6163,7 +6428,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.860702+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_231_V1",
@@ -6173,7 +6439,7 @@
     "primary_num": "231",
     "secondary_num": null,
     "title": "Rules of procedure",
-    "text": "Rules of procedure",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6186,7 +6452,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:40.932586+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_232_V1",
@@ -6196,7 +6463,7 @@
     "primary_num": "232",
     "secondary_num": null,
     "title": "Proclamation of emergency on account of war, internal disturbance, etc.",
-    "text": "Proclamation of emergency on account of war, internal disturbance, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6209,7 +6476,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.007414+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_233_V1",
@@ -6219,7 +6487,7 @@
     "primary_num": "233",
     "secondary_num": null,
     "title": "Power to suspend Fundamental Rights, etc., during emergency period",
-    "text": "Power to suspend Fundamental Rights, etc., during emergency period",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6232,7 +6500,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.085149+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_234_V1",
@@ -6242,7 +6511,7 @@
     "primary_num": "234",
     "secondary_num": null,
     "title": "Power to issue Proclamation in case of failure of Constitutional machinery in a Province",
-    "text": "Power to issue Proclamation in case of failure of Constitutional machinery in a Province",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6255,7 +6524,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.165882+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_235_V1",
@@ -6265,7 +6535,7 @@
     "primary_num": "235",
     "secondary_num": null,
     "title": "Proclamation in case of financial emergency",
-    "text": "Proclamation in case of financial emergency",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6278,7 +6548,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.232733+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_236_V1",
@@ -6288,7 +6559,7 @@
     "primary_num": "236",
     "secondary_num": null,
     "title": "Revocation of Proclamation, etc.",
-    "text": "Revocation of Proclamation, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6301,7 +6572,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.297791+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_237_V1",
@@ -6311,7 +6583,7 @@
     "primary_num": "237",
     "secondary_num": null,
     "title": "Majlis-e-Shoora (Parliament) may make laws of indemnity, etc.",
-    "text": "Majlis-e-Shoora (Parliament) may make laws of indemnity, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6324,7 +6596,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.360180+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_238_V1",
@@ -6334,7 +6607,7 @@
     "primary_num": "238",
     "secondary_num": null,
     "title": "Amendment of Constitution",
-    "text": "Amendment of Constitution",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6347,7 +6620,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.437282+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_239_V1",
@@ -6357,7 +6631,7 @@
     "primary_num": "239",
     "secondary_num": null,
     "title": "Constitution, amendment Bill",
-    "text": "Constitution, amendment Bill",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6370,7 +6644,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.505676+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_240_V1",
@@ -6380,7 +6655,7 @@
     "primary_num": "240",
     "secondary_num": null,
     "title": "Appointments to service of Pakistan and conditions of service",
-    "text": "Appointments to service of Pakistan and conditions of service",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6393,7 +6668,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.582379+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_241_V1",
@@ -6403,7 +6679,7 @@
     "primary_num": "241",
     "secondary_num": null,
     "title": "Existing rules, etc., to continue",
-    "text": "Existing rules, etc., to continue",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6416,7 +6692,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.633329+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_242_V1",
@@ -6426,7 +6703,7 @@
     "primary_num": "242",
     "secondary_num": null,
     "title": "Public Service Commission",
-    "text": "Public Service Commission",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6439,7 +6716,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.700831+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_243_V1",
@@ -6449,7 +6727,7 @@
     "primary_num": "243",
     "secondary_num": null,
     "title": "Command of Armed Forces",
-    "text": "Command of Armed Forces",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6462,7 +6740,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.752773+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_244_V1",
@@ -6472,7 +6751,7 @@
     "primary_num": "244",
     "secondary_num": null,
     "title": "Oath of Armed Forces",
-    "text": "Oath of Armed Forces",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6485,7 +6764,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.806665+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_245_V1",
@@ -6495,7 +6775,7 @@
     "primary_num": "245",
     "secondary_num": null,
     "title": "Functions of Armed Forces",
-    "text": "Functions of Armed Forces",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6508,7 +6788,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.862493+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_246_V1",
@@ -6518,7 +6799,7 @@
     "primary_num": "246",
     "secondary_num": null,
     "title": "Tribal Areas",
-    "text": "Tribal Areas",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6531,7 +6812,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:41.941037+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_247_V1",
@@ -6541,7 +6823,7 @@
     "primary_num": "247",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6554,7 +6836,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.002235+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_248_V1",
@@ -6564,7 +6847,7 @@
     "primary_num": "248",
     "secondary_num": null,
     "title": "Protection to President, Governor, Minister, etc.",
-    "text": "Protection to President, Governor, Minister, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6577,7 +6860,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.073678+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_249_V1",
@@ -6587,7 +6871,7 @@
     "primary_num": "249",
     "secondary_num": null,
     "title": "Legal proceedings",
-    "text": "Legal proceedings",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6600,7 +6884,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.126506+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_250_V1",
@@ -6610,7 +6895,7 @@
     "primary_num": "250",
     "secondary_num": null,
     "title": "Salaries, allowances, etc., of the President, etc.",
-    "text": "Salaries, allowances, etc., of the President, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6623,7 +6908,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.185835+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_251_V1",
@@ -6633,7 +6919,7 @@
     "primary_num": "251",
     "secondary_num": null,
     "title": "National language",
-    "text": "National language",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6646,7 +6932,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.253507+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_252_V1",
@@ -6656,7 +6943,7 @@
     "primary_num": "252",
     "secondary_num": null,
     "title": "Special provisions in relation to major ports and aerodromes",
-    "text": "Special provisions in relation to major ports and aerodromes",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6669,7 +6956,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.332615+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_253_V1",
@@ -6679,7 +6967,7 @@
     "primary_num": "253",
     "secondary_num": null,
     "title": "Maximum limits as to property, etc.",
-    "text": "Maximum limits as to property, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6692,7 +6980,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.420473+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_254_V1",
@@ -6702,7 +6991,7 @@
     "primary_num": "254",
     "secondary_num": null,
     "title": "Failure to comply with requirement as to time does not render an act invalid",
-    "text": "Failure to comply with requirement as to time does not render an act invalid",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6715,7 +7004,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.487191+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_255_V1",
@@ -6725,7 +7015,7 @@
     "primary_num": "255",
     "secondary_num": null,
     "title": "Oath of office",
-    "text": "Oath of office",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6738,7 +7028,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.553666+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_256_V1",
@@ -6748,7 +7039,7 @@
     "primary_num": "256",
     "secondary_num": null,
     "title": "Private armies forbidden",
-    "text": "Private armies forbidden",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6761,7 +7052,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.627682+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_257_V1",
@@ -6771,7 +7063,7 @@
     "primary_num": "257",
     "secondary_num": null,
     "title": "Provision relating to the State of Jammu and Kashmir",
-    "text": "Provision relating to the State of Jammu and Kashmir",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6784,7 +7076,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.706682+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_258_V1",
@@ -6794,7 +7087,7 @@
     "primary_num": "258",
     "secondary_num": null,
     "title": "Government of territories outside Provinces",
-    "text": "Government of territories outside Provinces",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6807,7 +7100,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.790486+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_259_V1",
@@ -6817,7 +7111,7 @@
     "primary_num": "259",
     "secondary_num": null,
     "title": "Awards",
-    "text": "Awards",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6830,7 +7124,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.870853+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_260_V1",
@@ -6840,7 +7135,7 @@
     "primary_num": "260",
     "secondary_num": null,
     "title": "Definitions",
-    "text": "Definitions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6853,7 +7148,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:42.946266+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_261_V1",
@@ -6863,7 +7159,7 @@
     "primary_num": "261",
     "secondary_num": null,
     "title": "Person acting in office not to be regarded as successor to previous occupant of office, etc.",
-    "text": "Person acting in office not to be regarded as successor to previous occupant of office, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6876,7 +7172,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:43.031184+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_262_V1",
@@ -6886,7 +7183,7 @@
     "primary_num": "262",
     "secondary_num": null,
     "title": "Gregorian calendar to be used",
-    "text": "Gregorian calendar to be used",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6899,7 +7196,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:43.102925+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_263_V1",
@@ -6909,7 +7207,7 @@
     "primary_num": "263",
     "secondary_num": null,
     "title": "Gender and number",
-    "text": "Gender and number",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6922,7 +7220,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:43.190092+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_264_V1",
@@ -6932,7 +7231,7 @@
     "primary_num": "264",
     "secondary_num": null,
     "title": "Effect of repeal of laws",
-    "text": "Effect of repeal of laws",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6945,7 +7244,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:43.262532+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_265_V1",
@@ -6955,7 +7255,7 @@
     "primary_num": "265",
     "secondary_num": null,
     "title": "Title of Constitution and commencement",
-    "text": "Title of Constitution and commencement",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6968,7 +7268,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:43.348402+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_266_V1",
@@ -6978,7 +7279,7 @@
     "primary_num": "266",
     "secondary_num": null,
     "title": "Repeal",
-    "text": "Repeal",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -6991,7 +7292,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:43.427294+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_267_V1",
@@ -7001,7 +7303,7 @@
     "primary_num": "267",
     "secondary_num": null,
     "title": "Power of President to remove difficulties",
-    "text": "Power of President to remove difficulties",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7014,7 +7316,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:43.515745+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_267A_V1",
@@ -7024,7 +7327,7 @@
     "primary_num": "267A",
     "secondary_num": null,
     "title": "Power to remove difficulties",
-    "text": "Power to remove difficulties",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7037,7 +7340,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:43.601020+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_267B_V1",
@@ -7047,7 +7351,7 @@
     "primary_num": "267B",
     "secondary_num": null,
     "title": "Removal of doubt",
-    "text": "Removal of doubt",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7060,7 +7364,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:43.685691+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_268_V1",
@@ -7070,7 +7375,7 @@
     "primary_num": "268",
     "secondary_num": null,
     "title": "Continuance in force, and adaptation of certain laws",
-    "text": "Continuance in force, and adaptation of certain laws",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7083,7 +7388,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:43.771207+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_269_V1",
@@ -7093,7 +7399,7 @@
     "primary_num": "269",
     "secondary_num": null,
     "title": "Validation of law, acts, etc.",
-    "text": "Validation of law, acts, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7106,7 +7412,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:43.852944+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_270_V1",
@@ -7116,7 +7423,7 @@
     "primary_num": "270",
     "secondary_num": null,
     "title": "Temporary validation of certain laws, etc.",
-    "text": "Temporary validation of certain laws, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7129,7 +7436,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:43.933194+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_270A_V1",
@@ -7139,7 +7447,7 @@
     "primary_num": "270A",
     "secondary_num": null,
     "title": "Affirmation of President\u2019s Orders, etc.",
-    "text": "Affirmation of President\u2019s Orders, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7152,7 +7460,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.008063+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_270B_V1",
@@ -7162,7 +7471,7 @@
     "primary_num": "270B",
     "secondary_num": null,
     "title": "Elections to be deemed to be held under Constitution",
-    "text": "Elections to be deemed to be held under Constitution",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7175,7 +7484,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.097405+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_270C_V1",
@@ -7185,7 +7495,7 @@
     "primary_num": "270C",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "[Omitted]",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7198,7 +7508,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.203049+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_271_V1",
@@ -7208,7 +7519,7 @@
     "primary_num": "271",
     "secondary_num": null,
     "title": "First National Assembly",
-    "text": "First National Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7221,7 +7532,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.267241+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_272_V1",
@@ -7231,7 +7543,7 @@
     "primary_num": "272",
     "secondary_num": null,
     "title": "First constitution of Senate",
-    "text": "First constitution of Senate",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7244,7 +7556,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.339248+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_273_V1",
@@ -7254,7 +7567,7 @@
     "primary_num": "273",
     "secondary_num": null,
     "title": "First Provincial Assembly",
-    "text": "First Provincial Assembly",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7267,7 +7580,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.419481+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_274_V1",
@@ -7277,7 +7591,7 @@
     "primary_num": "274",
     "secondary_num": null,
     "title": "Vesting of property, assets, rights, liabilities and obligations",
-    "text": "Vesting of property, assets, rights, liabilities and obligations",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7290,7 +7604,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.495808+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_275_V1",
@@ -7300,7 +7615,7 @@
     "primary_num": "275",
     "secondary_num": null,
     "title": "Continuance in office of persons in service of Pakistan, etc.",
-    "text": "Continuance in office of persons in service of Pakistan, etc.",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7313,7 +7628,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.580219+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_276_V1",
@@ -7323,7 +7639,7 @@
     "primary_num": "276",
     "secondary_num": null,
     "title": "Oath of first President",
-    "text": "Oath of first President",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7336,7 +7652,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.653783+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_277_V1",
@@ -7346,7 +7663,7 @@
     "primary_num": "277",
     "secondary_num": null,
     "title": "Transitional financial provisions",
-    "text": "Transitional financial provisions",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7359,7 +7676,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.729637+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_278_V1",
@@ -7369,7 +7687,7 @@
     "primary_num": "278",
     "secondary_num": null,
     "title": "Accounts not audited before commencing day",
-    "text": "Accounts not audited before commencing day",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7382,7 +7700,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.798168+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_279_V1",
@@ -7392,7 +7711,7 @@
     "primary_num": "279",
     "secondary_num": null,
     "title": "Continuance of taxes",
-    "text": "Continuance of taxes",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7405,7 +7724,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.859453+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_280_V1",
@@ -7415,7 +7735,7 @@
     "primary_num": "280",
     "secondary_num": null,
     "title": "Continuance of Proclamation of Emergency",
-    "text": "Continuance of Proclamation of Emergency",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7428,7 +7748,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.910024+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_184_3_V1",
@@ -7438,7 +7759,7 @@
     "primary_num": "184",
     "secondary_num": "3",
     "title": "Original jurisdiction of Supreme Court on questions of public importance with reference to enforcement of Fundamental Rights",
-    "text": "Original jurisdiction of Supreme Court on questions of public importance with reference to enforcement of Fundamental Rights",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7451,7 +7772,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:44.976691+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_58_2_B_V1",
@@ -7461,7 +7783,7 @@
     "primary_num": "58",
     "secondary_num": "2(b)",
     "title": "Dissolution of National Assembly by President where situation has arisen in which Government cannot be carried on in accordance with Constitution",
-    "text": "Dissolution of National Assembly by President where situation has arisen in which Government cannot be carried on in accordance with Constitution",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7474,7 +7796,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.039679+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_199_1_V1",
@@ -7484,7 +7807,7 @@
     "primary_num": "199",
     "secondary_num": "1",
     "title": "Jurisdiction of High Court to issue writs of prohibition, mandamus, certiorari, habeas corpus and quo warranto",
-    "text": "Jurisdiction of High Court to issue writs of prohibition, mandamus, certiorari, habeas corpus and quo warranto",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7497,7 +7820,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.108296+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_62_1_F_V1",
@@ -7507,7 +7831,7 @@
     "primary_num": "62",
     "secondary_num": "1(f)",
     "title": "Qualifications for membership of Parliament: sagacious, righteous and non-profligate, honest and ameen",
-    "text": "Qualifications for membership of Parliament: sagacious, righteous and non-profligate, honest and ameen",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7520,7 +7844,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.190393+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_63_1_V1",
@@ -7530,7 +7855,7 @@
     "primary_num": "63",
     "secondary_num": "1",
     "title": "Disqualifications for membership of Majlis-e-Shoora (Parliament)",
-    "text": "Disqualifications for membership of Majlis-e-Shoora (Parliament)",
+    "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -7543,7 +7868,8 @@
     "source_tier": "tier_1",
     "verification_status": "verified",
     "fetched_at": "2026-10-01T12:13:45.268348+00:00",
-    "previous_version_id": null
+    "previous_version_id": null,
+    "text_available": false
   },
   {
     "version_id": "CONST_1973_ART_1_V2",
@@ -14484,8 +14810,8 @@
     "secondary_num": null,
     "title": "Powers, jurisdiction and functions of the Court",
     "title_only": "Powers, jurisdiction and functions of the Court",
-    "text": "Article 203D: Powers, jurisdiction and functions of the Court:\n(1) The Court may, either of its own motion or on the petition of a citizen of Pakistan or the Federal Government or a Provincial Government, examine and decide the question whether or not any law or provision of law is repugnant to the Injunctions of Islam, as laid down in the Holy Quran and Sunnah of the Holy Prophet (peace be upon him).\n(2) If the Court decides that any law or provision of law is repugnant to the Injunctions of Islam, it shall set out in its decision:\n(a) the reasons for its holding that opinion; and\n(b) the extent to which such law or provision is so repugnant;\nand specify the day on which the decision shall take effect:\nProvided that no such decision shall be deemed to take effect before the expiration of the period within which an appeal therefrom may be preferred to the Supreme Court or, where an appeal has been so preferred, before the disposal of such appeal.\n(3) If any law or provision of law is declared by the Court to be repugnant to the Injunctions of Islam:\n(a) the President in the case of a Federal law, or the Governor in the case of a Provincial law, shall take steps to amend the law so as to bring such law or provision into conformity with the Injunctions of Islam; and\n(b) such law or provision shall, to the extent to which it is declared to be so repugnant, cease to have effect on the day on which the decision of the Court takes effect.",
-    "text_available": true,
+    "text": null,
+    "text_available": false,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -14544,8 +14870,8 @@
     "secondary_num": null,
     "title": "Appeal to Supreme Court",
     "title_only": "Appeal to Supreme Court",
-    "text": "Article 203F: Appeal to Supreme Court:\n(1) Any party to any proceedings before the Court under Article 203D may, within sixty days of the decision of the Court, prefer an appeal to the Supreme Court.\n(2) An appeal to the Supreme Court against a decision of the Court under Article 203D shall be heard by a Bench of that Court, to be called the Shariat Appellate Bench.\n(2A) The Shariat Appellate Bench shall consist of three Muslim Judges of the Supreme Court and not more than two Ulema to be appointed by the President to attend sittings of the Bench as ad hoc members thereof.\n(3) A decision of the Supreme Court Shariat Appellate Bench on appeal shall have final effect, and upon the disposal of such appeal, the decision of the Federal Shariat Court shall take effect only to the extent upheld by the Supreme Court.",
-    "text_available": true,
+    "text": null,
+    "text_available": false,
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
