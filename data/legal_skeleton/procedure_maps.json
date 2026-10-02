@@ -6,9 +6,9 @@
       "id": "PROC-BANKING-MORTGAGE-AUCTION",
       "name": "Banking Court Execution Auction of Mortgaged Property",
       "governing_law": "FIO 2001 Section 19, Order XXI CPC",
-      "status": "Approved",
-      "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
-      "review_date": "2026-10-02",
+      "status": "Unreviewed",
+      "reviewer": null,
+      "review_date": null,
       "steps": [
         {
           "step_number": 1,
@@ -31,7 +31,7 @@
         {
           "step_number": 4,
           "name": "Objection Petition under Order XXI Rule 90 CPC",
-          "rule": "Must be filed within 30 days of auction (Art. 166 Limitation Act). Court may require deposit (statutory baseline 20% second proviso). Non-compliance risks summary dismissal.",
+          "rule": "Must be filed within 30 days of auction (Art. 166 Limitation Act). 20% deposit requirement (second proviso) subject to court order. Non-compliance risks summary dismissal.",
           "authorities": "Order XXI Rule 90 CPC, 2024 SCMR 1218"
         },
         {

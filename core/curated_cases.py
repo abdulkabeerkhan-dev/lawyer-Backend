@@ -75,3 +75,45 @@ def is_curated_historical_exception(
     if c and c.get("is_historical_exception"):
         return True
     return False
+
+def find_landmark_cases_for_query(query: str) -> List[Dict[str, Any]]:
+    """
+    Retrieves curated landmark precedents matching query topics, statutory anchors,
+    case aliases, or doctrinal keywords.
+    """
+    cases = get_curated_cases()
+    q_lower = query.lower()
+    matches = []
+    seen = set()
+
+    for c in cases:
+        cid = c.get("neutral_citation") or c.get("case_id")
+        if cid in seen:
+            continue
+
+        matched = False
+        # 1. Match keys
+        for mk in c.get("match_keys", []):
+            if mk.lower() in q_lower:
+                matched = True
+                break
+
+        # 2. Aliases
+        if not matched:
+            for alias in c.get("aliases", []):
+                if alias.lower() in q_lower:
+                    matched = True
+                    break
+
+        # 3. Doctrinal keywords / statutory anchors
+        if not matched:
+            for kw in c.get("doctrinal_keywords", []):
+                if kw.lower() in q_lower:
+                    matched = True
+                    break
+
+        if matched:
+            seen.add(cid)
+            matches.append(c)
+
+    return matches

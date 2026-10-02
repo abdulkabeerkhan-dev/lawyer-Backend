@@ -112,12 +112,11 @@ def check_currency_labels_in_text(memo_text: str, provisions_to_check: Optional[
 def check_forum_limitation_accuracy(memo_text: str, exp_forum: str, exp_lim: str) -> Dict[str, Any]:
     text_lower = memo_text.lower()
     
-    # Check for forbidden forum routing errors (advising s.109 CPC appeal to District Judge)
+    # 1. Negative routing error check (advising s.109 CPC appeal to District Judge)
     s109_claim = bool(
         re.search(r'(?:appeal|remedy|petition|file).*?(?:section\s+109|s\.?\s*109).*?(?:district\s+judge|district\s+court)', text_lower) or
         re.search(r'(?:section\s+109|s\.?\s*109).*?(?:to|before).*?(?:district\s+judge|district\s+court)', text_lower)
     )
-    # Exclude if it's explicitly negated ("not lie to the district judge", "not under section 109")
     if s109_claim and ("not lie" in text_lower or "does not" in text_lower or "do not" in text_lower):
         s109_claim = False
 
@@ -125,12 +124,39 @@ def check_forum_limitation_accuracy(memo_text: str, exp_forum: str, exp_lim: str
     has_banking_hc_appeal = ("section 22" in text_lower and "high court" in text_lower) or ("fio" in text_lower and "high court" in text_lower)
     has_30_day_limitation = ("30 days" in text_lower or "thirty days" in text_lower)
 
-    passed = not has_s109_district_error
+    # Forum scoring
+    forum_passed = not has_s109_district_error
     if "s.22" in (exp_forum or "").lower():
-        passed = passed and has_banking_hc_appeal
+        forum_passed = forum_passed and has_banking_hc_appeal
+    elif "executing court" in (exp_forum or "").lower():
+        forum_passed = forum_passed and ("executing court" in text_lower or "execution court" in text_lower)
+
+    # Limitation scoring (honest assessment of unfilled fields)
+    lim_status = "verified"
+    lim_passed = True
+    if exp_lim and "lawyer to fill" in exp_lim.lower():
+        lim_status = "unverified_unfilled"
+        lim_passed = None  # Missing ground truth; cannot be marked as passed
+    elif exp_lim and exp_lim.lower() != "not applicable":
+        if "30" in exp_lim:
+            lim_passed = has_30_day_limitation
+        else:
+            lim_passed = True
+
+    # Overall pass: requires forum passed, and limitation passed (not failed)
+    if lim_passed is None:
+        passed = forum_passed
+        is_independent = False  # Lacks independent human ground truth for limitation
+    else:
+        passed = forum_passed and lim_passed
+        is_independent = True
 
     return {
         "passed": passed,
+        "forum_passed": forum_passed,
+        "limitation_passed": lim_passed,
+        "limitation_status": lim_status,
+        "is_independent_check": is_independent,
         "has_s109_district_error": has_s109_district_error,
         "has_banking_hc_appeal": has_banking_hc_appeal,
         "has_30_day_limitation": has_30_day_limitation
@@ -295,7 +321,8 @@ async def run_harness(
     approved_only: bool = True,
     include_drafts: bool = False,
     include_held_out: bool = False,
-    results_dir: Optional[str] = None
+    results_dir: Optional[str] = None,
+    out_file: Optional[str] = None
 ) -> Dict[str, Any]:
     with open(gold_json_path, "r", encoding="utf-8") as f:
         all_cases = json.load(f)
@@ -411,12 +438,12 @@ async def run_harness(
         }
     }
 
-    json_path = os.path.join(out_dir, f"eval_report_{ts}.json")
+    json_path = out_file if out_file else os.path.join(out_dir, f"eval_report_{ts}.json")
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump({"summary": summary, "cases": results}, f, indent=2)
     print(f"\n[PASS] Saved JSON eval report to {json_path}")
 
-    md_path = os.path.join(out_dir, f"eval_report_{ts}.md")
+    md_path = (out_file.rsplit('.', 1)[0] + ".md") if out_file else os.path.join(out_dir, f"eval_report_{ts}.md")
     with open(md_path, "w", encoding="utf-8") as f:
         f.write(f"# Legal Evaluation Benchmark Report ({ts})\n\n")
         f.write(f"- **Git Commit**: `{git_hash}`\n")
@@ -451,6 +478,13 @@ if __name__ == "__main__":
     parser.add_argument("--gold-file", default=os.path.join(WORKSPACE_DIR, "eval", "gold_set_examples.json"), help="Path to gold set JSON.")
     parser.add_argument("--include-drafts", action="store_true", default=False, help="Include draft cases for baseline benchmarking.")
     parser.add_argument("--include-held-out", action="store_true", default=False, help="Include held-out split cases.")
+    parser.add_argument("--out-file", default=None, help="Explicit path to write JSON evaluation report.")
     args = parser.parse_args()
 
-    asyncio.run(run_harness(args.gold_file, approved_only=not args.include_drafts, include_drafts=args.include_drafts, include_held_out=args.include_held_out))
+    asyncio.run(run_harness(
+        args.gold_file,
+        approved_only=not args.include_drafts,
+        include_drafts=args.include_drafts,
+        include_held_out=args.include_held_out,
+        out_file=args.out_file
+    ))

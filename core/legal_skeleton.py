@@ -2,20 +2,58 @@
 core/legal_skeleton.py
 
 Curated Legal Skeleton Loader & Accessor for Pakistani Jurisprudence.
-Enforces Phase 2 requirements:
+Phase 2 Requirements:
 1. Every skeleton entry carries source, reviewer, and status.
 2. Code strictly uses ONLY "Approved" entries with a named human reviewer (never AI).
-3. Provides canonical lookups for court hierarchy (post-27th Amendment FCC),
-   statute sections, limitations, doctrine elements, and procedure maps.
-4. Detects legal routing errors and forbidden procedural claims.
+3. Professional credentials (e.g. Barrister, Lincoln's Inn, Advocate High Court) in reviewer
+   strings are strictly prohibited unless explicitly authorized.
+4. "Unreviewed" entries are strictly ignored as legal authority.
+5. Rule 28 Guardrail: Restricts verification strictly to comparing structured memo claims
+   (forum, limitation, section subject, court label) against approved skeleton entries,
+   eliminating phrase patterns copied from audited memos.
 """
 
 import os
 import json
 import re
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple
 
-AI_REVIEWER_NAMES = {"claude", "gpt", "gemini", "ai", "llm", "chatgpt", "deepseek", "anthropic", "openai", "none", "null"}
+AI_REVIEWER_NAMES = {
+    "claude", "gpt", "gemini", "ai", "llm", "chatgpt", "deepseek",
+    "anthropic", "openai", "none", "null", "bot", "assistant"
+}
+
+DISALLOWED_CREDENTIAL_TERMS = {
+    "barrister", "lincoln's inn", "gray's inn", "inner temple", "middle temple",
+    "advocate high court", "advocate supreme court", "advocate", "ll.b", "llb",
+    "ll.m", "llm", "bar-at-law", "barrister-at-law", "attorney-at-law", "esq",
+    "senior counsel", "king's counsel", "queen's counsel"
+}
+
+# Whitelist for manually authorized credentials added by the user
+ALLOWED_CREDENTIALED_REVIEWERS = set()
+
+def check_human_reviewer_credentials(reviewer: Optional[str]) -> bool:
+    """
+    Validates reviewer identity:
+    1. Rejects None, empty, or AI reviewer names.
+    2. Rejects any string containing professional legal credentials unless explicitly authorized.
+    """
+    if not reviewer or not isinstance(reviewer, str):
+        return False
+    rev_clean = reviewer.strip()
+    rev_lower = rev_clean.lower()
+    if not rev_lower:
+        return False
+    # Check AI names
+    if any(ai_term in rev_lower for ai_term in AI_REVIEWER_NAMES):
+        return False
+    # Check disallowed credentials
+    if rev_clean not in ALLOWED_CREDENTIALED_REVIEWERS:
+        for cred in DISALLOWED_CREDENTIAL_TERMS:
+            if cred in rev_lower:
+                return False
+    return True
 
 class LegalSkeleton:
     def __init__(self, skeleton_dir: Optional[str] = None):
@@ -32,14 +70,11 @@ class LegalSkeleton:
         self._load_all()
 
     def _is_valid_human_reviewer(self, reviewer: Optional[str]) -> bool:
-        if not reviewer or not isinstance(reviewer, str):
-            return False
-        rev_lower = reviewer.strip().lower()
-        if not rev_lower:
-            return False
-        if any(ai_term in rev_lower for ai_term in AI_REVIEWER_NAMES):
-            return False
-        return True
+        return check_human_reviewer_credentials(reviewer)
+
+    def has_authority(self) -> bool:
+        """Returns True only if at least one approved authoritative entry is loaded."""
+        return bool(self.courts or self.statutes or self.limitations or self.doctrines or self.procedures or self.reporters)
 
     def _load_all(self):
         # 1. Courts
@@ -65,11 +100,12 @@ class LegalSkeleton:
                     for sec in s.get("sections", []):
                         if sec.get("status") == "Approved" and self._is_valid_human_reviewer(sec.get("reviewer")):
                             approved_sections[sec["section"].lower()] = sec
-                    self.statutes[s_name] = {
-                        "statute_name": s.get("statute_name"),
-                        "short_name": s.get("short_name"),
-                        "sections": approved_sections
-                    }
+                    if approved_sections:
+                        self.statutes[s_name] = {
+                            "statute_name": s.get("statute_name"),
+                            "short_name": s.get("short_name"),
+                            "sections": approved_sections
+                        }
 
         # 3. Limitations
         lim_path = os.path.join(self.skeleton_dir, "limitation_periods.json")
@@ -142,7 +178,6 @@ class LegalSkeleton:
             prefix = r["prefix"].upper()
             if prefix in cit_clean:
                 return r
-            # Handle split pattern like "PLD <YEAR> FSC" or "PLD <YEAR> SC"
             parts = prefix.split()
             if len(parts) == 2:
                 pattern = rf'\b{parts[0]}\s+(?:\d{{4}}\s+)?{parts[1]}\b'
@@ -150,33 +185,53 @@ class LegalSkeleton:
                     return r
         return None
 
-    def validate_memo_claims(self, memo_text: str) -> List[str]:
+    def validate_structured_claims(self, memo_text: str) -> List[str]:
         """
-        Validates a generated memo against curated legal skeleton rules.
-        Returns a list of violation messages if any forbidden or incorrect claims appear.
+        Rule 28 Guardrail: Restricts verification strictly to comparing structured memo claims
+        (forum, limitation, section subject, court label) against approved skeleton entries.
+        Strictly avoids hardcoded regex patterns copied from audited memos.
+        If no approved skeleton entries are loaded (e.g. unreviewed status), returns empty list.
         """
         violations = []
-        text_lower = memo_text.lower()
+        if not self.has_authority():
+            # Code must ignore Unreviewed entries as authority; cannot assert violations without approved entries
+            return violations
 
-        # 1. Banking court appeal to District Judge or s.109 CPC error
-        if ("banking court" in text_lower or "fio" in text_lower):
-            if "district judge" in text_lower and not ("not" in text_lower or "barred" in text_lower or "does not lie" in text_lower):
-                violations.append("Banking Court decisions cannot be appealed to the District Judge. Under Section 22 FIO 2001, appeal lies strictly to the High Court.")
-            if "section 109 cpc" in text_lower or "section 109" in text_lower:
-                if not ("not" in text_lower or "never" in text_lower or "does not lie" in text_lower):
-                    violations.append("Section 109 CPC governs High Court appeals to the Supreme Court, not Banking Court appeals.")
+        # 1. Structured Appellate Forum Claims: e.g. "Appellate Forum: <Court>" or "Appeal lies to: <Court>"
+        forum_matches = re.finditer(
+            r'(?:Appellate\s+Forum|Appellate\s+Court|Appeal\s+lies\s+to|Appeal\s+to)\s*:\s*([^\n\r;]+)',
+            memo_text,
+            re.IGNORECASE
+        )
+        unique_courts = {c["id"]: c for c in self.courts.values()}.values()
+        for fm in forum_matches:
+            claimed_forum = fm.group(1).strip()
+            for orig_entry in unique_courts:
+                if orig_entry.get("name", "").lower() in memo_text.lower() and orig_entry.get("appeal_route_to"):
+                    expected_route = orig_entry["appeal_route_to"]
+                    if claimed_forum.lower() not in expected_route.lower() and not any(w in claimed_forum.lower() for w in ["not", "bar", "prohibit"]):
+                        violations.append(
+                            f"Structured Forum Mismatch: Memo claims appellate forum '{claimed_forum}', but approved skeleton routing for '{orig_entry.get('name')}' is '{expected_route}'."
+                        )
 
-        # 2. Federal Constitutional Court existence
-        if "federal constitutional court" in text_lower and ("proposed" in text_lower or "not established" in text_lower or "pending bill" in text_lower):
-            violations.append("Federal Constitutional Court (FCC) was established by the 27th Constitutional Amendment in November 2025 and is not merely proposed.")
-
-        # 3. Section 4 MFLO survival ground
-        if "section 4" in text_lower and "mflo" in text_lower:
-            if "parliament" in text_lower and ("did not amend" in text_lower or "failed to amend" in text_lower) and "survives" in text_lower:
-                if "appeal" not in text_lower:
-                    violations.append("Section 4 MFLO survives because an appeal is pending before the Supreme Court Shariat Appellate Bench under Art. 203D(2) proviso, NOT due to parliamentary inaction.")
+        # 2. Structured Limitation Claims: e.g. "Limitation: <Period>" or "Period of Limitation: <Period>"
+        lim_matches = re.finditer(r'(?:Period\s+of\s+Limitation|Limitation)\s*:\s*([^\n\r.,;]+)', memo_text, re.IGNORECASE)
+        unique_lims = {l["id"]: l for l in self.limitations.values()}.values()
+        for lm in lim_matches:
+            claimed_lim = lm.group(1).strip().lower()
+            for proc_v in unique_lims:
+                if proc_v.get("proceeding", "").lower() in memo_text.lower():
+                    exp_period = proc_v.get("limitation_period", "").lower()
+                    if exp_period and exp_period not in claimed_lim:
+                        violations.append(
+                            f"Structured Limitation Mismatch: Memo claims limitation '{claimed_lim}', but approved skeleton period for '{proc_v.get('proceeding')}' is '{exp_period}'."
+                        )
 
         return violations
+
+    def validate_memo_claims(self, memo_text: str) -> List[str]:
+        """Delegate to structured claims validation."""
+        return self.validate_structured_claims(memo_text)
 
 # Global singleton
 skeleton = LegalSkeleton()

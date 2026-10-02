@@ -9,9 +9,9 @@
         {
           "section": "Section 15",
           "title": "Sale of mortgaged property without intervention of Banking Court",
-          "status": "Approved",
-          "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
-          "review_date": "2026-10-02",
+          "status": "Unreviewed",
+          "reviewer": null,
+          "review_date": null,
           "source": "FIO 2001, Section 15 (as amended 2016)",
           "span_pointer": "FIO 2001 s.15: Authorizes financial institution to sell mortgaged property after three notices (30, 14, 14 days) and reserve price fixed by approved PBA valuer.",
           "notes": "Covers extra-judicial private sale by bank, NOT execution by court."
@@ -19,9 +19,10 @@
         {
           "section": "Section 18",
           "title": "Powers of Banking Court regarding property",
-          "status": "Approved",
-          "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
-          "review_date": "2026-10-02",
+          "status": "Unreviewed",
+          "reviewer": null,
+          "review_date": null,
+          "lawyer_review_flag": "needs lawyer review: FIO s.18 description and scope of interim powers/attachment before judgment vs execution stage. Source: FIO 2001 s.18; PLD 2006 SC 538.",
           "source": "FIO 2001, Section 18",
           "span_pointer": "FIO 2001 s.18: Injunction, attachment before judgment, appointment of receiver.",
           "notes": "Pre-decree protective measures."
@@ -29,9 +30,9 @@
         {
           "section": "Section 19",
           "title": "Execution of decree and sale with or without intervention of Banking Court",
-          "status": "Approved",
-          "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
-          "review_date": "2026-10-02",
+          "status": "Unreviewed",
+          "reviewer": null,
+          "review_date": null,
           "source": "FIO 2001, Section 19",
           "span_pointer": "FIO 2001 s.19(1)-(5): Execution of decree. Reserve price based on valuation by PBA-approved valuers, public proclamation in national newspapers.",
           "notes": "Post-decree execution sale. Incorporates Order XXI CPC execution principles."
@@ -39,9 +40,10 @@
         {
           "section": "Section 22",
           "title": "Appeal",
-          "status": "Approved",
-          "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
-          "review_date": "2026-10-02",
+          "status": "Unreviewed",
+          "reviewer": null,
+          "review_date": null,
+          "lawyer_review_flag": "needs lawyer review: s.22 Division Bench requirement and 30-day limitation period for interlocutory vs final orders. Source: FIO 2001 s.22(1); 2021 SCMR 1890.",
           "source": "FIO 2001, Section 22",
           "span_pointer": "FIO 2001 s.22(1)-(6): Appeal lies to High Court within thirty days before a bench of not less than two judges. Bar on appeals to District Judge.",
           "notes": "Exclusive appellate route. Section 109 CPC and District Judge appeals do not lie."
@@ -55,19 +57,21 @@
         {
           "section": "Section 47",
           "title": "Questions to be determined by the Court executing decree",
-          "status": "Approved",
-          "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
-          "review_date": "2026-10-02",
+          "status": "Unreviewed",
+          "reviewer": null,
+          "review_date": null,
+          "lawyer_review_flag": "needs lawyer review: scope of questions between parties vs third-party claimants under s.47 vs r.58. Source: CPC 1908 s.47; 2002 SCMR 122.",
           "source": "CPC 1908, Section 47",
           "span_pointer": "CPC s.47: All questions arising between the parties to the suit or their representatives relating to execution, discharge or satisfaction of the decree shall be determined by the executing court and not by a separate suit.",
-          "notes": "Executing court has full jurisdiction; separate title suit is barred."
+          "notes": "Executing court determines questions; separate suit between parties barred."
         },
         {
           "section": "Order XXI Rule 58",
           "title": "Investigation of claims to, and objections to attachment of, attached property",
-          "status": "Approved",
-          "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
-          "review_date": "2026-10-02",
+          "status": "Unreviewed",
+          "reviewer": null,
+          "review_date": null,
+          "lawyer_review_flag": "needs lawyer review: r.58 'not separate suit' line and post-1972 amendment executing court adjudication as a decree. Source: CPC 1908 O.XXI r.58; PLD 1983 SC 457.",
           "source": "CPC 1908, Order XXI Rule 58",
           "span_pointer": "CPC O.XXI r.58: All questions relating to right, title or interest of third-party claimants are investigated and adjudicated by the executing court as a suit.",
           "notes": "Jurisdiction rests with executing court; order has force of a decree."
@@ -75,19 +79,20 @@
         {
           "section": "Order XXI Rule 90",
           "title": "Application to set aside sale on ground of irregularity or fraud",
-          "status": "Approved",
-          "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
-          "review_date": "2026-10-02",
+          "status": "Unreviewed",
+          "reviewer": null,
+          "review_date": null,
+          "lawyer_review_flag": "needs lawyer review: 20% deposit requirement (second proviso) across provincial amendments. Source: CPC 1908 O.XXI r.90; 2024 SCMR 1218.",
           "source": "CPC 1908, Order XXI Rule 90 (Second Proviso)",
-          "span_pointer": "O.XXI r.90 Second Proviso: Court may require applicant to deposit an amount not exceeding twenty per cent (20%) of the sum realized at the sale, or furnish security, before entertaining the application.",
-          "notes": "Statutory baseline is 20%. Non-compliance with court order risks summary dismissal. Client must seek stay/modification or pay under protest."
+          "span_pointer": "O.XXI r.90 Second Proviso: 20% deposit requirement (second proviso) - Court may require applicant to deposit an amount not exceeding twenty per cent (20%) of the sum realized at the sale, or furnish security, before entertaining the application.",
+          "notes": "20% deposit requirement (second proviso). Non-compliance with court order risks summary dismissal. Client must seek stay/modification or pay under protest."
         },
         {
           "section": "Section 109",
           "title": "When appeals lie to the Supreme Court",
-          "status": "Approved",
-          "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
-          "review_date": "2026-10-02",
+          "status": "Unreviewed",
+          "reviewer": null,
+          "review_date": null,
           "source": "CPC 1908, Section 109",
           "span_pointer": "CPC s.109: Governs appeals from High Court judgments/decrees to the Supreme Court.",
           "notes": "Does NOT provide an appeal to District Judge or from Banking Courts."
@@ -101,9 +106,9 @@
         {
           "section": "Section 4",
           "title": "Succession",
-          "status": "Approved",
-          "reviewer": "Kabeer (Barrister-at-Law, Lincoln's Inn)",
-          "review_date": "2026-10-02",
+          "status": "Unreviewed",
+          "reviewer": null,
+          "review_date": null,
           "source": "MFLO 1961, Section 4; PLD 2000 FSC 1 (Allah Rakha); Constitution Art. 203D(2) proviso",
           "span_pointer": "MFLO s.4: In the event of death of any son or daughter of the propositus before opening of succession, children of such son or daughter receive share parent would have received per stirpes. Remains valid operative law because Allah Rakha appeal is pending in SC Shariat Appellate Bench.",
           "notes": "Survives due to pending appeal in Supreme Court, NOT because Parliament failed to amend."

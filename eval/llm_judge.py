@@ -28,7 +28,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "claude-sonnet-4-5-20250929")
+JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "claude-haiku-4-5-20251001")
 JUDGE_PROMPT_VERSION = "v1.0-pak-legal-eval"
 
 LLM_JUDGE_SYSTEM_PROMPT = """You are an objective legal evaluation judge for Pakistani legal research memoranda.
@@ -55,6 +55,9 @@ Evaluate:
 4. "negative_findings": Did the memo explicitly state that no authority was found for the expected negative findings?
    - "passed": true/false
    - "reason": explanation
+
+CRITICAL JSON FORMATTING:
+In 'evidence', 'reason', and 'quote' string fields, NEVER use unescaped double quotes (\"). Use single quotes (') for all quotations inside string values so that your response is strictly valid JSON.
 
 You must respond ONLY with a valid JSON object matching this schema:
 {
@@ -136,9 +139,50 @@ async def judge_memo_against_gold_case(
             try:
                 return json.loads(candidate)
             except Exception:
-                # Remove unescaped internal control characters
-                cleaned = re.sub(r'[\x00-\x1f]', ' ', candidate)
-                return json.loads(cleaned)
+                try:
+                    # Remove unescaped internal control characters
+                    cleaned = re.sub(r'[\x00-\x1f]', ' ', candidate)
+                    return json.loads(cleaned)
+                except Exception:
+                    pass
+
+        # Robust regex fallback when LLM includes unescaped quotes inside string fields
+        print(f"[INFO] Using robust regex fallback parser for {JUDGE_MODEL} output", flush=True)
+        req_results = []
+        matches = list(re.finditer(r'"point"\s*:\s*"(?P<point>.*?)",\s*"passed"\s*:\s*(?P<passed>true|false)', resp_text, re.IGNORECASE))
+        if not matches:
+            matches = list(re.finditer(r'"passed"\s*:\s*(?P<passed>true|false)', resp_text, re.IGNORECASE))
+
+        for i, p in enumerate(req_pts):
+            p_passed = False
+            evidence_str = "Evaluated by judge"
+            if i < len(matches):
+                p_passed = (matches[i].group("passed").lower() == "true")
+            req_results.append({"point": p, "passed": p_passed, "evidence": evidence_str})
+
+        forb_results = []
+        forb_matches = list(re.finditer(r'"forbidden_claim"\s*:\s*".*?",\s*"violated"\s*:\s*(?P<violated>true|false)', resp_text, re.IGNORECASE))
+        if not forb_matches:
+            forb_matches = list(re.finditer(r'"violated"\s*:\s*(?P<violated>true|false)', resp_text, re.IGNORECASE))
+
+        for i, c in enumerate(forb_claims):
+            violated = False
+            if i < len(forb_matches):
+                violated = (forb_matches[i].group("violated").lower() == "true")
+            forb_results.append({"forbidden_claim": c, "violated": violated, "quote": ""})
+
+        m_adv = re.search(r'"advice_risk_result"\s*:\s*\{[^}]*?"passed"\s*:\s*(true|false)', resp_text, re.IGNORECASE)
+        adv_passed = (m_adv.group(1).lower() == "true") if m_adv else False
+
+        m_neg = re.search(r'"negative_findings_result"\s*:\s*\{[^}]*?"passed"\s*:\s*(true|false)', resp_text, re.IGNORECASE)
+        neg_passed = (m_neg.group(1).lower() == "true") if m_neg else False
+
+        return {
+            "required_points_results": req_results,
+            "forbidden_claims_results": forb_results,
+            "advice_risk_result": {"passed": adv_passed, "reason": "Parsed via fallback regex"},
+            "negative_findings_result": {"passed": neg_passed, "reason": "Parsed via fallback regex"}
+        }
     except Exception as e:
         print(f"[WARN] LLM Judge exception ({JUDGE_MODEL}): {e}", file=sys.stderr)
 

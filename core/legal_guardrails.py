@@ -1239,18 +1239,16 @@ def check_memo_completeness(text: str, is_formal_opinion: bool = True, context_c
     if "<<<CARDS>>>" in text:
         cards_match = re.search(r'<<<CARDS>>>(.*?)(?:<<<END_CARDS>>>|$)', text, re.DOTALL)
         if not cards_match or not cards_match.group(1).strip():
-            issues.append("Empty <<<CARDS>>> block")
+            pass  # Cards are optional visual metadata; do not invalidate the legal memo
         else:
             cards_content = cards_match.group(1).strip()
-            # Strip markdown code fences if model wrapped the JSON (e.g. ```json ... ```)
             cards_content = re.sub(r'^```(?:json)?\s*', '', cards_content)
             cards_content = re.sub(r'\s*```$', '', cards_content).strip()
             try:
                 parsed = json.loads(cards_content)
-                if not isinstance(parsed, list):
-                    issues.append("<<<CARDS>>> JSON is not an array")
             except Exception as e:
-                issues.append(f"Invalid <<<CARDS>>> JSON syntax: {e}")
+                # Log warning; cards must never take down the substantive memorandum
+                print(f"⚠️ [CARDS PARSE WARNING]: Cards block syntax error ({e}), processing substantive memo independently.", file=sys.stderr)
 
     is_complete = len(issues) == 0
     return is_complete, issues
