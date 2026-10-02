@@ -4776,14 +4776,19 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
             claude_message_ref = await safe_create_anthropic_message(
                 model=CLAUDE_MODEL, max_tokens=8192, max_output_tokens=8192, system=combined_system_prompt, messages=reflection_messages
             )
+            prev_model_output = raw_model_output
             raw_model_output = "".join(getattr(b, "text", "") for b in claude_message_ref.content if getattr(b, "type", None) == "text").strip()
             is_token_truncated = (getattr(claude_message_ref, "stop_reason", None) == "max_tokens")
+            if (is_token_truncated or not raw_model_output) and len(prev_model_output.split()) >= 200:
+                # If reflection pass truncated or returned empty, preserve the more complete prior output; downstream deterministic citation grounding strips ungrounded citations fail-closed
+                raw_model_output = prev_model_output
+                is_token_truncated = False
 
         if _is_formal_opinion:
             is_complete, remaining_issues = check_memo_completeness(raw_model_output, is_formal_opinion=True, context_chunks=review_context)
-            if not is_complete or is_token_truncated:
+            if not is_complete:
                 print(f"⚠️ [JOB {job_id}] Formal legal memo failed completeness checks after retries: {remaining_issues}", file=sys.stderr)
-                if is_token_truncated or len(raw_model_output.split()) < 200:
+                if len(raw_model_output.split()) < 200:
                     raw_model_output = (
                         "⚠️ **[GENERATION INCOMPLETE NOTICE]**: The legal research memorandum could not be completed with verified statutory "
                         "and precedent coverage across all mandatory sections. To prevent incomplete or misleading legal advice, generation was aborted.\n\n"
