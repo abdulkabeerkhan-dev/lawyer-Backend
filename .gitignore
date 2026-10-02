@@ -54,3 +54,7 @@ skipped_stubs.csv
 data/statute_staging/*.jsonl
 data/statute_staging/currency_cache.json
 
+# Backups: keep manifests in repo, store heavy payloads externally
+backups/*
+!backups/manifest_sha256.json
+

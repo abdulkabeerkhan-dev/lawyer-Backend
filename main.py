@@ -173,35 +173,28 @@ VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
-DEV_AUTH_BYPASS_ENABLED = os.environ.get("ENABLE_DEV_AUTH_BYPASS", "true").lower() in ("true", "1", "yes")
+# Environment and Access Control
+IS_PRODUCTION = (
+    os.environ.get("ENVIRONMENT", "").lower() == "production"
+    or os.environ.get("RAILWAY_ENVIRONMENT", "").lower() == "production"
+    or bool(os.environ.get("RAILWAY_PUBLIC_DOMAIN"))
+)
+# Dev auth bypass is strictly disabled in production and defaults to false in dev
+DEV_AUTH_BYPASS_ENABLED = False if IS_PRODUCTION else os.environ.get("ENABLE_DEV_AUTH_BYPASS", "false").lower() in ("true", "1", "yes")
 
 # Phase A Remediation: Persistent Prototype Warning Banner
 PROTOTYPE_BANNER = "> ⚠️ **Prototype. Not verified for use in pleadings. Verify every citation and statement against the original judgment.**\n\n"
 
-# Phase A Remediation: Authorized Prototype Testers Whitelist
-AUTHORIZED_TESTERS_DEFAULT = {
-    "mock_clerk_user_id_dev_run",
-    "eval_harness",
-    "test_user_id",
-    "test_user",
-    "test_admin_user",
-    "variance_eval_r1",
-    "variance_eval_r2",
-    "variance_eval_r3",
-    "auditor_evaluator",
-    "auditor_benchmark_user",
-    "dbg",
-    "user_3FMZUe1gD9gfJd1VxHxm7BwZsGk",  # Authorized developer / admin
-}
+# Phase A Remediation: Authorized Prototype Testers Whitelist (Strict Fail-Closed)
+# Default is strictly EMPTY. If AUTHORIZED_TESTERS environment variable is missing or empty,
+# the app fails closed and rejects all non-public requests.
+AUTHORIZED_TESTERS_DEFAULT = set()
 
 def get_authorized_testers() -> set:
     custom = os.environ.get("AUTHORIZED_TESTERS", "").strip()
-    testers = set(AUTHORIZED_TESTERS_DEFAULT)
-    if custom:
-        for t in custom.split(","):
-            if t.strip():
-                testers.add(t.strip())
-    return testers
+    if not custom:
+        return set()  # Fail closed by default
+    return {t.strip() for t in custom.split(",") if t.strip()}
 
 def get_backend_base_url() -> str:
     domain = os.environ.get("RAILWAY_PUBLIC_DOMAIN") or os.environ.get("RAILWAY_STATIC_URL") or os.environ.get("PUBLIC_DOMAIN")
@@ -2683,14 +2676,17 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
     global _clerk_jwks_keys_cache
     user_id = ""
     if not credentials:
-        if DEV_AUTH_BYPASS_ENABLED:
+        if not IS_PRODUCTION and DEV_AUTH_BYPASS_ENABLED:
             user_id = "mock_clerk_user_id_dev_run"
         else:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Missing Authorization bearer token.")
     else:
         token = credentials.credentials
         if token == "mock_clerk_user_id_dev_run":
-            user_id = "mock_clerk_user_id_dev_run"
+            if not IS_PRODUCTION and DEV_AUTH_BYPASS_ENABLED:
+                user_id = "mock_clerk_user_id_dev_run"
+            else:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Mock dev credentials are not permitted in production.")
         else:
             try:
                 unverified_payload = jwt.decode(token, options={"verify_signature": False})
@@ -2699,13 +2695,16 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
                 user_id = ""
 
     if not user_id:
-        if DEV_AUTH_BYPASS_ENABLED:
-            user_id = "mock_clerk_user_id_dev_run"
-        else:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Invalid or missing authentication credentials.")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Invalid or missing authentication credentials.")
 
     # Phase A Access Control: Restrict access strictly to authorized prototype testers
+    # Default is empty set -> strictly fails closed if AUTHORIZED_TESTERS is missing or empty
     authorized_testers = get_authorized_testers()
+    if not authorized_testers:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access Denied: Prototype access is closed. No authorized testers configured in AUTHORIZED_TESTERS."
+        )
     if user_id not in authorized_testers:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, 
@@ -2715,7 +2714,7 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
     return user_id
 
 async def verify_admin_role(authenticated_user_id: str = Depends(verify_clerk_session)) -> str:
-    if DEV_AUTH_BYPASS_ENABLED and authenticated_user_id == "mock_clerk_user_id_dev_run":
+    if not IS_PRODUCTION and DEV_AUTH_BYPASS_ENABLED and authenticated_user_id == "mock_clerk_user_id_dev_run":
         return authenticated_user_id
         
     if not supabase:
@@ -5527,7 +5526,10 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
     })
 
 @app.get("/api/judgments/{judgment_id:path}/pdf")
-async def get_api_judgment_pdf_endpoint(judgment_id: str):
+async def get_api_judgment_pdf_endpoint(
+    judgment_id: str,
+    authenticated_user_id: str = Depends(verify_clerk_session)
+):
     decoded_id = urllib.parse.unquote(judgment_id).strip()
     match_record = find_judgment_by_id_or_canonical(decoded_id)
 
@@ -5555,7 +5557,10 @@ async def get_api_judgment_pdf_endpoint(judgment_id: str):
     )
 
 @app.get("/api/judgments/{judgment_id:path}")
-async def get_api_judgment_endpoint(judgment_id: str):
+async def get_api_judgment_endpoint(
+    judgment_id: str,
+    authenticated_user_id: str = Depends(verify_clerk_session)
+):
     match_record = find_judgment_by_id_or_canonical(judgment_id)
     if not match_record:
         raise HTTPException(status_code=404, detail=f"Judgment '{judgment_id}' not found.")
@@ -5563,8 +5568,11 @@ async def get_api_judgment_endpoint(judgment_id: str):
     return match_record
 
 @app.get("/judgment-pdf/{case_id:path}")
-async def get_judgment_pdf_endpoint(case_id: str):
-    return await get_api_judgment_pdf_endpoint(case_id)
+async def get_judgment_pdf_endpoint(
+    case_id: str,
+    authenticated_user_id: str = Depends(verify_clerk_session)
+):
+    return await get_api_judgment_pdf_endpoint(case_id, authenticated_user_id=authenticated_user_id)
 
 @app.get("/judgment/{case_id:path}")
 async def get_full_judgment(
@@ -6431,7 +6439,7 @@ async def export_training_data(admin_id: str = Depends(verify_admin_role)):
 
 
 @app.get("/api/indexing-status")
-async def get_indexing_status():
+async def get_indexing_status(admin_id: str = Depends(verify_admin_role)):
     """Returns live telemetry of the vector indexing queue, tier completion status, and retrieval parity."""
     try:
         base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -6507,7 +6515,10 @@ async def get_indexing_status():
 # ============================================================================
 
 @app.post("/generate-pleading")
-async def generate_pleading(payload: dict):
+async def generate_pleading(
+    payload: dict,
+    authenticated_user_id: str = Depends(verify_clerk_session)
+):
     """
     Generates a Pakistani court-ready legal pleading (.docx) using verified law
     fetched directly from Supabase, strictly adhering to the Unfilled Bracket
@@ -6754,7 +6765,7 @@ def normalize_quarantine_record_for_dashboard(r: dict) -> dict:
 
 
 @app.get("/admin/quarantine/records")
-async def get_quarantine_records():
+async def get_quarantine_records(admin_id: str = Depends(verify_admin_role)):
     """
     Returns live quarantined candidate records from Supabase quarantined_judgments
     or local ledger fallback, fully normalized with structured fields mapped.
@@ -6776,7 +6787,10 @@ async def get_quarantine_records():
 
 
 @app.post("/admin/quarantine/review")
-async def submit_quarantine_review(payload: dict):
+async def submit_quarantine_review(
+    payload: dict,
+    admin_id: str = Depends(verify_admin_role)
+):
     """
     Executes an authenticated human curation action (approve or reject)
     on a quarantined record. Direct script promotion without human token is rejected.
@@ -6869,7 +6883,7 @@ async def submit_quarantine_review(payload: dict):
 
 
 @app.get("/admin/quarantine/dashboard", response_class=HTMLResponse)
-async def serve_quarantine_dashboard():
+async def serve_quarantine_dashboard(admin_id: str = Depends(verify_admin_role)):
     """
     Renders the live, interactive Quarantine Review & Promotion Dashboard.
     Enables physical human review, inline editing of extracted metadata,
