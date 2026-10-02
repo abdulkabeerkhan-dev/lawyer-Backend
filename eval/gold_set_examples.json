@@ -1,0 +1,350 @@
+[
+  {
+    "id": "GS-001",
+    "area": "Civil execution & recovery",
+    "anchors": [
+      "S.52 TPA",
+      "S.41 TPA",
+      "S.53 TPA",
+      "S.47 CPC",
+      "O.XXI r.58 CPC"
+    ],
+    "query": "My client's ex-husband gifted his house to his brother through a mutation while her maintenance suit was pending. The brother has filed an O.XXI r.58 objection saying he is a bona fide purchaser under s.41 TPA and that s.47 CPC stops the executing court from deciding his title. Does s.52 TPA defeat him, and can the executing court decide his title?",
+    "forum": "Family Court / civil executing court, Punjab",
+    "date_sensitive": false,
+    "required_points": [
+      "S.52 applies only if the specific immovable property is directly and specifically in question in the pending suit. A maintenance or money suit usually does not put a house in issue, so the memo must test this threshold against the facts.",
+      "Where s.52 does apply, a transferee takes subject to the outcome of the suit even if bona fide and without notice.",
+      "Memo must flag that Tabassum Shaheen and Muhammad Iqbal point different ways on s.41 versus lis pendens, and explain Iqbal's special facts (collusive consent decree, unimpleaded earlier purchaser).",
+      "S.41 requires a transfer for consideration, so a gift mutation cannot qualify. A mutation is only a record of title.",
+      "S.53 TPA (transfer to defeat or delay creditors) is the more apt basis, with intent judged on the totality of circumstances.",
+      "S.47 CPC covers parties and their representatives. O.XXI r.58 is the specific route for objections to attachment, and the order is open to a separate suit (lawyer to confirm rule numbers)."
+    ],
+    "required_authorities": [
+      {
+        "citation": "2012 SCMR 983",
+        "needed_for": "s.52 ingredients; transferee bound even if bona fide",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2014 SCMR 33",
+        "needed_for": "s.41 elements; s.53 totality-of-circumstances test",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2006 YLR 1060",
+        "needed_for": "s.41 elements including consideration; mutation is a record of title",
+        "min_court": "Lahore High Court"
+      }
+    ],
+    "forbidden_claims": [
+      "Saying Tabassum Shaheen requires 'full compliance with all four s.41 elements' or that it declared the sale void.",
+      "Citing Tabassum Shaheen as a family-court or maintenance authority.",
+      "Treating 2025 PLD 63 (attorney selling to his sons) as lis pendens or execution authority.",
+      "Describing O.XXI r.96 as attachment, or s.54 Specific Relief Act as cancellation of instruments.",
+      "Attributing to Muhammad Iqbal a presumption of fraud for transfers to relatives.",
+      "Labelling Lahore High Court decisions 'Supreme Court'."
+    ],
+    "expected_negative_findings": [
+      "No retrieved authority that a maintenance suit alone triggers s.52 over an unrelated house.",
+      "No retrieved authority that an executing court finally decides a stranger's title under s.47."
+    ],
+    "expected_forum_route": "Executing court first; separate suit if title is contested (lawyer to confirm under Family Courts Act and CPC).",
+    "expected_limitation": "LAWYER TO FILL: limitation for the r.63 suit and for a cancellation suit.",
+    "advice_risk": "Must warn that a r.58 order is not final and a separate suit may follow. Must not advise relying on s.52 without first checking what the maintenance suit pleaded.",
+    "currency_check": "S.52, s.41, s.53 TPA and O.XXI r.58 CPC: confirm current text and any provincial amendment.",
+    "sources": "Judgments 2012 SCMR 983, 2014 SCMR 33, 2006 YLR 1060, 2025 PLD 63 as uploaded. Rule numbers: lawyer to confirm against CPC.",
+    "split": "Dev",
+    "difficulty": "Hard",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": "Built from the first two audits. Rule and section numbers marked 'lawyer to confirm' need checking."
+  },
+  {
+    "id": "GS-002",
+    "area": "Family & succession",
+    "anchors": [
+      "S.4 MFLO 1961",
+      "Art. 203D(2) proviso",
+      "Art. 203F"
+    ],
+    "query": "Do orphaned grandchildren have a right to a share in their grandfather's property in Pakistan when their father died before him? Has anything changed recently?",
+    "forum": "Federal / all provinces",
+    "date_sensitive": true,
+    "required_points": [
+      "S.4 MFLO 1961 gives children of a predeceased son or daughter, living when succession opens, a share equal to what their parent would have received (lawyer to confirm exact wording, including per stirpes).",
+      "The Federal Shariat Court declared s.4 repugnant in Allah Rakha v Federation of Pakistan (PLD 2000 FSC 1).",
+      "The appeal is pending before the Shariat Appellate Bench of the Supreme Court, so the declaration has not taken effect and s.4 remains in force.",
+      "Courts have confined s.4 to descendants of the predeceased child.",
+      "The memo must print a currency label with the check date. Any claim of a recent change needs an official source or must be labelled unverified."
+    ],
+    "required_authorities": [
+      {
+        "citation": "PLD 2000 FSC 1",
+        "needed_for": "repugnancy declaration",
+        "min_court": "Federal Shariat Court"
+      },
+      {
+        "citation": "A High Court or Supreme Court decision applying s.4 while the appeal is pending",
+        "needed_for": "cite with full text",
+        "min_court": "High Court"
+      }
+    ],
+    "forbidden_claims": [
+      "Saying the statute survives only because Parliament has not amended it within a set time.",
+      "Omitting the pending appeal.",
+      "Deleting or hiding the Allah Rakha citation.",
+      "Calling a headnote-only record 'the latest appellate authority' or telling the lawyer to 'rely confidently' on it.",
+      "Asserting a recent amendment without an official source."
+    ],
+    "expected_negative_findings": [
+      "If nothing newer is found: label 'CHECKED: NO CHANGE FOUND' with sources and date."
+    ],
+    "expected_forum_route": "Not applicable (substantive question).",
+    "expected_limitation": "Not applicable.",
+    "advice_risk": "Must warn that the pending appeal could change the position and that the memo is current only to the check date.",
+    "currency_check": "S.4 MFLO 1961; Arts. 203D and 203F; status of the Allah Rakha appeal.",
+    "sources": "Sindh High Court judgments discussing Allah Rakha and the pending appeal; academic papers; lawyer to confirm against the Supreme Court cause list.",
+    "split": "Dev",
+    "difficulty": "Hard",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": "Tests the 'recent law' scenario. Replace the sources with official ones during review."
+  },
+  {
+    "id": "GS-003",
+    "area": "Banking & finance",
+    "anchors": [
+      "O.XXI r.90 CPC (second proviso)",
+      "S.19 FIO 2001",
+      "S.22 FIO 2001"
+    ],
+    "query": "The Banking Court directed a 50% deposit before it will hear my client's objection to the auction of mortgaged factory land. We read the statute as 20%. What should we do, and what are the grounds on reserve price and proclamation?",
+    "forum": "Banking Court / High Court",
+    "date_sensitive": true,
+    "required_points": [
+      "State the 20% deposit proviso to O.XXI r.90 with its source.",
+      "Say plainly when the retrieved sources do not address the legal basis for a court-directed amount above 20%.",
+      "Describe each retrieved case at its actual scope. A dismissal for not complying with a court direction is not a holding that 50% is lawful.",
+      "Warn that non-compliance with a court-directed deposit risks dismissal. Recommend a prompt application for stay, modification or review, or compliance under protest.",
+      "Give the appeal route from the Banking Court with its statutory source.",
+      "Separate points on valuation, reserve price and proclamation that retrieved cases support from those they do not."
+    ],
+    "required_authorities": [
+      {
+        "citation": "CANDIDATES, LAWYER TO CONFIRM: 2024 SCMR 1218",
+        "needed_for": "20% deposit proviso",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2026 CLD 96",
+        "needed_for": "reserve price, valuation, proclamation",
+        "min_court": "confirm court"
+      },
+      {
+        "citation": "2023 SCMR 890",
+        "needed_for": "Banking Courts and Order XXI",
+        "min_court": "Supreme Court"
+      }
+    ],
+    "forbidden_claims": [
+      "Calling a 50% direction 'ultra vires' or 'unlawful' unless a retrieved source says so.",
+      "Saying 'no precedent exists' about all case law. The correct wording is 'not found in the retrieved sources'.",
+      "Advising the client to pay only 20% against a 50% direction without the dismissal warning.",
+      "Sending the appeal to a District Judge under s.109 CPC.",
+      "FIO 2001 section numbers that conflict with the statute store.",
+      "Presenting a paraphrase as 'Statutory Text'."
+    ],
+    "expected_negative_findings": [
+      "Basis for a deposit above 20%: not addressed in retrieved sources (if none found).",
+      "Fraud authority: state explicitly if none retrieved."
+    ],
+    "expected_forum_route": "LAWYER TO CONFIRM: appeal to the High Court under s.22 FIO 2001.",
+    "expected_limitation": "LAWYER TO FILL: period for a r.90 application and for appeal under FIO 2001.",
+    "advice_risk": "Consequence of non-compliance with the court-directed deposit (dismissal of the objection).",
+    "currency_check": "O.XXI r.90 (provincial amendments), FIO 2001 ss.15, 19, 22, and any court decision striking provisions down.",
+    "sources": "Case texts for 2024 SCMR 1218, 2023 SCMR 890, 2026 CLD 96 (obtain full text). Statute text from official source.",
+    "split": "Dev",
+    "difficulty": "Hard",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": "Built from the third audit. Candidate citations need identity checks (see Kauser Parveen citation conflict)."
+  },
+  {
+    "id": "GS-004",
+    "area": "Civil procedure",
+    "anchors": [
+      "O.VI r.17 CPC"
+    ],
+    "query": "In a suit for specific performance of an oral agreement to sell, the plaintiff applies ten years after filing to amend the plaint to add where the agreement was made. Can the court allow it?",
+    "forum": "Civil court, Punjab",
+    "date_sensitive": false,
+    "required_points": [
+      "Courts may allow amendment at any stage but must exercise the discretion with caution.",
+      "An amendment is refused if it alters the nature of the suit, withdraws admissions, is mala fide, prejudices the other side, or tries to overcome evidentiary contradictions.",
+      "A belated amendment adding a new factual assertion needs heightened scrutiny.",
+      "A ten-year delay without a credible explanation weighs heavily against the applicant.",
+      "Correcting a typographical error is treated differently from adding a key disputed fact."
+    ],
+    "required_authorities": [
+      {
+        "citation": "2025 PLD 691",
+        "needed_for": "O.VI r.17 principles and delay",
+        "min_court": "Supreme Court"
+      }
+    ],
+    "forbidden_claims": [
+      "Saying amendments are barred after any fixed period.",
+      "Saying delay alone is always conclusive.",
+      "Saying the court cannot allow amendment after evidence has started."
+    ],
+    "expected_negative_findings": [],
+    "expected_forum_route": "Revision / petition per the case's procedural history.",
+    "expected_limitation": "Not applicable.",
+    "advice_risk": "Must warn that delay is a weighty factor and the applicant should explain it.",
+    "currency_check": "O.VI r.17 CPC: confirm no provincial amendment.",
+    "sources": "2025 PLD 691 as uploaded.",
+    "split": "Dev",
+    "difficulty": "Basic",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": null
+  },
+  {
+    "id": "GS-005",
+    "area": "Agency & power of attorney",
+    "anchors": [
+      "Ss.211, 214, 215 Contract Act",
+      "Powers-of-Attorney Act 1882"
+    ],
+    "query": "A general attorney sold my father's land to his own sons using a general power of attorney. Is the sale valid?",
+    "forum": "Civil court, Punjab",
+    "date_sensitive": false,
+    "required_points": [
+      "A general attorney needs the principal's prior special permission to transfer property to himself or close relatives.",
+      "If no such permission is shown, the sale's legality is highly doubtful.",
+      "A deed running over several pages needs signatures on each page or proof connecting the pages.",
+      "The Supreme Court seldom disturbs concurrent findings unless perverse, arbitrary, fanciful or capricious."
+    ],
+    "required_authorities": [
+      {
+        "citation": "2025 PLD 63",
+        "needed_for": "attorney's special permission",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "PLD 2003 SC 31 and PLD 2003 SC 494",
+        "needed_for": "cited within 2025 PLD 63",
+        "min_court": "Supreme Court"
+      }
+    ],
+    "forbidden_claims": [
+      "Applying this case to lis pendens or judgment-debtors.",
+      "Saying the Court created a presumption of fraud against judgment-debtors.",
+      "Listing PLD 2003 SC 31 as 'reviewed' when it is only cited within another judgment."
+    ],
+    "expected_negative_findings": [],
+    "expected_forum_route": "Suit for declaration and cancellation, then appeal and revision.",
+    "expected_limitation": "LAWYER TO FILL.",
+    "advice_risk": "Must warn that the principal's consent or ratification can change the result.",
+    "currency_check": null,
+    "sources": "2025 PLD 63 as uploaded.",
+    "split": "Held-out",
+    "difficulty": "Intermediate",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": null
+  },
+  {
+    "id": "GS-006",
+    "area": "Arbitration",
+    "anchors": [
+      "Ss.17, 30 Arbitration Act 1940"
+    ],
+    "query": "We filed objections to an arbitration award in the civil court. The court has framed issues and called for evidence. Is that correct?",
+    "forum": "Civil court, Punjab",
+    "date_sensitive": true,
+    "required_points": [
+      "Courts deciding objections to an award should avoid framing issues and recording evidence unless absolutely necessary.",
+      "An order framing issues must show why it is necessary, and the issues must be specific.",
+      "Courts are not appellate forums over awards. Interference is limited to jurisdictional error, proven misconduct or a patent legal error on the face of the record.",
+      "The memo must confirm which arbitration statute governs the dispute."
+    ],
+    "required_authorities": [
+      {
+        "citation": "2025 PLD 706",
+        "needed_for": "limits on issues and evidence at the objection stage",
+        "min_court": "Supreme Court"
+      }
+    ],
+    "forbidden_claims": [
+      "Saying courts may re-appraise the evidence like a first appellate court.",
+      "Saying issues can never be framed (the Court said avoid unless necessary)."
+    ],
+    "expected_negative_findings": [],
+    "expected_forum_route": "Revision / appeal per the statute.",
+    "expected_limitation": "LAWYER TO FILL.",
+    "advice_risk": "Must warn that the objections may be decided on the existing record.",
+    "currency_check": "Confirm the 1940 Act still governs, or identify any later arbitration legislation.",
+    "sources": "2025 PLD 706 as uploaded.",
+    "split": "Held-out",
+    "difficulty": "Intermediate",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": null
+  },
+  {
+    "id": "GS-007",
+    "area": "Constitutional & writs",
+    "anchors": [
+      "Art. 200",
+      "Art. 175A",
+      "Federal Constitutional Court"
+    ],
+    "query": "Can the President transfer High Court judges to the Islamabad High Court under Article 200, and who decides their seniority?",
+    "forum": "Supreme Court / Federal Constitutional Court",
+    "date_sensitive": true,
+    "required_points": [
+      "The 3–2 majority in 2025 PLD 516 held that transfers under Art. 200 were within the Constitution and remitted seniority and the nature of the transfer to the President.",
+      "The memo must state that the 27th Amendment (November 2025) changed Art. 200 and created the Federal Constitutional Court, so the 2025 position cannot be presented as current without a check.",
+      "A currency label with the check date must appear."
+    ],
+    "required_authorities": [
+      {
+        "citation": "2025 PLD 516",
+        "needed_for": "majority and dissent on Art. 200",
+        "min_court": "Supreme Court"
+      }
+    ],
+    "forbidden_claims": [
+      "Presenting the 2025 majority as the unqualified present law of Art. 200.",
+      "Describing the Federal Constitutional Court as merely 'proposed'.",
+      "Ignoring the two dissenting judges."
+    ],
+    "expected_negative_findings": [],
+    "expected_forum_route": "LAWYER TO CONFIRM: forum now that constitutional jurisdiction has shifted.",
+    "expected_limitation": "Not applicable.",
+    "advice_risk": "Must warn that the law changed after the judgment.",
+    "currency_check": "Art. 200 and Chapter 1A (Arts. 175B onwards) as amended by the 27th Amendment.",
+    "sources": "2025 PLD 516 as uploaded; public reporting on the 27th Amendment. Replace with the Gazette text.",
+    "split": "Held-out",
+    "difficulty": "Hard",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": "Tests the currency layer on a case that predates a constitutional change."
+  }
+]
