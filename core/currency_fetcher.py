@@ -252,11 +252,12 @@ def log_statute_currency_check(
     except Exception as e:
         logger.debug(f"Local check log notice: {e}")
 
-    # Optional Supabase log
+    # Optional Supabase log (disabled during testing or when SUPABASE_LOG_DISABLED is set)
     try:
         supabase_url = os.environ.get("SUPABASE_URL")
         supabase_key = os.environ.get("SUPABASE_SERVICE_KEY") or os.environ.get("SUPABASE_KEY")
-        if supabase_url and supabase_key:
+        disable_remote = os.environ.get("SUPABASE_LOG_DISABLED", "").strip().lower() in ("1", "true", "yes")
+        if supabase_url and supabase_key and not disable_remote:
             from supabase import create_client
             client = create_client(supabase_url, supabase_key)
             client.table("statute_currency_checks").insert(record).execute()

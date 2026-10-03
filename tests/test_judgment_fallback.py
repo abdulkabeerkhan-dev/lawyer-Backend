@@ -8,10 +8,16 @@ from main import find_judgment_by_id_or_canonical
 class TestJudgmentFallback(unittest.TestCase):
     def setUp(self):
         self._orig_sb = main.supabase
+        self._orig_pc = main.pinecone_index
+        self._orig_init_sb = main.init_supabase_client
         main.supabase = None
+        main.pinecone_index = None
+        main.init_supabase_client = lambda: None
 
     def tearDown(self):
         main.supabase = self._orig_sb
+        main.pinecone_index = self._orig_pc
+        main.init_supabase_client = self._orig_init_sb
 
     def test_find_judgment_fallback_unknown_id(self):
         unknown_id = "2099_TEST_9999"

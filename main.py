@@ -1845,14 +1845,6 @@ def clean_markdown_formatting(text: str) -> str:
     text = re.sub(r'#*\s*III\.\s*CONTROLLING\s*JUDICIAL.*', '### III. CONTROLLING JUDICIAL PRECEDENTS & APPELLATE RATIO', text, flags=re.IGNORECASE)
     text = re.sub(r'#*\s*IV\.\s*PROCEDURAL.*', '### IV. PROCEDURAL & STRATEGIC LITIGATION PLAYBOOK', text, flags=re.IGNORECASE)
 
-    # Normalize any accidental run-together words from quote stripping
-    text = re.sub(r'\bTheSubstratum\b', 'The Substratum', text, flags=re.IGNORECASE)
-    text = re.sub(r'\bIntactTest\b', 'Intact Test', text, flags=re.IGNORECASE)
-    text = re.sub(r'\bOppressionvs\b', 'Oppression vs', text, flags=re.IGNORECASE)
-    text = re.sub(r'\bofmismanagement\b', 'of mismanagement', text, flags=re.IGNORECASE)
-    text = re.sub(r'\bfoundno\b', 'found no', text, flags=re.IGNORECASE)
-    text = re.sub(r'\bunilateralwishful\b', 'unilateral wishful', text, flags=re.IGNORECASE)
-
     return text.strip()
 
 def strip_copyright_and_branding(text: str) -> str:

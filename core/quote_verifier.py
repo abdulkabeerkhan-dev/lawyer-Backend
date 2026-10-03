@@ -286,14 +286,6 @@ def sanitize_unverified_quotes(generated_text: str, unverified_quotes: List[str]
                 if variant in sanitized_text:
                     sanitized_text = sanitized_text.replace(variant, q_strip)
 
-    # Normalize any accidental run-together words
-    sanitized_text = re.sub(r'\bTheSubstratum\b', 'The Substratum', sanitized_text, flags=re.IGNORECASE)
-    sanitized_text = re.sub(r'\bIntactTest\b', 'Intact Test', sanitized_text, flags=re.IGNORECASE)
-    sanitized_text = re.sub(r'\bOppressionvs\b', 'Oppression vs', sanitized_text, flags=re.IGNORECASE)
-    sanitized_text = re.sub(r'\bofmismanagement\b', 'of mismanagement', sanitized_text, flags=re.IGNORECASE)
-    sanitized_text = re.sub(r'\bfoundno\b', 'found no', sanitized_text, flags=re.IGNORECASE)
-    sanitized_text = re.sub(r'\bunilateralwishful\b', 'unilateral wishful', sanitized_text, flags=re.IGNORECASE)
-
     return sanitized_text
 
 

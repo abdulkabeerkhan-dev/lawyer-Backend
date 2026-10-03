@@ -48,7 +48,11 @@ async def run_final_review_gate(
     as supported / unsupported / overstated against its cited span.
     """
     if not memo_text or not context_chunks:
-        return {"passed": True, "propositions": [], "issues": []}
+        return {
+            "passed": False,
+            "propositions": [],
+            "issues": ["Missing memo text or context chunks for final review gate."]
+        }
 
     # Format context chunks for reviewer
     formatted_contexts = []
@@ -136,6 +140,15 @@ async def run_final_review_gate(
                 "issues": actual_issues
             }
     except Exception as e:
-        print(f"?? Final review gate reviewer exception: {e}", file=sys.stderr)
+        print(f"Final review gate reviewer exception: {e}", file=sys.stderr)
+        return {
+            "passed": False,
+            "propositions": [],
+            "issues": [f"Final review gate failed to verify: {e}"]
+        }
 
-    return {"passed": True, "propositions": [], "issues": []}
+    return {
+        "passed": False,
+        "propositions": [],
+        "issues": ["Final review gate completed without returning a valid review decision."]
+    }

@@ -113,5 +113,26 @@ class TestGoldSetLeakPrevention(unittest.TestCase):
                 
         self.assertEqual(leaks, [], f"LEAK DETECTED in curated_historical_cases.json: {leaks}")
 
+    def test_no_gold_citations_in_statute_versions(self):
+        """Scans data/statute_versions/*.json for gold set citations."""
+        vers_dir = os.path.join(WORKSPACE_DIR, "data", "statute_versions")
+        leaks = []
+        for root, _, files in os.walk(vers_dir):
+            for file in files:
+                if file.endswith(".json") and not file.startswith("audit_"):
+                    fpath = os.path.join(root, file)
+                    with open(fpath, "r", encoding="utf-8") as f:
+                        content = f.read()
+                    for cit in self.gold_citations:
+                        # Note: MFLO_1961_SEC_4_V3 contains PLD 2000 FSC 1 as a court challenge recorded in commit 7bf0b6c
+                        if file == "MFLO_1961_versions.json" and "PLD 2000 FSC 1".lower() in cit.lower():
+                            continue
+                        cit_norm = cit.lower()
+                        cit_under = cit_norm.replace(" ", "_")
+                        if cit_norm in content.lower() or cit_under in content.lower():
+                            leaks.append((file, cit))
+                            
+        self.assertEqual(leaks, [], f"LEAK DETECTED in statute versions data: {leaks}")
+
 if __name__ == "__main__":
     unittest.main()

@@ -406,6 +406,8 @@ class TestRealCurrencyFetcher(unittest.IsolatedAsyncioTestCase):
     """Tests for Part 1, Item 3: Real Currency Check with caching, budget enforcement, whitelisting, and staging isolation."""
 
     def setUp(self):
+        self._orig_sb_disabled = os.environ.get("SUPABASE_LOG_DISABLED")
+        os.environ["SUPABASE_LOG_DISABLED"] = "1"
         self.test_dir = tempfile.mkdtemp()
         self.test_staging = tempfile.mkdtemp()
         self.cache_file = os.path.join(self.test_staging, "test_cache.json")
@@ -413,6 +415,10 @@ class TestRealCurrencyFetcher(unittest.IsolatedAsyncioTestCase):
         self.store = StatuteVersionStore(storage_dir=self.test_dir, staging_dir=self.test_staging, supabase_client=False)
 
     def tearDown(self):
+        if self._orig_sb_disabled is None:
+            os.environ.pop("SUPABASE_LOG_DISABLED", None)
+        else:
+            os.environ["SUPABASE_LOG_DISABLED"] = self._orig_sb_disabled
         shutil.rmtree(self.test_dir, ignore_errors=True)
         shutil.rmtree(self.test_staging, ignore_errors=True)
 
