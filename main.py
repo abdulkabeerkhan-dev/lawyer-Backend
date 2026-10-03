@@ -87,7 +87,46 @@ if os.environ.get("SENTRY_DSN"):
         profiles_sample_rate=1.0,
     )
 
-app = FastAPI(title="SECTION AI - Legal Intelligence Platform")
+# Directive 3: Invert production detection default -- treat as production UNLESS explicitly set to development
+# Fails closed so unconfigured environments default to strict production isolation.
+_env_val = os.environ.get("ENVIRONMENT", "").strip().lower()
+IS_PRODUCTION = _env_val not in ("development", "dev", "test")
+
+def validate_production_auth_config():
+    """
+    Mandates 1 & 2: Refuse startup in production if mandatory auth, CORS, or database environment variables are missing.
+    """
+    if IS_PRODUCTION:
+        missing = []
+        if not os.environ.get("CLERK_ISSUER", "").strip():
+            missing.append("CLERK_ISSUER")
+        if not os.environ.get("CLERK_AUTHORIZED_PARTY", "").strip():
+            missing.append("CLERK_AUTHORIZED_PARTY")
+        if not os.environ.get("AUTHORIZED_TESTERS", "").strip():
+            missing.append("AUTHORIZED_TESTERS")
+        if not os.environ.get("ALLOWED_ORIGINS", "").strip():
+            missing.append("ALLOWED_ORIGINS")
+        if not os.environ.get("SUPABASE_URL", "").strip():
+            missing.append("SUPABASE_URL")
+        if not os.environ.get("SUPABASE_SERVICE_KEY", "").strip():
+            missing.append("SUPABASE_SERVICE_KEY")
+        if missing:
+            raise RuntimeError(
+                f"FATAL: Production startup refused. Missing mandatory parameters: {', '.join(missing)}. "
+                "In production mode, the application strictly requires CLERK_ISSUER, CLERK_AUTHORIZED_PARTY, "
+                "AUTHORIZED_TESTERS, ALLOWED_ORIGINS, SUPABASE_URL, and SUPABASE_SERVICE_KEY to prevent open access, "
+                "arbitrary origin reflection, or unauthenticated database failures."
+            )
+
+validate_production_auth_config()
+
+# Mandate 2: In production, disable auto-generated API schema endpoints
+app = FastAPI(
+    title="SECTION AI - Legal Intelligence Platform",
+    docs_url=None if IS_PRODUCTION else "/docs",
+    redoc_url=None if IS_PRODUCTION else "/redoc",
+    openapi_url=None if IS_PRODUCTION else "/openapi.json"
+)
 
 @app.get("/health")
 def health_check():
@@ -129,10 +168,13 @@ def get_corpus_coverage():
 
 # CORS ORIGIN ALLOWLIST
 ALLOWED_ORIGINS = [o.strip() for o in os.environ.get("ALLOWED_ORIGINS", "").split(",") if o.strip()]
-if not ALLOWED_ORIGINS:
-    print("⚠️ WARNING: ALLOWED_ORIGINS is not set -- CORS is mirroring ANY request origin with credentials enabled.")
+if not ALLOWED_ORIGINS and not IS_PRODUCTION:
+    print("⚠️ WARNING: ALLOWED_ORIGINS is not set in development mode.")
 
 def _origin_is_allowed(origin: str) -> bool:
+    if IS_PRODUCTION:
+        # In production, NEVER mirror arbitrary origins. Origin must be explicitly in ALLOWED_ORIGINS.
+        return bool(ALLOWED_ORIGINS and origin in ALLOWED_ORIGINS)
     return (not ALLOWED_ORIGINS) or (origin in ALLOWED_ORIGINS)
 
 @app.middleware("http")
@@ -173,12 +215,6 @@ VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
-# Environment and Access Control
-IS_PRODUCTION = (
-    os.environ.get("ENVIRONMENT", "").lower() == "production"
-    or os.environ.get("RAILWAY_ENVIRONMENT", "").lower() == "production"
-    or bool(os.environ.get("RAILWAY_PUBLIC_DOMAIN"))
-)
 # Dev auth bypass is strictly disabled in production and defaults to false in dev
 DEV_AUTH_BYPASS_ENABLED = False if IS_PRODUCTION else os.environ.get("ENABLE_DEV_AUTH_BYPASS", "false").lower() in ("true", "1", "yes")
 
@@ -257,22 +293,25 @@ global_hybrid_engine = HybridSearchEngine(bm25_index=global_bm25_index, rrf_k=60
 def extract_raw_user_query(incoming_query: str) -> str:
     """
     Strips system-injected persona and styling headers (e.g., '[What you know about this lawyer: ...]')
-    to isolate the attorney's actual legal proposition before parsing or embedding.
+    to isolate the attorney's actual legal proposition before parsing, embedding, or logging to the database.
     """
     if not incoming_query:
         return ""
     clean_query = str(incoming_query)
     
     # 1. Remove lawyer context block
-    clean_query = re.sub(r"\[What you know about this lawyer:.*?\]", "", clean_query, flags=re.DOTALL)
+    clean_query = re.sub(r"\[What you know about this lawyer:.*?\]", "", clean_query, flags=re.DOTALL | re.IGNORECASE)
     
     # 2. Remove answer formatting block
-    clean_query = re.sub(r"\[Answer style:.*?\]", "", clean_query, flags=re.DOTALL)
+    clean_query = re.sub(r"\[Answer style:.*?\]", "", clean_query, flags=re.DOTALL | re.IGNORECASE)
     
     # 3. Remove conversation history markers
-    clean_query = re.sub(r"\[Earlier in this conversation:.*?\]", "", clean_query, flags=re.DOTALL)
+    clean_query = re.sub(r"\[Earlier in this conversation:.*?\]", "", clean_query, flags=re.DOTALL | re.IGNORECASE)
+
+    # 4. Remove generic context / instruction envelope tags
+    clean_query = re.sub(r"\[(?:Context|Instructions?):.*?\]", "", clean_query, flags=re.DOTALL | re.IGNORECASE)
     
-    # 4. Strip stray wrapping quotes or whitespace
+    # 5. Strip stray wrapping quotes or whitespace
     clean_query = clean_query.strip().strip("'\"")
     return clean_query if clean_query else incoming_query.strip()
 
@@ -726,7 +765,54 @@ async def safe_create_anthropic_message(**kwargs):
         ) from e
 
 security_agent = HTTPBearer(auto_error=False)
-_clerk_jwks_keys_cache = None
+
+_clerk_jwks_cache = {
+    "keys": {},          # kid -> RSAPublicKey
+    "last_fetched": 0.0,
+    "lock": threading.Lock()
+}
+
+def get_clerk_public_key(kid: str, force_refresh: bool = False) -> Optional[Any]:
+    """
+    Retrieves the RSAPublicKey for a given kid from Clerk's JWKS.
+    Caches keys for up to 1 hour, refreshing on-demand if kid is unknown or force_refresh is True.
+    """
+    global _clerk_jwks_cache
+    now = time.time()
+    with _clerk_jwks_cache["lock"]:
+        if not force_refresh and kid in _clerk_jwks_cache["keys"] and (now - _clerk_jwks_cache["last_fetched"] < 3600):
+            return _clerk_jwks_cache["keys"][kid]
+
+    clerk_issuer = os.environ.get("CLERK_ISSUER", "").rstrip("/")
+    clerk_jwks_url = os.environ.get("CLERK_JWKS_URL")
+    if not clerk_jwks_url and clerk_issuer:
+        clerk_jwks_url = f"{clerk_issuer}/.well-known/jwks.json"
+
+    if not clerk_jwks_url:
+        print("⚠️ CLERK_ISSUER is not configured. Cannot determine JWKS URL.", file=sys.stderr)
+        return None
+
+    try:
+        resp = httpx.get(clerk_jwks_url, timeout=10.0)
+        if resp.status_code == 200:
+            jwks_data = resp.json()
+            new_keys = {}
+            for k in jwks_data.get("keys", []):
+                k_kid = k.get("kid")
+                if k_kid:
+                    try:
+                        new_keys[k_kid] = RSAAlgorithm.from_jwk(k)
+                    except Exception as parse_err:
+                        print(f"⚠️ Failed to parse JWK {k_kid}: {parse_err}", file=sys.stderr)
+            with _clerk_jwks_cache["lock"]:
+                _clerk_jwks_cache["keys"].update(new_keys)
+                _clerk_jwks_cache["last_fetched"] = now
+                return _clerk_jwks_cache["keys"].get(kid)
+    except Exception as e:
+        print(f"⚠️ Failed to fetch Clerk JWKS from {clerk_jwks_url}: {e}", file=sys.stderr)
+
+    with _clerk_jwks_cache["lock"]:
+        return _clerk_jwks_cache["keys"].get(kid)
 
 COURT_BENCH_MAP = {
     # Punjab / LHC
@@ -2673,26 +2759,106 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
 
 # AUTHENTICATION HOOKS
 async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_agent)) -> str:
-    global _clerk_jwks_keys_cache
     user_id = ""
-    if not credentials:
+    if not credentials or not credentials.credentials:
         if not IS_PRODUCTION and DEV_AUTH_BYPASS_ENABLED:
             user_id = "mock_clerk_user_id_dev_run"
         else:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Missing Authorization bearer token.")
     else:
-        token = credentials.credentials
+        token = credentials.credentials.strip()
         if token == "mock_clerk_user_id_dev_run":
             if not IS_PRODUCTION and DEV_AUTH_BYPASS_ENABLED:
                 user_id = "mock_clerk_user_id_dev_run"
             else:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Mock dev credentials are not permitted in production.")
         else:
+            # 1. Parse unverified header to extract 'kid' and 'alg'
             try:
-                unverified_payload = jwt.decode(token, options={"verify_signature": False})
-                user_id = str(unverified_payload.get("sub") or unverified_payload.get("user_id") or unverified_payload.get("id") or "")
+                unverified_header = jwt.get_unverified_header(token)
             except Exception:
-                user_id = ""
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Malformed token header.")
+
+            alg = unverified_header.get("alg")
+            if alg != "RS256":
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail=f"Access Denied: Invalid algorithm '{alg}'. Only RS256 tokens are permitted."
+                )
+
+            kid = unverified_header.get("kid")
+            if not kid:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Token missing 'kid' in header.")
+
+            # 2. Retrieve public key from JWKS cache (auto-refresh on unknown kid)
+            public_key = get_clerk_public_key(kid)
+            if not public_key:
+                public_key = get_clerk_public_key(kid, force_refresh=True)
+
+            if not public_key:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Unknown or untrusted key identifier (kid).")
+
+            # 3. Cryptographically verify signature, expiry, and claims
+            try:
+                expected_issuer = os.environ.get("CLERK_ISSUER", "").strip()
+                if not expected_issuer and IS_PRODUCTION:
+                    raise HTTPException(
+                        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                        detail="Authentication Configuration Error: CLERK_ISSUER must be configured in production."
+                    )
+
+                decode_kwargs: Dict[str, Any] = {
+                    "algorithms": ["RS256"],
+                    "options": {
+                        "verify_signature": True,
+                        "verify_exp": True,
+                        "verify_aud": False,
+                        "require": ["exp", "sub"]
+                    }
+                }
+                if expected_issuer:
+                    decode_kwargs["issuer"] = expected_issuer
+                    decode_kwargs["options"]["verify_iss"] = True
+
+                payload = jwt.decode(token, public_key, **decode_kwargs)
+
+                # Mandate 1: Strict exact equality check on token issuer (no substring/suffix rules)
+                if expected_issuer and payload.get("iss") != expected_issuer:
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail=f"Access Denied: Token issuer mismatch. Expected exact '{expected_issuer}', got '{payload.get('iss')}'."
+                    )
+
+                # Mandate 1: Verify authorized party (required in production)
+                expected_party = os.environ.get("CLERK_AUTHORIZED_PARTY", "").strip()
+                if not expected_party and IS_PRODUCTION:
+                    raise HTTPException(
+                        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                        detail="Authentication Configuration Error: CLERK_AUTHORIZED_PARTY must be configured in production."
+                    )
+                if expected_party:
+                    azp = payload.get("azp")
+                    aud = payload.get("aud")
+                    aud_list = aud if isinstance(aud, list) else ([aud] if aud else [])
+                    if azp != expected_party and expected_party not in aud_list:
+                        raise HTTPException(
+                            status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail=f"Access Denied: Token authorized party or audience mismatch. Expected '{expected_party}'."
+                        )
+
+                user_id = str(payload.get("sub") or "").strip()
+            except jwt.ExpiredSignatureError:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Token has expired.")
+            except jwt.InvalidSignatureError:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Cryptographic signature verification failed.")
+            except jwt.InvalidIssuerError:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Token issuer verification failed.")
+            except jwt.InvalidAudienceError:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Token audience verification failed.")
+            except HTTPException:
+                raise
+            except Exception as jwt_err:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Access Denied: Invalid token ({type(jwt_err).__name__}).")
 
     if not user_id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Invalid or missing authentication credentials.")
@@ -5164,9 +5330,12 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
         inserted_row_id = str(uuid.uuid4())
         if supabase:
+            # Mandate 6: Store raw query text isolated from system-injected prompt envelopes
+            raw_clean_query = extract_raw_user_query(request.query_text)
+            logged_query = f"[Vision Context] {raw_clean_query}" if has_image else raw_clean_query
             insert_payload: Dict[str, Any] = {
                 "user_id": authenticated_user_id,
-                "query_text": f"[Vision Context] {request.query_text}" if has_image else request.query_text,
+                "query_text": logged_query,
                 "answer_text": display_answer,
                 "citations": citations_payload,
                 "input_tokens": total_input_tokens,
@@ -5811,27 +5980,60 @@ async def delete_diary_entry(entry_id: str, authenticated_user_id: str = Depends
     return {"status": "success"}
 
 # REMAINING CORE API ENDPOINTS
-@app.get("/health")
-def health_check():
-    return {"status": "healthy"}
+_request_access_ip_history: Dict[str, List[float]] = {}
+_request_access_lock = threading.Lock()
+
+def get_real_client_ip(request: Request) -> str:
+    """
+    Extracts genuine client IP behind Railway's Envoy edge proxy.
+    Railway uses Envoy Proxy at its ingress layer, which sets 'X-Envoy-External-Address'
+    to the trusted external client IP and strips/overwrites any client-supplied values.
+    Headers like 'CF-Connecting-IP', 'X-Real-IP', or raw 'X-Forwarded-For' are strictly NOT trusted
+    because Railway does not run behind Cloudflare by default, allowing attackers to spoof them.
+    Falls back to direct connection host (request.client.host) for local development/testing.
+    Note: In-memory rate limiting is per-process only.
+    """
+    envoy_ip = request.headers.get("x-envoy-external-address")
+    if envoy_ip and envoy_ip.strip():
+        return envoy_ip.strip()
+    return request.client.host if request.client else "unknown"
+
+def check_access_request_rate_limit(request: Request, max_requests: int = 5, window_seconds: int = 60):
+    client_ip = get_real_client_ip(request)
+    now = time.time()
+    with _request_access_lock:
+        timestamps = _request_access_ip_history.get(client_ip, [])
+        timestamps = [t for t in timestamps if now - t < window_seconds]
+        if len(timestamps) >= max_requests:
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail=f"Rate limit exceeded: Maximum {max_requests} access requests per minute."
+            )
+        timestamps.append(now)
+        _request_access_ip_history[client_ip] = timestamps
 
 @app.post("/request-access")
-async def register_access_request(request: AccessRegistration):
+async def register_access_request(request_payload: AccessRegistration, request: Request):
+    check_access_request_rate_limit(request)
     if not supabase: raise HTTPException(status_code=503, detail="Database service is currently offline.")
     try:
-        duplicate_check = supabase.table("access_requests").select("id").eq("email", request.email).execute()
+        duplicate_check = supabase.table("access_requests").select("id").eq("email", request_payload.email).execute()
         if duplicate_check.data and len(duplicate_check.data) > 0:
             return {"status": "duplicate", "message": "An invitation request for this email address is already under review."}
             
         supabase.table("access_requests").insert({
-            "full_name": request.full_name,
-            "firm_name": request.firm_name,
-            "email": request.email,
+            "full_name": request_payload.full_name,
+            "firm_name": request_payload.firm_name,
+            "email": request_payload.email,
             "status": "pending"
         }).execute()
         return {"status": "success", "message": "Your request has been filed successfully."}
+    except HTTPException:
+        raise
     except Exception as e:
         if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
+        raise HTTPException(status_code=500, detail="Failed to register access request.")
+
 class LoginPayload(BaseModel):
     email: str
     password: str
@@ -5840,7 +6042,18 @@ class LoginPayload(BaseModel):
 async def handle_backend_login(payload: LoginPayload):
     """
     Fallback login handler for custom frontend authentication forms.
+    Hard-disabled in production. Returns 404 in production.
     """
+    if IS_PRODUCTION:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Endpoint not found."
+        )
+    if not DEV_AUTH_BYPASS_ENABLED:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Direct login endpoint disabled."
+        )
     return {
         "status": "success",
         "access_token": "mock_clerk_user_id_dev_run",
@@ -5849,8 +6062,8 @@ async def handle_backend_login(payload: LoginPayload):
         "user": {
             "id": "mock_clerk_user_id_dev_run",
             "email": payload.email,
-            "full_name": "Kabeer Khan",
-            "role": "admin"
+            "full_name": "Development User",
+            "role": "associate"
         }
     }
 
