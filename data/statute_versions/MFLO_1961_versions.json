@@ -372,13 +372,7 @@
     "gazette_reference": "Gazette of Pakistan, Extraordinary, 2nd March 1961",
     "effective_application": "pending_and_prospective",
     "ordinance_expiry_date": null,
-    "court_challenges": [
-      {
-        "court": "Federal Shariat Court",
-        "citation": "PLD 2000 FSC 1",
-        "text_available": false
-      }
-    ],
+    "court_challenges": [],
     "source_url": "https://pakistancode.gov.pk",
     "source_tier": null,
     "verified_by": null,

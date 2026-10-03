@@ -1,6 +1,10 @@
 import unittest
 import asyncio
-from core.final_review_gate import run_final_review_gate
+from core.final_review_gate import (
+    run_final_review_gate,
+    format_review_gate_fallback,
+    NOT_REVIEWED_BANNER_TEMPLATE
+)
 from core.recent_judgments_search import (
     search_recent_external_judgments,
     format_external_authorities_section,
@@ -74,6 +78,41 @@ class TestFinalReviewGate(unittest.TestCase):
         res = asyncio.run(run_final_review_gate(memo, chunks, reviewer_fn=mock_reviewer_unsupported))
         self.assertFalse(res["passed"])
         self.assertIn("does not support", res["issues"][0])
+
+    def test_gate_fails_closed_on_reviewer_exception(self):
+        async def mock_reviewer_exploding(prompt):
+            raise ConnectionError("Anthropic API timeout / network unreachable")
+
+        memo = "Legal memo on limitation under Banking Companies Ordinance."
+        chunks = [{"citation": "2015 CLD 100", "full_text": "Limitation period is 30 days."}]
+
+        res = asyncio.run(run_final_review_gate(memo, chunks, reviewer_fn=mock_reviewer_exploding))
+        self.assertFalse(res["passed"])
+        self.assertTrue(any("failed to verify" in iss.lower() or "timeout" in iss.lower() or "connectionerror" in iss.lower() for iss in res["issues"]))
+
+    def test_format_review_gate_fallback_preserves_substantive_memo(self):
+        substantive_draft = (
+            "### 1. Executive Summary\n"
+            "An appeal under Section 22 of the Financial Institutions (Recovery of Finances) Ordinance, 2001 "
+            "must be filed within 30 days from the date of the decree or final order.\n\n"
+            "### 2. Statutory Framework\n"
+            "Section 22(1) confers a right of appeal to the High Court.\n"
+        )
+        output = format_review_gate_fallback(substantive_draft, reason="API timeout")
+        self.assertIn("> ⚠️ **[JUDICIAL REVIEW GATE: NOT REVIEWED]**", output)
+        self.assertIn("Section 22(1) confers a right of appeal", output)
+        self.assertIn("An appeal under Section 22", output)
+        # Verify it is never empty or notice-only
+        self.assertTrue(len(output.split()) >= len(substantive_draft.split()))
+
+    def test_format_review_gate_fallback_idempotence(self):
+        memo_with_banner = "> ⚠️ **[JUDICIAL REVIEW GATE: NOT REVIEWED]**: Already has banner.\n\nText here."
+        output = format_review_gate_fallback(memo_with_banner)
+        self.assertEqual(output.count("⚠️ **[JUDICIAL REVIEW GATE: NOT REVIEWED]**"), 1)
+
+    def test_format_review_gate_fallback_empty_memo(self):
+        output = format_review_gate_fallback("")
+        self.assertIn("No substantive memorandum was generated", output)
 
 
 class TestRecentJudgmentsSearch(unittest.TestCase):

@@ -58,3 +58,7 @@ data/statute_staging/currency_cache.json
 backups/*
 !backups/manifest_sha256.json
 
+# Security audit scanners and reports
+gitleaks_bin/
+gitleaks*.json
+

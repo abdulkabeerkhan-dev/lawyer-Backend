@@ -678,8 +678,8 @@ class TestRealCurrencyFetcher(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(v3["text_available"])
         self.assertIsNone(v3["text"])
         self.assertEqual(v3["effective_application"], "pending_and_prospective")
-        self.assertEqual(len(v3["court_challenges"]), 1)
-        self.assertEqual(v3["court_challenges"][0]["citation"], "PLD 2000 FSC 1")
+        self.assertEqual(len(v3["court_challenges"]), 0)
+        self.assertNotIn("PLD 2000 FSC 1", str(v3["court_challenges"]))
         self.assertNotIn("FCC", str(v3["court_challenges"]))
 
         v1 = next((r for r in records if r["version_id"] == "MFLO_1961_SEC_4_V1"), None)

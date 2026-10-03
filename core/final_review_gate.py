@@ -71,21 +71,21 @@ async def run_final_review_gate(
         "Output ONLY the JSON object."
     )
 
-    if reviewer_fn:
-        raw_res = await reviewer_fn(user_eval_prompt)
-        # Apply same consistency logic to mock/custom reviewers
-        propositions = raw_res.get("propositions", [])
-        issues = raw_res.get("issues", [])
-        has_unsupported = any(p.get("classification") in ("overstated", "unsupported") for p in propositions)
-        passed = raw_res.get("passed", True) and not has_unsupported and len(issues) == 0
-        return {
-            "passed": passed,
-            "propositions": propositions,
-            "issues": issues
-        }
-
-    # Use anthropic client at temperature 0
     try:
+        if reviewer_fn:
+            raw_res = await reviewer_fn(user_eval_prompt)
+            # Apply same consistency logic to mock/custom reviewers
+            propositions = raw_res.get("propositions", [])
+            issues = raw_res.get("issues", [])
+            has_unsupported = any(p.get("classification") in ("overstated", "unsupported") for p in propositions)
+            passed = raw_res.get("passed", True) and not has_unsupported and len(issues) == 0
+            return {
+                "passed": passed,
+                "propositions": propositions,
+                "issues": issues
+            }
+
+        # Use anthropic client at temperature 0
         from main import safe_create_anthropic_message, CLAUDE_MODEL
         resp = await safe_create_anthropic_message(
             model=CLAUDE_MODEL,
@@ -152,3 +152,28 @@ async def run_final_review_gate(
         "propositions": [],
         "issues": ["Final review gate completed without returning a valid review decision."]
     }
+
+
+NOT_REVIEWED_BANNER_TEMPLATE = (
+    "> ⚠️ **[JUDICIAL REVIEW GATE: NOT REVIEWED]**: This memorandum could not be verified "
+    "by the independent judicial review gate due to an automated verification {reason}. "
+    "The full substantive draft is preserved below for reference, but all citations, statutory interpretations, "
+    "and factual propositions MUST be independently verified against primary legal sources before reliance in pleadings.\n\n"
+)
+
+
+def format_review_gate_fallback(memo_text: str, reason: str = "service error or timeout") -> str:
+    """
+    Returns the substantive draft memorandum with a prominent, visible 'NOT REVIEWED' banner.
+    Ensures users always receive the complete substantive analysis rather than an empty
+    or notice-only response when verification fails due to API errors, empty output, or timeouts.
+    """
+    if not memo_text:
+        return (
+            "> ⚠️ **[JUDICIAL REVIEW GATE: NOT REVIEWED]**: No substantive memorandum was generated. "
+            "Verification gate could not proceed.\n"
+        )
+    if memo_text.startswith("> ⚠️ **[JUDICIAL REVIEW GATE: NOT REVIEWED]**"):
+        return memo_text
+    banner = NOT_REVIEWED_BANNER_TEMPLATE.format(reason=reason)
+    return f"{banner}{memo_text}"

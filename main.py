@@ -50,7 +50,7 @@ from core.currency_fetcher import fetch_currency_signals
 from core.curated_cases import find_curated_case, is_curated_historical_exception
 from core.party_cache import GLOBAL_PARTY_CACHE, PartyFallbackCache
 from core.recent_judgments_search import search_recent_external_judgments, format_external_authorities_section
-from core.final_review_gate import run_final_review_gate
+from core.final_review_gate import run_final_review_gate, format_review_gate_fallback
 
 
 try:
@@ -5002,43 +5002,77 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     raw_model_output = f"{notice_banner}{raw_model_output}"
 
         if review_context and not is_token_truncated and "⚠️ **[GENERATION INCOMPLETE NOTICE]**" not in raw_model_output:
-            gate_res = await run_final_review_gate(raw_model_output, review_context)
+            try:
+                gate_res = await run_final_review_gate(raw_model_output, review_context)
+            except Exception as gate_exc:
+                print(f"⚠️ [FINAL REVIEW GATE EXCEPTION]: {gate_exc}", file=sys.stderr)
+                gate_res = {"passed": False, "issues": [f"Review gate exception: {gate_exc}"], "system_failure": True}
+
             if not gate_res.get("passed", True):
                 gate_issues = gate_res.get("issues", [])
-                print(f"⚠️ [FINAL REVIEW GATE] Detected overstated/unsupported claims: {gate_issues}. Triggering 1 regeneration...", file=sys.stderr)
-                gate_regen_prompt = (
-                    "CRITICAL LEGAL ACCURACY REQUIREMENT: The independent judicial review gate flagged the following "
-                    "propositions in your draft as OVERSTATED or UNSUPPORTED by the cited authorities:\n"
-                    + "\n".join(f"- {iss}" for iss in gate_issues)
-                    + "\n\nRe-draft the COMPLETE memorandum (retaining all 5 required section headers and <<<CARDS>>> JSON) strictly resolving these issues:\n"
-                    "1. For each flagged case or authority above (e.g. Sultan Mahmood 2006 YLR 2776 or any other cited authority): COMPLETELY REMOVE any inferred or unstated claims. Either restrict the case description strictly to its literal verified holding or omit the problematic sentence entirely.\n"
-                    "2. For any statutory article flagged above: Cite strictly the codified text and do not state unverified doctrines.\n"
-                    "3. Explicitly state where no authority was retrieved on a sub-issue.\n"
-                    "4. Output the full revised memorandum directly with zero meta-commentary."
+                is_system_failure = gate_res.get("system_failure", False) or any(
+                    "failed to verify" in str(iss).lower() or
+                    "completed without" in str(iss).lower() or
+                    "timeout" in str(iss).lower() or
+                    "error" in str(iss).lower()
+                    for iss in gate_issues
                 )
-                gate_messages = list(messages) + [
-                    {"role": "assistant", "content": raw_model_output},
-                    {"role": "user", "content": gate_regen_prompt}
-                ]
-                claude_message_gate = await safe_create_anthropic_message(
-                    model=CLAUDE_MODEL, max_tokens=8192, max_output_tokens=8192, system=combined_system_prompt, messages=gate_messages
-                )
-                regen_output = "".join(getattr(b, "text", "") for b in claude_message_gate.content if getattr(b, "type", None) == "text").strip()
-                gate_res_round2 = await run_final_review_gate(regen_output, review_context)
-                if gate_res_round2.get("passed", True):
-                    raw_model_output = regen_output
-                    print(f"✅ [FINAL REVIEW GATE] Regeneration successfully resolved issues.", flush=True)
+
+                if is_system_failure:
+                    print(f"⚠️ [FINAL REVIEW GATE] System failure/timeout during verification: {gate_issues}", file=sys.stderr)
+                    raw_model_output = format_review_gate_fallback(raw_model_output, reason="verification service error or timeout")
                 else:
-                    unverified_issues = gate_res_round2.get("issues", gate_issues)
-                    print(f"⚠️ [FINAL REVIEW GATE PER-SENTENCE NOTICE] Persisting unverified claims after retry: {unverified_issues}", file=sys.stderr)
-                    # Fail closed per sentence, not per memo: prepend specific notice and preserve substantive analysis
-                    notice_banner = (
-                        "> ⚠️ **[JUDICIAL REVIEW CORROBORATION NOTICE]**: The following specific proposition(s) in this draft "
-                        "require independent corroboration against primary court records before reliance in pleadings:\n"
-                        + "\n".join(f"> - *{iss}*" for iss in unverified_issues)
-                        + "\n\n"
+                    print(f"⚠️ [FINAL REVIEW GATE] Detected overstated/unsupported claims: {gate_issues}. Triggering 1 regeneration...", file=sys.stderr)
+                    gate_regen_prompt = (
+                        "CRITICAL LEGAL ACCURACY REQUIREMENT: The independent judicial review gate flagged the following "
+                        "propositions in your draft as OVERSTATED or UNSUPPORTED by the cited authorities:\n"
+                        + "\n".join(f"- {iss}" for iss in gate_issues)
+                        + "\n\nRe-draft the COMPLETE memorandum (retaining all 5 required section headers and <<<CARDS>>> JSON) strictly resolving these issues:\n"
+                        "1. For each flagged case or authority above (e.g. Sultan Mahmood 2006 YLR 2776 or any other cited authority): COMPLETELY REMOVE any inferred or unstated claims. Either restrict the case description strictly to its literal verified holding or omit the problematic sentence entirely.\n"
+                        "2. For any statutory article flagged above: Cite strictly the codified text and do not state unverified doctrines.\n"
+                        "3. Explicitly state where no authority was retrieved on a sub-issue.\n"
+                        "4. Output the full revised memorandum directly with zero meta-commentary."
                     )
-                    raw_model_output = f"{notice_banner}{regen_output}"
+                    gate_messages = list(messages) + [
+                        {"role": "assistant", "content": raw_model_output},
+                        {"role": "user", "content": gate_regen_prompt}
+                    ]
+                    try:
+                        claude_message_gate = await safe_create_anthropic_message(
+                            model=CLAUDE_MODEL, max_tokens=8192, max_output_tokens=8192, system=combined_system_prompt, messages=gate_messages
+                        )
+                        regen_output = "".join(getattr(b, "text", "") for b in claude_message_gate.content if getattr(b, "type", None) == "text").strip()
+                    except Exception as regen_exc:
+                        print(f"⚠️ [FINAL REVIEW GATE REGEN EXCEPTION]: {regen_exc}", file=sys.stderr)
+                        regen_output = ""
+
+                    if not regen_output or len(regen_output.split()) < 200:
+                        # Regeneration failed, timed out, or returned empty output:
+                        # Fallback to substantive draft with NOT REVIEWED banner - NEVER return empty or notice-only memo!
+                        raw_model_output = format_review_gate_fallback(raw_model_output, reason="regeneration error or empty response")
+                    else:
+                        try:
+                            gate_res_round2 = await run_final_review_gate(regen_output, review_context)
+                        except Exception as r2_exc:
+                            gate_res_round2 = {"passed": False, "issues": [f"Review gate round 2 exception: {r2_exc}"], "system_failure": True}
+
+                        if gate_res_round2.get("passed", True):
+                            raw_model_output = regen_output
+                            print(f"✅ [FINAL REVIEW GATE] Regeneration successfully resolved issues.", flush=True)
+                        elif gate_res_round2.get("system_failure", False):
+                            raw_model_output = format_review_gate_fallback(regen_output, reason="round 2 review service timeout")
+                        else:
+                            unverified_issues = gate_res_round2.get("issues", gate_issues)
+                            print(f"⚠️ [FINAL REVIEW GATE PER-SENTENCE NOTICE] Persisting unverified claims after retry: {unverified_issues}", file=sys.stderr)
+                            # Fail closed per sentence, not per memo: prepend specific notice and preserve substantive analysis
+                            notice_banner = (
+                                "> ⚠️ **[JUDICIAL REVIEW CORROBORATION NOTICE]**: The following specific proposition(s) in this draft "
+                                "require independent corroboration against primary court records before reliance in pleadings:\n"
+                                + "\n".join(f"> - *{iss}*" for iss in unverified_issues)
+                                + "\n\n"
+                            )
+                            raw_model_output = f"{notice_banner}{regen_output}"
+
 
         executive_answer = ""
         precedent_cards = []

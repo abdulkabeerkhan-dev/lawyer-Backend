@@ -124,9 +124,6 @@ class TestGoldSetLeakPrevention(unittest.TestCase):
                     with open(fpath, "r", encoding="utf-8") as f:
                         content = f.read()
                     for cit in self.gold_citations:
-                        # Note: MFLO_1961_SEC_4_V3 contains PLD 2000 FSC 1 as a court challenge recorded in commit 7bf0b6c
-                        if file == "MFLO_1961_versions.json" and "PLD 2000 FSC 1".lower() in cit.lower():
-                            continue
                         cit_norm = cit.lower()
                         cit_under = cit_norm.replace(" ", "_")
                         if cit_norm in content.lower() or cit_under in content.lower():

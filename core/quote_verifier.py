@@ -265,26 +265,10 @@ def sanitize_unverified_quotes(generated_text: str, unverified_quotes: List[str]
         if not q_strip:
             continue
 
-        # Safe replacement: replace quotation marks around q_strip while preserving surrounding spaces
-        pattern = r'(?<=\S)?\s*["“\'‘]\s*' + re.escape(q_strip) + r'\s*["”\'’]\s*(?=\S)?'
-
-        def _safe_replace(match):
-            m_start, m_end = match.span()
-            before_char = sanitized_text[m_start - 1] if m_start > 0 else ""
-            after_char = sanitized_text[m_end] if m_end < len(sanitized_text) else ""
-
-            lead_space = " " if before_char and before_char not in " \n\t([{“\"\'‘#*`>" else ""
-            trail_space = " " if after_char and after_char not in " \n\t.,;:!?)’”\'’]}#*`" else ""
-            return f"{lead_space}{q_strip}{trail_space}"
-
-        # Try exact pattern replacement
-        if re.search(r'["“\'‘]\s*' + re.escape(q_strip) + r'\s*["”\'’]', sanitized_text):
-            sanitized_text = re.sub(pattern, _safe_replace, sanitized_text)
-        else:
-            # Fallback for exact variants
-            for variant in (f'"{quote}"', f'“{quote}”', f"'{quote}'", f'‘{quote}’'):
-                if variant in sanitized_text:
-                    sanitized_text = sanitized_text.replace(variant, q_strip)
+        # Safe delimiter-only removal: Remove opening and closing quote punctuation marks
+        # around the quote without consuming ANY surrounding whitespace or adjacent words.
+        pattern = r'(["“\'‘])(' + re.escape(q_strip) + r')(["”\'’])'
+        sanitized_text = re.sub(pattern, r'\2', sanitized_text)
 
     return sanitized_text
 

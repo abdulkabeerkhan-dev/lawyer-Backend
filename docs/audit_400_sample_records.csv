@@ -1,0 +1,401 @@
+case_id,stratum,stored_citation,header_citation,category,reason
+1975_PLD_1270,PLD,1975 PLD 1270,P L D 1975 Lahore 1270,format_artifact,Intervening court/bench token (PLD 1975 page 1270)
+1976_PLD_1049,PLD,1976 PLD 1049,P L D 1976 Karachi 1049,format_artifact,Intervening court/bench token (PLD 1976 page 1049)
+2012_PLD_ISL_11,PLD,PLD 2012 Isl 11,P L D 2012 Islamabad 11,format_artifact,Intervening court/bench token (PLD 2012 page 11)
+1956_PLD_452,PLD,1956 PLD 900,1956 PLD 900,verified_match,Clean canonical match
+1987_PLD_593,PLD,1987 PLD 593,1987 PLD 593 KARACHI-HIGH-COURT-SINDH,verified_match,Clean canonical match
+1992_PLD_LAH_11,PLD,PLD 1992 Lah 11,P L D 1992 Lahore 63,true_page_mismatch,True page mismatch: stored 11 vs header 63
+1986_PLD_476,PLD,1986 PLD 476,1986 PLD 476 KARACHI-HIGH-COURT-SINDH,verified_match,Clean canonical match
+1952_PLD_39,PLD,1952 PLD 15,1952 PLD 15,stub_or_index_entry,Non-judgment index stub (39 words)
+2011_PLD_217,PLD,2011 PLD 217,2011 PLD 217 LAHORE-HIGH-COURT-LAHORE,verified_match,Clean canonical match
+1979_PLD_687,PLD,1979 PLD 687,R L D 1979 Karachi 687,format_artifact,Intervening court/bench token (PLD 1979 page 687)
+2010_PLD_389,PLD,2010 PLD 389,2010 PLD 389 LAHORE-HIGH-COURT-LAHORE,verified_match,Clean canonical match
+2017_PLD_610,PLD,2017 PLD 610,2017 PLD 610 LAHORE-HIGH-COURT-LAHORE,verified_match,Clean canonical match
+1987_PLD_SC_461,PLD,PLD 1987 SC 461,P L D 1987 Supreme Court 461,format_artifact,Intervening court/bench token (PLD 1987 page 461)
+2023_PLD_661,PLD,2023 PLD 661,2023 PLD 661 SUPREME-COURT,verified_match,Clean canonical match
+1986_PLD_LAH_189,PLD,PLD 1986 Lah 189,P L D 1986 Lahore 189,format_artifact,Intervening court/bench token (PLD 1986 page 189)
+1993_PLD_456,PLD,1993 PLD 456,1993 PLD 456 LAHORE-HIGH-COURT-LAHORE,verified_match,Clean canonical match
+1977_PLD_836,PLD,1977 PLD 836,P L D 1977 Karachi 836,format_artifact,Intervening court/bench token (PLD 1977 page 836)
+1989_PLD_PESH_17,PLD,PLD 1989 Pesh 17,P L D 1989 Peshawar 17,format_artifact,Intervening court/bench token (PLD 1989 page 17)
+1957_PLD_450,PLD,1957 PLD 671,1957 PLD 671,verified_match,Clean canonical match
+1956_PLD_596,PLD,1956 PLD 596,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2008_PLD_LAH_341,PLD,PLD 2008 Lah 341,P L D 2008 Lahore 341,format_artifact,Intervening court/bench token (PLD 2008 page 341)
+1965_PLD_290,PLD,1965 PLD 290,1965 PLD 290 DHAKA-HIGH-COURT,verified_match,Clean canonical match
+2012_PLD_182,PLD,2012 PLD 182,2012 PLD 182 KARACHI-HIGH-COURT-SINDH,stub_or_index_entry,Non-judgment index stub (92 words)
+2015_PLD_85,PLD,2015 PLD 85,2015 PLD 85 ISLAMABAD,verified_match,Clean canonical match
+1953_PLD_15,PLD,1953 PLD 4,1953 PLD 4,verified_match,Clean canonical match
+1970_PLD_622,PLD,1970 PLD 622,P L D 1970 Dacca 622,format_artifact,Intervening court/bench token (PLD 1970 page 622)
+1957_PLD_155,PLD,1957 PLD 119,1957 PLD 119,verified_match,Clean canonical match
+1987_PLD_81,PLD,1987 PLD 81,1987 PLD 81 KARACHI-HIGH-COURT-SINDH,verified_match,Clean canonical match
+2007_PLD_421,PLD,2007 PLD 421,2007 PLD 421 KARACHI-HIGH-COURT-SINDH,verified_match,Clean canonical match
+1996_PLD_47,PLD,1996 PLD 47,1996 PLD 47 PESHAWAR-HIGH-COURT,verified_match,Clean canonical match
+1981_PLD_172,PLD,1981 PLD 172,1981 PLD 172 SUPREME-COURT,verified_match,Clean canonical match
+2006_PLD_18,PLD,2006 PLD 18,2006 PLD 18 QUETTA-HIGH-COURT-BALOCHISTAN,verified_match,Clean canonical match
+1965_PLD_PESH_20,PLD,PLD 1965 Pesh 20,P L D 1965 (W. P.) Peshawar 20     Befor,true_page_mismatch,Page mismatch: stored 20 vs header 1965
+1952_PLD_139,PLD,1952 PLD 57,1952 PLD 57,verified_match,Clean canonical match
+1993_PLD_207,PLD,1993 PLD 207,1993 PLD 207 KARACHI-HIGH-COURT-SINDH,verified_match,Clean canonical match
+1986_PLD_QTA_86,PLD,PLD 1986 Quetta 86,P L D 1986 Quetta 86,format_artifact,Intervening court/bench token (PLD 1986 page 86)
+1996_PLD_210,PLD,1996 PLD 210,1996 PLD 210 LAHORE-HIGH-COURT-LAHORE,verified_match,Clean canonical match
+1977_PLD_345,PLD,1977 PLD 345,P L D 1977 Lahore 345,format_artifact,Intervening court/bench token (PLD 1977 page 345)
+1966_PLD_5,PLD,1966 PLD 5,P L D 1966 Azad J & K 5,format_artifact,Intervening court/bench token (PLD 1966 page 5)
+1978_PLD_437,PLD,1978 PLD 437,P L D 1978 Karachi 437,format_artifact,Intervening court/bench token (PLD 1978 page 437)
+1961_PLD_151,PLD,1961 PLD 99,1961 PLD 99,verified_match,Clean canonical match
+1969_PLD_559,PLD,1969 PLD 559,1969 PLD 559 DHAKA-HIGH-COURT,verified_match,Clean canonical match
+1973_PCRLJ_212,PCRLJ,1973 PCRLJ 212,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1979_PCRLJ_838,PCRLJ,1979 PCRLJ 838,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2007_PCRLJ_301,PCRLJ,2007 PCRLJ 301,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2015_PCRLJ_1326,PCRLJ,2015 PCRLJ 1326,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1983_PCRLJ_1027,PCRLJ,1983 PCRLJ 1027,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1979_PCRLJ_900,PCRLJ,1979 PCRLJ 900,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1983_PCRLJ_2193,PCRLJ,1983 PCRLJ 2193,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2021_PCRLJ_1128,PCRLJ,2021 PCRLJ 1128,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2016_PCRLJ_1216,PCRLJ,2016 PCRLJ 1216,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1988_PCRLJ_1991,PCRLJ,1988 PCRLJ 1991,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1987_PCRLJ_1280,PCRLJ,1987 PCRLJ 1280,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1999_PCRLJ_476,PCRLJ,1999 PCRLJ 476,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2024_PCRLJ_33,PCRLJ,2024 PCRLJ 33,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1984_PCRLJ_2865,PCRLJ,1984 PCRLJ 2865,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2017_PCRLJ_920,PCRLJ,2017 PCRLJ 920,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2006_PCRLJ_867,PCRLJ,2006 PCRLJ 867,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1971_PCRLJ_352,PCRLJ,1971 PCRLJ 352,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1994_PCRLJ_2502,PCRLJ,1994 PCRLJ 2502,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1994_PCRLJ_1739,PCRLJ,1994 PCRLJ 1739,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1982_PCRLJ_231,PCRLJ,1982 PCRLJ 231,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2024_PCRLJ_121,PCRLJ,2024 PCRLJ 121,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1986_PCRLJ_1791,PCRLJ,1986 PCRLJ 1791,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1969_PCRLJ_473,PCRLJ,1969 PCRLJ 473,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2020_PCRLJ_374,PCRLJ,2020 PCRLJ 374,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2023_PCRLJ_233,PCRLJ,2023 PCRLJ 233,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1968_PCRLJ_216,PCRLJ,1968 PCRLJ 216,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1986_PCRLJ_1392,PCRLJ,1986 PCRLJ 1392,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1981_PCRLJ_999,PCRLJ,1981 PCRLJ 999,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1978_PCRLJ_64,PCRLJ,1978 PCRLJ 64,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1987_PCRLJ_512,PCRLJ,1987 PCRLJ 512,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1996_PCRLJ_475,PCRLJ,1996 PCRLJ 475,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1991_PCRLJ_1497,PCRLJ,1991 PCRLJ 1497,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1990_PCRLJ_1079,PCRLJ,1990 PCRLJ 1079,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2004_PCRLJ_1163,PCRLJ,2004 PCRLJ 1163,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2005_PCRLJ_123,PCRLJ,2005 PCRLJ 123,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1970_PCRLJ_38,PCRLJ,1970 PCRLJ 38,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1997_PCRLJ_2003,PCRLJ,1997 PCRLJ 2003,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1987_PCRLJ_1634,PCRLJ,1987 PCRLJ 1634,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1997_PCRLJ_1820,PCRLJ,1997 PCRLJ 1820,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1995_PCRLJ_1906,PCRLJ,1995 PCRLJ 1906,Register Feedback Customer Care Office P,publisher_banner,Publisher lockdown banner in header
+1987_PLC(CS)_123,PLC,1987 PLC(CS) 520,1987 PLC(CS) 520,format_artifact,Intervening court/bench token (PLC(CS) 1987 page 520)
+2013_PLC(CS)_56,PLC,2013 PLC(CS) 357,2013 PLC(CS) 357,stub_or_index_entry,Non-judgment index stub (93 words)
+2014_PLC(CS)_86,PLC,2014 PLC(CS) 639,2014 PLC(CS) 639,format_artifact,Intervening court/bench token (PLC(CS) 2014 page 639)
+2005_PLC_31,PLC,2005 PLC 31,"2005 PLC 31 KARACHI-HIGH-COURT-SINDH    ABDUL REHMAN BALOCH VS MUHAMMAD AHMED ZUBERI and others  Constitution of Pakistan 1973--199 , Industrial Relations Ordinance 1969--25-A , Industr",verified_match,Clean canonical match
+1988_PLC(CS)_266,PLC,1988 PLC(CS) 741,1988 PLC(CS) 741,format_artifact,Spaced OCR letters
+2012_PLC(CS)_227,PLC,2012 PLC(CS) 1317,2012 PLC(CS) 1317,format_artifact,Intervening court/bench token (PLC(CS) 2012 page 1317)
+1998_PLC_455,PLC,1998 PLC 455,1998 PLC 455 NATIONAL-INDUSTRIAL-RELATIONS-COMMISSION    MUHAMMAD AFRAZ VS SINGER PAKISTAN LIMITED  National Industrial Relations Commission (Procedure and Functions) Regulations 1973--,verified_match,Clean canonical match
+1992_PLC(CS)_90,PLC,1992 PLC(CS) 350,1992 PLC(CS) 350,format_artifact,Intervening court/bench token (PLC(CS) 1992 page 350)
+1999_PLC_463,PLC,1999 PLC 463,"1999 PLC 463 LABOUR-APPELLANT-TRIBUNAL-SINDH  SHAD MUHAMMAD VS HAKIMSONS CHEMICAL INDUSTRIES (PVT.) LIMITED 1990 SCMR 1539, Industrial Relations Ordinance 1969--25-A , Industrial Relati",verified_match,Clean canonical match
+2005_PLC(CS)_236,PLC,2005 PLC(CS) 1347,2005 PLC(CS) 1347,format_artifact,Intervening court/bench token (PLC(CS) 2005 page 1347)
+2002_PLC_192,PLC,2002 PLC 192,"2002 PLC 192 NATIONAL-INDUSTRIAL-RELATIONS-COMMISSION  MUHAMMAD RAMZAN, DRIVER, NORTHERN BOTTLERS (PVT.) LTD. ISLAMABAD VS USMAN JAVAID, OPERATIONS MANAGER NORTHERN BOTTLERS (PVT.) LTD.",stub_or_index_entry,Non-judgment index stub (24 words)
+2011_PLC(CS)_144,PLC,2011 PLC(CS) 782,2011 PLC(CS) 782,format_artifact,Intervening court/bench token (PLC(CS) 2011 page 782)
+2000_PLC_62,PLC,2000 PLC 62,2000 PLC 62 KARACHI-HIGH-COURT-SINDH  AGFA GEVAERT PAKISTAN LTD. VS SINDH (PROVINCIAL) EMPLOYEES' SOCIAL SECURITY INSTITUTION,stub_or_index_entry,Non-judgment index stub (17 words)
+2006_PLC_111,PLC,2006 PLC 111,"2006 PLC 111 KARACHI-HIGH-COURT-SINDH    P.C. HOTEL KARACHI WORKERS UNION VS M/s. PEARL CONTINENTAL HOTEL  Arbitrator--WORDS AND , --'Crime', 'Offence', 'Punish', 'Penal', defined and e",verified_match,Clean canonical match
+1986_PLC(CS)_129,PLC,1986 PLC(CS) 432,1986 PLC(CS) 432,format_artifact,Intervening court/bench token (PLC(CS) 1986 page 432)
+2014_PLC_459,PLC,2014 PLC 459,"2014 PLC 459 LABOUR-APPELLANT-TRIBUNAL-BALOCHISTAN  JAMILA BIBI VS DIRECTOR-GENERAL, QUETTA DEVELOPMENT AUTHORITY 1996 SCMR 1947, 2009 SCMR 320, 2013 PLC 394, PLD 1996 SC 610, Balochist",verified_match,Clean canonical match
+1996_PLC(CS)_62,PLC,1996 PLC(CS) 300,1996 PLC(CS) 300,format_artifact,Intervening court/bench token (PLC(CS) 1996 page 300)
+2001_PLC(CS)_123,PLC,2001 PLC(CS) 581,2001 PLC(CS) 581,format_artifact,Intervening court/bench token (PLC(CS) 2001 page 581)
+1974_PLC_186,PLC,1974 PLC 186,"1974 PLC 186 BAGHDAD-UL-JADID    MUHAMMAD AMIN VS CHIEF CONSERVATOR, FOREST DEPARTMENT, MULTAN REGION, MULTAN  Civil Service Rules (Punjab)--TERM , West Pakistan Government Servants (Ef",verified_match,Clean canonical match
+1983_PLC(CS)_395,PLC,1983 PLC(CS) 995,1983 PLC(CS) 995,format_artifact,Spaced OCR letters
+1962_PLC_1309,PLC,1962 PLC 1309,"1962 PLC 1309    VS  Evidence--TERM , Evidence Evidence-Payment of wages-Oral evidence on solemn affirmation disbelieved as against pay-sheets.  Industrial Disputes Ordinance 1959--34 ,",stub_or_index_entry,Non-judgment index stub (43 words)
+2010_PLC(CS)_70,PLC,2010 PLC(CS) 446,2010 PLC(CS) 446,stub_or_index_entry,Non-judgment index stub (86 words)
+2001_PLC(CS)_50,PLC,2001 PLC(CS) 212,2001 PLC(CS) 212,format_artifact,Intervening court/bench token (PLC(CS) 2001 page 212)
+2022_PLC_44,PLC,2022 PLC 44,"2022 PLC 44 LAHORE-HIGH-COURT-LAHORE  PROVINCE OF PUNJAB through Secretary, Irrigation Department, Jhang VS SAJJAD NASEEM",stub_or_index_entry,Non-judgment index stub (17 words)
+1988_PLC(CS)_12,PLC,1988 PLC(CS) 28,1988 PLC(CS) 28,format_artifact,Intervening court/bench token (PLC(CS) 1988 page 28)
+1996_PLC(CS)_238,PLC,1996 PLC(CS) 740,1996 PLC(CS) 740,stub_or_index_entry,Non-judgment index stub (74 words)
+2018_PLC_113,PLC,2018 PLC 113,"2018 PLC 113 LAHORE-HIGH-COURT-LAHORE    AMINULLAH KHAN VS PUNJAB LABOUR APPELLATE TRIBUNAL  Civil Procedure Code --Order VII of C.P.C. Plaint--10 , Industrial Relations Act 2012--57 ,",verified_match,Clean canonical match
+1981_PLC_97,PLC,1981 PLC 97,"1981 PLC 97 KARACHI-HIGH-COURT-SINDH    MESSERS JUPITER GENERAL INDUSTRIES VS SIND LABOUR APPELLATE TRIBUNAL  Constitution of Pakistan 1973--199 , Constitution of Pakistan 1973 -----Art",verified_match,Clean canonical match
+1993_PLC(CS)_11,PLC,1993 PLC(CS) 60,1993 PLC(CS) 60,format_artifact,Intervening court/bench token (PLC(CS) 1993 page 60)
+2015_PLC(CS)_6,PLC,2015 PLC(CS) 37,2015 PLC(CS) 37,format_artifact,Intervening court/bench token (PLC(CS) 2015 page 37)
+1976_PLC_672,PLC,1976 PLC 672,"1976 PLC 672 LABOUR-COURT-PUNJAB  REGISTRAR OF TRADE UNIONS, LYALLPUR VS COLONY THAL TEXTILE MILLS WORKERS' UNION, BHAKKAR",stub_or_index_entry,Non-judgment index stub (19 words)
+2008_PLC_164,PLC,2008 PLC 164,"2008 PLC 164 QUETTA-HIGH-COURT-BALOCHISTAN    WAQAR AHMED VS PAKISTAN SYNTHETIC LIMITED  Appeal to High Court--TERM , Grievance Petition--TERM , Industrial Relations Ordinance 2002--46",verified_match,Clean canonical match
+2023_PLC(CS)_46,PLC,2023 PLC(CS) 341,2023 PLC(CS) 341,format_artifact,Intervening court/bench token (PLC(CS) 2023 page 341)
+1984_PLC(CS)_492,PLC,1984 PLC(CS) 1073,1984 PLC(CS) 1073,format_artifact,Intervening court/bench token (PLC(CS) 1984 page 1073)
+1963_PLC_826,PLC,1963 PLC 826,"1963 PLC 826    AMARSINGH GOWAMAL & SONS (TISRA COLLIERY) VS THEIR WORKMEN  Misconduct--TERM , Misconduct Misconduct-Workman charge-sheeted for serious misconduct--Employer agreeing in",verified_match,Clean canonical match
+1977_PLC_447,PLC,1977 PLC 447,"1977 PLC 447 KARACHI-HIGH-COURT-SINDH  SIND EMPLOYEES' SOCIAL SECURITY INSTITUTION, KARACHI VS PHILIPS ELECTRICAL INDUSTHES OF PAKISTAN LTD. AND ANOTHER",stub_or_index_entry,Non-judgment index stub (21 words)
+1998_PLC_263,PLC,1998 PLC 263,"1998 PLC 263 NATIONAL-INDUSTRIAL-RELATIONS-COMMISSION    PAKISTAN PETROLEUM LIMITED VS MATLOOB HUSSAN  Industrial Relations Ordinance 1969--15 , Industrial Relations Ordinance 1969 ----",verified_match,Clean canonical match
+1999_PLC(CS)_265,PLC,1999 PLC(CS) 1518,1999 PLC(CS) 1518,format_artifact,Intervening court/bench token (PLC(CS) 1999 page 1518)
+2019_SCMR_2063,SCMR,2019 SCMR 2063,2019 SCMR 2063 SUPREME-COURT,verified_match,Clean canonical match
+1997_SCMR_1120,SCMR,1997 SCMR 1120,1997 S C M R 1120,format_artifact,Spaced OCR letters
+1997_SCMR_1339,SCMR,1997 SCMR 1339,1997SCMR 1339     [Supreme Court of Paki,verified_match,Clean canonical match
+2019_SCMR_556,SCMR,2019 SCMR 556,2019 SCMR 556 SUPREME-COURT,verified_match,Clean canonical match
+2001_SCMR_664,SCMR,2001 SCMR 664,2001 SCMR 664 SUPREME-COURT,verified_match,Clean canonical match
+2006_SCMR_1329,SCMR,2006 SCMR 1329,2006 SCMR 1329 SUPREME-COURT,verified_match,Clean canonical match
+1998_SCMR_2318,SCMR,1998 SCMR 2318,1998 S C M R 2318,format_artifact,Spaced OCR letters
+1998_SCMR_1559,SCMR,1998 SCMR 1559,1998 S C M R 1559,format_artifact,Spaced OCR letters
+2004_SCMR_1443,SCMR,2004 SCMR 1443,2004 SCMR 1443 SUPREME-COURT,verified_match,Clean canonical match
+1978_SCMR_77,SCMR,1978 SCMR 195,1978 SCMR 195,verified_match,Clean canonical match
+1984_SCMR_58,SCMR,1984 SCMR 58,1984 S C M R 58,format_artifact,Spaced OCR letters
+2001_SCMR_265,SCMR,2001 SCMR 265,2001 SCMR 265 SUPREME-COURT,verified_match,Clean canonical match
+1971_SCMR_56,SCMR,1971 SCMR 128,1971 SCMR 128,verified_match,Clean canonical match
+1990_SCMR_786,SCMR,1990 SCMR 786,1990 S C M R 786,format_artifact,Spaced OCR letters
+1973_SCMR_163,SCMR,1973 SCMR 503,1973 SCMR 503,verified_match,Clean canonical match
+1996_SCMR_1592,SCMR,1996 SCMR 1592,1996SCMR1592     [Supreme Court of Pakis,format_artifact,Fused tokens
+2009_SCMR_362,SCMR,2009 SCMR 362,2009 SCMR 362 SUPREME-COURT,verified_match,Clean canonical match
+1990_SCMR_296,SCMR,1990 SCMR 296,1990 S C M R 296,format_artifact,Spaced OCR letters
+1989_SCMR_1208,SCMR,1989 SCMR 1208,1989 S C M R 1208,format_artifact,Spaced OCR letters
+1990_SCMR_298,SCMR,1990 SCMR 298,1990 S C M R 298,format_artifact,Spaced OCR letters
+2006_SCMR_642,SCMR,2006 SCMR 642,2006 SCMR 642 SUPREME-COURT,verified_match,Clean canonical match
+1986_SCMR_1260,SCMR,1986 SCMR 1260,1986 S C M R 1260,format_artifact,Spaced OCR letters
+1994_SCMR_1782,SCMR,1994 SCMR 1782,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1988_SCMR_1847,SCMR,1988 SCMR 1847,1988 S C M R 1847,format_artifact,Spaced OCR letters
+1986_SCMR_1840,SCMR,1986 SCMR 1840,1986 S C M R 1840,format_artifact,Spaced OCR letters
+1991_SCMR_1764,SCMR,1991 SCMR 1764,1991 S C M R 1764,format_artifact,Spaced OCR letters
+2012_SCMR_140,SCMR,2012 SCMR 140,2012 SCMR 140 SUPREME-COURT,verified_match,Clean canonical match
+2008_SCMR_478,SCMR,2008 SCMR 478,2008 SCMR 478 SUPREME-COURT,verified_match,Clean canonical match
+1971_SCMR_244,SCMR,1971 SCMR 688,1971 SCMR 688,verified_match,Clean canonical match
+1975_SCMR_160,SCMR,1975 SCMR 330,1975 SCMR 330,verified_match,Clean canonical match
+1969_SCMR_355,SCMR,1969 SCMR 814,1969 SCMR 814,verified_match,Clean canonical match
+1989_SCMR_864,SCMR,1989 SCMR 864,1989 S C M R 864,format_artifact,Spaced OCR letters
+1969_SCMR_79,SCMR,1969 SCMR 113,1969 SCMR 113,verified_match,Clean canonical match
+1998_SCMR_359,SCMR,1998 SCMR 359,1998 S C M R 359,format_artifact,Spaced OCR letters
+1975_SCMR_61,SCMR,1975 SCMR 153,1975 SCMR 153,verified_match,Clean canonical match
+1996_SCMR_1051,SCMR,1996 SCMR 1051,1996SCMR 1051     [Supreme Court of Paki,verified_match,Clean canonical match
+1969_SCMR_266,SCMR,1969 SCMR 517,1969 SCMR 517,verified_match,Clean canonical match
+1996_SCMR_1044,SCMR,1996 SCMR 1044,1996 S C M R 1044,format_artifact,Spaced OCR letters
+1983_CLC_3181,CLC,1983 CLC 3181,"1983 CLC 3181 KARACHI-HIGH-COURT-SINDH    KUTUBUDDIN VS ALLAHDAD  Transfer of Property Act 1882--58 , S. 58.(C)--Sale-Sale of land-Transaction whether-sale or mortgage-Tests for determi",verified_match,Clean canonical match
+1982_CLC_1150,CLC,1982 CLC 1150,"1982 CLC 1150 KARACHI-HIGH-COURT-SINDH    MURTAZA HUSSAIN VS DEPUTY SETTLEMENT COMMISSIONER, THATTA  Civil Procedure Code --Order XXII of C.P.C. Death, Marriage and Insolvency of Partie",verified_match,Clean canonical match
+1980_CLC_1631,CLC,1980 CLC 1631,"1980 CLC 1631 KARACHI-HIGH-COURT-SINDH    WALIUL HASSAN VS SETTLEMENT COMMISSIONER (LAND), SIND, HYDERABAD  Audi Alteram Partem--MAXIM , Displaced Persons (Land Settlement) Act 1958--11",stub_or_index_entry,Non-judgment index stub (90 words)
+1993_CLC_2130,CLC,1993 CLC 2130,"1993 CLC 2130 LAHORE-HIGH-COURT-LAHORE    NIZAM-UD-DIN VS MUHAMMAD SAEED  Civil Procedure Code --Order XXI of C.P.C. Execution of Decrees and Orders--11 , Civil Procedure Code --Order X",verified_match,Clean canonical match
+2019_CLC_2083,CLC,2019 CLC 2083,"2019 CLC 2083 Gilgit-Baltistan Chief Court    MAQBOOL HUSSAIN VS PROVINCIAL GOVERNMENT through Chief Secretary  Civil Procedure Code --Order VII of C.P.C. Plaint--11 , O. VII, R. 11---P",verified_match,Clean canonical match
+2016_CLC_1405,CLC,2016 CLC 1405,"2016 CLC 1405 PESHAWAR-HIGH-COURT    AMIR SIYAB VS SHER BAHADAR KHAN alias TOTA  Constitutional petition--TERM , Khyber Pakhtunkhwa Pre-emption Act 1987--24 , Pre-Emption Suit--TERM , P",verified_match,Clean canonical match
+1988_CLC_564,CLC,1988 CLC 564,"1988 CLC 564 KARACHI-HIGH-COURT-SINDH    ELITE BUILDERS AND DEVELOPERS LTD. VS NOORUDDIN MOOSA HEMANI  Arbitration Act 1940--14 , Arbitration Act 1940 ---Ss. 14 & 17--Award made rule of",verified_match,Clean canonical match
+1983_CLC_1068,CLC,1983 CLC 1068,"1983 CLC 1068 KARACHI-HIGH-COURT-SINDH    TOYO MENKA KAISHA LTD. VS TRADING CORPORATION OF PAKISTAN  Sale of Goods Act 1930--4 , -- S. 4-Contract of sale and purchase of goods-Charter p",verified_match,Clean canonical match
+2011_CLC_1822,CLC,2011 CLC 1822,"2011 CLC 1822 LAHORE-HIGH-COURT-LAHORE    YASIR MUNIR VS CHAIRMAN, PEC  Constitution of Pakistan 1973--25 , Art. 25---Equal protection is conferred under Article 25 of the Constitution",verified_match,Clean canonical match
+2022_CLC_489,CLC,2022 CLC 489,"2022 CLC 489 KARACHI-HIGH-COURT-SINDH    MUHAMMAD HASHIM VS Haji ABDUL GHAFOOR  S.12(2)---Specific Relief Act (I of 1877), S. 27---Transfer of Property Act (IV of 1882), S. 42---Suit fo",verified_match,Clean canonical match
+2019_CLC_1690,CLC,2019 CLC 1690,"2019 CLC 1690 PESHAWAR-HIGH-COURT    MUHAMMAD ASLAM VS MUHAMMAD SHAFIQULLAH CHAKRIYAL  Code of Civil Procedure 1908--12 , S. 12(2)---Proceedings under S.12(2), C.P.C. were in the nature",stub_or_index_entry,Non-judgment index stub (78 words)
+2015_CLC_1360,CLC,2015 CLC 1360,"2015 CLC 1360 SUPREME-COURT-AZAD-KASHMIR  Sardar MUHAMMAD HUSSAIN KHAN VS ELECTION TRIBUNAL, AZAD JAMMU AND KASHMIR AT RAWLAKOT 1998 SCMR 1597, 1999 SCMR 284, 2004 CLC 1249, 2004 CLC 68",verified_match,Clean canonical match
+1982_CLC_1728,CLC,1982 CLC 1728,"1982 CLC 1728 LAHORE-HIGH-COURT-LAHORE    MUHAMMAD MURTAZA VS REHMAN  Constitution of Pakistan 1973--199 , Art. 199-Plaintiff not setting up case in plaint, held, not en",verified_match,Clean canonical match
+2015_CLC_1333,CLC,2015 CLC 1333,"2015 CLC 1333 KARACHI-HIGH-COURT-SINDH  Mrs. BILQUIS MOHSIN BUTT VS MUHAMMAD MAHMOOD BUTT 2007 CLD 659, PLD 1990 SC 1, Administration suit--TERM , Civil Procedure Code --Order XX of C.P",verified_match,Clean canonical match
+1987_CLC_705,CLC,1987 CLC 705,"1987 CLC 705 KARACHI-HIGH-COURT-SINDH    ZAKRIA M. FAZIL VS UNITED BANK LTD., KARACHI  Civil Procedure Code --Order VII of C.P.C. Plaint--11 , Civil Procedure Code --Order VII of C.P.C.",verified_match,Clean canonical match
+1998_CLC_256,CLC,1998 CLC 256,"1998 CLC 256 KARACHI-HIGH-COURT-SINDH    WASEEM AHMED USMANI VS L. & M. INTERNATIONAL (PRIVATE) LTD.  Arbitration Act 1940--20 , Arbitration Act 1940 ---S.20---Contract Act (IX of 1872)",verified_match,Clean canonical match
+1989_CLC_442,CLC,1989 CLC 442,"1989 CLC 442 LAHORE-HIGH-COURT-LAHORE    MUHAMMAD NAZIR VS MUHAMMAD NAZIR  West Pakistan Consolidation of Holding Ordinance 1960--13 , West Pakistan Consolidation of Holding Ordinance 1",stub_or_index_entry,Non-judgment index stub (98 words)
+2013_CLC_1191,CLC,2013 CLC 1191,"2013 CLC 1191 ISLAMABAD    PAKISTAN TELECOMMUNICATION COMPANY LIMITED (PTCL) VS Mst. NAIMA AYUB  Civil Procedure Code --Order XVII of C.P.C. Adjournments--2 , Civil Procedure Code --Ord",verified_match,Clean canonical match
+2019_CLC_1811,CLC,2019 CLC 1811,"2019 CLC 1811 LAHORE-HIGH-COURT-LAHORE    LIAQAT ZAHEER KHAWAJA VS MUHAMMAD SHAUKAT QAMAR  Civil Procedure Code --Order XLI of C.P.C. Appeals from Original Decrees--20 , Limitation--TER",verified_match,Clean canonical match
+1991_CLC_291,CLC,1991 CLC 291,"1991 CLC 291 LAHORE-HIGH-COURT-LAHORE    FAZAL BIBI VS ABDUL HAQ  Civil Procedure Code --Order IX of C.P.C. Appearance of Parties and Consequence of Non-Appearance--6 , Civil Procedure",verified_match,Clean canonical match
+1985_CLC_283,CLC,1985 CLC 283,"1985 CLC 283 KARACHI-HIGH-COURT-SINDH    FAKHRI TRADERS VS BATOOL FIDA HUSSAIN SHEIKH  Interpretation of Statutes--TERM , Interpretation of Statutes When two provisions of law laying do",verified_match,Clean canonical match
+1996_CLC_682,CLC,1996 CLC 682,"1996 CLC 682 LAHORE-HIGH-COURT-LAHORE    WAZIRAN VS ABDUL SATTAR  Punjab Pre-Emption Act 1991--13 , Punjab Pre-Emption Act 1991 S. 13---Plaintiff's failure to refer to Talb-i-Mowathibat",stub_or_index_entry,Non-judgment index stub (56 words)
+1987_CLC_929,CLC,1987 CLC 929,"1987 CLC 929 LAHORE-HIGH-COURT-LAHORE    SHAHBAZ KHAN VS MUNICIPAL CORPORATION, FAISALABAD  Contract Act 1872--73 , Contract Act 1872 ---S. 73--Suit for recovery of loss suffered on bre",verified_match,Clean canonical match
+1979_CLC_27,CLC,1979 CLC 109,1979 CLC 109,verified_match,Clean canonical match
+2002_CLC_918,CLC,2002 CLC 918,"2002 CLC 918 LAHORE-HIGH-COURT-LAHORE    KHADIM HUSSAIN VS MUHAMMAD NAWAZ  Condonation of delay--TERM , Limitation Act 1908--SCHI, 152 , ----S. 5 & Art. 152---Condonation of delay---App",verified_match,Clean canonical match
+1985_CLC_108,CLC,1985 CLC 108,"1985 CLC 108 LAHORE-HIGH-COURT-LAHORE    DAUD AHMAD VS DISTRICT JUDGE, LAHORE  Code of Civil Procedure 1908--96 , Ss.13 & 15--Oaths Act (X of 1873), S.11--Civil Procedure Code (V of 190",verified_match,Clean canonical match
+1995_CLC_1209,CLC,1995 CLC 1209,"1995 CLC 1209 LAHORE-HIGH-COURT-LAHORE    ALI AHMAD VS GHULAM HAIDER  Civil Procedure Code --Order VI of C.P.C. Pleading Generally--17 , S. 15---Civil Procedure Code (V of 1908), O.VI,",verified_match,Clean canonical match
+1985_CLC_395,CLC,1985 CLC 395,"1985 CLC 395 KARACHI-HIGH-COURT-SINDH    KHURSHID BIBI VS CUSTODIAN, EVACUEE PROPERTY, SIND  Benami Transaction--TERM , Benami Transaction Exchange of property by Benami owner Benami ow",verified_match,Clean canonical match
+1980_CLC_854,CLC,1980 CLC 854,"1980 CLC 854 KARACHI-HIGH-COURT-SINDH    MAHMOOD VS SETTLEMENT COMMISSIONER, WEST PAKISTAN  Displaced Persons (Compensation and Rehabilitation) Act 1958--2 , Settlement Scheme No. VIII-",stub_or_index_entry,Non-judgment index stub (87 words)
+2001_CLC_1072,CLC,2001 CLC 1072,"2001 CLC 1072 SUPREME-COURT-AZAD-KASHMIR    NASIR PERVAIZ VS SHAZIA QAYYUM  Azad Jammu and Kashmir Family Courts Act 1993--5 , Azad Jammu and Kashmir Family Courts Act 1993 S. 5 & Sched",verified_match,Clean canonical match
+2022_CLC_1858,CLC,2022 CLC 1858,2022 CLC 1858 ISLAMABAD    Rana MASOOD IQBAL VS MUHAMMAD AYUB IQBAL RANA  Act of Court---Effect---Act of Court should not prejudice any one---Where Court does not comply with mandatory,verified_match,Clean canonical match
+1984_CLC_2532,CLC,1984 CLC 2532,"1984 CLC 2532 KARACHI-HIGH-COURT-SINDH    AMAN ELECTRONICS SALES AND SERVICES VS ABDUL HAMID  Code of Civil Procedure 1908--100 , West Pakistan Urban Rent Restriction Ordinance 1959--13",stub_or_index_entry,Non-judgment index stub (91 words)
+2016_CLC_1309,CLC,2016 CLC 1309,"2016 CLC 1309 LAHORE-HIGH-COURT-LAHORE    MUHAMMAD SHABBIR VS MUHAMMAD RAFIQUE  Administration of Justice--TERM , Legal formalities were to safeguard paramount interest of justice---Tec",verified_match,Clean canonical match
+1979_CLC_52,CLC,1979 CLC 199,1979 CLC 199,verified_match,Clean canonical match
+2003_CLC_1428,CLC,2003 CLC 1428,"2003 CLC 1428 PESHAWAR-HIGH-COURT  MIR NAWAZ KHAN VS GUL AYUB KHAN 1995 MLD 1602, 1996 MLD 260, Civil Procedure Code --Order II of C.P.C. Frame of Suit--2 , Civil Procedure Code --Order",verified_match,Clean canonical match
+1994_CLC_1933,CLC,1994 CLC 1933,"1994 CLC 1933 LAHORE-HIGH-COURT-LAHORE    KARAM HUSSAIN VS ADDITIONAL DISTRICT JUDGE: GUJRANWALA  Audi Alteram Partem--MAXIM , Audi Alteram Partem ""Audi alteram partem"" principle of---L",verified_match,Clean canonical match
+2011_CLC_135,CLC,2011 CLC 135,"2011 CLC 135 KARACHI-HIGH-COURT-SINDH  NAA CONSULTING ENGINEERS (PVT.) LTD. VS PUBLIC PRIVATE PARTNERSHIP UNIT through Chief Secretary Sindh, Karachi",stub_or_index_entry,Non-judgment index stub (21 words)
+2010_MLD_817,MLD,2010 MLD 817,2010 M L D 817,format_artifact,Spaced OCR letters
+2011_MLD_733,MLD,2011 MLD 733,2011 M L D 733,format_artifact,Spaced OCR letters
+2025_MLD_165,MLD,2025 MLD 165,"2025 MLD 165 KARACHI-HIGH-COURT-SINDH    Badar-ud-Din VS Senior Superintendent of Police, Shikarpur  Ss. 22-A & 561-A---Powers of Justice of Peace under S.22-A, Cr.P.C.---Scope---Petiti",verified_match,Clean canonical match
+1994_MLD_1400,MLD,1994 MLD 1400,1994 M L D 1400,format_artifact,Spaced OCR letters
+2021_MLD_424,MLD,2021 MLD 424,Register Feedback Customer Care Office P,publisher_banner,Banner-only stub
+1985_MLD_444,MLD,1985 MLD 1107,1985 MLD 1107,verified_match,Clean canonical match
+2013_MLD_1315,MLD,2013 MLD 1315,2013 M L D 1315,format_artifact,Spaced OCR letters
+1988_MLD_484,MLD,1988 MLD 1323,1988 MLD 1323,verified_match,Clean canonical match
+2018_MLD_789,MLD,2018 MLD 789,2018 M L D 789,format_artifact,Spaced OCR letters
+1994_MLD_912,MLD,1994 MLD 912,1994 M L D 912,format_artifact,Spaced OCR letters
+1992_MLD_1983,MLD,1992 MLD 1983,1992 M L D 1983,format_artifact,Spaced OCR letters
+2020_MLD_1492,MLD,2020 MLD 1492,2020 M L D 1492,format_artifact,Spaced OCR letters
+2012_MLD_188,MLD,2012 MLD 188,2012 M L D 188,format_artifact,Spaced OCR letters
+2001_MLD_1259,MLD,2001 MLD 1259,2001 M L D 1259,format_artifact,Spaced OCR letters
+1987_MLD_870,MLD,1987 MLD 2384,1987 MLD 2384,verified_match,Clean canonical match
+2023_MLD_77,MLD,2023 MLD 77,2023 MLD 77 KARACHI-HIGH-COURT-SINDH  Syed JAN ALI SHAH VS GOVERNMENT OF SINDH through Secretary/ Senior Member Board of Revenue,stub_or_index_entry,Non-judgment index stub (21 words)
+2023_MLD_47,MLD,2023 MLD 47,"2023 MLD 47 ISLAMABAD    JUNAID MASEEH VS State  Intra Court Appeal--Term , Law Reforms Ordinance 1972--3 , Maintainability--TERM , Official Secrets Act 1923--13 , S. 13---Law Reforms O",verified_match,Clean canonical match
+2024_MLD_635,MLD,2024 MLD 635,"2024 MLD 635 KARACHI-HIGH-COURT-SINDH    Imran Khalid VS Mst. Munazza Rizvi  Constitutional petition--TERM , Maintainability--TERM , Sindh Rented Premises Ordinance 1979--16 , S. 16(1)-",verified_match,Clean canonical match
+1989_MLD_2226,MLD,1989 MLD 2226,× Case Description Error Code:700 Sorry ,verified_match,Clean canonical match
+1989_MLD_2043,MLD,1989 MLD 2043,1989 M L D 2043,format_artifact,Spaced OCR letters
+1994_MLD_266,MLD,1994 MLD 266,1994 M L D 266,format_artifact,Spaced OCR letters
+2022_MLD_2061,MLD,2022 MLD 2061,2022 MLD 2061 QUETTA-HIGH-COURT-BALOCHISTAN    CHAIRMAN NATIONAL ACCOUNTABILITY BUREAU VS ABDUL NABI JATTAK  Ss.9(a)(iv) & 14---Assets beyond known sources of income---Appreciation of e,verified_match,Clean canonical match
+1988_MLD_203,MLD,1988 MLD 520,1988 MLD 520,verified_match,Clean canonical match
+2016_MLD_1569,MLD,2016 MLD 1569,2016 M L D 1569,format_artifact,Spaced OCR letters
+2013_MLD_708,MLD,2013 MLD 708,2013 M L D 708,format_artifact,Spaced OCR letters
+1990_MLD_1977,MLD,1990 MLD 1977,1990 M L D 1977,format_artifact,Spaced OCR letters
+1989_MLD_4691,MLD,1989 MLD 4691,1989 M L D 4691,format_artifact,Spaced OCR letters
+1997_MLD_778,MLD,1997 MLD 778,1997 M L D 778,format_artifact,Spaced OCR letters
+1993_MLD_1303,MLD,1993 MLD 1303,1993 M L D 1303,format_artifact,Spaced OCR letters
+2003_MLD_1721,MLD,2003 MLD 1721,2003 M L D 1721,format_artifact,Spaced OCR letters
+1996_MLD_1825,MLD,1996 MLD 1825,1996 M L D 1825,format_artifact,Spaced OCR letters
+2001_MLD_1532,MLD,2001 MLD 1532,2001 M L D 1532,format_artifact,Spaced OCR letters
+2019_MLD_276,MLD,2019 MLD 276,2019 M L D 276,format_artifact,Spaced OCR letters
+2001_MLD_2012,MLD,2001 MLD 2012,2001 M L D 2012,format_artifact,Spaced OCR letters
+2023_MLD_910,MLD,2023 MLD 910,"2023 MLD 910 QUETTA-HIGH-COURT-BALOCHISTAN    MUHAMMAD AMEEN VS DEPUTY COMMISSIONER PANJGUR  Constitution of Pakistan 1973--199 , Constitutional petition--TERM , Factual controversy--Te",verified_match,Clean canonical match
+1987_MLD_1178,MLD,1987 MLD 3179,1987 MLD 3179,verified_match,Clean canonical match
+1995_MLD_511,MLD,1995 MLD 511,1995 M L D 511,format_artifact,Spaced OCR letters
+2024_YLR_1339,YLR,2024 YLR 1339,"2024 YLR 1339 LAHORE-HIGH-COURT-LAHORE    SHARAFAT ALI VS State  Criminal Procedure Code (Cr.P.C) 1898--498 , Pakistan Penal Code 1860--337-L , Pakistan Penal Code 1860--337-U , S. 498-",verified_match,Clean canonical match
+SHC_YLR_2727_2012,YLR,2012 YLR 2727,"2012 YLR 2727 KARACHI-HIGH-COURT-SINDH    MUMTAZ ALI JALBANI VS State  Criminal Procedure Code (Cr.P.C) 1898--497 , Pakistan Penal Code 1860--109 , Pakistan Penal Code 1860--34 , Pakist",verified_match,Clean canonical match
+1999_YLR_16,YLR,1999 YLR 16,1999 Y L R 16,format_artifact,Spaced OCR letters
+2013_YLR_1302,YLR,2013 YLR 1302,"2013 YLR 1302 KARACHI-HIGH-COURT-SINDH    Haji FARMAN ALI KOLACHI VS SESSIONS JUDGE  Criminal Procedure Code (Cr.P.C) 1898--22-A , Mala Fides--TERM , S. 22-A(6)---Illegal encroachment b",verified_match,Clean canonical match
+2023_YLR_2059,YLR,2023 YLR 2059,"2023 YLR 2059 LAHORE-HIGH-COURT-LAHORE    AHMAD KHAN VS ADDITIONAL DISTRICT JUDGE, JHANG  S. 5, Sched.--- Constitution of Pakistan, Art. 199---Constitutional petition---Dower---Plot in",verified_match,Clean canonical match
+2010_YLR_2205,YLR,2010 YLR 2205,2010 Y L R 2205,format_artifact,Spaced OCR letters
+2011_YLR_2272,YLR,2011 YLR 2272,"2011 YLR 2272 LAHORE-HIGH-COURT-LAHORE  MUHAMMAD NAEEM VS State 2009 PCr.LJ 1418, PLD 1995 SC 34, Criminal Procedure Code (Cr.P.C) 1898--497 , Dishonouring of cheque--Term , Pakistan Pe",verified_match,Clean canonical match
+2025_YLR_977,YLR,2025 YLR 977,"2025 YLR 977 KARACHI-HIGH-COURT-SINDH    Zohaib Ali Samo VS State  Appreciation of Evidence--TERM , Control of Narcotic Substances Act 1997--9 , Possession of narcotics--Term , S. 9(c)-",verified_match,Clean canonical match
+SC_YLR_1915_2008,YLR,2008 YLR 1915,2008 Y L R 1915,format_artifact,Spaced OCR letters
+2012_YLR_1496,YLR,2012 YLR 1496,2012 YLR 1496 KARACHI-HIGH-COURT-SINDH,verified_match,Clean canonical match
+2010_YLR_1846,YLR,2010 YLR 1846,2010 Y L R 1846,format_artifact,Spaced OCR letters
+2003_YLR_2226,YLR,2003 YLR 2226,2003 Y L R 2226,format_artifact,Spaced OCR letters
+2007_YLR_1729,YLR,2007 YLR 1729,2007 Y L R 1729,format_artifact,Spaced OCR letters
+2012_YLR_2895,YLR,2012 YLR 2895,2012 YLR 2895 KARACHI-HIGH-COURT-SINDH,verified_match,Clean canonical match
+2008_YLR_920,YLR,2008 YLR 920,2008 Y L R 920,format_artifact,Spaced OCR letters
+2014_YLR_66,YLR,2014 YLR 66,2014 YLR 66 KARACHI-HIGH-COURT-SINDH    QAMDEEN BROTHERS (PVT.) LTD. VS Mrs. SHIRLEY AMIRUDDIN VALIKA  Civil Procedure Code --Order XXIII of C.P.C. Withdrawal and Adjustment of Suits--3,verified_match,Clean canonical match
+2008_YLR_1958,YLR,2008 YLR 1958,2008 YLR 1958 KARACHI-HIGH-COURT-SINDH,verified_match,Clean canonical match
+2010_YLR_1757,YLR,2010 YLR 1757,2010 Y L R 1757,format_artifact,Spaced OCR letters
+2018_YLR_2363,YLR,2018 YLR 2363,"2018 YLR 2363 FEDERAL-SHARIAT-COURT    KALEEM ULLAH VS State  Appreciation of Evidence--TERM , Criminal Procedure Code (Cr.P.C) 1898--164 , Judicial confession--Term , Offences Against",verified_match,Clean canonical match
+2006_YLR_2770,YLR,2006 YLR 2770,2006 Y L R 2770,format_artifact,Spaced OCR letters
+SC_YLR_1426_2012,YLR,2012 YLR 1426,"2012 YLR 1426 LAHORE-HIGH-COURT-LAHORE  Hafiz MUHAMMAD ALEEM VS LAHORE DEVELOPMENT AUTHORITY 1997 SCMR 1020, 1998 SCMR 2268, 1998 SCMR 2386, 2004 SCMR 1274, 2007 YLR 1618, PLD 1999 Lah.",verified_match,Clean canonical match
+2006_YLR_1572,YLR,2006 YLR 1572,2006 Y L R 1572,format_artifact,Spaced OCR letters
+1999_YLR_929,YLR,1999 YLR 929,1999 Y L R 929,format_artifact,Spaced OCR letters
+2009_YLR_1165,YLR,2009 YLR 1165,2009 Y L R 1165,format_artifact,Spaced OCR letters
+2001_YLR_313,YLR,2001 YLR 313,2001 Y L R 313,format_artifact,Spaced OCR letters
+2001_YLR_1628,YLR,2001 YLR 1628,2001 Y L R 1628,format_artifact,Spaced OCR letters
+2001_YLR_1668,YLR,2001 YLR 1668,2001 YLR 1668 QUETTA-HIGH-COURT-BALOCHISTAN,verified_match,Clean canonical match
+2004_YLR_931,YLR,2004 YLR 931,2004 Y L R 931,format_artifact,Spaced OCR letters
+2008_YLR_2090,YLR,2008 YLR 2090,2008 Y L R 2090,format_artifact,Spaced OCR letters
+PHC_YLR_1515_2012,YLR,2012 YLR 1515,"2012 YLR 1515 PESHAWAR-HIGH-COURT    Mst. ZAKIYA BEGUM VS Mir JANAT SHAH  Civil Procedure Code --Order VII of C.P.C. Plaint--1 , Maintainability--TERM , Plaint--TERM , O.VII, R.1---Plai",verified_match,Clean canonical match
+2008_YLR_1548,YLR,2008 YLR 1548,2008 Y L R 1548,format_artifact,Spaced OCR letters
+2007_YLR_1911,YLR,2007 YLR 1911,2007 Y L R 1911,format_artifact,Spaced OCR letters
+2003_YLR_1198,YLR,2003 YLR 1198,2003 Y L R 1198,format_artifact,Spaced OCR letters
+2010_YLR_3323,YLR,2010 YLR 3323,2010 Y L R 3323,format_artifact,Spaced OCR letters
+2006_YLR_1433,YLR,2006 YLR 1433,2006 Y L R 1433,format_artifact,Spaced OCR letters
+2018_YLR_2589,YLR,2018 YLR 2589,"2018 YLR 2589 PESHAWAR-HIGH-COURT    MUHAMMAD ASHIQ VS State  Administration of Justice--TERM , Criminal Trial--TERM , Administration of justice---No one would be construed into the cri",verified_match,Clean canonical match
+1999_YLR_1517,YLR,1999 YLR 1517,1999 Y L R 1517,format_artifact,Spaced OCR letters
+2010_PTD_95,PTD,2010 PTD 779,2010 PTD 779,verified_match,Clean canonical match
+2005_PTD_228,PTD,2005 PTD 1346,2005 PTD 1346,verified_match,Clean canonical match
+2007_PTD_54,PTD,2007 PTD 380,2007 PTD 380,verified_match,Clean canonical match
+2003_PTD_372,PTD,2003 PTD 1969,2003 PTD 1969,verified_match,Clean canonical match
+2020_PTD_1502,PTD,2020 PTD 1502,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2001_PTD_661,PTD,2001 PTD 3243,2001 PTD 3243,verified_match,Clean canonical match
+2021_PTD_1329,PTD,2021 PTD 1329,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2002_PTD_301,PTD,2002 PTD 1500,2002 PTD 1500,verified_match,Clean canonical match
+2020_PTD_454,PTD,2020 PTD 454,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2001_PTD_718,PTD,2001 PTD 3442,2001 PTD 3442,verified_match,Clean canonical match
+1983_PTD_17,PTD,1983 PTD 63,1983 PTD 63,verified_match,Clean canonical match
+2023_PTD_146,PTD,2023 PTD 146,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1998_PTD_560,PTD,1998 PTD 3541,1998 PTD 3541,verified_match,Clean canonical match
+2000_PTD_309,PTD,2000 PTD 1804,2000 PTD 1804,verified_match,Clean canonical match
+2023_PTD_919,PTD,2023 PTD 919,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2021_PTD_815,PTD,2021 PTD 815,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1991_PTD_1,PTD,1991 PTD 1,1991 PTD 1,verified_match,Clean canonical match
+2001_PTD_693,PTD,2001 PTD 3380,2001 PTD 3380,verified_match,Clean canonical match
+2002_PTD_437,PTD,2002 PTD 2149,2002 PTD 2149,stub_or_index_entry,Non-judgment index stub (74 words)
+1992_PTD_113,PTD,1992 PTD 708,1992 PTD 708,verified_match,Clean canonical match
+2012_PTD_90,PTD,2012 PTD 90,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2022_PTD_390,PTD,2022 PTD 390,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2000_PTD_5,PTD,2000 PTD 44,2000 PTD 44,verified_match,Clean canonical match
+2012_PTD_453,PTD,2012 PTD 453,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2016_PTD_2219,PTD,2016 PTD 2219,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2000_PTD_465,PTD,2000 PTD 2737,2000 PTD 2737,verified_match,Clean canonical match
+1996_PTD_33,PTD,1996 PTD 268,1996 PTD 268,verified_match,Clean canonical match
+2015_PTD_520,PTD,2015 PTD 520,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2019_PTD_1100,PTD,2019 PTD 1100,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2026_PTD_816,PTD,2026 PTD 816,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+2005_PTD_307,PTD,2005 PTD 1806,2005 PTD 1806,verified_match,Clean canonical match
+2005_PTD_75,PTD,2005 PTD 472,2005 PTD 472,verified_match,Clean canonical match
+1990_PTD_100,PTD,1990 PTD 652,1990 PTD 652,verified_match,Clean canonical match
+2006_PTD_327,PTD,2006 PTD 1822,2006 PTD 1822,verified_match,Clean canonical match
+2015_PTD_668,PTD,2015 PTD 668,My Account Feedback Customer Care Office,verified_match,Clean canonical match
+1984_L_1,OTHER,1984 L 1,1984 C L C 1634,stub_or_index_entry,Missing journal or page in citation
+S.458/411/120---Quashing of proceedings---Accused had stood surety not for monetary gain but out of sheer benevolence---In the same case the confiscated amount of a bail bond furnished in respect of a co-accused by two other sureties was reduced from Rs.30_SS. 514 & 561-A---PENAL CODE (XLV OF 1860)_1,OTHER,S.458/411/120---Quashing of proceedings---Accused had stood surety not for monetary gain but out of sheer benevolence---In the same case the confiscated amount of a bail bond furnished in respect of a co-accused by two other sureties was reduced from Rs.30 SS. 514 & 561-A---PENAL CODE (XLV OF 1860) 1,000 i.e. the 1/5th of the total confisca,stub_or_index_entry,Non-judgment index stub (20 words)
+Constitution of Pakistan 1973--108_CONSTITUTION OF PAKISTAN 1973--107_1,OTHER,Constitution of Pakistan 1973--108 CONSTITUTION OF PAKISTAN 1973--107 1,Constitution of Pakistan 1973--112,stub_or_index_entry,Non-judgment index stub (4 words)
+being vitally interested in properties of such company_S. 174--WINDING UP PROCEEDINGS-SCRUTINY OF BIDS FOR SALE APPELLANTS HAVING A CLAIM OF SEVERAL CRORES OF RUPEES AGAINST COMPANY IN LIQUIDATION_1,OTHER,being vitally interested in properties of such company S. 174--WINDING UP PROCEEDINGS-SCRUTINY OF BIDS FOR SALE APPELLANTS HAVING A CLAIM OF SEVERAL CRORES OF RUPEES AGAINST COMPANY IN LIQUIDATION 1,acceptance of bid behind back of appella,stub_or_index_entry,Non-judgment index stub (21 words)
+Companies Ordinance 1984--284_AMALGAMATION OF COMPANIES--TERM_1,OTHER,Companies Ordinance 1984--284 AMALGAMATION OF COMPANIES--TERM 1,Stamp Act 1899--27-A,stub_or_index_entry,Non-judgment index stub (3 words)
+take over of-Management of factory_DEFENCE OF PAKISTAN RULES 1965 RR. 181 & 182-ENEMY PROPERTY_1,OTHER,take over of-Management of factory DEFENCE OF PAKISTAN RULES 1965 RR. 181 & 182-ENEMY PROPERTY 1,suffered from laches and liable to dismi,stub_or_index_entry,Non-judgment index stub (7 words)
+quantum of---Scope---Quantity of recovered narcotic---Perusal of Ss. 9(b) & 9(c) of Control of Narcotic Substances Act_SS. 9(B) & (C)---POSSESSION OF NARCOTIC---SENTENCE_1,OTHER,quantum of---Scope---Quantity of recovered narcotic---Perusal of Ss. 9(b) & 9(c) of Control of Narcotic Substances Act SS. 9(B) & (C)---POSSESSION OF NARCOTIC---SENTENCE 1,and if it exceeded ten kilograms it coul,stub_or_index_entry,Non-judgment index stub (23 words)
+"39 & 150--Territory within jurisdiction of a Court transferred to another Court--Proceedings pending in former Court do not get transferred automatically to the other Court or become liable to be transferred to the other Court save where such Court ceases to exist or is otherwise abolished and it is then that order of """"transfer of business"""" of that Court becomes liable to be passed under S.150_SS. 38_1",OTHER,"39 & 150--Territory within jurisdiction of a Court transferred to another Court--Proceedings pending in former Court do not get transferred automatically to the other Court or become liable to be transferred to the other Court save where such Court ceases to exist or is otherwise abolished and it is then that order of """"transfer of business"""" of that Court becomes liable to be passed under S.150 SS. 38 1",C.P.C. despite change of territory--Decr,stub_or_index_entry,Non-judgment index stub (24 words)
+r. 781-Company_COMPANIES ACT 1913 SS. 162 & 163 AND SIND CHIEF COURT RULES (ORIGINAL SIDE)_1,OTHER,r. 781-Company COMPANIES ACT 1913 SS. 162 & 163 AND SIND CHIEF COURT RULES (ORIGINAL SIDE) 1,1913-Two cheques issued by Company,stub_or_index_entry,Non-judgment index stub (5 words)
+while remaining land stood in the name of his brother_S.52 --- VALIDITY AND EFFECT OF MUTATION --- LONG STANDING ENTRIES IN RECORD-OF RIGHT.OF ???MUTATION UNDER CHALLENGE WAS ATTESTED ON 14?12?1926 WHILE PLAINTIFF ATTAINED MAJORITY IN 1935 ??? PLAINTIFF ON ATTAINING MAJORITY HAD SOLD HIS ENTIRE LAND_1,OTHER,while remaining land stood in the name of his brother S.52 --- VALIDITY AND EFFECT OF MUTATION --- LONG STANDING ENTRIES IN RECORD-OF RIGHT.OF ???MUTATION UNDER CHALLENGE WAS ATTESTED ON 14?12?1926 WHILE PLAINTIFF ATTAINED MAJORITY IN 1935 ??? PLAINTIFF ON ATTAINING MAJORITY HAD SOLD HIS ENTIRE LAND 1,when he instituted suit to challenge mut,stub_or_index_entry,Non-judgment index stub (12 words)
+Union Committee_DIVORCE--SHIAH LAW--WIFE NOT PRESENT AT THE TIME OF PRONOUNCEMENT OF TALAQ--NOTICE ADDRESSED TO WIFE WITH A COPY TO CHAIRMAN_1,OTHER,Union Committee DIVORCE--SHIAH LAW--WIFE NOT PRESENT AT THE TIME OF PRONOUNCEMENT OF TALAQ--NOTICE ADDRESSED TO WIFE WITH A COPY TO CHAIRMAN 1,though it did mention at the end names o,stub_or_index_entry,Non-judgment index stub (30 words)
+Pakistan Penal Code 1860--302_CRIMINAL PROCEDURE CODE (CR.P.C) 1898--498_1,OTHER,Pakistan Penal Code 1860--302 CRIMINAL PROCEDURE CODE (CR.P.C) 1898--498 1,Pakistan Penal Code 1860--452,stub_or_index_entry,Non-judgment index stub (4 words)
+whether sufficient to convict a woman for Zina --- Mere pregnancy is not sufficient to convict a woman for Zina_OFFENCE OF ZINA (ENFORCEMENT OF HUDOOD) ORDINANCE 1979 S. 10 --- ZINA --- PREGNANCY ALONE_1,OTHER,whether sufficient to convict a woman for Zina --- Mere pregnancy is not sufficient to convict a woman for Zina OFFENCE OF ZINA (ENFORCEMENT OF HUDOOD) ORDINANCE 1979 S. 10 --- ZINA --- PREGNANCY ALONE 1,is also entitled to benefit of doubt. [M,stub_or_index_entry,Non-judgment index stub (19 words)
+Ss. 5 & 20 Each step taken by Magistrate after passing main order under S. 488_S. 488 READ WITH WEST PAKISTAN FAMILY COURTS ACT (XXXV OF 1964)_1,OTHER,Ss. 5 & 20 Each step taken by Magistrate after passing main order under S. 488 S. 488 READ WITH WEST PAKISTAN FAMILY COURTS ACT (XXXV OF 1964) 1,enforced in District Order calling upon ,stub_or_index_entry,Non-judgment index stub (12 words)
+O. XXXIX_CIVIL PROCEDURE CODE --ORDER XXXIX OF C.P.C. TEMPORARY INJUNCTIONS AND INTERLOCUTORY ORDERS CIVIL PROCEDURE CODE (V OF 1908)_1,OTHER,O. XXXIX CIVIL PROCEDURE CODE --ORDER XXXIX OF C.P.C. TEMPORARY INJUNCTIONS AND INTERLOCUTORY ORDERS CIVIL PROCEDURE CODE (V OF 1908) 1,S. 198.Civil Procedure Code (V of 1908),stub_or_index_entry,Non-judgment index stub (7 words)
+-Landlord_S. 14- EJECTMENT ON GROUND OF PERSONAL BONA FIDE REQUIREMENT_1,OTHER,-Landlord S. 14- EJECTMENT ON GROUND OF PERSONAL BONA FIDE REQUIREMENT 1,neither required to prove his previous b,stub_or_index_entry,Non-judgment index stub (40 words)
+rr. 3 & 4-Execution of decree-Whether and when executing Court can refuse execution and question validity of decree-Decree_CODE OF CIVIL PROCEDURE 1908 S. 47 AND O. XXII_1,OTHER,rr. 3 & 4-Execution of decree-Whether and when executing Court can refuse execution and question validity of decree-Decree CODE OF CIVIL PROCEDURE 1908 S. 47 AND O. XXII 1,not competent in law to grant substituti,stub_or_index_entry,Non-judgment index stub (42 words)
+held_S. 13?EJECTMENT?ORDER OF EVICTION BASED ON EVIDENCE PRODUCED BY LANDLORD?NO ARGUMENT ADVANCED TO SHOW ORDER BEING NOT SUPPORTED BY EVIDENCE?ORDER_1,OTHER,held S. 13?EJECTMENT?ORDER OF EVICTION BASED ON EVIDENCE PRODUCED BY LANDLORD?NO ARGUMENT ADVANCED TO SHOW ORDER BEING NOT SUPPORTED BY EVIDENCE?ORDER 1,r. 17?Service by affixation?Section 13 o,stub_or_index_entry,Non-judgment index stub (24 words)
+Explanation_SS. 15(4)_1,OTHER,Explanation SS. 15(4) 1,r. 13-Restoration of dismissed applicati,stub_or_index_entry,Non-judgment index stub (10 words)
+R.1 [as inserted by Notification_CIVIL PROCEDURE CODE --ORDER VIII OF C.P.C. WRITTEN STATEMENT AND SET-OFF ----O. VIII_1,OTHER,R.1 [as inserted by Notification CIVIL PROCEDURE CODE --ORDER VIII OF C.P.C. WRITTEN STATEMENT AND SET-OFF ----O. VIII 1,filing of Extension in time Powers of Tr,stub_or_index_entry,Non-judgment index stub (13 words)
+even if premises was not required by all other cosharers. ---- S. 15(2)(vii) --- Personal bona fide need --- Evidence on record had fully proved that family of landlord consisted of rive members_S. 15(2)(VII) --- PERSONAL BONA RIDE NEED OF LANDLORD --- ONE OF THE CO-SHARERS IN. PREMISES COULD SEEK EVICTION OF TENANT ON GROUND OF PERSONAL BONA TIDE REQUIREMENT_1,OTHER,even if premises was not required by all other cosharers. ---- S. 15(2)(vii) --- Personal bona fide need --- Evidence on record had fully proved that family of landlord consisted of rive members S. 15(2)(VII) --- PERSONAL BONA RIDE NEED OF LANDLORD --- ONE OF THE CO-SHARERS IN. PREMISES COULD SEEK EVICTION OF TENANT ON GROUND OF PERSONAL BONA TIDE REQUIREMENT 1,4M/84 ordered by VIlIth Senior Civil Jud,stub_or_index_entry,Non-judgment index stub (10 words)
+he was not present at the place of occurrence and was visiting his cousin_S. 302(B)---QATL-I-AMD---REAPPRAISAL OF EVIDENCE---PLEA OF ALIBI SUCCESSFULLY ESTABLISHED---ACCUSED TOOK THE STANCE THAT ON THE FATEFUL DAY AND TIME_1,OTHER,he was not present at the place of occurrence and was visiting his cousin S. 302(B)---QATL-I-AMD---REAPPRAISAL OF EVIDENCE---PLEA OF ALIBI SUCCESSFULLY ESTABLISHED---ACCUSED TOOK THE STANCE THAT ON THE FATEFUL DAY AND TIME 1,who after thorough investigation found t,stub_or_index_entry,Non-judgment index stub (26 words)
+219 & 184(3)---Election Commission_ARTS. 218(3)_1,OTHER,219 & 184(3)---Election Commission ARTS. 218(3) 1,election could not be held on the same B,stub_or_index_entry,Non-judgment index stub (36 words)
+Art.185(3)---Award made rule of Court---Father (defendant) transferred suit-land by way of family settlement to all his heirs from both wives---Some children (plaintiffs) later on claiming suit-land to have been gifted to them by father (defendant) filed against him suit_----SS.17 & 21---CONSTITUTION OF PAKISTAN (1973)_1,OTHER,Art.185(3)---Award made rule of Court---Father (defendant) transferred suit-land by way of family settlement to all his heirs from both wives---Some children (plaintiffs) later on claiming suit-land to have been gifted to them by father (defendant) filed against him suit ----SS.17 & 21---CONSTITUTION OF PAKISTAN (1973) 1,consent of father Courts below in a subs,stub_or_index_entry,Non-judgment index stub (30 words)
+20 & 30---Arbitration proceedings---Award---Only two of legal heirs of deceased referred dispute with regard to inheritance of their deceased father to arbitrators by arbitration agreement and arbitrators prepared award and suo motu filed same in Court for making rule of Court---Arbitrators in their application filed before Court for making award rule of Court; beside parties to arbitration agreement also impleaded other co-sharers in property of . deceased -as respondents and also proposed some property in award in name of one of legal heirs of deceased who was not made party to reference---Trial Court as well as Appellate Court below_ARBITRATION ACT 1940 SS. 14_1,OTHER,20 & 30---Arbitration proceedings---Award---Only two of legal heirs of deceased referred dispute with regard to inheritance of their deceased father to arbitrators by arbitration agreement and arbitrators prepared award and suo motu filed same in Court for making rule of Court---Arbitrators in their application filed before Court for making award rule of Court; beside parties to arbitration agreement also impleaded other co-sharers in property of . deceased -as respondents and also proposed some property in award in name of one of legal heirs of deceased who was not made party to reference---Trial Court as well as Appellate Court below ARBITRATION ACT 1940 SS. 14 1,award based on such invalid action,stub_or_index_entry,Non-judgment index stub (6 words)
+Pakistan Penal Code 1860--302_CRIMINAL PROCEDURE CODE (CR.P.C) 1898--497_1,OTHER,Pakistan Penal Code 1860--302 CRIMINAL PROCEDURE CODE (CR.P.C) 1898--497 1,Pakistan Penal Code 1860--452,stub_or_index_entry,Non-judgment index stub (4 words)
+15_ARBITRATION ACT 1940 SS. 14_1,OTHER,15 ARBITRATION ACT 1940 SS. 14 1,30 & 33 Nature and object of arbitration,stub_or_index_entry,Non-judgment index stub (98 words)
+Ss. 342_SS. 194 & 195-PENAL CODE (XLV OF 1860)_1,OTHER,Ss. 342 SS. 194 & 195-PENAL CODE (XLV OF 1860) 1,Art. 15(5)(d)Complaint against Chief Mar,stub_or_index_entry,Non-judgment index stub (7 words)
+1967_H_1,OTHER,1967 H 1,P L D 1967 Karachi 569,stub_or_index_entry,Missing journal or page in citation
+100 & 302(c)--- Qatl-i-amd--- Reappraisal of evidence---Benefit of doubt---Right of private defence of the body and property extending to causing death of trespasser---Scope---Site plan did not show that the house of the complainant was at a short distance from the crime scene_SS. 97_1,OTHER,100 & 302(c)--- Qatl-i-amd--- Reappraisal of evidence---Benefit of doubt---Right of private defence of the body and property extending to causing death of trespasser---Scope---Site plan did not show that the house of the complainant was at a short distance from the crime scene SS. 97 1,was absolutely unfounded and it was for ,stub_or_index_entry,Non-judgment index stub (38 words)
+R.2_CIVIL PROCEDURE CODE --ORDER XXXVII OF C.P.C. SUMMARY PROCEDURE ON NEGOTIABLE INSTRUMENTS 0. XXXVII_1,OTHER,R.2 CIVIL PROCEDURE CODE --ORDER XXXVII OF C.P.C. SUMMARY PROCEDURE ON NEGOTIABLE INSTRUMENTS 0. XXXVII 1,R.10(2) Deletion of defendant's name fro,stub_or_index_entry,Missing journal or page in citation
+Ss. S(2) & 173-Bogus claim filed by displaced person---Police make investigation under S. S(2)_DISPLACED PERSONS (LAND SETTLEMENT) ACT 1958 S. 29 READ WITH CRIMINAL PROCEDURE CODE (V OF 1898)_1,OTHER,Ss. S(2) & 173-Bogus claim filed by displaced person---Police make investigation under S. S(2) DISPLACED PERSONS (LAND SETTLEMENT) ACT 1958 S. 29 READ WITH CRIMINAL PROCEDURE CODE (V OF 1898) 1,1958 Does not deal with question of inve,stub_or_index_entry,Non-judgment index stub (29 words)
+"S. 115-Arbitratioia-Estoppel-Contention that petitioner having once accepted compensation money on putting signatures in agreement Form """"A"""" cannot subsequently ask for referring matter to arbitration_SS. 5 & 7(AAA) READ WITH EVIDENCE ACT (I OF 1872)_1",OTHER,"S. 115-Arbitratioia-Estoppel-Contention that petitioner having once accepted compensation money on putting signatures in agreement Form """"A"""" cannot subsequently ask for referring matter to arbitration SS. 5 & 7(AAA) READ WITH EVIDENCE ACT (I OF 1872) 1",further cl. 6 of agreement speaks for re,stub_or_index_entry,Non-judgment index stub (20 words)
+a statutory body_WEST PAKISTAN INDUSTRIAL AND COMMERCIAL EMPLOYMENT (STANDING ORDERS) ORDINANCE 1968 INDUSTRIAL OR COMMERCIAL ESTABLISHMENT---LEAVE TO APPEAL WAS GRANTED BY SUPREME COURT TO EXAMINE THE CONTENTION THAT LAHORE DEVELOPMENT AUTHORITY_1,OTHER,a statutory body WEST PAKISTAN INDUSTRIAL AND COMMERCIAL EMPLOYMENT (STANDING ORDERS) ORDINANCE 1968 INDUSTRIAL OR COMMERCIAL ESTABLISHMENT---LEAVE TO APPEAL WAS GRANTED BY SUPREME COURT TO EXAMINE THE CONTENTION THAT LAHORE DEVELOPMENT AUTHORITY 1,1968 were not applicable.,stub_or_index_entry,Non-judgment index stub (4 words)
+2004_CLD_973,CLD,2004 CLD 973,"2004 CLD 973 LAHORE-HIGH-COURT-LAHORE    INDUSTRIAL DEVELOPMENT BANK OF PAKISTAN VS Messrs PROMETALS LTD  Financial Institutions (Recovery of Finances) Ordinance 2001--10 , -----S.10(1)",stub_or_index_entry,Non-judgment index stub (82 words)
+2009_CLD_1442,CLD,2009 CLD 1442,"2009 CLD 1442 SUPREME-COURT    SECURITIES AND EXCHANGE COMMISSION OF PAKISTAN VS Mian NISAR ELAHI  Constitution of Pakistan 1973--185 , Securities and Exchange Commission of Pakistan Ac",verified_match,Clean canonical match
+2012_CLD_1222,CLD,2012 CLD 1222,"2012 CLD 1222 LAHORE-HIGH-COURT-LAHORE    WARRIOR CHEMICAL (PVT.) LTD. VS NATIONAL BANK OF PAKISTAN  Application for leave to defend--Term , Banking Companies (Recovery of Loans, Advanc",verified_match,Clean canonical match
+2007_CLD_1232,CLD,2007 CLD 1232,"2007 CLD 1232 LAHORE-HIGH-COURT-LAHORE    MUSLIM COMMERCIAL BANK LIMITED VS AHMED ZIA  Financial Institutions (Recovery of Finances) Ordinance 2001--10 , Limitation Act 1908--5 , ---S.1",verified_match,Clean canonical match
+2002_CLD_399,CLD,2002 CLD 399,"2002 CLD 399 LAHORE-HIGH-COURT-LAHORE    KHALID PERVAIZ VS UNITED BANK LIMITED  Banking Companies (Recovery of Loans, Advances, Credits and Finances) Ordinance 1997--12 , Banking Compan",verified_match,Clean canonical match
+2004_CLD_512,CLD,2004 CLD 512,"2004 CLD 512 LAHORE-HIGH-COURT-LAHORE    Ch. MUHAMMAD ASLAM VS NATIONAL BANK OF PAKISTAN  Code of Civil Procedure 1908--11 , Financial Institutions (Recovery of Finances) Ordinance 2001",verified_match,Clean canonical match
+2005_CLD_1480,CLD,2005 CLD 1480,2005 CLD 1480 LAHORE-HIGH-COURT-LAHORE  Messrs Haji MUHAMMAD BOOTA through Sole Proprietor VS ALLIED BANK OF PAKISTAN LIMITED through Manager,stub_or_index_entry,Non-judgment index stub (21 words)
+2007_CLD_1116,CLD,2007 CLD 1116,2007 CLD 1116 SECURITIES-AND-EXCHANGE-COMMISSION-OF-PAKISTAN  QUALITY STEEL WORKS LIMITED: In the matter of VS QUALITY STEEL WORKS LIMITED: In the matter of,stub_or_index_entry,Non-judgment index stub (23 words)
+2010_CLD_116,CLD,2010 CLD 116,"2010 CLD 116 SECURITIES-AND-EXCHANGE-COMMISSION-OF-PAKISTAN    S.G. POWER LTD VS  Companies Ordinance 1984--492 , S.492-False statement Penalty for-Enforcement Department of Securities",verified_match,Clean canonical match
+2021_CLD_48,CLD,2021 CLD 48,"2021 CLD 48 KARACHI-HIGH-COURT-SINDH    MUHAMMAD SHAH KAKAR VS INTELLECTUAL PROPERTY TRIBUNAL AT SINDH AND BALOCHISTAN  Ss. 13, 15 & 19---Trade Marks Ordinance (XIX of 2001), Ss. 5(2) &",verified_match,Clean canonical match
+2013_CLD_2173,CLD,2013 CLD 2173,"2013 CLD 2173 SECURITIES-AND-EXCHANGE-COMMISSION-OF-PAKISTAN  AXIS GLOBAL LIMITED, BROKER KARACHI STOCK EXCHANGE LIMITED VS",stub_or_index_entry,Non-judgment index stub (15 words)
+2011_CLD_806,CLD,2011 CLD 806,"2011 CLD 806 LAHORE-HIGH-COURT-LAHORE  ALAM SHER MALIK VS MUSLIM COMMERCIAL BANK LIMITED 2005 SCMR 1643, Appeal--TERM , Financial Institutions (Recovery of Finances) Ordinance 2001--22",verified_match,Clean canonical match
+2004_CLD_762,CLD,2004 CLD 762,"2004 CLD 762 LAHORE-HIGH-COURT-LAHORE    ZULFIQAR ALI MUMTAZ VS UNITED BANK LIMITED  Banking Companies (Amendment) Ordinance 1997--12 , Banking Companies (Amendment) Ordinance 1997--6 ,",verified_match,Clean canonical match
+2019_CLD_211,CLD,2019 CLD 211,"2019 CLD 211 COMPETITION COMMISSION OF PAKISTAN    PAKISTAN SERVICES LIMITED VS  Competition Act 2010--10 , Competition Act 2010--30 , Competition Act 2010--32 , Competition Act 2010--3",verified_match,Clean canonical match
+2021_CLD_855,CLD,2021 CLD 855,"2021 CLD 855 SECURITIES-AND-EXCHANGE-COMMISSION-OF-PAKISTAN  AMPLE SECURITIES (PVT.) LTD. VS COMMISSIONER (SECURITIES MARKET DIVISION), SECP",stub_or_index_entry,Non-judgment index stub (16 words)
+2003_CLD_686,CLD,2003 CLD 686,"2003 CLD 686 LAHORE-HIGH-COURT-LAHORE    MUHAMMAD IQBAL VS Haji SHAUKAT ALI  Civil Procedure Code --Order VII of C.P.C. Plaint--2 , Civil Procedure Code --Order XXI of C.P.C. Execution",verified_match,Clean canonical match
+2007_CLD_524,CLD,2007 CLD 524,"2007 CLD 524 LAHORE-HIGH-COURT-LAHORE    SAEED AKHTAR VS PERVAIZ HANIF  Financial Institutions (Recovery of Finances) Ordinance 2001--19 , Financial Institutions (Recovery of Finances)",verified_match,Clean canonical match
+2018_CLD_823,CLD,2018 CLD 823,"2018 CLD 823 KARACHI-HIGH-COURT-SINDH    AMAN ELLAHI VS The REGISTRAR OF TRADE MARKS  Trade Marks Ordinance 2001--114 , Trade Marks Ordinance 2001--14 , Trade Marks Ordinance 2001--17 ,",verified_match,Clean canonical match
+2006_CLD_399,CLD,2006 CLD 399,"2006 CLD 399 SECURITIES-AND-EXCHANGE-COMMISSION-OF-PAKISTAN  In the matter of: MANSHA MOHSIN DOSSANI KHAN & COMPANY, CHARTERED ACCOUNTANTS VS In the matter of: MANSHA MOHSIN DOSSANI KHA",stub_or_index_entry,Non-judgment index stub (31 words)
+2010_CLD_726,CLD,2010 CLD 726,"2010 CLD 726 LAHORE-HIGH-COURT-LAHORE  MALIK MUSHTAQ GOODS TRANSPORT COMPANY VS FEDERATION OF PAKISTAN through Secretary Railways, Ministry of Railways, Islamabad",stub_or_index_entry,Non-judgment index stub (22 words)
+2016_CLD_1419,CLD,2016 CLD 1419,"2016 CLD 1419 ISLAMABAD  SAUDI PAK INDUSTRIAL AND AGRICULTURAL INVESTMENT COMPANY LIMITED VS The FOP through Secretary, Cabinet Division",stub_or_index_entry,Non-judgment index stub (21 words)
+2021_CLD_794,CLD,2021 CLD 794,"2021 CLD 794 KARACHI-HIGH-COURT-SINDH    RAZAK LATIF VS ACE SECURITIES (PVT.) LIMITED  Admission--TERM , Civil Procedure Code --Order XII of C.P.C. Admissions--6 , Judgment on admission",verified_match,Clean canonical match
+2010_CLD_34,CLD,2010 CLD 34,"2010 CLD 34 SECURITIES-AND-EXCHANGE-COMMISSION-OF-PAKISTAN    KOHINOOR INDUSTRIES LIMITED VS  Companies Ordinance 1984--244 , Companies Ordinance 1984--245 , Companies Ordinance 1984--4",verified_match,Clean canonical match
+2008_CLD_214,CLD,2008 CLD 214,"2008 CLD 214 KARACHI-HIGH-COURT-SINDH    HUMERA ABDUL AZIZ ESSA VS AL-ABBAS CEMENT INDUSTRIES LIMITED  Companies Ordinance 1984--305 , Companies Ordinance 1984--314 , Ss.305 & 314(2)---",verified_match,Clean canonical match
+2007_CLD_1365,CLD,2007 CLD 1365,"2007 CLD 1365 KARACHI-HIGH-COURT-SINDH    BABER SHEIKH VS State  Criminal Procedure Code (Cr.P.C) 1898--561-A , Financial Institutions (Recovery of Finances) Ordinance 2001--16 , ---S.1",verified_match,Clean canonical match
+2004_CLD_520,CLD,2004 CLD 520,"2004 CLD 520 LAHORE-HIGH-COURT-LAHORE    MUHAMMAD JAVAID ANJUM VS INDUSTRIAL DEVELOPMENT BANK OF PAKISTAN  Constitution of Pakistan 1973--199 , Contract Act 1872--62 , ----Art. 199---Co",verified_match,Clean canonical match
+2012_CLD_1109,CLD,2012 CLD 1109,2012 CLD 1109 SECURITIES-AND-EXCHANGE-COMMISSION-OF-PAKISTAN  SHOW CAUSE NOTICE ISSUED TO MESSRS FIRST PAKISTAN SECURITIES LIMITED VS,stub_or_index_entry,Non-judgment index stub (17 words)
+2002_CLD_1205,CLD,2002 CLD 1205,"2002 CLD 1205 SUPREME-COURT    Haji MUHAMMAD ASHIQ VS MUHAMMAD AJMAL QURESHI  Banking Companies (Recovery of Loans, Advances, Credits and Finances) Ordinance 1997--15 , Constitution of",verified_match,Clean canonical match
+2016_CLD_426,CLD,2016 CLD 426,"2016 CLD 426 SECURITIES-AND-EXCHANGE-COMMISSION-OF-PAKISTAN    H. P. BYRAMJI AND CO. (PVT.) LIMITED VS  Brokers and Agents Registration Rules 2001--RULE , Securities and Exchange Ordina",verified_match,Clean canonical match
+2003_CLD_1464,CLD,2003 CLD 1464,"2003 CLD 1464 LAHORE-HIGH-COURT-LAHORE  INTERNATIONAL TRADERS VS UNION BANK LIMITED PLD 1986 Kar. 464, PLD 1990 SC 497, Bankers Books Evidences Act 1891--4 , Banking Companies (Recovery",verified_match,Clean canonical match
+2016_CLD_1874,CLD,2016 CLD 1874,"2016 CLD 1874 LAHORE-HIGH-COURT-LAHORE    EHSAN-UL-HAQ VS MCB BANK LIMITED  Banking Companies (Recovery of Loans, Advances, Credits and Finances) Act 1997--9 , Banking Companies (Recove",verified_match,Clean canonical match
+2007_CLD_943,CLD,2007 CLD 943,2007 CLD 943 LAHORE-HIGH-COURT-LAHORE  Malik MUHAMMAD FAISAL VS STATE LIFE INSURANCE CORPORATION through Chairman and 2 others,stub_or_index_entry,Non-judgment index stub (19 words)
+2015_GBLR_152,GBLR,2015 GBLR 152,2015 GBLR 152 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2015_GBLR_358,GBLR,2015 GBLR 358,2015 GBLR 358 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2016_GBLR_266,GBLR,2016 GBLR 266,2016 GBLR 266 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2010_GBLR_390,GBLR,2010 GBLR 390,2010 GBLR 390 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2015_GBLR_186,GBLR,2015 GBLR 186,2015 GBLR 186 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2010_GBLR_276,GBLR,2010 GBLR 276,2010 GBLR 276 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2015_GBLR_318,GBLR,2015 GBLR 318,2015 GBLR 318 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2015_GBLR_162,GBLR,2015 GBLR 162,2015 GBLR 162 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2016_GBLR_127,GBLR,2016 GBLR 127,2016 GBLR 127 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2010_GBLR_301,GBLR,2010 GBLR 301,2010 GBLR 301 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2010_GBLR_88,GBLR,2010 GBLR 88,2010 GBLR 88 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2016_GBLR_199,GBLR,2016 GBLR 199,2016 GBLR 199 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2010_GBLR_280,GBLR,2010 GBLR 280,2010 GBLR 280 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2016_GBLR_35,GBLR,2016 GBLR 35,2016 GBLR 35 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2010_GBLR_356,GBLR,2010 GBLR 356,2010 GBLR 356 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2010_GBLR_413,GBLR,2010 GBLR 413,2010 GBLR 413 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2014_GBLR_228,GBLR,2014 GBLR 228,2014 GBLR 228 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2010_GBLR_351,GBLR,2010 GBLR 351,2010 GBLR 351 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2016_GBLR_424,GBLR,2016 GBLR 424,2016 GBLR 424 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2014_GBLR_106,GBLR,2014 GBLR 106,2014 GBLR 106 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2010_GBLR_311,GBLR,2010 GBLR 311,2010 GBLR 311 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2010_GBLR_83,GBLR,2010 GBLR 83,2010 GBLR 83 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2010_GBLR_75,GBLR,2010 GBLR 75,2010 GBLR 75 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2016_GBLR_139,GBLR,2016 GBLR 139,2016 GBLR 139 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2015_GBLR_117,GBLR,2015 GBLR 117,2015 GBLR 117 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2016_GBLR_29,GBLR,2016 GBLR 29,2016 GBLR 29 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
+2010_GBLR_134,GBLR,2010 GBLR 134,2010 GBLR 134 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2010_GBLR_36,GBLR,2010 GBLR 36,2010 GBLR 36 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2010_GBLR_73,GBLR,2010 GBLR 73,2010 GBLR 73 SUPREME-APPELATE-COURT-GILGIT,verified_match,Clean canonical match
+2015_GBLR_373,GBLR,2015 GBLR 373,2015 GBLR 373 SUPREME-APPELLATE-COURT,verified_match,Clean canonical match
