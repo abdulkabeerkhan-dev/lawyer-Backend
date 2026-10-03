@@ -1,3 +1,6 @@
 * @abdulkabeerkhan-dev
 data/ @abdulkabeerkhan-dev
 eval/ @abdulkabeerkhan-dev
+tests/test_anti_tamper_scrubbers.py @abdulkabeerkhan-dev
+core/legal_guardrails.py @abdulkabeerkhan-dev
+core/quote_verifier.py @abdulkabeerkhan-dev
