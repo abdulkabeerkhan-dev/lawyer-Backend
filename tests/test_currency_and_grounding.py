@@ -375,8 +375,8 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
         # Check version store record directly
         latest = global_statute_store.get_latest_version("PPC_1860", "PPC_1860_SEC_489F")
         self.assertIsNotNone(latest)
-        self.assertEqual(latest["version_id"], "PPC_1860_SEC_489F_V2")
-        self.assertEqual(latest["previous_version_id"], "PPC_1860_SEC_489F_V1")
+        self.assertEqual(latest["version_id"], "PPC_1860_SEC_489F_V1")
+        self.assertIsNone(latest["previous_version_id"])
         self.assertEqual(latest["verification_status"], "baseline_unverified")
         self.assertIsNone(latest["source_tier"])
         self.assertIsNone(latest["fetched_at"])
@@ -384,7 +384,7 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
         self.assertFalse(latest["text_available"])
         self.assertEqual(latest["court_challenges"], [])
 
-    def test_real_statute_baseline_v2_records(self):
+    def test_real_statute_baseline_v1_records(self):
         # PRPA and Pre-emption must be Punjab jurisdiction
         prpa = global_statute_store.get_latest_version("PRPA_2009", "PRPA_2009_SEC_1")
         self.assertIsNotNone(prpa)

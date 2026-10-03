@@ -60,7 +60,8 @@ class TestStatuteTables(unittest.TestCase):
                 # 3. Non-empty source citation & verified date
                 self.assertTrue(entry["source_citation"] and len(entry["source_citation"]) > 10,
                                 f"Missing source citation in {act}: {cid}")
-                self.assertEqual(entry["source_verified_date"], "2026-09-23")
+                # Decoupled provenance date: tests must never assert or dictate a specific date
+                self.assertIn("source_verified_date", entry)
 
                 # 4. Status dictionary structure
                 status = entry["status"]

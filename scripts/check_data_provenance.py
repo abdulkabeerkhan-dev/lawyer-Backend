@@ -45,7 +45,25 @@ def get_staged_data_files() -> List[str]:
 
 def verify_record_provenance(record: Dict[str, Any], file_name: str) -> List[str]:
     errors = []
+    rec_id = record.get('id') or record.get('case_id') or record.get('canonical_id') or "UNKNOWN"
     
+    # CI Provenance Rule: Any record claiming verification_status == "verified"
+    # MUST have source_url, source_pdf_page, and verified content_hash matching text
+    v_status = record.get("verification_status")
+    if v_status == "verified":
+        s_url = record.get("source_url") or record.get("file_path") or record.get("provenance_source")
+        page_val = record.get("source_pdf_page") or record.get("page") or record.get("source_page")
+        c_hash = record.get("content_hash") or record.get("content_sha256")
+        txt = record.get("text") or record.get("full_text")
+        if not s_url:
+            errors.append(f"Provenance violation: {file_name} record ID {rec_id} claims verification_status='verified' without source_url")
+        if not page_val:
+            errors.append(f"Provenance violation: {file_name} record ID {rec_id} claims verification_status='verified' without source_pdf_page")
+        if not txt or not c_hash:
+            errors.append(f"Provenance violation: {file_name} record ID {rec_id} claims verification_status='verified' without substantive text and content_hash")
+        elif c_hash != hashlib.sha256(txt.encode("utf-8")).hexdigest():
+            errors.append(f"Provenance violation: {file_name} record ID {rec_id} claims verification_status='verified' but content_hash mismatch")
+
     # Check if text is present and text_available is true
     has_text = bool(record.get("text") or record.get("full_text"))
     text_avail = record.get("text_available", True)
@@ -54,7 +72,7 @@ def verify_record_provenance(record: Dict[str, Any], file_name: str) -> List[str
     if not has_text:
         source = record.get("source_url") or record.get("source_citation") or record.get("source")
         if not source and text_avail is not False and record.get("status") != "Unreviewed":
-            errors.append(f"Missing source or source_citation in {file_name} record ID: {record.get('id') or record.get('case_id') or record.get('canonical_id')}")
+            errors.append(f"Missing source or source_citation in {file_name} record ID: {rec_id}")
         return errors
         
     source = record.get("source_url") or record.get("file_path") or record.get("provenance_source")
