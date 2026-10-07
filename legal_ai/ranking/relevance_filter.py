@@ -78,8 +78,9 @@ def filter_candidate_quality_before_ranking(
         cid = str(c.get("case_id") or meta.get("case_id") or "").lower()
 
         # 2. Hard Drop: Foreign jurisdictions
-        if any(fj in court for fj in ["supreme court of india", "delhi high court", "all-england", "calcutta high court", "bombay high court"]) or cid.startswith("air_"):
-            if "pakistan" not in court:
+        court_norm = court.replace("-", " ")
+        if any(fj in court_norm for fj in ["supreme court of india", "india", "delhi high court", "all england", "calcutta", "bombay", "madras", "privy council"]) or cid.startswith("air_") or "state of u. p" in title:
+            if "pakistan" not in court_norm:
                 rejection_counts["foreign_jurisdiction"] += 1
                 continue
 
@@ -89,25 +90,25 @@ def filter_candidate_quality_before_ranking(
             rejection_counts["insufficient_text"] += 1
             continue
 
-        haystack = f"{title} {raw_txt.lower()} {court}"
+        haystack = f"{title} {raw_txt.lower()} {court_norm}"
 
         # 4. Hard Drop: Unrelated subject matter
         if is_financial_or_fraud_or_bail:
             # Defamation filter (e.g. Gurmani)
             if any(k in haystack for k in ["mushtaq ahmad gurmani", "z. a. suleri", "defamation", "defamatory", "section 500 ppc", "sec 500"]):
-                if not any(k in haystack for k in ["409", "420", "406", "breach of trust", "misappropriat", "entrustment", "director loan"]):
+                if not any(k in haystack for k in ["409", "420", "406", "breach of trust", "misappropriat", "entrustment"]):
                     rejection_counts["unrelated_subject"] += 1
                     continue
 
             # Pure narcotics filter (CNSA)
             if any(k in haystack for k in ["control of narcotic substances act", "cnsa", "charas", "heroin", "opium", "methamphetamine"]):
-                if not any(k in haystack for k in ["409", "420", "406", "breach of trust", "consultancy fee", "director"]):
+                if not any(k in haystack for k in ["409", "420", "406", "breach of trust", "consultancy fee"]):
                     rejection_counts["unrelated_subject"] += 1
                     continue
 
             # Pure murder / 302 PPC filter
             if any(k in haystack for k in ["section 302 ppc", "302/34 ppc", "murder trial", "firearm injury", "post-mortem report"]):
-                if not any(k in haystack for k in ["409", "420", "406", "breach of trust", "director", "cheque"]):
+                if not any(k in haystack for k in ["409", "420", "406", "breach of trust"]):
                     rejection_counts["unrelated_subject"] += 1
                     continue
 
@@ -116,6 +117,23 @@ def filter_candidate_quality_before_ranking(
                 if not any(k in haystack for k in ["409", "420", "breach of trust", "fir", "bail"]):
                     rejection_counts["mismatched_domain"] += 1
                     continue
+
+            # Pure tax / customs / revenue assessment filter
+            if any(k in haystack for k in [
+                "sales tax act", "income tax ordinance", "appellate tribunal inland revenue",
+                "customs duty", "special prosecutor customs", "directorate of intelligence",
+                "anti-money laundering act", "customs act", "customs court", "fbr vs"
+            ]):
+                rejection_counts["mismatched_domain"] += 1
+                continue
+
+            # Pure labour / trade union filter
+            if any(k in haystack for k in [
+                "industrial relations act", "labour court", "trade union", "workman",
+                "standing orders ordinance", "wage board"
+            ]):
+                rejection_counts["mismatched_domain"] += 1
+                continue
 
         clean_candidates.append(c)
 

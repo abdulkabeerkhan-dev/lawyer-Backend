@@ -83,44 +83,47 @@ async def search_supabase_judgments(
         if not q_clean or len(q_clean) < 3:
             continue
 
-        # 1. Exact Citation or Case ID check
+        # 1. Exact Citation Check (e.g. "2021 SCMR 554")
         m_cit = re.search(r'\b(?:19|20)\d{2}\s+(?:SCMR|PLD|PCrLJ|CLC|MLD|YLR|CLD|PTD)\s+\d+\b', q_clean, re.IGNORECASE)
-        target_cit = m_cit.group(0) if m_cit else q_clean
-
-        try:
-            def _query_exact():
-                res = sb.table("full_judgments").select("id, case_id, case_title, neutral_citation, court_name, decision_date, full_text").or_(
-                    f"neutral_citation.eq.{target_cit},case_id.eq.{target_cit.replace(' ', '_')}"
-                ).limit(5).execute()
-                return res.data or []
-
-            exact_records = safe_supabase_query(_query_exact)
-            for r in exact_records:
-                cid = str(r.get("case_id") or r.get("id"))
-                if cid not in seen_ids:
-                    seen_ids.add(cid)
-                    candidates.append(_format_supabase_record(r, score=0.95))
-        except Exception:
-            pass
-
-        # 2. Text Search / ilike across title and full_text
-        try:
-            tokens = [t for t in re.split(r'[\s,\+\-]+', q_clean) if len(t) >= 3]
-            if tokens:
-                primary_token = tokens[0]
-                def _query_fts():
-                    res = sb.table("full_judgments").select("id, case_id, case_title, neutral_citation, court_name, decision_date, full_text").ilike(
-                        "case_title", f"%{primary_token}%"
-                    ).limit(limit_per_term).execute()
+        if m_cit:
+            target_cit = m_cit.group(0).strip()
+            norm_cid = target_cit.replace(' ', '_')
+            try:
+                def _query_exact():
+                    res = sb.table("full_judgments").select(
+                        "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
+                    ).or_(
+                        f"neutral_citation.eq.{target_cit},case_id.eq.{norm_cid}"
+                    ).limit(5).execute()
                     return res.data or []
 
-                records = safe_supabase_query(_query_fts)
-                for r in records:
+                exact_records = safe_supabase_query(_query_exact, retries=2)
+                for r in exact_records:
                     cid = str(r.get("case_id") or r.get("id"))
                     if cid not in seen_ids:
                         seen_ids.add(cid)
-                        candidates.append(_format_supabase_record(r, score=0.65))
-        except Exception as e:
-            print(f"⚠️ [SupabaseSearch] FTS query error for '{q_clean}': {e}", file=sys.stderr)
+                        candidates.append(_format_supabase_record(r, score=0.95))
+            except Exception:
+                pass
+
+        # 2. Case ID Check (e.g. "2021_SCMR_554")
+        if re.match(r'^(?:19|20)\d{2}_[a-zA-Z]+_\d+', q_clean):
+            try:
+                def _query_cid():
+                    res = sb.table("full_judgments").select(
+                        "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
+                    ).eq(
+                        "case_id", q_clean
+                    ).limit(2).execute()
+                    return res.data or []
+
+                cid_records = safe_supabase_query(_query_cid, retries=2)
+                for r in cid_records:
+                    cid = str(r.get("case_id") or r.get("id"))
+                    if cid not in seen_ids:
+                        seen_ids.add(cid)
+                        candidates.append(_format_supabase_record(r, score=0.95))
+            except Exception:
+                pass
 
     return candidates

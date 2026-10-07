@@ -1,0 +1,1685 @@
+[
+  {
+    "id": "query_1",
+    "title": "Query 1: Section 420 PPC",
+    "query": "Section 420 PPC",
+    "elapsed_seconds": 30.21,
+    "engine_counts": {
+      "count_supabase": 0,
+      "count_pinecone": 40,
+      "count_bm25": 40,
+      "count_external": 0
+    },
+    "rejection_counts": {
+      "caption_only": 0,
+      "insufficient_text": 12,
+      "unrelated_subject": 1,
+      "foreign_jurisdiction": 1,
+      "mismatched_domain": 0,
+      "trust_gate_exclusion": 0
+    },
+    "final_pool_count": 6,
+    "source_distribution": {
+      "Supabase": 0.0,
+      "Pinecone": 66.7,
+      "BM25": 33.3,
+      "External": 0.0
+    },
+    "authorities": [
+      {
+        "id": "2007_YLR_769",
+        "score": 0.021567717996289426,
+        "dense_score": 0.49909687,
+        "sparse_score": 7.595506410917132,
+        "rrf_score": 0.021567717996289426,
+        "source_type": "Pinecone",
+        "citation": "2007 YLR 769",
+        "title": "233 2007 YLR 769 ABDUL REHMAN VS DEPUTY SUPERINTENDENT OF POLICE, CITY CIRCLE, SARGODHA - Honorable Justice Syed Sajjad Hussain Shah - Sheikh Tariq Mehmood , Muhammad Arif Bhinder LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "233 2007 YLR 769 ABDUL REHMAN VS DEPUTY SUPERINTENDENT OF POLICE, CITY CIRCLE, SARGODHA - Honorable Justice Syed Sajjad Hussain Shah - Sheikh Tariq Mehmood , Muhammad Arif Bhinder LAHORE-HIGH-COURT-LAHORE",
+        "court": "Supreme Court of Pakistan",
+        "year": "2007",
+        "content_type": "full_text",
+        "preview": "sections 420/468/471, P.P.C. in which sections 468/471, P.P.C. are non-cognizable but section 420, P.P.C. is clearly a cognizable offence. Nevertheless there are two versions, one as given in the F.I.R. and the other has asserted, by the petitioner. In considering the question of quashing of criminal proceedings at the preliminary stage when evidence is yet to come, this Court has to take the alle",
+        "metadata": {
+          "canonical_id": "2007_YLR_769",
+          "case_id": "2007_YLR_769",
+          "case_title": "233\t2007 YLR 769\tABDUL REHMAN VS DEPUTY SUPERINTENDENT OF POLICE, CITY CIRCLE, SARGODHA - Honorable Justice Syed Sajjad Hussain Shah - Sheikh Tariq Mehmood , Muhammad Arif Bhinder\tLAHORE-HIGH-COURT-LAHORE",
+          "chunk_index": 9,
+          "citation": "2007 YLR 769",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2007-01-01",
+          "docket_number": "2007_YLR_769",
+          "judgment_id": "59b91610-f560-4670-b9d3-18aad11b5b03",
+          "sections": [
+            "420",
+            "561-A"
+          ],
+          "text": "sections 420/468/471, P.P.C. in which sections 468/471, P.P.C. are non-cognizable but section 420, P.P.C. is clearly a cognizable offence. Nevertheless there are two versions, one as given in the F.I.R. and the other has asserted, by the petitioner. In considering the question of quashing of criminal proceedings at the preliminary stage when evidence is yet to come, this Court has to take the allegation against the accused at their face value and accept the same in their entirety and then see if they do not constitute any offence for which a prosecution be warranted, the High Court in its limited jurisdiction under section 561-A, Cr.P.C. as well as under the constitutional jurisdiction will not embark upon inquiry to ascertain innocence or otherwise of the accused. If, therefore, the allegation discloses an offence, the case cannot be quashed merely because the accused denied the allegation and asserts that he has good defence which defence is yet to come. The matter before this Court",
+          "text_content": "sections 420/468/471, P.P.C. in which sections 468/471, P.P.C. are non-cognizable but section 420, P.P.C. is clearly a cognizable offence. Nevertheless there are two versions, one as given in the F.I.R. and the other has asserted, by the petitioner. In considering the question of quashing of criminal proceedings at the preliminary stage when evidence is yet to come, this Court has to take the allegation against the accused at their face value and accept the same in their entirety and then see if they do not constitute any offence for which a prosecution be warranted, the High Court in its limited jurisdiction under section 561-A, Cr.P.C. as well as under the constitutional jurisdiction will not embark upon inquiry to ascertain innocence or otherwise of the accused. If, therefore, the allegation discloses an offence, the case cannot be quashed merely because the accused denied the allegation and asserts that he has good defence which defence is yet to come. The matter before this Court"
+        },
+        "retrieval_engines": [
+          "Pinecone",
+          "BM25"
+        ],
+        "bm25_score": 7.595506410917132,
+        "authority_score": 118.13,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 0.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 28.62708719851577,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2007 YLR 769",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2007",
+        "sections": [
+          "Section 420"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "sections 420/468/471, P.P.C. in which sections 468/471, P.P.C. are non-cognizable but section 420, P.P.C. is clearly a cognizable offence. Nevertheless there are two versions, one as given in the F.I.R. and the other has asserted, by the petitioner. In considering the question of quashing of criminal proceedings at the preliminary stage when evidence is yet to come, this Court has to take the alle",
+        "holding": "sections 420/468/471, P.P.C. in which sections 468/471, P.P.C. are non-cognizable but section 420, P.P.C. is clearly a cognizable offence. Nevertheless there are two versions, one as given in the F.I.R. and the other has asserted, by the petitioner. In considering the question of quashing of criminal proceedings at the preliminary stage when evidence is yet to come, this Court has to take the alle",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_769",
+        "verification_status": "Verified Precedent Record"
+      },
+      {
+        "id": "2007_YLR_246",
+        "score": 0.04394190454670985,
+        "dense_score": 0.553628,
+        "sparse_score": 9.400942130658672,
+        "rrf_score": 0.04394190454670985,
+        "source_type": "Pinecone",
+        "citation": "2007 YLR 246",
+        "title": "70 2007 YLR 246 Sahabzada KAMRAN AHMAD VS S.H.O., SATELLITE TOWN, SARGODHA - Honorable Justice Tariq Shamim - Hafiz Khalil Ahmed , M. Farooq Qureshi Chishti and Muhammad Arif Bhinder LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "70 2007 YLR 246 Sahabzada KAMRAN AHMAD VS S.H.O., SATELLITE TOWN, SARGODHA - Honorable Justice Tariq Shamim - Hafiz Khalil Ahmed , M. Farooq Qureshi Chishti and Muhammad Arif Bhinder LAHORE-HIGH-COURT-LAHORE",
+        "court": "Lahore High Court",
+        "year": "2007",
+        "content_type": "full_text",
+        "preview": "contents of the F.I.R. offences under sections 420, 468 and 471, P.P.C. are prima facie made out and section 420, P.P.C. being a cognizable offence, registration of the case by the police was, therefore in consonance with the law.\n\n\u00a0\n\n7. I agree with the arguments advanced by the learned Additional Advocate General as well as the learned counsel appearing on behalf of respondent No.2 that if durin",
+        "metadata": {
+          "canonical_id": "2007_YLR_246",
+          "case_id": "2007_YLR_246",
+          "case_title": "70\t2007 YLR 246\tSahabzada KAMRAN AHMAD VS S.H.O., SATELLITE TOWN, SARGODHA - Honorable Justice Tariq Shamim - Hafiz Khalil Ahmed , M. Farooq Qureshi Chishti and Muhammad Arif Bhinder\tLAHORE-HIGH-COURT-LAHORE",
+          "chunk_index": 7,
+          "citation": "2007 YLR 246",
+          "court": "Lahore High Court",
+          "decision_date": "2007-01-01",
+          "docket_number": "2007_YLR_246",
+          "judgment_id": "1eeaf5e7-255c-4d39-a1be-890e6d6e0cac",
+          "sections": [
+            "420"
+          ],
+          "text": "contents of the F.I.R. offences under sections 420, 468 and 471, P.P.C. are prima facie made out and section 420, P.P.C. being a cognizable offence, registration of the case by the police was, therefore in consonance with the law.\n\n\u00a0\n\n7. I agree with the arguments advanced by the learned Additional Advocate General as well as the learned counsel appearing on behalf of respondent No.2 that if during a transaction criminal liability is spelt out, as in the instant case, there is no bar under the law of the two proceedings, civil as well as criminal, continuing side by side as both relate to different laws. The Honourable Supreme Court of Pakistan in the cases of Rafique Bibi v. Muhammad Sharif and others (2006 SCMR 512) and M. Aslam Zaheer v. Shah Muhammad (2000 SCMR 1619), has observed that there is no bar under the law to initiate both civil and criminal proceedings simultaneously.\n\n\u00a0\n\n8. Further, it is clear from the facts of the case that it is not a case of conversion of a civil dis",
+          "text_content": "contents of the F.I.R. offences under sections 420, 468 and 471, P.P.C. are prima facie made out and section 420, P.P.C. being a cognizable offence, registration of the case by the police was, therefore in consonance with the law.\n\n\u00a0\n\n7. I agree with the arguments advanced by the learned Additional Advocate General as well as the learned counsel appearing on behalf of respondent No.2 that if during a transaction criminal liability is spelt out, as in the instant case, there is no bar under the law of the two proceedings, civil as well as criminal, continuing side by side as both relate to different laws. The Honourable Supreme Court of Pakistan in the cases of Rafique Bibi v. Muhammad Sharif and others (2006 SCMR 512) and M. Aslam Zaheer v. Shah Muhammad (2000 SCMR 1619), has observed that there is no bar under the law to initiate both civil and criminal proceedings simultaneously.\n\n\u00a0\n\n8. Further, it is clear from the facts of the case that it is not a case of conversion of a civil dis"
+        },
+        "retrieval_engines": [
+          "Pinecone",
+          "BM25"
+        ],
+        "bm25_score": 9.161821045227175,
+        "authority_score": 109.5,
+        "authority_score_breakdown": {
+          "court_hierarchy": 25.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 0.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 35.0,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2007 YLR 246",
+        "court_name": "Lahore High Court",
+        "date": "2007",
+        "sections": [
+          "Section 420"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "contents of the F.I.R. offences under sections 420, 468 and 471, P.P.C. are prima facie made out and section 420, P.P.C. being a cognizable offence, registration of the case by the police was, therefore in consonance with the law.\n\n\u00a0\n\n7. I agree with the arguments advanced by the learned Additional Advocate General as well as the learned counsel appearing on behalf of respondent No.2 that if durin",
+        "holding": "contents of the F.I.R. offences under sections 420, 468 and 471, P.P.C. are prima facie made out and section 420, P.P.C. being a cognizable offence, registration of the case by the police was, therefore in consonance with the law.\n\n\u00a0\n\n7. I agree with the arguments advanced by the learned Additional Advocate General as well as the learned counsel appearing on behalf of respondent No.2 that if durin",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding High Court Precedent (Article 201)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_246",
+        "verification_status": "Verified Precedent Record"
+      },
+      {
+        "id": "2011_SCMR_1966",
+        "score": 0.013888888888888888,
+        "dense_score": 0.523909569,
+        "sparse_score": 0.0,
+        "rrf_score": 0.013888888888888888,
+        "source_type": "Pinecone",
+        "citation": "2011 SCMR 1966",
+        "title": "Precedent on Record",
+        "case_name": "Precedent on Record",
+        "court": "Supreme Court of Pakistan",
+        "year": "2011",
+        "content_type": "headnote_only",
+        "preview": "[2011 SCMR 1966 | Nasir Abbas v. The State]\n\nNASIR ABBAS VS State\n\nCheating--TERM , Pakistan Penal Code 1860--420 , Proof--TERM ,\nS. 420 Cheating Mens rea and actus reus Proof Pre-requisites Two ingredients are pre-requisites for trying and punishing an accused under S. 420, P.P.C. \"Cheating dishonestly\" is indicative of mens rea, whereas \"inducing a person to deliver any property to any person, o",
+        "metadata": {
+          "case_id": "2011_SCMR_1966",
+          "chunk_id": 0,
+          "citation": "2011 SCMR 1966",
+          "content_type": "headnote_only",
+          "court": "Supreme Court of Pakistan",
+          "court_name_raw": "Supreme Court of Pakistan",
+          "supabase_id": "817c750f-1977-4896-b01e-8eb54905f5f6",
+          "text": "[2011 SCMR 1966 | Nasir Abbas v. The State]\n\nNASIR ABBAS VS State\n\nCheating--TERM , Pakistan Penal Code 1860--420 , Proof--TERM ,\nS. 420 Cheating Mens rea and actus reus Proof Pre-requisites Two ingredients are pre-requisites for trying and punishing an accused under S. 420, P.P.C. \"Cheating dishonestly\" is indicative of mens rea, whereas \"inducing a person to deliver any property to any person, or to make, alter or destroy\" constitutes the actus reus.\n\nMaxim--TERM ,\n\"Actus non facit reum nisi mens sit rea\" Meaning and scope Act does not make a person guilty unless the mind is also guilty Actus reus in simple parlance is the actual act of committing some offence contrary to the law of land and mens rea is the intent to commit that offence If either of the elements is missing, the conduct would not attract a penal provision unless it is a case of strict liability wherein absence of mens rea may not be fatal to prosecution.\n2003 SCMR 341,\nPakistan Penal Code 1860--420 , Pakistan Penal Code 1860--468 , Pakistan Penal Code 1860--471 , Proof--TERM ,\nSs. 420, 468 & 471 Cheating, forgery for the purpose of cheating and using forged document as genuine Reappraisal of evidence Forged appointment letter, non-production of Mens rea and actus reus Proof Allegation against accused was that he prepared forged appointment letter and on the basis of the same sought appointment in a hospital where he had been serving for more than two years Conviction and sentence of five years awarded by Trial Court to accused was maintained by Lower Appellate Court and High Court Validity To prove charges under Ss. 420 & 468, P.P.C., the prosecution had to establish that accused had cheated and forged the document Accused was beneficiary of the document in question and it was considered by department to be a genuine document but prosecution ought to have led evidence to show that accused knew or had reason to believe that the appointment order was a forged one and that he produced it fraudulently with guilty intent Merely because accused was a beneficiary would not prove that he knew or had reason to believe that it was a forged document Accused having not been alleged to have forged the document could not be considered to have known that it was a forged document Exist",
+          "year": 2011
+        },
+        "retrieval_engines": [
+          "Pinecone"
+        ],
+        "authority_score": 105.06,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 12.0,
+          "full_text_substance": 8.0,
+          "provision_match": 17.5,
+          "issue_match": 7.0,
+          "citation_strength": 15.0,
+          "retrieval_fusion": 5.555555555555555,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2011 SCMR 1966",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2011",
+        "sections": [
+          "Section 420"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "[2011 SCMR 1966 | Nasir Abbas v. The State]\n\nNASIR ABBAS VS State\n\nCheating--TERM , Pakistan Penal Code 1860--420 , Proof--TERM ,\nS. 420 Cheating Mens rea and actus reus Proof Pre-requisites Two ingredients are pre-requisites for trying and punishing an accused under S. 420, P.P.C. \"Cheating dishonestly\" is indicative of mens rea, whereas \"inducing a person to deliver any property to any person, o",
+        "holding": "[2011 SCMR 1966 | Nasir Abbas v. The State]\n\nNASIR ABBAS VS State\n\nCheating--TERM , Pakistan Penal Code 1860--420 , Proof--TERM ,\nS. 420 Cheating Mens rea and actus reus Proof Pre-requisites Two ingredients are pre-requisites for trying and punishing an accused under S. 420, P.P.C. \"Cheating dishonestly\" is indicative of mens rea, whereas \"inducing a person to deliver any property to any person, o",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2011_SCMR_1966",
+        "verification_status": "Verified Headnote"
+      },
+      {
+        "id": "1996_SCMR_509",
+        "score": 0.02667140825035562,
+        "dense_score": 0.521801949,
+        "sparse_score": 0.0,
+        "rrf_score": 0.02667140825035562,
+        "source_type": "Pinecone",
+        "citation": "1996 SCMR 509",
+        "title": "Precedent on Record",
+        "case_name": "Precedent on Record",
+        "court": "Supreme Court of Pakistan",
+        "year": "1996",
+        "content_type": "full_text",
+        "preview": "[1996 SCMR 509 | 120\t1996 SCMR 509\tGHAZANFAR ALI VS SHAUKAT ALI]\n\n to be paid at the time of registration of sale\u2011deed and handing over of possession, respondent No.1, Shaukat Ali, feeling aggrieved that the last part of the agreement was not performed by the petitioner, filed a criminal case before the learned Magistrate, 1st Class, Islamabad, under section 406/420,, P.P.C.; in which the petition",
+        "metadata": {
+          "case_id": "1996_SCMR_509",
+          "chunk_id": 2,
+          "citation": "1996 SCMR 509",
+          "content_type": "full_text",
+          "court": "Supreme Court of Pakistan",
+          "court_name_raw": "Supreme Court of Pakistan",
+          "supabase_id": "e94d164a-fa4e-49f0-8d70-f459d92f4064",
+          "text": "[1996 SCMR 509 | 120\t1996 SCMR 509\tGHAZANFAR ALI VS SHAUKAT ALI]\n\n The question whether the petitioner has mens rea to misappropriate the amount or not and whether offence. of cheating was committed or not is to be decided by the trial Court after evaluation of evidence brought before it. There is no dispute about the factual position in this case that after receiving Rs.25,00,000 (Rupees twenty\u2011five lacs) by the petitioner, neither the sale was finalized and possession handed over nor the amount was returned, which was obtained in 1987. We agree with the High Court that this is a case in which interference is not warranted so that law should take its own course. Leave is' refused and in the result the petition is' dismissed as being without merits.\n\n \n\nN.H.Q./G\u2011490/S????????????????????????????????????????????????????????????????????? ??????????? Leave refused",
+          "year": 1996,
+          "full_text": "[1996 SCMR 509 | 120\t1996 SCMR 509\tGHAZANFAR ALI VS SHAUKAT ALI]\n\n to be paid at the time of registration of sale\u2011deed and handing over of possession, respondent No.1, Shaukat Ali, feeling aggrieved that the last part of the agreement was not performed by the petitioner, filed a criminal case before the learned Magistrate, 1st Class, Islamabad, under section 406/420,, P.P.C.; in which the petitioner filed an application under section 249\u2011A, Cr.P.C. for his acquittal on the ground that there was no probability of his being convicted. This application was dismissed by the trial Court and the petitioner moved the High Court under section 561\u2011A, Cr.P.C. for quashment of the proceedings before the trial Court, which is dismissed vide judgment dated 10\u201110\u20111994 and against which leave is being sought \u2011to file an appeal.\n\n \n\n2. It is submitted that the petitioner was ready to perform the last part of the agreement and was waiting for respondent No.l to turn up for payment of last instalment of Rs.5,00,000 (Rupees five lacs) and registration of sale\u2011deed, but he failed to come. It is further stated that the petitioner had no intention of committing cheating as he was always willing and ready to return the amount after adjudication in that respect from the Court. On query from the Court as to under what provision of law he had detained the amount, and what steps were taken by him to obtain decision from the Court in that regard, learned counsel for the petitioner was unable to give any satisfactory reply and stated that the petitioner did not take any steps to go to the Court, but respondent No.l filed the criminal case against him and also a civil suit for specific performance of the contract, which are pending. It is contended by the learned counsel that the petitioner has not committed any act of cheating as he had no mens rea to misappropriate the amount received from respondent No. l and even now is prepared to return the money if so directed by the Court.\n\n \n\n3. The question whether the petitioner has mens rea to misappropriate the amount or not and whether offence. of cheating was committed or not is to be decided by the trial Court after evaluation of evidence brought before it. There is no dispute about the factual position in this case that after receiving Rs.25,00,000 ("
+        },
+        "retrieval_engines": [
+          "Pinecone"
+        ],
+        "authority_score": 103.17,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 2.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 0.0,
+          "citation_strength": 15.0,
+          "retrieval_fusion": 10.668563300142248,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "1996 SCMR 509",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "1996",
+        "sections": [
+          "Section 406"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "[1996 SCMR 509 | 120\t1996 SCMR 509\tGHAZANFAR ALI VS SHAUKAT ALI]\n\n to be paid at the time of registration of sale\u2011deed and handing over of possession, respondent No.1, Shaukat Ali, feeling aggrieved that the last part of the agreement was not performed by the petitioner, filed a criminal case before the learned Magistrate, 1st Class, Islamabad, under section 406/420,, P.P.C.; in which the petition",
+        "holding": "[1996 SCMR 509 | 120\t1996 SCMR 509\tGHAZANFAR ALI VS SHAUKAT ALI]\n\n to be paid at the time of registration of sale\u2011deed and handing over of possession, respondent No.1, Shaukat Ali, feeling aggrieved that the last part of the agreement was not performed by the petitioner, filed a criminal case before the learned Magistrate, 1st Class, Islamabad, under section 406/420,, P.P.C.; in which the petition",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/1996_SCMR_509",
+        "verification_status": "Verified Precedent Record"
+      },
+      {
+        "id": "2007_YLR_1024",
+        "case_id": "2007_YLR_1024",
+        "chunk_id": "2007_YLR_1024_chk_0",
+        "score": 0.021937185327259648,
+        "dense_score": 0.0,
+        "sparse_score": 8.037575698133022,
+        "bm25_score": 7.693175536216672,
+        "rrf_score": 0.021937185327259648,
+        "source_type": "BM25",
+        "citation": "2007 YLR 1024",
+        "title": "312 2007 YLR 1024 MUHAMMAD ILYAS VS State - Honorable Justice Asif Saeed Khan Khosa - Ishfaq Ahmad Chaudhry , Ishfaq Ahmad Chaudhry LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "312 2007 YLR 1024 MUHAMMAD ILYAS VS State - Honorable Justice Asif Saeed Khan Khosa - Ishfaq Ahmad Chaudhry , Ishfaq Ahmad Chaudhry LAHORE-HIGH-COURT-LAHORE",
+        "court": "Supreme Court of Pakistan",
+        "year": "2007",
+        "content_type": "full_text",
+        "preview": "2007 Y L R 1024\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Asif Saeed Khan Khosa, J\n\n\u00a0\n\nMUHAMMAD ILYAS---Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE-Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.1102-B of 2006, decided on 10th March, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898)---\n\n\u00a0\n\n----S. 498---Penal Code (XLV of 1860), Ss.161, 409 & 420---Prevention of Corruption Act (II of 1947), S.5(2)---Pre -arrest bail, confirmation of---Offence against accused under Ss.161 & 420, P.P.C. were bailable---Accused being not a public servant, his alleged connection with the offences under S.409, P.P.C. and S.5(2), Prevention of Corruption Act, 1947 was indirect at the best---Accused according to prosecution, had received 269 gunny bags which he had allegedly misappropriated and in order to compensate for the same he had issued a cheque which was subsequently dishonoured, but prosecution remained unable to refer any particular document to prove alleged misappropriation of said gunny bags---Said cheque had not been issued in favou",
+        "metadata": {
+          "case_id": "2007_YLR_1024",
+          "citation": "2007 YLR 1024",
+          "case_title": "312\t2007 YLR 1024\tMUHAMMAD ILYAS VS State - Honorable Justice Asif Saeed Khan Khosa - Ishfaq Ahmad Chaudhry , Ishfaq Ahmad Chaudhry\tLAHORE-HIGH-COURT-LAHORE",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2007-01-01",
+          "sections": [
+            "409",
+            "498",
+            "5",
+            "5(2)"
+          ],
+          "statutes": [],
+          "chunk_index": 0,
+          "text": "2007 Y L R 1024\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Asif Saeed Khan Khosa, J\n\n\u00a0\n\nMUHAMMAD ILYAS---Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE-Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.1102-B of 2006, decided on 10th March, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898)---\n\n\u00a0\n\n----S. 498---Penal Code (XLV of 1860), Ss.161, 409 & 420---Prevention of Corruption Act (II of 1947), S.5(2)---Pre -arrest bail, confirmation of---Offence against accused under Ss.161 & 420, P.P.C. were bailable---Accused being not a public servant, his alleged connection with the offences under S.409, P.P.C. and S.5(2), Prevention of Corruption Act, 1947 was indirect at the best---Accused according to prosecution, had received 269 gunny bags which he had allegedly misappropriated and in order to compensate for the same he had issued a cheque which was subsequently dishonoured, but prosecution remained unable to refer any particular document to prove alleged misappropriation of said gunny bags---Said cheque had not been issued in favou"
+        },
+        "retrieval_engines": [
+          "BM25"
+        ],
+        "authority_score": 98.27,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 0.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 8.774874130903859,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2007 YLR 1024",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2007",
+        "sections": [
+          "Section 498---Penal",
+          "Section 5",
+          "Section 409"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "2007 Y L R 1024\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Asif Saeed Khan Khosa, J\n\n\u00a0\n\nMUHAMMAD ILYAS---Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE-Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.1102-B of 2006, decided on 10th March, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898)---\n\n\u00a0\n\n----S. 498---Penal Code (XLV of 1860), Ss.161, 409 & 420---Prevention of Corruption Act (II of 1947), S.5(2)---Pre -arrest bail, confirmation of---Offence against accused under Ss.161 & 420, P.P.C. were bailable---Accused being not a public servant, his alleged connection with the offences under S.409, P.P.C. and S.5(2), Prevention of Corruption Act, 1947 was indirect at the best---Accused according to prosecution, had received 269 gunny bags which he had allegedly misappropriated and in order to compensate for the same he had issued a cheque which was subsequently dishonoured, but prosecution remained unable to refer any particular document to prove alleged misappropriation of said gunny bags---Said cheque had not been issued in favou",
+        "holding": "2007 Y L R 1024\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Asif Saeed Khan Khosa, J\n\n\u00a0\n\nMUHAMMAD ILYAS---Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE-Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.1102-B of 2006, decided on 10th March, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898)---\n\n\u00a0\n\n----S. 498---Penal Code (XLV of 1860), Ss.161, 409 & 420---Prevention of Corruption Act (II of 1947), S.5(2)---Pre -arrest bail, confirmation of---Offence against accused under Ss.161 & 420, P.P.C. were bailable---Accused being not a public servant, his alleged connection with the offences under S.409, P.P.C. and S.5(2), Prevention of Corruption Act, 1947 was indirect at the best---Accused according to prosecution, had received 269 gunny bags which he had allegedly misappropriated and in order to compensate for the same he had issued a cheque which was subsequently dishonoured, but prosecution remained unable to refer any particular document to prove alleged misappropriation of said gunny bags---Said cheque had not been issued in favou",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_1024",
+        "verification_status": "Verified Precedent Record"
+      },
+      {
+        "id": "1959_PLD_322",
+        "score": 0.0414049671592775,
+        "dense_score": 0.5654459,
+        "sparse_score": 0.0,
+        "rrf_score": 0.0414049671592775,
+        "source_type": "Pinecone",
+        "citation": "1959 PLD 238",
+        "title": "M. SHARIF ASGHAR v. THE STATE",
+        "case_name": "M. SHARIF ASGHAR v. THE STATE",
+        "court": "Lahore High Court",
+        "year": "1959",
+        "content_type": "full_text",
+        "preview": "D.\n\nO.\n\n10.\n\nI am of opinion that on the facts established in this case, a charge of cheating under section 420, P.\n\nP.\n\nCode cannot arise against the appellant.\n\nIf a person undertakes to supply goods of 'a specific description on the condition that goods will be subjected to scrutiny before final acceptance, and will be liable to rejection if they are discovered to be of different quality and qu",
+        "metadata": {
+          "bench": "Before Abdul Hamid, J",
+          "canonical_id": "LHC_PLD_322_1959",
+          "case_id": "1959_PLD_322",
+          "case_title": "M. SHARIF ASGHAR v. THE STATE",
+          "chunk_index": 4,
+          "citation": "1959 PLD 238",
+          "court": "Lahore High Court",
+          "decision_date": "2nd February 1959",
+          "docket_number": "Criminal Appeal No. 9 of 1958, decided on 2nd February 1959.",
+          "judgment_id": "1959_PLD_322",
+          "pdf_url": "https://dexolywhperqvmnyqxpd.supabase.co/storage/v1/object/public/judgments-pdf/PLD/1959/1959_PLD_238_Lahore_322.pdf",
+          "text": "On calculation it was found that the timber at the destination was really worth Rs.\n\n22,789-2-0 while payment was made for timber of the value of Rs.\n\n59,771-8-0.\n\nOn the allegations that the timber was not of the quality tendered for, and the quantity was short of the price paid, a case of cheating under section 420, P.\n\nP.\n\nC.\n\nwas instituted against Sharif Asghar contractor, and of criminal mis appropriation under section 409, P.\n\nP.\n\nCode against Muhammad Afzal, S.\n\nD.\n\nO., and Abdul Ghafoor, Overseer.\n\nIt was also found that some of the railway receipts were tampered with, and charge under section 468, P.\n\nP.\n\nCode was also joined, but as no evidence was led to show when and where the tampering had taken place, that charge failed.\n\n7.\n\nThe trial Judge was of opinion that the evidence lent no countenance to charge of criminal misappropriation under section 409, P.\n\nP.\n\nC.\n\nagainst Muhammad Afzal, S.\n\nD.\n\nO.\n\nand Abdul Ghafoor, Overseer and lie, therefore, acquitted both of them.\n\nHe found that Sharif Asghar, the present appellant, was guilty of cheating under section 420, P.\n\nP.\n\nCode in that the timber supplied was inferior in quality and short in quantity, and the price received by him was in excess of the amount due to him in respect of timber supplied.\n\nSharif Asghar appellant said that there was no attempt at cheating at all, as the timber supplied was of the quality tendered for.\n\nAs regards quantity he demanded accounts and said that he was prepared to account for the excess payment.\n\n8.\n\nThe question now before this Court is whether an offence under section 420, P.\n\nP.\n\nCode can be made out against the appellant.\n\nMian Abdul Aziz (P.\n\nW.\n\n1), the Additional Chief Engineer, Thal Development Authority, stated that the supply of the timber was subject to two checks, an initial check at the station of despatch, from where the contractor had to make local purchases and to despatch timber to destination, and a second check at the desti nation.",
+          "text_preview": "On calculation it was found that the timber at the destination was really worth Rs.\n\n22,789-2-0 while payment was made for timber of the value of Rs.\n\n59,771-8-0.\n\nOn the allegations that the timber w",
+          "title": "M. SHARIF ASGHAR v. THE STATE",
+          "year": 1959,
+          "full_text": "D.\n\nO.\n\n10.\n\nI am of opinion that on the facts established in this case, a charge of cheating under section 420, P.\n\nP.\n\nCode cannot arise against the appellant.\n\nIf a person undertakes to supply goods of 'a specific description on the condition that goods will be subjected to scrutiny before final acceptance, and will be liable to rejection if they are discovered to be of different quality and quantity, and supplies goods which are not of the specified quality and takes the risk of loss arising from rejection, he does not commit the offence of cheating as defined in section 415 of the Pakistan Penal Code.\n\nHe commits no deception unless he so plays with the goods as to A conceal its defects, and gives to them the colour to appear as goods of the specified quality.\n\n11.\n\nThere can be no cheating without deception, and there can be no deception without misrepresentation, and misrepresenta tion takes place only when a person by his conduct changes the face of the article offered for acceptance.\n\nWill it be cheating if black iron is offered as gold ?\n\n12.\n\nIn the case in hand, the complaint was that the blocks were irregular in shape, that they were not free from knots and that some Anandar was produced in place of Deodar.\n\nThere is no complaint that any attempt was made to conceal the knots, or to make irregular blocks look regular, or to give Anandar the colour and appearance of Deodar.\n\nIf that had been done the case would no doubt have assumed the semblance of attempt to cheat.\n\nThe appellant placed before the Authority timber which in his view was in accordance with the specified quality, and made no attempt to conceal the defects if any.\n\nThere was complete choice in the Authority to reject the timber offered if it did not correspond to e the specifications.\n\nSubmission of goods to inspection and rejec tion, without any attempt to conceal their defects, specially when the price is still in the hands of the inspecting authority, does not constitute the offence either of cheating or attempt to cheat.\n\nIf it did few persons would have undertaken the business of supplying goods without handcuffs on their hands.\n\nIn this case the evidence discloses no element of deception in the conduct of the appellant, and without deception the offence of cheating is not complete.\n\n13.\n\nWith regard to overpayment, it is in evidence that over payment was deliberately made by the S.\n\nD.\n\nO.\n\nin order to help the contractor."
+        },
+        "retrieval_engines": [
+          "Pinecone"
+        ],
+        "authority_score": 96.5,
+        "authority_score_breakdown": {
+          "court_hierarchy": 25.0,
+          "recentness": 2.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 7.0,
+          "citation_strength": 12.0,
+          "retrieval_fusion": 15.0,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "1959 PLD 238",
+        "court_name": "Lahore High Court",
+        "date": "1959",
+        "sections": [
+          "Section 420"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "D.\n\nO.\n\n10.\n\nI am of opinion that on the facts established in this case, a charge of cheating under section 420, P.\n\nP.\n\nCode cannot arise against the appellant.\n\nIf a person undertakes to supply goods of 'a specific description on the condition that goods will be subjected to scrutiny before final acceptance, and will be liable to rejection if they are discovered to be of different quality and qu",
+        "holding": "D.\n\nO.\n\n10.\n\nI am of opinion that on the facts established in this case, a charge of cheating under section 420, P.\n\nP.\n\nCode cannot arise against the appellant.\n\nIf a person undertakes to supply goods of 'a specific description on the condition that goods will be subjected to scrutiny before final acceptance, and will be liable to rejection if they are discovered to be of different quality and qu",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding High Court Precedent (Article 201)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/1959_PLD_322",
+        "verification_status": "Verified Precedent Record"
+      }
+    ],
+    "pdf_status": [
+      {
+        "citation": "2007 YLR 769",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_769",
+        "valid": true
+      },
+      {
+        "citation": "2007 YLR 246",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_246",
+        "valid": true
+      },
+      {
+        "citation": "2011 SCMR 1966",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2011_SCMR_1966",
+        "valid": true
+      },
+      {
+        "citation": "1996 SCMR 509",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/1996_SCMR_509",
+        "valid": true
+      },
+      {
+        "citation": "2007 YLR 1024",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_1024",
+        "valid": true
+      },
+      {
+        "citation": "1959 PLD 238",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/1959_PLD_322",
+        "valid": true
+      }
+    ],
+    "warnings_count": 0
+  },
+  {
+    "id": "query_2",
+    "title": "Query 2: Section 409 PPC",
+    "query": "Section 409 PPC",
+    "elapsed_seconds": 3.12,
+    "engine_counts": {
+      "count_supabase": 0,
+      "count_pinecone": 40,
+      "count_bm25": 40,
+      "count_external": 0
+    },
+    "rejection_counts": {
+      "caption_only": 0,
+      "insufficient_text": 2,
+      "unrelated_subject": 1,
+      "foreign_jurisdiction": 2,
+      "mismatched_domain": 1,
+      "trust_gate_exclusion": 0
+    },
+    "final_pool_count": 6,
+    "source_distribution": {
+      "Supabase": 0.0,
+      "Pinecone": 8.3,
+      "BM25": 91.7,
+      "External": 0.0
+    },
+    "authorities": [
+      {
+        "id": "2007_YLR_232",
+        "score": 0.03225523286722797,
+        "dense_score": 0.576901436,
+        "sparse_score": 7.961093937276728,
+        "rrf_score": 0.03225523286722797,
+        "source_type": "Pinecone",
+        "citation": "2007 YLR 232",
+        "title": "65 2007 YLR 232 ABDUL QADIR TAWAKAL VS State - Honorable Justice RAHMAT HUSSAIN JAFFERI - Muhammad Ashraf Baig , Shafat Nabi Khan Sherwani, KARACHI-HIGH-COURT-SINDH",
+        "case_name": "65 2007 YLR 232 ABDUL QADIR TAWAKAL VS State - Honorable Justice RAHMAT HUSSAIN JAFFERI - Muhammad Ashraf Baig , Shafat Nabi Khan Sherwani, KARACHI-HIGH-COURT-SINDH",
+        "court": "High Court of Sindh",
+        "year": "2007",
+        "content_type": "full_text",
+        "preview": "te different from each other. Hence, they are distinct offences. For trial of both the offences separate forums are provided. For the trial of offence as defined under section 405, P.P.C. and punishable under section 409, P.P.C. the NAB Court has jurisdiction to take cognizance of offence and try the offender. The said offence cannot be tried by the Banking Court as it has no jurisdiction to take its cognizance, hence the arguments of the learned Advocate for the appellant are without force.\n\n\u00a0\n\n10. After considering the material available on the record, we are of the considered view that the prosecution has proved the case against the appellant beyond any reasonable doubt. There is no illegality or irregularity in the impugned judgment. There is no misreading or non-reading of the evidence as such the impugned judgment does not require any interference.\n\n\u00a0\n\n11. Above are the reasons of our short order dated 1-11-2005 by which we had dismissed the appeal.\n\n\u00a0\n\nH.B.T./A-135/K Appeal dism",
+        "metadata": {
+          "canonical_id": "2007_YLR_232",
+          "case_id": "2007_YLR_232",
+          "case_title": "65\t2007 YLR 232\tABDUL QADIR TAWAKAL VS State - Honorable Justice RAHMAT HUSSAIN JAFFERI - Muhammad Ashraf Baig , Shafat Nabi Khan Sherwani,\tKARACHI-HIGH-COURT-SINDH",
+          "chunk_index": 12,
+          "citation": "2007 YLR 232",
+          "court": "High Court of Sindh",
+          "decision_date": "2007-01-01",
+          "docket_number": "2007_YLR_232",
+          "judgment_id": "7848dbd1-bcf1-4e5c-89fe-b805454c9fb6",
+          "sections": [
+            "19",
+            "405"
+          ],
+          "text": "lant.\n\n\u00a0\n\n8. It will be advantageous to reproduce section 19(l)(a) of Act, 1997 and section 405, P.P.C. they are:\n\n\u00a0\n\n19. Provisions relating to certain offences.---(1) Whoever---\n\n\u00a0\n\n(a) dishonestly commits a breach of the terms of a letter of hypothecation or trust receipt or such other instrument or document executed by him whereby the possession of the property offered as security for the loan or finance is not with banking company but is retained by, or entrusted to him, for the purpose of effecting sale and depositing the same with the banking company; or\n\n\u00a0\n\n405. Criminal breach of trust.---Whoever, being in any manner entrusted with property, or with any dominion over property, dishonestly misappropriates or converts to his own use that property, or dishonestly uses or disposes of that property in violation of any direction of law prescribing the mode in which such trust is to be discharged, or of any legal contract, express or implied, which he has made touching the discharge",
+          "text_content": "lant.\n\n\u00a0\n\n8. It will be advantageous to reproduce section 19(l)(a) of Act, 1997 and section 405, P.P.C. they are:\n\n\u00a0\n\n19. Provisions relating to certain offences.---(1) Whoever---\n\n\u00a0\n\n(a) dishonestly commits a breach of the terms of a letter of hypothecation or trust receipt or such other instrument or document executed by him whereby the possession of the property offered as security for the loan or finance is not with banking company but is retained by, or entrusted to him, for the purpose of effecting sale and depositing the same with the banking company; or\n\n\u00a0\n\n405. Criminal breach of trust.---Whoever, being in any manner entrusted with property, or with any dominion over property, dishonestly misappropriates or converts to his own use that property, or dishonestly uses or disposes of that property in violation of any direction of law prescribing the mode in which such trust is to be discharged, or of any legal contract, express or implied, which he has made touching the discharge",
+          "full_text": "te different from each other. Hence, they are distinct offences. For trial of both the offences separate forums are provided. For the trial of offence as defined under section 405, P.P.C. and punishable under section 409, P.P.C. the NAB Court has jurisdiction to take cognizance of offence and try the offender. The said offence cannot be tried by the Banking Court as it has no jurisdiction to take its cognizance, hence the arguments of the learned Advocate for the appellant are without force.\n\n\u00a0\n\n10. After considering the material available on the record, we are of the considered view that the prosecution has proved the case against the appellant beyond any reasonable doubt. There is no illegality or irregularity in the impugned judgment. There is no misreading or non-reading of the evidence as such the impugned judgment does not require any interference.\n\n\u00a0\n\n11. Above are the reasons of our short order dated 1-11-2005 by which we had dismissed the appeal.\n\n\u00a0\n\nH.B.T./A-135/K Appeal dism"
+        },
+        "retrieval_engines": [
+          "Pinecone",
+          "BM25"
+        ],
+        "bm25_score": 7.961093937276728,
+        "authority_score": 124.9,
+        "authority_score_breakdown": {
+          "court_hierarchy": 25.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 35.0,
+          "issue_match": 0.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 32.90209314689119,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2007 YLR 232",
+        "court_name": "High Court of Sindh",
+        "date": "2007",
+        "sections": [
+          "Section 405",
+          "Section 409"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "te different from each other. Hence, they are distinct offences. For trial of both the offences separate forums are provided. For the trial of offence as defined under section 405, P.P.C. and punishable under section 409, P.P.C. the NAB Court has jurisdiction to take cognizance of offence and try the offender. The said offence cannot be tried by the Banking Court as it has no jurisdiction to take its cognizance, hence the arguments of the learned Advocate for the appellant are without force.\n\n\u00a0\n\n10. After considering the material available on the record, we are of the considered view that the prosecution has proved the case against the appellant beyond any reasonable doubt. There is no illegality or irregularity in the impugned judgment. There is no misreading or non-reading of the evidence as such the impugned judgment does not require any interference.\n\n\u00a0\n\n11. Above are the reasons of our short order dated 1-11-2005 by which we had dismissed the appeal.\n\n\u00a0\n\nH.B.T./A-135/K Appeal dism",
+        "holding": "te different from each other. Hence, they are distinct offences. For trial of both the offences separate forums are provided. For the trial of offence as defined under section 405, P.P.C. and punishable under section 409, P.P.C. the NAB Court has jurisdiction to take cognizance of offence and try the offender. The said offence cannot be tried by the Banking Court as it has no jurisdiction to take its cognizance, hence the arguments of the learned Advocate for the appellant are without force.\n\n\u00a0\n\n10. After considering the material available on the record, we are of the considered view that the prosecution has proved the case against the appellant beyond any reasonable doubt. There is no illegality or irregularity in the impugned judgment. There is no misreading or non-reading of the evidence as such the impugned judgment does not require any interference.\n\n\u00a0\n\n11. Above are the reasons of our short order dated 1-11-2005 by which we had dismissed the appeal.\n\n\u00a0\n\nH.B.T./A-135/K Appeal dism",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding High Court Precedent (Article 201)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_232",
+        "verification_status": "Verified Full Judgment"
+      },
+      {
+        "id": "2008_YLR_898",
+        "case_id": "2008_YLR_898",
+        "chunk_id": "2008_YLR_898_chk_8",
+        "score": 0.05343059849701216,
+        "dense_score": 0.0,
+        "sparse_score": 10.65121868414169,
+        "bm25_score": 8.0284174427663,
+        "rrf_score": 0.05343059849701216,
+        "source_type": "BM25",
+        "citation": "2008 YLR 898",
+        "title": "305 2008 YLR 898 SHOAIB AHMAD VS State - Honorable Justice Tariq Shamim - Mian Shahid Iqbal LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "305 2008 YLR 898 SHOAIB AHMAD VS State - Honorable Justice Tariq Shamim - Mian Shahid Iqbal LAHORE-HIGH-COURT-LAHORE",
+        "court": "Supreme Court of Pakistan",
+        "year": "2008",
+        "content_type": "full_text",
+        "preview": "han and others v. The State 1997 PCr.LJ 390 rel.\n\n\u00a0\n\nMian Shahid Iqbal for Petitioner.\n\n\u00a0\n\nCh. Naeem Masood, Asstt. A.-G. for the State with Rizwan, S.-I.\n\n\u00a0\n\n\u00a0\n\nORDER\n\n\u00a0\n\nTARIQ SHAMIM, J.---Through this petition the petitioner seeks pre-arrest bail in case F.I.R. No. 168/2006, dated 10-4-2006 for offence under section 409, P.P.C. registered at Police Station Old Anarkali, Lahore.\n\n\u00a0\n\n2. The brief facts of the case are that a parcel was sent from England by the brother of the complainant containing 5 mobile phones valued at Rs.1,19,500 which was misappropriated by the petitioner and others.\n\n\u00a0\n\n3. The learned counsel for the petitioner contended that under the Post Office Act only an officer who had been nominated could get a case registered on the direction of Post Master General, hence the case registered by the Local Police was against the law; that the complainant had compromised with the petitioner and had sworn an affidavit in the said respect; that the provisions of section 409,",
+        "metadata": {
+          "case_id": "2008_YLR_898",
+          "citation": "2008 YLR 898",
+          "case_title": "305\t2008 YLR 898\tSHOAIB AHMAD VS State - Honorable Justice Tariq Shamim - Mian Shahid Iqbal\tLAHORE-HIGH-COURT-LAHORE",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2008-01-01",
+          "sections": [
+            "409",
+            "497"
+          ],
+          "statutes": [],
+          "chunk_index": 8,
+          "text": "before the police and escaped from the Court in order to approach this Court on this ground alone the petitioner is not entitled to the grant of extraordinary concession of pre-arrest bail. Reference is made to the case of Malik Muhammad Nawaz Khan and others v. State 1997 PCr.LJ 390. The provisions of section 409, P.P.C. are prima facie attracted to the case of the petitioner which entails a sentence of 10 years 'imprisonment. The offence therefore falls within the prohibitory clause of section 497. Cr.P.C. The recovery of the mobile telephones is yet to be effected from the petitioner who has not joined the investigation at any stage and in such situation grant of pre-arrest bail would amount to putting a clog in the investigative process. Reference is made to Wasif and 2 others v. The State (2004 MLD 1533). Further, the affidavit referred to by the learned counsel for the petitioner sworn by the complainant is inconsequential as the offence under section 409, P.P.C. is a non-compou",
+          "full_text": "han and others v. The State 1997 PCr.LJ 390 rel.\n\n\u00a0\n\nMian Shahid Iqbal for Petitioner.\n\n\u00a0\n\nCh. Naeem Masood, Asstt. A.-G. for the State with Rizwan, S.-I.\n\n\u00a0\n\n\u00a0\n\nORDER\n\n\u00a0\n\nTARIQ SHAMIM, J.---Through this petition the petitioner seeks pre-arrest bail in case F.I.R. No. 168/2006, dated 10-4-2006 for offence under section 409, P.P.C. registered at Police Station Old Anarkali, Lahore.\n\n\u00a0\n\n2. The brief facts of the case are that a parcel was sent from England by the brother of the complainant containing 5 mobile phones valued at Rs.1,19,500 which was misappropriated by the petitioner and others.\n\n\u00a0\n\n3. The learned counsel for the petitioner contended that under the Post Office Act only an officer who had been nominated could get a case registered on the direction of Post Master General, hence the case registered by the Local Police was against the law; that the complainant had compromised with the petitioner and had sworn an affidavit in the said respect; that the provisions of section 409,"
+        },
+        "retrieval_engines": [
+          "BM25"
+        ],
+        "authority_score": 121.5,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 7.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 25.0,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2008 YLR 898",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2008",
+        "sections": [
+          "Section 409"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "han and others v. The State 1997 PCr.LJ 390 rel.\n\n\u00a0\n\nMian Shahid Iqbal for Petitioner.\n\n\u00a0\n\nCh. Naeem Masood, Asstt. A.-G. for the State with Rizwan, S.-I.\n\n\u00a0\n\n\u00a0\n\nORDER\n\n\u00a0\n\nTARIQ SHAMIM, J.---Through this petition the petitioner seeks pre-arrest bail in case F.I.R. No. 168/2006, dated 10-4-2006 for offence under section 409, P.P.C. registered at Police Station Old Anarkali, Lahore.\n\n\u00a0\n\n2. The brief facts of the case are that a parcel was sent from England by the brother of the complainant containing 5 mobile phones valued at Rs.1,19,500 which was misappropriated by the petitioner and others.\n\n\u00a0\n\n3. The learned counsel for the petitioner contended that under the Post Office Act only an officer who had been nominated could get a case registered on the direction of Post Master General, hence the case registered by the Local Police was against the law; that the complainant had compromised with the petitioner and had sworn an affidavit in the said respect; that the provisions of section 409,",
+        "holding": "han and others v. The State 1997 PCr.LJ 390 rel.\n\n\u00a0\n\nMian Shahid Iqbal for Petitioner.\n\n\u00a0\n\nCh. Naeem Masood, Asstt. A.-G. for the State with Rizwan, S.-I.\n\n\u00a0\n\n\u00a0\n\nORDER\n\n\u00a0\n\nTARIQ SHAMIM, J.---Through this petition the petitioner seeks pre-arrest bail in case F.I.R. No. 168/2006, dated 10-4-2006 for offence under section 409, P.P.C. registered at Police Station Old Anarkali, Lahore.\n\n\u00a0\n\n2. The brief facts of the case are that a parcel was sent from England by the brother of the complainant containing 5 mobile phones valued at Rs.1,19,500 which was misappropriated by the petitioner and others.\n\n\u00a0\n\n3. The learned counsel for the petitioner contended that under the Post Office Act only an officer who had been nominated could get a case registered on the direction of Post Master General, hence the case registered by the Local Police was against the law; that the complainant had compromised with the petitioner and had sworn an affidavit in the said respect; that the provisions of section 409,",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2008_YLR_898",
+        "verification_status": "Verified Full Judgment"
+      },
+      {
+        "id": "2006_YLR_1970",
+        "case_id": "2006_YLR_1970",
+        "chunk_id": "2006_YLR_1970_chk_4",
+        "score": 0.03751044277360067,
+        "dense_score": 0.0,
+        "sparse_score": 10.839631700629202,
+        "bm25_score": 7.994611631368913,
+        "rrf_score": 0.03751044277360067,
+        "source_type": "BM25",
+        "citation": "2006 YLR 1970",
+        "title": "676 2006 YLR 1970 NOOR MUHAMMAD VS State - Honorable Justice Muhammad Farrukh Mahmud - Raja Muhammad Sohail Iftikhar , Muhammad Faheem Khurram for the State with Lal Akhtar Khan Baluch LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "676 2006 YLR 1970 NOOR MUHAMMAD VS State - Honorable Justice Muhammad Farrukh Mahmud - Raja Muhammad Sohail Iftikhar , Muhammad Faheem Khurram for the State with Lal Akhtar Khan Baluch LAHORE-HIGH-COURT-LAHORE",
+        "court": "Supreme Court of Pakistan",
+        "year": "2006",
+        "content_type": "full_text",
+        "preview": "n of investigation of the case.\n\n\u00a0\n\n3. Learned counsel for the petitioner has argued that no record is available against the petitioner that he was a beneficiary of the amount distributed; that the amount was distributed to the persons who existed and have sworn affidavits to the effect that they had received the amount; that he was roped in a false case, as he refused to advance Zakat amount to Muhammad Hanif, who was Zimindar; that the amount was distributed to the persons after due scrutiny and sanction by the relevant authorities. Learned counsel appearing on behalf of the State has submitted that sufficient incriminating evidence was available against the petitioner to connect him with the offence under section 409, P.P.C., which attracted the prohibitory clause of section 497, Cr.P.C.; and that two prosecution witnesses have already been recorded and the petitioner did not deserve bail at this stage.\n\n\u00a0\n\n4. I have heard the learned counsel for the parties and have also gone throu",
+        "metadata": {
+          "case_id": "2006_YLR_1970",
+          "citation": "2006 YLR 1970",
+          "case_title": "676\t2006 YLR 1970\tNOOR MUHAMMAD VS State - Honorable Justice Muhammad Farrukh Mahmud - Raja Muhammad Sohail Iftikhar , Muhammad Faheem Khurram for the State with Lal Akhtar Khan Baluch\tLAHORE-HIGH-COURT-LAHORE",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2006-01-01",
+          "sections": [
+            "409",
+            "497"
+          ],
+          "statutes": [],
+          "chunk_index": 4,
+          "text": ", his act falls within the mischief of offence under section 409, P.P.C. which attracts the prohibition contained in section 497, Cr.P.C.\n\n\u00a0\n\n6. In the above noted circumstances, I am not inclined to admit the petitioner to bail. This application is dismissed.\n\n\u00a0\n\nN.H.Q./N-14/L Bail refused.",
+          "full_text": "n of investigation of the case.\n\n\u00a0\n\n3. Learned counsel for the petitioner has argued that no record is available against the petitioner that he was a beneficiary of the amount distributed; that the amount was distributed to the persons who existed and have sworn affidavits to the effect that they had received the amount; that he was roped in a false case, as he refused to advance Zakat amount to Muhammad Hanif, who was Zimindar; that the amount was distributed to the persons after due scrutiny and sanction by the relevant authorities. Learned counsel appearing on behalf of the State has submitted that sufficient incriminating evidence was available against the petitioner to connect him with the offence under section 409, P.P.C., which attracted the prohibitory clause of section 497, Cr.P.C.; and that two prosecution witnesses have already been recorded and the petitioner did not deserve bail at this stage.\n\n\u00a0\n\n4. I have heard the learned counsel for the parties and have also gone throu"
+        },
+        "retrieval_engines": [
+          "BM25"
+        ],
+        "authority_score": 114.5,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 0.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 25.0,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2006 YLR 1970",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2006",
+        "sections": [
+          "Section 409",
+          "Section 497"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "n of investigation of the case.\n\n\u00a0\n\n3. Learned counsel for the petitioner has argued that no record is available against the petitioner that he was a beneficiary of the amount distributed; that the amount was distributed to the persons who existed and have sworn affidavits to the effect that they had received the amount; that he was roped in a false case, as he refused to advance Zakat amount to Muhammad Hanif, who was Zimindar; that the amount was distributed to the persons after due scrutiny and sanction by the relevant authorities. Learned counsel appearing on behalf of the State has submitted that sufficient incriminating evidence was available against the petitioner to connect him with the offence under section 409, P.P.C., which attracted the prohibitory clause of section 497, Cr.P.C.; and that two prosecution witnesses have already been recorded and the petitioner did not deserve bail at this stage.\n\n\u00a0\n\n4. I have heard the learned counsel for the parties and have also gone throu",
+        "holding": "n of investigation of the case.\n\n\u00a0\n\n3. Learned counsel for the petitioner has argued that no record is available against the petitioner that he was a beneficiary of the amount distributed; that the amount was distributed to the persons who existed and have sworn affidavits to the effect that they had received the amount; that he was roped in a false case, as he refused to advance Zakat amount to Muhammad Hanif, who was Zimindar; that the amount was distributed to the persons after due scrutiny and sanction by the relevant authorities. Learned counsel appearing on behalf of the State has submitted that sufficient incriminating evidence was available against the petitioner to connect him with the offence under section 409, P.P.C., which attracted the prohibitory clause of section 497, Cr.P.C.; and that two prosecution witnesses have already been recorded and the petitioner did not deserve bail at this stage.\n\n\u00a0\n\n4. I have heard the learned counsel for the parties and have also gone throu",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_1970",
+        "verification_status": "Verified Full Judgment"
+      },
+      {
+        "id": "2001_YLR_2478",
+        "case_id": "2001_YLR_2478",
+        "chunk_id": "2001_YLR_2478_chk_19",
+        "score": 0.03727105214667404,
+        "dense_score": 0.0,
+        "sparse_score": 10.579255934355022,
+        "bm25_score": 7.9278606476870355,
+        "rrf_score": 0.03727105214667404,
+        "source_type": "BM25",
+        "citation": "2001 YLR 2478",
+        "title": "646 2001 YLR 2478 MUHAMMAD SARWAR CHAUDHRY VS STATE - SUPREME-COURT-AZAD-KASHMIR",
+        "case_name": "646 2001 YLR 2478 MUHAMMAD SARWAR CHAUDHRY VS STATE - SUPREME-COURT-AZAD-KASHMIR",
+        "court": "Superior Courts of Pakistan",
+        "year": "2001",
+        "content_type": "full_text",
+        "preview": "propriation. But despite this, he awarded the sentence to the appellants on the ground of their being the Drawing and Disbursing Officers and they did not perform their duties accordingly. So, they were liable for the offence under section 409, A.P.C. It is well\u2011settled principle of law that no one can be convicted under section 409, unless it is found that he misappropriated the amount. According to the aforesaid finding of the lower Court, there was no direct evidence against the appellants on the basis of which they were found involved in the commission of offence of misappropriation, but it was held by the Court that they had failed to perform their duties, regarding the keeping of watch and supervision. But one cannot be convicted for inefficiency rather he can be proceeded under the Efficiency and Discipline Rules. 1t is well\u2011settled principle of law that no one can be liable for misappropriation, unless he has committed the misappropriation or deliberately allowed some other per",
+        "metadata": {
+          "case_id": "2001_YLR_2478",
+          "citation": "2001 YLR 2478",
+          "case_title": "646\t2001 YLR 2478\tMUHAMMAD SARWAR CHAUDHRY VS STATE - \tSUPREME-COURT-AZAD-KASHMIR",
+          "court": "Superior Courts of Pakistan",
+          "decision_date": "2001-01-01",
+          "sections": [
+            "409"
+          ],
+          "statutes": [],
+          "chunk_index": 19,
+          "text": "propriation. But despite this, he awarded the sentence to the appellants on the ground of their being the Drawing and Disbursing Officers and they did not perform their duties accordingly. So, they were liable for the offence under section 409, A.P.C. It is well\u2011settled principle of law that no one can be convicted under section 409, unless it is found that he misappropriated the amount. According to the aforesaid finding of the lower Court, there was no direct evidence against the appellants on the basis of which they were found involved in the commission of offence of misappropriation, but it was held by the Court that they had failed to perform their duties, regarding the keeping of watch and supervision. But one cannot be convicted for inefficiency rather he can be proceeded under the Efficiency and Discipline Rules. 1t is well\u2011settled principle of law that no one can be liable for misappropriation, unless he has committed the misappropriation or deliberately allowed some other per"
+        },
+        "retrieval_engines": [
+          "BM25"
+        ],
+        "authority_score": 106.41,
+        "authority_score_breakdown": {
+          "court_hierarchy": 25.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 7.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 24.908420858669615,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2001 YLR 2478",
+        "court_name": "Superior Courts of Pakistan",
+        "date": "2001",
+        "sections": [
+          "Section 409"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "propriation. But despite this, he awarded the sentence to the appellants on the ground of their being the Drawing and Disbursing Officers and they did not perform their duties accordingly. So, they were liable for the offence under section 409, A.P.C. It is well\u2011settled principle of law that no one can be convicted under section 409, unless it is found that he misappropriated the amount. According to the aforesaid finding of the lower Court, there was no direct evidence against the appellants on the basis of which they were found involved in the commission of offence of misappropriation, but it was held by the Court that they had failed to perform their duties, regarding the keeping of watch and supervision. But one cannot be convicted for inefficiency rather he can be proceeded under the Efficiency and Discipline Rules. 1t is well\u2011settled principle of law that no one can be liable for misappropriation, unless he has committed the misappropriation or deliberately allowed some other per",
+        "holding": "propriation. But despite this, he awarded the sentence to the appellants on the ground of their being the Drawing and Disbursing Officers and they did not perform their duties accordingly. So, they were liable for the offence under section 409, A.P.C. It is well\u2011settled principle of law that no one can be convicted under section 409, unless it is found that he misappropriated the amount. According to the aforesaid finding of the lower Court, there was no direct evidence against the appellants on the basis of which they were found involved in the commission of offence of misappropriation, but it was held by the Court that they had failed to perform their duties, regarding the keeping of watch and supervision. But one cannot be convicted for inefficiency rather he can be proceeded under the Efficiency and Discipline Rules. 1t is well\u2011settled principle of law that no one can be liable for misappropriation, unless he has committed the misappropriation or deliberately allowed some other per",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Persuasive Superior Court Precedent",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2001_YLR_2478",
+        "verification_status": "Verified Full Judgment"
+      },
+      {
+        "id": "2007_YLR_1182",
+        "case_id": "2007_YLR_1182",
+        "chunk_id": "2007_YLR_1182_chk_4",
+        "score": 0.011363636363636364,
+        "dense_score": 0.0,
+        "sparse_score": 8.201902876840512,
+        "bm25_score": 8.201902876840512,
+        "rrf_score": 0.011363636363636364,
+        "source_type": "BM25",
+        "citation": "2007 YLR 1182",
+        "title": "374 2007 YLR 1182 GHULAM AKBAR VS State - Honorable Justice Ijaz Ahmad Chaudhry - Rana Sohail Ashraf , Saif Ullah Khalid LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "374 2007 YLR 1182 GHULAM AKBAR VS State - Honorable Justice Ijaz Ahmad Chaudhry - Rana Sohail Ashraf , Saif Ullah Khalid LAHORE-HIGH-COURT-LAHORE",
+        "court": "Supreme Court of Pakistan",
+        "year": "2007",
+        "content_type": "full_text",
+        "preview": "ide intention and ulterior motive. It was the duty of the petitioner to hand over the said articles immediately to the Moharrar for keeping the same in the Malkhana. Prima facie the petitioner had misappropriated the said articles and offence under section 409, P.P.C. is attracted in the present case, which falls within the prohibitory clause of section 497, Cr.P.C. Even otherwise, it is admitted position that the petitioner was bound to deposit the amount of Rs.52,400 in the double lock, which he failed to do and the same could not be Superdar. The affidavit of the complainant of the case, wherein the articles were recovered is of no help to the petitioner, rather it can be gathered that he is tampering with the prosecution evidence. It appears that after the registration of the case in league with the petitioner being their colleague, the Investigating Officer and the S.H.O. of the police station have tried to created some evidence to save him from the offence of misappropriation, wh",
+        "metadata": {
+          "case_id": "2007_YLR_1182",
+          "citation": "2007 YLR 1182",
+          "case_title": "374\t2007 YLR 1182\tGHULAM AKBAR VS State - Honorable Justice Ijaz Ahmad Chaudhry - Rana Sohail Ashraf , Saif Ullah Khalid\tLAHORE-HIGH-COURT-LAHORE",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2007-01-01",
+          "sections": [
+            "409",
+            "497"
+          ],
+          "statutes": [],
+          "chunk_index": 4,
+          "text": "ide intention and ulterior motive. It was the duty of the petitioner to hand over the said articles immediately to the Moharrar for keeping the same in the Malkhana. Prima facie the petitioner had misappropriated the said articles and offence under section 409, P.P.C. is attracted in the present case, which falls within the prohibitory clause of section 497, Cr.P.C. Even otherwise, it is admitted position that the petitioner was bound to deposit the amount of Rs.52,400 in the double lock, which he failed to do and the same could not be Superdar. The affidavit of the complainant of the case, wherein the articles were recovered is of no help to the petitioner, rather it can be gathered that he is tampering with the prosecution evidence. It appears that after the registration of the case in league with the petitioner being their colleague, the Investigating Officer and the S.H.O. of the police station have tried to created some evidence to save him from the offence of misappropriation, wh"
+        },
+        "retrieval_engines": [
+          "BM25"
+        ],
+        "authority_score": 101.05,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 7.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 4.545454545454546,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2007 YLR 1182",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2007",
+        "sections": [
+          "Section 409",
+          "Section 497"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "ide intention and ulterior motive. It was the duty of the petitioner to hand over the said articles immediately to the Moharrar for keeping the same in the Malkhana. Prima facie the petitioner had misappropriated the said articles and offence under section 409, P.P.C. is attracted in the present case, which falls within the prohibitory clause of section 497, Cr.P.C. Even otherwise, it is admitted position that the petitioner was bound to deposit the amount of Rs.52,400 in the double lock, which he failed to do and the same could not be Superdar. The affidavit of the complainant of the case, wherein the articles were recovered is of no help to the petitioner, rather it can be gathered that he is tampering with the prosecution evidence. It appears that after the registration of the case in league with the petitioner being their colleague, the Investigating Officer and the S.H.O. of the police station have tried to created some evidence to save him from the offence of misappropriation, wh",
+        "holding": "ide intention and ulterior motive. It was the duty of the petitioner to hand over the said articles immediately to the Moharrar for keeping the same in the Malkhana. Prima facie the petitioner had misappropriated the said articles and offence under section 409, P.P.C. is attracted in the present case, which falls within the prohibitory clause of section 497, Cr.P.C. Even otherwise, it is admitted position that the petitioner was bound to deposit the amount of Rs.52,400 in the double lock, which he failed to do and the same could not be Superdar. The affidavit of the complainant of the case, wherein the articles were recovered is of no help to the petitioner, rather it can be gathered that he is tampering with the prosecution evidence. It appears that after the registration of the case in league with the petitioner being their colleague, the Investigating Officer and the S.H.O. of the police station have tried to created some evidence to save him from the offence of misappropriation, wh",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_1182",
+        "verification_status": "Verified Full Judgment"
+      },
+      {
+        "id": "2007_YLR_1024",
+        "case_id": "2007_YLR_1024",
+        "chunk_id": "2007_YLR_1024_chk_3",
+        "score": 0.01098901098901099,
+        "dense_score": 0.0,
+        "sparse_score": 8.166598441656678,
+        "bm25_score": 8.166598441656678,
+        "rrf_score": 0.01098901098901099,
+        "source_type": "BM25",
+        "citation": "2007 YLR 1024",
+        "title": "312 2007 YLR 1024 MUHAMMAD ILYAS VS State - Honorable Justice Asif Saeed Khan Khosa - Ishfaq Ahmad Chaudhry , Ishfaq Ahmad Chaudhry LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "312 2007 YLR 1024 MUHAMMAD ILYAS VS State - Honorable Justice Asif Saeed Khan Khosa - Ishfaq Ahmad Chaudhry , Ishfaq Ahmad Chaudhry LAHORE-HIGH-COURT-LAHORE",
+        "court": "Supreme Court of Pakistan",
+        "year": "2007",
+        "content_type": "full_text",
+        "preview": "er on the petitioner had approached the Court of the learned Special Judge, Anti-Corruption, Gujranwala for the same relief but his application in that regard was dismissed on 19-4-2005. Hence, the present petition before this Court.\n\n\u00a0\n\n2. After hearing the learned counsel for the parties and going through the record it has straightaway been noticed by me that the offences under sections 161 and 420, P.P.C. are bailable. Admittedly the petitioner is not a public servant and, thus, the petitioner's alleged connection with the offences under section 409, P.P.C. and section 5(2) of the Prevention of Corruption Act, 1947 is indirect at best. A perusal of the record of investigation of this case shows that according to the prosecution the petitioner had received 269 gunny bags which he had allegedly misappropriated and in order to compensate for the same he had issued a cheque for a sum of Rs.1,14,325 which was subsequently dishonoured. I have repeatedly required, the learned counsel for t",
+        "metadata": {
+          "case_id": "2007_YLR_1024",
+          "citation": "2007 YLR 1024",
+          "case_title": "312\t2007 YLR 1024\tMUHAMMAD ILYAS VS State - Honorable Justice Asif Saeed Khan Khosa - Ishfaq Ahmad Chaudhry , Ishfaq Ahmad Chaudhry\tLAHORE-HIGH-COURT-LAHORE",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2007-01-01",
+          "sections": [
+            "409",
+            "5",
+            "5(2)"
+          ],
+          "statutes": [],
+          "chunk_index": 3,
+          "text": "er on the petitioner had approached the Court of the learned Special Judge, Anti-Corruption, Gujranwala for the same relief but his application in that regard was dismissed on 19-4-2005. Hence, the present petition before this Court.\n\n\u00a0\n\n2. After hearing the learned counsel for the parties and going through the record it has straightaway been noticed by me that the offences under sections 161 and 420, P.P.C. are bailable. Admittedly the petitioner is not a public servant and, thus, the petitioner's alleged connection with the offences under section 409, P.P.C. and section 5(2) of the Prevention of Corruption Act, 1947 is indirect at best. A perusal of the record of investigation of this case shows that according to the prosecution the petitioner had received 269 gunny bags which he had allegedly misappropriated and in order to compensate for the same he had issued a cheque for a sum of Rs.1,14,325 which was subsequently dishonoured. I have repeatedly required, the learned counsel for t"
+        },
+        "retrieval_engines": [
+          "BM25"
+        ],
+        "authority_score": 100.9,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 7.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 4.395604395604396,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2007 YLR 1024",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2007",
+        "sections": [
+          "Section 409",
+          "Section 5"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "er on the petitioner had approached the Court of the learned Special Judge, Anti-Corruption, Gujranwala for the same relief but his application in that regard was dismissed on 19-4-2005. Hence, the present petition before this Court.\n\n\u00a0\n\n2. After hearing the learned counsel for the parties and going through the record it has straightaway been noticed by me that the offences under sections 161 and 420, P.P.C. are bailable. Admittedly the petitioner is not a public servant and, thus, the petitioner's alleged connection with the offences under section 409, P.P.C. and section 5(2) of the Prevention of Corruption Act, 1947 is indirect at best. A perusal of the record of investigation of this case shows that according to the prosecution the petitioner had received 269 gunny bags which he had allegedly misappropriated and in order to compensate for the same he had issued a cheque for a sum of Rs.1,14,325 which was subsequently dishonoured. I have repeatedly required, the learned counsel for t",
+        "holding": "er on the petitioner had approached the Court of the learned Special Judge, Anti-Corruption, Gujranwala for the same relief but his application in that regard was dismissed on 19-4-2005. Hence, the present petition before this Court.\n\n\u00a0\n\n2. After hearing the learned counsel for the parties and going through the record it has straightaway been noticed by me that the offences under sections 161 and 420, P.P.C. are bailable. Admittedly the petitioner is not a public servant and, thus, the petitioner's alleged connection with the offences under section 409, P.P.C. and section 5(2) of the Prevention of Corruption Act, 1947 is indirect at best. A perusal of the record of investigation of this case shows that according to the prosecution the petitioner had received 269 gunny bags which he had allegedly misappropriated and in order to compensate for the same he had issued a cheque for a sum of Rs.1,14,325 which was subsequently dishonoured. I have repeatedly required, the learned counsel for t",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_1024",
+        "verification_status": "Verified Full Judgment"
+      }
+    ],
+    "pdf_status": [
+      {
+        "citation": "2007 YLR 232",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_232",
+        "valid": true
+      },
+      {
+        "citation": "2008 YLR 898",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2008_YLR_898",
+        "valid": true
+      },
+      {
+        "citation": "2006 YLR 1970",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_1970",
+        "valid": true
+      },
+      {
+        "citation": "2001 YLR 2478",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2001_YLR_2478",
+        "valid": true
+      },
+      {
+        "citation": "2007 YLR 1182",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_1182",
+        "valid": true
+      },
+      {
+        "citation": "2007 YLR 1024",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_1024",
+        "valid": true
+      }
+    ],
+    "warnings_count": 0
+  },
+  {
+    "id": "query_3",
+    "title": "Query 3: Section 406 PPC",
+    "query": "Section 406 PPC",
+    "elapsed_seconds": 1.25,
+    "engine_counts": {
+      "count_supabase": 0,
+      "count_pinecone": 40,
+      "count_bm25": 40,
+      "count_external": 0
+    },
+    "rejection_counts": {
+      "caption_only": 0,
+      "insufficient_text": 4,
+      "unrelated_subject": 1,
+      "foreign_jurisdiction": 1,
+      "mismatched_domain": 0,
+      "trust_gate_exclusion": 0
+    },
+    "final_pool_count": 6,
+    "source_distribution": {
+      "Supabase": 0.0,
+      "Pinecone": 50.0,
+      "BM25": 50.0,
+      "External": 0.0
+    },
+    "authorities": [
+      {
+        "id": "2008_YLR_2169",
+        "score": 0.10658545559120018,
+        "dense_score": 0.65066433,
+        "sparse_score": 8.929639618650846,
+        "rrf_score": 0.10658545559120018,
+        "source_type": "Pinecone",
+        "citation": "2008 YLR 2169",
+        "title": "732 2008 YLR 2169 MUHAMMAD RIZWAN VS State - Muhammad Ahsan Bhoon LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "732 2008 YLR 2169 MUHAMMAD RIZWAN VS State - Muhammad Ahsan Bhoon LAHORE-HIGH-COURT-LAHORE",
+        "court": "Supreme Court of Pakistan",
+        "year": "2008",
+        "content_type": "full_text",
+        "preview": "1, P.P.C. may not be attracted. To make out a case under section 406, P.P.C., according to the definition of `criminal breach of trust' contained in section 405, P.P.C., following ingredients, must co-exist:--\n\n\u00a0\n\n(i) That the property should be entrusted in any manner to the person;\n\n\u00a0\n\n(ii) He should have the domain over the property;\n\n\u00a0\n\n(iii) He dishonestly misappropriates or converts that pro",
+        "metadata": {
+          "canonical_id": "2008_YLR_2169",
+          "case_id": "2008_YLR_2169",
+          "case_title": "732\t2008 YLR 2169\tMUHAMMAD RIZWAN VS State - Muhammad Ahsan Bhoon\tLAHORE-HIGH-COURT-LAHORE",
+          "chunk_index": 10,
+          "citation": "2008 YLR 2169",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2008-01-01",
+          "docket_number": "2008_YLR_2169",
+          "judgment_id": "197d3463-5d2a-447f-9886-6b95f56d6285",
+          "sections": [
+            "405",
+            "406"
+          ],
+          "text": "1, P.P.C. may not be attracted. To make out a case under section 406, P.P.C., according to the definition of `criminal breach of trust' contained in section 405, P.P.C., following ingredients, must co-exist:--\n\n\u00a0\n\n(i) That the property should be entrusted in any manner to the person;\n\n\u00a0\n\n(ii) He should have the domain over the property;\n\n\u00a0\n\n(iii) He dishonestly misappropriates or converts that property to his own use; or\n\n\u00a0\n\n(iv) Dishonestly uses or dispossesses the property in violation of any direction of law.\n\n\u00a0\n\n6. The entrustment to the Manager of the rice and domain over it may be there. To see whether there appear reasonable grounds for believing that the petitioner has misappropriated or converted to his own use that property, to our view, this requirement is lacking.\n\n\u00a0\n\n7. During the inquiry (No.11 of 2001), it was observed by Muhammad Salim Sadiq, inquiry officer/Inspector, FIA/CBC-I, Lahore, that Muhammad Rizwan was liable to repay the amount and from the circumstances of t",
+          "text_content": "1, P.P.C. may not be attracted. To make out a case under section 406, P.P.C., according to the definition of `criminal breach of trust' contained in section 405, P.P.C., following ingredients, must co-exist:--\n\n\u00a0\n\n(i) That the property should be entrusted in any manner to the person;\n\n\u00a0\n\n(ii) He should have the domain over the property;\n\n\u00a0\n\n(iii) He dishonestly misappropriates or converts that property to his own use; or\n\n\u00a0\n\n(iv) Dishonestly uses or dispossesses the property in violation of any direction of law.\n\n\u00a0\n\n6. The entrustment to the Manager of the rice and domain over it may be there. To see whether there appear reasonable grounds for believing that the petitioner has misappropriated or converted to his own use that property, to our view, this requirement is lacking.\n\n\u00a0\n\n7. During the inquiry (No.11 of 2001), it was observed by Muhammad Salim Sadiq, inquiry officer/Inspector, FIA/CBC-I, Lahore, that Muhammad Rizwan was liable to repay the amount and from the circumstances of t"
+        },
+        "retrieval_engines": [
+          "Pinecone",
+          "BM25"
+        ],
+        "bm25_score": 8.444781295165939,
+        "authority_score": 149.0,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 35.0,
+          "issue_match": 7.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 35.0,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2008 YLR 2169",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2008",
+        "sections": [
+          "Section 406",
+          "Section 405"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "1, P.P.C. may not be attracted. To make out a case under section 406, P.P.C., according to the definition of `criminal breach of trust' contained in section 405, P.P.C., following ingredients, must co-exist:--\n\n\u00a0\n\n(i) That the property should be entrusted in any manner to the person;\n\n\u00a0\n\n(ii) He should have the domain over the property;\n\n\u00a0\n\n(iii) He dishonestly misappropriates or converts that pro",
+        "holding": "1, P.P.C. may not be attracted. To make out a case under section 406, P.P.C., according to the definition of `criminal breach of trust' contained in section 405, P.P.C., following ingredients, must co-exist:--\n\n\u00a0\n\n(i) That the property should be entrusted in any manner to the person;\n\n\u00a0\n\n(ii) He should have the domain over the property;\n\n\u00a0\n\n(iii) He dishonestly misappropriates or converts that pro",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2008_YLR_2169",
+        "verification_status": "Verified Precedent Record"
+      },
+      {
+        "id": "2007_YLR_2978",
+        "score": 0.03652982819649486,
+        "dense_score": 0.564945221,
+        "sparse_score": 8.452489672237663,
+        "rrf_score": 0.03652982819649486,
+        "source_type": "Pinecone",
+        "citation": "2007 YLR 2978",
+        "title": "984 2007 YLR 2978 MUHAMMAD HANIF VS SEUNG GOOK KIM alias SIMON KIM, - Honorable Justice Tariq Shamim - Dr. Syed Shaukat Hussain , Ch. Waris Ali Janjua LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "984 2007 YLR 2978 MUHAMMAD HANIF VS SEUNG GOOK KIM alias SIMON KIM, - Honorable Justice Tariq Shamim - Dr. Syed Shaukat Hussain , Ch. Waris Ali Janjua LAHORE-HIGH-COURT-LAHORE",
+        "court": "Supreme Court of Pakistan",
+        "year": "2007",
+        "content_type": "full_text",
+        "preview": ", I agree with the observation made by the learned Additional Sessions Judge in the impugned order that the element of entrustment is missing from the case which is an essential ingredient to attract the provisions of the section 406 P.P.C.\n\n\u00a0\n\n8. The opinion of the police is although not binding on the Court, yet being adverse to the prosecution puts the Court on enquiry as to the veracity of the",
+        "metadata": {
+          "canonical_id": "2007_YLR_2978",
+          "case_id": "2007_YLR_2978",
+          "case_title": "984\t2007 YLR 2978\tMUHAMMAD HANIF VS SEUNG GOOK KIM alias SIMON KIM, - Honorable Justice Tariq Shamim - Dr. Syed Shaukat Hussain , Ch. Waris Ali Janjua\tLAHORE-HIGH-COURT-LAHORE",
+          "chunk_index": 9,
+          "citation": "2007 YLR 2978",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2007-01-01",
+          "docket_number": "2007_YLR_2978",
+          "judgment_id": "8b11fc1c-b077-4acc-a211-77d9d5a00fc0",
+          "sections": [
+            "406"
+          ],
+          "text": ", I agree with the observation made by the learned Additional Sessions Judge in the impugned order that the element of entrustment is missing from the case which is an essential ingredient to attract the provisions of the section 406 P.P.C.\n\n\u00a0\n\n8. The opinion of the police is although not binding on the Court, yet being adverse to the prosecution puts the Court on enquiry as to the veracity of the prosecution ease, thereof, the same has to be given sufficient weight unless it cats be shown that the same smacks of mala fide. Although the learned counsel for the petitioner in rebuttal contended that the investigation conducted by the police was mala fide and not transparent nevertheless, the fact remains that the petitioner at no point of time had challenged the said investigation. The material on the basis of which opinion has been framed by the police is tangible and appears to be credible. It would be pertinent to mention that the police is the first agency which comes into contact wi",
+          "text_content": ", I agree with the observation made by the learned Additional Sessions Judge in the impugned order that the element of entrustment is missing from the case which is an essential ingredient to attract the provisions of the section 406 P.P.C.\n\n\u00a0\n\n8. The opinion of the police is although not binding on the Court, yet being adverse to the prosecution puts the Court on enquiry as to the veracity of the prosecution ease, thereof, the same has to be given sufficient weight unless it cats be shown that the same smacks of mala fide. Although the learned counsel for the petitioner in rebuttal contended that the investigation conducted by the police was mala fide and not transparent nevertheless, the fact remains that the petitioner at no point of time had challenged the said investigation. The material on the basis of which opinion has been framed by the police is tangible and appears to be credible. It would be pertinent to mention that the police is the first agency which comes into contact wi"
+        },
+        "retrieval_engines": [
+          "Pinecone",
+          "BM25"
+        ],
+        "bm25_score": 8.452489672237663,
+        "authority_score": 124.11,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 0.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 34.61193127859794,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2007 YLR 2978",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2007",
+        "sections": [
+          "Section 406"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": ", I agree with the observation made by the learned Additional Sessions Judge in the impugned order that the element of entrustment is missing from the case which is an essential ingredient to attract the provisions of the section 406 P.P.C.\n\n\u00a0\n\n8. The opinion of the police is although not binding on the Court, yet being adverse to the prosecution puts the Court on enquiry as to the veracity of the",
+        "holding": ", I agree with the observation made by the learned Additional Sessions Judge in the impugned order that the element of entrustment is missing from the case which is an essential ingredient to attract the provisions of the section 406 P.P.C.\n\n\u00a0\n\n8. The opinion of the police is although not binding on the Court, yet being adverse to the prosecution puts the Court on enquiry as to the veracity of the",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_2978",
+        "verification_status": "Verified Precedent Record"
+      },
+      {
+        "id": "2022_SCMR_1223",
+        "score": 0.011764705882352941,
+        "dense_score": 0.557065964,
+        "sparse_score": 0.0,
+        "rrf_score": 0.011764705882352941,
+        "source_type": "Pinecone",
+        "citation": "2022 SCMR 1223",
+        "title": "Precedent on Record",
+        "case_name": "Precedent on Record",
+        "court": "Supreme Court of Pakistan",
+        "year": "2022",
+        "content_type": "headnote_only",
+        "preview": "[2022 SCMR 1223 | Ali Raza v. The State]\n\nALI RAZA VS State\n\nS. 497(2) Penal Code (XLV of 1860), S. 406 Constitution of Pakistan, Art. 185(3) Criminal breach of trust Bail, grant of Further inquiry Pre-requisites for attracting section 406, P.P.C. absent Complainant had given his vehicle to the co-accused, who operated a car showroom and rent a car business Co-accused alleged that the vehicle in q",
+        "metadata": {
+          "case_id": "2022_SCMR_1223",
+          "chunk_id": 0,
+          "citation": "2022 SCMR 1223",
+          "content_type": "headnote_only",
+          "court": "Supreme Court of Pakistan",
+          "court_name_raw": "Supreme Court of Pakistan",
+          "supabase_id": "c3cbcd2a-6a55-40ab-b493-f09dd95e9f31",
+          "text": "[2022 SCMR 1223 | Ali Raza v. The State]\n\nALI RAZA VS State\n\nS. 497(2) Penal Code (XLV of 1860), S. 406 Constitution of Pakistan, Art. 185(3) Criminal breach of trust Bail, grant of Further inquiry Pre-requisites for attracting section 406, P.P.C. absent Complainant had given his vehicle to the co-accused, who operated a car showroom and rent a car business Co-accused alleged that the vehicle in question was given to the accused, who misappropriated the same and never returned it Only material against the accused was the statement of the co-accused which was per se not admissible in evidence To attract the provisions of section 406, P.P.C., it was necessary to fulfil basic requirements of 'entrustment' and 'misappropriation with 'mens rea' Both said ingredients of section 406, P.P.C. were totally absent in the present case Hence, there was no independent evidence or material against the accused which would directly involve him in the offence under section 406, P.P.C. Further, no recovery had been made from him and the question of his guilt or innocence was a matter which required further inquiry at trial stage Offence alleged also did not fall within the prohibitory clause of section 497, Cr.P.C. Petition for leave to appeal was converted into an appeal and allowed, and accused was admitted to bail.",
+          "year": 2022
+        },
+        "retrieval_engines": [
+          "Pinecone"
+        ],
+        "authority_score": 112.21,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 20.0,
+          "full_text_substance": 8.0,
+          "provision_match": 17.5,
+          "issue_match": 7.0,
+          "citation_strength": 15.0,
+          "retrieval_fusion": 4.705882352941177,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2022 SCMR 1223",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2022",
+        "sections": [
+          "Section 497",
+          "Section 406 Constitution",
+          "Section 185",
+          "Section 406"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "[2022 SCMR 1223 | Ali Raza v. The State]\n\nALI RAZA VS State\n\nS. 497(2) Penal Code (XLV of 1860), S. 406 Constitution of Pakistan, Art. 185(3) Criminal breach of trust Bail, grant of Further inquiry Pre-requisites for attracting section 406, P.P.C. absent Complainant had given his vehicle to the co-accused, who operated a car showroom and rent a car business Co-accused alleged that the vehicle in q",
+        "holding": "[2022 SCMR 1223 | Ali Raza v. The State]\n\nALI RAZA VS State\n\nS. 497(2) Penal Code (XLV of 1860), S. 406 Constitution of Pakistan, Art. 185(3) Criminal breach of trust Bail, grant of Further inquiry Pre-requisites for attracting section 406, P.P.C. absent Complainant had given his vehicle to the co-accused, who operated a car showroom and rent a car business Co-accused alleged that the vehicle in q",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2022_SCMR_1223",
+        "verification_status": "Verified Headnote"
+      },
+      {
+        "id": "2025_SCMR_1130",
+        "score": 0.025694893341952164,
+        "dense_score": 0.597736418,
+        "sparse_score": 0.0,
+        "rrf_score": 0.025694893341952164,
+        "source_type": "Pinecone",
+        "citation": "2025 SCMR 1130",
+        "title": "Precedent on Record",
+        "case_name": "Precedent on Record",
+        "court": "Supreme Court of Pakistan",
+        "year": "2025",
+        "content_type": "full_text",
+        "preview": "[2025 SCMR 1130 | Muhammad Amjad Naeem v. The State]\n\nMUHAMMAD AMJAD NAEEM VS State\n\nBail--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 ,\nS. 497 Bail Offences not falling within the prohibitory clause of Section 497, Cr.P.C. For such offences grant of bail is a rule and refusal is an exception.\n\nCriminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 , Pakistan Penal Code",
+        "metadata": {
+          "case_id": "2025_SCMR_1130",
+          "chunk_id": 1,
+          "citation": "2025 SCMR 1130",
+          "content_type": "full_text",
+          "court": "Supreme Court of Pakistan",
+          "court_name_raw": "Supreme Court of Pakistan",
+          "supabase_id": "ab508fd3-e128-40a8-9b97-cb9dca398763",
+          "text": "[2025 SCMR 1130 | Muhammad Amjad Naeem v. The State]\n\n complainant that the FIR explicitly stated the vehicles were given as a trust (amanat) was of no avail Mere mentioning of the word 'trust' in the FIR did not per se establish criminal breach of trust, and the said offence could only be made out when the requisite elements of the offence stood fulfilled View taken by the High Court in the impugned order that the petitioner could not be granted bail because he was nominated in three other FIRs was misplaced, because only previous conviction could furnish a ground for refusal of bail None of the vehicles in question had been recovered from the petitioner Complainant lodged FIR after a considerable delay of five months, without any explanation Due to such reasons, case of petitioner also called for further inquiry, falling under subsection (2) of Section 497 Cr.P.C., thus the petitioner was also entitled for bail after-arrest on such ground Offences did not fall within the prohibitory clause of Section 497(1) Cr.P.C., and in such cases, bail must be granted as a rule and refused only in exceptional circumstances Petition for bail was allowed in circumstances.\n\nPakistan Penal Code 1860--406 , Requirements--Term ,\nS. 406 Criminal breach of trust, applicability of Requirements Section 406 P.P.C reveals that, there are two requisite elements which are necessary to establish a case of criminal breach of trust Firstly, the accused must have been entrusted with a property as trust (amanat), or must had dominion over it as trust (amanat) Secondly, after such entrustment or dominion is created, the accused must have breached that trust by either dishonestly misappropriating or converting the property to his own use, or dishonestly using or disposing it of in violation of any direction of law, an express or implied legal contract related to the discharge of the trust, or willfully allowing another person to do any of these acts Both of these elements need to be present in order to constitute criminal breach of trust.",
+          "year": 2025,
+          "full_text": "[2025 SCMR 1130 | Muhammad Amjad Naeem v. The State]\n\nMUHAMMAD AMJAD NAEEM VS State\n\nBail--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 ,\nS. 497 Bail Offences not falling within the prohibitory clause of Section 497, Cr.P.C. For such offences grant of bail is a rule and refusal is an exception.\n\nCriminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 , Pakistan Penal Code 1860--406 ,\nS. 497 Penal Code (XLV of 1860), S. 406 Constitution of Pakistan, Art. 185(3) Criminal breach of trust Bail, grant of Further inquiry, case of Petitioner/accused was aggrieved of not being granted post-arrest bail by High Court Allegation against the petitioner was that he had misappropriated vehicles of the complainant Term 'entrustment' was used in a broad sense under Section 405 P.P.C and therefore, it encompassed a wide variety of contexts in which a property was handed over by an owner to a recipient person as trust (amanat) An entrustment could arise in any situation wherein property had been entrusted in the manner leading to the creation of a fiduciary relationship between the giver and recipient of the entrusted property Mere failure to pay profits, or a breach of promise, agreement or contract in the absence of clear entrustment of property, do not attract criminal breach of trust Contents of the FIR clearly stated that all the vehicles in question were given by the complainant to the petitioner in pursuance of successive business transactions Complainant not only settled the price of the vehicles with the petitioner but also received partial payments in lieu of the said transactions In such eventuality, it was quite clear that there was no entrustment of the vehicles as trust (amanat) to the petitioner by the complainant In absence of any such entrustment, offence under Section 405 P.P.C, was not made out and resultantly, Section 406 P.P.C was not applicable in the present case Contention of the complainant that the FIR explicitly stated the vehicles were given as a trust (amanat) was of no avail Mere mentioning of the word 'trust' in the FIR did not per se establish criminal breach of trust, and the said offence could only be made out when the requisite elements of the offence stood fulfilled View taken"
+        },
+        "retrieval_engines": [
+          "Pinecone"
+        ],
+        "authority_score": 110.28,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 30.0,
+          "full_text_substance": 8.0,
+          "provision_match": 0.0,
+          "issue_match": 7.0,
+          "citation_strength": 15.0,
+          "retrieval_fusion": 10.277957336780865,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2025 SCMR 1130",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2025",
+        "sections": [
+          "Section 497"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "[2025 SCMR 1130 | Muhammad Amjad Naeem v. The State]\n\nMUHAMMAD AMJAD NAEEM VS State\n\nBail--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 ,\nS. 497 Bail Offences not falling within the prohibitory clause of Section 497, Cr.P.C. For such offences grant of bail is a rule and refusal is an exception.\n\nCriminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 , Pakistan Penal Code",
+        "holding": "[2025 SCMR 1130 | Muhammad Amjad Naeem v. The State]\n\nMUHAMMAD AMJAD NAEEM VS State\n\nBail--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 ,\nS. 497 Bail Offences not falling within the prohibitory clause of Section 497, Cr.P.C. For such offences grant of bail is a rule and refusal is an exception.\n\nCriminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 , Pakistan Penal Code",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2025_SCMR_1130",
+        "verification_status": "Verified Precedent Record"
+      },
+      {
+        "id": "2007_YLR_1380",
+        "case_id": "2007_YLR_1380",
+        "chunk_id": "2007_YLR_1380_chk_1",
+        "score": 0.011235955056179775,
+        "dense_score": 0.0,
+        "sparse_score": 8.444781295165939,
+        "bm25_score": 8.444781295165939,
+        "rrf_score": 0.011235955056179775,
+        "source_type": "BM25",
+        "citation": "2007 YLR 1380",
+        "title": "458 2007 YLR 1380 Mirza MUHAMMAD RAMZAN VS State - Honorable Justice Ijaz Ahmad Chaudhry - Dr. Ehsan-ul-Haq , Naeem Tariq Sanghera LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "458 2007 YLR 1380 Mirza MUHAMMAD RAMZAN VS State - Honorable Justice Ijaz Ahmad Chaudhry - Dr. Ehsan-ul-Haq , Naeem Tariq Sanghera LAHORE-HIGH-COURT-LAHORE",
+        "court": "Supreme Court of Pakistan",
+        "year": "2007",
+        "content_type": "full_text",
+        "preview": "on case any more as nothing was to be recovered from him, who admittedly was not beneficiary of alleged fraud committed with the complainant---Even otherwise delay of about 3-months in the registration of F.I.R., was very significant and possibility of false implication of accused, could not be ruled out---Pre-arrest bail, already granted to accused was confirmed, in circumstances.\n\n\u00a0\n\nDr. Ehsan-ul-Haq for Petitioner.\n\n\u00a0\n\nNaeem Tariq Sanghera, Deputy Prosecutor General for the State.\n\n\u00a0\n\nMuhammad Ikram, A.S.-I. with Record.\n\n\u00a0\n\nORDER\n\n\u00a0\n\nIJAZ AHMAD CHAUDHRY, J.---Through this application under section 498, Cr.P,C. Mirza Muhammad Ramzan the petitioner seeks pre-arrest bail in a case F.I.R. No.337 of 2006, dated 13-3-2006, registered under section 406, P.P.C. at Police Station Defence Area, Lahore, on the application of Sohail Ahmad, the complainant.\n\n\u00a0\n\n2. According to the facts of the FIR., the petitioner along with the co-accused had committed breach of trust in the wake of managing t",
+        "metadata": {
+          "case_id": "2007_YLR_1380",
+          "citation": "2007 YLR 1380",
+          "case_title": "458\t2007 YLR 1380\tMirza MUHAMMAD RAMZAN VS State - Honorable Justice Ijaz Ahmad Chaudhry - Dr. Ehsan-ul-Haq , Naeem Tariq Sanghera\tLAHORE-HIGH-COURT-LAHORE",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2007-01-01",
+          "sections": [
+            "406",
+            "498",
+            "D",
+            "IJ"
+          ],
+          "statutes": [],
+          "chunk_index": 1,
+          "text": "on case any more as nothing was to be recovered from him, who admittedly was not beneficiary of alleged fraud committed with the complainant---Even otherwise delay of about 3-months in the registration of F.I.R., was very significant and possibility of false implication of accused, could not be ruled out---Pre-arrest bail, already granted to accused was confirmed, in circumstances.\n\n\u00a0\n\nDr. Ehsan-ul-Haq for Petitioner.\n\n\u00a0\n\nNaeem Tariq Sanghera, Deputy Prosecutor General for the State.\n\n\u00a0\n\nMuhammad Ikram, A.S.-I. with Record.\n\n\u00a0\n\nORDER\n\n\u00a0\n\nIJAZ AHMAD CHAUDHRY, J.---Through this application under section 498, Cr.P,C. Mirza Muhammad Ramzan the petitioner seeks pre-arrest bail in a case F.I.R. No.337 of 2006, dated 13-3-2006, registered under section 406, P.P.C. at Police Station Defence Area, Lahore, on the application of Sohail Ahmad, the complainant.\n\n\u00a0\n\n2. According to the facts of the FIR., the petitioner along with the co-accused had committed breach of trust in the wake of managing t"
+        },
+        "retrieval_engines": [
+          "BM25"
+        ],
+        "authority_score": 107.99,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 14.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 4.49438202247191,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2007 YLR 1380",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2007",
+        "sections": [
+          "Section 498",
+          "Section 406"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "on case any more as nothing was to be recovered from him, who admittedly was not beneficiary of alleged fraud committed with the complainant---Even otherwise delay of about 3-months in the registration of F.I.R., was very significant and possibility of false implication of accused, could not be ruled out---Pre-arrest bail, already granted to accused was confirmed, in circumstances.\n\n\u00a0\n\nDr. Ehsan-ul-Haq for Petitioner.\n\n\u00a0\n\nNaeem Tariq Sanghera, Deputy Prosecutor General for the State.\n\n\u00a0\n\nMuhammad Ikram, A.S.-I. with Record.\n\n\u00a0\n\nORDER\n\n\u00a0\n\nIJAZ AHMAD CHAUDHRY, J.---Through this application under section 498, Cr.P,C. Mirza Muhammad Ramzan the petitioner seeks pre-arrest bail in a case F.I.R. No.337 of 2006, dated 13-3-2006, registered under section 406, P.P.C. at Police Station Defence Area, Lahore, on the application of Sohail Ahmad, the complainant.\n\n\u00a0\n\n2. According to the facts of the FIR., the petitioner along with the co-accused had committed breach of trust in the wake of managing t",
+        "holding": "on case any more as nothing was to be recovered from him, who admittedly was not beneficiary of alleged fraud committed with the complainant---Even otherwise delay of about 3-months in the registration of F.I.R., was very significant and possibility of false implication of accused, could not be ruled out---Pre-arrest bail, already granted to accused was confirmed, in circumstances.\n\n\u00a0\n\nDr. Ehsan-ul-Haq for Petitioner.\n\n\u00a0\n\nNaeem Tariq Sanghera, Deputy Prosecutor General for the State.\n\n\u00a0\n\nMuhammad Ikram, A.S.-I. with Record.\n\n\u00a0\n\nORDER\n\n\u00a0\n\nIJAZ AHMAD CHAUDHRY, J.---Through this application under section 498, Cr.P,C. Mirza Muhammad Ramzan the petitioner seeks pre-arrest bail in a case F.I.R. No.337 of 2006, dated 13-3-2006, registered under section 406, P.P.C. at Police Station Defence Area, Lahore, on the application of Sohail Ahmad, the complainant.\n\n\u00a0\n\n2. According to the facts of the FIR., the petitioner along with the co-accused had committed breach of trust in the wake of managing t",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_1380",
+        "verification_status": "Verified Precedent Record"
+      },
+      {
+        "id": "2006_YLR_611",
+        "case_id": "2006_YLR_611",
+        "chunk_id": "2006_YLR_611_chk_1",
+        "score": 0.04006679362458606,
+        "dense_score": 0.0,
+        "sparse_score": 9.72118597095071,
+        "bm25_score": 8.515577597137595,
+        "rrf_score": 0.04006679362458606,
+        "source_type": "BM25",
+        "citation": "2006 YLR 611",
+        "title": "167 2006 YLR 611 SEEMA FAREED VS ALI HAKIMDIN GHULAM ALI MANDVIWALA - Honorable Justice Muhammad Sadiq Leghari - Khawaja Shamsul Islam , M.A. Kazi,Akhtar Saeed KARACHI-HIGH-COURT-SINDH",
+        "case_name": "167 2006 YLR 611 SEEMA FAREED VS ALI HAKIMDIN GHULAM ALI MANDVIWALA - Honorable Justice Muhammad Sadiq Leghari - Khawaja Shamsul Islam , M.A. Kazi,Akhtar Saeed KARACHI-HIGH-COURT-SINDH",
+        "court": "Supreme Court of Pakistan",
+        "year": "2006",
+        "content_type": "full_text",
+        "preview": "the law in criminal proceedings.\n\n\u00a0\n\n2004 SCMR 1892 ref.\n\n\u00a0\n\n(b) Criminal Procedure Code (V of 1898)---\n\n\u00a0\n\n----S. 561-A---Penal Code (XLV of 1860), Ss. 406 & 489-F---Constitution of Pakistan (1973), Art.89---General Clauses Act (X of 1897), S.6-A---Quashing of proceedings---Application for---Express allegations were made by complainant in his F.I.R. that accused had dishonestly got agreement executed by him and then started selling properties of the project without his signatures and also they were dishonestly not giving him the share of profit which was required to be paid to him under the terms of agreement---Complainant had also alleged that cheques were issued to him by the accused dishonestly without availability of funds and same were dishonoured---Said allegations apparently had disclosed misappropriation of the share of profit of the owners of the land and dishonest issuance of the cheques which were not honoured, which offences were punishable under Ss. 406 & 489-F, P.P.C.---",
+        "metadata": {
+          "case_id": "2006_YLR_611",
+          "citation": "2006 YLR 611",
+          "case_title": "167\t2006 YLR 611\tSEEMA FAREED VS ALI HAKIMDIN GHULAM ALI MANDVIWALA - Honorable Justice Muhammad Sadiq Leghari - Khawaja Shamsul Islam , M.A. Kazi,Akhtar Saeed\tKARACHI-HIGH-COURT-SINDH",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2006-01-01",
+          "sections": [
+            "561-A",
+            "6-A",
+            "89"
+          ],
+          "statutes": [],
+          "chunk_index": 1,
+          "text": "the law in criminal proceedings.\n\n\u00a0\n\n2004 SCMR 1892 ref.\n\n\u00a0\n\n(b) Criminal Procedure Code (V of 1898)---\n\n\u00a0\n\n----S. 561-A---Penal Code (XLV of 1860), Ss. 406 & 489-F---Constitution of Pakistan (1973), Art.89---General Clauses Act (X of 1897), S.6-A---Quashing of proceedings---Application for---Express allegations were made by complainant in his F.I.R. that accused had dishonestly got agreement executed by him and then started selling properties of the project without his signatures and also they were dishonestly not giving him the share of profit which was required to be paid to him under the terms of agreement---Complainant had also alleged that cheques were issued to him by the accused dishonestly without availability of funds and same were dishonoured---Said allegations apparently had disclosed misappropriation of the share of profit of the owners of the land and dishonest issuance of the cheques which were not honoured, which offences were punishable under Ss. 406 & 489-F, P.P.C.---"
+        },
+        "retrieval_engines": [
+          "BM25"
+        ],
+        "authority_score": 104.5,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 17.5,
+          "issue_match": 0.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 15.0,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2006 YLR 611",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2006",
+        "sections": [
+          "Section 561-A---Penal",
+          "Section 89---General",
+          "Section 6-A---Quashing"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "the law in criminal proceedings.\n\n\u00a0\n\n2004 SCMR 1892 ref.\n\n\u00a0\n\n(b) Criminal Procedure Code (V of 1898)---\n\n\u00a0\n\n----S. 561-A---Penal Code (XLV of 1860), Ss. 406 & 489-F---Constitution of Pakistan (1973), Art.89---General Clauses Act (X of 1897), S.6-A---Quashing of proceedings---Application for---Express allegations were made by complainant in his F.I.R. that accused had dishonestly got agreement executed by him and then started selling properties of the project without his signatures and also they were dishonestly not giving him the share of profit which was required to be paid to him under the terms of agreement---Complainant had also alleged that cheques were issued to him by the accused dishonestly without availability of funds and same were dishonoured---Said allegations apparently had disclosed misappropriation of the share of profit of the owners of the land and dishonest issuance of the cheques which were not honoured, which offences were punishable under Ss. 406 & 489-F, P.P.C.---",
+        "holding": "the law in criminal proceedings.\n\n\u00a0\n\n2004 SCMR 1892 ref.\n\n\u00a0\n\n(b) Criminal Procedure Code (V of 1898)---\n\n\u00a0\n\n----S. 561-A---Penal Code (XLV of 1860), Ss. 406 & 489-F---Constitution of Pakistan (1973), Art.89---General Clauses Act (X of 1897), S.6-A---Quashing of proceedings---Application for---Express allegations were made by complainant in his F.I.R. that accused had dishonestly got agreement executed by him and then started selling properties of the project without his signatures and also they were dishonestly not giving him the share of profit which was required to be paid to him under the terms of agreement---Complainant had also alleged that cheques were issued to him by the accused dishonestly without availability of funds and same were dishonoured---Said allegations apparently had disclosed misappropriation of the share of profit of the owners of the land and dishonest issuance of the cheques which were not honoured, which offences were punishable under Ss. 406 & 489-F, P.P.C.---",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_611",
+        "verification_status": "Verified Precedent Record"
+      }
+    ],
+    "pdf_status": [
+      {
+        "citation": "2008 YLR 2169",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2008_YLR_2169",
+        "valid": true
+      },
+      {
+        "citation": "2007 YLR 2978",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_2978",
+        "valid": true
+      },
+      {
+        "citation": "2022 SCMR 1223",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2022_SCMR_1223",
+        "valid": true
+      },
+      {
+        "citation": "2025 SCMR 1130",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2025_SCMR_1130",
+        "valid": true
+      },
+      {
+        "citation": "2007 YLR 1380",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_1380",
+        "valid": true
+      },
+      {
+        "citation": "2006 YLR 611",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_611",
+        "valid": true
+      }
+    ],
+    "warnings_count": 0
+  },
+  {
+    "id": "query_4_adversarial",
+    "title": "Query 4 (Adversarial): Company Director Investment Failure (420/406 PPC vs Civil Dispute)",
+    "query": "A company director received investment money, business failed, investor filed FIR under Section 420 PPC and 406 PPC. Determine criminal liability, civil remedy distinction, and pre-arrest bail grounds.",
+    "elapsed_seconds": 1.94,
+    "engine_counts": {
+      "count_supabase": 0,
+      "count_pinecone": 40,
+      "count_bm25": 40,
+      "count_external": 0
+    },
+    "rejection_counts": {
+      "caption_only": 0,
+      "insufficient_text": 3,
+      "unrelated_subject": 1,
+      "foreign_jurisdiction": 0,
+      "mismatched_domain": 5,
+      "trust_gate_exclusion": 0
+    },
+    "final_pool_count": 6,
+    "source_distribution": {
+      "Supabase": 0.0,
+      "Pinecone": 58.3,
+      "BM25": 41.7,
+      "External": 0.0
+    },
+    "authorities": [
+      {
+        "id": "2006_YLR_1305",
+        "score": 0.023369565217391305,
+        "dense_score": 0.461984634,
+        "sparse_score": 21.25789414998378,
+        "rrf_score": 0.023369565217391305,
+        "source_type": "Pinecone",
+        "citation": "2006 YLR 1305",
+        "title": "429 2006 YLR 1305 ISRAR-UL-HAQ VS State - Honorable Justice Tariq Shamim - Muhammad Akbar Khan , Badar Munir Malik LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "429 2006 YLR 1305 ISRAR-UL-HAQ VS State - Honorable Justice Tariq Shamim - Muhammad Akbar Khan , Badar Munir Malik LAHORE-HIGH-COURT-LAHORE",
+        "court": "Supreme Court of Pakistan",
+        "year": "2006",
+        "content_type": "full_text",
+        "preview": "2006 Y L R 1305\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Tariq Shamim, J\n\n\u00a0\n\nISRAR-UL-HAQ Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE-Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.1711/B of 2006, decided on 27th March, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898) \n\n\u00a0\n\n S. 498 Penal Code (XLV of 1860), Ss.406 & 506 Ad interim pre-arrest bail, confirmation of Matter essentially was one of civil nature as same related to busines",
+        "metadata": {
+          "canonical_id": "2006_YLR_1305",
+          "case_id": "2006_YLR_1305",
+          "case_title": "429\t2006 YLR 1305\tISRAR-UL-HAQ VS State - Honorable Justice Tariq Shamim - Muhammad Akbar Khan , Badar Munir Malik\tLAHORE-HIGH-COURT-LAHORE",
+          "chunk_index": 0,
+          "citation": "2006 YLR 1305",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2006-01-01",
+          "docket_number": "2006_YLR_1305",
+          "judgment_id": "89413d37-def4-4cf0-9314-79cb16abdced",
+          "sections": [
+            "498",
+            "D"
+          ],
+          "text": "2006 Y L R 1305\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Tariq Shamim, J\n\n\u00a0\n\nISRAR-UL-HAQ Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE-Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.1711/B of 2006, decided on 27th March, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898) \n\n\u00a0\n\n S. 498 Penal Code (XLV of 1860), Ss.406 & 506 Ad interim pre-arrest bail, confirmation of Matter essentially was one of civil nature as same related to business dealings between accused and complainant Mala fides of complainant were obvious from the fact that S.H.O. concerned was one of the defendants in the civil suit filed by accused which was prior in time to F.I.R. Co-accused had already been granted bail by the Trial Court Accused was also entitled to confirmation of his bail before arrest Possibility of F.I.R., being lodged out of ulterior motive by the complainant, could not be ruled out Civil litigation, though was no bar to criminal proceedings which could continue simultaneously, nevertheless one would get the impression that F.I.R. had be",
+          "text_content": "2006 Y L R 1305\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Tariq Shamim, J\n\n\u00a0\n\nISRAR-UL-HAQ Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE-Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.1711/B of 2006, decided on 27th March, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898) \n\n\u00a0\n\n S. 498 Penal Code (XLV of 1860), Ss.406 & 506 Ad interim pre-arrest bail, confirmation of Matter essentially was one of civil nature as same related to business dealings between accused and complainant Mala fides of complainant were obvious from the fact that S.H.O. concerned was one of the defendants in the civil suit filed by accused which was prior in time to F.I.R. Co-accused had already been granted bail by the Trial Court Accused was also entitled to confirmation of his bail before arrest Possibility of F.I.R., being lodged out of ulterior motive by the complainant, could not be ruled out Civil litigation, though was no bar to criminal proceedings which could continue simultaneously, nevertheless one would get the impression that F.I.R. had be"
+        },
+        "retrieval_engines": [
+          "Pinecone",
+          "BM25"
+        ],
+        "bm25_score": 21.25789414998378,
+        "authority_score": 149.0,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 35.0,
+          "issue_match": 7.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 35.0,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2006 YLR 1305",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2006",
+        "sections": [
+          "Section 498"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "2006 Y L R 1305\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Tariq Shamim, J\n\n\u00a0\n\nISRAR-UL-HAQ Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE-Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.1711/B of 2006, decided on 27th March, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898) \n\n\u00a0\n\n S. 498 Penal Code (XLV of 1860), Ss.406 & 506 Ad interim pre-arrest bail, confirmation of Matter essentially was one of civil nature as same related to busines",
+        "holding": "2006 Y L R 1305\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Tariq Shamim, J\n\n\u00a0\n\nISRAR-UL-HAQ Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE-Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.1711/B of 2006, decided on 27th March, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898) \n\n\u00a0\n\n S. 498 Penal Code (XLV of 1860), Ss.406 & 506 Ad interim pre-arrest bail, confirmation of Matter essentially was one of civil nature as same related to busines",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_1305",
+        "verification_status": "Verified Precedent Record"
+      },
+      {
+        "id": "2020_SCMR_670",
+        "score": 0.014705882352941176,
+        "dense_score": 0.486032486,
+        "sparse_score": 0.0,
+        "rrf_score": 0.014705882352941176,
+        "source_type": "Pinecone",
+        "citation": "2020 SCMR 670",
+        "title": "Precedent on Record",
+        "case_name": "Precedent on Record",
+        "court": "Supreme Court of Pakistan",
+        "year": "2020",
+        "content_type": "headnote_only",
+        "preview": "[2020 SCMR 670 | Hassan Javed v. The State]\n\nHASSAN JAVED VS State\n\nCriminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 , Criminal Procedure Code (Cr.P.C) 1898--498 , Further Inquiry--TERM , Pakistan Penal Code 1860--406 ,\nSs. 498 & 497(2) Penal Code (XLV of 1860), S. 406 Criminal breach of trust Anticipatory bail, grant of Further inquiry Allegation against accused-employe",
+        "metadata": {
+          "case_id": "2020_SCMR_670",
+          "chunk_id": 0,
+          "citation": "2020 SCMR 670",
+          "content_type": "headnote_only",
+          "court": "Supreme Court of Pakistan",
+          "court_name_raw": "Supreme Court of Pakistan",
+          "supabase_id": "e43ce6b3-525f-4122-a255-84b8bfe9b2a7",
+          "text": "[2020 SCMR 670 | Hassan Javed v. The State]\n\nHASSAN JAVED VS State\n\nCriminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 , Criminal Procedure Code (Cr.P.C) 1898--498 , Further Inquiry--TERM , Pakistan Penal Code 1860--406 ,\nSs. 498 & 497(2) Penal Code (XLV of 1860), S. 406 Criminal breach of trust Anticipatory bail, grant of Further inquiry Allegation against accused-employee was that he received payments from his employer's customers in his personal accounts; that he transacted payments from company's account of his employer for consignments personally settled with foreign customers, and that he confessed his guilt and paid back part of the alleged sum with an undertaking for the remainder Held, that the prosecution and complainant had not been able to point out, any material/evidence to establish alleged transactions, each of which was admittedly documented No statement was available on the record to confirm the alleged confession by the accused, either individually or jointly with other employees In addition to the crime report, the only statement was that of a prosecution witness, who referred to some \"voice messaging\" by the accused as proof of his guilt without production thereof before the Investigating Officer, foreclosing the possibility of its forensic confirmation Not even the time or date of impugned transactions was mentioned in the crime report Loss, allegedly incurred due to the employees, could not be equated with breach of trust Argument that mala fide was lurking behind the intended arrest could not be dismissed and as such given the accused's clean past, his remission into custody would be a measure far from being conscionable Case of accused came within the remit of S. 497(2), Cr.P.C. Accused was admitted to anticipatory bail.",
+          "year": 2020
+        },
+        "retrieval_engines": [
+          "Pinecone"
+        ],
+        "authority_score": 130.88,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 20.0,
+          "full_text_substance": 8.0,
+          "provision_match": 35.0,
+          "issue_match": 7.0,
+          "citation_strength": 15.0,
+          "retrieval_fusion": 5.88235294117647,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2020 SCMR 670",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2020",
+        "sections": [
+          "Section 406"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "[2020 SCMR 670 | Hassan Javed v. The State]\n\nHASSAN JAVED VS State\n\nCriminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 , Criminal Procedure Code (Cr.P.C) 1898--498 , Further Inquiry--TERM , Pakistan Penal Code 1860--406 ,\nSs. 498 & 497(2) Penal Code (XLV of 1860), S. 406 Criminal breach of trust Anticipatory bail, grant of Further inquiry Allegation against accused-employe",
+        "holding": "[2020 SCMR 670 | Hassan Javed v. The State]\n\nHASSAN JAVED VS State\n\nCriminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 , Criminal Procedure Code (Cr.P.C) 1898--498 , Further Inquiry--TERM , Pakistan Penal Code 1860--406 ,\nSs. 498 & 497(2) Penal Code (XLV of 1860), S. 406 Criminal breach of trust Anticipatory bail, grant of Further inquiry Allegation against accused-employe",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2020_SCMR_670",
+        "verification_status": "Verified Headnote"
+      },
+      {
+        "id": "2010_SCMR_1986",
+        "score": 0.014925373134328358,
+        "dense_score": 0.487991363,
+        "sparse_score": 0.0,
+        "rrf_score": 0.014925373134328358,
+        "source_type": "Pinecone",
+        "citation": "2010 SCMR 1986",
+        "title": "Precedent on Record",
+        "case_name": "Precedent on Record",
+        "court": "Supreme Court of Pakistan",
+        "year": "2010",
+        "content_type": "headnote_only",
+        "preview": "[2010 SCMR 1986 | Farhat Hussain Shah v. The State]\n\nFARHAT HUSSAIN SHAH VS State\n1985 SCMR 1949,\nCriminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 , Criminal Procedure Code (Cr.P.C) 1898--498 , Pakistan Penal Code 1860--406 ,\nSs. 497 & 498 Penal Code (XLV of 1860), S. 406 Criminal breach of trust Pre-arrest bail, grant of Principles Case of further inquiry Prohibitory cl",
+        "metadata": {
+          "case_id": "2010_SCMR_1986",
+          "chunk_id": 0,
+          "citation": "2010 SCMR 1986",
+          "content_type": "headnote_only",
+          "court": "Supreme Court of Pakistan",
+          "court_name_raw": "Supreme Court of Pakistan",
+          "supabase_id": "9e13cfeb-050c-4985-9d9b-f963c09183df",
+          "text": "[2010 SCMR 1986 | Farhat Hussain Shah v. The State]\n\nFARHAT HUSSAIN SHAH VS State\n1985 SCMR 1949,\nCriminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 , Criminal Procedure Code (Cr.P.C) 1898--498 , Pakistan Penal Code 1860--406 ,\nSs. 497 & 498 Penal Code (XLV of 1860), S. 406 Criminal breach of trust Pre-arrest bail, grant of Principles Case of further inquiry Prohibitory clause of S.497, Cr.P.C. Scope Pre-arrest bail granted to accused persons was cancelled by High Court and they were taken into custody Validity Mere heinousness of allegations should not stand in the way of grant of pre-arrest bail to any accused if he was otherwise qualified to grant of the same It was' not established beyond reasonable doubt that accused were guilty of offence punishable with death or imprisonment for life, therefore, they were entitled to grant of bail Provisions of S.498 Cr.P.C. were intended to be used very sparingly in exceptional cases where mala fide was patent or even latent Mala fide against accused persons was found on surface and prima facie the case of accused did not fall within the category of further inquiry Order passed by High Court was set aside by Supreme Court Bail was allowed.",
+          "year": 2010
+        },
+        "retrieval_engines": [
+          "Pinecone"
+        ],
+        "authority_score": 129.97,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 12.0,
+          "full_text_substance": 8.0,
+          "provision_match": 35.0,
+          "issue_match": 14.0,
+          "citation_strength": 15.0,
+          "retrieval_fusion": 5.970149253731343,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2010 SCMR 1986",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2010",
+        "sections": [
+          "Section 406"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "[2010 SCMR 1986 | Farhat Hussain Shah v. The State]\n\nFARHAT HUSSAIN SHAH VS State\n1985 SCMR 1949,\nCriminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 , Criminal Procedure Code (Cr.P.C) 1898--498 , Pakistan Penal Code 1860--406 ,\nSs. 497 & 498 Penal Code (XLV of 1860), S. 406 Criminal breach of trust Pre-arrest bail, grant of Principles Case of further inquiry Prohibitory cl",
+        "holding": "[2010 SCMR 1986 | Farhat Hussain Shah v. The State]\n\nFARHAT HUSSAIN SHAH VS State\n1985 SCMR 1949,\nCriminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--497 , Criminal Procedure Code (Cr.P.C) 1898--498 , Pakistan Penal Code 1860--406 ,\nSs. 497 & 498 Penal Code (XLV of 1860), S. 406 Criminal breach of trust Pre-arrest bail, grant of Principles Case of further inquiry Prohibitory cl",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2010_SCMR_1986",
+        "verification_status": "Verified Headnote"
+      },
+      {
+        "id": "2006_YLR_1927",
+        "case_id": "2006_YLR_1927",
+        "chunk_id": "2006_YLR_1927_chk_0",
+        "score": 0.014084507042253521,
+        "dense_score": 0.0,
+        "sparse_score": 24.372542313513172,
+        "bm25_score": 24.372542313513172,
+        "rrf_score": 0.014084507042253521,
+        "source_type": "BM25",
+        "citation": "2006 YLR 1927",
+        "title": "657 2006 YLR 1927 Haji MUHAMMAD RAFIQUE VS State - Honorable Justice Ali Nawaz Chowhan - Azam Nazir Tarrar , Samina Shahzadi LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "657 2006 YLR 1927 Haji MUHAMMAD RAFIQUE VS State - Honorable Justice Ali Nawaz Chowhan - Azam Nazir Tarrar , Samina Shahzadi LAHORE-HIGH-COURT-LAHORE",
+        "court": "Supreme Court of Pakistan",
+        "year": "2006",
+        "content_type": "full_text",
+        "preview": "2006 Y L R 1927\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Ali Nawaz Chowhan, J\n\n\u00a0\n\nHaji MUHAMMAD RAFIQUE Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.9248-B of 2005, decided on 19th January, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898) \n\n\u00a0\n\n S. 498 Penal Code (XLV of 1860), Ss.468, 471, 420 & 406 Ad interim pre-arrest bail, confirmation of Two basic pieces of evidence were available before High Court, which, prima facie, looked favourable as far as accused was concerned: One was that the report of A.S.P. had been further endorsed by A.S.P. (Investigation) and the other was the statement of Local Commissioner, who went to execute the document Question of impersonation was still to be established and the best persons for that purpose were the vendors, who were yet to be investigated by A.S.P. (Investigation), but they were not presently available Bail application had been lingering for the want of said two pieces of evidence Bail of accused was confirmed subject to conditi",
+        "metadata": {
+          "case_id": "2006_YLR_1927",
+          "citation": "2006 YLR 1927",
+          "case_title": "657\t2006 YLR 1927\tHaji MUHAMMAD RAFIQUE VS State - Honorable Justice Ali Nawaz Chowhan - Azam Nazir Tarrar , Samina Shahzadi\tLAHORE-HIGH-COURT-LAHORE",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2006-01-01",
+          "sections": [
+            "498"
+          ],
+          "statutes": [],
+          "chunk_index": 0,
+          "text": "2006 Y L R 1927\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Ali Nawaz Chowhan, J\n\n\u00a0\n\nHaji MUHAMMAD RAFIQUE Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.9248-B of 2005, decided on 19th January, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898) \n\n\u00a0\n\n S. 498 Penal Code (XLV of 1860), Ss.468, 471, 420 & 406 Ad interim pre-arrest bail, confirmation of Two basic pieces of evidence were available before High Court, which, prima facie, looked favourable as far as accused was concerned: One was that the report of A.S.P. had been further endorsed by A.S.P. (Investigation) and the other was the statement of Local Commissioner, who went to execute the document Question of impersonation was still to be established and the best persons for that purpose were the vendors, who were yet to be investigated by A.S.P. (Investigation), but they were not presently available Bail application had been lingering for the want of said two pieces of evidence Bail of accused was confirmed subject to conditi"
+        },
+        "retrieval_engines": [
+          "BM25"
+        ],
+        "authority_score": 129.63,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 35.0,
+          "issue_match": 7.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 15.633802816901408,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2006 YLR 1927",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2006",
+        "sections": [
+          "Section 498"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "2006 Y L R 1927\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Ali Nawaz Chowhan, J\n\n\u00a0\n\nHaji MUHAMMAD RAFIQUE Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.9248-B of 2005, decided on 19th January, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898) \n\n\u00a0\n\n S. 498 Penal Code (XLV of 1860), Ss.468, 471, 420 & 406 Ad interim pre-arrest bail, confirmation of Two basic pieces of evidence were available before High Court, which, prima facie, looked favourable as far as accused was concerned: One was that the report of A.S.P. had been further endorsed by A.S.P. (Investigation) and the other was the statement of Local Commissioner, who went to execute the document Question of impersonation was still to be established and the best persons for that purpose were the vendors, who were yet to be investigated by A.S.P. (Investigation), but they were not presently available Bail application had been lingering for the want of said two pieces of evidence Bail of accused was confirmed subject to conditi",
+        "holding": "2006 Y L R 1927\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Ali Nawaz Chowhan, J\n\n\u00a0\n\nHaji MUHAMMAD RAFIQUE Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.9248-B of 2005, decided on 19th January, 2006.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898) \n\n\u00a0\n\n S. 498 Penal Code (XLV of 1860), Ss.468, 471, 420 & 406 Ad interim pre-arrest bail, confirmation of Two basic pieces of evidence were available before High Court, which, prima facie, looked favourable as far as accused was concerned: One was that the report of A.S.P. had been further endorsed by A.S.P. (Investigation) and the other was the statement of Local Commissioner, who went to execute the document Question of impersonation was still to be established and the best persons for that purpose were the vendors, who were yet to be investigated by A.S.P. (Investigation), but they were not presently available Bail application had been lingering for the want of said two pieces of evidence Bail of accused was confirmed subject to conditi",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_1927",
+        "verification_status": "Verified Full Judgment"
+      },
+      {
+        "id": "2010_SCMR_1415",
+        "score": 0.011904761904761904,
+        "dense_score": 0.457286835,
+        "sparse_score": 0.0,
+        "rrf_score": 0.011904761904761904,
+        "source_type": "Pinecone",
+        "citation": "2010 SCMR 1415",
+        "title": "Precedent on Record",
+        "case_name": "Precedent on Record",
+        "court": "Supreme Court of Pakistan",
+        "year": "2010",
+        "content_type": "headnote_only",
+        "preview": "[2010 SCMR 1415 | Rai Riasat Ali v. The State]\n\nRai RIASAT ALI VS State\n\nConstitution of Pakistan 1973--185 , Criminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--498 , Pakistan Penal Code 1860--406 ,\nS. 498 Penal Code (XLV of 1860), S.406 Constitution of Pakistan (1973), Art. 185(3) Criminal breach of trust Pre-arrest bail, grant of Suit for recovery filed against the complaina",
+        "metadata": {
+          "case_id": "2010_SCMR_1415",
+          "chunk_id": 0,
+          "citation": "2010 SCMR 1415",
+          "content_type": "headnote_only",
+          "court": "Supreme Court of Pakistan",
+          "court_name_raw": "Supreme Court of Pakistan",
+          "supabase_id": "ada6cdaf-3fbd-4c6c-b66f-cac68d3bfdfb",
+          "text": "[2010 SCMR 1415 | Rai Riasat Ali v. The State]\n\nRai RIASAT ALI VS State\n\nConstitution of Pakistan 1973--185 , Criminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--498 , Pakistan Penal Code 1860--406 ,\nS. 498 Penal Code (XLV of 1860), S.406 Constitution of Pakistan (1973), Art. 185(3) Criminal breach of trust Pre-arrest bail, grant of Suit for recovery filed against the complainant by the Bank, was much prior to the registration of criminal case; and it was not denied that complainant got the case registered after filing of written reply in the recovery suit pending before the Banking Court Investigation in the case having remained inconclusive and Bank had filed a recovery suit with regard to the amount subject-matter of the F.I.R. against the complainant much prior to registration of case; petition for leave to appeal was converted into appeal by the Supreme Court and was allowed and pre-arrest bail was granted If accused would misuse the concession of bail, it would be open to the prosecution to move for cancellation of bail.",
+          "year": 2010
+        },
+        "retrieval_engines": [
+          "Pinecone"
+        ],
+        "authority_score": 128.76,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 12.0,
+          "full_text_substance": 8.0,
+          "provision_match": 35.0,
+          "issue_match": 14.0,
+          "citation_strength": 15.0,
+          "retrieval_fusion": 4.761904761904762,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2010 SCMR 1415",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2010",
+        "sections": [
+          "Section 498",
+          "Section 406 Constitution",
+          "Section 185"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "[2010 SCMR 1415 | Rai Riasat Ali v. The State]\n\nRai RIASAT ALI VS State\n\nConstitution of Pakistan 1973--185 , Criminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--498 , Pakistan Penal Code 1860--406 ,\nS. 498 Penal Code (XLV of 1860), S.406 Constitution of Pakistan (1973), Art. 185(3) Criminal breach of trust Pre-arrest bail, grant of Suit for recovery filed against the complaina",
+        "holding": "[2010 SCMR 1415 | Rai Riasat Ali v. The State]\n\nRai RIASAT ALI VS State\n\nConstitution of Pakistan 1973--185 , Criminal breach of trust--TERM , Criminal Procedure Code (Cr.P.C) 1898--498 , Pakistan Penal Code 1860--406 ,\nS. 498 Penal Code (XLV of 1860), S.406 Constitution of Pakistan (1973), Art. 185(3) Criminal breach of trust Pre-arrest bail, grant of Suit for recovery filed against the complaina",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2010_SCMR_1415",
+        "verification_status": "Verified Headnote"
+      },
+      {
+        "id": "2006_YLR_406",
+        "case_id": "2006_YLR_406",
+        "chunk_id": "2006_YLR_406_chk_0",
+        "score": 0.011904761904761904,
+        "dense_score": 0.0,
+        "sparse_score": 22.281864197817832,
+        "bm25_score": 22.281864197817832,
+        "rrf_score": 0.011904761904761904,
+        "source_type": "BM25",
+        "citation": "2006 YLR 406",
+        "title": "122 2006 YLR 406 MAZHAR IQBAL VS State - Honorable Justice Sh. Javaid Sarfraz - Ahmad Raza , Muhammad Yosuaf Syed LAHORE-HIGH-COURT-LAHORE",
+        "case_name": "122 2006 YLR 406 MAZHAR IQBAL VS State - Honorable Justice Sh. Javaid Sarfraz - Ahmad Raza , Muhammad Yosuaf Syed LAHORE-HIGH-COURT-LAHORE",
+        "court": "Supreme Court of Pakistan",
+        "year": "2006",
+        "content_type": "full_text",
+        "preview": "2006 Y L R 406\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Sh. Javaid Sarfraz, J\n\n\u00a0\n\nMAZHAR IQBAL---Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE---Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.3225-B of 2005, decided on 28th November, 2005.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898)---\n\n\u00a0\n\n----S. 498---Penal Code (XLV of 1860), S.489-F---Pre-arrest bail, grant of--Business dealing existed between accused and complainant and due to said dealings cheque in question was handed over to complainant---Amount of cheque in question, had already been paid to complainant in due course of time and said cheque was not to be presented to Bank for encashment---In order to attract S.489-F, P.P.C., element of dishonesty should be shown, which element was absent in the present case as amount had already been paid to the complainant---Dishonouring of cheque would not mean that criminal case be registered forthwith, but purpose for which cheque was issued should be taken into account before initiating criminal action---Accused, in circumsta",
+        "metadata": {
+          "case_id": "2006_YLR_406",
+          "citation": "2006 YLR 406",
+          "case_title": "122\t2006 YLR 406\tMAZHAR IQBAL VS State - Honorable Justice Sh. Javaid Sarfraz - Ahmad Raza , Muhammad Yosuaf Syed\tLAHORE-HIGH-COURT-LAHORE",
+          "court": "Supreme Court of Pakistan",
+          "decision_date": "2006-01-01",
+          "sections": [
+            "489-F",
+            "498"
+          ],
+          "statutes": [],
+          "chunk_index": 0,
+          "text": "2006 Y L R 406\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Sh. Javaid Sarfraz, J\n\n\u00a0\n\nMAZHAR IQBAL---Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE---Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.3225-B of 2005, decided on 28th November, 2005.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898)---\n\n\u00a0\n\n----S. 498---Penal Code (XLV of 1860), S.489-F---Pre-arrest bail, grant of--Business dealing existed between accused and complainant and due to said dealings cheque in question was handed over to complainant---Amount of cheque in question, had already been paid to complainant in due course of time and said cheque was not to be presented to Bank for encashment---In order to attract S.489-F, P.P.C., element of dishonesty should be shown, which element was absent in the present case as amount had already been paid to the complainant---Dishonouring of cheque would not mean that criminal case be registered forthwith, but purpose for which cheque was issued should be taken into account before initiating criminal action---Accused, in circumsta"
+        },
+        "retrieval_engines": [
+          "BM25"
+        ],
+        "authority_score": 128.76,
+        "authority_score_breakdown": {
+          "court_hierarchy": 40.0,
+          "recentness": 6.0,
+          "full_text_substance": 18.0,
+          "provision_match": 35.0,
+          "issue_match": 7.0,
+          "citation_strength": 8.0,
+          "retrieval_fusion": 14.761904761904763,
+          "off_topic_penalty": 0.0
+        },
+        "neutral_citation": "2006 YLR 406",
+        "court_name": "Supreme Court of Pakistan",
+        "date": "2006",
+        "sections": [
+          "Section 498---Penal",
+          "Section 489-F---Pre-arrest",
+          "Section 489-F"
+        ],
+        "legal_issue": "Legal proposition extracted from indexed public judgment record.",
+        "issue": "Legal proposition extracted from indexed public judgment record.",
+        "ratio_decidendi": "2006 Y L R 406\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Sh. Javaid Sarfraz, J\n\n\u00a0\n\nMAZHAR IQBAL---Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE---Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.3225-B of 2005, decided on 28th November, 2005.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898)---\n\n\u00a0\n\n----S. 498---Penal Code (XLV of 1860), S.489-F---Pre-arrest bail, grant of--Business dealing existed between accused and complainant and due to said dealings cheque in question was handed over to complainant---Amount of cheque in question, had already been paid to complainant in due course of time and said cheque was not to be presented to Bank for encashment---In order to attract S.489-F, P.P.C., element of dishonesty should be shown, which element was absent in the present case as amount had already been paid to the complainant---Dishonouring of cheque would not mean that criminal case be registered forthwith, but purpose for which cheque was issued should be taken into account before initiating criminal action---Accused, in circumsta",
+        "holding": "2006 Y L R 406\n\n\u00a0\n\n[Lahore]\n\n\u00a0\n\nBefore Sh. Javaid Sarfraz, J\n\n\u00a0\n\nMAZHAR IQBAL---Petitioner\n\n\u00a0\n\nVersus\n\n\u00a0\n\nTHE STATE---Respondent\n\n\u00a0\n\nCriminal Miscellaneous No.3225-B of 2005, decided on 28th November, 2005.\n\n\u00a0\n\nCriminal Procedure Code (V of 1898)---\n\n\u00a0\n\n----S. 498---Penal Code (XLV of 1860), S.489-F---Pre-arrest bail, grant of--Business dealing existed between accused and complainant and due to said dealings cheque in question was handed over to complainant---Amount of cheque in question, had already been paid to complainant in due course of time and said cheque was not to be presented to Bank for encashment---In order to attract S.489-F, P.P.C., element of dishonesty should be shown, which element was absent in the present case as amount had already been paid to the complainant---Dishonouring of cheque would not mean that criminal case be registered forthwith, but purpose for which cheque was issued should be taken into account before initiating criminal action---Accused, in circumsta",
+        "important_paragraphs": "Key judicial principles and reasoning on record.",
+        "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_406",
+        "verification_status": "Verified Precedent Record"
+      }
+    ],
+    "pdf_status": [
+      {
+        "citation": "2006 YLR 1305",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_1305",
+        "valid": true
+      },
+      {
+        "citation": "2020 SCMR 670",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2020_SCMR_670",
+        "valid": true
+      },
+      {
+        "citation": "2010 SCMR 1986",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2010_SCMR_1986",
+        "valid": true
+      },
+      {
+        "citation": "2006 YLR 1927",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_1927",
+        "valid": true
+      },
+      {
+        "citation": "2010 SCMR 1415",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2010_SCMR_1415",
+        "valid": true
+      },
+      {
+        "citation": "2006 YLR 406",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_406",
+        "valid": true
+      }
+    ],
+    "warnings_count": 0
+  }
+]

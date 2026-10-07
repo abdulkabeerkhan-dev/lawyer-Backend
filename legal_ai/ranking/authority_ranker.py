@@ -84,7 +84,7 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: Any) -> Tup
     else:
         scores["full_text_substance"] = 0.0
 
-    # 4. Provision Match (0 to 25 pts)
+    # 4. Provision Match (0 to 35 pts)
     provisions = []
     if query_plan:
         if hasattr(query_plan, "provisions") and query_plan.provisions:
@@ -97,12 +97,13 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: Any) -> Tup
         p_clean = str(prov).lower().replace("section ", "").replace("sec ", "").strip()
         nums = re.findall(r'\b[0-9]+(?:-[a-z])?\b', p_clean)
         for num in nums:
-            if re.search(rf'\b(?:sec|section|u/s)?\s*{re.escape(num)}\b', text) or re.search(rf'\b(?:sec|section|u/s)?\s*{re.escape(num)}\b', title):
-                prov_points += 12.5
+            # Check for section number in statutory context
+            if re.search(rf'\b(?:sec|section|s\.?|ss\.?|u/s)?\s*{re.escape(num)}\b', text) or re.search(rf'\b(?:sec|section|s\.?|ss\.?|u/s)?\s*{re.escape(num)}\b', title):
+                prov_points += 17.5
                 break
-    scores["provision_match"] = min(25.0, prov_points)
+    scores["provision_match"] = min(35.0, prov_points)
 
-    # 5. Legal Issue Match (0 to 30 pts)
+    # 5. Legal Issue Match (0 to 35 pts)
     questions = []
     if query_plan:
         if hasattr(query_plan, "legal_questions") and query_plan.legal_questions:
@@ -115,16 +116,28 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: Any) -> Tup
     key_terms = [
         "breach of trust", "dishonest intention", "civil dispute", "contractual breach",
         "pre-arrest bail", "mala fide", "ulterior motive", "director", "consultancy fee",
-        "cheating", "entrustment", "quashment", "fiduciary"
+        "cheating", "entrustment", "quashment", "fiduciary", "misappropriat", "inducement",
+        "delivery of property", "recovery", "accountability"
     ]
     matched_terms = 0
     for term in key_terms:
         if term in combined_questions and (term in text or term in title):
             matched_terms += 1
 
-    scores["issue_match"] = min(30.0, matched_terms * 6.0)
+    scores["issue_match"] = min(35.0, matched_terms * 7.0)
 
-    # 6. Citation Strength (0 to 15 pts)
+    # 6. Retrieval Fusion & Multi-Source Cross-Validation (0 to 35 pts)
+    fusion_points = 0.0
+    engines = candidate.get("retrieval_engines", [])
+    if len(engines) >= 2:
+        fusion_points += 20.0  # Multi-engine consensus (e.g. Pinecone + BM25)
+    rrf_sc = float(candidate.get("rrf_score", 0.0) or candidate.get("score", 0.0) or 0.0)
+    fusion_points += min(15.0, rrf_sc * 400.0)
+    if float(candidate.get("sparse_score", 0.0) or candidate.get("bm25_score", 0.0) or 0.0) >= 10.0:
+        fusion_points += 10.0
+    scores["retrieval_fusion"] = min(35.0, fusion_points)
+
+    # 7. Citation Strength (0 to 15 pts)
     if "SCMR" in citation:
         scores["citation_strength"] = 15.0
     elif "PLD" in citation:
@@ -134,8 +147,14 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: Any) -> Tup
     else:
         scores["citation_strength"] = 3.0
 
+    # 8. Off-topic Penalty: If query has statutory provisions and candidate matches neither provision nor issue
+    if provisions and scores["provision_match"] == 0.0 and scores["issue_match"] == 0.0:
+        scores["off_topic_penalty"] = -35.0
+    else:
+        scores["off_topic_penalty"] = 0.0
+
     total_score = sum(scores.values())
-    return total_score, scores
+    return max(0.0, total_score), scores
 
 
 def rank_and_filter_authorities(

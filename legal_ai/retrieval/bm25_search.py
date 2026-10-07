@@ -72,8 +72,15 @@ def search_bm25_sparse(
             m_year = re.search(r'\b(19\d{2}|20\d{2})\b', f"{cit} {title}")
             year = int(m_year.group(1)) if m_year else 2020
 
+        clean_case_id = str(meta.get("case_id") or "").strip()
+        if not clean_case_id:
+            clean_case_id = re.sub(r'(_chk_\d+|_chunk_\d+|#c\d+)$', '', str(cid), flags=re.IGNORECASE).strip()
+        final_id = clean_case_id or cid
+
         candidates.append({
-            "id": cid,
+            "id": final_id,
+            "case_id": final_id,
+            "chunk_id": cid,
             "score": score,
             "dense_score": 0.0,
             "sparse_score": score,
@@ -86,7 +93,7 @@ def search_bm25_sparse(
             "court": court,
             "year": year,
             "content_type": content_type,
-            "preview": text[:400],
+            "preview": text[:1500] if text else "",
             "metadata": meta
         })
 

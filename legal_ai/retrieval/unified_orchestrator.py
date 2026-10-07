@@ -33,14 +33,22 @@ def merge_candidates_with_rrf(
 
     for engine_name, candidates in engine_results.items():
         for rank, c in enumerate(candidates):
-            cid = str(c.get("id") or c.get("citation") or (c.get("metadata") or {}).get("case_id") or "").strip()
+            meta = c.get("metadata") if isinstance(c.get("metadata"), dict) else {}
+            cid = str(c.get("case_id") or meta.get("case_id") or c.get("citation") or c.get("id") or "").strip()
             if not cid:
                 continue
 
             norm_cid = re.sub(r'[\s_\-]+', '_', cid).lower()
+            norm_cid = re.sub(r'(_chk_\d+|_chunk_\d+|#c\d+)$', '', norm_cid, flags=re.IGNORECASE).strip()
+
             if norm_cid not in merged_map:
                 merged_map[norm_cid] = dict(c)
+                merged_map[norm_cid]["retrieval_engines"] = [engine_name]
                 rrf_scores[norm_cid] = 0.0
+            else:
+                existing = merged_map[norm_cid]
+                if engine_name not in existing.get("retrieval_engines", []):
+                    existing.setdefault("retrieval_engines", []).append(engine_name)
 
             rrf_scores[norm_cid] += 1.0 / (rrf_k + rank + 1)
 
@@ -52,11 +60,14 @@ def merge_candidates_with_rrf(
                 existing["dense_score"] = c["dense_score"]
             if c.get("sparse_score", 0.0) > existing.get("sparse_score", 0.0):
                 existing["sparse_score"] = c["sparse_score"]
+            if c.get("bm25_score"):
+                existing["bm25_score"] = c["bm25_score"]
 
             meta_existing = existing.get("metadata", {})
             meta_new = c.get("metadata", {})
-            if len(str(meta_new.get("full_text") or "")) > len(str(meta_existing.get("full_text") or "")):
-                meta_existing["full_text"] = meta_new.get("full_text")
+            if len(str(meta_new.get("full_text") or meta_new.get("text") or "")) > len(str(meta_existing.get("full_text") or meta_existing.get("text") or "")):
+                meta_existing["full_text"] = meta_new.get("full_text") or meta_new.get("text")
+                existing["preview"] = c.get("preview") or existing.get("preview")
 
     # Assign final RRF score to each candidate
     final_list: List[Dict[str, Any]] = []
@@ -98,9 +109,20 @@ async def retrieve_candidates_parallel(
             if isinstance(lane, dict) and lane.get("query"):
                 search_terms.append(lane["query"])
 
-    # 2. Fire concurrent search tasks
+    # 2. Build enriched query for semantic vector search
+    semantic_query = query_text
+    if query_plan:
+        q_list = []
+        if hasattr(query_plan, "legal_questions") and query_plan.legal_questions:
+            q_list = [str(q) for q in query_plan.legal_questions]
+        elif isinstance(query_plan, dict) and query_plan.get("legal_questions"):
+            q_list = [str(q) for q in query_plan["legal_questions"]]
+        if q_list:
+            semantic_query = f"{query_text} {' '.join(q_list[:2])}".strip()
+
+    # 3. Fire concurrent search tasks
     supabase_task = asyncio.create_task(search_supabase_judgments(search_terms, limit_per_term=15))
-    pinecone_task = asyncio.create_task(search_pinecone_dense(query_text, top_k=top_k_per_engine))
+    pinecone_task = asyncio.create_task(search_pinecone_dense(semantic_query, top_k=top_k_per_engine, min_similarity=0.30))
     bm25_task = asyncio.create_task(asyncio.to_thread(search_bm25_sparse, query_text, top_k=top_k_per_engine))
 
     if include_external:

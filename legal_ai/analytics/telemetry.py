@@ -38,11 +38,11 @@ def compute_source_distribution(authorities: List[Dict[str, Any]]) -> Dict[str, 
     if not authorities:
         return {"Supabase": 0.0, "Pinecone": 0.0, "BM25": 0.0, "External": 0.0}
 
-    counts = {"Supabase": 0, "Pinecone": 0, "BM25": 0, "External": 0}
-    total = len(authorities)
+    engine_points = {"Supabase": 0.0, "Pinecone": 0.0, "BM25": 0.0, "External": 0.0}
 
     for item in authorities:
         meta = item.get("metadata", {}) if isinstance(item, dict) else getattr(item, "metadata", {}) or {}
+        engines = item.get("retrieval_engines") or meta.get("retrieval_engines") or []
         stype = str(
             item.get("source_type")
             or item.get("retrieval_source")
@@ -51,22 +51,27 @@ def compute_source_distribution(authorities: List[Dict[str, Any]]) -> Dict[str, 
             or ""
         ).lower()
 
-        # Check explicit tags or flags
-        if item.get("is_supabase_fts") or meta.get("is_supabase_fts") or "supabase" in stype:
-            counts["Supabase"] += 1
-        elif item.get("is_external") or meta.get("is_external") or "external" in stype or "web" in stype or "searxng" in stype:
-            counts["External"] += 1
-        elif "bm25" in stype or item.get("bm25_score") is not None:
-            counts["BM25"] += 1
+        if engines:
+            fraction = 1.0 / len(engines)
+            for eng in engines:
+                if eng in engine_points:
+                    engine_points[eng] += fraction
         else:
-            # Default dense vector match
-            counts["Pinecone"] += 1
+            if item.get("is_supabase_fts") or meta.get("is_supabase_fts") or "supabase" in stype:
+                engine_points["Supabase"] += 1.0
+            elif item.get("is_external") or meta.get("is_external") or "external" in stype:
+                engine_points["External"] += 1.0
+            elif "bm25" in stype or item.get("bm25_score") is not None or float(item.get("sparse_score", 0.0) or 0.0) > 0:
+                engine_points["BM25"] += 1.0
+            else:
+                engine_points["Pinecone"] += 1.0
 
+    total_points = sum(engine_points.values()) or 1.0
     return {
-        "Supabase": round((counts["Supabase"] / total) * 100.0, 1),
-        "Pinecone": round((counts["Pinecone"] / total) * 100.0, 1),
-        "BM25": round((counts["BM25"] / total) * 100.0, 1),
-        "External": round((counts["External"] / total) * 100.0, 1),
+        "Supabase": round((engine_points["Supabase"] / total_points) * 100.0, 1),
+        "Pinecone": round((engine_points["Pinecone"] / total_points) * 100.0, 1),
+        "BM25": round((engine_points["BM25"] / total_points) * 100.0, 1),
+        "External": round((engine_points["External"] / total_points) * 100.0, 1),
     }
 
 
