@@ -3868,7 +3868,35 @@ def extract_images_from_pdf_base64(b64_str: str) -> List[ImagePayload]:
         print(f"⚠️ PDF image extraction warning: {pdf_img_err}", file=sys.stderr, flush=True)
     return extracted_images
 
+USE_LEGAL_AI_PIPELINE = os.environ.get("USE_LEGAL_AI_PIPELINE", "true").lower() in ("true", "1", "yes")
+
 async def process_query_job(job_id: str, request: QueryRequest, authenticated_user_id: str):
+    use_flag = os.environ.get("USE_LEGAL_AI_PIPELINE", "true").lower() in ("true", "1", "yes")
+    if use_flag:
+        try:
+            print(f"🚀 [JOB {job_id}] Routing through modern legal_ai pipeline...", file=sys.stderr, flush=True)
+            from legal_ai.query_engine.query_processor import process_query_job_legal_ai
+            await process_query_job_legal_ai(job_id, request, authenticated_user_id, jobs_store, supabase)
+            return
+        except Exception as e:
+            print(f"⚠️ [JOB {job_id}] legal_ai pipeline error: {e}. Falling back to legacy pipeline...", file=sys.stderr, flush=True)
+            import traceback
+            traceback.print_exc(file=sys.stderr)
+            if job_id in jobs_store and jobs_store[job_id].get("stage") in ("understanding_query", "checking_law", "searching_precedents", "starting", None):
+                await _legacy_process_query_job(job_id, request, authenticated_user_id)
+                return
+            if job_id in jobs_store:
+                jobs_store[job_id].update({
+                    "status": "error",
+                    "error": str(e),
+                    "completed_at": datetime.now(timezone.utc)
+                })
+            return
+
+    print(f"🚀 [JOB {job_id}] Executing legacy pipeline...", file=sys.stderr, flush=True)
+    await _legacy_process_query_job(job_id, request, authenticated_user_id)
+
+async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenticated_user_id: str):
     try:
         user_prompt = request.query_text
         intercepted_card, clean_topic = extract_and_intercept_citation(user_prompt)

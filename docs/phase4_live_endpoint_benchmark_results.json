@@ -1,0 +1,218 @@
+[
+  {
+    "id": "query_1",
+    "name": "Query 1: Section 420 PPC",
+    "duration_sec": 129.89,
+    "status": "done",
+    "passed_checks": true,
+    "failures": [],
+    "precedents_summary": [
+      {
+        "citation": "2026 SCMR 792",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "HAKEEM VS State - Honorable Justice Athar Minallah - Arshad Hussain Yousafzai",
+        "source_type": "BM25",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2026_SCMR_792"
+      },
+      {
+        "citation": "2026 SCMR 145",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "MUHAMMAD RASHID VS State - Honorable Justice Irfan Saadat Khan - Aftab Alam Yasir",
+        "source_type": "BM25",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2026_SCMR_145"
+      },
+      {
+        "citation": "2007 YLR 246",
+        "court": "Lahore High Court",
+        "case_name": "70 2007 YLR 246 Sahabzada KAMRAN AHMAD VS S.H.O., SATELLITE TOWN, SARGODHA - Honorable Justice Tariq Shamim - Hafiz Khalil Ahmed , M. Farooq Qureshi Chishti and Muhammad Arif Bhinder LAHORE-HIGH-COURT-LAHORE",
+        "source_type": "Pinecone",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_246"
+      },
+      {
+        "citation": "1968 SCMR 752",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "Case #420 (1968 SCMR 752)",
+        "source_type": "Supabase",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/1968_SCMR_420"
+      },
+      {
+        "citation": "2006 YLR 168",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "63 2006 YLR 168 WASIM AKRAM VS State - Honorable Justice Anwar Zaheer Jamali - Zahid F. Ebrahim , Aamir Jalil Zubedi, A.A.-G. KARACHI-HIGH-COURT-SINDH",
+        "source_type": "Pinecone",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_168"
+      },
+      {
+        "citation": "2010 YLR 2244",
+        "court": "High Court of Sindh",
+        "case_name": "740 2010 YLR 2244 MUHAMMAD TAHIR alias Tahir Jaffar VS State - Honorable Justice Ahmed Ali M. Shaikh - Mehmood A. Qureshi KARACHI-HIGH-COURT-SINDH",
+        "source_type": "BM25",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2010_YLR_2244"
+      }
+    ],
+    "answer_word_count": 4201,
+    "citations_count": 6
+  },
+  {
+    "id": "query_2",
+    "name": "Query 2: Section 409 PPC",
+    "duration_sec": 209.89,
+    "status": "done",
+    "passed_checks": true,
+    "failures": [],
+    "precedents_summary": [
+      {
+        "citation": "2026 SCMR 792",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "HAKEEM VS State - Honorable Justice Athar Minallah - Arshad Hussain Yousafzai",
+        "source_type": "BM25",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2026_SCMR_792"
+      },
+      {
+        "citation": "2010 SCMR 1986",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "Farhat Hussain Shah v. The State",
+        "source_type": "Supabase",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2010_SCMR_1986"
+      },
+      {
+        "citation": "2026 SCMR 145",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "MUHAMMAD RASHID VS State - Honorable Justice Irfan Saadat Khan - Aftab Alam Yasir",
+        "source_type": "BM25",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2026_SCMR_145"
+      },
+      {
+        "citation": "2008 YLR 898",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "305 2008 YLR 898 SHOAIB AHMAD VS State - Honorable Justice Tariq Shamim - Mian Shahid Iqbal LAHORE-HIGH-COURT-LAHORE",
+        "source_type": "Pinecone",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2008_YLR_898"
+      },
+      {
+        "citation": "2026 PLD 75",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "Syed BASIT HYDER TAQVI VS State - Honorable Justice Muhammad Hashim Khan Kakar - Abbad-ul-Hussnain",
+        "source_type": "BM25",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2026_PLD_SC_75"
+      },
+      {
+        "citation": "2026 SCMR 449",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "SHAKEEL AHMED KAYANI VS The MANAGING DIRECTOR/CHIEF EXECUTIVE OFFICER, ISLAMABAD - Honorable Justice Syed Mansoor Ali Shah - Muhammad Bashir Khan , Sultan Mazhar Sher Khan",
+        "source_type": "BM25",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2026_SCMR_449"
+      }
+    ],
+    "answer_word_count": 4583,
+    "citations_count": 6
+  },
+  {
+    "id": "query_3",
+    "name": "Query 3: Section 406 PPC",
+    "duration_sec": 196.73,
+    "status": "done",
+    "passed_checks": true,
+    "failures": [],
+    "precedents_summary": [
+      {
+        "citation": "2026 SCMR 792",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "HAKEEM VS State - Honorable Justice Athar Minallah - Arshad Hussain Yousafzai",
+        "source_type": "BM25",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2026_SCMR_792"
+      },
+      {
+        "citation": "2006 YLR 2851",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "960 2006 YLR 2851 M. IQBAL VS State - Honorable Justice Muhammad Khalid Alvi - Tariq Zulfiqar Ahmad Chaudhary , Tahseen Ifran LAHORE-HIGH-COURT-LAHORE",
+        "source_type": "Pinecone",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_2851"
+      },
+      {
+        "citation": "2007 YLR 1582",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "513 2007 YLR 1582 ZARGAM KHAN VS State - Honorable Justice Hasnat Ahmad Khan - Ch. Pervaiz Aftab LAHORE-HIGH-COURT-LAHORE",
+        "source_type": "BM25",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2007_YLR_1582"
+      },
+      {
+        "citation": "2010 SCMR 1415",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "Precedent on Record",
+        "source_type": "Pinecone",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2010_SCMR_1415"
+      },
+      {
+        "citation": "2010 YLR 2244",
+        "court": "High Court of Sindh",
+        "case_name": "740 2010 YLR 2244 MUHAMMAD TAHIR alias Tahir Jaffar VS State - Honorable Justice Ahmed Ali M. Shaikh - Mehmood A. Qureshi KARACHI-HIGH-COURT-SINDH",
+        "source_type": "Pinecone",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2010_YLR_2244"
+      },
+      {
+        "citation": "2022 SCMR 1223",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "Precedent on Record",
+        "source_type": "Pinecone",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2022_SCMR_1223"
+      }
+    ],
+    "answer_word_count": 4684,
+    "citations_count": 6
+  },
+  {
+    "id": "query_4_adversarial",
+    "name": "Query 4 (Adversarial): Company Director Investment Failure",
+    "duration_sec": 177.07,
+    "status": "done",
+    "passed_checks": true,
+    "failures": [],
+    "precedents_summary": [
+      {
+        "citation": "2006 YLR 1305",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "429 2006 YLR 1305 ISRAR-UL-HAQ VS State - Honorable Justice Tariq Shamim - Muhammad Akbar Khan , Badar Munir Malik LAHORE-HIGH-COURT-LAHORE",
+        "source_type": "Pinecone",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_1305"
+      },
+      {
+        "citation": "2026 YLR 620",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "81 2026 YLR 620 Zahid Siddique VS State - Honorable Justice Malik Javid Iqbal Wains - Muhammad Bilal Butt and Ms. Rabia Kausar LAHORE-HIGH-COURT-LAHORE",
+        "source_type": "Supabase",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2026_YLR_620"
+      },
+      {
+        "citation": "2010 SCMR 1415",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "Precedent on Record",
+        "source_type": "Pinecone",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2010_SCMR_1415"
+      },
+      {
+        "citation": "2020 SCMR 670",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "Precedent on Record",
+        "source_type": "Pinecone",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2020_SCMR_670"
+      },
+      {
+        "citation": "2006 YLR 1927",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "657 2006 YLR 1927 Haji MUHAMMAD RAFIQUE VS State - Honorable Justice Ali Nawaz Chowhan - Azam Nazir Tarrar , Samina Shahzadi LAHORE-HIGH-COURT-LAHORE",
+        "source_type": "BM25",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2006_YLR_1927"
+      },
+      {
+        "citation": "2022 SCMR 1223",
+        "court": "Supreme Court of Pakistan",
+        "case_name": "Precedent on Record",
+        "source_type": "Pinecone",
+        "pdf_url": "https://lawyer-backend-production-26c7.up.railway.app/judgment-pdf/2022_SCMR_1223"
+      }
+    ],
+    "answer_word_count": 4012,
+    "citations_count": 6
+  }
+]

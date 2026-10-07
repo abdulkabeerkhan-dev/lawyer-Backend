@@ -22,7 +22,7 @@ async def search_external_judgments(
 
     try:
         from core.recent_judgments_search import search_recent_external_judgments
-        external_results = search_recent_external_judgments(query_text, max_results=max_results)
+        external_results = await search_recent_external_judgments(query_text, budget_s=2.5)
     except Exception as e:
         print(f"⚠️ [ExternalSearch] External search error: {e}", file=sys.stderr)
         return []

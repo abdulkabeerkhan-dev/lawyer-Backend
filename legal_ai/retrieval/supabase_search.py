@@ -29,6 +29,7 @@ def _format_supabase_record(rec: Dict[str, Any], score: float = 0.60) -> Dict[st
 
     return {
         "id": cid,
+        "case_id": cid,
         "score": score,
         "dense_score": 0.0,
         "sparse_score": 0.0,
@@ -126,4 +127,52 @@ async def search_supabase_judgments(
             except Exception:
                 pass
 
+        # 3. Case Title & Section Keyword Search (Fast Indexed Search)
+        # Strips boilerplate words and builds tsquery for title
+        STOP_WORDS = {
+            'the', 'of', 'and', 'a', 'in', 'to', 'is', 'for', 'on', 'with', 'by', 'at', 'from',
+            'an', 'as', 'be', 'under', 'versus', 'vs', 'v', 'state', 'act', 'code', 'law',
+            'order', 'section', 'sec', 'petition', 'appeal', 'criminal', 'civil'
+        }
+        words = [w for w in re.sub(r'[^\w\s]', ' ', q_clean).split() if len(w) > 2 and w.lower() not in STOP_WORDS]
+        if words:
+            title_ts = " & ".join(words[:3])
+            try:
+                def _query_title():
+                    res = sb.table("full_judgments").select(
+                        "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
+                    ).limit(5).text_search("case_title", title_ts).execute()
+                    return res.data or []
+
+                title_records = safe_supabase_query(_query_title, retries=1)
+                for r in (title_records or []):
+                    cid = str(r.get("case_id") or r.get("id"))
+                    if cid not in seen_ids:
+                        seen_ids.add(cid)
+                        candidates.append(_format_supabase_record(r, score=0.75))
+            except Exception:
+                pass
+
+        # 4. Doctrinal Full-Text Search (Targeted and Guarded)
+        # Only fire full_text if we have 2-3 distinctive doctrinal keywords (e.g. dishonest & intention)
+        distinctive = [w for w in words if not w.isdigit() and len(w) >= 5]
+        if len(distinctive) >= 2:
+            ft_ts = " & ".join(distinctive[:2])
+            try:
+                def _query_fulltext():
+                    res = sb.table("full_judgments").select(
+                        "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
+                    ).limit(4).text_search("full_text", ft_ts).execute()
+                    return res.data or []
+
+                ft_records = safe_supabase_query(_query_fulltext, retries=1)
+                for r in (ft_records or []):
+                    cid = str(r.get("case_id") or r.get("id"))
+                    if cid not in seen_ids:
+                        seen_ids.add(cid)
+                        candidates.append(_format_supabase_record(r, score=0.70))
+            except Exception:
+                pass
+
     return candidates
+
