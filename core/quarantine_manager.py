@@ -137,11 +137,14 @@ def approve_and_promote_record(
 
     edits = edited_fields or {}
 
-    court = edits.get("court_name") or target.get("extracted_court_name") or target.get("court_name") or "Court"
+    from core.court_taxonomy import get_effective_court
+    from core.case_title_taxonomy import get_effective_title
+    court = get_effective_court(edits) or target.get("extracted_court_name") or get_effective_court(target) or "Court"
     case_type = edits.get("case_type") or target.get("case_type") or "GEN"
+
     docket = edits.get("docket_number") or target.get("docket_number") or "0"
     date_val = edits.get("decision_date") or target.get("extracted_date") or target.get("decision_date") or "2026-01-01"
-    title = edits.get("case_title") or target.get("extracted_case_title") or target.get("case_title") or "Unnamed Judgment"
+    title = get_effective_title(edits) or target.get("extracted_case_title") or get_effective_title(target) or "Unnamed Judgment"
     bench = edits.get("bench") or target.get("extracted_judge_names") or target.get("judge_names")
     full_text = target.get("raw_text") or ""
 

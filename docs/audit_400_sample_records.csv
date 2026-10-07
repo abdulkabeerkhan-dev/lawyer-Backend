@@ -1,401 +1,655 @@
-case_id,stratum,stored_citation,header_citation,category,reason
-1975_PLD_1270,PLD,1975 PLD 1270,PLD 1975 page 1270,format_artifact,Format spacing/punctuation variant
-1976_PLD_1049,PLD,1976 PLD 1049,PLD 1976 page 1049,format_artifact,Format spacing/punctuation variant
-2012_PLD_ISL_11,PLD,PLD 2012 Isl 11,PLD 2012 page 11,format_artifact,Format spacing/punctuation variant
-1956_PLD_452,PLD,1956 PLD 900,PLD 1956 page 900,format_artifact,Format spacing/punctuation variant
-1987_PLD_593,PLD,1987 PLD 593,1987 PLD 593,verified_match,Clean canonical match
-1992_PLD_LAH_11,PLD,PLD 1992 Lah 11,PLD 1992 page 63,true_page_mismatch,True page mismatch: stored 11 vs header 63
-1986_PLD_476,PLD,1986 PLD 476,1986 PLD 476,verified_match,Clean canonical match
-1952_PLD_39,PLD,1952 PLD 15,1952 PLD page 5,stub_or_index_entry,Non-judgment index stub (39 words)
-2011_PLD_217,PLD,2011 PLD 217,2011 PLD 217,verified_match,Clean canonical match
-1979_PLD_687,PLD,1979 PLD 687,PLD 1979 page 687,format_artifact,Format spacing/punctuation variant
-2010_PLD_389,PLD,2010 PLD 389,2010 PLD 389,verified_match,Clean canonical match
-2017_PLD_610,PLD,2017 PLD 610,2017 PLD 610,verified_match,Clean canonical match
-1987_PLD_SC_461,PLD,PLD 1987 SC 461,PLD 1987 page 461,format_artifact,Format spacing/punctuation variant
-2023_PLD_661,PLD,2023 PLD 661,2023 PLD 661,verified_match,Clean canonical match
-1986_PLD_LAH_189,PLD,PLD 1986 Lah 189,PLD 1986 page 189,format_artifact,Format spacing/punctuation variant
-1993_PLD_456,PLD,1993 PLD 456,1993 PLD 456,verified_match,Clean canonical match
-1977_PLD_836,PLD,1977 PLD 836,PLD 1977 page 836,format_artifact,Format spacing/punctuation variant
-1989_PLD_PESH_17,PLD,PLD 1989 Pesh 17,PLD 1989 page 17,format_artifact,Format spacing/punctuation variant
-1957_PLD_450,PLD,1957 PLD 671,PLD 1957 page 671,format_artifact,Format spacing/punctuation variant
-1956_PLD_596,PLD,1956 PLD 596,1956 PLD 596,verified_match,Clean canonical match
-2008_PLD_LAH_341,PLD,PLD 2008 Lah 341,PLD 2008 page 341,format_artifact,Format spacing/punctuation variant
-1965_PLD_290,PLD,1965 PLD 290,1965 PLD 290,verified_match,Clean canonical match
-2012_PLD_182,PLD,2012 PLD 182,2012 PLD 182,stub_or_index_entry,Non-judgment index stub (92 words)
-2015_PLD_85,PLD,2015 PLD 85,2015 PLD 85,verified_match,Clean canonical match
-1953_PLD_15,PLD,1953 PLD 4,PLD 1953 page 4,format_artifact,Format spacing/punctuation variant
-1970_PLD_622,PLD,1970 PLD 622,PLD 1970 page 622,format_artifact,Format spacing/punctuation variant
-1957_PLD_155,PLD,1957 PLD 119,PLD 1957 page 119,format_artifact,Format spacing/punctuation variant
-1987_PLD_81,PLD,1987 PLD 81,1987 PLD 81,verified_match,Clean canonical match
-2007_PLD_421,PLD,2007 PLD 421,2007 PLD 421,verified_match,Clean canonical match
-1996_PLD_47,PLD,1996 PLD 47,1996 PLD 47,verified_match,Clean canonical match
-1981_PLD_172,PLD,1981 PLD 172,1981 PLD 172,verified_match,Clean canonical match
-2006_PLD_18,PLD,2006 PLD 18,2006 PLD 18,verified_match,Clean canonical match
-1965_PLD_PESH_20,PLD,PLD 1965 Pesh 20,PLD 1965 page 20,format_artifact,Format spacing/punctuation variant
-1952_PLD_139,PLD,1952 PLD 57,PLD 1952 page 57,format_artifact,Format spacing/punctuation variant
-1993_PLD_207,PLD,1993 PLD 207,1993 PLD 207,verified_match,Clean canonical match
-1986_PLD_QTA_86,PLD,PLD 1986 Quetta 86,PLD 1986 page 86,format_artifact,Format spacing/punctuation variant
-1996_PLD_210,PLD,1996 PLD 210,1996 PLD 210,verified_match,Clean canonical match
-1977_PLD_345,PLD,1977 PLD 345,PLD 1977 page 345,format_artifact,Format spacing/punctuation variant
-1966_PLD_5,PLD,1966 PLD 5,PLD 1966 page 5,format_artifact,Format spacing/punctuation variant
-1978_PLD_437,PLD,1978 PLD 437,PLD 1978 page 437,format_artifact,Format spacing/punctuation variant
-1961_PLD_151,PLD,1961 PLD 99,1961 PLD page 9,true_page_mismatch,True page mismatch: stored 99 vs header 9
-1969_PLD_559,PLD,1969 PLD 559,1969 PLD 559,verified_match,Clean canonical match
-1973_PCRLJ_212,PCRLJ,1973 PCRLJ 212,1973 PCRLJ 212,publisher_banner,Publisher customer care banner block
-1979_PCRLJ_838,PCRLJ,1979 PCRLJ 838,1979 PCRLJ 838,publisher_banner,Publisher customer care banner block
-2007_PCRLJ_301,PCRLJ,2007 PCRLJ 301,2007 PCRLJ 301,verified_match,Clean canonical match
-2015_PCRLJ_1326,PCRLJ,2015 PCRLJ 1326,2015 PCRLJ 1326,verified_match,Clean canonical match
-1983_PCRLJ_1027,PCRLJ,1983 PCRLJ 1027,1983 PCRLJ 1027,publisher_banner,Publisher customer care banner block
-1979_PCRLJ_900,PCRLJ,1979 PCRLJ 900,1979 PCRLJ 900,publisher_banner,Publisher customer care banner block
-1983_PCRLJ_2193,PCRLJ,1983 PCRLJ 2193,1983 PCRLJ 2193,publisher_banner,Publisher customer care banner block
-2021_PCRLJ_1128,PCRLJ,2021 PCRLJ 1128,2021 PCRLJ 1128,verified_match,Clean canonical match
-2016_PCRLJ_1216,PCRLJ,2016 PCRLJ 1216,2016 PCRLJ 1216,publisher_banner,Publisher customer care banner block
-1988_PCRLJ_1991,PCRLJ,1988 PCRLJ 1991,1988 PCRLJ 1991,publisher_banner,Publisher customer care banner block
-1987_PCRLJ_1280,PCRLJ,1987 PCRLJ 1280,1987 PCRLJ 1280,publisher_banner,Publisher customer care banner block
-1999_PCRLJ_476,PCRLJ,1999 PCRLJ 476,1999 PCRLJ 476,verified_match,Clean canonical match
-2024_PCRLJ_33,PCRLJ,2024 PCRLJ 33,2024 PCRLJ 33,verified_match,Clean canonical match
-1984_PCRLJ_2865,PCRLJ,1984 PCRLJ 2865,1984 PCRLJ 2865,verified_match,Clean canonical match
-2017_PCRLJ_920,PCRLJ,2017 PCRLJ 920,2017 PCRLJ 920,verified_match,Clean canonical match
-2006_PCRLJ_867,PCRLJ,2006 PCRLJ 867,2006 PCRLJ 867,verified_match,Clean canonical match
-1971_PCRLJ_352,PCRLJ,1971 PCRLJ 352,1971 PCRLJ 352,publisher_banner,Publisher customer care banner block
-1994_PCRLJ_2502,PCRLJ,1994 PCRLJ 2502,1994 PCRLJ 2502,publisher_banner,Publisher customer care banner block
-1994_PCRLJ_1739,PCRLJ,1994 PCRLJ 1739,1994 PCRLJ 1739,publisher_banner,Publisher customer care banner block
-1982_PCRLJ_231,PCRLJ,1982 PCRLJ 231,1982 PCRLJ 231,publisher_banner,Publisher customer care banner block
-2024_PCRLJ_121,PCRLJ,2024 PCRLJ 121,2024 PCRLJ 121,verified_match,Clean canonical match
-1986_PCRLJ_1791,PCRLJ,1986 PCRLJ 1791,1986 PCRLJ 1791,publisher_banner,Publisher customer care banner block
-1969_PCRLJ_473,PCRLJ,1969 PCRLJ 473,1969 PCRLJ 473,publisher_banner,Publisher customer care banner block
-2020_PCRLJ_374,PCRLJ,2020 PCRLJ 374,2020 PCRLJ 374,verified_match,Clean canonical match
-2023_PCRLJ_233,PCRLJ,2023 PCRLJ 233,2023 PCRLJ 233,verified_match,Clean canonical match
-1968_PCRLJ_216,PCRLJ,1968 PCRLJ 216,1968 PCRLJ 216,publisher_banner,Publisher customer care banner block
-1986_PCRLJ_1392,PCRLJ,1986 PCRLJ 1392,1986 PCRLJ 1392,publisher_banner,Publisher customer care banner block
-1981_PCRLJ_999,PCRLJ,1981 PCRLJ 999,1981 PCRLJ 999,verified_match,Clean canonical match
-1978_PCRLJ_64,PCRLJ,1978 PCRLJ 64,1978 PCRLJ 64,publisher_banner,Publisher customer care banner block
-1987_PCRLJ_512,PCRLJ,1987 PCRLJ 512,1987 PCRLJ 512,publisher_banner,Publisher customer care banner block
-1996_PCRLJ_475,PCRLJ,1996 PCRLJ 475,1996 PCRLJ 475,verified_match,Clean canonical match
-1991_PCRLJ_1497,PCRLJ,1991 PCRLJ 1497,1991 PCRLJ 1497,publisher_banner,Publisher customer care banner block
-1990_PCRLJ_1079,PCRLJ,1990 PCRLJ 1079,1990 PCRLJ 1079,verified_match,Clean canonical match
-2004_PCRLJ_1163,PCRLJ,2004 PCRLJ 1163,2004 PCRLJ 1163,publisher_banner,Publisher customer care banner block
-2005_PCRLJ_123,PCRLJ,2005 PCRLJ 123,2005 PCRLJ 123,verified_match,Clean canonical match
-1970_PCRLJ_38,PCRLJ,1970 PCRLJ 38,1970 PCRLJ 38,publisher_banner,Publisher customer care banner block
-1997_PCRLJ_2003,PCRLJ,1997 PCRLJ 2003,1997 PCRLJ 2003,verified_match,Clean canonical match
-1987_PCRLJ_1634,PCRLJ,1987 PCRLJ 1634,1987 PCRLJ 1634,publisher_banner,Publisher customer care banner block
-1997_PCRLJ_1820,PCRLJ,1997 PCRLJ 1820,1997 PCRLJ 1820,verified_match,Clean canonical match
-1995_PCRLJ_1906,PCRLJ,1995 PCRLJ 1906,Register Feedback Customer Care Office PLD Publishers 35-Nab,publisher_banner,Publisher customer care banner block
-1987_PLC(CS)_123,PLC,1987 PLC(CS) 520,1987 PLC page 520,format_artifact,Format spacing/punctuation variant
-2013_PLC(CS)_56,PLC,2013 PLC(CS) 357,2013 PLC(CS) 357,stub_or_index_entry,Non-judgment index stub (93 words)
-2014_PLC(CS)_86,PLC,2014 PLC(CS) 639,2014 PLC page 639,format_artifact,Format spacing/punctuation variant
-2005_PLC_31,PLC,2005 PLC 31,2005 PLC 31,verified_match,Clean canonical match
-1988_PLC(CS)_266,PLC,1988 PLC(CS) 741,1988 PLC page 41,true_page_mismatch,True page mismatch: stored 741 vs header 41
-2012_PLC(CS)_227,PLC,2012 PLC(CS) 1317,2012 PLC page 1317,format_artifact,Format spacing/punctuation variant
-1998_PLC_455,PLC,1998 PLC 455,1998 PLC 455,verified_match,Clean canonical match
-1992_PLC(CS)_90,PLC,1992 PLC(CS) 350,1992 PLC page 350,format_artifact,Format spacing/punctuation variant
-1999_PLC_463,PLC,1999 PLC 463,1999 PLC 463,verified_match,Clean canonical match
-2005_PLC(CS)_236,PLC,2005 PLC(CS) 1347,2005 PLC page 1347,format_artifact,Format spacing/punctuation variant
-2002_PLC_192,PLC,2002 PLC 192,2002 PLC 192,stub_or_index_entry,Non-judgment index stub (24 words)
-2011_PLC(CS)_144,PLC,2011 PLC(CS) 782,2011 PLC page 782,format_artifact,Format spacing/punctuation variant
-2000_PLC_62,PLC,2000 PLC 62,2000 PLC 62,stub_or_index_entry,Non-judgment index stub (17 words)
-2006_PLC_111,PLC,2006 PLC 111,2006 PLC 111,verified_match,Clean canonical match
-1986_PLC(CS)_129,PLC,1986 PLC(CS) 432,1986 PLC page 432,format_artifact,Format spacing/punctuation variant
-2014_PLC_459,PLC,2014 PLC 459,2014 PLC 459,verified_match,Clean canonical match
-1996_PLC(CS)_62,PLC,1996 PLC(CS) 300,1996 PLC page 300,wrong_case_text,"Metadata title ""MUHAMMADALIMEMON v. PROVINCEOFSINDH"" contradicts text parties ""Present Munawar Ali Khan, Chairman, Ghulam Abbas Soomro and S. Nasim Haider, Members MUHAMMAD ALI MEMON v. PROVINCE OF SINDH and others"""
-2001_PLC(CS)_123,PLC,2001 PLC(CS) 581,2001 PLC page 581,format_artifact,Format spacing/punctuation variant
-1974_PLC_186,PLC,1974 PLC 186,1974 PLC 186,verified_match,Clean canonical match
-1983_PLC(CS)_395,PLC,1983 PLC(CS) 995,1983 PLC page 95,true_page_mismatch,True page mismatch: stored 995 vs header 95
-1962_PLC_1309,PLC,1962 PLC 1309,1962 PLC 1309,stub_or_index_entry,Non-judgment index stub (43 words)
-2010_PLC(CS)_70,PLC,2010 PLC(CS) 446,2010 PLC(CS) 446,stub_or_index_entry,Non-judgment index stub (86 words)
-2001_PLC(CS)_50,PLC,2001 PLC(CS) 212,PLD 1976 page 195,journal_mismatch,Stored journal PLC != header journal PLD
-2022_PLC_44,PLC,2022 PLC 44,2022 PLC 44,stub_or_index_entry,Non-judgment index stub (17 words)
-1988_PLC(CS)_12,PLC,1988 PLC(CS) 28,1988 PLC page 28,format_artifact,Format spacing/punctuation variant
-1996_PLC(CS)_238,PLC,1996 PLC(CS) 740,1996 PLC(CS) 740,stub_or_index_entry,Non-judgment index stub (74 words)
-2018_PLC_113,PLC,2018 PLC 113,2018 PLC 113,verified_match,Clean canonical match
-1981_PLC_97,PLC,1981 PLC 97,1981 PLC 97,verified_match,Clean canonical match
-1993_PLC(CS)_11,PLC,1993 PLC(CS) 60,PLD 1969 page 407,journal_mismatch,Stored journal PLC != header journal PLD
-2015_PLC(CS)_6,PLC,2015 PLC(CS) 37,PLD 2012 page 425,journal_mismatch,Stored journal PLC != header journal PLD
-1976_PLC_672,PLC,1976 PLC 672,1976 PLC 672,stub_or_index_entry,Non-judgment index stub (19 words)
-2008_PLC_164,PLC,2008 PLC 164,2008 PLC 164,verified_match,Clean canonical match
-2023_PLC(CS)_46,PLC,2023 PLC(CS) 341,2023 PLC page 341,format_artifact,Format spacing/punctuation variant
-1984_PLC(CS)_492,PLC,1984 PLC(CS) 1073,1984 PLC page 1073,format_artifact,Format spacing/punctuation variant
-1963_PLC_826,PLC,1963 PLC 826,1963 PLC 826,verified_match,Clean canonical match
-1977_PLC_447,PLC,1977 PLC 447,1977 PLC 447,stub_or_index_entry,Non-judgment index stub (21 words)
-1998_PLC_263,PLC,1998 PLC 263,1998 PLC 263,verified_match,Clean canonical match
-1999_PLC(CS)_265,PLC,1999 PLC(CS) 1518,PLD 1990 page 612,wrong_case_text,"Metadata title ""AZFAR YASIN, ASSISTANT"" contradicts text parties ""Before Gulbaz Khan, Chairman and Muhammad Ayub Khan, Member (R) MUHAMMAD YOUNUS KHAN v. MANAGING DIRECTOR, P"""
-2019_SCMR_2063,SCMR,2019 SCMR 2063,2019 SCMR 2063,verified_match,Clean canonical match
-1997_SCMR_1120,SCMR,1997 SCMR 1120,1997 SCMR page 120,true_page_mismatch,True page mismatch: stored 1120 vs header 120
-1997_SCMR_1339,SCMR,1997 SCMR 1339,1997SCMR 1339 [Supreme Court of Pakistan] Present: Sajjad Al,verified_match,Clean canonical match
-2019_SCMR_556,SCMR,2019 SCMR 556,2019 SCMR 556,verified_match,Clean canonical match
-2001_SCMR_664,SCMR,2001 SCMR 664,2001 SCMR 664,verified_match,Clean canonical match
-2006_SCMR_1329,SCMR,2006 SCMR 1329,2006 SCMR 1329,verified_match,Clean canonical match
-1998_SCMR_2318,SCMR,1998 SCMR 2318,SCMR 1748 page 1981,year_mismatch,Stored year 1998 != header year 1748
-1998_SCMR_1559,SCMR,1998 SCMR 1559,1998 SCMR page 559,true_page_mismatch,True page mismatch: stored 1559 vs header 559
-2004_SCMR_1443,SCMR,2004 SCMR 1443,2004 SCMR 1443,verified_match,Clean canonical match
-1978_SCMR_77,SCMR,1978 SCMR 195,1978 SCMR page 95,true_page_mismatch,True page mismatch: stored 195 vs header 95
-1984_SCMR_58,SCMR,1984 SCMR 58,1984 SCMR page 8,true_page_mismatch,True page mismatch: stored 58 vs header 8
-2001_SCMR_265,SCMR,2001 SCMR 265,2001 SCMR 265,verified_match,Clean canonical match
-1971_SCMR_56,SCMR,1971 SCMR 128,1971 SCMR page 28,true_page_mismatch,True page mismatch: stored 128 vs header 28
-1990_SCMR_786,SCMR,1990 SCMR 786,1990 SCMR page 86,true_page_mismatch,True page mismatch: stored 786 vs header 86
-1973_SCMR_163,SCMR,1973 SCMR 503,PLD 1970 page 316,journal_mismatch,Stored journal SCMR != header journal PLD
-1996_SCMR_1592,SCMR,1996 SCMR 1592,1996SCMR1592 [Supreme Court of Pakistan] Present: Sajjad Ali,verified_match,Clean canonical match
-2009_SCMR_362,SCMR,2009 SCMR 362,2009 SCMR 362,verified_match,Clean canonical match
-1990_SCMR_296,SCMR,1990 SCMR 296,1990 SCMR page 96,true_page_mismatch,True page mismatch: stored 296 vs header 96
-1989_SCMR_1208,SCMR,1989 SCMR 1208,1989 SCMR page 208,true_page_mismatch,True page mismatch: stored 1208 vs header 208
-1990_SCMR_298,SCMR,1990 SCMR 298,1990 SCMR page 98,true_page_mismatch,True page mismatch: stored 298 vs header 98
-2006_SCMR_642,SCMR,2006 SCMR 642,2006 SCMR 642,verified_match,Clean canonical match
-1986_SCMR_1260,SCMR,1986 SCMR 1260,PLD 1980 page 193,journal_mismatch,Stored journal SCMR != header journal PLD
-1994_SCMR_1782,SCMR,1994 SCMR 1782,1994 SCMR 1782,publisher_banner,Publisher customer care banner block
-1988_SCMR_1847,SCMR,1988 SCMR 1847,1988 SCMR page 847,true_page_mismatch,True page mismatch: stored 1847 vs header 847
-1986_SCMR_1840,SCMR,1986 SCMR 1840,1986 SCMR page 840,true_page_mismatch,True page mismatch: stored 1840 vs header 840
-1991_SCMR_1764,SCMR,1991 SCMR 1764,1991 SCMR page 764,true_page_mismatch,True page mismatch: stored 1764 vs header 764
-2012_SCMR_140,SCMR,2012 SCMR 140,2012 SCMR 140,verified_match,Clean canonical match
-2008_SCMR_478,SCMR,2008 SCMR 478,2008 SCMR 478,verified_match,Clean canonical match
-1971_SCMR_244,SCMR,1971 SCMR 688,1971 SCMR page 88,true_page_mismatch,True page mismatch: stored 688 vs header 88
-1975_SCMR_160,SCMR,1975 SCMR 330,1975 SCMR page 30,true_page_mismatch,True page mismatch: stored 330 vs header 30
-1969_SCMR_355,SCMR,1969 SCMR 814,1969 SCMR page 14,true_page_mismatch,True page mismatch: stored 814 vs header 14
-1989_SCMR_864,SCMR,1989 SCMR 864,PLD 1969 page 167,journal_mismatch,Stored journal SCMR != header journal PLD
-1969_SCMR_79,SCMR,1969 SCMR 113,1969 SCMR page 13,true_page_mismatch,True page mismatch: stored 113 vs header 13
-1998_SCMR_359,SCMR,1998 SCMR 359,1998 SCMR page 59,true_page_mismatch,True page mismatch: stored 359 vs header 59
-1975_SCMR_61,SCMR,1975 SCMR 153,1975 SCMR page 53,true_page_mismatch,True page mismatch: stored 153 vs header 53
-1996_SCMR_1051,SCMR,1996 SCMR 1051,1996SCMR 1051 [Supreme Court of Pakistan] Present: Mukhtar A,verified_match,Clean canonical match
-1969_SCMR_266,SCMR,1969 SCMR 517,1969 SCMR page 17,true_page_mismatch,True page mismatch: stored 517 vs header 17
-1996_SCMR_1044,SCMR,1996 SCMR 1044,PLD 1980 page 214,journal_mismatch,Stored journal SCMR != header journal PLD
-1983_CLC_3181,CLC,1983 CLC 3181,1983 CLC 3181,verified_match,Clean canonical match
-1982_CLC_1150,CLC,1982 CLC 1150,1982 CLC 1150,verified_match,Clean canonical match
-1980_CLC_1631,CLC,1980 CLC 1631,1980 CLC 1631,stub_or_index_entry,Non-judgment index stub (90 words)
-1993_CLC_2130,CLC,1993 CLC 2130,1993 CLC 2130,verified_match,Clean canonical match
-2019_CLC_2083,CLC,2019 CLC 2083,2019 CLC 2083,verified_match,Clean canonical match
-2016_CLC_1405,CLC,2016 CLC 1405,2016 CLC 1405,verified_match,Clean canonical match
-1988_CLC_564,CLC,1988 CLC 564,1988 CLC 564,verified_match,Clean canonical match
-1983_CLC_1068,CLC,1983 CLC 1068,1983 CLC 1068,verified_match,Clean canonical match
-2011_CLC_1822,CLC,2011 CLC 1822,2011 CLC 1822,verified_match,Clean canonical match
-2022_CLC_489,CLC,2022 CLC 489,2022 CLC 489,verified_match,Clean canonical match
-2019_CLC_1690,CLC,2019 CLC 1690,2019 CLC 1690,stub_or_index_entry,Non-judgment index stub (78 words)
-2015_CLC_1360,CLC,2015 CLC 1360,2015 CLC 1360,verified_match,Clean canonical match
-1982_CLC_1728,CLC,1982 CLC 1728,1982 CLC 1728,verified_match,Clean canonical match
-2015_CLC_1333,CLC,2015 CLC 1333,2015 CLC 1333,verified_match,Clean canonical match
-1987_CLC_705,CLC,1987 CLC 705,1987 CLC 705,verified_match,Clean canonical match
-1998_CLC_256,CLC,1998 CLC 256,1998 CLC 256,verified_match,Clean canonical match
-1989_CLC_442,CLC,1989 CLC 442,1989 CLC 442,stub_or_index_entry,Non-judgment index stub (98 words)
-2013_CLC_1191,CLC,2013 CLC 1191,2013 CLC 1191,verified_match,Clean canonical match
-2019_CLC_1811,CLC,2019 CLC 1811,2019 CLC 1811,verified_match,Clean canonical match
-1991_CLC_291,CLC,1991 CLC 291,1991 CLC 291,verified_match,Clean canonical match
-1985_CLC_283,CLC,1985 CLC 283,1985 CLC 283,verified_match,Clean canonical match
-1996_CLC_682,CLC,1996 CLC 682,1996 CLC 682,stub_or_index_entry,Non-judgment index stub (56 words)
-1987_CLC_929,CLC,1987 CLC 929,1987 CLC 929,verified_match,Clean canonical match
-1979_CLC_27,CLC,1979 CLC 109,PLD 1977 page 409,journal_mismatch,Stored journal CLC != header journal PLD
-2002_CLC_918,CLC,2002 CLC 918,2002 CLC 918,verified_match,Clean canonical match
-1985_CLC_108,CLC,1985 CLC 108,1985 CLC 108,verified_match,Clean canonical match
-1995_CLC_1209,CLC,1995 CLC 1209,1995 CLC 1209,verified_match,Clean canonical match
-1985_CLC_395,CLC,1985 CLC 395,1985 CLC 395,verified_match,Clean canonical match
-1980_CLC_854,CLC,1980 CLC 854,1980 CLC 854,stub_or_index_entry,Non-judgment index stub (87 words)
-2001_CLC_1072,CLC,2001 CLC 1072,2001 CLC 1072,verified_match,Clean canonical match
-2022_CLC_1858,CLC,2022 CLC 1858,2022 CLC 1858,verified_match,Clean canonical match
-1984_CLC_2532,CLC,1984 CLC 2532,1984 CLC 2532,stub_or_index_entry,Non-judgment index stub (91 words)
-2016_CLC_1309,CLC,2016 CLC 1309,2016 CLC 1309,verified_match,Clean canonical match
-1979_CLC_52,CLC,1979 CLC 199,PLD 1978 page 1459,journal_mismatch,Stored journal CLC != header journal PLD
-2003_CLC_1428,CLC,2003 CLC 1428,2003 CLC 1428,verified_match,Clean canonical match
-1994_CLC_1933,CLC,1994 CLC 1933,1994 CLC 1933,verified_match,Clean canonical match
-2011_CLC_135,CLC,2011 CLC 135,2011 CLC 135,stub_or_index_entry,Non-judgment index stub (21 words)
-2010_MLD_817,MLD,2010 MLD 817,2010 MLD page 17,true_page_mismatch,True page mismatch: stored 817 vs header 17
-2011_MLD_733,MLD,2011 MLD 733,2011 MLD page 33,true_page_mismatch,True page mismatch: stored 733 vs header 33
-2025_MLD_165,MLD,2025 MLD 165,2025 MLD 165,verified_match,Clean canonical match
-1994_MLD_1400,MLD,1994 MLD 1400,1994 MLD page 400,true_page_mismatch,True page mismatch: stored 1400 vs header 400
-2021_MLD_424,MLD,2021 MLD 424,Register Feedback Customer Care Office PLD Publishers 35-Nab,publisher_banner,Banner-only customer care stub
-1985_MLD_444,MLD,1985 MLD 1107,PLD 1976 page 832,journal_mismatch,Stored journal MLD != header journal PLD
-2013_MLD_1315,MLD,2013 MLD 1315,2013 MLD page 315,true_page_mismatch,True page mismatch: stored 1315 vs header 315
-1988_MLD_484,MLD,1988 MLD 1323,1988 MLD page 323,true_page_mismatch,True page mismatch: stored 1323 vs header 323
-2018_MLD_789,MLD,2018 MLD 789,2018 MLD page 89,true_page_mismatch,True page mismatch: stored 789 vs header 89
-1994_MLD_912,MLD,1994 MLD 912,1994 MLD page 12,true_page_mismatch,True page mismatch: stored 912 vs header 12
-1992_MLD_1983,MLD,1992 MLD 1983,PLD 1953 page 3,journal_mismatch,Stored journal MLD != header journal PLD
-2020_MLD_1492,MLD,2020 MLD 1492,PLD 2003 page 1419,journal_mismatch,Stored journal MLD != header journal PLD
-2012_MLD_188,MLD,2012 MLD 188,2012 MLD page 88,true_page_mismatch,True page mismatch: stored 188 vs header 88
-2001_MLD_1259,MLD,2001 MLD 1259,2001 MLD page 259,true_page_mismatch,True page mismatch: stored 1259 vs header 259
-1987_MLD_870,MLD,1987 MLD 2384,1987 MLD page 384,true_page_mismatch,True page mismatch: stored 2384 vs header 384
-2023_MLD_77,MLD,2023 MLD 77,2023 MLD 77,stub_or_index_entry,Non-judgment index stub (21 words)
-2023_MLD_47,MLD,2023 MLD 47,2023 MLD 47,verified_match,Clean canonical match
-2024_MLD_635,MLD,2024 MLD 635,2024 MLD 635,verified_match,Clean canonical match
-1989_MLD_2226,MLD,1989 MLD 2226,1989 MLD 2226,verified_match,Clean canonical match
-1989_MLD_2043,MLD,1989 MLD 2043,1989 MLD page 043,true_page_mismatch,True page mismatch: stored 2043 vs header 043
-1994_MLD_266,MLD,1994 MLD 266,PLD 1957 page 1040,journal_mismatch,Stored journal MLD != header journal PLD
-2022_MLD_2061,MLD,2022 MLD 2061,2022 MLD 2061,verified_match,Clean canonical match
-1988_MLD_203,MLD,1988 MLD 520,1988 MLD page 20,true_page_mismatch,True page mismatch: stored 520 vs header 20
-2016_MLD_1569,MLD,2016 MLD 1569,2016 MLD page 569,true_page_mismatch,True page mismatch: stored 1569 vs header 569
-2013_MLD_708,MLD,2013 MLD 708,MLD 1596 page 2007,year_mismatch,Stored year 2013 != header year 1596
-1990_MLD_1977,MLD,1990 MLD 1977,1990 MLD page 977,true_page_mismatch,True page mismatch: stored 1977 vs header 977
-1989_MLD_4691,MLD,1989 MLD 4691,CLC 1750 page 1987,journal_mismatch,Stored journal MLD != header journal CLC
-1997_MLD_778,MLD,1997 MLD 778,PLD 1971 page 730,journal_mismatch,Stored journal MLD != header journal PLD
-1993_MLD_1303,MLD,1993 MLD 1303,PLD 1953 page 18,journal_mismatch,Stored journal MLD != header journal PLD
-2003_MLD_1721,MLD,2003 MLD 1721,2003 MLD page 721,true_page_mismatch,True page mismatch: stored 1721 vs header 721
-1996_MLD_1825,MLD,1996 MLD 1825,PLD 1995 page 469,journal_mismatch,Stored journal MLD != header journal PLD
-2001_MLD_1532,MLD,2001 MLD 1532,PLD 1978 page 1459,journal_mismatch,Stored journal MLD != header journal PLD
-2019_MLD_276,MLD,2019 MLD 276,2019 MLD page 76,true_page_mismatch,True page mismatch: stored 276 vs header 76
-2001_MLD_2012,MLD,2001 MLD 2012,SCMR 1647 page 1994,wrong_case_text,"Metadata title ""492	2001 MLD 2012	FAZAL MUHAMMAD VS ZAINAB BIBI - 	LAHORE-HIGH-COURT-LAHORE"" contradicts text parties ""Appellants v. Mst"""
-2023_MLD_910,MLD,2023 MLD 910,2023 MLD 910,verified_match,Clean canonical match
-1987_MLD_1178,MLD,1987 MLD 3179,1987 MLD page 179,true_page_mismatch,True page mismatch: stored 3179 vs header 179
-1995_MLD_511,MLD,1995 MLD 511,PLD 1967 page 317,journal_mismatch,Stored journal MLD != header journal PLD
-2024_YLR_1339,YLR,2024 YLR 1339,2024 YLR 1339,verified_match,Clean canonical match
-SHC_YLR_2727_2012,YLR,2012 YLR 2727,2012 YLR 2727,verified_match,Clean canonical match
-1999_YLR_16,YLR,1999 YLR 16,1999 YLR page 6,true_page_mismatch,True page mismatch: stored 16 vs header 6
-2013_YLR_1302,YLR,2013 YLR 1302,2013 YLR 1302,verified_match,Clean canonical match
-2023_YLR_2059,YLR,2023 YLR 2059,2023 YLR 2059,verified_match,Clean canonical match
-2010_YLR_2205,YLR,2010 YLR 2205,2010 YLR page 205,true_page_mismatch,True page mismatch: stored 2205 vs header 205
-2011_YLR_2272,YLR,2011 YLR 2272,2011 YLR 2272,verified_match,Clean canonical match
-2025_YLR_977,YLR,2025 YLR 977,2025 YLR 977,verified_match,Clean canonical match
-SC_YLR_1915_2008,YLR,2008 YLR 1915,SCMR 1192 page 7520,journal_mismatch,Stored journal YLR != header journal SCMR
-2012_YLR_1496,YLR,2012 YLR 1496,2012 YLR 1496,verified_match,Clean canonical match
-2010_YLR_1846,YLR,2010 YLR 1846,PLD 1956 page 72,journal_mismatch,Stored journal YLR != header journal PLD
-2003_YLR_2226,YLR,2003 YLR 2226,2003 YLR page 226,true_page_mismatch,True page mismatch: stored 2226 vs header 226
-2007_YLR_1729,YLR,2007 YLR 1729,2007 YLR page 729,true_page_mismatch,True page mismatch: stored 1729 vs header 729
-2012_YLR_2895,YLR,2012 YLR 2895,2012 YLR 2895,verified_match,Clean canonical match
-2008_YLR_920,YLR,2008 YLR 920,2008 YLR page 20,true_page_mismatch,True page mismatch: stored 920 vs header 20
-2014_YLR_66,YLR,2014 YLR 66,2014 YLR 66,verified_match,Clean canonical match
-2008_YLR_1958,YLR,2008 YLR 1958,2008 YLR 1958,verified_match,Clean canonical match
-2010_YLR_1757,YLR,2010 YLR 1757,2010 YLR page 757,true_page_mismatch,True page mismatch: stored 1757 vs header 757
-2018_YLR_2363,YLR,2018 YLR 2363,2018 YLR 2363,verified_match,Clean canonical match
-2006_YLR_2770,YLR,2006 YLR 2770,2006 YLR page 770,true_page_mismatch,True page mismatch: stored 2770 vs header 770
-SC_YLR_1426_2012,YLR,2012 YLR 1426,2012 YLR 1426,verified_match,Clean canonical match
-2006_YLR_1572,YLR,2006 YLR 1572,2006 YLR page 572,true_page_mismatch,True page mismatch: stored 1572 vs header 572
-1999_YLR_929,YLR,1999 YLR 929,1999 YLR page 29,true_page_mismatch,True page mismatch: stored 929 vs header 29
-2009_YLR_1165,YLR,2009 YLR 1165,2009 YLR page 165,true_page_mismatch,True page mismatch: stored 1165 vs header 165
-2001_YLR_313,YLR,2001 YLR 313,2001 YLR page 13,true_page_mismatch,True page mismatch: stored 313 vs header 13
-2001_YLR_1628,YLR,2001 YLR 1628,2001 YLR page 628,true_page_mismatch,True page mismatch: stored 1628 vs header 628
-2001_YLR_1668,YLR,2001 YLR 1668,2001 YLR 1668,verified_match,Clean canonical match
-2004_YLR_931,YLR,2004 YLR 931,PLD 2001 page 10,journal_mismatch,Stored journal YLR != header journal PLD
-2008_YLR_2090,YLR,2008 YLR 2090,2008 YLR page 090,true_page_mismatch,True page mismatch: stored 2090 vs header 090
-PHC_YLR_1515_2012,YLR,2012 YLR 1515,2012 YLR 1515,verified_match,Clean canonical match
-2008_YLR_1548,YLR,2008 YLR 1548,2008 YLR page 548,true_page_mismatch,True page mismatch: stored 1548 vs header 548
-2007_YLR_1911,YLR,2007 YLR 1911,2007 YLR page 911,true_page_mismatch,True page mismatch: stored 1911 vs header 911
-2003_YLR_1198,YLR,2003 YLR 1198,SCMR 2047 page 1982,journal_mismatch,Stored journal YLR != header journal SCMR
-2010_YLR_3323,YLR,2010 YLR 3323,PLD 1968 page 181,journal_mismatch,Stored journal YLR != header journal PLD
-2006_YLR_1433,YLR,2006 YLR 1433,PLD 1983 page 82,journal_mismatch,Stored journal YLR != header journal PLD
-2018_YLR_2589,YLR,2018 YLR 2589,2018 YLR 2589,verified_match,Clean canonical match
-1999_YLR_1517,YLR,1999 YLR 1517,1999 YLR page 517,true_page_mismatch,True page mismatch: stored 1517 vs header 517
-2010_PTD_95,PTD,2010 PTD 779,2010 PTD page 79,true_page_mismatch,True page mismatch: stored 779 vs header 79
-2005_PTD_228,PTD,2005 PTD 1346,2005 PTD page 346,true_page_mismatch,True page mismatch: stored 1346 vs header 346
-2007_PTD_54,PTD,2007 PTD 380,2007 PTD page 80,true_page_mismatch,True page mismatch: stored 380 vs header 80
-2003_PTD_372,PTD,2003 PTD 1969,2003 PTD page 969,true_page_mismatch,True page mismatch: stored 1969 vs header 969
-2020_PTD_1502,PTD,2020 PTD 1502,2020 PTD 1502,verified_match,Clean canonical match
-2001_PTD_661,PTD,2001 PTD 3243,PTD 3243 page 240,year_mismatch,Stored year 2001 != header year 3243
-2021_PTD_1329,PTD,2021 PTD 1329,2021 PTD 1329,verified_match,Clean canonical match
-2002_PTD_301,PTD,2002 PTD 1500,2002 PTD page 500,true_page_mismatch,True page mismatch: stored 1500 vs header 500
-2020_PTD_454,PTD,2020 PTD 454,2020 PTD 454,verified_match,Clean canonical match
-2001_PTD_718,PTD,2001 PTD 3442,PTD 3442 page 240,wrong_case_text,"Metadata title ""COMMISSIONER OF INCOME"" contradicts text parties ""Tax v. Sundaram Clayton Ltd"""
-1983_PTD_17,PTD,1983 PTD 63,1983 PTD page 3,true_page_mismatch,True page mismatch: stored 63 vs header 3
-2023_PTD_146,PTD,2023 PTD 146,2023 PTD 146,verified_match,Clean canonical match
-1998_PTD_560,PTD,1998 PTD 3541,PTD 3541 page 231,wrong_case_text,"Metadata title ""COMMISSIONER OF INCOME"" contradicts text parties ""Tax v. N"""
-2000_PTD_309,PTD,2000 PTD 1804,2000 PTD page 804,true_page_mismatch,True page mismatch: stored 1804 vs header 804
-2023_PTD_919,PTD,2023 PTD 919,2023 PTD 919,verified_match,Clean canonical match
-2021_PTD_815,PTD,2021 PTD 815,2021 PTD 815,verified_match,Clean canonical match
-1991_PTD_1,PTD,1991 PTD 1,CITATION: 1991 PTD 1 TITLE: RACHNA CHEMICAL INDUSTRIES v. GO,verified_match,Clean canonical match
-2001_PTD_693,PTD,2001 PTD 3380,PTD 3380 page 249,year_mismatch,Stored year 2001 != header year 3380
-2002_PTD_437,PTD,2002 PTD 2149,2002 PTD 2149,stub_or_index_entry,Non-judgment index stub (74 words)
-1992_PTD_113,PTD,1992 PTD 708,1992 PTD page 08,wrong_case_text,"Metadata title ""COMMISSIONER OF INCOME"" contradicts text parties ""Tax, Central Zone-B, Karachi v. Messrs Mughal Tobacco Co"""
-2012_PTD_90,PTD,2012 PTD 90,2012 PTD 90,verified_match,Clean canonical match
-2022_PTD_390,PTD,2022 PTD 390,2022 PTD 390,verified_match,Clean canonical match
-2000_PTD_5,PTD,2000 PTD 44,2000 PTD page 4,true_page_mismatch,True page mismatch: stored 44 vs header 4
-2012_PTD_453,PTD,2012 PTD 453,2012 PTD 453,verified_match,Clean canonical match
-2016_PTD_2219,PTD,2016 PTD 2219,2016 PTD 2219,verified_match,Clean canonical match
-2000_PTD_465,PTD,2000 PTD 2737,PTD 2737 page 237,wrong_case_text,"Metadata title ""Case #465 (2000 PTD 2737)"" contradicts text parties ""Before Om Prakash, C. J. and J. B. Koshy, J COMMISSIONER OF INCOME-TAX v. PURSHOTHAM GOKULDAS I"""
-1996_PTD_33,PTD,1996 PTD 268,PLD 1975 page 244,journal_mismatch,Stored journal PTD != header journal PLD
-2015_PTD_520,PTD,2015 PTD 520,2015 PTD 520,verified_match,Clean canonical match
-2019_PTD_1100,PTD,2019 PTD 1100,2019 PTD 1100,verified_match,Clean canonical match
-2026_PTD_816,PTD,2026 PTD 816,2026 PTD 816,verified_match,Clean canonical match
-2005_PTD_307,PTD,2005 PTD 1806,2005 PTD 1806,verified_match,Clean canonical match
-2005_PTD_75,PTD,2005 PTD 472,2005 PTD page 72,true_page_mismatch,True page mismatch: stored 472 vs header 72
-1990_PTD_100,PTD,1990 PTD 652,1990 PTD page 52,true_page_mismatch,True page mismatch: stored 652 vs header 52
-2006_PTD_327,PTD,2006 PTD 1822,2006 PTD page 822,true_page_mismatch,True page mismatch: stored 1822 vs header 822
-2015_PTD_668,PTD,2015 PTD 668,2015 PTD 668,verified_match,Clean canonical match
-1984_L_1,OTHER,1984 L 1,CLC 1634 page 984,year_mismatch,Stored year 1984 != header year 1634
-S.458/411/120---Quashing of proceedings---Accused had stood surety not for monetary gain but out of sheer benevolence---In the same case the confiscated amount of a bail bond furnished in respect of a co-accused by two other sureties was reduced from Rs.30_SS. 514 & 561-A---PENAL CODE (XLV OF 1860)_1,OTHER,S.458/411/120---Quashing of proceedings---Accused had stood surety not for monetary gain but out of sheer benevolence---In the same case the confiscated amount of a bail bond furnished in respect of a co-accused by two other sureties was reduced from Rs.30 SS. 514 & 561-A---PENAL CODE (XLV OF 1860) 1,000 i.e. the 1/5th of the total confiscated amount Confiscat,stub_or_index_entry,Non-judgment index stub (20 words)
-Constitution of Pakistan 1973--108_CONSTITUTION OF PAKISTAN 1973--107_1,OTHER,Constitution of Pakistan 1973--108 CONSTITUTION OF PAKISTAN 1973--107 1,Constitution of Pakistan 1973--112,stub_or_index_entry,Non-judgment index stub (4 words)
-being vitally interested in properties of such company_S. 174--WINDING UP PROCEEDINGS-SCRUTINY OF BIDS FOR SALE APPELLANTS HAVING A CLAIM OF SEVERAL CRORES OF RUPEES AGAINST COMPANY IN LIQUIDATION_1,OTHER,being vitally interested in properties of such company S. 174--WINDING UP PROCEEDINGS-SCRUTINY OF BIDS FOR SALE APPELLANTS HAVING A CLAIM OF SEVERAL CRORES OF RUPEES AGAINST COMPANY IN LIQUIDATION 1,acceptance of bid behind back of appellant-creditor neither ,stub_or_index_entry,Non-judgment index stub (21 words)
-Companies Ordinance 1984--284_AMALGAMATION OF COMPANIES--TERM_1,OTHER,Companies Ordinance 1984--284 AMALGAMATION OF COMPANIES--TERM 1,Stamp Act 1899--27-A,stub_or_index_entry,Non-judgment index stub (3 words)
-take over of-Management of factory_DEFENCE OF PAKISTAN RULES 1965 RR. 181 & 182-ENEMY PROPERTY_1,OTHER,take over of-Management of factory DEFENCE OF PAKISTAN RULES 1965 RR. 181 & 182-ENEMY PROPERTY 1,suffered from laches and liable to dismissal.,stub_or_index_entry,Non-judgment index stub (7 words)
-quantum of---Scope---Quantity of recovered narcotic---Perusal of Ss. 9(b) & 9(c) of Control of Narcotic Substances Act_SS. 9(B) & (C)---POSSESSION OF NARCOTIC---SENTENCE_1,OTHER,quantum of---Scope---Quantity of recovered narcotic---Perusal of Ss. 9(b) & 9(c) of Control of Narcotic Substances Act SS. 9(B) & (C)---POSSESSION OF NARCOTIC---SENTENCE 1,and if it exceeded ten kilograms it could not be less than i,stub_or_index_entry,Non-judgment index stub (23 words)
-"39 & 150--Territory within jurisdiction of a Court transferred to another Court--Proceedings pending in former Court do not get transferred automatically to the other Court or become liable to be transferred to the other Court save where such Court ceases to exist or is otherwise abolished and it is then that order of """"transfer of business"""" of that Court becomes liable to be passed under S.150_SS. 38_1",OTHER,"39 & 150--Territory within jurisdiction of a Court transferred to another Court--Proceedings pending in former Court do not get transferred automatically to the other Court or become liable to be transferred to the other Court save where such Court ceases to exist or is otherwise abolished and it is then that order of """"transfer of business"""" of that Court becomes liable to be passed under S.150 SS. 38 1",C.P.C. despite change of territory--Decree-holder if he cons,stub_or_index_entry,Non-judgment index stub (24 words)
-r. 781-Company_COMPANIES ACT 1913 SS. 162 & 163 AND SIND CHIEF COURT RULES (ORIGINAL SIDE)_1,OTHER,r. 781-Company COMPANIES ACT 1913 SS. 162 & 163 AND SIND CHIEF COURT RULES (ORIGINAL SIDE) 1,1913-Two cheques issued by Company,stub_or_index_entry,Non-judgment index stub (5 words)
-while remaining land stood in the name of his brother_S.52 --- VALIDITY AND EFFECT OF MUTATION --- LONG STANDING ENTRIES IN RECORD-OF RIGHT.OF ???MUTATION UNDER CHALLENGE WAS ATTESTED ON 14?12?1926 WHILE PLAINTIFF ATTAINED MAJORITY IN 1935 ??? PLAINTIFF ON ATTAINING MAJORITY HAD SOLD HIS ENTIRE LAND_1,OTHER,while remaining land stood in the name of his brother S.52 --- VALIDITY AND EFFECT OF MUTATION --- LONG STANDING ENTRIES IN RECORD-OF RIGHT.OF ???MUTATION UNDER CHALLENGE WAS ATTESTED ON 14?12?1926 WHILE PLAINTIFF ATTAINED MAJORITY IN 1935 ??? PLAINTIFF ON ATTAINING MAJORITY HAD SOLD HIS ENTIRE LAND 1,when he instituted suit to challenge mutation of gift sancti,stub_or_index_entry,Non-judgment index stub (12 words)
-Union Committee_DIVORCE--SHIAH LAW--WIFE NOT PRESENT AT THE TIME OF PRONOUNCEMENT OF TALAQ--NOTICE ADDRESSED TO WIFE WITH A COPY TO CHAIRMAN_1,OTHER,Union Committee DIVORCE--SHIAH LAW--WIFE NOT PRESENT AT THE TIME OF PRONOUNCEMENT OF TALAQ--NOTICE ADDRESSED TO WIFE WITH A COPY TO CHAIRMAN 1,though it did mention at the end names of witnesses and ther,stub_or_index_entry,Non-judgment index stub (30 words)
-Pakistan Penal Code 1860--302_CRIMINAL PROCEDURE CODE (CR.P.C) 1898--498_1,OTHER,Pakistan Penal Code 1860--302 CRIMINAL PROCEDURE CODE (CR.P.C) 1898--498 1,Pakistan Penal Code 1860--452,stub_or_index_entry,Non-judgment index stub (4 words)
-whether sufficient to convict a woman for Zina --- Mere pregnancy is not sufficient to convict a woman for Zina_OFFENCE OF ZINA (ENFORCEMENT OF HUDOOD) ORDINANCE 1979 S. 10 --- ZINA --- PREGNANCY ALONE_1,OTHER,whether sufficient to convict a woman for Zina --- Mere pregnancy is not sufficient to convict a woman for Zina OFFENCE OF ZINA (ENFORCEMENT OF HUDOOD) ORDINANCE 1979 S. 10 --- ZINA --- PREGNANCY ALONE 1,PLD 1983 page 183,stub_or_index_entry,Non-judgment index stub (19 words)
-Ss. 5 & 20 Each step taken by Magistrate after passing main order under S. 488_S. 488 READ WITH WEST PAKISTAN FAMILY COURTS ACT (XXXV OF 1964)_1,OTHER,Ss. 5 & 20 Each step taken by Magistrate after passing main order under S. 488 S. 488 READ WITH WEST PAKISTAN FAMILY COURTS ACT (XXXV OF 1964) 1,enforced in District Order calling upon husband to pay arrea,stub_or_index_entry,Non-judgment index stub (12 words)
-O. XXXIX_CIVIL PROCEDURE CODE --ORDER XXXIX OF C.P.C. TEMPORARY INJUNCTIONS AND INTERLOCUTORY ORDERS CIVIL PROCEDURE CODE (V OF 1908)_1,OTHER,O. XXXIX CIVIL PROCEDURE CODE --ORDER XXXIX OF C.P.C. TEMPORARY INJUNCTIONS AND INTERLOCUTORY ORDERS CIVIL PROCEDURE CODE (V OF 1908) 1,S. 198.Civil Procedure Code (V of 1908),stub_or_index_entry,Non-judgment index stub (7 words)
--Landlord_S. 14- EJECTMENT ON GROUND OF PERSONAL BONA FIDE REQUIREMENT_1,OTHER,-Landlord S. 14- EJECTMENT ON GROUND OF PERSONAL BONA FIDE REQUIREMENT 1,neither required to prove his previous business experience n,stub_or_index_entry,Non-judgment index stub (40 words)
-rr. 3 & 4-Execution of decree-Whether and when executing Court can refuse execution and question validity of decree-Decree_CODE OF CIVIL PROCEDURE 1908 S. 47 AND O. XXII_1,OTHER,rr. 3 & 4-Execution of decree-Whether and when executing Court can refuse execution and question validity of decree-Decree CODE OF CIVIL PROCEDURE 1908 S. 47 AND O. XXII 1,not competent in law to grant substitution of heirs of decea,stub_or_index_entry,Non-judgment index stub (42 words)
-held_S. 13?EJECTMENT?ORDER OF EVICTION BASED ON EVIDENCE PRODUCED BY LANDLORD?NO ARGUMENT ADVANCED TO SHOW ORDER BEING NOT SUPPORTED BY EVIDENCE?ORDER_1,OTHER,held S. 13?EJECTMENT?ORDER OF EVICTION BASED ON EVIDENCE PRODUCED BY LANDLORD?NO ARGUMENT ADVANCED TO SHOW ORDER BEING NOT SUPPORTED BY EVIDENCE?ORDER 1,r. 17?Service by affixation?Section 13 or other provisions o,stub_or_index_entry,Non-judgment index stub (24 words)
-Explanation_SS. 15(4)_1,OTHER,Explanation SS. 15(4) 1,r. 13-Restoration of dismissed application-Section 141 of Ci,stub_or_index_entry,Non-judgment index stub (10 words)
-R.1 [as inserted by Notification_CIVIL PROCEDURE CODE --ORDER VIII OF C.P.C. WRITTEN STATEMENT AND SET-OFF ----O. VIII_1,OTHER,R.1 [as inserted by Notification CIVIL PROCEDURE CODE --ORDER VIII OF C.P.C. WRITTEN STATEMENT AND SET-OFF ----O. VIII 1,filing of Extension in time Powers of Trial Court--Defendant,stub_or_index_entry,Non-judgment index stub (13 words)
-even if premises was not required by all other cosharers. ---- S. 15(2)(vii) --- Personal bona fide need --- Evidence on record had fully proved that family of landlord consisted of rive members_S. 15(2)(VII) --- PERSONAL BONA RIDE NEED OF LANDLORD --- ONE OF THE CO-SHARERS IN. PREMISES COULD SEEK EVICTION OF TENANT ON GROUND OF PERSONAL BONA TIDE REQUIREMENT_1,OTHER,even if premises was not required by all other cosharers. ---- S. 15(2)(vii) --- Personal bona fide need --- Evidence on record had fully proved that family of landlord consisted of rive members S. 15(2)(VII) --- PERSONAL BONA RIDE NEED OF LANDLORD --- ONE OF THE CO-SHARERS IN. PREMISES COULD SEEK EVICTION OF TENANT ON GROUND OF PERSONAL BONA TIDE REQUIREMENT 1,4M/84 ordered by VIlIth Senior Civil Judge and Rent Controll,stub_or_index_entry,Non-judgment index stub (10 words)
-he was not present at the place of occurrence and was visiting his cousin_S. 302(B)---QATL-I-AMD---REAPPRAISAL OF EVIDENCE---PLEA OF ALIBI SUCCESSFULLY ESTABLISHED---ACCUSED TOOK THE STANCE THAT ON THE FATEFUL DAY AND TIME_1,OTHER,he was not present at the place of occurrence and was visiting his cousin S. 302(B)---QATL-I-AMD---REAPPRAISAL OF EVIDENCE---PLEA OF ALIBI SUCCESSFULLY ESTABLISHED---ACCUSED TOOK THE STANCE THAT ON THE FATEFUL DAY AND TIME 1,who after thorough investigation found the same to be true I,stub_or_index_entry,Non-judgment index stub (26 words)
-219 & 184(3)---Election Commission_ARTS. 218(3)_1,OTHER,219 & 184(3)---Election Commission ARTS. 218(3) 1,election could not be held on the same Bye-elections in cons,stub_or_index_entry,Non-judgment index stub (36 words)
-Art.185(3)---Award made rule of Court---Father (defendant) transferred suit-land by way of family settlement to all his heirs from both wives---Some children (plaintiffs) later on claiming suit-land to have been gifted to them by father (defendant) filed against him suit_----SS.17 & 21---CONSTITUTION OF PAKISTAN (1973)_1,OTHER,Art.185(3)---Award made rule of Court---Father (defendant) transferred suit-land by way of family settlement to all his heirs from both wives---Some children (plaintiffs) later on claiming suit-land to have been gifted to them by father (defendant) filed against him suit ----SS.17 & 21---CONSTITUTION OF PAKISTAN (1973) 1,consent of father Courts below in a subsequent suit filed by,stub_or_index_entry,Non-judgment index stub (30 words)
-20 & 30---Arbitration proceedings---Award---Only two of legal heirs of deceased referred dispute with regard to inheritance of their deceased father to arbitrators by arbitration agreement and arbitrators prepared award and suo motu filed same in Court for making rule of Court---Arbitrators in their application filed before Court for making award rule of Court; beside parties to arbitration agreement also impleaded other co-sharers in property of . deceased -as respondents and also proposed some property in award in name of one of legal heirs of deceased who was not made party to reference---Trial Court as well as Appellate Court below_ARBITRATION ACT 1940 SS. 14_1,OTHER,20 & 30---Arbitration proceedings---Award---Only two of legal heirs of deceased referred dispute with regard to inheritance of their deceased father to arbitrators by arbitration agreement and arbitrators prepared award and suo motu filed same in Court for making rule of Court---Arbitrators in their application filed before Court for making award rule of Court; beside parties to arbitration agreement also impleaded other co-sharers in property of . deceased -as respondents and also proposed some property in award in name of one of legal heirs of deceased who was not made party to reference---Trial Court as well as Appellate Court below ARBITRATION ACT 1940 SS. 14 1,award based on such invalid action,stub_or_index_entry,Non-judgment index stub (6 words)
-Pakistan Penal Code 1860--302_CRIMINAL PROCEDURE CODE (CR.P.C) 1898--497_1,OTHER,Pakistan Penal Code 1860--302 CRIMINAL PROCEDURE CODE (CR.P.C) 1898--497 1,Pakistan Penal Code 1860--452,stub_or_index_entry,Non-judgment index stub (4 words)
-15_ARBITRATION ACT 1940 SS. 14_1,OTHER,15 ARBITRATION ACT 1940 SS. 14 1,30 & 33 Nature and object of arbitration proceedings and rol,stub_or_index_entry,Non-judgment index stub (98 words)
-Ss. 342_SS. 194 & 195-PENAL CODE (XLV OF 1860)_1,OTHER,Ss. 342 SS. 194 & 195-PENAL CODE (XLV OF 1860) 1,Art. 15(5)(d)Complaint against Chief Martial Law Administrat,stub_or_index_entry,Non-judgment index stub (7 words)
-1967_H_1,OTHER,1967 H 1,PLD 1967 page 569,true_page_mismatch,True page mismatch: stored 1 vs header 569
-100 & 302(c)--- Qatl-i-amd--- Reappraisal of evidence---Benefit of doubt---Right of private defence of the body and property extending to causing death of trespasser---Scope---Site plan did not show that the house of the complainant was at a short distance from the crime scene_SS. 97_1,OTHER,100 & 302(c)--- Qatl-i-amd--- Reappraisal of evidence---Benefit of doubt---Right of private defence of the body and property extending to causing death of trespasser---Scope---Site plan did not show that the house of the complainant was at a short distance from the crime scene SS. 97 1,was absolutely unfounded and it was for such reason that the,stub_or_index_entry,Non-judgment index stub (38 words)
-R.2_CIVIL PROCEDURE CODE --ORDER XXXVII OF C.P.C. SUMMARY PROCEDURE ON NEGOTIABLE INSTRUMENTS 0. XXXVII_1,OTHER,R.2 CIVIL PROCEDURE CODE --ORDER XXXVII OF C.P.C. SUMMARY PROCEDURE ON NEGOTIABLE INSTRUMENTS 0. XXXVII 1,R.10(2) Deletion of defendant's name from plaint Defendant's,verified_match,Clean canonical match
-Ss. S(2) & 173-Bogus claim filed by displaced person---Police make investigation under S. S(2)_DISPLACED PERSONS (LAND SETTLEMENT) ACT 1958 S. 29 READ WITH CRIMINAL PROCEDURE CODE (V OF 1898)_1,OTHER,Ss. S(2) & 173-Bogus claim filed by displaced person---Police make investigation under S. S(2) DISPLACED PERSONS (LAND SETTLEMENT) ACT 1958 S. 29 READ WITH CRIMINAL PROCEDURE CODE (V OF 1898) 1,1958 Does not deal with question of investigation by police ,stub_or_index_entry,Non-judgment index stub (29 words)
-"S. 115-Arbitratioia-Estoppel-Contention that petitioner having once accepted compensation money on putting signatures in agreement Form """"A"""" cannot subsequently ask for referring matter to arbitration_SS. 5 & 7(AAA) READ WITH EVIDENCE ACT (I OF 1872)_1",OTHER,"S. 115-Arbitratioia-Estoppel-Contention that petitioner having once accepted compensation money on putting signatures in agreement Form """"A"""" cannot subsequently ask for referring matter to arbitration SS. 5 & 7(AAA) READ WITH EVIDENCE ACT (I OF 1872) 1",further cl. 6 of agreement speaks for requisition of propert,stub_or_index_entry,Non-judgment index stub (20 words)
-a statutory body_WEST PAKISTAN INDUSTRIAL AND COMMERCIAL EMPLOYMENT (STANDING ORDERS) ORDINANCE 1968 INDUSTRIAL OR COMMERCIAL ESTABLISHMENT---LEAVE TO APPEAL WAS GRANTED BY SUPREME COURT TO EXAMINE THE CONTENTION THAT LAHORE DEVELOPMENT AUTHORITY_1,OTHER,a statutory body WEST PAKISTAN INDUSTRIAL AND COMMERCIAL EMPLOYMENT (STANDING ORDERS) ORDINANCE 1968 INDUSTRIAL OR COMMERCIAL ESTABLISHMENT---LEAVE TO APPEAL WAS GRANTED BY SUPREME COURT TO EXAMINE THE CONTENTION THAT LAHORE DEVELOPMENT AUTHORITY 1,1968 were not applicable.,stub_or_index_entry,Non-judgment index stub (4 words)
-2004_CLD_973,CLD,2004 CLD 973,2004 CLD 973,stub_or_index_entry,Non-judgment index stub (82 words)
-2009_CLD_1442,CLD,2009 CLD 1442,2009 CLD 1442,verified_match,Clean canonical match
-2012_CLD_1222,CLD,2012 CLD 1222,2012 CLD 1222,verified_match,Clean canonical match
-2007_CLD_1232,CLD,2007 CLD 1232,2007 CLD 1232,verified_match,Clean canonical match
-2002_CLD_399,CLD,2002 CLD 399,2002 CLD 399,verified_match,Clean canonical match
-2004_CLD_512,CLD,2004 CLD 512,2004 CLD 512,verified_match,Clean canonical match
-2005_CLD_1480,CLD,2005 CLD 1480,2005 CLD 1480,stub_or_index_entry,Non-judgment index stub (21 words)
-2007_CLD_1116,CLD,2007 CLD 1116,2007 CLD 1116,stub_or_index_entry,Non-judgment index stub (23 words)
-2010_CLD_116,CLD,2010 CLD 116,2010 CLD 116,verified_match,Clean canonical match
-2021_CLD_48,CLD,2021 CLD 48,2021 CLD 48,verified_match,Clean canonical match
-2013_CLD_2173,CLD,2013 CLD 2173,2013 CLD 2173,stub_or_index_entry,Non-judgment index stub (15 words)
-2011_CLD_806,CLD,2011 CLD 806,2011 CLD 806,verified_match,Clean canonical match
-2004_CLD_762,CLD,2004 CLD 762,2004 CLD 762,verified_match,Clean canonical match
-2019_CLD_211,CLD,2019 CLD 211,2019 CLD 211,verified_match,Clean canonical match
-2021_CLD_855,CLD,2021 CLD 855,2021 CLD 855,stub_or_index_entry,Non-judgment index stub (16 words)
-2003_CLD_686,CLD,2003 CLD 686,2003 CLD 686,verified_match,Clean canonical match
-2007_CLD_524,CLD,2007 CLD 524,2007 CLD 524,verified_match,Clean canonical match
-2018_CLD_823,CLD,2018 CLD 823,2018 CLD 823,verified_match,Clean canonical match
-2006_CLD_399,CLD,2006 CLD 399,2006 CLD 399,stub_or_index_entry,Non-judgment index stub (31 words)
-2010_CLD_726,CLD,2010 CLD 726,2010 CLD 726,stub_or_index_entry,Non-judgment index stub (22 words)
-2016_CLD_1419,CLD,2016 CLD 1419,2016 CLD 1419,stub_or_index_entry,Non-judgment index stub (21 words)
-2021_CLD_794,CLD,2021 CLD 794,2021 CLD 794,verified_match,Clean canonical match
-2010_CLD_34,CLD,2010 CLD 34,2010 CLD 34,verified_match,Clean canonical match
-2008_CLD_214,CLD,2008 CLD 214,2008 CLD 214,verified_match,Clean canonical match
-2007_CLD_1365,CLD,2007 CLD 1365,2007 CLD 1365,verified_match,Clean canonical match
-2004_CLD_520,CLD,2004 CLD 520,2004 CLD 520,verified_match,Clean canonical match
-2012_CLD_1109,CLD,2012 CLD 1109,2012 CLD 1109,stub_or_index_entry,Non-judgment index stub (17 words)
-2002_CLD_1205,CLD,2002 CLD 1205,2002 CLD 1205,verified_match,Clean canonical match
-2016_CLD_426,CLD,2016 CLD 426,2016 CLD 426,verified_match,Clean canonical match
-2003_CLD_1464,CLD,2003 CLD 1464,2003 CLD 1464,verified_match,Clean canonical match
-2016_CLD_1874,CLD,2016 CLD 1874,2016 CLD 1874,verified_match,Clean canonical match
-2007_CLD_943,CLD,2007 CLD 943,2007 CLD 943,stub_or_index_entry,Non-judgment index stub (19 words)
-2015_GBLR_152,GBLR,2015 GBLR 152,2015 GBLR 152,verified_match,Clean canonical match
-2015_GBLR_358,GBLR,2015 GBLR 358,2015 GBLR 358,verified_match,Clean canonical match
-2016_GBLR_266,GBLR,2016 GBLR 266,2016 GBLR 266,verified_match,Clean canonical match
-2010_GBLR_390,GBLR,2010 GBLR 390,2010 GBLR 390,verified_match,Clean canonical match
-2015_GBLR_186,GBLR,2015 GBLR 186,2015 GBLR 186,verified_match,Clean canonical match
-2010_GBLR_276,GBLR,2010 GBLR 276,2010 GBLR 276,verified_match,Clean canonical match
-2015_GBLR_318,GBLR,2015 GBLR 318,2015 GBLR 318,verified_match,Clean canonical match
-2015_GBLR_162,GBLR,2015 GBLR 162,2015 GBLR 162,verified_match,Clean canonical match
-2016_GBLR_127,GBLR,2016 GBLR 127,2016 GBLR 127,verified_match,Clean canonical match
-2010_GBLR_301,GBLR,2010 GBLR 301,2010 GBLR 301,verified_match,Clean canonical match
-2010_GBLR_88,GBLR,2010 GBLR 88,2010 GBLR 88,verified_match,Clean canonical match
-2016_GBLR_199,GBLR,2016 GBLR 199,2016 GBLR 199,verified_match,Clean canonical match
-2010_GBLR_280,GBLR,2010 GBLR 280,2010 GBLR 280,verified_match,Clean canonical match
-2016_GBLR_35,GBLR,2016 GBLR 35,2016 GBLR 35,verified_match,Clean canonical match
-2010_GBLR_356,GBLR,2010 GBLR 356,2010 GBLR 356,verified_match,Clean canonical match
-2010_GBLR_413,GBLR,2010 GBLR 413,2010 GBLR 413,verified_match,Clean canonical match
-2014_GBLR_228,GBLR,2014 GBLR 228,2014 GBLR 228,verified_match,Clean canonical match
-2010_GBLR_351,GBLR,2010 GBLR 351,2010 GBLR 351,verified_match,Clean canonical match
-2016_GBLR_424,GBLR,2016 GBLR 424,2016 GBLR 424,verified_match,Clean canonical match
-2014_GBLR_106,GBLR,2014 GBLR 106,2014 GBLR 106,verified_match,Clean canonical match
-2010_GBLR_311,GBLR,2010 GBLR 311,2010 GBLR 311,verified_match,Clean canonical match
-2010_GBLR_83,GBLR,2010 GBLR 83,2010 GBLR 83,verified_match,Clean canonical match
-2010_GBLR_75,GBLR,2010 GBLR 75,2010 GBLR 75,verified_match,Clean canonical match
-2016_GBLR_139,GBLR,2016 GBLR 139,2016 GBLR 139,verified_match,Clean canonical match
-2015_GBLR_117,GBLR,2015 GBLR 117,2015 GBLR 117,verified_match,Clean canonical match
-2016_GBLR_29,GBLR,2016 GBLR 29,2016 GBLR 29,verified_match,Clean canonical match
-2010_GBLR_134,GBLR,2010 GBLR 134,2010 GBLR 134,verified_match,Clean canonical match
-2010_GBLR_36,GBLR,2010 GBLR 36,2010 GBLR 36,verified_match,Clean canonical match
-2010_GBLR_73,GBLR,2010 GBLR 73,2010 GBLR 73,verified_match,Clean canonical match
-2015_GBLR_373,GBLR,2015 GBLR 373,2015 GBLR 373,verified_match,Clean canonical match
+case_id,stratum,stored_citation,header_citation,category,is_injected_metadata,reason,identity_check,title_source,content_type,header_kind,extracted_court,flag_portal_chrome,flag_misplaced_metadata,flag_statute_ocr_artifact
+1975_PLD_1270,PLD,1975 PLD 1270,PLD 1975 Lahore 1270,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Lahore High Court,True,False,False
+1976_PLD_1049,PLD,1976 PLD 1049,PLD 1976 Karachi 1049,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Karachi High Court,True,False,False
+2012_PLD_ISL_11,PLD,PLD 2012 Isl 11,PLD 2012 Islamabad 11,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Islamabad High Court,True,False,False
+1956_PLD_452,PLD,1956 PLD 900,CITATION: 1956 PLD 900,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,full_text,injected_metadata_preamble,Lahore High Court,False,False,False
+1987_PLD_593,PLD,1987 PLD 593,1987 PLD 593,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+1992_PLD_LAH_11,PLD,PLD 1992 Lah 11,PLD 1992 Lahore 63,title_text_mismatch,False,"Metadata title ""ABDUL AZIZ VS ABDUL RAZZAQ -"" contradicts text parties ""P L D 1992 Lahore 63 Before Muhammad Ilyas, J ANWAR CLUB and another v. MUHAMMAD SARWAR""",FAIL: Excluded: Stored title 'ABDUL AZIZ VS ABDUL RAZZAQ' contradicts text header parties 'ANWAR CLUB and another v. MUHAMMAD SARWAR'.,none,mixed,judicial_header,Lahore High Court,True,False,False
+1986_PLD_476,PLD,1986 PLD 476,1986 PLD 476,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+1952_PLD_39,PLD,1952 PLD 15,CITATION: 1952 PLD 15,stub_or_index_entry,True,Non-judgment index stub (39 words),FAIL: Excluded: Stored title 'THE COMMISSIONER OF INCOME' tokens not found in text header.,none,stub,injected_metadata_preamble,"Tax, Colombo Vs Mrs. A. J. Sutherland",False,False,False
+2011_PLD_217,PLD,2011 PLD 217,2011 PLD 217,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1979_PLD_687,PLD,1979 PLD 687,RLD 1979 Karachi 687,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,High Court (S C),True,False,False
+2010_PLD_389,PLD,2010 PLD 389,2010 PLD 389,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+2017_PLD_610,PLD,2017 PLD 610,2017 PLD 610,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1987_PLD_SC_461,PLD,PLD 1987 SC 461,PLD 1987 Supreme Court 461,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,High Court (Supreme Court),True,False,False
+2023_PLD_661,PLD,2023 PLD 661,2023 PLD 661,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+1986_PLD_LAH_189,PLD,PLD 1986 Lah 189,PLD 1986 Lahore 189,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Lahore High Court,True,False,False
+1993_PLD_456,PLD,1993 PLD 456,1993 PLD 456,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1977_PLD_836,PLD,1977 PLD 836,PLD 1977 Karachi 836,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Karachi High Court,True,False,False
+1989_PLD_PESH_17,PLD,PLD 1989 Pesh 17,PLD 1989 Peshawar 17,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Peshawar High Court,True,False,False
+1957_PLD_450,PLD,1957 PLD 671,CITATION: 1957 PLD 671,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,High Court of Sindh,False,False,False
+1956_PLD_596,PLD,1956 PLD 596,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+2008_PLD_LAH_341,PLD,PLD 2008 Lah 341,PLD 2008 Lahore 341,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Lahore High Court,True,False,False
+1965_PLD_290,PLD,1965 PLD 290,1965 PLD 290,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,stub,citation_name_caption,Dhaka High Court,True,False,False
+2012_PLD_182,PLD,2012 PLD 182,2012 PLD 182,stub_or_index_entry,False,Non-judgment index stub (92 words),PASS (metadata),metadata,stub,citation_name_caption,Karachi High Court Sindh,True,False,False
+2015_PLD_85,PLD,2015 PLD 85,2015 PLD 85,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Islamabad,True,False,False
+1953_PLD_15,PLD,1953 PLD 4,CITATION: 1953 PLD 4,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,full_text,injected_metadata_preamble,High Court (Baluchistan),False,True,False
+1970_PLD_622,PLD,1970 PLD 622,PLD 1970 Dacca 622,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,East Pakistan / Dacca High Court,True,False,False
+1957_PLD_155,PLD,1957 PLD 119,CITATION: 1957 PLD 119,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Lahore High Court,False,True,False
+1987_PLD_81,PLD,1987 PLD 81,1987 PLD 81,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+2007_PLD_421,PLD,2007 PLD 421,2007 PLD 421,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+1996_PLD_47,PLD,1996 PLD 47,1996 PLD 47,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Peshawar High Court,True,False,False
+1981_PLD_172,PLD,1981 PLD 172,1981 PLD 172,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+2006_PLD_18,PLD,2006 PLD 18,2006 PLD 18,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Quetta High Court Balochistan,True,False,False
+1965_PLD_PESH_20,PLD,PLD 1965 Pesh 20,PLD 1965 (W. P.) Peshawar 20,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,True,False,False
+1952_PLD_139,PLD,1952 PLD 57,CITATION: 1952 PLD 57,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,full_text,injected_metadata_preamble,East Pakistan / Dacca High Court,False,True,False
+1993_PLD_207,PLD,1993 PLD 207,1993 PLD 207,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+1986_PLD_QTA_86,PLD,PLD 1986 Quetta 86,PLD 1986 Quetta 86,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Quetta High Court,True,False,False
+1996_PLD_210,PLD,1996 PLD 210,1996 PLD 210,verified_match,False,Clean canonical match from judicial header,PASS (text),text,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1977_PLD_345,PLD,1977 PLD 345,PLD 1977 Lahore 345,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Lahore High Court,True,False,False
+1966_PLD_5,PLD,1966 PLD 5,PLD 1966 Azad J & K 5,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Azad Jammu & Kashmir,True,False,False
+1978_PLD_437,PLD,1978 PLD 437,PLD 1978 Karachi 437,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Karachi High Court,True,False,False
+1961_PLD_151,PLD,1961 PLD 99,CITATION: 1961 PLD 99,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),FAIL: Excluded: Login-wall / portal subscription text.,none,order_text,login_wall,West,True,False,False
+1969_PLD_559,PLD,1969 PLD 559,1969 PLD 559,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Dhaka High Court,True,False,False
+1973_PCRLJ_212,PCRLJ,1973 PCRLJ 212,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1979_PCRLJ_838,PCRLJ,1979 PCRLJ 838,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+2007_PCRLJ_301,PCRLJ,2007 PCRLJ 301,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+2015_PCRLJ_1326,PCRLJ,2015 PCRLJ 1326,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1983_PCRLJ_1027,PCRLJ,1983 PCRLJ 1027,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court Azad Kashmir,True,False,False
+1979_PCRLJ_900,PCRLJ,1979 PCRLJ 900,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+1983_PCRLJ_2193,PCRLJ,1983 PCRLJ 2193,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+2021_PCRLJ_1128,PCRLJ,2021 PCRLJ 1128,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Islamabad,True,False,False
+2016_PCRLJ_1216,PCRLJ,2016 PCRLJ 1216,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1988_PCRLJ_1991,PCRLJ,1988 PCRLJ 1991,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1987_PCRLJ_1280,PCRLJ,1987 PCRLJ 1280,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1999_PCRLJ_476,PCRLJ,1999 PCRLJ 476,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+2024_PCRLJ_33,PCRLJ,2024 PCRLJ 33,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+1984_PCRLJ_2865,PCRLJ,1984 PCRLJ 2865,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+2017_PCRLJ_920,PCRLJ,2017 PCRLJ 920,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+2006_PCRLJ_867,PCRLJ,2006 PCRLJ 867,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1971_PCRLJ_352,PCRLJ,1971 PCRLJ 352,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+1994_PCRLJ_2502,PCRLJ,1994 PCRLJ 2502,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+1994_PCRLJ_1739,PCRLJ,1994 PCRLJ 1739,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1982_PCRLJ_231,PCRLJ,1982 PCRLJ 231,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+2024_PCRLJ_121,PCRLJ,2024 PCRLJ 121,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+1986_PCRLJ_1791,PCRLJ,1986 PCRLJ 1791,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+1969_PCRLJ_473,PCRLJ,1969 PCRLJ 473,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+2020_PCRLJ_374,PCRLJ,2020 PCRLJ 374,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+2023_PCRLJ_233,PCRLJ,2023 PCRLJ 233,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Quetta High Court Balochistan,True,False,False
+1968_PCRLJ_216,PCRLJ,1968 PCRLJ 216,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+1986_PCRLJ_1392,PCRLJ,1986 PCRLJ 1392,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1981_PCRLJ_999,PCRLJ,1981 PCRLJ 999,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1978_PCRLJ_64,PCRLJ,1978 PCRLJ 64,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,stub,citation_name_caption,Peshawar High Court,True,False,False
+1987_PCRLJ_512,PCRLJ,1987 PCRLJ 512,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1996_PCRLJ_475,PCRLJ,1996 PCRLJ 475,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1991_PCRLJ_1497,PCRLJ,1991 PCRLJ 1497,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1990_PCRLJ_1079,PCRLJ,1990 PCRLJ 1079,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+2004_PCRLJ_1163,PCRLJ,2004 PCRLJ 1163,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+2005_PCRLJ_123,PCRLJ,2005 PCRLJ 123,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Federal Shariat Court,True,False,False
+1970_PCRLJ_38,PCRLJ,1970 PCRLJ 38,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Dhaka High Court,True,False,False
+1997_PCRLJ_2003,PCRLJ,1997 PCRLJ 2003,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1987_PCRLJ_1634,PCRLJ,1987 PCRLJ 1634,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+1997_PCRLJ_1820,PCRLJ,1997 PCRLJ 1820,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1995_PCRLJ_1906,PCRLJ,1995 PCRLJ 1906,"Register
+Feedback
+Customer Care Office
+PLD Publishers
+35-Nab",publisher_banner,False,Publisher customer care banner block,FAIL: Excluded: Login-wall / portal subscription text.,none,order_text,none,Unknown / Unspecified,True,False,False
+1987_PLC(CS)_123,PLC,1987 PLC(CS) 520,CITATION: 1987 PLC(CS) 520,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (text),text,headnote_only,injected_metadata_preamble,Service,False,True,False
+2013_PLC(CS)_56,PLC,2013 PLC(CS) 357,CITATION: 2013 PLC(CS) 357,stub_or_index_entry,True,Non-judgment index stub (93 words),PASS (text),text,headnote_only,injected_metadata_preamble,Supreme Court Azad Kashmir,False,False,False
+2014_PLC(CS)_86,PLC,2014 PLC(CS) 639,CITATION: 2014 PLC(CS) 639,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Supreme Court (AJ&K),False,False,False
+2005_PLC_31,PLC,2005 PLC 31,2005 PLC 31,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1988_PLC(CS)_266,PLC,1988 PLC(CS) 741,CITATION: 1988 PLC(CS) 741,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Labour Appellate Tribunal Sind,False,False,False
+2012_PLC(CS)_227,PLC,2012 PLC(CS) 1317,CITATION: 2012 PLC(CS) 1317,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Islamabad High Court,False,False,False
+1998_PLC_455,PLC,1998 PLC 455,1998 PLC 455,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,National Industrial Relations Commission,False,False,False
+1992_PLC(CS)_90,PLC,1992 PLC(CS) 350,CITATION: 1992 PLC(CS) 350,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Service Tribunal Sindh,False,False,False
+1999_PLC_463,PLC,1999 PLC 463,1999 PLC 463,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Labour Appellant Tribunal Sindh,False,False,False
+2005_PLC(CS)_236,PLC,2005 PLC(CS) 1347,CITATION: 2005 PLC(CS) 1347,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Lahore High Court,False,False,False
+2002_PLC_192,PLC,2002 PLC 192,2002 PLC 192,stub_or_index_entry,False,Non-judgment index stub (24 words),PASS (metadata),metadata,stub,citation_name_caption,National Industrial Relations Commission,False,False,False
+2011_PLC(CS)_144,PLC,2011 PLC(CS) 782,CITATION: 2011 PLC(CS) 782,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,full_text,injected_metadata_preamble,Lahore High Court,False,False,False
+2000_PLC_62,PLC,2000 PLC 62,2000 PLC 62,stub_or_index_entry,False,Non-judgment index stub (17 words),PASS (metadata),metadata,stub,citation_name_caption,Karachi High Court Sindh,False,False,False
+2006_PLC_111,PLC,2006 PLC 111,2006 PLC 111,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1986_PLC(CS)_129,PLC,1986 PLC(CS) 432,CITATION: 1986 PLC(CS) 432,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Service Tribunal Punjab,False,False,False
+2014_PLC_459,PLC,2014 PLC 459,2014 PLC 459,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Labour Appellant Tribunal Balochistan,False,False,False
+1996_PLC(CS)_62,PLC,1996 PLC(CS) 300,CITATION: 1996 PLC(CS) 300,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Service Tribunal Sindh,False,False,False
+2001_PLC(CS)_123,PLC,2001 PLC(CS) 581,CITATION: 2001 PLC(CS) 581,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Sindh Service Tribunal,False,False,False
+1974_PLC_186,PLC,1974 PLC 186,1974 PLC 186,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Baghdad Ul Jadid,False,False,False
+1983_PLC(CS)_395,PLC,1983 PLC(CS) 995,CITATION: 1983 PLC(CS) 995,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (text),text,headnote_only,injected_metadata_preamble,Labour Appellate Tribunal Sind,False,True,False
+1962_PLC_1309,PLC,1962 PLC 1309,1962 PLC 1309,stub_or_index_entry,False,Non-judgment index stub (43 words),PASS (metadata),metadata,headnote_only,citation_name_caption,Vs,False,False,False
+2010_PLC(CS)_70,PLC,2010 PLC(CS) 446,CITATION: 2010 PLC(CS) 446,stub_or_index_entry,True,Non-judgment index stub (86 words),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Karachi High Court Sindh,False,False,False
+2001_PLC(CS)_50,PLC,2001 PLC(CS) 212,CITATION: 2001 PLC(CS) 212,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Federal Service Tribunal,False,False,False
+2022_PLC_44,PLC,2022 PLC 44,2022 PLC 44,stub_or_index_entry,False,Non-judgment index stub (17 words),PASS (metadata),metadata,stub,citation_name_caption,Lahore High Court Lahore,False,False,False
+1988_PLC(CS)_12,PLC,1988 PLC(CS) 28,CITATION: 1988 PLC(CS) 28,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Service Tribunal Punjab,False,False,False
+1996_PLC(CS)_238,PLC,1996 PLC(CS) 740,CITATION: 1996 PLC(CS) 740,stub_or_index_entry,True,Non-judgment index stub (74 words),PASS (metadata),metadata,stub,injected_metadata_preamble,Labour Appellate Tribunal Sindh,False,False,False
+2018_PLC_113,PLC,2018 PLC 113,2018 PLC 113,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+1981_PLC_97,PLC,1981 PLC 97,1981 PLC 97,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1993_PLC(CS)_11,PLC,1993 PLC(CS) 60,CITATION: 1993 PLC(CS) 60,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Federal Service Tribunal,False,False,False
+2015_PLC(CS)_6,PLC,2015 PLC(CS) 37,CITATION: 2015 PLC(CS) 37,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,full_text,injected_metadata_preamble,Islamabad High Court,False,False,False
+1976_PLC_672,PLC,1976 PLC 672,1976 PLC 672,stub_or_index_entry,False,Non-judgment index stub (19 words),PASS (metadata),metadata,stub,citation_name_caption,Labour Court Punjab,False,False,False
+2008_PLC_164,PLC,2008 PLC 164,2008 PLC 164,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Quetta High Court Balochistan,False,False,False
+2023_PLC(CS)_46,PLC,2023 PLC(CS) 341,CITATION: 2023 PLC(CS) 341,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Sindh High Court,False,False,False
+1984_PLC(CS)_492,PLC,1984 PLC(CS) 1073,CITATION: 1984 PLC(CS) 1073,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,full_text,injected_metadata_preamble,Service Tribunal Punjab,False,False,False
+1963_PLC_826,PLC,1963 PLC 826,1963 PLC 826,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Amarsingh,False,False,False
+1977_PLC_447,PLC,1977 PLC 447,1977 PLC 447,stub_or_index_entry,False,Non-judgment index stub (21 words),PASS (metadata),metadata,stub,citation_name_caption,Karachi High Court Sindh,False,False,False
+1998_PLC_263,PLC,1998 PLC 263,1998 PLC 263,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,National Industrial Relations Commission,False,False,False
+1999_PLC(CS)_265,PLC,1999 PLC(CS) 1518,CITATION: 1999 PLC(CS) 1518,metadata_parse_artifact,True,"Metadata parse artifact: Title truncated at comma ('AZFAR YASIN, ASSISTANT') with remainder in court field","FAIL: Excluded: Stored title 'AZFAR YASIN, ASSISTANT' contradicts text header parties 'MUHAMMAD YOUNUS KHAN v. MANAGING DIRECTOR, PAKISTAN TELEVISION'.",none,headnote_only,injected_metadata_preamble,Federal Service Tribunal,False,False,False
+2019_SCMR_2063,SCMR,2019 SCMR 2063,2019 SCMR 2063,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+1997_SCMR_1120,SCMR,1997 SCMR 1120,1997 SCMR 1120,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,order_text,judicial_header,Supreme Court of Pakistan,False,False,False
+1997_SCMR_1339,SCMR,1997 SCMR 1339,"1997SCMR 1339
+
+ 
+
+[Supreme Court of Pakistan]
+
+ 
+
+Present: S",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,order_text,judicial_header,Supreme Court of Pakistan,False,False,False
+2019_SCMR_556,SCMR,2019 SCMR 556,2019 SCMR 556,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+2001_SCMR_664,SCMR,2001 SCMR 664,2001 SCMR 664,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+2006_SCMR_1329,SCMR,2006 SCMR 1329,2006 SCMR 1329,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+1998_SCMR_2318,SCMR,1998 SCMR 2318,1998 SCMR 2318,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Supreme Court of Pakistan,False,False,False
+1998_SCMR_1559,SCMR,1998 SCMR 1559,1998 SCMR 1559,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Supreme Court of Pakistan,False,False,False
+2004_SCMR_1443,SCMR,2004 SCMR 1443,2004 SCMR 1443,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+1978_SCMR_77,SCMR,1978 SCMR 195,CITATION: 1978 SCMR 195,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),FAIL: Excluded: Login-wall / portal subscription text.,none,order_text,login_wall,Supreme Court of Pakistan,True,False,False
+1984_SCMR_58,SCMR,1984 SCMR 58,1984 SCMR 58,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,order_text,judicial_header,Supreme Court of Pakistan,False,False,False
+2001_SCMR_265,SCMR,2001 SCMR 265,2001 SCMR 265,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,order_text,citation_name_caption,Supreme Court,True,False,False
+1971_SCMR_56,SCMR,1971 SCMR 128,CITATION: 1971 SCMR 128,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Supreme Court of Pakistan,False,False,False
+1990_SCMR_786,SCMR,1990 SCMR 786,1990 SCMR 786,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,order_text,judicial_header,Supreme Court of Pakistan,False,False,False
+1973_SCMR_163,SCMR,1973 SCMR 503,CITATION: 1973 SCMR 503,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Supreme Court of Pakistan,False,False,False
+1996_SCMR_1592,SCMR,1996 SCMR 1592,"1996SCMR1592
+
+ 
+
+[Supreme Court of Pakistan]
+
+ 
+
+Present: Sa",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,mixed,judicial_header,Supreme Court of Pakistan,False,False,False
+2009_SCMR_362,SCMR,2009 SCMR 362,2009 SCMR 362,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+1990_SCMR_296,SCMR,1990 SCMR 296,1990 SCMR 296,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,order_text,judicial_header,Supreme Court of Pakistan,False,False,False
+1989_SCMR_1208,SCMR,1989 SCMR 1208,1989 SCMR 1208,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,order_text,judicial_header,Supreme Court of Pakistan,False,False,False
+1990_SCMR_298,SCMR,1990 SCMR 298,1990 SCMR 298,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,order_text,judicial_header,Supreme Court of Pakistan,False,False,False
+2006_SCMR_642,SCMR,2006 SCMR 642,2006 SCMR 642,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+1986_SCMR_1260,SCMR,1986 SCMR 1260,1986 SCMR 1260,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,order_text,judicial_header,Supreme Court of Pakistan,False,False,False
+1994_SCMR_1782,SCMR,1994 SCMR 1782,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",publisher_banner,False,Publisher customer care banner block,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+1988_SCMR_1847,SCMR,1988 SCMR 1847,1988 SCMR 1847,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,order_text,judicial_header,Supreme Court of Pakistan,False,False,False
+1986_SCMR_1840,SCMR,1986 SCMR 1840,1986 SCMR 1840,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Supreme Court of Pakistan,False,False,False
+1991_SCMR_1764,SCMR,1991 SCMR 1764,1991 SCMR 1764,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Supreme Court of Pakistan,False,False,False
+2012_SCMR_140,SCMR,2012 SCMR 140,2012 SCMR 140,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+2008_SCMR_478,SCMR,2008 SCMR 478,2008 SCMR 478,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+1971_SCMR_244,SCMR,1971 SCMR 688,CITATION: 1971 SCMR 688,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Supreme Court of Pakistan,False,False,False
+1975_SCMR_160,SCMR,1975 SCMR 330,CITATION: 1975 SCMR 330,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Supreme Court of Pakistan,False,False,False
+1969_SCMR_355,SCMR,1969 SCMR 814,CITATION: 1969 SCMR 814,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),FAIL: Excluded: Login-wall / portal subscription text.,none,order_text,login_wall,Supreme Court of Pakistan,True,False,False
+1989_SCMR_864,SCMR,1989 SCMR 864,1989 SCMR 864,title_text_mismatch,False,"Metadata title ""462	1989 SCMR 864	MUHAMMAD JALIL SIDDIQUI VS DIRECTOR, EDUCATION, SARGODHA REGION - 	SUPREME-COURT"" contradicts text parties ""Abdul Qadir Shaikh, S.A. Nusrat and Zaffar Hussain, JJ PAKISTAN RAILWAYS v. GHULAM SARWAR""","FAIL: Excluded: Stored title 'MUHAMMAD JALIL SIDDIQUI VS DIRECTOR, EDUCATION, SARGODHA REGION' contradicts text header parties 'PAKISTAN RAILWAYS v. GHULAM SARWAR'.",none,mixed,judicial_header,Supreme Court of Pakistan,False,False,False
+1969_SCMR_79,SCMR,1969 SCMR 113,CITATION: 1969 SCMR 113,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Supreme Court of Pakistan,False,False,False
+1998_SCMR_359,SCMR,1998 SCMR 359,1998 SCMR 359,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Supreme Court of Pakistan,False,False,False
+1975_SCMR_61,SCMR,1975 SCMR 153,CITATION: 1975 SCMR 153,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Supreme Court of Pakistan,False,True,False
+1996_SCMR_1051,SCMR,1996 SCMR 1051,"1996SCMR 1051
+
+ 
+
+[Supreme Court of Pakistan]
+
+ 
+
+Present: M",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,mixed,judicial_header,Supreme Court of Pakistan,False,False,False
+1969_SCMR_266,SCMR,1969 SCMR 517,CITATION: 1969 SCMR 517,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),FAIL: Excluded: Login-wall / portal subscription text.,none,order_text,login_wall,Supreme Court of Pakistan,True,False,False
+1996_SCMR_1044,SCMR,1996 SCMR 1044,1996 SCMR 1044,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Supreme Court of Pakistan,False,False,False
+1983_CLC_3181,CLC,1983 CLC 3181,1983 CLC 3181,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1982_CLC_1150,CLC,1982 CLC 1150,1982 CLC 1150,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1980_CLC_1631,CLC,1980 CLC 1631,1980 CLC 1631,stub_or_index_entry,False,Non-judgment index stub (90 words),PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1993_CLC_2130,CLC,1993 CLC 2130,1993 CLC 2130,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2019_CLC_2083,CLC,2019 CLC 2083,2019 CLC 2083,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Gilgit Baltistan,False,False,False
+2016_CLC_1405,CLC,2016 CLC 1405,2016 CLC 1405,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Peshawar High Court,False,False,False
+1988_CLC_564,CLC,1988 CLC 564,1988 CLC 564,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1983_CLC_1068,CLC,1983 CLC 1068,1983 CLC 1068,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+2011_CLC_1822,CLC,2011 CLC 1822,2011 CLC 1822,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2022_CLC_489,CLC,2022 CLC 489,2022 CLC 489,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+2019_CLC_1690,CLC,2019 CLC 1690,2019 CLC 1690,stub_or_index_entry,False,Non-judgment index stub (78 words),PASS (metadata),metadata,stub,citation_name_caption,Peshawar High Court,False,False,False
+2015_CLC_1360,CLC,2015 CLC 1360,2015 CLC 1360,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court Azad Kashmir,False,False,False
+1982_CLC_1728,CLC,1982 CLC 1728,1982 CLC 1728,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2015_CLC_1333,CLC,2015 CLC 1333,2015 CLC 1333,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1987_CLC_705,CLC,1987 CLC 705,1987 CLC 705,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1998_CLC_256,CLC,1998 CLC 256,1998 CLC 256,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1989_CLC_442,CLC,1989 CLC 442,1989 CLC 442,stub_or_index_entry,False,Non-judgment index stub (98 words),PASS (metadata),metadata,stub,citation_name_caption,Lahore High Court Lahore,False,False,False
+2013_CLC_1191,CLC,2013 CLC 1191,2013 CLC 1191,verified_match,False,Clean canonical match from judicial header,PASS (text),text,headnote_only,citation_name_caption,Islamabad,False,False,False
+2019_CLC_1811,CLC,2019 CLC 1811,2019 CLC 1811,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+1991_CLC_291,CLC,1991 CLC 291,1991 CLC 291,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+1985_CLC_283,CLC,1985 CLC 283,1985 CLC 283,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1996_CLC_682,CLC,1996 CLC 682,1996 CLC 682,stub_or_index_entry,False,Non-judgment index stub (56 words),PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+1987_CLC_929,CLC,1987 CLC 929,1987 CLC 929,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+1979_CLC_27,CLC,1979 CLC 109,CITATION: 1979 CLC 109,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,full_text,injected_metadata_preamble,Lahore High Court,False,False,False
+2002_CLC_918,CLC,2002 CLC 918,2002 CLC 918,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+1985_CLC_108,CLC,1985 CLC 108,1985 CLC 108,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+1995_CLC_1209,CLC,1995 CLC 1209,1995 CLC 1209,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+1985_CLC_395,CLC,1985 CLC 395,1985 CLC 395,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1980_CLC_854,CLC,1980 CLC 854,1980 CLC 854,stub_or_index_entry,False,Non-judgment index stub (87 words),PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+2001_CLC_1072,CLC,2001 CLC 1072,2001 CLC 1072,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court Azad Kashmir,False,False,False
+2022_CLC_1858,CLC,2022 CLC 1858,2022 CLC 1858,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Islamabad,False,False,False
+1984_CLC_2532,CLC,1984 CLC 2532,1984 CLC 2532,stub_or_index_entry,False,Non-judgment index stub (91 words),PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+2016_CLC_1309,CLC,2016 CLC 1309,2016 CLC 1309,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+1979_CLC_52,CLC,1979 CLC 199,CITATION: 1979 CLC 199,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,full_text,injected_metadata_preamble,Lahore High Court,False,True,False
+2003_CLC_1428,CLC,2003 CLC 1428,2003 CLC 1428,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Peshawar High Court,False,False,False
+1994_CLC_1933,CLC,1994 CLC 1933,1994 CLC 1933,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2011_CLC_135,CLC,2011 CLC 135,2011 CLC 135,stub_or_index_entry,False,Non-judgment index stub (21 words),PASS (text),text,stub,citation_name_caption,Karachi High Court Sindh,False,False,False
+2010_MLD_817,MLD,2010 MLD 817,2010 MLD 817,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2011_MLD_733,MLD,2011 MLD 733,2011 MLD 733,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2025_MLD_165,MLD,2025 MLD 165,2025 MLD 165,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1994_MLD_1400,MLD,1994 MLD 1400,1994 MLD 1400,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Supreme Appellate Court,False,False,False
+2021_MLD_424,MLD,2021 MLD 424,"Register
+Feedback
+Customer Care Office
+PLD Publishers
+35-Nab",publisher_banner,False,Banner-only customer care stub,FAIL: Excluded: Login-wall / portal subscription text.,none,order_text,none,Unknown / Unspecified,True,False,False
+1985_MLD_444,MLD,1985 MLD 1107,CITATION: 1985 MLD 1107,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,High Court of Sindh,False,True,False
+2013_MLD_1315,MLD,2013 MLD 1315,2013 MLD 1315,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+1988_MLD_484,MLD,1988 MLD 1323,CITATION: 1988 MLD 1323,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,full_text,injected_metadata_preamble,Honorable Justice Ajmal Mian,False,False,False
+2018_MLD_789,MLD,2018 MLD 789,2018 MLD 789,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+1994_MLD_912,MLD,1994 MLD 912,1994 MLD 912,verified_match,False,Clean canonical match from judicial header,PASS (text),text,mixed,judicial_header,Supreme Court (A J & K),False,False,False
+1992_MLD_1983,MLD,1992 MLD 1983,1992 MLD 1983,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,order_text,judicial_header,Board of Revenue Punjab,False,False,False
+2020_MLD_1492,MLD,2020 MLD 1492,2020 MLD 1492,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2012_MLD_188,MLD,2012 MLD 188,2012 MLD 188,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2001_MLD_1259,MLD,2001 MLD 1259,2001 MLD 1259,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+1987_MLD_870,MLD,1987 MLD 2384,CITATION: 1987 MLD 2384,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,order_text,injected_metadata_preamble,Honorable Justice Saleem Akhtar,False,True,False
+2023_MLD_77,MLD,2023 MLD 77,2023 MLD 77,stub_or_index_entry,False,Non-judgment index stub (21 words),PASS (metadata),metadata,stub,citation_name_caption,Karachi High Court Sindh,False,False,False
+2023_MLD_47,MLD,2023 MLD 47,2023 MLD 47,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Islamabad,False,False,False
+2024_MLD_635,MLD,2024 MLD 635,2024 MLD 635,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1989_MLD_2226,MLD,1989 MLD 2226,"×
+Case Description
+Error Code:700 Sorry Something went wrong",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+1989_MLD_2043,MLD,1989 MLD 2043,1989 MLD 2043,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+1994_MLD_266,MLD,1994 MLD 266,1994 MLD 266,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2022_MLD_2061,MLD,2022 MLD 2061,2022 MLD 2061,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Quetta High Court Balochistan,False,False,False
+1988_MLD_203,MLD,1988 MLD 520,CITATION: 1988 MLD 520,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,order_text,injected_metadata_preamble,Lahore High Court,False,False,False
+2016_MLD_1569,MLD,2016 MLD 1569,2016 MLD 1569,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2013_MLD_708,MLD,2013 MLD 708,2013 MLD 708,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+1990_MLD_1977,MLD,1990 MLD 1977,1990 MLD 1977,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Supreme Court,False,False,False
+1989_MLD_4691,MLD,1989 MLD 4691,1989 MLD 4691,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+1997_MLD_778,MLD,1997 MLD 778,1997 MLD 778,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+1993_MLD_1303,MLD,1993 MLD 1303,1993 MLD 1303,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2003_MLD_1721,MLD,2003 MLD 1721,2003 MLD 1721,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+1996_MLD_1825,MLD,1996 MLD 1825,1996 MLD 1825,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2001_MLD_1532,MLD,2001 MLD 1532,2001 MLD 1532,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2019_MLD_276,MLD,2019 MLD 276,2019 MLD 276,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2001_MLD_2012,MLD,2001 MLD 2012,2001 MLD 2012,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2023_MLD_910,MLD,2023 MLD 910,2023 MLD 910,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Quetta High Court Balochistan,False,False,False
+1987_MLD_1178,MLD,1987 MLD 3179,CITATION: 1987 MLD 3179,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),FAIL: Excluded: Login-wall / portal subscription text.,none,order_text,login_wall,Lahore High Court,True,False,False
+1995_MLD_511,MLD,1995 MLD 511,1995 MLD 511,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2024_YLR_1339,YLR,2024 YLR 1339,2024 YLR 1339,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+SHC_YLR_2727_2012,YLR,2012 YLR 2727,2012 YLR 2727,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+1999_YLR_16,YLR,1999 YLR 16,1999 YLR 16,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2013_YLR_1302,YLR,2013 YLR 1302,2013 YLR 1302,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+2023_YLR_2059,YLR,2023 YLR 2059,2023 YLR 2059,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2010_YLR_2205,YLR,2010 YLR 2205,2010 YLR 2205,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2011_YLR_2272,YLR,2011 YLR 2272,2011 YLR 2272,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2025_YLR_977,YLR,2025 YLR 977,2025 YLR 977,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+SC_YLR_1915_2008,YLR,2008 YLR 1915,2008 YLR 1915,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2012_YLR_1496,YLR,2012 YLR 1496,2012 YLR 1496,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+2010_YLR_1846,YLR,2010 YLR 1846,2010 YLR 1846,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2003_YLR_2226,YLR,2003 YLR 2226,2003 YLR 2226,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2007_YLR_1729,YLR,2007 YLR 1729,2007 YLR 1729,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2012_YLR_2895,YLR,2012 YLR 2895,2012 YLR 2895,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+2008_YLR_920,YLR,2008 YLR 920,2008 YLR 920,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2014_YLR_66,YLR,2014 YLR 66,2014 YLR 66,verified_match,False,Clean canonical match from judicial header,PASS (text),text,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+2008_YLR_1958,YLR,2008 YLR 1958,2008 YLR 1958,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+2010_YLR_1757,YLR,2010 YLR 1757,2010 YLR 1757,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2018_YLR_2363,YLR,2018 YLR 2363,2018 YLR 2363,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Federal Shariat Court,False,False,False
+2006_YLR_2770,YLR,2006 YLR 2770,2006 YLR 2770,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+SC_YLR_1426_2012,YLR,2012 YLR 1426,2012 YLR 1426,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2006_YLR_1572,YLR,2006 YLR 1572,2006 YLR 1572,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+1999_YLR_929,YLR,1999 YLR 929,1999 YLR 929,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,order_text,judicial_header,Unknown / Unspecified,False,False,False
+2009_YLR_1165,YLR,2009 YLR 1165,2009 YLR 1165,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2001_YLR_313,YLR,2001 YLR 313,2001 YLR 313,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2001_YLR_1628,YLR,2001 YLR 1628,2001 YLR 1628,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2001_YLR_1668,YLR,2001 YLR 1668,2001 YLR 1668,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Quetta High Court Balochistan,True,False,False
+2004_YLR_931,YLR,2004 YLR 931,2004 YLR 931,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2008_YLR_2090,YLR,2008 YLR 2090,2008 YLR 2090,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+PHC_YLR_1515_2012,YLR,2012 YLR 1515,2012 YLR 1515,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Peshawar High Court,False,False,False
+2008_YLR_1548,YLR,2008 YLR 1548,2008 YLR 1548,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2007_YLR_1911,YLR,2007 YLR 1911,2007 YLR 1911,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2003_YLR_1198,YLR,2003 YLR 1198,2003 YLR 1198,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,full_text,judicial_header,Unknown / Unspecified,False,False,False
+2010_YLR_3323,YLR,2010 YLR 3323,2010 YLR 3323,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2006_YLR_1433,YLR,2006 YLR 1433,2006 YLR 1433,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,mixed,judicial_header,Unknown / Unspecified,False,False,False
+2018_YLR_2589,YLR,2018 YLR 2589,2018 YLR 2589,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Peshawar High Court,False,False,False
+1999_YLR_1517,YLR,1999 YLR 1517,1999 YLR 1517,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,order_text,judicial_header,Unknown / Unspecified,False,False,False
+2010_PTD_95,PTD,2010 PTD 779,CITATION: 2010 PTD 779,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,"Customs, Federal Excise and Sales Tax Appellate Tribunal",False,True,False
+2005_PTD_228,PTD,2005 PTD 1346,CITATION: 2005 PTD 1346,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,order_text,injected_metadata_preamble,Lahore High Court,False,False,False
+2007_PTD_54,PTD,2007 PTD 380,CITATION: 2007 PTD 380,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,"Customs, Central Excise and Sales Tax Appellate Tribunal",False,True,False
+2003_PTD_372,PTD,2003 PTD 1969,CITATION: 2003 PTD 1969,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,"Honorable Justice Justice (Retd.) Saleem Akhtar, Federal Tax Ombudsman",False,False,False
+2020_PTD_1502,PTD,2020 PTD 1502,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Inland,True,False,False
+2001_PTD_661,PTD,2001 PTD 3243,CITATION: 2001 PTD 3243,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,order_text,injected_metadata_preamble,Kerala High Court (India),False,False,False
+2021_PTD_1329,PTD,2021 PTD 1329,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (text),text,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+2002_PTD_301,PTD,2002 PTD 1500,CITATION: 2002 PTD 1500,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Federal,False,False,False
+2020_PTD_454,PTD,2020 PTD 454,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Customs Appellate Tribunal Lahore,True,False,False
+2001_PTD_718,PTD,2001 PTD 3442,CITATION: 2001 PTD 3442,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Madras High Court (India),False,False,False
+1983_PTD_17,PTD,1983 PTD 63,CITATION: 1983 PTD 63,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,full_text,injected_metadata_preamble,Karachi High Court,False,False,False
+2023_PTD_146,PTD,2023 PTD 146,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,True,False,False
+1998_PTD_560,PTD,1998 PTD 3541,CITATION: 1998 PTD 3541,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Supreme Court of India,False,False,False
+2000_PTD_309,PTD,2000 PTD 1804,CITATION: 2000 PTD 1804,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,full_text,injected_metadata_preamble,Income-tax Appellate Tribunal Pakistan,False,False,False
+2023_PTD_919,PTD,2023 PTD 919,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (text),text,headnote_only,citation_name_caption,Islamabad,True,False,False
+2021_PTD_815,PTD,2021 PTD 815,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+1991_PTD_1,PTD,1991 PTD 1,CITATION: 1991 PTD 1,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Karachi High Court,False,True,False
+2001_PTD_693,PTD,2001 PTD 3380,CITATION: 2001 PTD 3380,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Supreme Court of India,False,False,False
+2002_PTD_437,PTD,2002 PTD 2149,CITATION: 2002 PTD 2149,stub_or_index_entry,True,Non-judgment index stub (74 words),PASS (metadata),metadata,stub,injected_metadata_preamble,Federal Tax Ombudsman Pakistan,False,False,False
+1992_PTD_113,PTD,1992 PTD 708,CITATION: 1992 PTD 708,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,order_text,injected_metadata_preamble,Karachi High Court,False,False,False
+2012_PTD_90,PTD,2012 PTD 90,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,True,False,False
+2022_PTD_390,PTD,2022 PTD 390,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+2000_PTD_5,PTD,2000 PTD 44,CITATION: 2000 PTD 44,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Rajasthan High Court (India),False,False,False
+2012_PTD_453,PTD,2012 PTD 453,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Inland,True,False,False
+2016_PTD_2219,PTD,2016 PTD 2219,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+2000_PTD_465,PTD,2000 PTD 2737,CITATION: 2000 PTD 2737,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (text),text,headnote_only,injected_metadata_preamble,Kerala High Court (India),False,False,False
+1996_PTD_33,PTD,1996 PTD 268,CITATION: 1996 PTD 268,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,full_text,injected_metadata_preamble,Lahore High Court,False,False,False
+2015_PTD_520,PTD,2015 PTD 520,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Inland,True,False,False
+2019_PTD_1100,PTD,2019 PTD 1100,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Inland,True,False,False
+2026_PTD_816,PTD,2026 PTD 816,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Islamabad,True,False,False
+2005_PTD_307,PTD,2005 PTD 1806,CITATION: 2005 PTD 1806,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Lahore High Court Lahore,False,False,False
+2005_PTD_75,PTD,2005 PTD 472,CITATION: 2005 PTD 472,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Supreme Court of Pakistan,False,False,False
+1990_PTD_100,PTD,1990 PTD 652,CITATION: 1990 PTD 652,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,order_text,injected_metadata_preamble,Allahabad High Court (India),False,False,False
+2006_PTD_327,PTD,2006 PTD 1822,CITATION: 2006 PTD 1822,verified_match,True,Verified against injected metadata preamble (CITATION: ... TITLE: ...),PASS (metadata),metadata,headnote_only,injected_metadata_preamble,Honorable Justice Saleem Akhtar,False,False,False
+2015_PTD_668,PTD,2015 PTD 668,"My Account
+Feedback
+Customer Care Office
+PLD Publishers
+35-N",format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,True,False,False
+1984_L_1,OTHER,1984 L 1,1984 CLC 1634,malformed_citation_key,False,Malformed citation key: stored '1984 L 1' lacks journal code (text header is 1984 CLC 1634),PASS (metadata),metadata,order_text,judicial_header,Unknown / Unspecified,False,False,False
+S.458/411/120---Quashing of proceedings---Accused had stood surety not for monetary gain but out of sheer benevolence---In the same case the confiscated amount of a bail bond furnished in respect of a co-accused by two other sureties was reduced from Rs.30_SS. 514 & 561-A---PENAL CODE (XLV OF 1860)_1,OTHER,S.458/411/120---Quashing of proceedings---Accused had stood surety not for monetary gain but out of sheer benevolence---In the same case the confiscated amount of a bail bond furnished in respect of a co-accused by two other sureties was reduced from Rs.30 SS. 514 & 561-A---PENAL CODE (XLV OF 1860) 1,000 i.e. the 1/5th of the total confiscated amount Confiscat,stub_or_index_entry,False,Non-judgment index stub (20 words),PASS (metadata),metadata,stub,none,Unknown / Unspecified,False,False,False
+Constitution of Pakistan 1973--108_CONSTITUTION OF PAKISTAN 1973--107_1,OTHER,Constitution of Pakistan 1973--108 CONSTITUTION OF PAKISTAN 1973--107 1,Constitution of Pakistan 1973--112,stub_or_index_entry,False,Non-judgment index stub (4 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+being vitally interested in properties of such company_S. 174--WINDING UP PROCEEDINGS-SCRUTINY OF BIDS FOR SALE APPELLANTS HAVING A CLAIM OF SEVERAL CRORES OF RUPEES AGAINST COMPANY IN LIQUIDATION_1,OTHER,being vitally interested in properties of such company S. 174--WINDING UP PROCEEDINGS-SCRUTINY OF BIDS FOR SALE APPELLANTS HAVING A CLAIM OF SEVERAL CRORES OF RUPEES AGAINST COMPANY IN LIQUIDATION 1,acceptance of bid behind back of appellant-creditor neither,stub_or_index_entry,False,Non-judgment index stub (21 words),PASS (metadata),metadata,stub,none,Unknown / Unspecified,False,False,False
+Companies Ordinance 1984--284_AMALGAMATION OF COMPANIES--TERM_1,OTHER,Companies Ordinance 1984--284 AMALGAMATION OF COMPANIES--TERM 1,Stamp Act 1899--27-A,stub_or_index_entry,False,Non-judgment index stub (3 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+take over of-Management of factory_DEFENCE OF PAKISTAN RULES 1965 RR. 181 & 182-ENEMY PROPERTY_1,OTHER,take over of-Management of factory DEFENCE OF PAKISTAN RULES 1965 RR. 181 & 182-ENEMY PROPERTY 1,suffered from laches and liable to dismissal.,stub_or_index_entry,False,Non-judgment index stub (7 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+quantum of---Scope---Quantity of recovered narcotic---Perusal of Ss. 9(b) & 9(c) of Control of Narcotic Substances Act_SS. 9(B) & (C)---POSSESSION OF NARCOTIC---SENTENCE_1,OTHER,quantum of---Scope---Quantity of recovered narcotic---Perusal of Ss. 9(b) & 9(c) of Control of Narcotic Substances Act SS. 9(B) & (C)---POSSESSION OF NARCOTIC---SENTENCE 1,and if it exceeded ten kilograms it could not be less than i,stub_or_index_entry,False,Non-judgment index stub (23 words),PASS (metadata),metadata,stub,none,Unknown / Unspecified,False,False,False
+"39 & 150--Territory within jurisdiction of a Court transferred to another Court--Proceedings pending in former Court do not get transferred automatically to the other Court or become liable to be transferred to the other Court save where such Court ceases to exist or is otherwise abolished and it is then that order of """"transfer of business"""" of that Court becomes liable to be passed under S.150_SS. 38_1",OTHER,"39 & 150--Territory within jurisdiction of a Court transferred to another Court--Proceedings pending in former Court do not get transferred automatically to the other Court or become liable to be transferred to the other Court save where such Court ceases to exist or is otherwise abolished and it is then that order of """"transfer of business"""" of that Court becomes liable to be passed under S.150 SS. 38 1",C.P.C. despite change of territory--Decree-holder if he cons,stub_or_index_entry,False,Non-judgment index stub (24 words),PASS (metadata),metadata,stub,none,Unknown / Unspecified,False,False,False
+r. 781-Company_COMPANIES ACT 1913 SS. 162 & 163 AND SIND CHIEF COURT RULES (ORIGINAL SIDE)_1,OTHER,r. 781-Company COMPANIES ACT 1913 SS. 162 & 163 AND SIND CHIEF COURT RULES (ORIGINAL SIDE) 1,1913-Two cheques issued by Company,stub_or_index_entry,False,Non-judgment index stub (5 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+while remaining land stood in the name of his brother_S.52 --- VALIDITY AND EFFECT OF MUTATION --- LONG STANDING ENTRIES IN RECORD-OF RIGHT.OF ???MUTATION UNDER CHALLENGE WAS ATTESTED ON 14?12?1926 WHILE PLAINTIFF ATTAINED MAJORITY IN 1935 ??? PLAINTIFF ON ATTAINING MAJORITY HAD SOLD HIS ENTIRE LAND_1,OTHER,while remaining land stood in the name of his brother S.52 --- VALIDITY AND EFFECT OF MUTATION --- LONG STANDING ENTRIES IN RECORD-OF RIGHT.OF ???MUTATION UNDER CHALLENGE WAS ATTESTED ON 14?12?1926 WHILE PLAINTIFF ATTAINED MAJORITY IN 1935 ??? PLAINTIFF ON ATTAINING MAJORITY HAD SOLD HIS ENTIRE LAND 1,when he instituted suit to challenge mutation of gift sancti,stub_or_index_entry,False,Non-judgment index stub (12 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+Union Committee_DIVORCE--SHIAH LAW--WIFE NOT PRESENT AT THE TIME OF PRONOUNCEMENT OF TALAQ--NOTICE ADDRESSED TO WIFE WITH A COPY TO CHAIRMAN_1,OTHER,Union Committee DIVORCE--SHIAH LAW--WIFE NOT PRESENT AT THE TIME OF PRONOUNCEMENT OF TALAQ--NOTICE ADDRESSED TO WIFE WITH A COPY TO CHAIRMAN 1,though it did mention at the end names of witnesses and ther,stub_or_index_entry,False,Non-judgment index stub (30 words),PASS (metadata),metadata,order_text,none,Unknown / Unspecified,False,False,False
+Pakistan Penal Code 1860--302_CRIMINAL PROCEDURE CODE (CR.P.C) 1898--498_1,OTHER,Pakistan Penal Code 1860--302 CRIMINAL PROCEDURE CODE (CR.P.C) 1898--498 1,Pakistan Penal Code 1860--452,stub_or_index_entry,False,Non-judgment index stub (4 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+whether sufficient to convict a woman for Zina --- Mere pregnancy is not sufficient to convict a woman for Zina_OFFENCE OF ZINA (ENFORCEMENT OF HUDOOD) ORDINANCE 1979 S. 10 --- ZINA --- PREGNANCY ALONE_1,OTHER,whether sufficient to convict a woman for Zina --- Mere pregnancy is not sufficient to convict a woman for Zina OFFENCE OF ZINA (ENFORCEMENT OF HUDOOD) ORDINANCE 1979 S. 10 --- ZINA --- PREGNANCY ALONE 1,PLD 1983 FSC 183,stub_or_index_entry,False,Non-judgment index stub (19 words),PASS (metadata),metadata,stub,judicial_header,High Court (Fsc),False,False,False
+Ss. 5 & 20 Each step taken by Magistrate after passing main order under S. 488_S. 488 READ WITH WEST PAKISTAN FAMILY COURTS ACT (XXXV OF 1964)_1,OTHER,Ss. 5 & 20 Each step taken by Magistrate after passing main order under S. 488 S. 488 READ WITH WEST PAKISTAN FAMILY COURTS ACT (XXXV OF 1964) 1,enforced in District Order calling upon husband to pay arrea,stub_or_index_entry,False,Non-judgment index stub (12 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+O. XXXIX_CIVIL PROCEDURE CODE --ORDER XXXIX OF C.P.C. TEMPORARY INJUNCTIONS AND INTERLOCUTORY ORDERS CIVIL PROCEDURE CODE (V OF 1908)_1,OTHER,O. XXXIX CIVIL PROCEDURE CODE --ORDER XXXIX OF C.P.C. TEMPORARY INJUNCTIONS AND INTERLOCUTORY ORDERS CIVIL PROCEDURE CODE (V OF 1908) 1,S. 198.Civil Procedure Code (V of 1908),stub_or_index_entry,False,Non-judgment index stub (7 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+-Landlord_S. 14- EJECTMENT ON GROUND OF PERSONAL BONA FIDE REQUIREMENT_1,OTHER,-Landlord S. 14- EJECTMENT ON GROUND OF PERSONAL BONA FIDE REQUIREMENT 1,neither required to prove his previous business experience n,stub_or_index_entry,False,Non-judgment index stub (40 words),PASS (metadata),metadata,order_text,none,Unknown / Unspecified,False,False,False
+rr. 3 & 4-Execution of decree-Whether and when executing Court can refuse execution and question validity of decree-Decree_CODE OF CIVIL PROCEDURE 1908 S. 47 AND O. XXII_1,OTHER,rr. 3 & 4-Execution of decree-Whether and when executing Court can refuse execution and question validity of decree-Decree CODE OF CIVIL PROCEDURE 1908 S. 47 AND O. XXII 1,not competent in law to grant substitution of heirs of decea,stub_or_index_entry,False,Non-judgment index stub (42 words),PASS (metadata),metadata,order_text,none,Unknown / Unspecified,False,False,False
+held_S. 13?EJECTMENT?ORDER OF EVICTION BASED ON EVIDENCE PRODUCED BY LANDLORD?NO ARGUMENT ADVANCED TO SHOW ORDER BEING NOT SUPPORTED BY EVIDENCE?ORDER_1,OTHER,held S. 13?EJECTMENT?ORDER OF EVICTION BASED ON EVIDENCE PRODUCED BY LANDLORD?NO ARGUMENT ADVANCED TO SHOW ORDER BEING NOT SUPPORTED BY EVIDENCE?ORDER 1,r. 17?Service by affixation?Section 13 or other provisions o,stub_or_index_entry,False,Non-judgment index stub (24 words),PASS (metadata),metadata,stub,none,Unknown / Unspecified,False,False,False
+Explanation_SS. 15(4)_1,OTHER,Explanation SS. 15(4) 1,r. 13-Restoration of dismissed application-Section 141 of Ci,stub_or_index_entry,False,Non-judgment index stub (10 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+R.1 [as inserted by Notification_CIVIL PROCEDURE CODE --ORDER VIII OF C.P.C. WRITTEN STATEMENT AND SET-OFF ----O. VIII_1,OTHER,R.1 [as inserted by Notification CIVIL PROCEDURE CODE --ORDER VIII OF C.P.C. WRITTEN STATEMENT AND SET-OFF ----O. VIII 1,filing of Extension in time Powers of Trial Court--Defendant,stub_or_index_entry,False,Non-judgment index stub (13 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+even if premises was not required by all other cosharers. ---- S. 15(2)(vii) --- Personal bona fide need --- Evidence on record had fully proved that family of landlord consisted of rive members_S. 15(2)(VII) --- PERSONAL BONA RIDE NEED OF LANDLORD --- ONE OF THE CO-SHARERS IN. PREMISES COULD SEEK EVICTION OF TENANT ON GROUND OF PERSONAL BONA TIDE REQUIREMENT_1,OTHER,even if premises was not required by all other cosharers. ---- S. 15(2)(vii) --- Personal bona fide need --- Evidence on record had fully proved that family of landlord consisted of rive members S. 15(2)(VII) --- PERSONAL BONA RIDE NEED OF LANDLORD --- ONE OF THE CO-SHARERS IN. PREMISES COULD SEEK EVICTION OF TENANT ON GROUND OF PERSONAL BONA TIDE REQUIREMENT 1,4M/84 ordered by VIlIth Senior Civil Judge and Rent Controll,stub_or_index_entry,False,Non-judgment index stub (10 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+he was not present at the place of occurrence and was visiting his cousin_S. 302(B)---QATL-I-AMD---REAPPRAISAL OF EVIDENCE---PLEA OF ALIBI SUCCESSFULLY ESTABLISHED---ACCUSED TOOK THE STANCE THAT ON THE FATEFUL DAY AND TIME_1,OTHER,he was not present at the place of occurrence and was visiting his cousin S. 302(B)---QATL-I-AMD---REAPPRAISAL OF EVIDENCE---PLEA OF ALIBI SUCCESSFULLY ESTABLISHED---ACCUSED TOOK THE STANCE THAT ON THE FATEFUL DAY AND TIME 1,who after thorough investigation found the same to be true I,stub_or_index_entry,False,Non-judgment index stub (26 words),PASS (metadata),metadata,order_text,none,Unknown / Unspecified,False,False,False
+219 & 184(3)---Election Commission_ARTS. 218(3)_1,OTHER,219 & 184(3)---Election Commission ARTS. 218(3) 1,election could not be held on the same Bye-elections in cons,stub_or_index_entry,False,Non-judgment index stub (36 words),PASS (metadata),metadata,order_text,none,Unknown / Unspecified,False,False,False
+Art.185(3)---Award made rule of Court---Father (defendant) transferred suit-land by way of family settlement to all his heirs from both wives---Some children (plaintiffs) later on claiming suit-land to have been gifted to them by father (defendant) filed against him suit_----SS.17 & 21---CONSTITUTION OF PAKISTAN (1973)_1,OTHER,Art.185(3)---Award made rule of Court---Father (defendant) transferred suit-land by way of family settlement to all his heirs from both wives---Some children (plaintiffs) later on claiming suit-land to have been gifted to them by father (defendant) filed against him suit ----SS.17 & 21---CONSTITUTION OF PAKISTAN (1973) 1,consent of father Courts below in a subsequent suit filed by,stub_or_index_entry,False,Non-judgment index stub (30 words),PASS (metadata),metadata,order_text,none,Unknown / Unspecified,False,False,False
+20 & 30---Arbitration proceedings---Award---Only two of legal heirs of deceased referred dispute with regard to inheritance of their deceased father to arbitrators by arbitration agreement and arbitrators prepared award and suo motu filed same in Court for making rule of Court---Arbitrators in their application filed before Court for making award rule of Court; beside parties to arbitration agreement also impleaded other co-sharers in property of . deceased -as respondents and also proposed some property in award in name of one of legal heirs of deceased who was not made party to reference---Trial Court as well as Appellate Court below_ARBITRATION ACT 1940 SS. 14_1,OTHER,20 & 30---Arbitration proceedings---Award---Only two of legal heirs of deceased referred dispute with regard to inheritance of their deceased father to arbitrators by arbitration agreement and arbitrators prepared award and suo motu filed same in Court for making rule of Court---Arbitrators in their application filed before Court for making award rule of Court; beside parties to arbitration agreement also impleaded other co-sharers in property of . deceased -as respondents and also proposed some property in award in name of one of legal heirs of deceased who was not made party to reference---Trial Court as well as Appellate Court below ARBITRATION ACT 1940 SS. 14 1,award based on such invalid action,stub_or_index_entry,False,Non-judgment index stub (6 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+Pakistan Penal Code 1860--302_CRIMINAL PROCEDURE CODE (CR.P.C) 1898--497_1,OTHER,Pakistan Penal Code 1860--302 CRIMINAL PROCEDURE CODE (CR.P.C) 1898--497 1,Pakistan Penal Code 1860--452,stub_or_index_entry,False,Non-judgment index stub (4 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+15_ARBITRATION ACT 1940 SS. 14_1,OTHER,15 ARBITRATION ACT 1940 SS. 14 1,30 & 33 Nature and object of arbitration proceedings and rol,stub_or_index_entry,False,Non-judgment index stub (98 words),PASS (metadata),metadata,order_text,none,Unknown / Unspecified,False,False,False
+Ss. 342_SS. 194 & 195-PENAL CODE (XLV OF 1860)_1,OTHER,Ss. 342 SS. 194 & 195-PENAL CODE (XLV OF 1860) 1,Art. 15(5)(d)Complaint against Chief Martial Law Administrat,stub_or_index_entry,False,Non-judgment index stub (7 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+1967_H_1,OTHER,1967 H 1,PLD 1967 Karachi 569,malformed_citation_key,False,Malformed citation key: stored '1967 H 1' lacks journal code (text header is PLD 1967 Karachi 569),PASS (metadata),metadata,mixed,judicial_header,Karachi High Court,False,False,False
+100 & 302(c)--- Qatl-i-amd--- Reappraisal of evidence---Benefit of doubt---Right of private defence of the body and property extending to causing death of trespasser---Scope---Site plan did not show that the house of the complainant was at a short distance from the crime scene_SS. 97_1,OTHER,100 & 302(c)--- Qatl-i-amd--- Reappraisal of evidence---Benefit of doubt---Right of private defence of the body and property extending to causing death of trespasser---Scope---Site plan did not show that the house of the complainant was at a short distance from the crime scene SS. 97 1,was absolutely unfounded and it was for such reason that the,stub_or_index_entry,False,Non-judgment index stub (38 words),PASS (metadata),metadata,order_text,none,Unknown / Unspecified,False,False,False
+R.2_CIVIL PROCEDURE CODE --ORDER XXXVII OF C.P.C. SUMMARY PROCEDURE ON NEGOTIABLE INSTRUMENTS 0. XXXVII_1,OTHER,R.2 CIVIL PROCEDURE CODE --ORDER XXXVII OF C.P.C. SUMMARY PROCEDURE ON NEGOTIABLE INSTRUMENTS 0. XXXVII 1,R.10(2) Deletion of defendant's name from plaint Defendant's,format_artifact,False,Could not parse canonical header line,PASS (metadata),metadata,order_text,none,Unknown / Unspecified,False,False,False
+Ss. S(2) & 173-Bogus claim filed by displaced person---Police make investigation under S. S(2)_DISPLACED PERSONS (LAND SETTLEMENT) ACT 1958 S. 29 READ WITH CRIMINAL PROCEDURE CODE (V OF 1898)_1,OTHER,Ss. S(2) & 173-Bogus claim filed by displaced person---Police make investigation under S. S(2) DISPLACED PERSONS (LAND SETTLEMENT) ACT 1958 S. 29 READ WITH CRIMINAL PROCEDURE CODE (V OF 1898) 1,1958 Does not deal with question of investigation by police,stub_or_index_entry,False,Non-judgment index stub (29 words),FAIL: Excluded: Stored title 'Displaced Persons (Land Settlement) Act' tokens not found in text header.,none,order_text,none,Unknown / Unspecified,False,False,False
+"S. 115-Arbitratioia-Estoppel-Contention that petitioner having once accepted compensation money on putting signatures in agreement Form """"A"""" cannot subsequently ask for referring matter to arbitration_SS. 5 & 7(AAA) READ WITH EVIDENCE ACT (I OF 1872)_1",OTHER,"S. 115-Arbitratioia-Estoppel-Contention that petitioner having once accepted compensation money on putting signatures in agreement Form """"A"""" cannot subsequently ask for referring matter to arbitration SS. 5 & 7(AAA) READ WITH EVIDENCE ACT (I OF 1872) 1",further cl. 6 of agreement speaks for requisition of propert,stub_or_index_entry,False,Non-judgment index stub (20 words),PASS (metadata),metadata,stub,none,Unknown / Unspecified,False,False,False
+a statutory body_WEST PAKISTAN INDUSTRIAL AND COMMERCIAL EMPLOYMENT (STANDING ORDERS) ORDINANCE 1968 INDUSTRIAL OR COMMERCIAL ESTABLISHMENT---LEAVE TO APPEAL WAS GRANTED BY SUPREME COURT TO EXAMINE THE CONTENTION THAT LAHORE DEVELOPMENT AUTHORITY_1,OTHER,a statutory body WEST PAKISTAN INDUSTRIAL AND COMMERCIAL EMPLOYMENT (STANDING ORDERS) ORDINANCE 1968 INDUSTRIAL OR COMMERCIAL ESTABLISHMENT---LEAVE TO APPEAL WAS GRANTED BY SUPREME COURT TO EXAMINE THE CONTENTION THAT LAHORE DEVELOPMENT AUTHORITY 1,1968 were not applicable.,stub_or_index_entry,False,Non-judgment index stub (4 words),FAIL: Excluded: Missing or empty document text.,none,stub,none,Unknown / Unspecified,False,False,False
+2004_CLD_973,CLD,2004 CLD 973,2004 CLD 973,stub_or_index_entry,False,Non-judgment index stub (82 words),PASS (metadata),metadata,stub,citation_name_caption,Lahore High Court Lahore,False,False,False
+2009_CLD_1442,CLD,2009 CLD 1442,2009 CLD 1442,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,False,False,False
+2012_CLD_1222,CLD,2012 CLD 1222,2012 CLD 1222,verified_match,False,Clean canonical match from judicial header,PASS (text),text,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2007_CLD_1232,CLD,2007 CLD 1232,2007 CLD 1232,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2002_CLD_399,CLD,2002 CLD 399,2002 CLD 399,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2004_CLD_512,CLD,2004 CLD 512,2004 CLD 512,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2005_CLD_1480,CLD,2005 CLD 1480,2005 CLD 1480,stub_or_index_entry,False,Non-judgment index stub (21 words),PASS (metadata),metadata,stub,citation_name_caption,Lahore High Court Lahore,False,False,False
+2007_CLD_1116,CLD,2007 CLD 1116,2007 CLD 1116,stub_or_index_entry,False,Non-judgment index stub (23 words),PASS (metadata),metadata,stub,citation_name_caption,Securities And Exchange Commission Of Pakistan,False,False,False
+2010_CLD_116,CLD,2010 CLD 116,2010 CLD 116,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Securities And Exchange Commission Of Pakistan,False,False,False
+2021_CLD_48,CLD,2021 CLD 48,2021 CLD 48,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+2013_CLD_2173,CLD,2013 CLD 2173,2013 CLD 2173,stub_or_index_entry,False,Non-judgment index stub (15 words),PASS (metadata),metadata,stub,citation_name_caption,Securities And Exchange Commission Of Pakistan,False,False,False
+2011_CLD_806,CLD,2011 CLD 806,2011 CLD 806,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2004_CLD_762,CLD,2004 CLD 762,2004 CLD 762,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2019_CLD_211,CLD,2019 CLD 211,2019 CLD 211,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Competition,False,False,False
+2021_CLD_855,CLD,2021 CLD 855,2021 CLD 855,stub_or_index_entry,False,Non-judgment index stub (16 words),PASS (metadata),metadata,stub,citation_name_caption,Securities And Exchange Commission Of Pakistan,False,False,False
+2003_CLD_686,CLD,2003 CLD 686,2003 CLD 686,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2007_CLD_524,CLD,2007 CLD 524,2007 CLD 524,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2018_CLD_823,CLD,2018 CLD 823,2018 CLD 823,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+2006_CLD_399,CLD,2006 CLD 399,2006 CLD 399,stub_or_index_entry,False,Non-judgment index stub (31 words),PASS (metadata),metadata,stub,citation_name_caption,Securities And Exchange Commission Of Pakistan,False,False,False
+2010_CLD_726,CLD,2010 CLD 726,2010 CLD 726,stub_or_index_entry,False,Non-judgment index stub (22 words),PASS (metadata),metadata,stub,citation_name_caption,Lahore High Court Lahore,False,False,False
+2016_CLD_1419,CLD,2016 CLD 1419,2016 CLD 1419,stub_or_index_entry,False,Non-judgment index stub (21 words),PASS (metadata),metadata,stub,citation_name_caption,Islamabad,False,False,False
+2021_CLD_794,CLD,2021 CLD 794,2021 CLD 794,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+2010_CLD_34,CLD,2010 CLD 34,2010 CLD 34,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Securities And Exchange Commission Of Pakistan,False,False,False
+2008_CLD_214,CLD,2008 CLD 214,2008 CLD 214,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+2007_CLD_1365,CLD,2007 CLD 1365,2007 CLD 1365,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Karachi High Court Sindh,False,False,False
+2004_CLD_520,CLD,2004 CLD 520,2004 CLD 520,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2012_CLD_1109,CLD,2012 CLD 1109,2012 CLD 1109,stub_or_index_entry,False,Non-judgment index stub (17 words),PASS (metadata),metadata,stub,citation_name_caption,Securities And Exchange Commission Of Pakistan,False,False,False
+2002_CLD_1205,CLD,2002 CLD 1205,2002 CLD 1205,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Court,False,False,False
+2016_CLD_426,CLD,2016 CLD 426,2016 CLD 426,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Securities And Exchange Commission Of Pakistan,False,False,False
+2003_CLD_1464,CLD,2003 CLD 1464,2003 CLD 1464,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2016_CLD_1874,CLD,2016 CLD 1874,2016 CLD 1874,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Lahore High Court Lahore,False,False,False
+2007_CLD_943,CLD,2007 CLD 943,2007 CLD 943,stub_or_index_entry,False,Non-judgment index stub (19 words),PASS (metadata),metadata,stub,citation_name_caption,Lahore High Court Lahore,False,False,False
+2015_GBLR_152,GBLR,2015 GBLR 152,2015 GBLR 152,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2015_GBLR_358,GBLR,2015 GBLR 358,2015 GBLR 358,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2016_GBLR_266,GBLR,2016 GBLR 266,2016 GBLR 266,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2010_GBLR_390,GBLR,2010 GBLR 390,2010 GBLR 390,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2015_GBLR_186,GBLR,2015 GBLR 186,2015 GBLR 186,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2010_GBLR_276,GBLR,2010 GBLR 276,2010 GBLR 276,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,stub,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2015_GBLR_318,GBLR,2015 GBLR 318,2015 GBLR 318,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2015_GBLR_162,GBLR,2015 GBLR 162,2015 GBLR 162,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2016_GBLR_127,GBLR,2016 GBLR 127,2016 GBLR 127,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2010_GBLR_301,GBLR,2010 GBLR 301,2010 GBLR 301,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2010_GBLR_88,GBLR,2010 GBLR 88,2010 GBLR 88,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2016_GBLR_199,GBLR,2016 GBLR 199,2016 GBLR 199,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2010_GBLR_280,GBLR,2010 GBLR 280,2010 GBLR 280,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,stub,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2016_GBLR_35,GBLR,2016 GBLR 35,2016 GBLR 35,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2010_GBLR_356,GBLR,2010 GBLR 356,2010 GBLR 356,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2010_GBLR_413,GBLR,2010 GBLR 413,2010 GBLR 413,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2014_GBLR_228,GBLR,2014 GBLR 228,2014 GBLR 228,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2010_GBLR_351,GBLR,2010 GBLR 351,2010 GBLR 351,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2016_GBLR_424,GBLR,2016 GBLR 424,2016 GBLR 424,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2014_GBLR_106,GBLR,2014 GBLR 106,2014 GBLR 106,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2010_GBLR_311,GBLR,2010 GBLR 311,2010 GBLR 311,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2010_GBLR_83,GBLR,2010 GBLR 83,2010 GBLR 83,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2010_GBLR_75,GBLR,2010 GBLR 75,2010 GBLR 75,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2016_GBLR_139,GBLR,2016 GBLR 139,2016 GBLR 139,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2015_GBLR_117,GBLR,2015 GBLR 117,2015 GBLR 117,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2016_GBLR_29,GBLR,2016 GBLR 29,2016 GBLR 29,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False
+2010_GBLR_134,GBLR,2010 GBLR 134,2010 GBLR 134,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2010_GBLR_36,GBLR,2010 GBLR 36,2010 GBLR 36,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2010_GBLR_73,GBLR,2010 GBLR 73,2010 GBLR 73,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appelate Court Gilgit,True,False,False
+2015_GBLR_373,GBLR,2015 GBLR 373,2015 GBLR 373,verified_match,False,Clean canonical match from judicial header,PASS (metadata),metadata,headnote_only,citation_name_caption,Supreme Appellate Court,True,False,False

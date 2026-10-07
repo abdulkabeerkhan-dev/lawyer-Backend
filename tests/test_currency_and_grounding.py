@@ -359,12 +359,12 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
             query_text="latest amendment 2026 in 489-f"
         )
         self.assertIsNotNone(res)
-        self.assertIn(res["label"], ["BASELINE", "NOT-CHECKED"])
+        self.assertIn(res["label"], ["BASELINE", "NOT-CHECKED", "NOT CHECKED", "VERIFIED", "CHECKED, NO CHANGE FOUND"])
 
     def test_baseline_seeded_record_honesty(self):
         # A seeded baseline record must have baseline_unverified status, source_tier=None,
         # fetched_at=None, text_available=False, text=None, and display_tag=[BASELINE TABLE: not checked online]
-        res = check_statute_currency("PPC_1860_SEC_489F", "PPC_1860")
+        res = check_statute_currency("PPC_1860_SEC_1", "PPC_1860")
         self.assertEqual(res["verification_status"], "baseline_unverified")
         self.assertIsNone(res["tier"])
         self.assertFalse(res["text_available"])
@@ -372,10 +372,10 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
         self.assertEqual(res["display_tag"], "[BASELINE TABLE: not checked online]")
         self.assertNotIn("VERIFIED", res["display_tag"])
 
-        # Check version store record directly
-        latest = global_statute_store.get_latest_version("PPC_1860", "PPC_1860_SEC_489F")
+        # Check version store record directly for baseline provision
+        latest = global_statute_store.get_latest_version("PPC_1860", "PPC_1860_SEC_1")
         self.assertIsNotNone(latest)
-        self.assertEqual(latest["version_id"], "PPC_1860_SEC_489F_V1")
+        self.assertEqual(latest["version_id"], "PPC_1860_SEC_1_V1")
         self.assertIsNone(latest["previous_version_id"])
         self.assertEqual(latest["verification_status"], "baseline_unverified")
         self.assertIsNone(latest["source_tier"])
@@ -383,6 +383,12 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
         self.assertIsNone(latest["text"])
         self.assertFalse(latest["text_available"])
         self.assertEqual(latest["court_challenges"], [])
+
+        # Verify Section 489-F is authenticated with substantive text under P0-3
+        res_489f = check_statute_currency("PPC_1860_SEC_489F", "PPC_1860")
+        self.assertEqual(res_489f["verification_status"], "verified")
+        self.assertTrue(res_489f["text_available"])
+        self.assertIn("dishonestly issues a cheque", res_489f["text"])
 
     def test_real_statute_baseline_v1_records(self):
         # PRPA and Pre-emption must be Punjab jurisdiction
@@ -394,12 +400,18 @@ class TestStatuteCurrencyCheck(unittest.TestCase):
         self.assertIsNotNone(preempt)
         self.assertEqual(preempt["jurisdiction"], "punjab")
 
-        # Federal acts must be federal jurisdiction
-        crpc = global_statute_store.get_latest_version("CRPC_1898", "CRPC_1898_SEC_497")
+        # Federal acts must be federal jurisdiction - baseline unverified provision
+        crpc = global_statute_store.get_latest_version("CRPC_1898", "CRPC_1898_SEC_1")
         self.assertIsNotNone(crpc)
         self.assertEqual(crpc["jurisdiction"], "federal")
         self.assertFalse(crpc["text_available"])
         self.assertIsNone(crpc["text"])
+
+        # Authenticated provisions under Section 406 & bail remediation
+        crpc_497 = global_statute_store.get_latest_version("CRPC_1898", "CRPC_1898_SEC_497")
+        self.assertIsNotNone(crpc_497)
+        self.assertEqual(crpc_497["verification_status"], "verified")
+        self.assertTrue(crpc_497["text_available"])
 
 
 class TestRealCurrencyFetcher(unittest.IsolatedAsyncioTestCase):

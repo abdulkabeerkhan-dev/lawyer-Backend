@@ -2747,7 +2747,7 @@
     "secondary_num": null,
     "canonical_id": "CRPC_1898_SEC_127",
     "display_name": "Section 127",
-    "title": "Assembly to disperse on command of Magistrate or police­officer",
+    "title": "Assembly to disperse on command of Magistrate or police\u00adofficer",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",
@@ -4556,8 +4556,21 @@
       "balochistan": "in_force"
     },
     "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1898; https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf",
-    "source_verified_date": "2026-09-23"
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf, page 62",
+    "source_verified_date": "2026-09-23",
+    "text": "The Magistrate before whom a complaint is made or to whom it has been transferred, may dismiss the complaint, if, after considering the statement on oath (if any) of the complainant and the result of the investigation or inquiry (if any) under section 202, there is in his judgment no sufficient ground for proceeding. In such case he shall briefly record his reasons for so doing.",
+    "text_available": true,
+    "amending_instrument": null,
+    "content_hash": "b4e4e19edafa513d2fcaed7856bff3f16cb4ec9d98dfa3789b386d3dab83e884",
+    "source_url": "https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf",
+    "file_path": "https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf",
+    "source_pdf_page": 62,
+    "page": 62,
+    "source_type": "official",
+    "fetch_date": "2026-09-23",
+    "fetched_at": "2026-09-23T00:00:00Z",
+    "verification_status": "verified",
+    "source_tier": "tier_1"
   },
   {
     "act_code": "CRPC_1898",
@@ -8776,8 +8789,21 @@
       "balochistan": "in_force"
     },
     "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1898; https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf",
-    "source_verified_date": "2026-09-23"
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf, page 147",
+    "source_verified_date": "2026-09-23",
+    "text": "(1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for ten years: Provided that the Court may direct that any person under the age of sixteen years or any woman or any sick or infirm person accused of such an offence be released on bail: Provided further that the Court may, except where there appear reasonable grounds for believing that the accused has been guilty of an offence punishable with death or imprisonment for life or imprisonment for ten years, direct that any person be released on bail who has been arrested or detained without warrant, or appears or is brought before a Court: Provided further that the Court shall, except where it is of opinion that the delay in the trial of the accused has been occasioned by an act or omission of the accused or any other person acting on his behalf, direct that any person shall be released on bail: (a) who, being accused of any offence not punishable with death, has been detained for such offence for a continuous period exceeding one year and whose trial for such offence has not concluded; or (b) who, being accused of an offence punishable with death, has been detained for such offence for a continuous period exceeding two years and whose trial for such offence has not concluded: Provided further that the provisions of the third proviso to this sub-section shall not apply to a previously convicted offender for an offence punishable with death or imprisonment for life or to a person who, in the opinion of the Court, is a hardened, desperate or dangerous criminal or is accused of an act of terrorism punishable with death or imprisonment for life. (2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are not reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided. (3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing. (4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered. (5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody.",
+    "text_available": true,
+    "amending_instrument": "Code of Criminal Procedure (Second Amendment) Ordinance, 1979 (LXXI of 1979); Ordinance XXXVII of 2001",
+    "content_hash": "53674132a78d5efce88096c2322c0e86a8abd849e08c2be2954da02f7c9a4870",
+    "source_url": "https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf",
+    "file_path": "https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf",
+    "source_pdf_page": 147,
+    "page": 147,
+    "source_type": "official",
+    "fetch_date": "2026-09-23",
+    "fetched_at": "2026-09-23T00:00:00Z",
+    "verification_status": "verified",
+    "source_tier": "tier_1"
   },
   {
     "act_code": "CRPC_1898",
@@ -8796,8 +8822,21 @@
       "balochistan": "in_force"
     },
     "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1898; https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf",
-    "source_verified_date": "2026-09-23"
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf, page 148",
+    "source_verified_date": "2026-09-23",
+    "text": "The amount of every bond executed under this Chapter shall be fixed with due regard to the circumstances of the case, and shall not be excessive; and the High Court or Court of Session may, in any case, whether there be an appeal on conviction or not, direct that any person be admitted to bail, or that the bail required by a police-officer or Magistrate be reduced.",
+    "text_available": true,
+    "amending_instrument": null,
+    "content_hash": "10e2ecab0db95c396996bdcd0923b082ae2fe4af4d0ac965cdfe9eb477715356",
+    "source_url": "https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf",
+    "file_path": "https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf",
+    "source_pdf_page": 148,
+    "page": 148,
+    "source_type": "official",
+    "fetch_date": "2026-09-23",
+    "fetched_at": "2026-09-23T00:00:00Z",
+    "verification_status": "verified",
+    "source_tier": "tier_1"
   },
   {
     "act_code": "CRPC_1898",
@@ -9627,7 +9666,7 @@
     "secondary_num": null,
     "canonical_id": "CRPC_1898_SEC_533",
     "display_name": "Section 533",
-    "title": "Non­compliance with provisions of section 164 or 364",
+    "title": "Non\u00adcompliance with provisions of section 164 or 364",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",
@@ -9987,7 +10026,7 @@
     "secondary_num": null,
     "canonical_id": "CRPC_1898_SEC_546A",
     "display_name": "Section 546A",
-    "title": "Order of payment of certain fees paid by complainant in non­cognizable cases",
+    "title": "Order of payment of certain fees paid by complainant in non\u00adcognizable cases",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",
@@ -10047,7 +10086,7 @@
     "secondary_num": null,
     "canonical_id": "CRPC_1898_SEC_549",
     "display_name": "Section 549",
-    "title": "Delivery to military authorities of persons liable to be tried by Court­martial",
+    "title": "Delivery to military authorities of persons liable to be tried by Court\u00admartial",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",
@@ -10407,7 +10446,7 @@
     "secondary_num": null,
     "canonical_id": "CRPC_1898_SEC_1951",
     "display_name": "Section 1951",
-    "title": "It has been applied to Phulera in the Excluded Area of Upper Tanawal to the extent the Act is applicable in the N.­W.F.P., subject to certain",
+    "title": "It has been applied to Phulera in the Excluded Area of Upper Tanawal to the extent the Act is applicable in the N.\u00adW.F.P., subject to certain",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",

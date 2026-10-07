@@ -3,6 +3,7 @@ import json
 import time
 import hashlib
 from typing import Dict, Any, List, Optional
+from core.court_taxonomy import get_effective_court
 
 LOG_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'logs', 'retrieval_traces'))
 os.makedirs(LOG_DIR, exist_ok=True)
@@ -38,7 +39,7 @@ class RetrievalTraceLogger:
                     'id': str(h.get('id', '')),
                     'score': float(h.get('score', 0.0)),
                     'citation': str(h.get('metadata', {}).get('citation', '') or h.get('citation', '')),
-                    'court': str(h.get('metadata', {}).get('court', '') or h.get('court', ''))
+                    'court': str(get_effective_court(h.get('metadata', {})) or get_effective_court(h) or '')
                 }
                 for h in (top_hits or [])[:5]
             ]
@@ -58,12 +59,14 @@ class RetrievalTraceLogger:
         })
 
     def log_final_context(self, precedents: List[Dict[str, Any]]):
+        from core.court_taxonomy import get_effective_court
         self.trace['final_precedents'] = [
             {
                 'case_id': p.get('case_id'),
                 'citation': p.get('citation'),
-                'court': p.get('court') or p.get('court_name'),
+                'court': get_effective_court(p),
                 'content_type': p.get('content_type'),
+
                 'outcome': p.get('outcome')
             }
             for p in (precedents or [])

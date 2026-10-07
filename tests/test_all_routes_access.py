@@ -90,7 +90,7 @@ class TestAllRoutesAccessControl(unittest.TestCase):
             if isinstance(r, APIRoute):
                 methods = r.methods - {"HEAD"}
                 for m in methods:
-                    is_public = r.path in ("/health", "/coverage", "/request-access", "/auth/login")
+                    is_public = r.path in ("/health", "/coverage", "/request-access", "/auth/login", "/disclaimer", "/privacy", "/terms")
                     routes.append((m, r.path, self._resolve_test_path(r.path), is_public))
         return routes
 

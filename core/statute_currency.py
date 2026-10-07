@@ -695,6 +695,7 @@ def check_statute_currency(
         "ordinance_expiry_date": latest.get("ordinance_expiry_date"),
         "title_only": latest.get("title_only") or latest.get("title"),
         "text_available": bool(latest.get("text_available", False)),
+        "text": latest.get("text"),
         "jurisdiction": latest.get("jurisdiction", "federal"),
         "valid_from": latest.get("valid_from"),
         "valid_to": latest.get("valid_to"),

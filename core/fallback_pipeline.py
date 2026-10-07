@@ -59,6 +59,8 @@ from core.domain_whitelist import COURT_TIER_1_DOMAINS, is_whitelisted_court_url
 from core.search_provider import (
     BaseProvider,
     build_provider_from_env,
+    SindhHighCourtReproductionError,
+    is_shc_url,
 )
 
 # Whitelisted court domains (single source of truth from core.domain_whitelist)
@@ -102,6 +104,13 @@ def stage4_fetch_pdf(url: str, timeout: int = 20) -> Tuple[Optional[bytes], Opti
     Stage 4: Fetches raw judgment PDF bytes via HTTP with complete browser headers.
     Returns (pdf_bytes, error_message).
     """
+    # LEGAL REPRODUCTION GUARDRAIL: Sindh High Court text reproduction prohibition
+    if is_shc_url(url):
+        raise SindhHighCourtReproductionError(
+            f"Automated ingestion or reproduction of judgment text from Sindh High Court ({url}) is prohibited under SHC copyright terms. "
+            "SHC materials are restricted strictly to LINK AND CITE ONLY."
+        )
+
     parsed = urllib.parse.urlparse(url)
     domain = parsed.netloc.lower()
 
@@ -323,8 +332,10 @@ def stage6_verify_gates(record: Dict[str, Any], source_url: str) -> Dict[str, An
     }
 
     # GATE 1: Domain-to-Jurisdiction Match
+    from core.court_taxonomy import get_effective_court
+    from core.case_title_taxonomy import get_effective_title
     domain = urllib.parse.urlparse(source_url).netloc.lower()
-    court_name = record.get("court_name") or ""
+    court_name = get_effective_court(record) or ""
     
     domain_matched = False
     for d_key, valid_courts in DOMAIN_COURT_MAP.items():
@@ -338,10 +349,11 @@ def stage6_verify_gates(record: Dict[str, Any], source_url: str) -> Dict[str, An
         gate_results["rejection_reasons"].append(f"Gate 1 Failed: Domain '{domain}' does not match court '{court_name}'")
 
     # GATE 2: Required Non-Null Fields
-    court = record.get("court_name")
+    court = get_effective_court(record)
     docket = record.get("docket_number")
+
     date_val = record.get("decision_date")
-    title = record.get("case_title")
+    title = get_effective_title(record)
 
     has_all_required = bool(court and docket and date_val and title)
     gate_results["gate2_passed"] = has_all_required
@@ -420,9 +432,10 @@ def stage7_quarantine_record(record: Dict[str, Any], gate_results: Dict[str, Any
         "source_domain": domain,
         "fetched_at": datetime.utcnow().isoformat() + "Z",
         "extracted_citation": record.get("extracted_citation"),
-        "extracted_case_title": record.get("case_title"),
-        "extracted_court_name": record.get("court_name"),
+        "extracted_case_title": get_effective_title(record),
+        "extracted_court_name": get_effective_court(record),
         "extracted_date": record.get("decision_date"),
+
         "extracted_judge_names": record.get("judge_names"),
         "docket_number": record.get("docket_number"),
         "case_type": record.get("case_type"),
@@ -572,7 +585,7 @@ def search_whitelisted_court_precedents(
             res = process_court_pdf_pipeline(pdf_url)
             if res.get("status") == "success" and res.get("gates", {}).get("gate4_passed"):
                 rec = res.get("extracted", {})
-                rec_title = rec.get("case_title") or "Reported Precedent"
+                rec_title = get_effective_title(rec) or "Reported Precedent"
                 rec_cit = rec.get("extracted_citation") or f"{rec.get('court_name')} [{rec.get('docket_number')}]"
                 rec_text = rec.get("raw_text") or ""
 
@@ -591,9 +604,10 @@ def search_whitelisted_court_precedents(
                         "citation": rec_cit,
                         "title": rec_title,
                         "case_title": rec_title,
-                        "court": rec.get("court_name"),
-                        "court_name": rec.get("court_name"),
+                        "court": get_effective_court(rec),
+                        "court_name": get_effective_court(rec),
                         "date": rec.get("decision_date"),
+
                         "year": rec.get("decision_date"),
                         "text": rec_text[:3500],
                         "full_text": rec_text[:3500],

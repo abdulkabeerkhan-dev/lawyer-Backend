@@ -3,7 +3,7 @@ import re
 import json
 
 CITATION_REGEX = re.compile(
-    r'\b(?:19\d\d|20\d\d)\s+(?:PLD|SCMR|CLC|MLD|YLR|PCrLJ|PTD|PLC|CLD|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR)(?:\s+\([A-Za-z\s.]+\))?\s+\d+\b'
+    r'\b(?:19\d\d|20\d\d)\s+(?:PLD|SCMR|CLC|MLD|YLR|PCrLJ|PTD|PLC|CLD|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR)(?:\s*\([A-Za-z\s.]+\))?\s+\d+\b'
     r'|\bPLD\s+(?:19\d\d|20\d\d)\s+[A-Za-z\s.]+\s+\d+\b',
     re.IGNORECASE
 )
@@ -216,6 +216,21 @@ MANDATORY ADJUDICATION RULES:
       * You are STRICTLY FORBIDDEN from inventing, reconstructing, or attributing holdings, ratios, legal tests (e.g. "Substratum Intact Test"), or factual analyses to this case from parametric memory.
       * You MUST explicitly disclose in the memorandum: "[TRANSPARENCY: Caption only — No judicial reasoning or headnote text available in database for this precedent]."
       * State that the authority is noted only as a reported matter on the court's docket, and the advocate must consult the certified law report for the court's actual ratio decidendi.
+
+24. HEADNOTE-ONLY AUTHORITY POLICY & DISCOVERY RESTRICTIONS (EVIDENCE-LANE SEPARATION):
+    - Operational Authority Classes:
+      * FULL_AUTHORITY: full_text, mixed, order_text, clean_judgment. These records contain actual judicial text and may support legal propositions, ratios, and quoted excerpts subject to passage verification.
+      * HEADNOTE_DISCOVERY: headnote_only. These records contain secondary editorial summaries prepared by law reporters, not verbatim judicial orders.
+      * NON_AUTHORITY: stubs, portal chrome, paywalls, listing tables, or caption_only. Excluded from substantive authority.
+    - Strict Evidentiary Rules for HEADNOTE_DISCOVERY:
+      * Headnote-only records may be used for topical discovery and secondary summary only.
+      * They may ONLY be cited under a separate dedicated heading: "Preliminary Leads / Unverified Authorities" or similar.
+      * They may NOT enter the substantive synthesis as verified ratio or established court holding.
+      * They may NOT be paraphrased as an established holding of the court.
+      * You are STRICTLY FORBIDDEN from generating purported verbatim judicial quotations from headnote-only records.
+      * Every reference to a headnote-only authority MUST carry the explicit notice:
+        "A reported headnote indicates that this authority may address the proposition, but the underlying judgment text has not been verified and I would not rely on it as verified authority yet."
+      * If ONLY discovery leads are retrieved for an issue, the system MUST explicitly state that no verified primary authority was found, rather than answering from headnotes alone.
 """
 
 
@@ -513,6 +528,27 @@ def is_compiled_headnote(text: str) -> bool:
     return info["detected_type"] == "headnote_only"
 
 
+def get_authority_policy(content_quality: str) -> str:
+    """
+    Classifies the operational authority class of a precedent record:
+    - FULL_AUTHORITY: full_text, mixed, order_text, clean_judgment
+      (May support propositions subject to passage verification and direct judicial citations)
+    - HEADNOTE_DISCOVERY: headnote_only
+      (Discovery + secondary summary only; no purported verbatim judicial quote;
+       cannot be represented as directly verified ratio without judgment text)
+    - NON_AUTHORITY: stubs, portal chrome, paywalls, listing tables, caption_only
+      (Excluded from substantive authority / generation context)
+    """
+    cq = str(content_quality or "").lower().strip()
+    if cq in ("full_text", "mixed", "order_text", "clean_judgment"):
+        return "FULL_AUTHORITY"
+    elif cq in ("headnote_only",):
+        return "HEADNOTE_DISCOVERY"
+    elif cq in ("stub", "portal_chrome", "paywall", "listing_table", "caption_only", "title_only"):
+        return "NON_AUTHORITY"
+    return "HEADNOTE_DISCOVERY"
+
+
 def is_caption_only_record(text: str) -> bool:
     """
     Detects whether a precedent text is merely caption metadata (parties, court, date, appeal numbers)
@@ -601,7 +637,8 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
                 meta = c.get("metadata", {}) if isinstance(c.get("metadata"), dict) else {}
                 txt = c.get("full_judgment_body") or c.get("text") or c.get("preview") or meta.get("text") or meta.get("full_text") or ""
                 cit = c.get("citation") or c.get("neutral_citation") or meta.get("citation") or meta.get("neutral_citation") or ""
-                title = c.get("case_name") or c.get("title") or meta.get("title") or meta.get("case_title") or ""
+                from core.case_title_taxonomy import get_effective_title
+                title = get_effective_title(c) or get_effective_title(meta) or c.get("case_name") or ""
                 chunk_str = " ".join(filter(None, [str(cit), str(title), str(txt)]))
                 retrieved_parts.append(chunk_str)
                 context_parts.extend([str(cit), str(title), str(txt)])
@@ -1247,27 +1284,27 @@ def check_memo_completeness(text: str, is_formal_opinion: bool = True, context_c
     required_sections = [
         (
             "Executive Summary",
-            r'(?:^|\n)(?:#{1,4}\s*|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:EXECUTIVE\s*SUMMARY|LEGAL\s*OPINION|SUMMARY\s*OF\s*(?:THE\s*)?(?:LEGAL\s*)?OPINION|OVERVIEW|EXECUTIVE\s*OVERVIEW|CORE\s*FINDINGS?|SUMMARY\s*FINDINGS?)\b',
+            r'(?:^|\n)(?:[#\s]{1,10}|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:EXECUTIVE\s*SUMMARY|LEGAL\s*OPINION|SUMMARY\s*OF\s*(?:THE\s*)?(?:LEGAL\s*)?OPINION|OVERVIEW|EXECUTIVE\s*OVERVIEW|CORE\s*FINDINGS?|SUMMARY\s*FINDINGS?)\b',
             25
         ),
         (
             "Statutory Framework",
-            r'(?:^|\n)(?:#{1,4}\s*|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:CONTROLLING\s*STATUTORY|STATUTORY\s*(?:&|AND|\+)?\s*PROCEDURAL|GOVERNING\s*STATUTORY|STATUTORY\s*FRAMEWORK|STATUTORY\s*ARCHITECTURE|CONSTITUTIONAL\s*(?:&|AND|\+)?\s*STATUTORY|STATUTORY\s*(?:PROVISIONS|AUTHORIT(?:Y|IES)|BASIS)|RELEVANT\s*(?:STATUTORY|LEGAL)\s*FRAMEWORK|APPLICABLE\s*LAW|LEGISLATIVE\s*FRAMEWORK|REGULATORY\s*FRAMEWORK)\b',
+            r'(?:^|\n)(?:[#\s]{1,10}|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:CONTROLLING\s*STATUTORY|STATUTORY\s*(?:&|AND|\+)?\s*PROCEDURAL|GOVERNING\s*STATUTORY|STATUTORY\s*FRAMEWORK|STATUTORY\s*ARCHITECTURE|CONSTITUTIONAL\s*(?:&|AND|\+)?\s*STATUTORY|STATUTORY\s*(?:PROVISIONS|AUTHORIT(?:Y|IES)|BASIS)|RELEVANT\s*(?:STATUTORY|LEGAL)\s*FRAMEWORK|APPLICABLE\s*LAW|LEGISLATIVE\s*FRAMEWORK|REGULATORY\s*FRAMEWORK)\b',
             25
         ),
         (
             "Precedents",
-            r'(?:^|\n)(?:#{1,4}\s*|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:CONTROLLING\s*JUDICIAL|CASE\s*LAW|BINDING\s*(?:&|AND|\+)?\s*PERSUASIVE|APPELLATE\s*(?:PRECEDENTS?|RATIO|JURISPRUDENCE)|PRECEDENTS?|JUDICIAL\s*PRECEDENTS?|SUPERIOR\s*COURT\s*PRECEDENTS?|JUDICIAL\s*AUTHORIT(?:Y|IES)|EXTERNAL\s*AUTHORITIES|PRECEDENT\s*ANALYSIS|REPORTED\s*(?:CASE\s*LAW|JUDGMENTS?|PRECEDENTS?))\b',
+            r'(?:^|\n)(?:[#\s]{1,10}|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:CONTROLLING\s*JUDICIAL|CASE\s*LAW|BINDING\s*(?:&|AND|\+)?\s*PERSUASIVE|APPELLATE\s*(?:PRECEDENTS?|RATIO|JURISPRUDENCE)|PRECEDENTS?|JUDICIAL\s*PRECEDENTS?|SUPERIOR\s*COURT\s*PRECEDENTS?|JUDICIAL\s*AUTHORIT(?:Y|IES)|EXTERNAL\s*AUTHORITIES|PRECEDENT\s*ANALYSIS|REPORTED\s*(?:CASE\s*LAW|JUDGMENTS?|PRECEDENTS?))\b',
             20
         ),
         (
             "Legal Analysis",
-            r'(?:^|\n)(?:#{1,4}\s*|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:LEGAL\s*ANALYSIS|STRATEGIC\s*LEGAL|PROCEDURAL\s*(?:&|AND|\+)?\s*STRATEGIC|ANALYSIS|SUBSTANTIVE\s*ANALYSIS|LEGAL\s*EVALUATION|DETAILED\s*ANALYSIS|DISCUSSION\s*(?:&|AND|\+)?\s*ANALYSIS|APPLICATION\s*OF\s*LAW)\b',
+            r'(?:^|\n)(?:[#\s]{1,10}|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:LEGAL\s*ANALYSIS|STRATEGIC\s*LEGAL|PROCEDURAL\s*(?:&|AND|\+)?\s*STRATEGIC|ANALYSIS|SUBSTANTIVE\s*ANALYSIS|LEGAL\s*EVALUATION|DETAILED\s*ANALYSIS|DISCUSSION\s*(?:&|AND|\+)?\s*ANALYSIS|APPLICATION\s*OF\s*LAW)\b',
             25
         ),
         (
             "Recommendations / Next Steps",
-            r'(?:^|\n)(?:#{1,4}\s*|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:RECOMMENDATIONS?|PRACTICAL\s*NEXT|NEXT\s*STEPS?|PROCEDURAL\s*ROADMAP|PLAYBOOK|ACTION\s*PLAN|STRATEGIC\s*RECOMMENDATIONS?|CONCLUSION(?:\s*(?:&|AND|\+)\s*(?:RECOMMENDATIONS?|NEXT\s*STEPS?))?|PRACTICAL\s*ADVICE|NEXT\s*PROCEDURAL\s*STEPS?)\b',
+            r'(?:^|\n)(?:[#\s]{1,10}|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:RECOMMENDATIONS?|PRACTICAL\s*NEXT|NEXT\s*STEPS?|PROCEDURAL\s*ROADMAP|PLAYBOOK|ACTION\s*PLAN|STRATEGIC\s*RECOMMENDATIONS?|CONCLUSION(?:\s*(?:&|AND|\+)\s*(?:RECOMMENDATIONS?|NEXT\s*STEPS?))?|PRACTICAL\s*ADVICE|NEXT\s*PROCEDURAL\s*STEPS?)\b',
             25
         ),
     ]
@@ -1703,17 +1740,21 @@ def detect_conflicting_authorities(precedents: List[Dict[str, Any]]) -> List[Dic
     hc_cases = []
     for p in precedents:
         meta = p.get("metadata", {}) if isinstance(p, dict) else getattr(p, "metadata", {}) or {}
-        court = str(meta.get("court") or meta.get("court_name") or "").lower()
+        from core.court_taxonomy import get_effective_court
+        eff_court = get_effective_court(meta)
+        court = str(eff_court or "").lower()
         cit = meta.get("citation") or meta.get("neutral_citation") or meta.get("case_id")
         outcome = str(meta.get("outcome") or "").lower()
         is_sc = "supreme court" in court or "scmr" in str(cit).lower() or "pld sc" in str(cit).lower()
+        from core.case_title_taxonomy import get_effective_title
         info = {
             "citation": cit,
-            "title": meta.get("title") or meta.get("case_title"),
-            "court": meta.get("court") or meta.get("court_name"),
+            "title": get_effective_title(meta),
+            "court": eff_court,
             "outcome": outcome,
         }
         if is_sc:
+
             sc_cases.append(info)
         else:
             hc_cases.append(info)
@@ -1771,4 +1812,75 @@ def verify_doctrine_elements(doctrine_name: str, fact_text: str, memo_text: str)
         "all_elements_present": len(missing) == 0,
         "present_elements": present,
         "missing_elements": missing
+    }
+
+def audit_memorandum_propositions(
+    memo_text: str,
+    retrieved_records: Optional[List[Dict[str, Any]]] = None,
+    client_type: str = "university_employee"
+) -> Dict[str, Any]:
+    """
+    Performs comprehensive proposition-level citation validation, doctrine separation,
+    and contradiction detection across a legal memorandum at sentence-level granularity.
+    """
+    from core.proposition_validator import (
+        PropositionGroundingEngine, LegalProposition, generate_grounding_matrix,
+        CITATION_REGEX, FAIL_CLOSED_DISCLOSURE
+    )
+    engine = PropositionGroundingEngine(retrieved_records or [])
+    
+    paragraphs = re.split(r'\n{2,}', memo_text or "")
+    validated_propositions: List[LegalProposition] = []
+    contradiction_flags = []
+    rejected_citations = []
+    approved_citations = []
+    
+    for para in paragraphs:
+        p_clean = para.strip()
+        if not p_clean:
+            continue
+            
+        issue = "Substantive Law and Procedure"
+        if any(k in p_clean.lower() for k in ["q1", "article 199", "service tribunal", "maintainab"]):
+            issue = "Constitutional Maintainability and Jurisdiction"
+        elif any(k in p_clean.lower() for k in ["q2", "natural justice", "hearing", "show-cause", "audi alteram"]):
+            issue = "Principles of Natural Justice and Due Process"
+        elif any(k in p_clean.lower() for k in ["q3", "retrospective", "superannuation", "vested right", "tenure"]):
+            issue = "Vested Rights and Retrospective Operation"
+        elif "strategy" in p_clean.lower() or "recommend" in p_clean.lower():
+            issue = "Litigation Strategy and Interim Relief"
+            
+        sentences = re.split(r'(?<!\s[vV]\.)(?<!\s[dD]r\.)(?<!\s[nN]o\.)(?<!\s[aA]rt\.)(?<!\s[pP]ara\.)(?<=[.!?])\s+', p_clean)
+        for sent in sentences:
+            s_clean = sent.strip()
+            if not s_clean:
+                continue
+            cits = [m.group(0).strip() for m in CITATION_REGEX.finditer(s_clean)]
+            for cit in cits:
+                prop = engine.validate_proposition(
+                    issue=issue,
+                    proposition_text=s_clean,
+                    citation=cit,
+                    client_type=client_type
+                )
+                validated_propositions.append(prop)
+                if prop.contradiction_flag:
+                    contradiction_flags.append(prop.contradiction_flag)
+                if prop.final_wording_status == "REJECTED":
+                    if cit not in rejected_citations:
+                        rejected_citations.append(cit)
+                else:
+                    if cit not in approved_citations:
+                        approved_citations.append(cit)
+                        
+    matrix = generate_grounding_matrix(validated_propositions)
+    has_rejected = any(p.final_wording_status == "REJECTED" for p in validated_propositions)
+    
+    return {
+        "passed": not has_rejected and len(contradiction_flags) == 0,
+        "propositions": [p.to_dict() for p in validated_propositions],
+        "grounding_matrix": matrix,
+        "contradiction_flags": contradiction_flags,
+        "rejected_citations": rejected_citations,
+        "approved_citations": approved_citations
     }

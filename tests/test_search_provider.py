@@ -131,5 +131,27 @@ class TestConfig(unittest.TestCase):
         mk(http).search("Civil Procedure Code amendment")
         self.assertIn("site%3Ana.gov.pk", seen["url"])
 
+class TestSHCGuardrail(unittest.TestCase):
+    def test_shc_body_text_stripped_and_restricted(self):
+        hosts = ["caselaw.shc.gov.pk", "shc.gov.pk", "lhc.gov.pk"]
+        shc_item = {
+            "title": "Mr. A v. Province of Sindh",
+            "link": "https://caselaw.shc.gov.pk/caselaw/view-file/12345",
+            "snippet": "Full judgment body text reproduced here from Sindh High Court."
+        }
+        p = sp.GoogleCSEProvider("k", "cx", hosts, FakeHttp((200, gcse([shc_item]))))
+        r = p.search("tax matter")
+        self.assertEqual(r.status, sp.OK)
+        self.assertEqual(len(r.results), 1)
+        res = r.results[0]
+        self.assertEqual(res["url"], "https://caselaw.shc.gov.pk/caselaw/view-file/12345")
+        self.assertEqual(res["snippet"], "")
+        self.assertTrue(res.get("reproduction_restricted"))
+        self.assertEqual(res.get("body", ""), "")
+
+    def test_shc_ingestion_raises_error(self):
+        with self.assertRaises(sp.SindhHighCourtReproductionError):
+            sp.enforce_no_shc_ingestion("https://caselaw.shc.gov.pk/caselaw/view-file/12345", text="Judicial content")
+
 if __name__ == "__main__":
     unittest.main()

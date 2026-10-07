@@ -9,6 +9,7 @@ import base64
 import urllib.parse
 from datetime import datetime, timezone, timedelta
 from typing import List, Dict, Any, Optional, cast, Set
+from collections import defaultdict, deque
 import re
 import json
 
@@ -21,7 +22,7 @@ from pinecone import Pinecone
 from anthropic import AsyncAnthropic
 from supabase import create_client, Client
 from dotenv import load_dotenv
-from hybrid_search import BM25Index, HybridSearchEngine, reciprocal_rank_fusion, get_court_authority_weight, get_recency_weight
+from hybrid_search import BM25Index, HybridSearchEngine, reciprocal_rank_fusion, get_court_authority_weight, get_recency_weight, extract_year_num
 
 from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks, Request
 from fastapi.responses import StreamingResponse, HTMLResponse, JSONResponse
@@ -51,6 +52,9 @@ from core.curated_cases import find_curated_case, is_curated_historical_exceptio
 from core.party_cache import GLOBAL_PARTY_CACHE, PartyFallbackCache
 from core.recent_judgments_search import search_recent_external_judgments, format_external_authorities_section
 from core.final_review_gate import run_final_review_gate, format_review_gate_fallback
+from core.court_taxonomy import get_effective_court
+from core.case_title_taxonomy import get_effective_title
+
 
 
 try:
@@ -133,10 +137,9 @@ def health_check():
     return {
         "status": "ok",
         "healthy": True,
-        "anthropic_key_len": len(ANTHROPIC_API_KEY) if ANTHROPIC_API_KEY else 0,
-        "anthropic_key_suffix": ANTHROPIC_API_KEY[-6:] if ANTHROPIC_API_KEY else None,
-        "workspace_id": ANTHROPIC_WORKSPACE_ID,
-        "model": CLAUDE_MODEL
+        "model": CLAUDE_MODEL,
+        "version": "2.4.0-mission2b",
+        "build": os.environ.get("RAILWAY_GIT_COMMIT_SHA", os.environ.get("BUILD_SHA", "d0c56df"))[:7]
     }
 
 @app.get("/coverage")
@@ -165,6 +168,106 @@ def get_corpus_coverage():
         },
         "pre_digitization_boundary": PRE_DIGITIZATION_BOUNDARY
     }
+
+@app.get("/disclaimer")
+def get_legal_disclaimer(request: Request):
+    content = {
+        "platform": "Section AI",
+        "nature_of_service": "Assistive technology designed for legal research and drafting by legal professionals.",
+        "professional_disclaimer": "Section AI is not a law firm and does not provide legal advice, formal representation, or guaranteed outcomes. It does not replace professional legal judgment.",
+        "independent_verification_requirement": "All AI-generated legal analyses, case summaries, citations, ratios decidendi, and draft pleadings must be independently reviewed and verified against authoritative law reports (PLD, SCMR, CLC, PCrLJ, PLC, PTD, MLD) prior to court filing, client reliance, or citation before any tribunal.",
+        "jurisdiction": "Islamic Republic of Pakistan",
+        "version": "2026-10-launch"
+    }
+    if "text/html" in request.headers.get("accept", ""):
+        html = f"""<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Section AI - Legal Disclaimer</title>
+<style>body{{font-family:system-ui,sans-serif;max-width:800px;margin:40px auto;padding:0 20px;line-height:1.6;color:#1e293b}}h1{{color:#0f172a}}p{{margin:16px 0}}.box{{background:#f8fafc;border-left:4px solid #0284c7;padding:16px;margin:24px 0}}</style>
+</head><body>
+<h1>Section AI — Legal Research Disclaimer</h1>
+<div class="box"><p><strong>Mandatory Independent Verification Notice:</strong> {content['independent_verification_requirement']}</p></div>
+<p>{content['professional_disclaimer']}</p>
+<p>{content['nature_of_service']}</p>
+<p><small>Jurisdiction: {content['jurisdiction']} | Version: {content['version']}</small></p>
+</body></html>"""
+        return HTMLResponse(content=html)
+    return content
+
+@app.get("/privacy")
+def get_privacy_policy(request: Request):
+    content = {
+        "title": "Section AI — Privacy Policy",
+        "effective_date": "October 2026",
+        "data_collected": [
+            "Account Information: Name, email address, and role collected via Clerk authentication.",
+            "Research Inputs: Search query text, statutory anchors, and document uploads processed for legal research.",
+            "System Telemetry: Request metadata, error logs, and execution traces via Sentry."
+        ],
+        "subprocessors_and_data_flows": {
+            "anthropic": "Substantive legal analysis and memorandum synthesis are processed via Anthropic commercial API. Customer Content submitted via commercial API is not used to train foundation models. Standard retention for abuse monitoring applies per commercial account policy; Zero Data Retention is subject to verified enterprise agreement.",
+            "voyage_ai": "Legal search queries are transmitted to Voyage AI to produce dense embeddings (voyage-law-2). Input text is not used for training.",
+            "supabase": "User profiles, access permissions, and query history are stored in managed PostgreSQL databases governed by Row Level Security.",
+            "pinecone": "Indexed vector representations of public court judgments. Zero user PII or client documents are stored in the vector database.",
+            "searxng_and_upstream_search": "During corpus-miss fallback, legal keywords (such as statute names or case citations) are submitted to our dedicated SearxNG service, which transmits search terms to external upstream search engines (e.g., Google, Bing) and judicial portals to locate published judgments. Search terms sent during fallback leave private infrastructure.",
+            "clerk": "Identity, session management, and credential security are managed via Clerk.com SOC-2 certified infrastructure."
+        },
+        "user_rights": "Users may request export or deletion of their account records and query history at any time."
+    }
+    if "text/html" in request.headers.get("accept", ""):
+        html = f"""<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Section AI - Privacy Policy</title>
+<style>body{{font-family:system-ui,sans-serif;max-width:800px;margin:40px auto;padding:0 20px;line-height:1.6;color:#1e293b}}h1{{color:#0f172a}}h2{{color:#334155;margin-top:24px}}ul{{padding-left:20px}}</style>
+</head><body>
+<h1>Section AI — Privacy Policy</h1>
+<p><em>Effective Date: {content['effective_date']}</em></p>
+<h2>1. Information We Collect</h2>
+<ul>{''.join(f'<li>{item}</li>' for item in content['data_collected'])}</ul>
+<h2>2. Third-Party Processors & Data Flows</h2>
+<ul>
+<li><strong>Anthropic PBC:</strong> {content['subprocessors_and_data_flows']['anthropic']}</li>
+<li><strong>Voyage AI:</strong> {content['subprocessors_and_data_flows']['voyage_ai']}</li>
+<li><strong>SearxNG & Upstream Engines:</strong> {content['subprocessors_and_data_flows']['searxng_and_upstream_search']}</li>
+<li><strong>Supabase Inc.:</strong> {content['subprocessors_and_data_flows']['supabase']}</li>
+<li><strong>Pinecone Systems:</strong> {content['subprocessors_and_data_flows']['pinecone']}</li>
+<li><strong>Clerk Inc.:</strong> {content['subprocessors_and_data_flows']['clerk']}</li>
+</ul>
+<h2>3. Your Rights</h2>
+<p>{content['user_rights']}</p>
+</body></html>"""
+        return HTMLResponse(content=html)
+    return content
+
+@app.get("/terms")
+def get_terms_of_use(request: Request):
+    content = {
+        "title": "Section AI — Terms of Use",
+        "effective_date": "October 2026",
+        "permitted_use": "Section AI is provided exclusively for professional legal research and drafting by advocates and researchers in Pakistan.",
+        "independent_verification_duty": "Users bear the sole professional responsibility to independently review and verify all generated authorities, statutory references, and draft pleadings prior to reliance or court filing.",
+        "no_warranty": "The service is provided 'AS IS' and 'AS AVAILABLE' without warranties of merchantability, fitness for a particular purpose, or guaranteed legal correctness.",
+        "abuse_restrictions": "Automated scraping, reverse engineering, bypassing rate limits (5 requests/min), or exceeding fair-use daily quotas (100 queries/day) is strictly prohibited.",
+        "limitation_of_liability": "In no event shall Section AI or its developers be liable for lost cases, adverse judicial rulings, court sanctions, or consequential damages arising from use of the platform."
+    }
+    if "text/html" in request.headers.get("accept", ""):
+        html = f"""<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Section AI - Terms of Use</title>
+<style>body{{font-family:system-ui,sans-serif;max-width:800px;margin:40px auto;padding:0 20px;line-height:1.6;color:#1e293b}}h1{{color:#0f172a}}h2{{color:#334155;margin-top:24px}}p{{margin:12px 0}}</style>
+</head><body>
+<h1>Section AI — Terms of Use</h1>
+<p><em>Effective Date: {content['effective_date']}</em></p>
+<h2>1. Permitted Use</h2>
+<p>{content['permitted_use']}</p>
+<h2>2. Mandatory Duty of Independent Verification</h2>
+<p><strong>{content['independent_verification_duty']}</strong></p>
+<h2>3. Acceptable Use & Abuse Restrictions</h2>
+<p>{content['abuse_restrictions']}</p>
+<h2>4. Disclaimer of Warranties</h2>
+<p>{content['no_warranty']}</p>
+<h2>5. Limitation of Liability</h2>
+<p>{content['limitation_of_liability']}</p>
+</body></html>"""
+        return HTMLResponse(content=html)
+    return content
 
 # CORS ORIGIN ALLOWLIST
 ALLOWED_ORIGINS = [o.strip() for o in os.environ.get("ALLOWED_ORIGINS", "").split(",") if o.strip()]
@@ -398,7 +501,7 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
         for r in rows:
             txt = str(r.get("full_text") or "").strip()
             cid = str(r.get("case_id") or "").strip()
-            title = str(r.get("case_title") or "").strip()
+            title = str(get_effective_title(r) or "").strip()
             cit = str(r.get("neutral_citation") or "").strip()
             if len(txt) < 150:
                 continue
@@ -412,7 +515,7 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
     # 1. Try text_search column first (if migration applied with GIN index)
     try:
         res = supabase.table('full_judgments') \
-            .select('id, case_id, neutral_citation, case_title, court_name, decision_date, full_text') \
+            .select('id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text') \
             .limit(limit * 2) \
             .text_search('text_search', ts_query) \
             .execute()
@@ -423,21 +526,7 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
     except Exception:
         pass
 
-    # 2. Try full_text native FTS
-    try:
-        res = supabase.table('full_judgments') \
-            .select('id, case_id, neutral_citation, case_title, court_name, decision_date, full_text') \
-            .limit(limit * 2) \
-            .text_search('full_text', ts_query) \
-            .execute()
-        if res.data:
-            cleaned = _clean_fts_rows(res.data)
-            if cleaned:
-                return cleaned
-    except Exception as e:
-        print(f"⚠️ Postgres full_text FTS notice: {e}", file=sys.stderr, flush=True)
-
-    # 3. Resilient fallback: Try case_title text search (fast even prior to GIN index build)
+    # 2. Resilient fast fallback: Try case_title text search (fast indexed search, returns in <100ms)
     try:
         boilerplate = {'act', 'section', 'order', 'rules', 'ordinance', 'constitution', 'code', 'statute', 'duty', 'stamp', 'law', 'versus', 'state', 'matter', 'petition'}
         candidates = [w for w in clean_terms.split() if len(w) > 2 and w.lower() not in _STOP_WORDS and w.lower() not in boilerplate and not w.isdigit()]
@@ -448,7 +537,7 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
         if search_words:
             title_query = " & ".join(search_words)
             res = supabase.table('full_judgments') \
-                .select('id, case_id, neutral_citation, case_title, court_name, decision_date, full_text') \
+                .select('id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text') \
                 .limit(limit * 2) \
                 .text_search('case_title', title_query) \
                 .execute()
@@ -554,33 +643,176 @@ class LegalSearchPipeline:
             if fresh_bm25:
                 hybrid_engine.bm25_index = fresh_bm25
 
-        raw_candidates = []
-        if hybrid_engine and hybrid_engine.bm25_index and hybrid_engine.bm25_index.corpus_size > 0:
-            raw_candidates = hybrid_engine.search(
+        # 1. DUAL-LANE PRECEDENT RETRIEVAL (P1-4):
+        # Lane A: Staged Year Batches (Batch 1: 2026, 2025, 2024 -> Batch 2: 2023, 2022, 2021 -> Historical: <=2020)
+        # Lane B: Parallel Controlling Authority Lane across entire corpus for Supreme Court / landmark binding precedent
+        from concurrent.futures import ThreadPoolExecutor
+
+        years_searched = []
+        results_per_year = {}
+        expansion_reason = None
+
+        if pinecone_filter:
+            # Caller supplied explicit metadata filter: execute direct single-lane query
+            if hybrid_engine and hybrid_engine.bm25_index and hybrid_engine.bm25_index.corpus_size > 0:
+                raw_candidates = hybrid_engine.search(
+                    pinecone_index=target_index,
+                    query_vector=query_vector,
+                    query_text=clean_query,
+                    top_k=k,
+                    namespace=ns,
+                    pinecone_filter=pinecone_filter
+                )
+            else:
+                dense_matches = hybrid_engine._dense_search(target_index, query_vector, k, ns, pinecone_filter) if hybrid_engine else []
+                raw_candidates = [
+                    {"id": doc_id, "score": score, "rrf_score": 1.0 / (60 + rank + 1), "similarity_score": score, "dense_score": score, "sparse_score": 0.0, "dense_rank": rank + 1, "sparse_rank": 0, "metadata": meta}
+                    for rank, (doc_id, score, meta) in enumerate(dense_matches)
+                ]
+        else:
+            # P1-4: Execute Dual-Lane Retrieval
+            # LANE B: Concurrent Controlling Authority Lane across entire corpus (Apex binding authorities)
+            lane_b_raw = hybrid_engine.search(
                 pinecone_index=target_index,
                 query_vector=query_vector,
                 query_text=clean_query,
-                top_k=k,
+                top_k=30,
                 namespace=ns,
-                pinecone_filter=pinecone_filter
-            )
-        else:
-            # Fallback to dense if BM25 index is not yet built or available
-            dense_matches = hybrid_engine._dense_search(
-                target_index, query_vector, k, ns, pinecone_filter
+                pinecone_filter=None
             ) if hybrid_engine else []
-            for rank, (doc_id, score, meta) in enumerate(dense_matches):
-                raw_candidates.append({
-                    "id": doc_id,
-                    "score": score,
-                    "rrf_score": 1.0 / (60 + rank + 1),
-                    "similarity_score": score,
-                    "dense_score": score,
-                    "sparse_score": 0.0,
-                    "dense_rank": rank + 1,
-                    "sparse_rank": 0,
-                    "metadata": meta
-                })
+
+            lane_b_controlling = []
+            for item in lane_b_raw:
+                meta = item.get("metadata", {}) if isinstance(item, dict) else {}
+                c_court = str(meta.get("court") or meta.get("court_name") or "").lower()
+                c_cit = str(meta.get("citation") or "").upper()
+                if "supreme court" in c_court or "scmr" in c_cit or "pld sc" in c_cit:
+                    item["is_controlling_authority"] = True
+                    lane_b_controlling.append(item)
+                elif float(item.get("dense_score", 0.0) or 0.0) >= 0.60:
+                    lane_b_controlling.append(item)
+
+            # LANE A - STAGE 1 (BATCH 1): 2026, 2025, 2024
+            batch_1_years = [2026, 2025, 2024]
+            years_searched.extend(batch_1_years)
+
+            def _query_year_dense(yr: int):
+                try:
+                    res = target_index.query(
+                        namespace=ns,
+                        vector=query_vector,
+                        top_k=15,
+                        include_metadata=True,
+                        filter={"year": yr}
+                    )
+                    matches = res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", []) or []
+                    return yr, matches
+                except Exception:
+                    return yr, []
+
+            with ThreadPoolExecutor(max_workers=3) as executor:
+                b1_future_results = list(executor.map(_query_year_dense, batch_1_years))
+
+            b1_dense_matches = []
+            for yr, m_list in b1_future_results:
+                results_per_year[yr] = len(m_list)
+                for rank, m in enumerate(m_list):
+                    doc_id = m.get("id", "") if isinstance(m, dict) else getattr(m, "id", "")
+                    score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
+                    meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
+                    b1_dense_matches.append((doc_id, score, meta))
+
+            # BM25 filter for Batch 1 years
+            all_bm25 = []
+            if hybrid_engine and hybrid_engine.bm25_index and hybrid_engine.bm25_index.corpus_size > 0:
+                all_bm25 = hybrid_engine.bm25_index.search(clean_query, top_k=60)
+
+            b1_sparse_matches = [
+                item for item in all_bm25
+                if extract_year_num(item[2].get("year"), item[2].get("citation"), item[0]) in batch_1_years
+            ]
+
+            b1_fused = reciprocal_rank_fusion(b1_dense_matches, b1_sparse_matches, k=hybrid_engine.rrf_k if hybrid_engine else 60)
+            
+            # Sufficiency check: relevance + authority quality
+            b1_strong = [
+                h for h in b1_fused
+                if float(h.get("dense_score", 0.0) or 0.0) >= 0.50
+                or float(h.get("sparse_score", 0.0) or 0.0) >= 6.0
+                or float(h.get("rrf_score", 0.0) or 0.0) >= 0.018
+            ]
+            is_b1_sufficient = len(b1_strong) >= 2 or any(
+                "supreme court" in str((h.get("metadata") or {}).get("court") or "").lower() or
+                "high court" in str((h.get("metadata") or {}).get("court") or "").lower()
+                for h in b1_strong
+            )
+
+            if is_b1_sufficient:
+                lane_a_candidates = b1_fused
+            else:
+                # LANE A - STAGE 2 (BATCH 2): 2023, 2022, 2021
+                batch_2_years = [2023, 2022, 2021]
+                years_searched.extend(batch_2_years)
+                expansion_reason = f"Batch 1 (2026-2024) yielded {len(b1_strong)} strong authorities; expanded to Batch 2 (2023-2021)"
+                print(f"--> [RECENCY EXPANSION]: {expansion_reason}", flush=True)
+
+                with ThreadPoolExecutor(max_workers=3) as executor:
+                    b2_future_results = list(executor.map(_query_year_dense, batch_2_years))
+
+                b2_dense_matches = list(b1_dense_matches)
+                for yr, m_list in b2_future_results:
+                    results_per_year[yr] = len(m_list)
+                    for rank, m in enumerate(m_list):
+                        doc_id = m.get("id", "") if isinstance(m, dict) else getattr(m, "id", "")
+                        score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
+                        meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
+                        b2_dense_matches.append((doc_id, score, meta))
+
+                b2_sparse_matches = [
+                    item for item in all_bm25
+                    if extract_year_num(item[2].get("year"), item[2].get("citation"), item[0]) in (batch_1_years + batch_2_years)
+                ]
+
+                b2_fused = reciprocal_rank_fusion(b2_dense_matches, b2_sparse_matches, k=hybrid_engine.rrf_k if hybrid_engine else 60)
+                b2_strong = [
+                    h for h in b2_fused
+                    if float(h.get("dense_score", 0.0) or 0.0) >= 0.50
+                    or float(h.get("sparse_score", 0.0) or 0.0) >= 6.0
+                    or float(h.get("rrf_score", 0.0) or 0.0) >= 0.018
+                ]
+                is_b2_sufficient = len(b2_strong) >= 2
+                if is_b2_sufficient:
+                    lane_a_candidates = b2_fused
+                else:
+                    # LANE A - STAGE 3 (HISTORICAL FALLBACK: <=2020)
+                    expansion_reason = f"Batch 1 & 2 yielded {len(b2_strong)} strong authorities; expanded to historical corpus (<=2020)"
+                    print(f"--> [RECENCY EXPANSION]: {expansion_reason}", flush=True)
+                    lane_a_candidates = lane_b_raw
+
+            # Pool Lane A (Recent) and Lane B (Controlling Authority)
+            pooled_map = {}
+            for item in (lane_a_candidates + lane_b_controlling):
+                doc_id = str(item.get("id") or (item.get("metadata") or {}).get("case_id") or "")
+                if doc_id not in pooled_map:
+                    pooled_map[doc_id] = item
+                else:
+                    if float(item.get("score", 0.0) or 0.0) > float(pooled_map[doc_id].get("score", 0.0) or 0.0):
+                        pooled_map[doc_id] = item
+                    if item.get("is_controlling_authority"):
+                        pooled_map[doc_id]["is_controlling_authority"] = True
+
+            raw_candidates = list(pooled_map.values())
+            
+            # Telemetry metadata
+            all_years = [extract_year_num((c.get("metadata") or {}).get("year"), (c.get("metadata") or {}).get("citation"), c.get("id")) for c in raw_candidates]
+            valid_years = [y for y in all_years if y and y >= 1900]
+            self.latest_recency_telemetry = {
+                "years_searched": years_searched,
+                "results_per_year": results_per_year,
+                "expansion_reason": expansion_reason,
+                "most_recent_year_used": max(valid_years) if valid_years else None,
+                "oldest_controlling_year": min(valid_years) if valid_years else None
+            }
 
         # 2. GENERALIZED DYNAMIC THRESHOLDING WITH STATUTORY ANCHOR MATCHING
         # Matches query statutory anchors against retrieved case text.
@@ -716,11 +948,18 @@ async def safe_create_anthropic_message(**kwargs):
     call_kwargs = dict(kwargs)
     call_kwargs["model"] = primary_model
 
-    # Enforce minimum 8192 max_tokens to prevent truncation of detailed precedent cards
+    # Bound synthesis tokens per P1-5 (honors explicit max_tokens or defaults to MAX_SYNTHESIS_TOKENS)
     if "max_output_tokens" in call_kwargs:
         call_kwargs["max_tokens"] = call_kwargs.pop("max_output_tokens")
-    if "max_tokens" not in call_kwargs or (isinstance(call_kwargs.get("max_tokens"), int) and call_kwargs["max_tokens"] < 4096):
-        call_kwargs["max_tokens"] = 8192
+    if "max_tokens" not in call_kwargs:
+        call_kwargs["max_tokens"] = int(os.environ.get("MAX_SYNTHESIS_TOKENS", "2500"))
+
+    # Handle temperature parameter compatibility across Anthropic SDK versions
+    if "temperature" in call_kwargs:
+        temp_val = call_kwargs.pop("temperature")
+        extra_body = dict(call_kwargs.get("extra_body") or {})
+        extra_body["temperature"] = temp_val
+        call_kwargs["extra_body"] = extra_body
 
     try:
         return await async_anthropic_client.messages.create(**call_kwargs)
@@ -1621,11 +1860,11 @@ def extract_and_intercept_citation(user_query: str):
             try:
                 if req_court:
                     cq_u = f"{yr}_{clean_j}_{req_court}_{pg}".upper()
-                    res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", cq_u).limit(1).execute()
+                    res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text").eq("case_id", cq_u).limit(1).execute()
                 if not res_supa or not res_supa.data:
-                    res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", norm_u).limit(1).execute()
+                    res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text").eq("case_id", norm_u).limit(1).execute()
                 if not res_supa.data and raw_u != norm_u:
-                    res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("case_id", raw_u).limit(1).execute()
+                    res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text").eq("case_id", raw_u).limit(1).execute()
             except Exception as _supa_err:
                 print(f"⚠️ Primary case_id lookup notice: {_supa_err}", file=sys.stderr)
 
@@ -1635,10 +1874,10 @@ def extract_and_intercept_citation(user_query: str):
                     clean_txt = strip_copyright_and_branding(raw_full).strip()
                     is_corrupt_stub = (len(clean_txt) < 100) or is_scraped_portal_junk(raw_full)
 
-                    stored_court = clean_court_name(r.get("court_name") or "", title=r.get("case_title") or "", case_id=r.get("case_id") or "", text=raw_full)
+                    stored_court = clean_court_name(get_effective_court(r) or "", title=get_effective_title(r) or "", case_id=r.get("case_id") or "", text=raw_full)
 
                     # Check curated historical cases data file for metadata overrides
-                    r_curated = find_curated_case(year=yr, journal=clean_j, page=pg, citation=str(r.get("neutral_citation") or r.get("case_id") or ""), text=str(r.get("case_title") or "") + " " + raw_q)
+                    r_curated = find_curated_case(year=yr, journal=clean_j, page=pg, citation=str(r.get("neutral_citation") or r.get("case_id") or ""), text=str(get_effective_title(r) or "") + " " + raw_q)
                     if r_curated:
                         if r_curated.get("court_name"):
                             stored_court = r_curated["court_name"]
@@ -1764,21 +2003,21 @@ def extract_and_intercept_citation(user_query: str):
                     found_rows.append(cached_res)
             else:
                 try:
-                    res_party = supabase.table("full_judgments").select("id, case_id, case_title, court_name").ilike("case_title", f"%{clean_party_name}%").limit(3).execute()
+                    res_party = supabase.table("full_judgments").select("id, case_id, case_title, court_name, canonical_court_name").ilike("case_title", f"%{clean_party_name}%").limit(3).execute()
                     if not res_party or not res_party.data:
                         p_words = clean_party_name.split()
                         if len(p_words) >= 2:
                             short_party = " ".join(p_words[-2:])
-                            res_party = supabase.table("full_judgments").select("id, case_id, case_title, court_name").ilike("case_title", f"%{short_party}%").limit(3).execute()
+                            res_party = supabase.table("full_judgments").select("id, case_id, case_title, court_name, canonical_court_name").ilike("case_title", f"%{short_party}%").limit(3).execute()
                     if res_party and res_party.data:
                         party_rows = res_party.data
                         sc_rows = [
                             r for r in party_rows 
-                            if "supreme court" in str(r.get("court_name") or r.get("court") or "").lower() 
+                            if "supreme court" in str(get_effective_court(r) or "").lower() 
                             or any(j in str(r.get("case_id") or r.get("neutral_citation") or "").upper() for j in ["SCMR", "PLD"])
                         ]
                         winning_row = sc_rows[0] if sc_rows else party_rows[0]
-                        full_row_res = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, decision_date, full_text").eq("id", winning_row.get("id")).limit(1).execute()
+                        full_row_res = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text").eq("id", winning_row.get("id")).limit(1).execute()
                         winning_full = full_row_res.data[0] if (full_row_res and full_row_res.data) else winning_row
                         GLOBAL_PARTY_CACHE.set(clean_party_name, winning_full, citation=context_cit, case_id=context_cid)
                         found_rows.append(winning_full)
@@ -2378,8 +2617,8 @@ def synthesize_canonical_citation(record: Dict[str, Any]) -> str:
     )
     
     # 3. Clean court abbreviation
-    court_raw = str(record.get("court_name") or record.get("court") or "").strip()
-    court_abbrev = clean_court_name(court_raw, title=str(record.get("case_title") or record.get("title") or ""), case_id=str(record.get("case_id") or ""))
+    court_raw = str(get_effective_court(record) or "").strip()
+    court_abbrev = clean_court_name(court_raw, title=str(get_effective_title(record) or ""), case_id=str(record.get("case_id") or ""))
     
     c_lower = court_abbrev.lower()
     if "supreme court of azad" in c_lower: abbrev = "AJK SC"
@@ -2481,7 +2720,7 @@ def is_usable_precedent(card_or_match: Dict[str, Any]) -> bool:
         return False
     meta = card_or_match.get("metadata", {}) if isinstance(card_or_match, dict) else getattr(card_or_match, "metadata", {}) or {}
 
-    title = str(meta.get("title") or meta.get("case_title") or card_or_match.get("title") or card_or_match.get("case_title") or card_or_match.get("case_name") or "").strip()
+    title = str(get_effective_title(meta) or get_effective_title(card_or_match) or card_or_match.get("case_name") or "").strip()
     citation = str(meta.get("citation") or meta.get("neutral_citation") or card_or_match.get("citation") or card_or_match.get("neutral_citation") or "").strip()
     case_id = str(meta.get("case_id") or card_or_match.get("case_id") or card_or_match.get("id") or "").strip()
     text = str(meta.get("text") or meta.get("full_text") or meta.get("text_preview") or card_or_match.get("full_text") or card_or_match.get("preview") or card_or_match.get("holding") or card_or_match.get("text") or "").strip()
@@ -2573,6 +2812,12 @@ def is_usable_precedent(card_or_match: Dict[str, Any]) -> bool:
     if any(marker in text_lower[:500] for marker in ["undergoing index synchronization"]):
         return False
 
+    # F. Canonical Trust Layer Gate:
+    # Quarantined, rejected, or restricted records must fail closed from LLM generation
+    r_status = meta.get("retrieval_status") or card_or_match.get("retrieval_status")
+    if r_status and r_status != "trusted":
+        return False
+
     return True
 
 
@@ -2587,7 +2832,7 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
     c = dict(card)
     
     # 1. Clean case name / title
-    raw_title = str(c.get("case_name") or c.get("title") or "Reported Precedent")
+    raw_title = str(c.get("case_name") or get_effective_title(c) or "Reported Precedent")
     c["case_name"] = sanitize_case_title(raw_title)
     if "title" in c:
         c["title"] = c["case_name"]
@@ -2632,14 +2877,14 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
         c["parties"] = extract_case_roles(c.get("raw_judgment_text") or "", fallback_title=c.get("case_name") or "")
 
     # 7. Strip any remaining occurrences of "Citation Name" or portal banners from all string fields
-    for k in ["case_name", "citation", "court_name", "court", "holding", "issue", "why_relevant", "operative_result", "raw_judgment_text"]:
+    for k in ["case_name", "citation", "court_name", "court", "canonical_court_name", "holding", "issue", "why_relevant", "operative_result", "raw_judgment_text"]:
         if isinstance(c.get(k), str):
             c[k] = re.sub(r'(?i)\b(?:Citation\s*Name|Case\s*Description|Bookmark\s*this\s*case)\s*:?\s*', '', c[k]).strip()
     card_cit = str(c.get("citation") or c.get("case_id") or "").upper()
-    card_title = str(c.get("case_name") or c.get("title") or "").upper()
+    card_title = str(c.get("case_name") or get_effective_title(c) or "").upper()
 
     # Curated precedent status / metadata annotation from data file
-    card_curated = find_curated_case(citation=c.get("citation") or c.get("case_id"), text=str(c.get("case_name") or c.get("title") or ""))
+    card_curated = find_curated_case(citation=c.get("citation") or c.get("case_id"), text=str(c.get("case_name") or get_effective_title(c) or ""))
     if card_curated:
         if card_curated.get("court_name"):
             c["court_name"] = card_curated["court_name"]
@@ -2679,7 +2924,8 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
         c["is_headnote"] = False
 
     # Dynamic court cleanup fallback
-    if not c.get("court_name") or c.get("court_name") in ("Court not identified", "Court of Record", "Unknown", "unknown court", "None"):
+    eff_court = get_effective_court(c)
+    if not eff_court or eff_court in ("Court not identified", "Court of Record", "Unknown", "unknown court", "None"):
         resolved_c = clean_court_name(
             court_name="",
             title=c.get("case_name") or c.get("title") or "",
@@ -2689,6 +2935,9 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
         if resolved_c and resolved_c != "Court not identified":
             c["court_name"] = resolved_c
             c["court"] = resolved_c
+    else:
+        c["court_name"] = eff_court
+        c["court"] = eff_court
 
     # Dynamic Source & Completeness Badges for Lawyer UI
     source_url = c.get("source_url") or c.get("url") or c.get("pdf_url") or ""
@@ -2709,8 +2958,9 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
         except Exception:
             domain = ""
     if not domain and (c.get("is_fresh_fetch") or is_partial_doc):
-        court_val = str(c.get("court_name") or "").lower()
+        court_val = str(get_effective_court(c) or "").lower()
         if "supreme" in court_val:
+
             domain = "supremecourt.gov.pk"
         elif "lahore" in court_val:
             domain = "sys.lhc.gov.pk"
@@ -2983,7 +3233,7 @@ def boost_banking_fio_precedents(query: str, hits: list) -> list:
         meta = h.get("metadata", {}) if isinstance(h, dict) else getattr(h, "metadata", {}) or {}
         holding = str(h.get("holding") or meta.get("holding") or "")
         full_text = str(h.get("full_text") or meta.get("full_text") or meta.get("text") or meta.get("text_preview") or "")
-        case_title = str(h.get("case_title") or meta.get("case_title") or meta.get("title") or "")
+        case_title = str(get_effective_title(h) or get_effective_title(meta) or "")
         text = f"{holding} {full_text} {case_title}".lower()
         
         base_score = float(h.get("score", 0.0) if isinstance(h, dict) else getattr(h, "score", 0.0))
@@ -3072,7 +3322,7 @@ def rerank_by_judicial_hierarchy_and_recency(hits: list) -> list:
             return (0, -9999, -9999.0, idx)
             
         cit = meta.get("citation", "") or meta.get("neutral_citation", "") or h.get("citation", "")
-        court = meta.get("court", "") or meta.get("court_name", "") or h.get("court", "") or h.get("court_name", "")
+        court = get_effective_court(meta) or get_effective_court(h) or ""
         raw_year = meta.get("year", 0) or meta.get("decision_date", "") or meta.get("date", "") or h.get("year", 0)
         doc_id = str(h.get("id") or meta.get("case_id") or "")
         
@@ -3094,8 +3344,9 @@ def rerank_by_judicial_hierarchy_and_recency(hits: list) -> list:
     for rank_idx, (_, h) in enumerate(indexed_hits):
         meta = h.get("metadata", {}) if isinstance(h, dict) else getattr(h, "metadata", {}) or {}
         cit = meta.get("citation", "") or meta.get("neutral_citation", "") or h.get("citation", "")
-        court = meta.get("court", "") or meta.get("court_name", "") or h.get("court", "") or h.get("court_name", "")
+        court = get_effective_court(meta) or get_effective_court(h) or ""
         raw_year = meta.get("year", 0) or meta.get("decision_date", "") or meta.get("date", "") or h.get("year", 0)
+
         doc_id = str(h.get("id") or meta.get("case_id") or "")
         tier = get_court_hierarchy_tier(str(cit), str(court))
         year = extract_year_int(raw_year, citation=str(cit), doc_id=doc_id)
@@ -3113,6 +3364,89 @@ def rerank_by_judicial_hierarchy_and_recency(hits: list) -> list:
 
     return ranked_hits
 
+
+def classify_retrieval_trust_category(
+    m: Dict[str, Any],
+    db_status: Optional[str] = None
+) -> Tuple[str, List[str]]:
+    """
+    Candidate Trust Classifier:
+    Categorizes candidate judgment records into 7 deterministic verification classes:
+    1. verified_v2: Fully satisfies modern metadata contract (v2_canonical, v2_canonical_anchor, repair_version, deterministic ID #c\\d+).
+    2. legacy_verified: Authentic internal legacy record with verifiable citation/court, substantive text, not quarantined/restricted.
+    3. caption_only: Valid metadata but lacks substantive judicial reasoning text.
+    4. restricted: Explicitly restricted in metadata or database.
+    5. quarantined: Explicitly quarantined in metadata, database, or quarantine manifest.
+    6. rejected: Explicitly rejected in metadata or database.
+    7. unverifiable: Corrupted, empty, or malformed stub (e.g. 'v.', 'vs.', <100 chars text).
+    """
+    meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
+    m_id = str(m.get("id") if isinstance(m, dict) else getattr(m, "id", "") or "")
+    cand_cid = str(meta.get("case_id") or meta.get("id") or m.get("id") or "")
+    
+    meta_status = str(meta.get("retrieval_status") or "").strip().lower()
+    db_status_clean = str(db_status or "").strip().lower()
+    effective_status = db_status_clean or meta_status
+
+    # 1. Quarantined / Restricted / Rejected exclusions
+    if effective_status == "quarantined":
+        return "quarantined", ["quarantined_status"]
+    if effective_status == "restricted":
+        return "restricted", ["restricted_status"]
+    if effective_status == "rejected":
+        return "rejected", ["rejected_status"]
+
+    is_boosted = bool(m.get("is_boosted") if isinstance(m, dict) else False) or bool(meta.get("is_boosted"))
+    is_fts = bool(m.get("is_fts_fallback") if isinstance(m, dict) else False) or bool(meta.get("is_fts_fallback"))
+
+    cand_text = str(meta.get("text") or meta.get("full_text") or meta.get("text_preview") or "").strip()
+    cand_title = str(meta.get("title") or meta.get("case_title") or "").strip()
+    cand_cit = str(meta.get("citation") or meta.get("neutral_citation") or "").strip()
+    cand_court = str(get_effective_court(meta) or meta.get("court") or meta.get("court_name") or "").strip()
+
+    # Boosted / FTS records qualify directly if text exists
+    if is_boosted or is_fts:
+        if len(cand_text) >= 50:
+            return "legacy_verified", ["boosted_or_fts_authority"]
+
+    # 2. Unverifiable malformed stubs
+    if len(cand_text) < 100 and not is_caption_only_record(meta):
+        return "unverifiable", ["text_too_short"]
+    if cand_title.lower() in ("v.", "vs.", "v", "vs", "null", "none", "unresolved") and not cand_cit:
+        return "unverifiable", ["placeholder_title_and_no_citation"]
+    if is_garbled_text(cand_text) or is_junk_citation_dump(cand_text) or is_scraped_portal_junk(cand_text):
+        return "unverifiable", ["corrupted_or_junk_text"]
+
+    # 3. Modern verified_v2 contract check
+    has_det_id = bool(re.match(r"^.+#[cC]\d+$", m_id)) and (m_id.startswith(cand_cid + "#") or "#" in m_id)
+    has_title_ver = meta.get("title_version") in ("v2_canonical",)
+    has_chunker_ver = meta.get("chunker_version") in ("v2_canonical_anchor",)
+    has_repair_ver = bool(meta.get("repair_version"))
+    is_clean_title = bool(cand_title) and not cand_title.startswith("Case #") and cand_title.lower() not in ("null", "none", "unresolved")
+    has_cit_court = bool(cand_cit) and bool(cand_court)
+
+    if has_det_id and has_title_ver and has_chunker_ver and has_repair_ver and is_clean_title and has_cit_court:
+        return "verified_v2", ["passes_v2_canonical_contract"]
+
+    # 4. Caption-only check
+    if is_caption_only_record(meta) or meta.get("content_quality") == "caption_only":
+        return "caption_only", ["caption_only_record"]
+
+    # 5. Legacy Verified check:
+    # Requires deterministic evidence of authentic internal judgment:
+    # - Valid case_id or recognized doc_id
+    # - Recognizable citation pattern or valid superior court
+    # - Substantive text (>= 150 chars)
+    # - Effective status is 'trusted', empty/null, or not explicitly excluded
+    has_valid_citation = bool(re.search(r'\b(19\d\d|20\d\d)\s+[A-Za-z]+(?:\s+[A-Za-z]+)*\s+\d+\b', cand_cit)) or bool(cand_cit)
+    has_superior_court = any(sc in cand_court.lower() for sc in ["supreme court", "high court", "court of record", "bench"])
+    has_substantive_text = len(cand_text) >= 150
+
+    if (has_valid_citation or has_superior_court) and has_substantive_text and cand_cid:
+        if effective_status in ("", "trusted", "legacy", "verified", "none", "null"):
+            return "legacy_verified", ["valid_internal_legacy_authority"]
+
+    return "unverifiable", ["insufficient_provenance_evidence"]
 
 
 SYSTEM_PROMPTS = {
@@ -3142,6 +3476,36 @@ def check_user_quota(user_id: str, num_images_requested: int):
         raise
     except Exception as e:
         print(f"⚠️ Quota verification error: {e}")
+
+_BURST_RATE_LIMIT_LOCK = threading.Lock()
+_BURST_RATE_LIMIT_STORE: Dict[str, deque] = defaultdict(deque)
+BURST_WINDOW_SECONDS = 60.0
+BURST_MAX_REQUESTS = 5
+
+def check_burst_rate_limit(identifier: str, action: str = "request"):
+    """
+    Application-level sliding-window burst rate limiter for public launch.
+    Enforces max 5 intensive requests per 60 seconds per user/identifier.
+    Exempts mock tester accounts.
+    """
+    if not identifier or identifier == "mock_clerk_user_id_dev_run":
+        return
+
+    now = time.time()
+    with _BURST_RATE_LIMIT_LOCK:
+        timestamps = _BURST_RATE_LIMIT_STORE[identifier]
+        while timestamps and (now - timestamps[0]) > BURST_WINDOW_SECONDS:
+            timestamps.popleft()
+
+        if len(timestamps) >= BURST_MAX_REQUESTS:
+            oldest = timestamps[0]
+            retry_after = max(1, int(BURST_WINDOW_SECONDS - (now - oldest)))
+            raise HTTPException(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                detail=f"Burst rate limit exceeded for {action}: Maximum {BURST_MAX_REQUESTS} requests per {int(BURST_WINDOW_SECONDS)} seconds. Please retry after {retry_after} seconds.",
+                headers={"Retry-After": str(retry_after)}
+            )
+        timestamps.append(now)
 
 ACTIVE_HEADNOTE_UPGRADE_JOBS: Set[str] = set()
 
@@ -3547,8 +3911,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             courts_found = set()
             for match in retrieved_matches:
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
-                court = meta.get("court") or meta.get("court_name")
-                title = meta.get("title") or meta.get("case_title") or ""
+                court = get_effective_court(meta)
+                title = get_effective_title(meta) or ""
+
                 cid = meta.get("case_id") or ""
                 cleaned = clean_court_name(str(court or "Court of Record"), title=str(title), case_id=str(cid))
                 if cleaned and cleaned != "Unknown Court":
@@ -3680,11 +4045,11 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if rows:
                     for row in rows:
                         c_cit = row.get("neutral_citation") or row.get("case_id") or search_query
-                        c_title = sanitize_case_title(row.get("case_title") or row.get("title") or "Reported Precedent")
+                        c_title = sanitize_case_title(get_effective_title(row) or "Reported Precedent")
                         print(f"--> [TOOL INTERCEPT HIT]: Found {c_cit} ({c_title})", flush=True)
-                        c_name = row.get("court_name") or row.get("court")
+                        c_name = get_effective_court(row)
                         if not c_name or c_name in ("Court of Record", "Court not identified", "High Court"):
-                            resolved_c = clean_court_name(court_name="", title=c_title, case_id=c_cit, text=row.get("full_text") or "")
+                            resolved_c = clean_court_name(court_name=c_name or "", title=c_title, case_id=c_cit, text=row.get("full_text") or "")
                             if resolved_c and resolved_c != "Court not identified":
                                 c_name = resolved_c
                         if not c_name or c_name in ("Court of Record", "Court not identified"):
@@ -3710,6 +4075,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                                 "title": c_title,
                                 "court": c_name,
                                 "court_name": c_name,
+                                "canonical_court_name": row.get("canonical_court_name"),
                                 "citation": c_cit,
                                 "date": str(row.get("decision_date") or row.get("year") or ""),
                                 "text": (row.get("full_text") or "")[:3500],
@@ -3980,6 +4346,61 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             filtered_matches = boost_banking_fio_precedents(f"{sq_lower} {effective_user_query.lower()}", filtered_matches)
             filtered_matches = rerank_by_judicial_hierarchy_and_recency(filtered_matches)
+            # Canonical Supabase Trust-State Verification Gate:
+            # Query Supabase full_judgments in a single batch to verify candidates before promotion
+            if filtered_matches:
+                verified_trusted_matches = []
+                trust_telemetry = {
+                    "verified_v2": 0,
+                    "legacy_verified": 0,
+                    "caption_only": 0,
+                    "restricted": 0,
+                    "quarantined": 0,
+                    "rejected": 0,
+                    "unverifiable": 0
+                }
+                
+                # Batch query Supabase status for all candidate case IDs in a single round-trip
+                candidate_cids = list({
+                    str((m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}).get("case_id") or "")
+                    for m in filtered_matches
+                })
+                candidate_cids = [cid for cid in candidate_cids if cid]
+                db_status_map = {}
+                if candidate_cids and supabase:
+                    try:
+                        res_t = supabase.table("full_judgments").select("case_id, retrieval_status, verification_reason").in_("case_id", candidate_cids).execute()
+                        if res_t and res_t.data:
+                            for row in res_t.data:
+                                db_status_map[str(row.get("case_id"))] = str(row.get("retrieval_status") or "").lower()
+                    except Exception as db_err:
+                        print(f"⚠️ Batch Supabase trust query notice: {db_err}", flush=True)
+
+                for m in filtered_matches:
+                    meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
+                    cand_cid = str(meta.get("case_id") or meta.get("id") or "")
+                    m_id = str(m.get("id") if isinstance(m, dict) else getattr(m, "id", ""))
+                    db_status = db_status_map.get(cand_cid)
+
+                    cat, reasons = classify_retrieval_trust_category(m, db_status=db_status)
+                    trust_telemetry[cat] = trust_telemetry.get(cat, 0) + 1
+                    meta["trust_classification"] = cat
+
+                    # Admitted classes: verified_v2, legacy_verified, caption_only
+                    if cat in ("verified_v2", "legacy_verified", "caption_only"):
+                        # Title normalization for legacy records lacking explicit title
+                        cur_title = str(meta.get("title") or meta.get("case_title") or "").strip()
+                        if not cur_title or cur_title.lower() in ("null", "none", "unresolved") or cur_title.startswith("Case #"):
+                            cit_fallback = str(meta.get("citation") or meta.get("neutral_citation") or cand_cid or "Precedent Authority").strip()
+                            meta["title"] = cit_fallback
+                            meta["case_title"] = cit_fallback
+                        verified_trusted_matches.append(m)
+                    else:
+                        print(f"[TRUST_GATE_EXCLUSION] Vector {m_id} (case_id={cand_cid}) excluded as '{cat}': {', '.join(reasons)}")
+
+                print(f"--> [TRUST GATE TELEMETRY]: Admitted {len(verified_trusted_matches)}/{len(filtered_matches)} candidates: {trust_telemetry}", flush=True)
+                filtered_matches = verified_trusted_matches
+
             primary_matches = filtered_matches[:3]
             secondary_matches = filtered_matches[3:6]
             aggregate_sources_matches.extend(primary_matches + secondary_matches)
@@ -3993,10 +4414,11 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     for r in fts_records:
                         cid = r.get("case_id") or str(r.get("id"))
                         raw_txt = r.get("full_text") or ""
-                        raw_court = r.get("court_name") or "Court of Record"
-                        clean_c = clean_court_name(raw_court, title=r.get("case_title"), case_id=cid, text=raw_txt[:2500])
+                        raw_court = get_effective_court(r) or "Court of Record"
+                        clean_c = clean_court_name(raw_court, title=get_effective_title(r), case_id=cid, text=raw_txt[:2500])
+
                         cit = r.get("neutral_citation") or cid
-                        title = sanitize_case_title(clean_or_extract_title(r.get("case_title"), raw_txt))
+                        title = sanitize_case_title(clean_or_extract_title(get_effective_title(r), raw_txt))
                         year_val = extract_year_from_citation_or_date(r.get("decision_date"), cit, cid)
                         
                         m_obj = {
@@ -4250,8 +4672,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         aggregate_external_recent_judgments.extend(ext_recent)
                 except Exception:
                     pass
-
             context_parts = []
+            authoritative_context_parts = []
+            discovery_leads_parts = []
             for match in primary_matches:
                 meta = match.get("metadata", {}) if isinstance(match, dict) else getattr(match, "metadata", {}) or {}
                 case_id = str(meta.get('case_id', 'Unknown Docket'))
@@ -4261,8 +4684,9 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     text_content = full_body_str
                 official_citation = str(meta.get('citation') or meta.get('neutral_citation') or '').strip()
                 neutral_cit = synthesize_canonical_citation(meta)
-                court = infer_court_from_citation(neutral_cit or official_citation, text_content, meta.get('court') or meta.get('court_name') or '')
+                court = infer_court_from_citation(neutral_cit or official_citation, text_content, get_effective_court(meta) or '')
                 court = derive_court_from_judgment_header(full_body_str or text_content, fallback_meta=court)
+
                 year_or_date = extract_year_from_citation_or_date(meta.get('date') or meta.get('decision_date') or meta.get('year'), meta.get('citation') or meta.get('neutral_citation'), case_id)
                 title = sanitize_case_title(clean_repeated_phrases(str(meta.get('title', meta.get('case_title', 'Untitled Case')) or 'Untitled Case')))
                 outcome_val = determine_case_outcome(text_content, meta.get("disposition") or meta.get("outcome"))
@@ -4299,6 +4723,26 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 else:
                     c_type_val = str(raw_c_type) if raw_c_type and str(raw_c_type).lower() not in ("unknown", "none") else "headnote_only"
 
+                from core.legal_guardrails import get_authority_policy
+                from core.ingestion_verification import classify_retrieval_authority_lane
+
+                # Ensure meta contains trust fields or fall back to deterministic classification
+                meta_trust_check = {
+                    "case_id": case_id,
+                    "case_title": title,
+                    "neutral_citation": neutral_cit,
+                    "court_name": court,
+                    "full_text": full_body_str or text_content,
+                    "source_url": meta.get("source_url") or "",
+                    "retrieval_status": meta.get("retrieval_status"),
+                    "identity_status": meta.get("identity_status"),
+                    "citation_status": meta.get("citation_status"),
+                    "title_status": meta.get("title_status"),
+                    "content_quality": meta.get("content_quality") or c_type_val,
+                }
+                lane_info = classify_retrieval_authority_lane(meta_trust_check, authority_policy=None)
+                auth_policy = lane_info["authority_class"]
+
                 if c_type_val == "caption_only":
                     context_precedent_notice = (
                         "[TRANSPARENCY: Caption only — No judicial reasoning or headnote text available in database]\n"
@@ -4307,23 +4751,94 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         "Do NOT invent, attribute, or synthesize any legal holding, doctrine, test, or rule to this case. "
                         "State clearly that the substantive text is missing from the database.\n"
                     )
+                elif auth_policy == "PROVISIONAL_LEAD":
+                    context_precedent_notice = (
+                        "[PROVISIONAL LEAD ONLY: Docket identity is classified as probable, not conclusively verified. "
+                        "May be used as a research lead only; do NOT rely upon or cite as verified judicial ratio in court pleadings "
+                        "without verifying certified court records.]\n"
+                    )
+                elif auth_policy == "HEADNOTE_DISCOVERY":
+                    context_precedent_notice = (
+                        "[HEADNOTE DISCOVERY ONLY: Source text contains editorial headnote/summary only. "
+                        "No direct verbatim judicial quotation permitted; do not represent as verified judicial ratio from judgment text. "
+                        "Proposition must be verified against certified judgment transcript before citing in court pleadings.]\n"
+                    )
                 else:
                     context_precedent_notice = ""
 
-                context_parts.append(
-                    f"=== RETRIEVED PRECEDENT #{len(context_parts)+1} ===\n"
-                    f"{context_precedent_notice}"
-                    f"CASE_ID: {case_id}\n"
-                    f"CASE TITLE: {title}\n"
-                    f"NEUTRAL CITATION: {neutral_cit}\n"
-                    f"COURT: {court}\n"
-                    f"CONTENT TYPE: {c_type_val}\n"
-                    f"DECISION DATE: {year_or_date}\n"
-                    f"OUTCOME: {outcome_val}\n"
-                    f"STATUTES: {', '.join(statutes_val)}\n"
-                    f"KEY HOLDING & TEXT CONTENT:\n{text_content}\n"
-                    f"=== END PRECEDENT ==="
-                )
+                if lane_info["lane"] == "authoritative_evidence":
+                    item_str = (
+                        f"=== RETRIEVED PRECEDENT #{len(authoritative_context_parts)+1} [AUTHORITATIVE EVIDENCE] ===\n"
+                        f"{context_precedent_notice}"
+                        f"CASE_ID: {case_id}\n"
+                        f"CASE TITLE: {title}\n"
+                        f"NEUTRAL CITATION: {neutral_cit}\n"
+                        f"COURT: {court}\n"
+                        f"CONTENT TYPE: {c_type_val}\n"
+                        f"AUTHORITY CLASS: FULL_AUTHORITY\n"
+                        f"DECISION DATE: {year_or_date}\n"
+                        f"OUTCOME: {outcome_val}\n"
+                        f"STATUTES: {', '.join(statutes_val)}\n"
+                        f"KEY HOLDING & JUDICIAL TEXT CONTENT:\n{text_content}\n"
+                        f"=== END PRECEDENT ==="
+                    )
+                    authoritative_context_parts.append(item_str)
+                    context_parts.append(item_str)
+                elif auth_policy == "PROVISIONAL_LEAD":
+                    item_str = (
+                        f"=== PROVISIONAL LEAD #{len(discovery_leads_parts)+1} [PROVISIONAL LEAD ONLY — PROBABLE IDENTITY] ===\n"
+                        f"NOTICE: The text matches this authority with high probability, but docket identity is not conclusively verified. "
+                        f"This record is provided as a provisional research lead only. Do NOT cite as verified judicial ratio or binding "
+                        f"precedent without verifying the certified court record.\n"
+                        f"{context_precedent_notice}"
+                        f"CASE_ID: {case_id}\n"
+                        f"CASE TITLE: {title}\n"
+                        f"NEUTRAL CITATION: {neutral_cit}\n"
+                        f"COURT: {court}\n"
+                        f"CONTENT TYPE: {c_type_val}\n"
+                        f"AUTHORITY CLASS: PROVISIONAL_LEAD\n"
+                        f"DECISION DATE: {year_or_date}\n"
+                        f"OUTCOME: {outcome_val}\n"
+                        f"STATUTES: {', '.join(statutes_val)}\n"
+                        f"PROVISIONAL JUDICIAL / SUMMARY TEXT CONTENT (UNVERIFIED RATIO):\n{text_content}\n"
+                        f"=== END PROVISIONAL LEAD ==="
+                    )
+                    discovery_leads_parts.append(item_str)
+                    context_parts.append(item_str)
+                elif c_type_val == "caption_only":
+                    item_str = (
+                        f"=== DOCKET METADATA ONLY #{len(discovery_leads_parts)+1} [CAPTION ONLY] ===\n"
+                        f"{context_precedent_notice}"
+                        f"CASE_ID: {case_id}\n"
+                        f"CASE TITLE: {title}\n"
+                        f"NEUTRAL CITATION: {neutral_cit}\n"
+                        f"COURT: {court}\n"
+                        f"CONTENT TYPE: caption_only\n"
+                        f"AUTHORITY CLASS: NON_AUTHORITY\n"
+                        f"DECISION DATE: {year_or_date}\n"
+                        f"=== END DOCKET METADATA ==="
+                    )
+                    discovery_leads_parts.append(item_str)
+                    context_parts.append(item_str)
+                else:
+                    item_str = (
+                        f"=== DISCOVERY LEAD #{len(discovery_leads_parts)+1} [PRELIMINARY LEAD ONLY] ===\n"
+                        f"NOTICE: A reported headnote indicates that this authority may address the proposition, but the underlying judgment text has not been verified and I would not rely on it as verified authority yet.\n"
+                        f"{context_precedent_notice}"
+                        f"CASE_ID: {case_id}\n"
+                        f"CASE TITLE: {title}\n"
+                        f"NEUTRAL CITATION: {neutral_cit}\n"
+                        f"COURT: {court}\n"
+                        f"CONTENT TYPE: headnote_only\n"
+                        f"AUTHORITY CLASS: HEADNOTE_DISCOVERY\n"
+                        f"DECISION DATE: {year_or_date}\n"
+                        f"OUTCOME: {outcome_val}\n"
+                        f"STATUTES: {', '.join(statutes_val)}\n"
+                        f"EDITORIAL HEADNOTE SUMMARY (NOT VERIFIED JUDICIAL RATIO):\n{text_content}\n"
+                        f"=== END DISCOVERY LEAD ==="
+                    )
+                    discovery_leads_parts.append(item_str)
+                    context_parts.append(item_str)
 
                 cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
                 cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
@@ -4360,10 +4875,13 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     clean_holding_snip = "Holding not verified in retrieved database (caption only)"
                     card_outcome = "Not stated in caption (caption only)"
 
-                is_full_text = (c_type_val == "full_text")
+                is_full_text = lane_info["verified_source"]
+                evidence_lane = lane_info["lane"]
+                source_badge = lane_info["source_badge"]
                 aggregate_citations_payload.append({
+                    "evidence_lane": evidence_lane,
                     "verified_source": is_full_text,
-                    "source_badge": "Verified Source" if is_full_text else ("Caption Only" if c_type_val == "caption_only" else ("Editorial Headnote" if c_type_val == "headnote_only" else "Reported Authority")),
+                    "source_badge": source_badge,
                     "temporal_tag": temporal_tag,
                     "temporal_warning": temporal_warning,
                     "supabase_id": meta.get("supabase_id") or meta.get("id") or "",
@@ -4374,12 +4892,14 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     "title": title, "citation": neutral_cit, "score": match_score, "outcome": card_outcome,
                     "statutes": statutes_val, "sections": sections_val, "pdf_url": pdf_url_val,
                     "content_type": c_type_val,
+                    "authority_level": lane_info["authority_class"],
                     "is_headnote": (c_type_val == "headnote_only"),
                     "relevance": "High" if match_score >= 0.65 else ("Medium" if match_score >= 0.52 else "Low"),
                     "parties": meta.get("parties") or extract_case_roles(text_content, title),
                     "operative_result": meta.get("operative_result") or extract_operative_order(text_content),
                     "is_fts_fallback": bool(meta.get("is_fts_fallback") or match.get("is_fts_fallback"))
                 })
+
 
 
             for match in secondary_matches:
@@ -4423,10 +4943,20 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             if primary_matches:
                 currency_header = ""
                 if currency_findings and os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() != "off":
-                    valid_cfs = [cf for cf in currency_findings if cf.get("display_tag")]
+                    valid_cfs = [cf for cf in currency_findings if cf.get("display_tag") or cf.get("text")]
                     if valid_cfs:
-                        cf_lines = [f"- {cf['canonical_id']}: {cf['display_tag']} (Status: {cf['status']})" for cf in valid_cfs]
-                        currency_header = "=== STATUTE CURRENCY & VERIFICATION STATUS ===\n" + "\n".join(cf_lines) + "\n==============================================\n\n"
+                        cf_lines = []
+                        for cf in valid_cfs:
+                            tag_info = f"{cf.get('display_tag', '')} (Status: {cf.get('status', 'in_force')})".strip()
+                            sec_text = cf.get("text")
+                            if sec_text:
+                                cf_lines.append(
+                                    f"--- {cf['canonical_id']} [{tag_info}] ---\n"
+                                    f"VERBATIM STATUTORY TEXT:\n\"{sec_text}\""
+                                )
+                            else:
+                                cf_lines.append(f"- {cf['canonical_id']}: {tag_info}")
+                        currency_header = "=== STATUTE CODIFIED TEXT & VERIFICATION STATUS ===\n" + "\n\n".join(cf_lines) + "\n===================================================\n\n"
 
                 conflicts = detect_conflicting_authorities(primary_matches)
                 conflict_header = ""
@@ -4434,14 +4964,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     c_lines = [f"- {c['note']}" for c in conflicts]
                     conflict_header = "=== CONFLICTING AUTHORITIES & STARE DECISIS ===\n" + "\n".join(c_lines) + "\n===============================================\n\n"
 
-                header = (
-                    currency_header +
-                    conflict_header +
-                    "=== RETRIEVED PRECEDENTS FROM VERIFIED DATABASE ===\n"
-                    f"Retrieved {len(primary_matches)} verified superior court precedent(s) for this query.\n"
-                    "MANDATORY DIRECTIVE: You MUST cite, analyze, and ground your legal reasoning in these retrieved precedents.\n"
-                    "DO NOT state that the database contains no direct precedent when precedents are provided below.\n\n"
-                )
+                header = currency_header + conflict_header
 
                 headnote_cases = []
                 fts_cases = []
@@ -4479,9 +5002,69 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         f"The following precedent(s) are indexed as 'headnote_only': {', '.join(headnote_cases)}.\n"
                         "Because full verbatim judicial reasoning is not available in the database for these records, you MUST explicitly state in your visible response (under a clear notice or heading) that this authority is grounded in an editorial headnote summary / short order rather than the court's verbatim full text, and advise the advocate to verify against the certified judgment before relying on it in court pleadings.\n\n"
                     )
+
+                # P1-4: Recency audit & disclosure
+                recency_telem = getattr(global_search_pipeline, "latest_recency_telemetry", {}) or {}
+                primary_years = [
+                    extract_year_num(
+                        (m.get("metadata") or {}).get("year"),
+                        (m.get("metadata") or {}).get("citation"),
+                        m.get("id")
+                    )
+                    for m in primary_matches
+                ]
+                primary_years = [y for y in primary_years if y and y >= 1900]
+                most_recent_year_found = max(primary_years) if primary_years else None
+                if primary_matches and most_recent_year_found and most_recent_year_found < 2025:
+                    header += (
+                        f"RECENCY AUDIT NOTICE:\n"
+                        f"No interpreting authorities were retrieved from 2026 or 2025; the most recent verified authority retrieved is from {most_recent_year_found}. "
+                        f"In your memorandum, disclose plainly that the most recent verified precedent identified on this issue is from {most_recent_year_found}.\n\n"
+                    )
+                if job_id in jobs_store:
+                    jobs_store[job_id]["recency_telemetry"] = recency_telem
+
+                # Physical Evidence-Lane Separation
+                if len(authoritative_context_parts) == 0 and discovery_leads_parts:
+                    evidence_body = (
+                        "=== MANDATORY VERIFICATION LIMITATION NOTICE ===\n"
+                        "No verified primary judicial authority (full judgment, mixed order, or verified short order) was found in the database on point for this issue.\n"
+                        "Only editorial headnotes / preliminary discovery leads were retrieved.\n"
+                        "MANDATORY INSTRUCTIONS:\n"
+                        "1. You MUST explicitly state in your visible response that NO verified primary authority was found in the database.\n"
+                        "2. Do NOT answer the legal proposition from headnotes alone as if they were established law.\n"
+                        "3. You may list the discovery leads ONLY under a separate heading titled 'Preliminary Leads / Unverified Authorities' with this exact disclaimer:\n"
+                        "   'A reported headnote indicates that this authority may address the proposition, but the underlying judgment text has not been verified and I would not rely on it as verified authority yet.'\n\n"
+                        "=== SECTION 2: PRELIMINARY LEADS / UNVERIFIED AUTHORITIES (DISCOVERY LEADS ONLY) ===\n\n"
+                        + "\n\n".join(discovery_leads_parts)
+                    )
+                else:
+                    sections = []
+                    if authoritative_context_parts:
+                        sections.append(
+                            "=== SECTION 1: VERIFIED AUTHORITATIVE EVIDENCE (PRIMARY JUDICIAL TEXT) ===\n"
+                            f"Retrieved {len(authoritative_context_parts)} verified superior court precedent(s) with authentic judicial bodies.\n"
+                            "MANDATORY DIRECTIVE: You MUST cite, analyze, and ground your legal reasoning in these verified precedents.\n"
+                            "Authoritative evidence may be quoted, analyzed, and used to support verified holdings.\n\n"
+                            + "\n\n".join(authoritative_context_parts)
+                        )
+                    if discovery_leads_parts:
+                        sections.append(
+                            "=== SECTION 2: PRELIMINARY LEADS / UNVERIFIED AUTHORITIES (DISCOVERY LEADS ONLY) ===\n"
+                            f"Retrieved {len(discovery_leads_parts)} discovery lead(s) containing secondary editorial headnotes or docket captions.\n"
+                            "STRICT EVIDENTIARY DIRECTIVES FOR DISCOVERY LEADS:\n"
+                            "1. Discovery leads may ONLY be cited under a separate heading titled 'Preliminary Leads / Unverified Authorities'.\n"
+                            "2. Discovery leads may NOT enter the substantive synthesis as verified ratio decidendi.\n"
+                            "3. Discovery leads may NOT be paraphrased as an established holding of the court.\n"
+                            "4. You are STRICTLY FORBIDDEN from generating purported verbatim judicial quotations from headnote summaries.\n"
+                            "5. Every discovery lead must carry the notice: 'A reported headnote indicates that this authority may address the proposition, but the underlying judgment text has not been verified and I would not rely on it as verified authority yet.'\n\n"
+                            + "\n\n".join(discovery_leads_parts)
+                        )
+                    evidence_body = "\n\n".join(sections)
+
                 trace_logger.log_final_context(aggregate_citations_payload)
                 trace_logger.write_trace()
-                return header + "\n\n".join(context_parts)
+                return header + evidence_body
 
             trace_logger.log_final_context([])
             trace_logger.write_trace()
@@ -4646,7 +5229,7 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
             c_cit = synthesize_canonical_citation(intercepted_card)
             c_title = sanitize_case_title(intercepted_card.get("case_title") or "Reported Precedent")
             c_text = (intercepted_card.get("full_text") or "")[:4000]
-            c_name = infer_court_from_citation(c_cit, c_text, intercepted_card.get("court_name") or intercepted_card.get("court") or "")
+            c_name = infer_court_from_citation(c_cit, c_text, get_effective_court(intercepted_card) or "")
             c_id = intercepted_card.get("case_id") or intercepted_card.get("id") or c_cit
             c_supabase_id = intercepted_card.get("supabase_id") or intercepted_card.get("id") or ""
             target_pdf_id = c_supabase_id or c_id
@@ -4681,6 +5264,7 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
                 "supabase_id": c_supabase_id,
                 "court": c_name,
                 "court_name": c_name,
+                "canonical_court_name": intercepted_card.get("canonical_court_name"),
                 "year": c_date,
                 "preview": clean_holding_snip,
                 "holding": clean_holding_snip,
@@ -4825,11 +5409,11 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
             if round_idx >= MAX_TOOL_ROUNDS:
                 tools_to_pass = []
 
-            print(f"DEBUG: Calling Claude LLM (round {round_idx+1}) with {len(messages)} messages.", flush=True)
+            synthesis_max_tokens = int(os.environ.get("MAX_SYNTHESIS_TOKENS", "2500"))
             claude_message = await safe_create_anthropic_message(
                 model=CLAUDE_MODEL,
-                max_tokens=8192,
-                max_output_tokens=8192,
+                max_tokens=synthesis_max_tokens,
+                max_output_tokens=synthesis_max_tokens,
                 system=combined_system_prompt,
                 messages=messages,
                 tools=tools_to_pass,
@@ -4945,7 +5529,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     for ch in challenges:
                         ch_cit = ch.get("case_citation") or ch.get("citation") or ""
                         ch_title = ch.get("case_name") or ch.get("title") or "Court Challenge"
-                        ch_court = ch.get("court") or "Superior Court"
+                        ch_court = get_effective_court(ch) or "Superior Court"
                         ch_ruling = ch.get("ruling") or ""
                         ch_appeal = ch.get("appeal_status") or ""
                         ch_effect = ch.get("effective_legal_effect") or ""
@@ -4973,7 +5557,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                 {"role": "user", "content": reflection_prompt},
             ]
             claude_message_ref = await safe_create_anthropic_message(
-                model=CLAUDE_MODEL, max_tokens=8192, max_output_tokens=8192, system=combined_system_prompt, messages=reflection_messages
+                model=CLAUDE_MODEL, max_tokens=synthesis_max_tokens, max_output_tokens=synthesis_max_tokens, system=combined_system_prompt, messages=reflection_messages
             )
             prev_model_output = raw_model_output
             raw_model_output = "".join(getattr(b, "text", "") for b in claude_message_ref.content if getattr(b, "type", None) == "text").strip()
@@ -5039,7 +5623,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     ]
                     try:
                         claude_message_gate = await safe_create_anthropic_message(
-                            model=CLAUDE_MODEL, max_tokens=8192, max_output_tokens=8192, system=combined_system_prompt, messages=gate_messages
+                            model=CLAUDE_MODEL, max_tokens=synthesis_max_tokens, max_output_tokens=synthesis_max_tokens, system=combined_system_prompt, messages=gate_messages
                         )
                         regen_output = "".join(getattr(b, "text", "") for b in claude_message_gate.content if getattr(b, "type", None) == "text").strip()
                     except Exception as regen_exc:
@@ -5052,9 +5636,10 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                         raw_model_output = format_review_gate_fallback(raw_model_output, reason="regeneration error or empty response")
                     else:
                         try:
-                            gate_res_round2 = await run_final_review_gate(regen_output, review_context)
+                            gate_res_round2 = await asyncio.wait_for(run_final_review_gate(regen_output, review_context), timeout=10.0)
                         except Exception as r2_exc:
-                            gate_res_round2 = {"passed": False, "issues": [f"Review gate round 2 exception: {r2_exc}"], "system_failure": True}
+                            print(f"⚠️ [FINAL REVIEW GATE ROUND 2 NOTICE]: Review evaluation completed or timed out ({r2_exc}); applying notice banner fail-closed.", file=sys.stderr)
+                            gate_res_round2 = {"passed": False, "issues": gate_issues, "system_failure": False}
 
                         if gate_res_round2.get("passed", True):
                             raw_model_output = regen_output
@@ -5174,13 +5759,15 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                 card["case_id"] = matched.get("case_id") or card.get("case_id") or str(card.get("citation") or "case_id")
                 card["supabase_id"] = matched.get("supabase_id") or card.get("supabase_id") or ""
                 card["case_name"] = sanitize_case_title(matched.get("title") or card.get("case_name") or "Reported Precedent")
-                court_str = matched.get("court") or matched.get("court_name") or infer_court_from_citation(
+                court_str = get_effective_court(matched) or infer_court_from_citation(
                     card.get("citation") or matched.get("citation") or "",
                     card.get("raw_judgment_text") or matched.get("preview") or "",
-                    card.get("court") or card.get("court_name") or ""
+                    get_effective_court(card) or ""
                 )
                 card["court_name"] = court_str
                 card["court"] = court_str
+                if matched.get("canonical_court_name"):
+                    card["canonical_court_name"] = matched.get("canonical_court_name")
                 target_pdf_id = card.get("supabase_id") or matched.get("supabase_id") or card.get("case_id")
                 raw_pdf = matched.get("pdf_url") or card.get("pdf_url")
                 if not raw_pdf or "supabase.co" in str(raw_pdf).lower() or "/judgment-pdf/" in str(raw_pdf):
@@ -5212,34 +5799,47 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         precedent_cards = verified_cards
 
         if not precedent_cards and citations_payload:
-            precedent_cards = [
-                sanitize_precedent_card({
-                    "case_name": sanitize_case_title(c.get("title") or c.get("case_name") or "Reported Precedent"),
-                    "title": sanitize_case_title(c.get("title") or c.get("case_name") or "Reported Precedent"),
-                    "case_id": c.get("case_id") or c.get("citation") or "case_id",
-                    "supabase_id": c.get("supabase_id") or "",
-                    "citation": c.get("citation") or "Neutral Citation",
-                    "court_name": c.get("court") or c.get("court_name") or infer_court_from_citation(c.get("citation") or "", c.get("preview") or "", c.get("court") or c.get("court_name") or ""),
-                    "court": c.get("court") or c.get("court_name") or infer_court_from_citation(c.get("citation") or "", c.get("preview") or "", c.get("court") or c.get("court_name") or ""),
-                    "date": extract_year_from_citation_or_date(c.get("year"), c.get("citation"), c.get("case_id")) or "2024",
-                    "issue": "Legal proposition extracted from indexed public judgment record.",
-                    "holding": sanitize_holding_text(c.get("preview", "")) or "Holding on record.",
-                    "why_relevant": "Retrieved precedent directly governing the statutory issues raised.",
-                    "statutes_invoked": [{"name": str(s), "explanation": "Governing statutory authority"} for s in (c.get("statutes") or [])],
-                    "outcome": determine_case_outcome(c.get("preview") or "", c.get("outcome")) or "Decided",
-                    "verified_source": True,
-                    "content_type": c.get("content_type") or "unknown",
-                    "is_fts_fallback": bool(c.get("is_fts_fallback", False)),
-                    "pdf_url": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('supabase_id') or c.get('case_id') or c.get('citation') or ''))}",
-                    "pdf_link": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('supabase_id') or c.get('case_id') or c.get('citation') or ''))}",
-                    "download_url": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('supabase_id') or c.get('case_id') or c.get('citation') or ''))}",
-                    "url": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('supabase_id') or c.get('case_id') or c.get('citation') or ''))}",
-                    "raw_judgment_text": strip_control_characters(c.get("preview", "")),
-                    "parties": c.get("parties") or extract_case_roles(c.get("preview") or "", c.get("title") or ""),
-                    "operative_result": c.get("operative_result") or extract_operative_order(c.get("preview") or "") or "Order passed on merits."
-                })
-                for c in citations_payload
+            # P1-6 UI Provenance: Only backfill cards if the synthesis actually cited the candidate
+            # AND the candidate is a verified courtroom authority (not unverified discovery leads).
+            authoritative_cited = [
+                c for c in citations_payload
+                if (c.get("verified_source") or c.get("evidence_lane") == "authoritative_evidence")
+                and (
+                    (c.get("citation") and str(c.get("citation")).lower() in executive_answer.lower())
+                    or (c.get("case_id") and str(c.get("case_id")).lower() in executive_answer.lower())
+                )
             ]
+            if authoritative_cited:
+                precedent_cards = [
+                    sanitize_precedent_card({
+                        "case_name": sanitize_case_title(get_effective_title(c) or c.get("case_name") or "Reported Precedent"),
+                        "title": sanitize_case_title(get_effective_title(c) or c.get("case_name") or "Reported Precedent"),
+                        "case_id": c.get("case_id") or c.get("citation") or "case_id",
+                        "supabase_id": c.get("supabase_id") or "",
+                        "citation": c.get("citation") or "Neutral Citation",
+                        "court_name": get_effective_court(c) or infer_court_from_citation(c.get("citation") or "", c.get("preview") or "", get_effective_court(c) or ""),
+                        "court": get_effective_court(c) or infer_court_from_citation(c.get("citation") or "", c.get("preview") or "", get_effective_court(c) or ""),
+                        "canonical_court_name": c.get("canonical_court_name"),
+                        "canonical_case_title": c.get("canonical_case_title"),
+                        "date": extract_year_from_citation_or_date(c.get("year"), c.get("citation"), c.get("case_id")) or "2024",
+                        "issue": "Legal proposition extracted from indexed public judgment record.",
+                        "holding": sanitize_holding_text(c.get("preview", "")) or "Holding on record.",
+                        "why_relevant": "Retrieved precedent directly governing the statutory issues raised.",
+                        "statutes_invoked": [{"name": str(s), "explanation": "Governing statutory authority"} for s in (c.get("statutes") or [])],
+                        "outcome": determine_case_outcome(c.get("preview") or "", c.get("outcome")) or "Decided",
+                        "verified_source": True,
+                        "content_type": c.get("content_type") or "unknown",
+                        "is_fts_fallback": bool(c.get("is_fts_fallback", False)),
+                        "pdf_url": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('supabase_id') or c.get('case_id') or c.get('citation') or ''))}",
+                        "pdf_link": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('supabase_id') or c.get('case_id') or c.get('citation') or ''))}",
+                        "download_url": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('supabase_id') or c.get('case_id') or c.get('citation') or ''))}",
+                        "url": c.get("pdf_url") or f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(c.get('supabase_id') or c.get('case_id') or c.get('citation') or ''))}",
+                        "raw_judgment_text": strip_control_characters(c.get("preview", "")),
+                        "parties": c.get("parties") or extract_case_roles(c.get("preview") or "", c.get("title") or ""),
+                        "operative_result": c.get("operative_result") or extract_operative_order(c.get("preview") or "") or "Order passed on merits."
+                    })
+                    for c in authoritative_cited
+                ]
 
         ans_lower = executive_answer.lower()
         is_missing_doc_response = withhold_tools or upload_extraction_failed or is_doc_analysis_without_content or any(phrase in ans_lower for phrase in [
@@ -5576,7 +6176,8 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
     def _sanitize_record(rec_dict: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
         if not rec_dict:
             return rec_dict
-        c_name = rec_dict.get("court_name") or rec_dict.get("court")
+        eff_court = get_effective_court(rec_dict)
+        c_name = eff_court or rec_dict.get("court_name") or rec_dict.get("court")
         ylr_cases = ["2006_YLR_1206", "2006 YLR 1206", "2007_YLR_2827", "2007 YLR 2827", "2006_YLR_3278", "2006 YLR 3278", "2006_YLR_96", "2006 YLR 96"]
         is_wl = (
             any(k in str(rec_dict.get("case_id") or "").upper() or k in str(rec_dict.get("neutral_citation") or "").upper() for k in ylr_cases) or
@@ -5600,17 +6201,20 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                     rec_dict["is_headnote"] = False
 
         if not c_name or c_name in ("Court of Record", "Court not identified", "High Court"):
-            resolved = clean_court_name(court_name="", title=rec_dict.get("case_title") or "", case_id=rec_dict.get("case_id") or "", text=rec_dict.get("full_text") or "")
+            resolved = clean_court_name(court_name=c_name or "", title=get_effective_title(rec_dict) or "", case_id=rec_dict.get("case_id") or "", text=rec_dict.get("full_text") or "")
             if resolved and resolved != "Court not identified":
                 rec_dict["court_name"] = resolved
                 rec_dict["court"] = resolved
+        elif eff_court:
+            rec_dict["court_name"] = eff_court
+            rec_dict["court"] = eff_court
 
         try:
             from core.precedent_tracker import get_precedent_annotation, format_precedent_status_banner
             annot = (
                 get_precedent_annotation(rec_dict.get("case_id")) or
                 get_precedent_annotation(rec_dict.get("neutral_citation")) or
-                get_precedent_annotation(rec_dict.get("case_title"))
+                get_precedent_annotation(get_effective_title(rec_dict))
             )
             if annot:
                 rec_dict["precedent_status"] = annot.get("status")
@@ -5702,7 +6306,7 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                         "case_id": meta0.get("case_id") or decoded_id,
                         "case_title": meta0.get("title") or meta0.get("case_title") or decoded_id,
                         "neutral_citation": meta0.get("citation") or "",
-                        "court_name": meta0.get("court") or "Supreme Court of Pakistan",
+                        "court_name": get_effective_court(meta0) or "Supreme Court of Pakistan",
                         "full_text": full_text or f"Full judgment record for {decoded_id} is currently undergoing index synchronization.",
                         "pdf_url": meta0.get("pdf_url") or ""
                     })
@@ -5734,9 +6338,9 @@ async def get_api_judgment_pdf_endpoint(
         if stored_pdf.startswith("http://") or stored_pdf.startswith("https://"):
             return Response(status_code=307, headers={"Location": stored_pdf})
 
-    title = (match_record.get("case_title") if match_record else decoded_id) or decoded_id
+    title = (get_effective_title(match_record) if match_record else decoded_id) or decoded_id
     citation = (match_record.get("neutral_citation") if match_record else "") or ""
-    court = (match_record.get("court_name") if match_record else "Supreme Court of Pakistan") or "Supreme Court of Pakistan"
+    court = (get_effective_court(match_record) if match_record else "Supreme Court of Pakistan") or "Supreme Court of Pakistan"
     text = (match_record.get("full_text") if match_record else f"Full judgment record for {decoded_id} is currently undergoing index synchronization.") or ""
 
     pdf_bytes = build_judgment_pdf_bytes(title, citation, court, text)
@@ -5849,7 +6453,7 @@ async def get_full_judgment(
                         "case_id": decoded_case_id,
                         "case_title": first_meta.get("title") or first_meta.get("case_title") or decoded_case_id,
                         "neutral_citation": first_meta.get("citation") or decoded_case_id,
-                        "court": first_meta.get("court", "Supreme Court / High Court of Pakistan"),
+                        "court": get_effective_court(first_meta) or first_meta.get("court", "Supreme Court / High Court of Pakistan"),
                         "judgment_year": first_meta.get("year", 2024),
                         "full_text": format_clean_judgment_paragraphs(assembled_raw),
                         "reassembled_from_chunks": True
@@ -5864,7 +6468,7 @@ async def get_full_judgment(
                         full_reconstructed_parts.append(chunk_str)
 
                 first_meta = matches[0].get("metadata", {}) if isinstance(matches[0], dict) else getattr(matches[0], "metadata", {}) or {}
-                court_val = clean_court_name(str(first_meta.get("court", "")))
+                court_val = clean_court_name(str(get_effective_court(first_meta) or first_meta.get("court", "")))
                 title_val = str(first_meta.get("title") or first_meta.get("case_title", decoded_case_id))
                 official_citation = str(first_meta.get("citation") or first_meta.get("neutral_citation") or "").strip()
                 citation_val = format_neutral_citation(court_val, official_citation or decoded_case_id, str(first_meta.get("date") or first_meta.get("year") or ""))
@@ -5889,6 +6493,7 @@ async def export_court_pleading(
     payload: PleadingExportRequest, 
     authenticated_user_id: str = Depends(verify_clerk_session)
 ):
+    check_burst_rate_limit(authenticated_user_id, action="pleading export")
     if not DOCX_AVAILABLE:
         raise HTTPException(status_code=500, detail="python-docx library is not installed on the server environment.")
 
@@ -6192,6 +6797,7 @@ async def execute_legal_query(
     background_tasks: BackgroundTasks,
     authenticated_user_id: str = Depends(verify_clerk_session)
 ):
+    check_burst_rate_limit(authenticated_user_id, action="legal query")
     print("=" * 60, flush=True)
     print(f"--> [LIVE REQUEST BODY]: query_text='{request.query_text}'", flush=True)
     print("=" * 60, flush=True)
@@ -6228,8 +6834,9 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                             "case_name": c.get("title") or c.get("case_name") or "Reported Precedent",
                             "case_id": cid,
                             "citation": c.get("citation") or "Neutral Citation",
-                            "court": c.get("court") or c.get("court_name") or "High Court",
-                            "court_name": c.get("court") or c.get("court_name") or "High Court",
+                            "court": get_effective_court(c) or "High Court",
+                            "court_name": get_effective_court(c) or "High Court",
+                            "canonical_court_name": c.get("canonical_court_name"),
                             "holding": c.get("preview") or c.get("holding") or "Holding on record.",
                             "pdf_url": p_url,
                             "pdf_link": p_url,
@@ -6763,6 +7370,7 @@ async def generate_pleading(
     fetched directly from Supabase, strictly adhering to the Unfilled Bracket
     and Zero Paraphrasing rules.
     """
+    check_burst_rate_limit(authenticated_user_id, action="pleading generation")
     if not isinstance(payload, dict):
         raise HTTPException(status_code=400, detail="Invalid request payload format.")
 
@@ -6812,7 +7420,7 @@ async def generate_pleading(
     verified_law_formatted = "\n\n".join(verified_law_items)
 
     # 2. Construct the User Prompt
-    court_name = payload.get("court_name", "HIGH COURT / SUPREME COURT")
+    court_name = get_effective_court(payload) or "HIGH COURT / SUPREME COURT"
     case_title = payload.get("case_title", "IN RE: PETITION")
     facts = payload.get("facts", "")
 
@@ -6877,7 +7485,7 @@ def normalize_quarantine_record_for_dashboard(r: dict) -> dict:
     source_url = r.get("source_url") or ""
     
     # 1. Base mapping from existing DB columns
-    court = r.get("court_name") or r.get("extracted_court_name") or ""
+    court = get_effective_court(r) or r.get("extracted_court_name") or ""
     docket = r.get("docket_number") or ""
     ctype = r.get("case_type") or ""
     date_val = r.get("decision_date") or r.get("extracted_date") or ""

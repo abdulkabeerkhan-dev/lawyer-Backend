@@ -73,7 +73,7 @@ def _execute_sync_court_search(
 
 async def search_recent_external_judgments(
     query_text: str,
-    budget_s: float = 5.0,
+    budget_s: float = 2.5,
     mock_fetcher: Optional[Any] = None,
     provider: Optional[BaseProvider] = None
 ) -> List[Dict[str, Any]]:
@@ -109,8 +109,10 @@ def format_external_authorities_section(records: List[Dict[str, Any]]) -> str:
     ]
     for r in records:
         title = r.get("title") or "External Judgment"
-        court = r.get("court") or "Superior Court"
+        from core.court_taxonomy import get_effective_court
+        court = get_effective_court(r) or "Superior Court"
         dt = r.get("date") or "Recent"
+
         c_type = r.get("content_type") or "judgment"
         url = r.get("url") or "#"
         snip = r.get("snippet") or ""

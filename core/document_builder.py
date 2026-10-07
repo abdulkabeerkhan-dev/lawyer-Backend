@@ -4,7 +4,16 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 import io
 
 def generate_court_docx(case_title, court_name, pleading_text):
+    if isinstance(case_title, dict):
+        from core.case_title_taxonomy import get_effective_title
+        case_title = get_effective_title(case_title) or "Cause Title"
+
+    if isinstance(court_name, dict):
+        from core.court_taxonomy import get_effective_court
+        court_name = get_effective_court(court_name) or "High Court / Supreme Court"
+
     doc = Document()
+
     
     # Pakistani Court Standards: A4/Legal size, Wide left margin for binding/stamping
     sections = doc.sections

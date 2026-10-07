@@ -141,8 +141,9 @@ def get_dashboard_html() -> str:
           : '<span class="px-2 py-0.5 text-xs font-semibold rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">Rejected</span>';
 
         const titleVal = escapeHtml(r.case_title || r.extracted_case_title || '');
-        const courtVal = escapeHtml(r.court_name || r.extracted_court_name || '');
+        const courtVal = escapeHtml(r.canonical_court_name || r.court_name || r.extracted_court_name || '');
         const docketVal = escapeHtml(r.docket_number || '');
+
         const typeVal = escapeHtml(r.case_type || 'CP');
         const dateVal = escapeHtml(r.decision_date || r.extracted_date || '');
         const citationVal = escapeHtml(r.neutral_citation || r.extracted_citation || '');

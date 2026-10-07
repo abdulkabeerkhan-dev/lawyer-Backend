@@ -62,3 +62,9 @@ backups/*
 gitleaks_bin/
 gitleaks*.json
 
+# Snapshot caches
+docs/*.pkl
+
+scratch_*
+
+

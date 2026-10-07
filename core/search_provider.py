@@ -14,6 +14,10 @@ Rules
 - A circuit breaker stops hammering a failing provider; a daily cap controls cost.
 - Search text should be an act name or issue words. Never send client facts.
 - Network access is injectable (http_get) so tests never touch the internet.
+- LEGAL REPRODUCTION GUARDRAIL: Sindh High Court (caselaw.shc.gov.pk / shc.gov.pk)
+  terms prohibit reproduction of judgment text without the Registrar's permission.
+  SHC search results are strictly restricted to LINK AND CITE ONLY (generating clickable
+  neutral links and citations). Never ingest, scrape, or reproduce judgment bodies from SHC.
 """
 
 import json
@@ -81,6 +85,43 @@ def host_allowed(url: str, allowed_hosts: Sequence[str]) -> bool:
     return bool(host) and any(host == h or host.endswith("." + h) for h in allowed_hosts)
 
 
+# --- Sindh High Court Guardrail ---
+SHC_HOSTS = ("caselaw.shc.gov.pk", "shc.gov.pk")
+
+
+class SindhHighCourtReproductionError(PermissionError):
+    """Raised when an attempt is made to ingest, scrape, or reproduce judgment body text from Sindh High Court."""
+    pass
+
+
+def is_shc_url(url: str) -> bool:
+    try:
+        host = (urllib.parse.urlparse(url or "").hostname or "").lower().rstrip(".")
+    except Exception:
+        return False
+    return bool(host) and any(host == h or host.endswith("." + h) for h in SHC_HOSTS)
+
+
+def enforce_no_shc_ingestion(url: str, text: Optional[str] = None) -> None:
+    """Enforces the SHC reproduction prohibition: blocks ingestion and body reproduction."""
+    if is_shc_url(url) and text:
+        raise SindhHighCourtReproductionError(
+            f"Reproduction of Sindh High Court judgment text from {url} is prohibited under SHC copyright terms. "
+            "SHC materials are strictly restricted to LINK AND CITE ONLY."
+        )
+
+
+def sanitize_result_guardrails(res: Dict) -> Dict:
+    """Sanitizes search result to enforce copyright reproduction restrictions."""
+    u = res.get("url") or res.get("link") or ""
+    if is_shc_url(u):
+        res["snippet"] = ""
+        res["body"] = ""
+        res["reproduction_restricted"] = True
+        res["restriction_reason"] = "SHC terms prohibit reproduction without Registrar permission. Link and cite only."
+    return res
+
+
 class BaseProvider:
     name = "base"
 
@@ -115,7 +156,22 @@ class BaseProvider:
 
     # --- shared behaviour ---
     def _scope(self, query: str) -> str:
-        hosts = " OR ".join(f"site:{h}" for h in self.allowed_hosts[:8])
+        # Prioritize apex and high court judgment portals (SC, SHC caselaw, LHC) so they are not cut off
+        priority_order = [
+            "supremecourt.gov.pk",
+            "caselaw.shc.gov.pk",
+            "shc.gov.pk",
+            "lhc.gov.pk",
+            "sys.lhc.gov.pk",
+            "ihc.gov.pk",
+            "phc.gov.pk",
+            "bhc.gov.pk",
+            "federalshariatcourt.gov.pk",
+        ]
+        ordered = [h for h in priority_order if h in self.allowed_hosts]
+        remaining = [h for h in self.allowed_hosts if h not in ordered]
+        scoped = (ordered + remaining)[:10]
+        hosts = " OR ".join(f"site:{h}" for h in scoped)
         return f"{query} ({hosts})" if hosts else query
 
     def search(self, query: str, max_results: int = 5) -> SearchResponse:
@@ -157,7 +213,7 @@ class BaseProvider:
         except Exception as e:
             return self._fail(done, FAILED, f"parse error: {type(e).__name__}")
 
-        kept = [r for r in parsed if r.get("url") and host_allowed(r["url"], self.allowed_hosts)]
+        kept = [sanitize_result_guardrails(r) for r in parsed if r.get("url") and host_allowed(r["url"], self.allowed_hosts)]
         self._consecutive_failures = 0
         dropped = len(parsed) - len(kept)
         if not kept:
@@ -198,13 +254,17 @@ class GoogleCSEProvider(BaseProvider):
 class SearxNGProvider(BaseProvider):
     name = "searxng"
 
-    def __init__(self, base_url: str, *a, **kw):
+    def __init__(self, base_url: str, *a, api_key: Optional[str] = None, **kw):
         super().__init__(*a, **kw)
         self.base_url = base_url.rstrip("/")
+        self.api_key = api_key
 
     def _build(self, query, max_results):
         q = urllib.parse.urlencode({"q": query, "format": "json", "language": "en"})
-        return f"{self.base_url}/search?{q}", {"Accept": "application/json"}
+        headers = {"Accept": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        return f"{self.base_url}/search?{q}", headers
 
     def _parse(self, body):
         data = json.loads(body)
@@ -229,7 +289,8 @@ def build_provider_from_env(env: Dict[str, str], allowed_hosts: Sequence[str],
         return GoogleCSEProvider(env["GOOGLE_CSE_KEY"], env["GOOGLE_CSE_CX"],
                                  allowed_hosts, http_get, daily_cap=cap)
     if kind == "searxng" and env.get("SEARXNG_URL"):
-        return SearxNGProvider(env["SEARXNG_URL"], allowed_hosts, http_get, daily_cap=cap)
+        api_key = env.get("SEARXNG_API_KEY") or env.get("SEARXNG_SECRET")
+        return SearxNGProvider(env["SEARXNG_URL"], allowed_hosts, http_get, daily_cap=cap, api_key=api_key)
     return UnconfiguredProvider(allowed_hosts)
 
 

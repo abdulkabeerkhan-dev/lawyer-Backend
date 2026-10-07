@@ -146,13 +146,15 @@ class BM25Index:
 # Judicial Hierarchy & Recency Re-weighting
 # ---------------------------------------------------------------------------
 import datetime
+from core.court_taxonomy import COURT_AUTHORITY_WEIGHTS
 
 def get_court_authority_weight(citation: str, court_name: str = "") -> float:
     """
     Under Article 189 of the Constitution of Pakistan, Supreme Court of Pakistan
     decisions are binding on all courts in Pakistan (1.35x multiplier).
     Recognized provincial High Court decisions under Article 201 bind subordinate
-    courts in their respective province (1.05x multiplier).
+    courts in their respective province (1.10x multiplier).
+    Statutory tribunals receive 0.95x multiplier.
     Historical/external courts (Privy Council, Dhaka High Court, Federal Court,
     AJK courts, Board of Revenue) and unresolved records receive a neutral 1.0x weight.
     """
@@ -167,28 +169,37 @@ def get_court_authority_weight(citation: str, court_name: str = "") -> float:
         "COURT NOT IDENTIFIED", "UNKNOWN", "FEDERAL CONSTITUTIONAL COURT", "FEDERAL-CONSTITUTIONAL-COURT"
     ]
     if any(nc in court_upper for nc in neutral_courts):
-        return 1.0
+        return COURT_AUTHORITY_WEIGHTS["neutral"]
 
-    # 2. Supreme Court of Pakistan (Apex binding precedent under Art. 189)
+    # 2. Check for Tribunals / Ombudsman / Lower forum -> 0.95x
+    tribunal_keywords = [
+        "TRIBUNAL", "SERVICE TRIBUNAL", "APPELLATE TRIBUNAL", "FEDERAL TAX OMBUDSMAN",
+        "FTO", "BANKING TRIBUNAL", "SPECIAL TRIBUNAL", "CUSTOMS APPELLATE", "ATIR",
+        "ENVIRONMENTAL PROTECTION TRIBUNAL", "LABOUR APPELLATE TRIBUNAL"
+    ]
+    if any(tk in court_upper for tk in tribunal_keywords) or any(tk in cit_upper for tk in ["FTO", "ATIR", "TDAP"]):
+        return COURT_AUTHORITY_WEIGHTS["tribunal"]
+
+    # 3. Supreme Court of Pakistan (Apex binding precedent under Art. 189) -> 1.35x
     if "SUPREME COURT OF PAKISTAN" in court_upper:
-        return 1.35
+        return COURT_AUTHORITY_WEIGHTS["supreme_court"]
     if "SCMR" in cit_upper or "PLD SC" in cit_upper or "PLD_SC_" in cit_upper:
-        return 1.35
+        return COURT_AUTHORITY_WEIGHTS["supreme_court"]
 
-    # 3. Recognized Pakistani High Courts under Art. 201 (LHC, SHC, PHC, BHC, IHC)
+    # 4. Recognized Pakistani High Courts under Art. 201 (LHC, SHC, PHC, BHC, IHC) -> 1.10x
     recognized_high_courts = [
         "LAHORE HIGH COURT", "HIGH COURT OF SINDH", "PESHAWAR HIGH COURT",
         "HIGH COURT OF BALOCHISTAN", "ISLAMABAD HIGH COURT"
     ]
     if any(hc in court_upper for hc in recognized_high_courts):
-        return 1.05
+        return COURT_AUTHORITY_WEIGHTS["high_court"]
 
-    # 4. Fallback on citation reporter if court_name was empty/unspecified
+    # 5. Fallback on citation reporter if court_name was empty/unspecified -> 1.10x
     if not court_upper or court_upper in ("HIGH COURT", "COURT"):
         if any(h in cit_upper for h in ["PCRLJ", "CLC", "YLR", "MLD", "PTD", "PLC", "CLD", "PLJ", "NLR"]):
-            return 1.05
+            return COURT_AUTHORITY_WEIGHTS["high_court"]
 
-    return 1.0
+    return COURT_AUTHORITY_WEIGHTS["neutral"]
 
 
 def extract_year_num(year_val: Any, citation: str = "", doc_id: str = "") -> int:
@@ -207,16 +218,12 @@ def extract_year_num(year_val: Any, citation: str = "", doc_id: str = "") -> int
 
 def get_recency_weight(year_val: Any, citation: str = "", doc_id: str = "") -> float:
     """
-    Temporal precedence weighting: Gently prefers recent rulings without
-    penalizing or burying landmark constitutional and apex precedents.
-    Year-based decay/boost gives up to a +10% lift for contemporary precedents (2010–2026).
+    P1-4: Recency is governed by staged year-prioritized batch retrieval
+    (Batch 1: 2026-2024, Batch 2: 2023-2021) and judicial hierarchy reranking,
+    ensuring recency never causes a lower-court case to outrank an older binding
+    Supreme Court authority.
     """
-    y = extract_year_num(year_val, citation, doc_id)
-    if not y or y < 1900:
-        return 1.0
-    recency_delta = max(0, y - 2010)
-    recency_boost = (recency_delta / 16.0) * 0.10  # up to +0.10 (10%) lift
-    return 1.0 + recency_boost
+    return 1.0
 
 
 # ---------------------------------------------------------------------------
@@ -258,10 +265,11 @@ def reciprocal_rank_fusion(
     for doc_id in rrf_scores:
         meta = metadata_map.get(doc_id, {}) or {}
         cit = meta.get("citation", "") or meta.get("neutral_citation", "")
-        court = meta.get("court", "") or meta.get("court_name", "")
+        from core.court_taxonomy import get_effective_court
+        court = get_effective_court(meta) or ""
         raw_year = meta.get("year", 0) or meta.get("decision_date", "") or meta.get("date", "")
-
         court_weight = get_court_authority_weight(cit, court)
+
         recency_weight = get_recency_weight(raw_year, citation=cit, doc_id=doc_id)
 
         base_rrf = rrf_scores[doc_id]

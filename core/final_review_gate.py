@@ -2,6 +2,7 @@ import json
 import re
 import sys
 from typing import List, Dict, Any, Optional, Callable, Tuple
+from core.case_title_taxonomy import get_effective_title
 
 REVIEWER_SYSTEM_PROMPT = """You are an independent, strict judicial reviewer verifying a legal memorandum for Pakistan legal accuracy.
 You must examine every substantive legal claim, statutory proposition, and case proposition in the memorandum that cites an authority.
@@ -20,6 +21,13 @@ NOTE ON NEGATIVE FINDINGS AND CODIFIED STATUTES:
 
 NOTE ON CAPTION-ONLY OR THIN SOURCES:
 - When a retrieved authority contains ONLY caption metadata (parties, court, date, appeal numbers) or thin text without substantive judicial reasoning, ANY substantive legal rule, ratio decidendi, multi-point holding, or factual test attributed to that authority is STRICTLY UNSUPPORTED. The memorandum may ONLY state that the case was decided on that date between those parties, and must disclose that the text is caption-only in the database. Generating holdings, legal principles, or tests from model memory for caption-only records is an immediate verification failure.
+
+NOTE ON HEADNOTE-ONLY SOURCES (DISCOVERY LEADS):
+- When a retrieved authority is classified as 'headnote_only' or categorized under Discovery Leads, it serves for preliminary discovery only.
+- It may NOT enter the substantive synthesis as an established holding of the court or a verified ratio decidendi.
+- Paraphrasing a headnote as an established judicial holding or attributing verbatim judicial quotations to the court from headnotes is STRICTLY UNSUPPORTED.
+- It may ONLY be cited under a dedicated preliminary leads section with the required disclaimer ("A reported headnote indicates that this authority may address the proposition, but the underlying judgment text has not been verified and I would not rely on it as verified authority yet").
+- If only discovery leads were retrieved, asserting that a verified primary judicial holding exists is STRICTLY UNSUPPORTED.
 
 You must respond ONLY with a valid JSON object matching this schema:
 {
@@ -57,7 +65,7 @@ async def run_final_review_gate(
     # Format context chunks for reviewer
     formatted_contexts = []
     for i, c in enumerate(context_chunks[:40]):
-        title = c.get("case_title") or c.get("title") or c.get("case_name") or f"Authority {i+1}"
+        title = get_effective_title(c) or c.get("case_name") or f"Authority {i+1}"
         cit = c.get("neutral_citation") or c.get("citation") or c.get("case_id") or ""
         txt = c.get("text") or c.get("full_text") or c.get("raw_text") or c.get("snippet") or ""
         formatted_contexts.append(f"--- AUTHORITY {i+1}: {title} ({cit}) ---\n{txt[:3500]}")
@@ -89,7 +97,7 @@ async def run_final_review_gate(
         from main import safe_create_anthropic_message, CLAUDE_MODEL
         resp = await safe_create_anthropic_message(
             model=CLAUDE_MODEL,
-            max_tokens=4096,
+            max_tokens=1500,
             temperature=0.0,
             system=REVIEWER_SYSTEM_PROMPT,
             messages=[{"role": "user", "content": user_eval_prompt}]
