@@ -138,8 +138,8 @@ def health_check():
         "status": "ok",
         "healthy": True,
         "model": CLAUDE_MODEL,
-        "version": "2.4.0-mission2b",
-        "build": os.environ.get("RAILWAY_GIT_COMMIT_SHA", os.environ.get("BUILD_SHA", "d0c56df"))[:7]
+        "version": "2.4.1-remediation",
+        "build": os.environ.get("RAILWAY_GIT_COMMIT_SHA", os.environ.get("BUILD_SHA", "deploy-trigger"))[:7]
     }
 
 @app.get("/coverage")
