@@ -107,7 +107,13 @@ async def process_query_job_legal_ai(
     """
     Executes the modern legal_ai architecture for query processing.
     """
-    effective_user_query = str(getattr(request, "query_text", "") or "").strip()
+    raw_input_text = str(getattr(request, "query_text", "") or "").strip()
+    effective_user_query = re.sub(
+        r'\[(?:What you know about this lawyer|Earlier in this conversation|Answer style|Context|Instructions?):[\s\S]*?\]',
+        '',
+        raw_input_text,
+        flags=re.IGNORECASE
+    ).strip() or raw_input_text
 
     # Fast path: Chitchat
     _CHITCHAT_EXACT = {
