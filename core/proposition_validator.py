@@ -1,4 +1,4 @@
-﻿"""
+"""
 Proposition-Level Citation Grounding & Doctrine Verification Engine
 
 Implements strict validation of legal propositions against retrieved corpus texts,
