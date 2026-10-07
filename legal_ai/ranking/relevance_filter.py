@@ -138,3 +138,52 @@ def filter_candidate_quality_before_ranking(
         clean_candidates.append(c)
 
     return clean_candidates, rejection_counts
+
+
+def filter_topic_relevance(
+    candidates: List[Dict[str, Any]],
+    topics: List[str]
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], List[str]]:
+    """
+    Topic-level relevance gating layer.
+    Evaluates candidate texts against topic-specific 'relevance.strong' markers.
+    Returns:
+        passing_candidates: Candidates matching at least one strong marker for any detected topic.
+        rejected_candidates: Candidates not passing the topic marker test.
+        abstain_topics: Topics for which ZERO candidates matched.
+    """
+    from legal_ai.verification.doctrinal_rules import TOPICS_SPEC
+    if not topics:
+        return candidates, [], []
+
+    passing: List[Dict[str, Any]] = []
+    rejected: List[Dict[str, Any]] = []
+    topic_match_counts = {t: 0 for t in topics if t in TOPICS_SPEC}
+
+    for c in candidates:
+        text = str(
+            c.get("holding") or c.get("headnote") or c.get("text")
+            or c.get("preview") or c.get("full_text") or c.get("snippet") or ""
+        )
+        if not text.strip():
+            rejected.append(c)
+            continue
+
+        matched_any = False
+        for t in topics:
+            if t not in TOPICS_SPEC:
+                continue
+            spec = TOPICS_SPEC[t]
+            strong = [p for p in spec["relevance"]["strong"] if re.search(p, text, re.IGNORECASE)]
+            if strong:
+                topic_match_counts[t] += 1
+                matched_any = True
+
+        if matched_any:
+            passing.append(c)
+        else:
+            rejected.append(c)
+
+    abstain_topics = [t for t, count in topic_match_counts.items() if count == 0]
+    return passing, rejected, abstain_topics
+

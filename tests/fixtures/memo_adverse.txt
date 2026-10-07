@@ -1,0 +1,17 @@
+LEGAL MEMORANDUM
+Adverse Possession Against Provincial Government: Maturation of Title Under Section 28, Limitation Act 1908
+1. ### EXECUTIVE SUMMARY & LEGAL OPINION
+Direct Opinion: Adverse possession cannot mature into ownership against the Provincial Government under Section 28 of the Limitation Act 1908. The statutory bar against possession of Government property is absolute and operates as an insurmountable legal impediment.
+Section 28 provides the statutory foundation for Government immunity from adverse possession claims:
+“No period of limitation fixed by this Act shall run against the Government in respect of any property in its possession or the possession of any person in trust for it.”
+Transfer of Property Act 1882, Section 110: Prescribes the conditions for adverse possession in general. Twelve years' continuous possession in good faith is the threshold.
+Transfer of Property Act 1882, Section 49: Requires registration of documents creating future obligations or rights.
+High Courts exercise appellate and revisional jurisdiction under Articles 181, 182, and 189 of the Limitation Act 1908.
+Lengthy possession of Government property cannot convert illegal occupation into legal title, as in 2025 PLD 502 (HIDAYAT KHAN v. Mst. NASREEN).
+6. ### PRE-ARREST BAIL STRATEGY (OR PROCEDURAL REMEDY)
+Remedy 3: Revision Petition Under Section 561-A Cr.P.C. (Misapplied). A claimant might file a revision petition arguing the trial court erred.
+A claimant might petition the Supreme Court under Article 184(3) Constitution arguing Section 28 violates Article 23.
+8. ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES
+No reported cases explicitly reconciling Section 110 with Section 28 have been retrieved. Cases establishing the abandonment exception are not substantiated in the retrieved precedents.
+Litigation grounded in adverse possession faces zero realistic prospect of success.
+<<<CARDS>>> [ { “case_name”: “HIDAYAT KHAN VS Mst. NASREEN”, “citation”: “2025 PLD 502”, "court": “Supreme Court of Pakistan”, "year“: 2025, ”sections": [“Transfer of Property Act 1882, Section 123”], “legal_issue”: “Efflux of time”, “ratio_decidendi”: “Mere efflux of time does not extinguish the right of inheritance”, “important_paragraphs”: “Mere efflux of time does not extinguish the right of inheritance, therefore, question of limitation in case of inheritance and fraud is not attracted”, “authority_strength”: “Binding”, "pdf_url": “Not provided”, “source_type”: “PLD”, “verification_status”: “Confirmed from provided case matrix” }, { “case_name”: “ZHONGZING TELECOM VS IMPERIAL ELECTRIC”, “citation”: “2026 PLD 217 and 2026 CLD 642”, "court": “Supreme Court of Pakistan”, "year“: 2026, ”sections": [“Article 178”], “legal_issue”: “Primary vs residuary”, “ratio_decidendi”: “Article 178 being primary provision regulates period for making Award Rule of Court”, “important_paragraphs”: “Article 178 of the Act of 1908 being the primary provision regulated the period within which proceedings could be instituted”, “authority_strength”: “Binding”, "pdf_url": “Not provided”, “source_type”: “PLD”, “verification_status”: “Confirmed from provided case matrix” } ] <<<END_CARDS>>>

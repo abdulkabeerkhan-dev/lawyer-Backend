@@ -83,16 +83,24 @@ def sanitize_precedent_card(card: Dict[str, Any], backend_base_url: str = "") ->
     c["case_name"] = title
     c["title"] = title
 
-    # 2. citation
-    cit = str(c.get("citation") or c.get("neutral_citation") or c.get("case_id") or "Neutral Citation").strip()
-    c["citation"] = cit
-    c["neutral_citation"] = cit
-
     # 3. court
     raw_court = str(c.get("court") or c.get("court_name") or "Supreme Court of Pakistan").strip()
     court = normalize_court_name(raw_court)
     c["court"] = court
     c["court_name"] = court
+
+    # 2. citation
+    cit = str(c.get("citation") or c.get("neutral_citation") or c.get("case_id") or "Neutral Citation").strip()
+    try:
+        from legal_ai.verification.statute_matcher import normalize_citation, norm_text, shingles
+        canon_cit, is_canon = normalize_citation(cit, court)
+        if is_canon:
+            cit = canon_cit
+    except Exception:
+        norm_text = None
+        shingles = None
+    c["citation"] = cit
+    c["neutral_citation"] = cit
 
     # 4. year
     year_val = c.get("year") or c.get("date")
@@ -150,7 +158,8 @@ def sanitize_precedent_card(card: Dict[str, Any], backend_base_url: str = "") ->
     c["authority_strength"] = str(c_strength).strip()
 
     # 10. pdf_url
-    c["pdf_url"] = resolve_judgment_pdf_url(c, backend_base_url=backend_base_url)
+    raw_pdf = resolve_judgment_pdf_url(c, backend_base_url=backend_base_url)
+    c["pdf_url"] = str(raw_pdf).strip() if (raw_pdf and str(raw_pdf).strip().startswith("http")) else None
 
     # 11. source_type
     raw_src = c.get("source_type") or c.get("source")
@@ -168,7 +177,7 @@ def sanitize_precedent_card(card: Dict[str, Any], backend_base_url: str = "") ->
     # 12. verification_status
     c_type = str(c.get("content_type", "")).lower()
     raw_vstatus = c.get("verification_status")
-    if not raw_vstatus:
+    if not raw_vstatus or "verified against" in str(raw_vstatus).lower():
         raw_text_len = len(str(c.get("raw_judgment_text") or c.get("preview") or "").split())
         if c_type in ("full_text", "fresh_court_fetch") and raw_text_len >= 150:
             raw_vstatus = "Verified Full Judgment"

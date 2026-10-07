@@ -1,0 +1,14 @@
+LEGAL MEMORANDUM
+Order XXXIX Civil Procedure Code 1908: Injunctive Relief Framework
+Rule 1 establishes the court's power to grant injunctions. The rule enumerates three categories of injunction: (a) interim; (b) final injunctions granted after judgment; and (c) declaratory injunctions.
+Rule 4 governs the scope and duration of ex parte injunctions, and Rule 4(2) mandates that the ex parte order shall lapse unless the applicant obtains an inter partes injunction.
+Sections 42 and 54 of the Specific Relief Act, 1877 provide the substantive law governing injunctions. Section 42 establishes that an injunction may be granted to prevent the breach of an obligation.
+Order XXXIX remains the exclusive and controlling statutory framework for injunctions.
+6. ### PRE-ARREST BAIL STRATEGY (OR PROCEDURAL REMEDY)
+If a subordinate court wrongly dismisses an Order XXXIX application, the remedy is a petition to the High Court under Section 561-A C.P.C. File a revision within 30 days of dismissal.
+An application under Order XXXIX Rule 2 (final injunction ancillary to judgment) may be filed in the executing court.
+The Supreme Court retains inherent power under Article 184(3) of the Constitution to grant interim relief. File contempt proceedings under the Contempt of Court Ordinance, 2003.
+8. ### APPENDIX
+The case matrix did not retrieve judgments addressing procedural consequences of disobedience to injunctions (Rule 3) or attachment of property.
+Verification Status: All statutory citations are drawn directly from the retrieved superior court judgments or official statutory text.
+<<<CARDS>>> [ { “case_name”: “Raja Amer Khan v. Federation of Pakistan”, “citation”: “2025 PLD 869”, "court": “Supreme Court of Pakistan”, "year": "2025", “sections”: [“Article 191”], “legal_issue”: “SC procedure”, “ratio_decidendi”: “Supreme Court is not bound to follow Code of Civil Procedure”, “important_paragraphs”: “NOT by C.P.C.”, “authority_strength”: “Binding”, "pdf_url": “Retrieved from official Supreme Court records”, “source_type”: “PLD”, “verification_status”: “Verified against official records” }, { “case_name”: “Muhammad Aslam Mianoor v. Pakistan Cables Ltd.”, “citation”: “2008 YLR 1536”, "court": “High Court of Sindh”, "year": "2008", “sections”: [“Order XXXIX Rules 1, 2 & 4”], “legal_issue”: “Injunction”, “ratio_decidendi”: “Order XXXIX Rules 1, 2 & 4 govern injunctions”, “important_paragraphs”: “x”, “authority_strength”: “Binding”, "pdf_url": “Retrieved from official court records”, “source_type”: “YLR”, “verification_status”: “Verified against official records” } ] <<<END_CARDS>>>

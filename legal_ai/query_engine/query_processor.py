@@ -26,8 +26,17 @@ from legal_ai.config import (
     get_backend_base_url
 )
 from legal_ai.retrieval.unified_orchestrator import retrieve_candidates_parallel
-from legal_ai.ranking.relevance_filter import filter_candidate_quality_before_ranking
+from legal_ai.ranking.relevance_filter import (
+    filter_candidate_quality_before_ranking,
+    filter_topic_relevance,
+)
 from legal_ai.ranking.authority_ranker import rank_and_filter_authorities
+from legal_ai.verification import (
+    classify_matter_type,
+    detect_topics,
+    build_pre_synthesis_trap_instructions,
+    audit_memo,
+)
 from legal_ai.synthesis.memorandum_generator import (
     purge_debug_warnings,
     sanitize_precedent_card
@@ -202,14 +211,22 @@ async def process_query_job_legal_ai(
         raw_candidates=merged_candidates,
         query_plan=legal_query_plan
     )
+
+    detected_topics = detect_topics(effective_user_query)
+    admitted_candidates, rejected_by_topic, abstain_topics = filter_topic_relevance(
+        candidates=clean_candidates,
+        topics=detected_topics
+    )
+    ranking_pool = admitted_candidates if (detected_topics and admitted_candidates) else clean_candidates
+
     pipeline_metrics.record_candidate_filtering(
         raw_count=len(merged_candidates),
         rejected_counts=rejection_counts,
-        admitted_count=len(clean_candidates)
+        admitted_count=len(ranking_pool)
     )
 
     ranked_authorities = rank_and_filter_authorities(
-        candidates=clean_candidates,
+        candidates=ranking_pool,
         query_plan=legal_query_plan,
         top_k=6
     )
@@ -236,10 +253,24 @@ async def process_query_job_legal_ai(
     system_prompt = _load_system_prompt()
     precedent_context_block = _build_precedent_context_block(precedent_cards)
 
+    plan_domains = getattr(legal_query_plan, "legal_domain", []) if hasattr(legal_query_plan, "legal_domain") else []
+    matter_type = classify_matter_type(effective_user_query, plan_domains)
+    if matter_type == "criminal":
+        sec6_heading = "   - ### 6. ### PRE-ARREST BAIL STRATEGY (OR PROCEDURAL REMEDY)\n"
+    else:
+        sec6_heading = "   - ### 6. ### PROCEDURAL REMEDY & APPELLATE STRATEGY\n"
+
+    trap_instructions = build_pre_synthesis_trap_instructions(
+        matter_type=matter_type,
+        topics=detected_topics,
+        abstain_topics=abstain_topics
+    )
+
     user_synthesis_content = (
         f"FACTUAL MATRIX / LEGAL QUERY:\n{effective_user_query}\n\n"
         f"STATUTORY & CURRENT LAW FRAMEWORK:\n{formatted_current_law_block}\n\n"
         f"{precedent_context_block}\n\n"
+        f"{trap_instructions}\n\n"
         "Draft the exhaustive, authoritative 8-part Senior Counsel legal opinion addressing this query.\n\n"
         "MANDATORY PACING & STRUCTURE INSTRUCTIONS:\n"
         "1. TOTAL WORD BUDGET: The entire memorandum should be between 2,500 and 3,500 words across all 8 sections (approx 300-400 words per section). Keep analysis crisp, incisive, and authoritative so that you never exhaust the token window before concluding.\n"
@@ -249,7 +280,7 @@ async def process_query_job_legal_ai(
         "   - ### 3. ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX\n"
         "   - ### 4. ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE\n"
         "   - ### 5. ### APPLICATION OF LAW TO FACTS\n"
-        "   - ### 6. ### PRE-ARREST BAIL STRATEGY (OR PROCEDURAL REMEDY)\n"
+        f"{sec6_heading}"
         "   - ### 7. ### RECOMMENDATIONS & LITIGATION ROADMAP\n"
         "   - ### 8. ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES\n"
         "3. YOU MUST COMPLETE SECTION 8 BEFORE CONCLUDING.\n"
@@ -282,6 +313,18 @@ async def process_query_job_legal_ai(
     pipeline_metrics.start_stage("verifying_output")
 
     clean_answer = purge_debug_warnings(raw_answer)
+
+    # Stage-6 In-Memory Verification Audit (Zero Banners, < 20ms)
+    audit_report = audit_memo(
+        memo=clean_answer,
+        query=effective_user_query,
+        retrieved=precedent_cards,
+        matter_type=matter_type,
+        drop_irrelevant_cards=False
+    )
+    if audit_report.body and audit_report.body != clean_answer:
+        clean_answer = audit_report.body
+    verification_report_payload = audit_report.to_dict()
 
     # Ensure Section 8 Appendix is always present even if LLM output was boundary-constrained
     if "appendix" not in clean_answer.lower():
@@ -368,6 +411,7 @@ async def process_query_job_legal_ai(
                 "superseding_citation": None,
                 "superseding_case_name": None,
                 "doctrinal_note": None,
+                "verification_report": verification_report_payload,
             },
             "completed_at": datetime.now(timezone.utc),
             "continue_state": {
