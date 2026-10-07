@@ -42,7 +42,7 @@ if os.environ.get("ALLOW_DIRECT_PROD_MUTATION") != "TRUE":
     )
 
 
-RAILWAY_URL = os.environ.get("RAILWAY_URL", "https://lawyer-backend-production-5804.up.railway.app")
+RAILWAY_URL = os.environ.get("RAILWAY_URL", "https://lawyer-backend-production-26c7.up.railway.app")
 
 JOURNAL_REGEX = r'(?:PLD|SCMR|PCrLJ|PCRLJ|CLC|MLD|YLR|CLD|PTD|PLC\s*\(CS\)|PLC|PLJ|NLR|GBLR|PTCL|ALD|SLR|ILR|SBLR)'
 

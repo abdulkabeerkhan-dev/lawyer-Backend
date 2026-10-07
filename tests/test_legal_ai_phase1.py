@@ -143,6 +143,22 @@ class TestLegalAIPhase1(unittest.TestCase):
                 content = f.read()
                 self.assertGreater(len(content), 100)
 
+    def test_pdf_public_access_and_base_url(self):
+        """Verifies that /judgment-pdf/ requires zero auth and base URL points to 26c7."""
+        import main
+        from legal_ai.config import get_backend_base_url
+        from fastapi.testclient import TestClient
+
+        self.assertEqual(get_backend_base_url(), "https://lawyer-backend-production-26c7.up.railway.app")
+        self.assertEqual(main.get_backend_base_url(), "https://lawyer-backend-production-26c7.up.railway.app")
+
+        client = TestClient(main.app)
+        # Request with NO Authorization bearer token
+        resp = client.get("/judgment-pdf/aa5ec63f-e7fd-4bb5-83f4-b2c23d1ba76a")
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.headers.get("content-type"), "application/pdf")
+        self.assertTrue(resp.content.startswith(b"%PDF"))
+
 
 if __name__ == "__main__":
     unittest.main()

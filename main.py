@@ -354,7 +354,7 @@ def get_backend_base_url() -> str:
         if not domain.startswith("http://") and not domain.startswith("https://"):
             return f"https://{domain}"
         return domain
-    return "https://lawyer-backend-production-5804.up.railway.app"
+    return "https://lawyer-backend-production-26c7.up.railway.app"
 
 async def get_voyage_embedding(text: str) -> List[float]:
     if not VOYAGE_API_KEY:

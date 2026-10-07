@@ -6,7 +6,7 @@ import sys
 # Add parent directory to sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-RAILWAY_URL = os.environ.get("RAILWAY_URL", "https://lawyer-backend-production-5804.up.railway.app")
+RAILWAY_URL = os.environ.get("RAILWAY_URL", "https://lawyer-backend-production-26c7.up.railway.app")
 RUN_LIVE_TESTS = os.environ.get("RUN_LIVE_TESTS", "").strip().lower() in ("1", "true", "yes")
 skip_unless_live = unittest.skipUnless(RUN_LIVE_TESTS, "Live network test: set RUN_LIVE_TESTS=1 to run")
 
