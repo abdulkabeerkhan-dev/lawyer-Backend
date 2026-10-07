@@ -2856,6 +2856,11 @@ def purge_debug_warnings(text: str) -> str:
     Strips all Prototype warnings, verification notices, completeness notices,
     and statutory currency warning tags from user-facing output; confines all to internal logs.
     """
+    try:
+        from legal_ai.synthesis.memorandum_generator import purge_debug_warnings as _purge
+        return _purge(text)
+    except Exception:
+        pass
     if not text:
         return ""
     clean = text
@@ -2891,6 +2896,11 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
     """Sanitizes every field of a precedent card to ensure zero scraper artifacts
     (e.g., 'Citation Name:', portal banners, raw court tags) leak into the frontend.
     """
+    try:
+        from legal_ai.synthesis.memorandum_generator import sanitize_precedent_card as _sanitize
+        return _sanitize(card)
+    except Exception:
+        pass
     if not isinstance(card, dict):
         return card
 
