@@ -957,7 +957,7 @@ async def safe_create_anthropic_message(**kwargs):
     if "max_output_tokens" in call_kwargs:
         call_kwargs["max_tokens"] = call_kwargs.pop("max_output_tokens")
     if "max_tokens" not in call_kwargs:
-        call_kwargs["max_tokens"] = int(os.environ.get("MAX_SYNTHESIS_TOKENS", "2500"))
+        call_kwargs["max_tokens"] = int(os.environ.get("MAX_SYNTHESIS_TOKENS", "8192"))
 
     # Handle temperature parameter compatibility across Anthropic SDK versions
     if "temperature" in call_kwargs:
@@ -5430,6 +5430,8 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                 "3. Ensure all mandatory sections are fully articulated with at least 25 words per section and <<<CARDS>>> JSON.\n"
                 "4. NEVER describe an interlocutory direction, deposit order, or statutory provision as 'ultra vires' or declare 'no precedent exists' unless a cited judgment explicitly uses those exact words.\n"
                 "5. In the procedural risks and recommendations sections, always explicitly advise on the consequence of non-compliance and recommend practical protective steps.\n"
+                "6. DO NOT cite ungrounded Constitutional Articles (such as Article 199) unless explicitly present in the retrieved authorities or raised in the query. Ground criminal and bail remedies directly in the Cr.P.C. (Sections 497, 498, 561-A, 249-A).\n"
+                "7. Keep each section comprehensive yet focused (approx. 200–400 words per section) so that ALL 8 sections from EXECUTIVE SUMMARY through RECOMMENDATIONS & LITIGATION ROADMAP and APPENDIX are fully written without truncation.\n"
             )
             messages.append({
                 "role": "user",
@@ -5462,7 +5464,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
             if round_idx >= MAX_TOOL_ROUNDS:
                 tools_to_pass = []
 
-            synthesis_max_tokens = int(os.environ.get("MAX_SYNTHESIS_TOKENS", "2500"))
+            synthesis_max_tokens = int(os.environ.get("MAX_SYNTHESIS_TOKENS", "8192"))
             claude_message = await safe_create_anthropic_message(
                 model=CLAUDE_MODEL,
                 max_tokens=synthesis_max_tokens,
@@ -5518,6 +5520,8 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     "3. Ensure all mandatory sections are fully articulated with at least 25 words per section and <<<CARDS>>> JSON.\n"
                     "4. NEVER describe an interlocutory direction, deposit order, or statutory provision as 'ultra vires' or declare 'no precedent exists' unless a cited judgment explicitly uses those exact words.\n"
                     "5. In the procedural risks and recommendations sections, always explicitly advise on the consequence of non-compliance and recommend practical protective steps.\n"
+                    "6. DO NOT cite ungrounded Constitutional Articles (such as Article 199) unless explicitly present in the retrieved authorities or raised in the query. Ground criminal and bail remedies directly in the Cr.P.C. (Sections 497, 498, 561-A, 249-A).\n"
+                    "7. Keep each section comprehensive yet focused (approx. 200–400 words per section) so that ALL 8 sections from EXECUTIVE SUMMARY through RECOMMENDATIONS & LITIGATION ROADMAP and APPENDIX are fully written without truncation.\n"
                 )
                 if tool_result_blocks:
                     tool_result_blocks[0]["content"] = str(tool_result_blocks[0]["content"]) + synthesis_instruction
