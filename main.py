@@ -5347,32 +5347,23 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             final_pool = primary_matches + secondary_matches
             zero_authorities_found = (is_mandatory_authority_query and not valid_quality_matches)
 
-            # Emit exact pipeline telemetry block
-            sections_log = ", ".join(legal_query_plan.provisions) if (hasattr(legal_query_plan, "provisions") and legal_query_plan.provisions) else "N/A"
-            issues_log = "; ".join(legal_query_plan.legal_questions) if (hasattr(legal_query_plan, "legal_questions") and legal_query_plan.legal_questions) else (raw_search_query or effective_user_query)
-
-            pipeline_log_block = (
-                f"\nQUERY PLAN:\n"
-                f"Sections: {sections_log}\n"
-                f"Issues: {issues_log}\n\n"
-                f"SUPABASE RESULTS:\n"
-                f"count: {count_supabase}\n\n"
-                f"PINECONE RESULTS:\n"
-                f"count: {count_pinecone}\n\n"
-                f"BM25 RESULTS:\n"
-                f"count: {count_bm25}\n\n"
-                f"EXTERNAL RESULTS:\n"
-                f"count: {count_external}\n\n"
-                f"FILTERED:\n"
-                f"- caption only: {filtered_counts['caption only']}\n"
-                f"- wrong jurisdiction: {filtered_counts['wrong jurisdiction']}\n"
-                f"- irrelevant topic: {filtered_counts['irrelevant topic']}\n"
-                f"- low quality: {filtered_counts['low quality']}\n"
-                f"- trust gate exclusion: {filtered_counts['trust gate exclusion']}\n\n"
-                f"FINAL AUTHORITY POOL:\n"
-                f"count: {len(final_pool)}\n"
-            )
-            print(pipeline_log_block, flush=True)
+            # Emit exact pipeline telemetry block with mandatory source distribution %
+            sections_list = legal_query_plan.provisions if (hasattr(legal_query_plan, "provisions") and legal_query_plan.provisions) else []
+            issues_list = legal_query_plan.legal_questions if (hasattr(legal_query_plan, "legal_questions") and legal_query_plan.legal_questions) else ([raw_search_query or effective_user_query] if (raw_search_query or effective_user_query) else [])
+            try:
+                from legal_ai.analytics.telemetry import log_retrieval_telemetry
+                log_retrieval_telemetry(
+                    sections=sections_list,
+                    issues=issues_list,
+                    count_supabase=count_supabase,
+                    count_pinecone=count_pinecone,
+                    count_bm25=count_bm25,
+                    count_external=count_external,
+                    filtered_counts=filtered_counts,
+                    final_pool=final_pool
+                )
+            except Exception as telem_err:
+                print(f"⚠️ Telemetry log notice: {telem_err}", file=sys.stderr, flush=True)
 
             if zero_authorities_found:
                 trace_logger.log_final_context([])

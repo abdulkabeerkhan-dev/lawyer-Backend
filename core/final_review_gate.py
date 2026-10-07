@@ -95,7 +95,10 @@ async def run_final_review_gate(
             }
 
         # Use anthropic client at temperature 0
-        from main import safe_create_anthropic_message, CLAUDE_MODEL
+        try:
+            from legal_ai.config import safe_create_anthropic_message, CLAUDE_MODEL
+        except ImportError:
+            from main import safe_create_anthropic_message, CLAUDE_MODEL
         reviewer_max_tokens = int(os.environ.get("MAX_REVIEWER_TOKENS", "3500"))
         resp = await safe_create_anthropic_message(
             model=CLAUDE_MODEL,
