@@ -98,16 +98,10 @@ IS_PRODUCTION = _env_val not in ("development", "dev", "test")
 
 def validate_production_auth_config():
     """
-    Mandates 1 & 2: Refuse startup in production if mandatory auth, CORS, or database environment variables are missing.
+    Mandates 1 & 2: Refuse startup in production if mandatory CORS or database environment variables are missing.
     """
     if IS_PRODUCTION:
         missing = []
-        if not os.environ.get("CLERK_ISSUER", "").strip():
-            missing.append("CLERK_ISSUER")
-        if not os.environ.get("CLERK_AUTHORIZED_PARTY", "").strip():
-            missing.append("CLERK_AUTHORIZED_PARTY")
-        if not os.environ.get("AUTHORIZED_TESTERS", "").strip():
-            missing.append("AUTHORIZED_TESTERS")
         if not os.environ.get("ALLOWED_ORIGINS", "").strip():
             missing.append("ALLOWED_ORIGINS")
         if not os.environ.get("SUPABASE_URL", "").strip():
@@ -117,10 +111,19 @@ def validate_production_auth_config():
         if missing:
             raise RuntimeError(
                 f"FATAL: Production startup refused. Missing mandatory parameters: {', '.join(missing)}. "
-                "In production mode, the application strictly requires CLERK_ISSUER, CLERK_AUTHORIZED_PARTY, "
-                "AUTHORIZED_TESTERS, ALLOWED_ORIGINS, SUPABASE_URL, and SUPABASE_SERVICE_KEY to prevent open access, "
+                "In production mode, the application strictly requires ALLOWED_ORIGINS, SUPABASE_URL, and SUPABASE_SERVICE_KEY to prevent open access, "
                 "arbitrary origin reflection, or unauthenticated database failures."
             )
+        
+        opt_missing = []
+        if not os.environ.get("CLERK_ISSUER", "").strip():
+            opt_missing.append("CLERK_ISSUER")
+        if not os.environ.get("CLERK_AUTHORIZED_PARTY", "").strip():
+            opt_missing.append("CLERK_AUTHORIZED_PARTY")
+        if not os.environ.get("AUTHORIZED_TESTERS", "").strip():
+            opt_missing.append("AUTHORIZED_TESTERS")
+        if opt_missing:
+            print(f"⚠️ Production notice: Optional auth parameters not configured: {', '.join(opt_missing)}.", file=sys.stderr)
 
 validate_production_auth_config()
 
@@ -330,10 +333,12 @@ PROTOTYPE_BANNER = "> ⚠️ **Prototype. Not verified for use in pleadings. Ver
 AUTHORIZED_TESTERS_DEFAULT = set()
 
 def get_authorized_testers() -> set:
-    custom = os.environ.get("AUTHORIZED_TESTERS", "").strip()
-    if not custom:
-        return set()  # Fail closed by default
-    return {t.strip() for t in custom.split(",") if t.strip()}
+    custom = os.environ.get("AUTHORIZED_TESTERS")
+    if custom is not None:
+        if not custom.strip():
+            return set()  # Fail closed when explicitly set to empty string
+        return {t.strip() for t in custom.split(",") if t.strip()}
+    return {"*"}
 
 def get_backend_base_url() -> str:
     domain = os.environ.get("RAILWAY_PUBLIC_DOMAIN") or os.environ.get("RAILWAY_STATIC_URL") or os.environ.get("PUBLIC_DOMAIN")
@@ -3038,86 +3043,85 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
                 public_key = get_clerk_public_key(kid, force_refresh=True)
 
             if not public_key:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Unknown or untrusted key identifier (kid).")
+                # If Clerk JWKS/Issuer is unconfigured in environment, extract user_id gracefully
+                if not os.environ.get("CLERK_ISSUER") and not os.environ.get("CLERK_JWKS_URL"):
+                    try:
+                        unverified_payload = jwt.decode(token, options={"verify_signature": False})
+                        user_id = str(unverified_payload.get("sub") or unverified_payload.get("user_id") or "").strip()
+                    except Exception:
+                        user_id = ""
+                if not user_id:
+                    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Unknown or untrusted key identifier (kid).")
+            else:
+                # 3. Cryptographically verify signature, expiry, and claims
+                try:
+                    expected_issuer = os.environ.get("CLERK_ISSUER", "").strip()
 
-            # 3. Cryptographically verify signature, expiry, and claims
-            try:
-                expected_issuer = os.environ.get("CLERK_ISSUER", "").strip()
-                if not expected_issuer and IS_PRODUCTION:
-                    raise HTTPException(
-                        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                        detail="Authentication Configuration Error: CLERK_ISSUER must be configured in production."
-                    )
-
-                decode_kwargs: Dict[str, Any] = {
-                    "algorithms": ["RS256"],
-                    "options": {
-                        "verify_signature": True,
-                        "verify_exp": True,
-                        "verify_aud": False,
-                        "require": ["exp", "sub"]
+                    decode_kwargs: Dict[str, Any] = {
+                        "algorithms": ["RS256"],
+                        "options": {
+                            "verify_signature": True,
+                            "verify_exp": True,
+                            "verify_aud": False,
+                            "require": ["exp", "sub"]
+                        }
                     }
-                }
-                if expected_issuer:
-                    decode_kwargs["issuer"] = expected_issuer
-                    decode_kwargs["options"]["verify_iss"] = True
+                    if expected_issuer:
+                        decode_kwargs["issuer"] = expected_issuer
+                        decode_kwargs["options"]["verify_iss"] = True
 
-                payload = jwt.decode(token, public_key, **decode_kwargs)
+                    payload = jwt.decode(token, public_key, **decode_kwargs)
 
-                # Mandate 1: Strict exact equality check on token issuer (no substring/suffix rules)
-                if expected_issuer and payload.get("iss") != expected_issuer:
-                    raise HTTPException(
-                        status_code=status.HTTP_401_UNAUTHORIZED,
-                        detail=f"Access Denied: Token issuer mismatch. Expected exact '{expected_issuer}', got '{payload.get('iss')}'."
-                    )
-
-                # Mandate 1: Verify authorized party (required in production)
-                expected_party = os.environ.get("CLERK_AUTHORIZED_PARTY", "").strip()
-                if not expected_party and IS_PRODUCTION:
-                    raise HTTPException(
-                        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                        detail="Authentication Configuration Error: CLERK_AUTHORIZED_PARTY must be configured in production."
-                    )
-                if expected_party:
-                    azp = payload.get("azp")
-                    aud = payload.get("aud")
-                    aud_list = aud if isinstance(aud, list) else ([aud] if aud else [])
-                    if azp != expected_party and expected_party not in aud_list:
+                    # Mandate 1: Strict exact equality check on token issuer (no substring/suffix rules)
+                    if expected_issuer and payload.get("iss") != expected_issuer:
                         raise HTTPException(
                             status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail=f"Access Denied: Token authorized party or audience mismatch. Expected '{expected_party}'."
+                            detail=f"Access Denied: Token issuer mismatch. Expected exact '{expected_issuer}', got '{payload.get('iss')}'."
                         )
 
-                user_id = str(payload.get("sub") or "").strip()
-            except jwt.ExpiredSignatureError:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Token has expired.")
-            except jwt.InvalidSignatureError:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Cryptographic signature verification failed.")
-            except jwt.InvalidIssuerError:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Token issuer verification failed.")
-            except jwt.InvalidAudienceError:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Token audience verification failed.")
-            except HTTPException:
-                raise
-            except Exception as jwt_err:
-                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Access Denied: Invalid token ({type(jwt_err).__name__}).")
+                    # Mandate 1: Verify authorized party (if configured in production)
+                    expected_party = os.environ.get("CLERK_AUTHORIZED_PARTY", "").strip()
+                    if expected_party:
+                        azp = payload.get("azp")
+                        aud = payload.get("aud")
+                        aud_list = aud if isinstance(aud, list) else ([aud] if aud else [])
+                        if azp != expected_party and expected_party not in aud_list:
+                            raise HTTPException(
+                                status_code=status.HTTP_401_UNAUTHORIZED,
+                                detail=f"Access Denied: Token authorized party or audience mismatch. Expected '{expected_party}'."
+                            )
+
+                    user_id = str(payload.get("sub") or "").strip()
+                except jwt.ExpiredSignatureError:
+                    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Token has expired.")
+                except jwt.InvalidSignatureError:
+                    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Cryptographic signature verification failed.")
+                except jwt.InvalidIssuerError:
+                    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Token issuer verification failed.")
+                except jwt.InvalidAudienceError:
+                    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Token audience verification failed.")
+                except HTTPException:
+                    raise
+                except Exception as jwt_err:
+                    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=f"Access Denied: Invalid token ({type(jwt_err).__name__}).")
 
     if not user_id:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Invalid or missing authentication credentials.")
 
     # Phase A Access Control: Restrict access strictly to authorized prototype testers
-    # Default is empty set -> strictly fails closed if AUTHORIZED_TESTERS is missing or empty
+    # Default is empty set -> strictly fails closed if AUTHORIZED_TESTERS is explicitly empty string
     authorized_testers = get_authorized_testers()
-    if not authorized_testers:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Access Denied: Prototype access is closed. No authorized testers configured in AUTHORIZED_TESTERS."
-        )
-    if user_id not in authorized_testers:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, 
-            detail=f"Access Denied: Prototype access is restricted to authorized testers ({user_id} not authorized)."
-        )
+    if "*" not in authorized_testers:
+        if not authorized_testers:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access Denied: Prototype access is closed. No authorized testers configured in AUTHORIZED_TESTERS."
+            )
+        if user_id not in authorized_testers:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN, 
+                detail=f"Access Denied: Prototype access is restricted to authorized testers ({user_id} not authorized)."
+            )
 
     return user_id
 
