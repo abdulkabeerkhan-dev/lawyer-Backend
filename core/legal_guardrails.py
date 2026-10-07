@@ -1243,6 +1243,31 @@ def decompose_compound_legal_query(query: str) -> List[str]:
     if any(k in q_lower for k in ["fraud", "collusion", "fraudulent", "substantial injury"]):
         subqueries.append("setting aside auction sale fraud substantial injury Order XXI Rule 90")
 
+    # 6. Offence Ingredients & Applicability to Company Director (Sections 409, 420, 406 PPC)
+    if any(k in q_lower for k in ["409", "420", "406", "breach of trust", "misappropriat", "entrustment", "cheating"]):
+        if any(k in q_lower for k in ["director", "company", "banker", "merchant", "agent", "public servant"]):
+            subqueries.append("Section 409 Section 420 PPC criminal breach of trust company director agent entrustment dominion over property")
+        else:
+            subqueries.append("Section 409 Section 420 Section 406 PPC criminal breach of trust dishonest misappropriation entrustment cheating")
+
+    # 7. Civil dispute vs Criminal breach of trust / dishonest intention at inception
+    if any(k in q_lower for k in ["civil", "commercial", "contract", "contractual", "loan", "repayment", "quash", "561-a", "dispute"]):
+        if any(k in q_lower for k in ["409", "420", "406", "breach of trust", "fir", "criminal"]):
+            subqueries.append("criminal breach of trust vs civil dispute dishonest intention at inception commercial transaction loan repayment quashment")
+
+    # 8. Pre-arrest / Post-arrest Bail (Section 498, 497 Cr.P.C.)
+    if any(k in q_lower for k in ["bail", "pre-arrest", "pre arrest", "post-arrest", "498", "497"]):
+        statute_ctx = "Section 409 Section 420 PPC" if any(k in q_lower for k in ["409", "420", "406", "breach of trust"]) else ""
+        subqueries.append(f"Section 498 Section 497 CrPC pre-arrest bail mala fide ulterior motive civil dispute commercial recovery arrest humiliation {statute_ctx}".strip())
+
+    # 9. Corporate Director / Board / Company Funds / Loan aspect
+    if any(k in q_lower for k in ["director", "board of directors", "company funds", "consultancy fee", "shareholder", "corporate governance", "companies act"]):
+        subqueries.append("company director unauthorized transfer company funds consultancy fee director loan fiduciary duty Companies Act")
+
+    # 10. Cheque Dishonour / Section 489-F PPC
+    if any(k in q_lower for k in ["489-f", "489f", "dishonoured cheque", "dishonored cheque", "cheque bounce"]):
+        subqueries.append("Section 489-F PPC dishonour of cheque dishonest issuance loan repayment compromise settlement")
+
     # If subqueries were identified and there are at least 2 distinct prongs, return them alongside a normalized core query
     if len(subqueries) >= 2:
         result = [q_clean]
@@ -1377,9 +1402,29 @@ def extract_positive_query_anchors(query: str) -> List[str]:
         return []
     anchors = set()
     q_clean = query.strip()
+
+    # 1. Multi-section or single-section patterns (e.g. "Sections 409 and 420", "Section 409/420", "Ss. 409, 420", "s. 498")
+    sec_groups = re.findall(
+        r'\b(?:sections?|secs?\.?|ss\.?|s\.)\s*([0-9a-z\-]+(?:\s*(?:/|,|and|&)\s*[0-9a-z\-]+)*)\b',
+        q_clean, re.IGNORECASE
+    )
+    for g in sec_groups:
+        for m in re.findall(r'\b(\d+[a-z]?(?:-[a-z]+)?)\b', g, re.IGNORECASE):
+            anchors.add(f"section {m.lower()}")
+
+    # 2. Direct section numbers tied to statute abbreviations (e.g. "409 PPC", "420 PPC", "498 CrPC", "489-F PPC")
+    stat_sec_matches = re.findall(
+        r'\b(\d+[a-z]?(?:-[a-z]+)?)\s*(?:ppc|p\.p\.c|crpc|cr\.p\.c|cpc|c\.p\.c|qso|fio)\b',
+        q_clean, re.IGNORECASE
+    )
+    for m in stat_sec_matches:
+        anchors.add(f"section {m.lower()}")
+
+    # 3. Standard fallback for single section numbers
     sec_matches = re.findall(r'\b(?:section|sec\.?|s\.)\s*(\d+[a-z]?(?:\(\d+\))*(?:-[a-z]+)?)\b', q_clean, re.IGNORECASE)
     for m in sec_matches:
         anchors.add(f"section {m.lower()}")
+
     art_matches = re.findall(r'\b(?:article|art\.?)\s*(\d+[a-z]?(?:\(\d+\))*)\b', q_clean, re.IGNORECASE)
     for m in art_matches:
         anchors.add(f"article {m.lower()}")
@@ -1399,7 +1444,12 @@ def extract_positive_query_anchors(query: str) -> List[str]:
         "talb-i-ishhad", "zar-i-khula", "khula", "substantial injury",
         "material irregularity", "bona fide purchaser", "adverse possession",
         "past and closed transaction", "cheque dishonour", "custody of minor",
-        "leave to defend", "pre-arrest bail", "post-arrest bail"
+        "leave to defend", "pre-arrest bail", "post-arrest bail",
+        "criminal breach of trust", "cheating", "entrustment", "misappropriation",
+        "dishonest intention", "commercial dispute", "civil dispute",
+        "civil remedy", "quashment", "quashment of fir", "561-a",
+        "ulterior motive", "mala fide", "malafide", "custodial interrogation",
+        "further inquiry", "fiduciary duty", "director loan", "unauthorized transfer"
     ]
     q_lower = q_clean.lower()
     for doc in doctrines:
@@ -1412,6 +1462,9 @@ def extract_positive_query_anchors(query: str) -> List[str]:
         ("cnsa 1997", ["cnsa 1997", "control of narcotic substances"]),
         ("qso 1984", ["qso 1984", "qanun-e-shahadat"]),
         ("mflo 1961", ["mflo 1961", "muslim family laws"]),
+        ("ppc 1860", ["ppc 1860", "pakistan penal code", "ppc"]),
+        ("crpc 1898", ["crpc 1898", "code of criminal procedure", "crpc"]),
+        ("companies act 2017", ["companies act 2017", "companies act", "companies ordinance 1984"]),
     ]
     for key, terms in statute_keys:
         if any(t in q_lower for t in terms):

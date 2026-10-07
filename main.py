@@ -4111,7 +4111,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     if not VOYAGE_API_KEY:
                         return "Search tool unavailable: embedding service is not configured."
 
-                    queries_to_embed = [q for q in (decomposed_queries or [embedding_query]) if q and len(q.strip()) > 3][:4]
+                    queries_to_embed = [q for q in (decomposed_queries or [embedding_query]) if q and len(q.strip()) > 3][:5]
                     if not queries_to_embed:
                         queries_to_embed = [embedding_query]
 
@@ -4337,6 +4337,47 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             not any(k in haystack_check for k in ["banking court", "financial institution", "fio 2001", "mortgaged property", "mortgage auction", "recovery of finances"])
                         )
                         if is_pure_family_or_partition and not any(k in effective_user_query.lower() for k in ["family", "khula", "partition", "custody"]):
+                            continue
+
+                    # Strict Criminal / Financial Fraud / Bail Query Hygiene:
+                    # Filter out disjoint subject matter (defamation/Gurmani, narcotics, murder, contempt)
+                    # when the query specifically concerns breach of trust, fraud, cheating, cheque dishonour, or bail.
+                    is_crim_fraud_or_bail = any(k in sq_lower or k in effective_user_query.lower() for k in [
+                        "409", "420", "406", "489-f", "489f", "breach of trust", "misappropriat",
+                        "cheating", "pre-arrest bail", "section 498", "loan repayment"
+                    ])
+                    if is_crim_fraud_or_bail:
+                        haystack_check = f"{case_title_str} {full_text_str}".lower()
+                        # Reject pure criminal defamation / journalistic privilege cases (e.g. Mushtaq Ahmad Gurmani)
+                        is_pure_defamation = (
+                            any(k in haystack_check for k in ["defamation", "defamatory", "section 500", "sec 500", "500 ppc", "libel", "slander", "journalistic privilege", "mushtaq ahmad gurmani", "z. a. suleri"]) and
+                            not any(k in haystack_check for k in ["409", "420", "406", "489-f", "breach of trust", "misappropriat", "cheating", "entrustment", "director loan", "company funds"])
+                        )
+                        if is_pure_defamation and not any(k in effective_user_query.lower() for k in ["defamation", "500", "libel"]):
+                            continue
+
+                        # Reject pure narcotics cases unless query asks about narcotics
+                        is_pure_narcotics = (
+                            any(k in haystack_check for k in ["control of narcotic", "cnsa", "charas", "heroin", "opium", "narcotic substances"]) and
+                            not any(k in haystack_check for k in ["409", "420", "406", "489-f", "cheque", "breach of trust", "fraud"])
+                        )
+                        if is_pure_narcotics and not any(k in effective_user_query.lower() for k in ["narcotic", "cnsa", "charas"]):
+                            continue
+
+                        # Reject pure murder / violent crime cases
+                        is_pure_murder = (
+                            any(k in haystack_check for k in ["qatl-i-amd", "section 302", "302 ppc", "firearm injury", "post-mortem"]) and
+                            not any(k in haystack_check for k in ["409", "420", "406", "489-f", "breach of trust", "corporate", "director"])
+                        )
+                        if is_pure_murder and not any(k in effective_user_query.lower() for k in ["302", "murder", "qatl"]):
+                            continue
+
+                        # Reject pure contempt of court cases
+                        is_pure_contempt = (
+                            any(k in haystack_check for k in ["contempt of court act", "contempt of court ordinance", "article 204", "scandalizing the court"]) and
+                            not any(k in haystack_check for k in ["409", "420", "406", "breach of trust", "director"])
+                        )
+                        if is_pure_contempt and not any(k in effective_user_query.lower() for k in ["contempt", "204"]):
                             continue
                 cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
                 cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
@@ -5372,15 +5413,23 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
             })
             synthesis_instruction = (
                 "\n\n[MANDATORY SYSTEM DIRECTIVE]: The case law search has been executed and results are provided above. "
-                "Now immediately synthesize and deliver your complete, authoritative legal memorandum based on the retrieved authorities "
-                "and settled statutory principles.\n"
+                "Synthesize an authoritative, advocate-grade legal memorandum tailored to the advocate's query. "
+                "Tone must be confident, thorough, analytical, and professional—NOT defensive boilerplate.\n\n"
+                "STRUCTURE REQUIREMENTS (8-PART MEMORANDUM):\n"
+                "1. ### 1. EXECUTIVE SUMMARY & LEGAL OPINION: Direct, crisp actionable opinion on the issues raised. Summarize whether offences apply, whether dispute is civil or criminal, and prospects of bail.\n"
+                "2. ### 2. STATUTORY & PROCEDURAL FRAMEWORK: Exact statutory provisions from the verified context (Section 409 PPC, Section 420 PPC, Section 498 Cr.P.C., Section 497 Cr.P.C., etc.). Present verbatim text and analyze each legal ingredient.\n"
+                "3. ### 3. CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX: Present retrieved superior court authorities in a clear markdown table (Citation | Court | Judge | Key Holding / Ratio | Application). Ground every entry strictly in retrieved context.\n"
+                "4. ### 4. SUBSTANTIVE LEGAL DOCTRINE (CIVIL DISPUTE VS. CRIMINAL BREACH OF TRUST): Comprehensive doctrine analysis: distinguish dishonest intention at inception vs. subsequent contractual breach, conversion of civil debt/loan into criminal FIR, and applicability of Section 409 PPC to company directors as agents/fiduciaries.\n"
+                "5. ### 5. APPLICATION TO FACTS: Apply substantive law to the client facts (consultancy fee vs undocumented loan repayment, lack of board approval, company asset dominion, transfer to relative account).\n"
+                "6. ### 6. PRE-ARREST BAIL STRATEGY (SECTION 498 CR.P.C.): Ground bail strategy in settled principles (mala fide, ulterior motives, preventing police arrest/humiliation for civil recovery, absence of custodial interrogation need). Detail mandatory procedural steps (supporting affidavit, interim pre-arrest bail petition, High Court / Sessions Court jurisdiction).\n"
+                "7. ### 7. PRACTICAL RECOMMENDATIONS & LITIGATION ROADMAP: Immediate step-by-step guidance for the advocate (e.g. filing pre-arrest bail before Sessions/High Court, joining investigation, placing company loan ledgers on record, Section 249-A CrPC / 561-A CrPC quashment options).\n"
+                "8. ### 8. APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES: Confine all research limitations, database scope notes, and unlocated specific points strictly to this final appendix. DO NOT let negative findings or defensive disclaimers pollute the substantive memorandum body.\n\n"
                 "CRITICAL CITATION ACCURACY & NON-OVERSTATEMENT RULES:\n"
-                "1. NEVER extrapolate or speculate on what a case held beyond the exact text in the retrieved snippet. If an authority only mentions an outcome or short headnote (e.g. Sultan Mahmood 2006 YLR 2776), report ONLY its explicit holding (e.g. auction proceedings require examination in light of objections raised before confirmation becomes final). Do NOT infer unstated rules regarding deposit timing proximity or other speculative doctrines.\n"
-                "2. When discussing statutory rules (e.g. Order XXI Rule 90 CPC deposit requirement, FIO 2001 Section 19 reserve price/valuation, Article 203D Constitution), stick strictly to the exact statutory text and established provisos.\n"
-                "3. Ensure all 5 mandatory sections are fully articulated (### EXECUTIVE SUMMARY & LEGAL OPINION, ### STATUTORY & PROCEDURAL FRAMEWORK, "
-                "### CASE LAW & APPELLATE PRECEDENTS, ### LEGAL ANALYSIS & PROCEDURAL RISKS, ### RECOMMENDATIONS & NEXT STEPS) with <<<CARDS>>> JSON.\n"
-                "4. NEVER describe an interlocutory direction, deposit order, or statutory provision as 'ultra vires' or declare 'no precedent exists' unless a cited judgment explicitly uses those exact words. Analyze discretionary interlocutory orders under abuse of discretion or lack of statutory mandate without overclaiming.\n"
-                "5. In the procedural risks and recommendations sections, always explicitly advise on the consequence of non-compliance (e.g. risk of summary dismissal of the objection or confirmation of auction) and recommend practical protective steps (seeking stay or modification, depositing under protest with reservation of rights, and verifying with counsel).\n"
+                "1. NEVER extrapolate or speculate on what a case held beyond the exact text in the retrieved snippet.\n"
+                "2. When discussing statutory rules, stick strictly to the exact statutory text and established provisos.\n"
+                "3. Ensure all mandatory sections are fully articulated with at least 25 words per section and <<<CARDS>>> JSON.\n"
+                "4. NEVER describe an interlocutory direction, deposit order, or statutory provision as 'ultra vires' or declare 'no precedent exists' unless a cited judgment explicitly uses those exact words.\n"
+                "5. In the procedural risks and recommendations sections, always explicitly advise on the consequence of non-compliance and recommend practical protective steps.\n"
             )
             messages.append({
                 "role": "user",
@@ -5452,14 +5501,23 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
                 synthesis_instruction = (
                     "\n\n[MANDATORY SYSTEM DIRECTIVE]: You have executed the search. Now immediately synthesize and deliver your complete, "
-                    "authoritative legal memorandum based on the retrieved authorities and settled statutory principles.\n"
+                    "authoritative, advocate-grade legal memorandum tailored to the advocate's query. "
+                    "Tone must be confident, thorough, analytical, and professional—NOT defensive boilerplate.\n\n"
+                    "STRUCTURE REQUIREMENTS (8-PART MEMORANDUM):\n"
+                    "1. ### 1. EXECUTIVE SUMMARY & LEGAL OPINION: Direct, crisp actionable opinion on the issues raised. Summarize whether offences apply, whether dispute is civil or criminal, and prospects of bail.\n"
+                    "2. ### 2. STATUTORY & PROCEDURAL FRAMEWORK: Exact statutory provisions from the verified context (Section 409 PPC, Section 420 PPC, Section 498 Cr.P.C., Section 497 Cr.P.C., etc.). Present verbatim text and analyze each legal ingredient.\n"
+                    "3. ### 3. CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX: Present retrieved superior court authorities in a clear markdown table (Citation | Court | Judge | Key Holding / Ratio | Application). Ground every entry strictly in retrieved context.\n"
+                    "4. ### 4. SUBSTANTIVE LEGAL DOCTRINE (CIVIL DISPUTE VS. CRIMINAL BREACH OF TRUST): Comprehensive doctrine analysis: distinguish dishonest intention at inception vs. subsequent contractual breach, conversion of civil debt/loan into criminal FIR, and applicability of Section 409 PPC to company directors as agents/fiduciaries.\n"
+                    "5. ### 5. APPLICATION TO FACTS: Apply substantive law to the client facts (consultancy fee vs undocumented loan repayment, lack of board approval, company asset dominion, transfer to relative account).\n"
+                    "6. ### 6. PRE-ARREST BAIL STRATEGY (SECTION 498 CR.P.C.): Ground bail strategy in settled principles (mala fide, ulterior motives, preventing police arrest/humiliation for civil recovery, absence of custodial interrogation need). Detail mandatory procedural steps (supporting affidavit, interim pre-arrest bail petition, High Court / Sessions Court jurisdiction).\n"
+                    "7. ### 7. PRACTICAL RECOMMENDATIONS & LITIGATION ROADMAP: Immediate step-by-step guidance for the advocate (e.g. filing pre-arrest bail before Sessions/High Court, joining investigation, placing company loan ledgers on record, Section 249-A CrPC / 561-A CrPC quashment options).\n"
+                    "8. ### 8. APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES: Confine all research limitations, database scope notes, and unlocated specific points strictly to this final appendix. DO NOT let negative findings or defensive disclaimers pollute the substantive memorandum body.\n\n"
                     "CRITICAL CITATION ACCURACY & NON-OVERSTATEMENT RULES:\n"
-                    "1. NEVER extrapolate or speculate on what a case held beyond the exact text in the retrieved snippet. If an authority only mentions an outcome or short headnote (e.g. Sultan Mahmood 2006 YLR 2776), report ONLY its explicit holding (e.g. auction proceedings require examination in light of objections raised before confirmation becomes final). Do NOT infer unstated rules regarding deposit timing proximity or other speculative doctrines.\n"
-                    "2. When discussing statutory rules (e.g. Order XXI Rule 90 CPC deposit requirement, FIO 2001 Section 19 reserve price/valuation, Article 203D Constitution), stick strictly to the exact statutory text and established provisos.\n"
-                    "3. Ensure all 5 mandatory sections are fully articulated (### EXECUTIVE SUMMARY & LEGAL OPINION, ### STATUTORY & PROCEDURAL FRAMEWORK, "
-                    "### CASE LAW & APPELLATE PRECEDENTS, ### LEGAL ANALYSIS & PROCEDURAL RISKS, ### RECOMMENDATIONS & NEXT STEPS) with <<<CARDS>>> JSON.\n"
-                    "4. NEVER describe an interlocutory direction, deposit order, or statutory provision as 'ultra vires' or declare 'no precedent exists' unless a cited judgment explicitly uses those exact words. Analyze discretionary interlocutory orders under abuse of discretion or lack of statutory mandate without overclaiming.\n"
-                    "5. In the procedural risks and recommendations sections, always explicitly advise on the consequence of non-compliance (e.g. risk of summary dismissal of the objection or confirmation of auction) and recommend practical protective steps (seeking stay or modification, depositing under protest with reservation of rights, and verifying with counsel).\n"
+                    "1. NEVER extrapolate or speculate on what a case held beyond the exact text in the retrieved snippet.\n"
+                    "2. When discussing statutory rules, stick strictly to the exact statutory text and established provisos.\n"
+                    "3. Ensure all mandatory sections are fully articulated with at least 25 words per section and <<<CARDS>>> JSON.\n"
+                    "4. NEVER describe an interlocutory direction, deposit order, or statutory provision as 'ultra vires' or declare 'no precedent exists' unless a cited judgment explicitly uses those exact words.\n"
+                    "5. In the procedural risks and recommendations sections, always explicitly advise on the consequence of non-compliance and recommend practical protective steps.\n"
                 )
                 if tool_result_blocks:
                     tool_result_blocks[0]["content"] = str(tool_result_blocks[0]["content"]) + synthesis_instruction
