@@ -1324,12 +1324,12 @@ def check_memo_completeness(text: str, is_formal_opinion: bool = True, context_c
         ),
         (
             "Legal Analysis",
-            r'(?:^|\n)(?:[#\s]{1,10}|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:LEGAL\s*ANALYSIS|STRATEGIC\s*LEGAL|PROCEDURAL\s*(?:&|AND|\+)?\s*STRATEGIC|ANALYSIS|SUBSTANTIVE\s*ANALYSIS|LEGAL\s*EVALUATION|DETAILED\s*ANALYSIS|DISCUSSION\s*(?:&|AND|\+)?\s*ANALYSIS|APPLICATION\s*OF\s*LAW)\b',
+            r'(?:^|\n)(?:[#\s]{1,10}|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:LEGAL\s*ANALYSIS|STRATEGIC\s*LEGAL|PROCEDURAL\s*(?:&|AND|\+)?\s*STRATEGIC|ANALYSIS|SUBSTANTIVE\s*(?:LEGAL\s*)?(?:ANALYSIS|DOCTRINE)|LEGAL\s*DOCTRINE|LEGAL\s*EVALUATION|DETAILED\s*ANALYSIS|DISCUSSION\s*(?:&|AND|\+)?\s*ANALYSIS|APPLICATION\s*OF\s*LAW)\b',
             25
         ),
         (
             "Recommendations / Next Steps",
-            r'(?:^|\n)(?:[#\s]{1,10}|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:RECOMMENDATIONS?|PRACTICAL\s*NEXT|NEXT\s*STEPS?|PROCEDURAL\s*ROADMAP|PLAYBOOK|ACTION\s*PLAN|STRATEGIC\s*RECOMMENDATIONS?|CONCLUSION(?:\s*(?:&|AND|\+)\s*(?:RECOMMENDATIONS?|NEXT\s*STEPS?))?|PRACTICAL\s*ADVICE|NEXT\s*PROCEDURAL\s*STEPS?)\b',
+            r'(?:^|\n)(?:[#\s]{1,10}|\*{2}\s*)?(?:(?:[IVX]+|[1-9])(?:[\.\:\-\)]|\s+)\s*)?(?:(?:PRACTICAL\s+|STRATEGIC\s+)?RECOMMENDATIONS?|PRACTICAL\s*NEXT|NEXT\s*STEPS?|PROCEDURAL\s*ROADMAP|PLAYBOOK|ACTION\s*PLAN|CONCLUSION(?:\s*(?:&|AND|\+)\s*(?:RECOMMENDATIONS?|NEXT\s*STEPS?))?|PRACTICAL\s*ADVICE|NEXT\s*PROCEDURAL\s*STEPS?)\b',
             25
         ),
     ]

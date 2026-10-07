@@ -847,6 +847,15 @@ def detect_statutory_provisions_in_query(query: str) -> List[Tuple[str, str]]:
             primary_num = parsed.get("primary_num")
             rule_num = parsed.get("rule_num")
 
+            # Disambiguate PPC offence sections and CrPC procedural/bail sections
+            p_str = str(primary_num or "").lower().strip()
+            if act_code == "CRPC_1898" and p_str in ("405", "406", "408", "409", "415", "420", "489-f", "489f", "302", "376"):
+                if any(k in query_lower for k in ["ppc", "penal code", "409", "420", "breach of trust", "cheating"]):
+                    act_code = "PPC_1860"
+            elif act_code == "PPC_1860" and p_str in ("496", "497", "498", "498-a", "561-a", "561a"):
+                if any(k in query_lower for k in ["crpc", "criminal procedure", "bail", "quash"]):
+                    act_code = "CRPC_1898"
+
             # CPC substantive sections only go up to 158
             if act_code == "CPC_1908" and prov_type == "section" and primary_num and primary_num.isdigit() and int(primary_num) > 158:
                 continue

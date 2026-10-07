@@ -95,58 +95,70 @@ async def run_final_review_gate(
 
         # Use anthropic client at temperature 0
         from main import safe_create_anthropic_message, CLAUDE_MODEL
+        reviewer_max_tokens = int(os.environ.get("MAX_REVIEWER_TOKENS", "3500"))
         resp = await safe_create_anthropic_message(
             model=CLAUDE_MODEL,
-            max_tokens=1500,
+            max_tokens=reviewer_max_tokens,
             temperature=0.0,
             system=REVIEWER_SYSTEM_PROMPT,
             messages=[{"role": "user", "content": user_eval_prompt}]
         )
         resp_text = "".join(getattr(b, "text", "") for b in resp.content if getattr(b, "type", None) == "text").strip()
+        parsed = {}
         m_json = re.search(r'\{.*\}', resp_text, re.DOTALL)
         if m_json:
-            parsed = json.loads(m_json.group(0))
-            propositions = parsed.get("propositions", [])
-            issues = parsed.get("issues", [])
+            try:
+                parsed = json.loads(m_json.group(0))
+            except Exception as j_err:
+                print(f"⚠️ [REVIEW GATE JSON PARSE NOTICE]: {j_err}, attempting resilient extraction", file=sys.stderr)
+                m_iss = re.search(r'"issues"\s*:\s*\[(.*?)\]', resp_text, re.DOTALL)
+                parsed_issues = []
+                if m_iss:
+                    for iss in re.findall(r'"([^"\\]*(?:\\.[^"\\]*)*)"', m_iss.group(1)):
+                        parsed_issues.append(iss)
+                parsed = {"passed": len(parsed_issues) == 0, "propositions": [], "issues": parsed_issues}
 
-            # Filter out spurious or pedantic issues (e.g. "whichever is later", "implied", minor phrasing)
-            def is_spurious_flag(reason_str: str) -> bool:
-                r_low = reason_str.lower()
-                return any(k in r_low for k in [
-                    "whichever is later",
-                    "though this may be implied",
-                    "this may be implied",
-                    "implied by",
-                    "minor phrasing"
-                ])
+        propositions = parsed.get("propositions", [])
+        issues = parsed.get("issues", [])
 
-            actual_issues = []
-            for iss in issues:
-                if not is_spurious_flag(iss):
-                    actual_issues.append(iss)
+        # Filter out spurious or pedantic issues (e.g. "whichever is later", "implied", minor phrasing)
+        def is_spurious_flag(reason_str: str) -> bool:
+            r_low = reason_str.lower()
+            return any(k in r_low for k in [
+                "whichever is later",
+                "though this may be implied",
+                "this may be implied",
+                "implied by",
+                "minor phrasing"
+            ])
 
-            has_genuine_unsupported = False
-            for p in propositions:
-                c_type = p.get("classification", "").lower()
-                reason = p.get("reason", "")
-                if c_type in ("overstated", "unsupported"):
-                    if is_spurious_flag(reason):
-                        p["classification"] = "supported"
-                    else:
-                        has_genuine_unsupported = True
-                        auth = p.get("cited_authority", "")
-                        iss_entry = f"{auth}: {reason}" if auth else reason
-                        if iss_entry not in actual_issues:
-                            actual_issues.append(iss_entry)
+        actual_issues = []
+        for iss in issues:
+            if not is_spurious_flag(iss):
+                actual_issues.append(iss)
 
-            # If no genuine unsupported or overstated claims exist, the memo passes!
-            passed = not has_genuine_unsupported and len(actual_issues) == 0
+        has_genuine_unsupported = False
+        for p in propositions:
+            c_type = p.get("classification", "").lower()
+            reason = p.get("reason", "")
+            if c_type in ("overstated", "unsupported"):
+                if is_spurious_flag(reason):
+                    p["classification"] = "supported"
+                else:
+                    has_genuine_unsupported = True
+                    auth = p.get("cited_authority", "")
+                    iss_entry = f"{auth}: {reason}" if auth else reason
+                    if iss_entry not in actual_issues:
+                        actual_issues.append(iss_entry)
 
-            return {
-                "passed": passed,
-                "propositions": propositions,
-                "issues": actual_issues
-            }
+        # If no genuine unsupported or overstated claims exist, the memo passes!
+        passed = not has_genuine_unsupported and len(actual_issues) == 0
+
+        return {
+            "passed": passed,
+            "propositions": propositions,
+            "issues": actual_issues
+        }
     except Exception as e:
         print(f"Final review gate reviewer exception: {e}", file=sys.stderr)
         return {
