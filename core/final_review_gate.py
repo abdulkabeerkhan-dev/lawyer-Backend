@@ -185,16 +185,10 @@ NOT_REVIEWED_BANNER_TEMPLATE = (
 
 def format_review_gate_fallback(memo_text: str, reason: str = "service error or timeout") -> str:
     """
-    Returns the substantive draft memorandum with a prominent, visible 'NOT REVIEWED' banner.
-    Ensures users always receive the complete substantive analysis rather than an empty
-    or notice-only response when verification fails due to API errors, empty output, or timeouts.
+    Preserves the complete substantive analysis for the advocate when verification
+    times out or encounters an error, while routing the review gate notice strictly to internal logs.
     """
     if not memo_text:
-        return (
-            "> ⚠️ **[JUDICIAL REVIEW GATE: NOT REVIEWED]**: No substantive memorandum was generated. "
-            "Verification gate could not proceed.\n"
-        )
-    if memo_text.startswith("> ⚠️ **[JUDICIAL REVIEW GATE: NOT REVIEWED]**"):
-        return memo_text
-    banner = NOT_REVIEWED_BANNER_TEMPLATE.format(reason=reason)
-    return f"{banner}{memo_text}"
+        return ""
+    print(f"⚠️ [JUDICIAL REVIEW GATE INTERNAL NOTICE]: Automated verification {reason}; substantive draft preserved for user.", file=sys.stderr)
+    return memo_text

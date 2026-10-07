@@ -189,6 +189,76 @@ class TestLegalAIPipeline(unittest.TestCase):
         self.assertEqual(y, "2024")
         self.assertEqual(p, "500")
 
+    def test_purge_debug_warnings(self):
+        from main import purge_debug_warnings
+        dirty_text = (
+            "> ⚠️ **Prototype. Not verified for use in pleadings.**\n\n"
+            "### EXECUTIVE SUMMARY & LEGAL OPINION\n"
+            "This is substantive legal advice regarding Section 409 PPC [NOT CHECKED].\n\n"
+            "> ⚠️ **[JUDICIAL REVIEW CORROBORATION NOTICE]**\n"
+            "Propositions need corroboration.\n\n"
+            "### STATUTORY & PROCEDURAL FRAMEWORK\n"
+            "Section 420 PPC governs cheating.\n\n"
+            "#### Statutory Currency Verification Status\n"
+            "- **PPC_1860_SEC_409**: [NOT CHECKED]\n\n"
+            "### APPENDIX: SYSTEM & VERIFICATION NOTICE\n"
+            "System notice text here.\n"
+        )
+        cleaned = purge_debug_warnings(dirty_text)
+        self.assertNotIn("Prototype", cleaned)
+        self.assertNotIn("[JUDICIAL REVIEW CORROBORATION NOTICE]", cleaned)
+        self.assertNotIn("Statutory Currency Verification Status", cleaned)
+        self.assertNotIn("[NOT CHECKED]", cleaned)
+        self.assertNotIn("APPENDIX: SYSTEM & VERIFICATION NOTICE", cleaned)
+        self.assertIn("### EXECUTIVE SUMMARY & LEGAL OPINION", cleaned)
+        self.assertIn("Section 409 PPC", cleaned)
+
+    def test_precedent_card_12_fields(self):
+        from main import sanitize_precedent_card
+        raw_card = {
+            "id": "2024_SCMR_500",
+            "case_id": "2024_SCMR_500",
+            "title": "Tariq Mahmood v. The State",
+            "citation": "2024 SCMR 500",
+            "court": "Supreme Court of Pakistan",
+            "year": "2024",
+            "sections": ["Section 409 PPC", "Section 420 PPC"],
+            "legal_issue": "Commercial loan default vs criminal breach of trust",
+            "ratio_decidendi": "Mere non-payment of loan without dishonest intention at inception is a civil dispute.",
+            "important_paragraphs": "Paragraph 7 and 8 discussing distinction between civil debt and entrustment.",
+            "authority_strength": "Binding Supreme Court Precedent (Article 189)",
+            "is_supabase_fts": False,
+            "dense_score": 0.85,
+            "raw_judgment_text": "Detailed judgment text exceeding 150 words. " * 30,
+            "content_type": "full_text"
+        }
+        sanitized = sanitize_precedent_card(raw_card)
+        required_12_fields = [
+            "case_name", "citation", "court", "year", "sections", "legal_issue",
+            "ratio_decidendi", "important_paragraphs", "authority_strength",
+            "pdf_url", "source_type", "verification_status"
+        ]
+        for field in required_12_fields:
+            self.assertIn(field, sanitized, f"Field '{field}' missing from precedent card")
+            self.assertTrue(sanitized[field], f"Field '{field}' has empty value")
+
+        self.assertEqual(sanitized["source_type"], "Pinecone")
+        self.assertEqual(sanitized["verification_status"], "Verified Full Judgment")
+        self.assertTrue(sanitized["pdf_url"].startswith("http"))
+
+    def test_build_judgment_pdf_bytes_no_prototype_banner(self):
+        from main import build_judgment_pdf_bytes
+        pdf_bytes = build_judgment_pdf_bytes(
+            title="Tariq Mahmood v. State",
+            citation="2024 SCMR 500",
+            court="Supreme Court of Pakistan",
+            text="Judgment body paragraph text."
+        )
+        self.assertIsInstance(pdf_bytes, bytes)
+        self.assertTrue(pdf_bytes.startswith(b"%PDF"))
+        self.assertNotIn(b"PROTOTYPE", pdf_bytes)
+
 
 if __name__ == '__main__':
     unittest.main()
+

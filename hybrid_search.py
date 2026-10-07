@@ -307,6 +307,37 @@ class HybridSearchEngine:
     def __init__(self, bm25_index: Optional[BM25Index] = None, rrf_k: int = 60):
         self.bm25_index = bm25_index
         self.rrf_k = rrf_k
+        self.last_dense_count: int = 0
+        self.last_sparse_count: int = 0
+
+    def search_with_components(
+        self,
+        pinecone_index,
+        query_vector: List[float],
+        query_text: str,
+        top_k: int = 40,
+        namespace: str = "judgments",
+        pinecone_filter: Optional[Dict] = None,
+    ) -> Tuple[List[Dict[str, Any]], List[Tuple[str, float, Dict]], List[Tuple[str, float, Dict]]]:
+        """
+        Execute hybrid search: dense Pinecone query + BM25 sparse query + RRF fusion.
+        Returns (fused_results, dense_results, sparse_results).
+        """
+        dense_results = self._dense_search(
+            pinecone_index, query_vector, top_k, namespace, pinecone_filter
+        )
+        self.last_dense_count = len(dense_results)
+
+        sparse_results = []
+        if self.bm25_index and self.bm25_index.corpus_size > 0:
+            sparse_results = self.bm25_index.search(query_text, top_k=top_k)
+        self.last_sparse_count = len(sparse_results)
+
+        if not dense_results and not sparse_results:
+            return [], dense_results, sparse_results
+
+        fused = reciprocal_rank_fusion(dense_results, sparse_results, k=self.rrf_k)
+        return fused[:top_k], dense_results, sparse_results
 
     def search(
         self,
@@ -320,19 +351,10 @@ class HybridSearchEngine:
         """
         Execute hybrid search: dense Pinecone query + BM25 sparse query + RRF fusion.
         """
-        dense_results = self._dense_search(
-            pinecone_index, query_vector, top_k, namespace, pinecone_filter
+        fused, _, _ = self.search_with_components(
+            pinecone_index, query_vector, query_text, top_k=top_k, namespace=namespace, pinecone_filter=pinecone_filter
         )
-
-        sparse_results = []
-        if self.bm25_index and self.bm25_index.corpus_size > 0:
-            sparse_results = self.bm25_index.search(query_text, top_k=top_k)
-
-        if not dense_results and not sparse_results:
-            return []
-
-        fused = reciprocal_rank_fusion(dense_results, sparse_results, k=self.rrf_k)
-        return fused[:top_k]
+        return fused
 
     def _dense_search(
         self,

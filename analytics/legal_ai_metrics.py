@@ -50,8 +50,14 @@ class PipelineMetricsTracker:
             "passed": True,
             "issues_count": 0
         }
+        self.warnings: List[str] = []
         self.completed_at: Optional[str] = None
         self.total_duration_sec: float = 0.0
+
+    def record_warning(self, warning: str):
+        if not hasattr(self, "warnings"):
+            self.warnings = []
+        self.warnings.append(str(warning))
 
     def start_stage(self, stage_name: str):
         self.stage_starts[stage_name] = time.perf_counter()

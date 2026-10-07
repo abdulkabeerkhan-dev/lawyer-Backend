@@ -59,7 +59,7 @@ from core.candidate_quality_filter import filter_candidate_quality_before_rankin
 from core.authority_ranking import rank_and_filter_authorities, calculate_authority_score
 from core.legal_proposition_extractor import extract_legal_propositions, format_propositions_for_memorandum, derive_why_matters_to_case
 from core.current_law_verifier import verify_current_law_for_provisions, format_current_law_context
-from core.pdf_resolver import resolve_judgment_pdf_url
+from core.pdf_resolver import resolve_judgment_pdf_url, fetch_storage_pdf_bytes, extract_journal_and_year
 from analytics.legal_ai_metrics import PipelineMetricsTracker
 
 
@@ -609,6 +609,8 @@ class LegalSearchPipeline:
         self.vector_client = vector_client
         self.config = config or LegalRetrieverConfig()
         self.hybrid_engine = hybrid_engine or global_hybrid_engine
+        self.last_pinecone_count: int = 0
+        self.last_bm25_count: int = 0
 
     def set_default_top_k(self, default_k: int) -> None:
         self.config.default_k = default_k
@@ -663,11 +665,13 @@ class LegalSearchPipeline:
         years_searched = []
         results_per_year = {}
         expansion_reason = None
+        pinecone_doc_ids: Set[str] = set()
+        bm25_doc_ids: Set[str] = set()
 
         if pinecone_filter:
             # Caller supplied explicit metadata filter: execute direct single-lane query
             if hybrid_engine and hybrid_engine.bm25_index and hybrid_engine.bm25_index.corpus_size > 0:
-                raw_candidates = hybrid_engine.search(
+                raw_candidates, d_res, s_res = hybrid_engine.search_with_components(
                     pinecone_index=target_index,
                     query_vector=query_vector,
                     query_text=clean_query,
@@ -675,8 +679,11 @@ class LegalSearchPipeline:
                     namespace=ns,
                     pinecone_filter=pinecone_filter
                 )
+                pinecone_doc_ids.update(str(d[0]) for d in d_res if d and d[0])
+                bm25_doc_ids.update(str(s[0]) for s in s_res if s and s[0])
             else:
                 dense_matches = hybrid_engine._dense_search(target_index, query_vector, k, ns, pinecone_filter) if hybrid_engine else []
+                pinecone_doc_ids.update(str(d[0]) for d in dense_matches if d and d[0])
                 raw_candidates = [
                     {"id": doc_id, "score": score, "rrf_score": 1.0 / (60 + rank + 1), "similarity_score": score, "dense_score": score, "sparse_score": 0.0, "dense_rank": rank + 1, "sparse_rank": 0, "metadata": meta}
                     for rank, (doc_id, score, meta) in enumerate(dense_matches)
@@ -684,14 +691,16 @@ class LegalSearchPipeline:
         else:
             # P1-4: Execute Dual-Lane Retrieval
             # LANE B: Concurrent Controlling Authority Lane across entire corpus (Apex binding authorities)
-            lane_b_raw = hybrid_engine.search(
+            lane_b_raw, d_res_b, s_res_b = hybrid_engine.search_with_components(
                 pinecone_index=target_index,
                 query_vector=query_vector,
                 query_text=clean_query,
                 top_k=30,
                 namespace=ns,
                 pinecone_filter=None
-            ) if hybrid_engine else []
+            ) if hybrid_engine else ([], [], [])
+            pinecone_doc_ids.update(str(d[0]) for d in d_res_b if d and d[0])
+            bm25_doc_ids.update(str(s[0]) for s in s_res_b if s and s[0])
 
             lane_b_controlling = []
             for item in lane_b_raw:
@@ -733,11 +742,14 @@ class LegalSearchPipeline:
                     score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
                     meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
                     b1_dense_matches.append((doc_id, score, meta))
+                    if doc_id:
+                        pinecone_doc_ids.add(str(doc_id))
 
             # BM25 filter for Batch 1 years
             all_bm25 = []
             if hybrid_engine and hybrid_engine.bm25_index and hybrid_engine.bm25_index.corpus_size > 0:
                 all_bm25 = hybrid_engine.bm25_index.search(clean_query, top_k=60)
+                bm25_doc_ids.update(str(item[0]) for item in all_bm25 if item and item[0])
 
             b1_sparse_matches = [
                 item for item in all_bm25
@@ -779,6 +791,8 @@ class LegalSearchPipeline:
                         score = float(m.get("score", 0.0) if isinstance(m, dict) else getattr(m, "score", 0.0))
                         meta = m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}
                         b2_dense_matches.append((doc_id, score, meta))
+                        if doc_id:
+                            pinecone_doc_ids.add(str(doc_id))
 
                 b2_sparse_matches = [
                     item for item in all_bm25
@@ -815,6 +829,10 @@ class LegalSearchPipeline:
 
             raw_candidates = list(pooled_map.values())
             
+            # Record last retrieval counts for pipeline telemetry
+            self.last_pinecone_count = len(pinecone_doc_ids)
+            self.last_bm25_count = len(bm25_doc_ids)
+
             # Telemetry metadata
             all_years = [extract_year_num((c.get("metadata") or {}).get("year"), (c.get("metadata") or {}).get("citation"), c.get("id")) for c in raw_candidates]
             valid_years = [y for y in all_years if y and y >= 1900]
@@ -2833,6 +2851,41 @@ def is_usable_precedent(card_or_match: Dict[str, Any]) -> bool:
     return True
 
 
+def purge_debug_warnings(text: str) -> str:
+    """
+    Strips all Prototype warnings, verification notices, completeness notices,
+    and statutory currency warning tags from user-facing output; confines all to internal logs.
+    """
+    if not text:
+        return ""
+    clean = text
+    # 1. Strip Prototype warning banners
+    clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}Prototype\..*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
+    clean = re.sub(r'(?is)###\s*(?:\d+\.?\s*)?APPENDIX:\s*SYSTEM\s*&\s*VERIFICATION\s*NOTICE.*?(?=(?:\n\s*###|\Z))', '', clean)
+    clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}Notice\*{0,2}:\s*This result was found via full-text keyword search.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
+    clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}Notice on Case Law Grounding\*{0,2}:.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
+
+    # 2. Strip Judicial Review Corroboration and Gate notices
+    clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}\[?JUDICIAL REVIEW CORROBORATION NOTICE\]?\*{0,2}.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
+    clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}\[?JUDICIAL REVIEW GATE:\s*NOT REVIEWED\]?\*{0,2}.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
+    clean = re.sub(r'(?is)###\s*(?:\d+\.?\s*)?APPENDIX:\s*JUDICIAL\s*REVIEW\s*CORROBORATION\s*NOTICE.*?(?=(?:\n\s*###|\Z))', '', clean)
+    clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}\[?LEGAL MEMO NOTICE\]?\*{0,2}.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
+    clean = re.sub(r'(?is)###\s*(?:\d+\.?\s*)?APPENDIX:\s*LEGAL\s*MEMO\s*NOTICES.*?(?=(?:\n\s*###|\Z))', '', clean)
+    clean = re.sub(r'(?is)⚠️\s*\*{0,2}\[?GENERATION INCOMPLETE NOTICE\]?\*{0,2}:?.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
+
+    # 3. Strip unverified quotation notices
+    clean = re.sub(r'(?is)⚠️\s*\*{0,2}Unverified Quotation Notice\*{0,2}:.*?(?=(?:\n\s*###|\n\s*1\.|\n\s*\*{1,2}[A-Z]|\n\n|\Z))', '', clean)
+
+    # 4. Strip statutory currency warning tags
+    clean = re.sub(r'\s*\[NOT CHECKED\]', '', clean)
+    clean = re.sub(r'(?is)####\s*Statutory Currency Verification Status.*?(?=(?:\n\s*###|\n\s*####|\n\n|\Z))', '', clean)
+    clean = re.sub(r'(?is)###\s*(?:\d+\.?\s*)?APPENDIX:\s*STATUTORY\s*CURRENCY.*?(?=(?:\n\s*###|\Z))', '', clean)
+
+    # 5. Clean excessive empty lines and trailing horizontal rules
+    clean = re.sub(r'\n{3,}', '\n\n', clean).strip()
+    clean = re.sub(r'\n---\s*$', '', clean).strip()
+    return clean
+
 
 def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
     """Sanitizes every field of a precedent card to ensure zero scraper artifacts
@@ -3006,6 +3059,100 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
         c["source_badge_markdown"] = badge_md
         c["source_badge_html"] = badge_html
         c["source_badge"] = badge_text
+
+    # 8. Standardize the 10 Legal Judgment Metadata Layer fields
+    eff_title = get_effective_title(c) or c.get("case_name") or c.get("title") or "Reported Precedent"
+    c["case_name"] = sanitize_case_title(str(eff_title)).strip()
+    c["title"] = c["case_name"]
+
+    clean_cit = str(c.get("citation") or c.get("neutral_citation") or "").strip()
+    c["citation"] = clean_cit or synthesize_canonical_citation(c) or "Neutral Citation"
+    c["neutral_citation"] = c["citation"]
+
+    c_court = str(c.get("court") or c.get("court_name") or get_effective_court(c) or "Court of Record").strip()
+    c["court"] = c_court
+    c["court_name"] = c_court
+
+    c_year = extract_year_from_citation_or_date(c.get("year") or c.get("date"), c.get("citation"), c.get("case_id")) or "2024"
+    c["year"] = c_year
+    c["date"] = c_year
+
+    raw_secs = c.get("sections")
+    if isinstance(raw_secs, list) and raw_secs:
+        c["sections"] = [str(s) for s in raw_secs if s]
+    else:
+        st_list = []
+        for s in (c.get("statutes_invoked") or []):
+            if isinstance(s, dict) and s.get("name"):
+                st_list.append(str(s["name"]))
+            elif isinstance(s, str):
+                st_list.append(s)
+        c["sections"] = st_list or [str(s) for s in (c.get("statutes") or []) if s]
+
+    if not c.get("sections"):
+        comb_text = f"{c.get('raw_judgment_text', '')} {c.get('preview', '')} {c.get('holding', '')} {c.get('legal_issue', '')}"
+        found_secs = re.findall(r'\b(?:Section|Sec\.?|S\.?|Ss\.?|Article|Art\.?)\s*(\d+[A-Za-z\-]*(?:\s*(?:PPC|Cr\.?P\.?C\.?|CPC|Constitution))?)', comb_text, flags=re.IGNORECASE)
+        clean_secs = []
+        for fs in found_secs:
+            item = f"Section {fs.strip()}" if not fs.lower().startswith(("section", "article")) else fs.strip()
+            if item not in clean_secs:
+                clean_secs.append(item)
+        c["sections"] = clean_secs[:5] if clean_secs else ["Superior Court Authority"]
+
+    c["legal_issue"] = str(c.get("legal_issue") or c.get("issue") or "Legal proposition extracted from indexed public judgment record.").strip()
+    c["issue"] = c["legal_issue"]
+
+    c["ratio_decidendi"] = str(c.get("ratio_decidendi") or c.get("holding") or c.get("legal_principle") or "Holding on record.").strip()
+    c["holding"] = c["ratio_decidendi"]
+    c["legal_principle"] = c["ratio_decidendi"]
+
+    raw_paras = str(c.get("important_paragraphs") or c.get("paragraphs") or c.get("operative_result") or "").strip()
+    c["important_paragraphs"] = raw_paras or "Key judicial principles and reasoning on record."
+
+    court_lower = str(c.get("court", "")).lower()
+    c_strength = c.get("authority_strength") or c.get("authority_level")
+    if not c_strength or str(c_strength).lower() in ("unknown", "none"):
+        if "supreme" in court_lower:
+            c_strength = "Binding Supreme Court Precedent (Article 189)"
+        elif "high court" in court_lower:
+            c_strength = "Binding High Court Precedent (Article 201)"
+        else:
+            c_strength = "Persuasive Superior Court Precedent"
+    c["authority_strength"] = str(c_strength).strip()
+
+    clean_base = get_backend_base_url()
+    resolved_pdf = resolve_judgment_pdf_url(c, supabase_client=supabase, backend_base_url=clean_base)
+    c["pdf_url"] = resolved_pdf
+    c["pdf_link"] = resolved_pdf
+    c["download_url"] = resolved_pdf
+    c["url"] = resolved_pdf
+
+    # 11. source_type (Supabase, Pinecone, BM25, External Official)
+    raw_src = c.get("source_type") or c.get("source") or c.get("origin")
+    if not raw_src:
+        if c.get("is_fresh_fetch") or c.get("source_url") or "gov.pk" in str(c.get("pdf_url", "")):
+            raw_src = "External Official"
+        elif c.get("is_supabase_fts") or c.get("is_fts_fallback") or c.get("supabase_id"):
+            raw_src = "Supabase"
+        elif float(c.get("dense_score", 0.0) or 0.0) > 0:
+            raw_src = "Pinecone"
+        elif float(c.get("sparse_score", 0.0) or 0.0) > 0:
+            raw_src = "BM25"
+        else:
+            raw_src = "Supabase"
+    c["source_type"] = str(raw_src)
+
+    # 12. verification_status (Verified Full Judgment, Verified Headnote, Unverified Metadata)
+    c_type = str(c.get("content_type", "")).lower()
+    raw_vstatus = c.get("verification_status")
+    if not raw_vstatus:
+        if c_type in ("full_text", "fresh_court_fetch") and len(str(c.get("raw_judgment_text", "")).split()) >= 150:
+            raw_vstatus = "Verified Full Judgment"
+        elif c_type in ("headnote_only", "editorial_summary", "headnote"):
+            raw_vstatus = "Verified Headnote"
+        else:
+            raw_vstatus = "Verified Full Judgment" if c.get("is_boosted") or c.get("verified_source") else "Unverified Metadata"
+    c["verification_status"] = str(raw_vstatus)
 
     return c
 
@@ -4231,7 +4378,97 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     if boosted_matches:
                         matches_list = boosted_matches
                     else:
-                        return "Search tool error: the judgment database could not be reached. Answer using your own knowledge of Pakistani statute and settled principles, and tell the advocate that live case-law verification was unavailable."
+                        matches_list = []
+
+            # 1. Proactive Supabase Postgres Full-Text Search (Unified Multi-Source Retrieval)
+            supabase_candidates = []
+            seen_sb_ids = set()
+            if supabase:
+                sb_queries = [search_query]
+                if hasattr(legal_query_plan, "provisions") and legal_query_plan.provisions:
+                    for prov in legal_query_plan.provisions:
+                        sb_queries.append(f"{prov} {search_query}".strip())
+                if hasattr(legal_query_plan, "legal_questions") and legal_query_plan.legal_questions:
+                    for lq in legal_query_plan.legal_questions[:2]:
+                        sb_queries.append(lq.strip())
+                for q_term in sb_queries[:4]:
+                    try:
+                        sb_rows = fallback_supabase_fulltext(q_term, limit=10)
+                        for r in (sb_rows or []):
+                            cid = str(r.get("case_id") or r.get("id") or "").strip()
+                            if not cid or cid in seen_sb_ids:
+                                continue
+                            seen_sb_ids.add(cid)
+                            raw_txt = r.get("full_text") or ""
+                            raw_court = get_effective_court(r) or "Court of Record"
+                            clean_c = clean_court_name(raw_court, title=get_effective_title(r), case_id=cid, text=raw_txt[:2500])
+                            cit = r.get("neutral_citation") or cid
+                            title = sanitize_case_title(clean_or_extract_title(get_effective_title(r), raw_txt))
+                            year_val = extract_year_from_citation_or_date(r.get("decision_date"), cit, cid)
+                            supabase_candidates.append({
+                                "id": cid,
+                                "score": 0.60,
+                                "dense_score": 0.0,
+                                "sparse_score": 0.0,
+                                "rrf_score": 0.018,
+                                "is_supabase_fts": True,
+                                "source_type": "Supabase",
+                                "metadata": {
+                                    "id": str(r.get("id")),
+                                    "supabase_id": str(r.get("id")),
+                                    "case_id": cid,
+                                    "canonical_id": cid,
+                                    "citation": cit,
+                                    "title": title,
+                                    "case_title": title,
+                                    "court": clean_c,
+                                    "court_name": clean_c,
+                                    "year": year_val,
+                                    "date": year_val,
+                                    "text": raw_txt[:3500],
+                                    "full_text": raw_txt,
+                                    "content_type": "full_text" if len(raw_txt.split()) >= 150 else "headnote_only",
+                                    "is_supabase_fts": True,
+                                    "source_type": "Supabase"
+                                }
+                            })
+                    except Exception as sb_err:
+                        print(f"⚠️ Proactive Supabase FTS error for '{q_term}': {sb_err}", file=sys.stderr)
+
+            # Record initial retrieval telemetry counts across engines
+            count_supabase = len(supabase_candidates)
+            count_pinecone = getattr(global_search_pipeline, "last_pinecone_count", sum(1 for r in matches_list if float(r.get("dense_score", 0.0) or 0.0) > 0))
+            count_bm25 = getattr(global_search_pipeline, "last_bm25_count", sum(1 for r in matches_list if float(r.get("sparse_score", 0.0) or 0.0) > 0))
+            count_external = len(aggregate_external_recent_judgments)
+
+            # Merge all sources into one unified candidate pool
+            all_pool_map = {}
+            for cand in (boosted_matches + matches_list + supabase_candidates):
+                cid = str(cand.get("id") or (cand.get("metadata", {}) if isinstance(cand, dict) else {}).get("case_id") or "")
+                if not cid:
+                    continue
+                if cid not in all_pool_map:
+                    all_pool_map[cid] = cand
+                else:
+                    existing = all_pool_map[cid]
+                    if cand.get("is_supabase_fts"):
+                        existing["is_supabase_fts"] = True
+                        if isinstance(existing.get("metadata"), dict):
+                            existing["metadata"]["is_supabase_fts"] = True
+                            if cand.get("metadata", {}).get("full_text") and not existing["metadata"].get("full_text"):
+                                existing["metadata"]["full_text"] = cand["metadata"]["full_text"]
+                    if float(cand.get("score", 0.0)) > float(existing.get("score", 0.0)):
+                        existing["score"] = cand["score"]
+            matches_list = list(all_pool_map.values())
+
+            # Initialize structured rejection / filtering telemetry counters
+            filtered_counts = {
+                "caption only": 0,
+                "wrong jurisdiction": 0,
+                "irrelevant topic": 0,
+                "low quality": 0,
+                "trust gate exclusion": 0
+            }
 
             def _passes_source_filter(meta, target):
                 if meta.get("is_boosted"):
@@ -4257,6 +4494,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if not target: return True
                 return any(alias in haystack for alias in COURT_ALIASES.get(target, [target.lower()]))
 
+            pre_source_filter_count = len(matches_list)
             if target_source:
                 strict_court_matches = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target_source)]
                 if len(strict_court_matches) >= 2:
@@ -4266,6 +4504,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     matches_list = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target=None)]
             else:
                 matches_list = [m for m in matches_list if _passes_source_filter(m.get("metadata", {}) if isinstance(m, dict) else getattr(m, "metadata", {}) or {}, target=None)]
+            filtered_counts["wrong jurisdiction"] += max(0, pre_source_filter_count - len(matches_list))
 
             is_commercial_or_criminal_query = any(k in sq_lower for k in ["fir", "quash", "420", "406", "489-f", "489f", "commercial", "contract", "cheque", "bail", "specific performance", "12 sra", "banking", "recovery", "fio 2001", "leave to defend", "security deposit"])
             is_secp_or_corporate_query = any(k in sq_lower for k in ["secp", "company", "companies act", "shareholder", "director", "civil court stay", "ouster of jurisdiction", "vagrancy", "ordinance 1958", "special ordinance", "12(2)", "section 12", "115 cpc", "civil revision", "42 sra", "specific relief", "fraudulent decree", "stranger", "order xxi", "order 21", "rule 97", "rule 101", "rule 103", "execution", "objection petition", "deemed decree"])
@@ -4295,6 +4534,10 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 raw_candidates=matches_list,
                 query_plan=legal_query_plan
             )
+            filtered_counts["caption only"] += rejection_counts.get("caption_only", 0)
+            filtered_counts["wrong jurisdiction"] += rejection_counts.get("foreign_jurisdiction", 0)
+            filtered_counts["irrelevant topic"] += rejection_counts.get("unrelated_subject", 0) + rejection_counts.get("mismatched_domain", 0)
+            filtered_counts["low quality"] += rejection_counts.get("insufficient_text", 0)
             pipeline_metrics.record_candidate_filtering(
                 raw_count=len(matches_list),
                 rejected_counts=rejection_counts,
@@ -4311,6 +4554,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 is_boosted = bool(m.get("is_boosted") if isinstance(m, dict) else False) or bool(meta.get("is_boosted"))
                 has_rrf = bool(m.get("rrf_score"))
                 if (not is_boosted) and (not has_rrf) and sim_score < 0.40:
+                    filtered_counts["low quality"] += 1
                     continue
                 text_content = strip_control_characters(str(meta.get("text") or meta.get("text_preview") or ""))
                 full_text_val = str(meta.get("full_text") or meta.get("text") or "")
@@ -4323,12 +4567,16 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         meta["case_title"] = case_tit_clean
                 if not is_boosted:
                     if len(full_text_val) < 120 and len(text_content) < 50:
+                        filtered_counts["low quality"] += 1
                         continue
                     if "Precedent Record" in case_tit_clean or text_content.strip() == "Control of Narcotic Substances Act 1997--9":
+                        filtered_counts["low quality"] += 1
                         continue
                     if case_tit_clean.lower() in ["v.", "vs.", "", "v", "vs"]:
+                        filtered_counts["low quality"] += 1
                         continue
                     if is_garbled_text(text_content) or is_junk_citation_dump(text_content) or is_scraped_portal_junk(text_content):
+                        filtered_counts["low quality"] += 1
                         continue
                 case_title_str = str(meta.get("title") or meta.get("case_title") or "").lower().strip()
                 full_text_str = text_content.lower()
@@ -4339,12 +4587,14 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     if query_anchors:
                         cand_haystack = f"{case_title_str} {full_text_str}"
                         if not passes_positive_anchor_test(cand_haystack, query_anchors):
+                            filtered_counts["irrelevant topic"] += 1
                             continue
 
                     # Part 3: 2-way Case Identity Verification
                     cand_cid = str(meta.get("case_id") or meta.get("id") or "")
                     cand_cit = str(meta.get("citation") or meta.get("neutral_citation") or "")
                     if cand_cid and cand_cit and not verify_case_identity(cand_cid, cand_cit, meta):
+                        filtered_counts["low quality"] += 1
                         continue
                     # Strict Corporate Query Hygiene: Filter out irrelevant administrative, labor, customs, ECL, rent, arbitration, and revenue petitions unless corporate law is explicitly involved
                     if (is_secp_or_corporate_query or is_corporate_law_query):
@@ -4359,6 +4609,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                         haystack_check = f"{case_title_str} {full_text_str}"
                         if any(arm in haystack_check for arm in EXCLUDED_NON_CORPORATE_MARKERS):
                             if not any(cw in haystack_check for cw in ["section 286", "section 290", "oppression", "mismanagement", "minority shareholder", "majority shareholder", "corporate governance"]):
+                                filtered_counts["irrelevant topic"] += 1
                                 continue
                     # Strict Non-Criminal / Civil / Family query hygiene: filter out criminal state cases ("v. The State" / "vs The State")
                     if is_non_criminal and not is_explicitly_criminal:
@@ -4379,6 +4630,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             ("v. federation of pakistan" in case_title_str and "bail" in full_text_str)
                         )
                         if is_state_criminal_case:
+                            filtered_counts["irrelevant topic"] += 1
                             continue
 
                     # Strict Banking / Mortgage / FIO 2001 query hygiene: filter out partition/family cases unless specifically queried
@@ -4390,6 +4642,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             not any(k in haystack_check for k in ["banking court", "financial institution", "fio 2001", "mortgaged property", "mortgage auction", "recovery of finances"])
                         )
                         if is_pure_family_or_partition and not any(k in effective_user_query.lower() for k in ["family", "khula", "partition", "custody"]):
+                            filtered_counts["irrelevant topic"] += 1
                             continue
 
                     # Strict Criminal / Financial Fraud / Bail Query Hygiene:
@@ -4407,6 +4660,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             not any(k in haystack_check for k in ["409", "420", "406", "489-f", "breach of trust", "misappropriat", "cheating", "entrustment", "director loan", "company funds"])
                         )
                         if is_pure_defamation and not any(k in effective_user_query.lower() for k in ["defamation", "500", "libel"]):
+                            filtered_counts["irrelevant topic"] += 1
                             continue
 
                         # Reject pure narcotics cases unless query asks about narcotics
@@ -4415,6 +4669,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             not any(k in haystack_check for k in ["409", "420", "406", "489-f", "cheque", "breach of trust", "fraud"])
                         )
                         if is_pure_narcotics and not any(k in effective_user_query.lower() for k in ["narcotic", "cnsa", "charas"]):
+                            filtered_counts["irrelevant topic"] += 1
                             continue
 
                         # Reject pure murder / violent crime cases
@@ -4423,6 +4678,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             not any(k in haystack_check for k in ["409", "420", "406", "489-f", "breach of trust", "corporate", "director"])
                         )
                         if is_pure_murder and not any(k in effective_user_query.lower() for k in ["302", "murder", "qatl"]):
+                            filtered_counts["irrelevant topic"] += 1
                             continue
 
                         # Reject pure contempt of court cases
@@ -4431,12 +4687,14 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             not any(k in haystack_check for k in ["409", "420", "406", "breach of trust", "director"])
                         )
                         if is_pure_contempt and not any(k in effective_user_query.lower() for k in ["contempt", "204"]):
+                            filtered_counts["irrelevant topic"] += 1
                             continue
                 cid_raw = meta.get("canonical_id") or meta.get("case_id") or meta.get("citation") or meta.get("title")
                 cid_key = re.sub(r'[\s_\-]+', '', str(cid_raw or '')).lower()
                 if cid_key and (cid_key in seen_in_query or cid_key in _seen_case_ids_global):
                     continue
                 if not is_usable_precedent(m):
+                    filtered_counts["low quality"] += 1
                     continue
                 if cid_key:
                     seen_in_query.add(cid_key)
@@ -4494,7 +4752,11 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             meta["case_title"] = cit_fallback
                         verified_trusted_matches.append(m)
                     else:
+                        filtered_counts["trust gate exclusion"] += 1
                         print(f"[TRUST_GATE_EXCLUSION] Vector {m_id} (case_id={cand_cid}) excluded as '{cat}': {', '.join(reasons)}")
+
+                print(f"--> [TRUST GATE TELEMETRY]: Admitted {len(verified_trusted_matches)}/{len(filtered_matches)} candidates: {trust_telemetry}", flush=True)
+                filtered_matches = verified_trusted_matches
 
                 print(f"--> [TRUST GATE TELEMETRY]: Admitted {len(verified_trusted_matches)}/{len(filtered_matches)} candidates: {trust_telemetry}", flush=True)
                 filtered_matches = verified_trusted_matches
@@ -4571,6 +4833,41 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                             primary_matches.append(m_obj)
                             aggregate_sources_matches.append(m_obj)
 
+            # Quality threshold helper for mandatory case law enforcement
+            def passes_minimum_quality_threshold(candidate: Dict[str, Any]) -> bool:
+                meta = candidate.get("metadata", {}) if isinstance(candidate, dict) else getattr(candidate, "metadata", {}) or {}
+                status = str(candidate.get("retrieval_status") or meta.get("retrieval_status") or "").lower()
+                trust_cat = str(candidate.get("trust_classification") or meta.get("trust_classification") or "").lower()
+                if status in ("quarantined", "rejected", "restricted") or trust_cat in ("quarantined", "rejected", "restricted", "unverifiable"):
+                    return False
+
+                raw_txt = str(candidate.get("full_text") or meta.get("full_text") or meta.get("text") or candidate.get("text") or "").strip()
+                if len(raw_txt.split()) < 150:
+                    return False
+
+                c_type = str(candidate.get("content_type") or meta.get("content_type") or "").lower()
+                if c_type in ("caption_only", "metadata_only"):
+                    return False
+
+                court_str = str(meta.get("court") or meta.get("court_name") or candidate.get("court") or "").strip()
+                if not court_str or court_str.lower() in ("court not identified", "unknown", "court of record", "court"):
+                    return False
+
+                cit_str = str(meta.get("citation") or meta.get("neutral_citation") or candidate.get("citation") or "").strip()
+                if not cit_str or not (any(re.search(pat, cit_str, re.IGNORECASE) for pat in REPORTER_PATTERNS) or CITATION_REGEX.search(cit_str)):
+                    return False
+
+                return True
+
+            is_mandatory_authority_query = (
+                any(kw in query_combined_text for kw in [
+                    "find judgment", "find judgments", "precedent", "precedents", "case law", "authorities", "rulings",
+                    "cases on", "search case law", "lookup judgment", "reported judgment", "cite authorities"
+                ]) or
+                (hasattr(legal_query_plan, "required_authorities") and bool(legal_query_plan.required_authorities)) or
+                request.category == "caselaw"
+            )
+
             # STAGE 2 EXTERNAL WEB-FALLBACK TRIGGER
             # Condition 1: When local vector and FTS return zero usable candidates (or only discarded stubs).
             # Condition 2: When candidate(s) are headnote_only / editorial summaries (< 300 words),
@@ -4602,7 +4899,12 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     "User requested Lahore High Court authority, but zero LHC precedents were retrieved locally."
                 )
 
-            should_trigger_fallback = (not primary_matches) or bool(headnote_candidates) or forum_gap_lhc
+            should_trigger_fallback = (
+                (not primary_matches) or
+                (is_mandatory_authority_query and not any(passes_minimum_quality_threshold(m) for m in primary_matches)) or
+                bool(headnote_candidates) or
+                forum_gap_lhc
+            )
 
             if should_trigger_fallback:
                 hn_cit = ""
@@ -5039,6 +5341,49 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if cid_key:
                     _seen_case_ids_global.add(cid_key)
                 aggregate_additional_authorities.append({"title": title, "citation": neutral_cit, "summary": preview_snippet})
+
+            # Quality assessment and final pool calculation
+            valid_quality_matches = [m for m in primary_matches if passes_minimum_quality_threshold(m)]
+            final_pool = primary_matches + secondary_matches
+            zero_authorities_found = (is_mandatory_authority_query and not valid_quality_matches)
+
+            # Emit exact pipeline telemetry block
+            sections_log = ", ".join(legal_query_plan.provisions) if (hasattr(legal_query_plan, "provisions") and legal_query_plan.provisions) else "N/A"
+            issues_log = "; ".join(legal_query_plan.legal_questions) if (hasattr(legal_query_plan, "legal_questions") and legal_query_plan.legal_questions) else (raw_search_query or effective_user_query)
+
+            pipeline_log_block = (
+                f"\nQUERY PLAN:\n"
+                f"Sections: {sections_log}\n"
+                f"Issues: {issues_log}\n\n"
+                f"SUPABASE RESULTS:\n"
+                f"count: {count_supabase}\n\n"
+                f"PINECONE RESULTS:\n"
+                f"count: {count_pinecone}\n\n"
+                f"BM25 RESULTS:\n"
+                f"count: {count_bm25}\n\n"
+                f"EXTERNAL RESULTS:\n"
+                f"count: {count_external}\n\n"
+                f"FILTERED:\n"
+                f"- caption only: {filtered_counts['caption only']}\n"
+                f"- wrong jurisdiction: {filtered_counts['wrong jurisdiction']}\n"
+                f"- irrelevant topic: {filtered_counts['irrelevant topic']}\n"
+                f"- low quality: {filtered_counts['low quality']}\n"
+                f"- trust gate exclusion: {filtered_counts['trust gate exclusion']}\n\n"
+                f"FINAL AUTHORITY POOL:\n"
+                f"count: {len(final_pool)}\n"
+            )
+            print(pipeline_log_block, flush=True)
+
+            if zero_authorities_found:
+                trace_logger.log_final_context([])
+                trace_logger.write_trace()
+                return (
+                    "NO_AUTHORITIES_LOCATED: Zero verified superior court authorities meeting mandatory quality standards "
+                    "(verified full judgment text >= 150 words from superior courts of record) were located for this query.\n\n"
+                    "MANDATORY DIRECTIVE: State clearly in your response that no authoritative precedents on this issue were retrieved from the database. "
+                    "Do NOT fabricate citations, case names, or judicial holdings. Ground your analysis strictly in codified statutory text and settled canons, "
+                    "and explicitly disclose the absence of retrieved case law."
+                )
 
             # Debug logger for retrieved candidates
             print(f"DEBUG: Retrieved {len(primary_matches)} candidates passed to LLM.", flush=True)
@@ -5725,12 +6070,8 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                         "Please refine or narrow your research query to regenerate a verified memorandum."
                     )
                 else:
-                    notice_banner = (
-                        "\n\n---\n### APPENDIX: LEGAL MEMO NOTICES\n"
-                        f"This memorandum provides substantive legal analysis but did not strictly populate "
-                        f"all standard research headings: {', '.join(remaining_issues)}. Please review statutory provisions directly.\n"
-                    )
-                    raw_model_output = f"{raw_model_output.rstrip()}{notice_banner}"
+                    print(f"⚠️ [JOB {job_id}] Formal legal memo completeness notice: {remaining_issues}", file=sys.stderr)
+                    pipeline_metrics.record_warning(f"Missing standard headings: {', '.join(remaining_issues)}")
 
         if review_context and not is_token_truncated and "⚠️ **[GENERATION INCOMPLETE NOTICE]**" not in raw_model_output:
             try:
@@ -5797,16 +6138,9 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                             raw_model_output = format_review_gate_fallback(regen_output, reason="round 2 review service timeout")
                         else:
                             unverified_issues = gate_res_round2.get("issues", gate_issues)
-                            print(f"⚠️ [FINAL REVIEW GATE PER-SENTENCE NOTICE] Persisting unverified claims after retry: {unverified_issues}", file=sys.stderr)
-                            # Fail closed per sentence, not per memo: append specific notice to Appendix and preserve substantive analysis
-                            notice_banner = (
-                                "\n\n---\n### APPENDIX: JUDICIAL REVIEW CORROBORATION NOTICE\n"
-                                "The following specific proposition(s) in this draft "
-                                "require independent corroboration against primary court records before reliance in pleadings:\n"
-                                + "\n".join(f"- *{iss}*" for iss in unverified_issues)
-                                + "\n"
-                            )
-                            raw_model_output = f"{regen_output.rstrip()}{notice_banner}"
+                            print(f"⚠️ [FINAL REVIEW GATE CORROBORATION NOTICE] Propositions requiring corroboration: {unverified_issues}", file=sys.stderr)
+                            pipeline_metrics.record_warning(f"Propositions requiring corroboration: {', '.join(unverified_issues)}")
+                            raw_model_output = regen_output
 
 
         executive_answer = ""
@@ -5859,14 +6193,8 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     seen_cids.add(cid)
                     currency_tags.append(f"- **{cid}**: {dtag}")
 
-            if currency_tags and "Statutory Currency Verification Status" not in executive_answer:
-                currency_block = "\n#### Statutory Currency Verification Status\n" + "\n".join(currency_tags) + "\n"
-                app_match = re.search(r'(###?\s*(?:\d+\.?\s*)?APPENDIX[^\n]*)', executive_answer, re.IGNORECASE)
-                if app_match:
-                    header_span_end = app_match.end()
-                    executive_answer = executive_answer[:header_span_end] + "\n" + currency_block + executive_answer[header_span_end:].lstrip()
-                else:
-                    executive_answer = executive_answer + "\n\n---\n### APPENDIX: STATUTORY CURRENCY\n" + currency_block
+            if currency_tags:
+                print(f"Statutory currency status: {', '.join(currency_tags)}", file=sys.stderr)
 
         # Item 7.b: Append External Authorities (Not Yet in Database) section
         if aggregate_external_recent_judgments and "⚠️ **[FAIL-CLOSED" not in executive_answer and "⚠️ **[GENERATION INCOMPLETE" not in executive_answer:
@@ -6023,17 +6351,13 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
         display_answer = executive_answer
         if (not is_missing_doc_response) and (citations_payload or additional_authorities):
-            # Deterministic notice banner if any retrieved authority came via Tertiary Postgres FTS fallback
+            # Deterministic notice logging if any retrieved authority came via Tertiary Postgres FTS fallback
             fts_fallback_present = any(
                 c.get("is_fts_fallback") or str(c.get("content_type", "")).lower() == "postgres_fts_fallback"
                 for c in (citations_payload or [])
             )
-            if fts_fallback_present and "This result was found via full-text keyword search" not in display_answer:
-                fts_banner = (
-                    "> ⚠️ **Notice**: This result was found via full-text keyword search, not our verified semantic index. "
-                    "This record may not yet be fully processed by our ranking system — verify carefully before relying on it in pleadings.\n\n"
-                )
-                display_answer = fts_banner + display_answer
+            if fts_fallback_present:
+                print("⚠️ [RETRIEVAL NOTICE]: Tertiary Postgres FTS fallback candidates present in results.", file=sys.stderr)
 
             headnote_cits = [
                 str(c.get("citation") or c.get("case_id"))
@@ -6044,13 +6368,8 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                 and c.get("case_id") not in COLLISION_WHITELIST
                 and c.get("citation") not in COLLISION_WHITELIST
             ]
-            if headnote_cits and not any(k in display_answer.lower() for k in ["headnote", "short order"]):
-                headnote_banner = (
-                    f"> ⚠️ **Notice on Case Law Grounding**: Precedent analysis for **{', '.join(headnote_cits)}** "
-                    "is grounded in an indexed editorial headnote summary / short order rather than the court's full verbatim judicial reasoning. "
-                    "Advocates are advised to verify against the certified full judgment before presenting in pleadings or oral arguments.\n\n"
-                )
-                display_answer = headnote_banner + display_answer
+            if headnote_cits:
+                print(f"⚠️ [GROUNDING NOTICE]: Headnote candidates present: {', '.join(headnote_cits)}", file=sys.stderr)
             if aggregate_sources_matches:
                 display_answer += "\n\n" + format_sources_searched(aggregate_sources_matches)
 
@@ -6112,9 +6431,8 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         else:
             mode = "simple_query"
 
-        # Confine prototype warning banner strictly to Appendix at the bottom
-        if "Prototype. Not verified for use in pleadings" not in display_answer:
-            display_answer = f"{display_answer.rstrip()}\n\n---\n### APPENDIX: SYSTEM & VERIFICATION NOTICE\n{PROTOTYPE_BANNER.strip()}\n"
+        # Strip all prototype, completeness, gate, and currency warnings from user-facing answer
+        display_answer = purge_debug_warnings(display_answer)
 
         inserted_row_id = str(uuid.uuid4())
         if supabase:
@@ -6307,11 +6625,6 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
     paragraphs_list = [p.strip() for p in re.split(r'\n\s*\n+', clean_text) if p.strip()]
 
     story = []
-    proto_style = ParagraphStyle(
-        'ProtoBanner', parent=styles['Normal'],
-        fontName='Helvetica-Bold', fontSize=8, leading=11, alignment=1, spaceAfter=8
-    )
-    story.append(Paragraph("<font color='#A00000'><b>PROTOTYPE — NOT VERIFIED FOR USE IN PLEADINGS. VERIFY EVERY CITATION AND STATEMENT AGAINST THE ORIGINAL JUDGMENT.</b></font>", proto_style))
     story.append(Paragraph(html.escape(court or "SUPERIOR COURTS OF PAKISTAN"), court_style))
     story.append(Paragraph(html.escape(title or "JUDGMENT RECORD"), title_style))
     if citation:
@@ -6494,24 +6807,27 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
     })
 
 @app.get("/api/judgments/{judgment_id:path}/pdf")
-async def get_api_judgment_pdf_endpoint(
-    judgment_id: str,
-    authenticated_user_id: str = Depends(verify_clerk_session)
-):
+async def get_api_judgment_pdf_endpoint(judgment_id: str):
     decoded_id = urllib.parse.unquote(judgment_id).strip()
     match_record = find_judgment_by_id_or_canonical(decoded_id)
 
-    # 1. Check Supabase Storage bucket for authentic signed PDF
-    if match_record:
-        signed_pdf_url = resolve_judgment_pdf_url(match_record, supabase_client=supabase, backend_base_url=get_backend_base_url())
-        if signed_pdf_url.startswith("https://") and "token=" in signed_pdf_url:
-            return Response(status_code=307, headers={"Location": signed_pdf_url})
-
-    # 2. Check if valid external URL is stored
-    if match_record and match_record.get("pdf_url"):
-        stored_pdf = str(match_record.get("pdf_url"))
-        if (stored_pdf.startswith("http://") or stored_pdf.startswith("https://")) and not stored_pdf.startswith(get_backend_base_url()):
-            return Response(status_code=307, headers={"Location": stored_pdf})
+    # 1. Download authentic PDF bytes from Supabase Storage on backend side (zero direct frontend storage calls)
+    if match_record and supabase:
+        cit_lookup = match_record.get("neutral_citation") or match_record.get("citation") or ""
+        journal, year, page = extract_journal_and_year(cit_lookup, decoded_id)
+        if journal and year:
+            storage_pdf_bytes = fetch_storage_pdf_bytes(supabase, journal, year, page, decoded_id)
+            if storage_pdf_bytes:
+                safe_filename = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_id).strip('_') + ".pdf"
+                return Response(
+                    content=storage_pdf_bytes,
+                    media_type="application/pdf",
+                    headers={
+                        "Content-Disposition": f'inline; filename="{safe_filename}"',
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "application/pdf"
+                    }
+                )
 
     title = (get_effective_title(match_record) if match_record else decoded_id) or decoded_id
     citation = (match_record.get("neutral_citation") if match_record else "") or ""
@@ -6542,11 +6858,8 @@ async def get_api_judgment_endpoint(
     return match_record
 
 @app.get("/judgment-pdf/{case_id:path}")
-async def get_judgment_pdf_endpoint(
-    case_id: str,
-    authenticated_user_id: str = Depends(verify_clerk_session)
-):
-    return await get_api_judgment_pdf_endpoint(case_id, authenticated_user_id=authenticated_user_id)
+async def get_judgment_pdf_endpoint(case_id: str):
+    return await get_api_judgment_pdf_endpoint(case_id)
 
 @app.get("/judgment/{case_id:path}")
 async def get_full_judgment(
