@@ -44,9 +44,11 @@ SUPABASE_SERVICE_KEY: Optional[str] = os.environ.get("SUPABASE_SERVICE_KEY")
 
 # --- Anthropic LLM Config ---
 ANTHROPIC_API_KEY: Optional[str] = os.environ.get("ANTHROPIC_API_KEY")
-ANTHROPIC_WORKSPACE_ID: Optional[str] = os.environ.get(
-    "ANTHROPIC_WORKSPACE_ID", "wrkspc_016AwCn1LDaCtQ39UsfQiWjU"
-)
+_raw_ws = (os.environ.get("ANTHROPIC_WORKSPACE_ID") or "").strip()
+if _raw_ws and _raw_ws.startswith("wrkspc_"):
+    ANTHROPIC_WORKSPACE_ID: Optional[str] = _raw_ws
+else:
+    ANTHROPIC_WORKSPACE_ID: Optional[str] = "wrkspc_016AwCn1LDaCtQ39UsfQiWjU"
 
 # --- Voyage AI Embedding Config ---
 VOYAGE_API_KEY: Optional[str] = os.environ.get("VOYAGE_API_KEY")
@@ -204,7 +206,30 @@ async def safe_create_anthropic_message(**kwargs):
         return await client.messages.create(**call_kwargs)
     except Exception as e:
         err_str = str(e)
-        if not ("404" in err_str or "not_found" in err_str.lower() or "model:" in err_str.lower()):
+
+        # 1. Immediate Auto-Recovery for Workspace Header Errors
+        if "workspace" in err_str.lower() and ("not found" in err_str.lower() or "invalid" in err_str.lower()):
+            print(
+                f"⚠️ [legal_ai.config] Anthropic rejected workspace ID. "
+                f"Auto-recovering with default workspace 'wrkspc_016AwCn1LDaCtQ39UsfQiWjU'...",
+                file=sys.stderr,
+                flush=True
+            )
+            try:
+                from anthropic import AsyncAnthropic
+                recov_client = AsyncAnthropic(
+                    api_key=ANTHROPIC_API_KEY,
+                    default_headers={"anthropic-workspace-id": "wrkspc_016AwCn1LDaCtQ39UsfQiWjU"}
+                )
+                return await recov_client.messages.create(**call_kwargs)
+            except Exception as recov_err:
+                print(f"⚠️ [legal_ai.config] Workspace recovery attempt failed: {recov_err}. Trying without workspace header...", file=sys.stderr, flush=True)
+                recov_client_no_hdr = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
+                return await recov_client_no_hdr.messages.create(**call_kwargs)
+
+        # 2. Model 404 Failover (Only when error is specifically about model, not workspace)
+        is_model_error = ("model:" in err_str.lower() or "model_not_found" in err_str.lower() or ("404" in err_str and "model" in err_str.lower())) and "workspace" not in err_str.lower()
+        if not is_model_error:
             raise e
 
         candidate_models = []

@@ -322,7 +322,8 @@ PINECONE_NAMESPACE = os.environ.get("PINECONE_NAMESPACE", "judgments")
 if not PINECONE_NAMESPACE or PINECONE_NAMESPACE == "default":
     PINECONE_NAMESPACE = "judgments"
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
-ANTHROPIC_WORKSPACE_ID = os.environ.get("ANTHROPIC_WORKSPACE_ID") or "wrkspc_016AwCn1LDaCtQ39UsfQiWjU"
+_raw_main_ws = (os.environ.get("ANTHROPIC_WORKSPACE_ID") or "").strip()
+ANTHROPIC_WORKSPACE_ID = _raw_main_ws if (_raw_main_ws and _raw_main_ws.startswith("wrkspc_")) else "wrkspc_016AwCn1LDaCtQ39UsfQiWjU"
 VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY")
 VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
@@ -995,7 +996,30 @@ async def safe_create_anthropic_message(**kwargs):
         return await async_anthropic_client.messages.create(**call_kwargs)
     except Exception as e:
         err_str = str(e)
-        if not ("404" in err_str or "not_found" in err_str.lower() or "model:" in err_str.lower()):
+
+        # 1. Immediate Auto-Recovery for Workspace Header Errors
+        if "workspace" in err_str.lower() and ("not found" in err_str.lower() or "invalid" in err_str.lower()):
+            print(
+                f"⚠️ Anthropic rejected workspace ID '{ANTHROPIC_WORKSPACE_ID}'. "
+                f"Auto-recovering with default workspace 'wrkspc_016AwCn1LDaCtQ39UsfQiWjU'...",
+                file=sys.stderr,
+                flush=True
+            )
+            try:
+                from anthropic import AsyncAnthropic
+                recov_client = AsyncAnthropic(
+                    api_key=ANTHROPIC_API_KEY,
+                    default_headers={"anthropic-workspace-id": "wrkspc_016AwCn1LDaCtQ39UsfQiWjU"}
+                )
+                return await recov_client.messages.create(**call_kwargs)
+            except Exception as recov_err:
+                print(f"⚠️ Workspace recovery attempt failed: {recov_err}. Retrying without workspace header...", file=sys.stderr, flush=True)
+                recov_client_no_hdr = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
+                return await recov_client_no_hdr.messages.create(**call_kwargs)
+
+        # 2. Model 404 Failover (Only when error is specifically about model, not workspace)
+        is_model_error = ("model:" in err_str.lower() or "model_not_found" in err_str.lower() or ("404" in err_str and "model" in err_str.lower())) and "workspace" not in err_str.lower()
+        if not is_model_error:
             raise e
 
         # Build candidate list of fallback models
@@ -1003,9 +1027,6 @@ async def safe_create_anthropic_message(**kwargs):
         custom_fallback = os.environ.get("ANTHROPIC_FALLBACK_MODEL", "").strip()
         if custom_fallback:
             candidate_models.append(custom_fallback)
-        # Note: Anthropic retired claude-3-haiku-20240307 (April 2026) and claude-3-5-haiku-20241022 (February 19, 2026).
-        # Active supported fallback as of October 2026: claude-haiku-4-5-20251001 (retirement not sooner than Oct 15, 2026).
-        # Operators should configure ANTHROPIC_FALLBACK_MODEL for dynamic unpinned fallback.
         for m in ["claude-haiku-4-5-20251001"]:
             if m not in candidate_models and m != primary_model:
                 candidate_models.append(m)
