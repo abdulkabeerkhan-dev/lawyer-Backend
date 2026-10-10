@@ -161,6 +161,49 @@ class StatuteAuthorityStore:
             except Exception:
                 pass
 
+        # Load verified statute tables if available
+        st_dir = self.workspace_root / "data" / "statute_tables"
+        if st_dir.exists():
+            prov_map = {self.key(p): p for p in self.provisions}
+            for json_file in st_dir.glob("*.json"):
+                try:
+                    data = json.loads(json_file.read_text(encoding="utf-8"))
+                    if isinstance(data, list):
+                        for row in data:
+                            if isinstance(row, dict) and row.get("text"):
+                                act = str(row.get("act_code", "")).lower()
+                                if "const" in act:
+                                    act_alias = "constitution"
+                                elif "service_tribunals" in act:
+                                    act_alias = "service_tribunals_act"
+                                elif "peeda" in act:
+                                    act_alias = "peeda"
+                                elif "limitation" in act:
+                                    act_alias = "limitation_act"
+                                elif "cpc" in act:
+                                    act_alias = "cpc"
+                                elif "crpc" in act:
+                                    act_alias = "crpc"
+                                elif "sra" in act:
+                                    act_alias = "sra"
+                                elif "registration" in act:
+                                    act_alias = "registration_act"
+                                elif "tpa" in act:
+                                    act_alias = "tpa"
+                                else:
+                                    act_alias = act
+
+                                ptype = row.get("provision_type", "section")
+                                pnum = str(row.get("primary_num", ""))
+                                k = f"{act_alias}:{ptype}:{pnum}"
+                                if k in prov_map:
+                                    prov_map[k]["text"] = row["text"]
+                                    prov_map[k]["source"] = row.get("source_url")
+                                    prov_map[k]["as_at"] = row.get("as_amended_to")
+                                    prov_map[k]["reviewed_by"] = row.get("reviewed_by")
+                except Exception:
+                    pass
+
     @staticmethod
     def key(p: Dict[str, Any]) -> str:
         return f"{p['act']}:{p['kind']}:{p['id']}"
@@ -178,6 +221,11 @@ class StatuteAuthorityStore:
 
     def all_statute_texts(self) -> List[str]:
         return [p["text"] for p in self.provisions if p.get("text")]
+
+    def all_statute_norm_texts(self) -> List[str]:
+        if not hasattr(self, "_cached_statute_norm") or self._cached_statute_norm is None:
+            self._cached_statute_norm = [norm_text(p["text"]) for p in self.provisions if p.get("text")]
+        return self._cached_statute_norm
 
     def add_judgment(self, text: str, citation: Optional[str] = None, title: str = "") -> Optional[str]:
         if not text.strip():

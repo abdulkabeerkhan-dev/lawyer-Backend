@@ -39,7 +39,16 @@ from legal_ai.verification import (
 )
 from legal_ai.synthesis.memorandum_generator import (
     purge_debug_warnings,
-    sanitize_precedent_card
+    sanitize_precedent_card,
+    enforce_judgment_first_boundaries,
+    query_requests_strategy,
+    enforce_holding_attribution,
+    is_headnote_only_card,
+    filter_and_cap_authorities,
+    check_missing_statutory_source,
+    enforce_missing_statutory_source_warning,
+    enforce_proposition_confidence_guardrails,
+    log_runtime_diagnostic,
 )
 from legal_ai.analytics.telemetry import (
     compute_source_distribution,
@@ -64,30 +73,29 @@ def _load_system_prompt() -> str:
     return (
         "You are Senior Appellate Counsel preparing an authoritative, exhaustive legal research opinion for a Pakistani advocate.\n"
         "Your writing style is confident, analytical, rigorous, and professional.\n\n"
-        "MANDATORY 8-PART STRUCTURE:\n"
-        "### 1. ### EXECUTIVE SUMMARY & LEGAL OPINION\n"
-        "### 2. ### STATUTORY & PROCEDURAL FRAMEWORK\n"
-        "### 3. ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX\n"
-        "### 4. ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE\n"
-        "### 5. ### APPLICATION OF LAW TO FACTS\n"
-        "### 6. ### PRE-ARREST BAIL STRATEGY (OR PROCEDURAL REMEDY)\n"
-        "### 7. ### RECOMMENDATIONS & LITIGATION ROADMAP\n"
-        "### 8. ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES\n\n"
+        "MANDATORY JUDGMENT-FIRST STRUCTURE:\n"
+        "### 1. LEGAL ISSUE\n"
+        "### 2. RELEVANT PROVISIONS & STATUTORY VERIFICATION\n"
+        "### 3. CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX\n"
+        "### 4. APPLICATION TO QUERY (OR VERIFICATION)\n\n"
+        "STRICT BOUNDARY: The output must terminate immediately after Application to Query / Verification. "
+        "Do NOT include Senior Counsel Opinion, Executive Summary & Legal Opinion, Procedural Remedy & Appellate Strategy, Recommendations, Litigation Roadmap, or For an Advocate.\n"
         "ZERO DISCLAIMER POLLUTION: Do not include prototype disclaimers, currency tags, or verification notices."
     )
 
 
 def _build_precedent_context_block(cards: List[Dict[str, Any]]) -> str:
     lines = ["\n### CONTROLLING SUPERIOR COURT PRECEDENTS ON RECORD:\n"]
-    lines.append("| Citation | Court | Case Title | Year | Core Legal Principle / Ratio |")
-    lines.append("| :--- | :--- | :--- | :--- | :--- |")
+    lines.append("| Citation | Court | Case Title | Authority Level | Year | Core Legal Principle / Ratio |")
+    lines.append("| :--- | :--- | :--- | :--- | :--- | :--- |")
     for c in cards:
         cit = c.get("citation", "Citation")
         court = c.get("court", "Court")
         title = c.get("case_name", c.get("title", "Case"))
+        auth_level = c.get("authority_level", "Direct Authority")
         yr = c.get("year", "2024")
         ratio = (c.get("ratio_decidendi") or c.get("legal_issue") or "Holding on record").replace("\n", " ").strip()
-        lines.append(f"| {cit} | {court} | {title} | {yr} | {ratio[:120]}... |")
+        lines.append(f"| {cit} | {court} | {title} | {auth_level} | {yr} | {ratio[:100]}... |")
 
     lines.append("\n### RELEVANT JUDICIAL PASSAGES & OPERATIVE HOLDINGS:\n")
     for idx, c in enumerate(cards, 1):
@@ -96,11 +104,30 @@ def _build_precedent_context_block(cards: List[Dict[str, Any]]) -> str:
         court = c.get("court", "")
         preview = c.get("preview") or c.get("ratio_decidendi") or ""
         paras = c.get("important_paragraphs", "")
+        neg_boundary = c.get("what_this_case_does_not_decide") or c.get("negative_boundary") or ""
+        headnote_flag = is_headnote_only_card(c)
+        auth_tag = c.get("authority_classification_tag") or c.get("authority_level") or "Direct Authority"
+        auth_level = c.get("authority_level", "Direct Authority")
+
         lines.append(f"--- PRECEDENT #{idx}: {cit} ({title}) [{court}] ---")
-        if preview:
-            lines.append(f"Holding / Ratio: {preview}")
+        lines.append(f"- **Authority Level**: {auth_tag}")
+        if auth_level == "Analogical Authority":
+            lines.append("- **Caution**: ANALOGICAL ONLY (different statute/forum). Do NOT cite as controlling on this statute.")
+        if headnote_flag:
+            lines.append("Record Source: Headnote / Editorial Summary only (no verbatim full judgment text on record).")
+            lines.append("ATTRIBUTION DIRECTIVE: Label as 'The judgment record indicates' — DO NOT use 'The Court held'.")
+            if preview:
+                lines.append(f"Record Indication / Summary: {preview}")
+        else:
+            lines.append("Record Source: Full Judgment with Identifiable Holding.")
+            lines.append("ATTRIBUTION DIRECTIVE: Label as 'The Court held'.")
+            if preview:
+                lines.append(f"Holding / Ratio: {preview}")
+
         if paras and paras != preview:
             lines.append(f"Key Paragraphs: {paras}")
+        if neg_boundary:
+            lines.append(f"Negative Boundary (What this case does NOT decide): {neg_boundary}")
         lines.append("")
 
     return "\n".join(lines)
@@ -185,6 +212,27 @@ async def process_query_job_legal_ai(
         query_text=effective_user_query
     )
     formatted_current_law_block = format_current_law_context(verified_statutory_provisions)
+
+    # Ground-Truth Statute Injection (Phase 2 Fix 2.2)
+    from legal_ai.statutes.statute_injector import inject_statutory_framework
+    statute_framework_res = inject_statutory_framework(legal_query_plan, query_text=effective_user_query)
+    if statute_framework_res.get("statute_block"):
+        formatted_current_law_block = f"{formatted_current_law_block}\n\n{statute_framework_res['statute_block']}".strip()
+
+    # Phase 4 Early Display: Populate plan and statutes for streaming clients
+    if job_id in jobs_store:
+        jobs_store[job_id].setdefault("early_display", {})
+        jobs_store[job_id]["early_display"]["plan"] = {
+            "matter_type": getattr(legal_query_plan, "matter_type", "civil"),
+            "primary_jurisdiction": getattr(legal_query_plan, "primary_jurisdiction", "all"),
+            "provisions": getattr(legal_query_plan, "provisions", []),
+            "core_issues": getattr(legal_query_plan, "core_issues", []),
+        }
+        jobs_store[job_id]["early_display"]["statutes"] = {
+            "injected_statutes": statute_framework_res.get("injected_statutes", []) if isinstance(statute_framework_res, dict) else [],
+            "statute_block": statute_framework_res.get("statute_block", "") if isinstance(statute_framework_res, dict) else "",
+        }
+
     pipeline_metrics.end_stage("checking_law")
 
     # 4. Stage: Searching Precedents
@@ -212,6 +260,14 @@ async def process_query_job_legal_ai(
         query_plan=legal_query_plan
     )
 
+    # Phase 3 Stage 2 Candidate Relevance Gating and Reranking Engine (SHADOW MODE)
+    from legal_ai.ranking.shadow_reranker import evaluate_candidate_relevance_shadow
+    shadow_candidates, shadow_rerank_stats = evaluate_candidate_relevance_shadow(
+        candidates=clean_candidates,
+        query_plan=legal_query_plan,
+        query_text=effective_user_query
+    )
+
     detected_topics = detect_topics(effective_user_query)
     admitted_candidates, rejected_by_topic, abstain_topics = filter_topic_relevance(
         candidates=clean_candidates,
@@ -235,6 +291,20 @@ async def process_query_job_legal_ai(
     backend_base_url = get_backend_base_url()
     precedent_cards = [sanitize_precedent_card(c, backend_base_url=backend_base_url) for c in ranked_authorities]
 
+    # Filter peripheral cross-provincial cases and cap at 2-5 strongest authorities
+    precedent_cards = filter_and_cap_authorities(
+        candidates=precedent_cards,
+        query_plan=legal_query_plan,
+        query_text=effective_user_query,
+        min_k=2,
+        max_k=5
+    )
+
+    # Phase 4 Early Display: Populate precedent cards for streaming clients
+    if job_id in jobs_store:
+        jobs_store[job_id].setdefault("early_display", {})
+        jobs_store[job_id]["early_display"]["precedent_cards"] = precedent_cards
+
     signed_cnt = sum(1 for c in precedent_cards if "token=" in str(c.get("pdf_url", "")))
     pipeline_metrics.record_pdf_stats(
         total=len(precedent_cards),
@@ -253,12 +323,15 @@ async def process_query_job_legal_ai(
     system_prompt = _load_system_prompt()
     precedent_context_block = _build_precedent_context_block(precedent_cards)
 
+    plan_matter_types = getattr(legal_query_plan, "matter_type", []) if hasattr(legal_query_plan, "matter_type") else []
     plan_domains = getattr(legal_query_plan, "legal_domain", []) if hasattr(legal_query_plan, "legal_domain") else []
-    matter_type = classify_matter_type(effective_user_query, plan_domains)
-    if matter_type == "criminal":
+    matter_type = classify_matter_type(effective_user_query, plan_domains + plan_matter_types)
+    if "criminal" in plan_matter_types or matter_type == "criminal":
         sec6_heading = "   - ### 6. ### PRE-ARREST BAIL STRATEGY (OR PROCEDURAL REMEDY)\n"
+        sec6_directive = "Section 6 MUST focus on statutory pre-arrest bail under Section 498 Cr.P.C. or quashment under Section 561-A Cr.P.C."
     else:
         sec6_heading = "   - ### 6. ### PROCEDURAL REMEDY & APPELLATE STRATEGY\n"
+        sec6_directive = "Section 6 MUST be titled '### 6. ### PROCEDURAL REMEDY & APPELLATE STRATEGY' and analyze civil/statutory interim remedies and appeals (Order XXXIX Rules 1 & 2 CPC, Order XLIII Rule 1(r) CPC appeal, s.115 CPC revision, or PRPA Rent Tribunal proceedings). NEVER discuss bail, FIR, or criminal procedure in civil/property/rent disputes."
 
     trap_instructions = build_pre_synthesis_trap_instructions(
         matter_type=matter_type,
@@ -266,27 +339,145 @@ async def process_query_job_legal_ai(
         abstain_topics=abstain_topics
     )
 
-    user_synthesis_content = (
-        f"FACTUAL MATRIX / LEGAL QUERY:\n{effective_user_query}\n\n"
-        f"STATUTORY & CURRENT LAW FRAMEWORK:\n{formatted_current_law_block}\n\n"
-        f"{precedent_context_block}\n\n"
-        f"{trap_instructions}\n\n"
-        "Draft the exhaustive, authoritative 8-part Senior Counsel legal opinion addressing this query.\n\n"
-        "MANDATORY PACING & STRUCTURE INSTRUCTIONS:\n"
-        "1. TOTAL WORD BUDGET: The entire memorandum should be between 2,500 and 3,500 words across all 8 sections (approx 300-400 words per section). Keep analysis crisp, incisive, and authoritative so that you never exhaust the token window before concluding.\n"
-        "2. ALL 8 SECTIONS ARE STRICTLY MANDATORY:\n"
-        "   - ### 1. ### EXECUTIVE SUMMARY & LEGAL OPINION\n"
-        "   - ### 2. ### STATUTORY & PROCEDURAL FRAMEWORK\n"
-        "   - ### 3. ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX\n"
-        "   - ### 4. ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE\n"
-        "   - ### 5. ### APPLICATION OF LAW TO FACTS\n"
-        f"{sec6_heading}"
-        "   - ### 7. ### RECOMMENDATIONS & LITIGATION ROADMAP\n"
-        "   - ### 8. ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES\n"
-        "3. YOU MUST COMPLETE SECTION 8 BEFORE CONCLUDING.\n"
-        "4. Ground all legal holdings strictly in the retrieved superior court precedents with exact citations.\n"
-        "5. ZERO DISCLAIMER POLLUTION: Do not include prototype tags, [NOT CHECKED], or verification disclaimers in substantive sections."
-    )
+    synthesis_mode = os.environ.get("SYNTHESIS_MODE", "judgment_first").lower()
+    requests_strategy = query_requests_strategy(effective_user_query)
+
+    if synthesis_mode == "senior_counsel":
+        user_synthesis_content = (
+            f"FACTUAL MATRIX / LEGAL QUERY:\n{effective_user_query}\n\n"
+            f"STATUTORY & CURRENT LAW FRAMEWORK:\n{formatted_current_law_block}\n\n"
+            f"{precedent_context_block}\n\n"
+            f"{trap_instructions}\n\n"
+            "Draft the exhaustive, authoritative 8-part Senior Counsel legal opinion addressing this query.\n\n"
+            "MANDATORY PACING & STRUCTURE INSTRUCTIONS:\n"
+            "1. TOTAL WORD BUDGET: The entire memorandum should be between 2,500 and 3,500 words across all 8 sections (approx 300-400 words per section). Keep analysis crisp, incisive, and authoritative so that you never exhaust the token window before concluding.\n"
+            "2. ALL 8 SECTIONS ARE STRICTLY MANDATORY:\n"
+            "   - ### 1. ### EXECUTIVE SUMMARY & LEGAL OPINION\n"
+            "   - ### 2. ### STATUTORY & PROCEDURAL FRAMEWORK\n"
+            "   - ### 3. ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX\n"
+            "   - ### 4. ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE\n"
+            "   - ### 5. ### APPLICATION OF LAW TO FACTS\n"
+            f"{sec6_heading}"
+            "   - ### 7. ### RECOMMENDATIONS & LITIGATION ROADMAP\n"
+            "   - ### 8. ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES\n"
+            f"3. {sec6_directive}\n"
+            "4. YOU MUST COMPLETE SECTION 8 BEFORE CONCLUDING.\n"
+            "5. CLOSED-WORLD CITATION & PROPOSITION GROUNDING RESTRICTIONS:\n"
+            "   - You may ONLY cite superior court precedents explicitly listed in the PRECEDENT table or cards above.\n"
+            "   - STRICT RATIO GROUNDING: Every citing sentence MUST strictly reflect what the cited case actually decided as set forth in 'Holding / Ratio' and 'Key Paragraphs'. Do NOT extrapolate beyond the exact legal proposition decided.\n"
+            "   - RESPECT NEGATIVE BOUNDARIES: Strictly adhere to 'Negative Boundary (What this case does NOT decide)'—never claim an authority decided matters outside its holding, never convert a leave grant into an automatic decree, and do NOT add statutory durations or penalties not affirmed in the ratio.\n"
+            "   - NO BARE STRING-CITATIONS: Never cite a precedent as part of an ungrounded string-citation without substantive doctrinal engagement in the narrative.\n"
+            "6. ZERO DISCLAIMER POLLUTION: Do not include prototype tags, [NOT CHECKED], or verification disclaimers in substantive sections."
+        )
+    else:
+        # Default: Judgment-First Mode
+        is_statute_missing, missing_statute_name = check_missing_statutory_source(
+            query_text=effective_user_query,
+            query_plan=legal_query_plan
+        )
+        missing_statute_directive = ""
+        if is_statute_missing:
+            missing_statute_directive = (
+                f"MANDATORY MISSING STATUTORY SOURCE DIRECTIVE:\n"
+                f"The complete official bare-act text of {missing_statute_name} is unavailable in retrieved sources.\n"
+                f"Under '## Relevant Provisions', you MUST insert the exact line:\n"
+                f"> Statutory text unavailable in retrieved sources. The analysis is based only on judicial references.\n"
+                f"Temper all conclusions accordingly and base analysis strictly on judicial references.\n\n"
+            )
+
+        if requests_strategy:
+            strategy_directive = (
+                "USER EXPLICITLY REQUESTED LEGAL STRATEGY: You may include an incisive legal strategy or "
+                "litigation roadmap section following Application to Query.\n\n"
+            )
+        else:
+            strategy_directive = (
+                "STRICT PROHIBITION ON STRATEGY & OPINION SECTIONS (JUDGMENT-FIRST MODE):\n"
+                "Strictly prohibit sections titled:\n"
+                "- Senior Counsel Opinion\n"
+                "- Executive Summary & Legal Opinion\n"
+                "- Procedural Remedy & Appellate Strategy\n"
+                "- Recommendations\n"
+                "- Litigation Roadmap\n"
+                "- For an Advocate\n"
+                "- Legal Opinion\n"
+                "- Strategy\n"
+                "- Prospects of Success\n"
+                "- Probability Assessment\n"
+                "(or any variations thereof). The user did NOT request legal strategy.\n"
+                "THE OUTPUT MUST TERMINATE IMMEDIATELY AFTER THE REQUESTED VERIFICATION OR APPLICATION SECTION.\n"
+                "Do NOT output any sections after verification/application (no Appendix, no Strategy, no Recommendations, no Concluding Remarks, no Roadmap, no Advice for an Advocate).\n\n"
+            )
+
+        user_synthesis_content = (
+            f"FACTUAL MATRIX / LEGAL QUERY:\n{effective_user_query}\n\n"
+            f"STATUTORY & CURRENT LAW FRAMEWORK:\n{formatted_current_law_block}\n\n"
+            f"{precedent_context_block}\n\n"
+            f"{trap_instructions}\n\n"
+            "SYNTHESIZE THE LEGAL ANSWER STRICTLY IN JUDGMENT-FIRST MODE.\n\n"
+            "CORE OBJECTIVE:\n"
+            "Generate the legal answer by extracting and synthesizing judicial reasoning from retrieved authorities, not by writing an independent legal opinion.\n"
+            "The answer must remain strictly within:\n"
+            "1. Relevant judgments/precedents retrieved.\n"
+            "2. Relevant statutory provisions.\n"
+            "3. The actual ratio decidendi and observations of the courts.\n"
+            "Do NOT expand beyond what the authorities support. Default mode = judgment digest, not legal opinion.\n\n"
+            f"{missing_statute_directive}"
+            f"{strategy_directive}"
+            "AUTHORITY RELEVANCE & 3-TIER CLASSIFICATION RULES:\n"
+            "- For every precedent under '## Judicial Authorities', specify:\n"
+            "  '- **Authority Level**: [Direct Authority | Analogical Authority | Background Authority]'\n"
+            "- NEVER cite an 'Analogical Authority' (such as decisions under a different statute like Land Revenue Act s.172, or out-of-province rent enactments) as controlling or binding on the specific statutory regime at issue.\n\n"
+            "STRICT PROHIBITION ON OVERSTATING CIVIL COURT JURISDICTION:\n"
+            "- Where a special statute (such as the Punjab Rented Premises Act 2009) creates exclusive tribunals, do NOT broadly assert that the civil court retains general jurisdiction for declaration of tenancy rights or to challenge eviction notices.\n"
+            "- Enforce the narrower legality / ultra vires review standard:\n"
+            "  'Where the challenge concerns illegality, lack of jurisdiction, or action beyond statutory authority, courts have recognised that exclusionary clauses may not prevent examination of legality; however, ordinary declaration of tenancy rights falls within the exclusive domain of the special Rent Tribunal under the Punjab Rented Premises Act 2009.'\n"
+            "- Attribution Classification: Classify every proposition strictly as: (A) Direct holding, (B) Necessary inference, (C) General legal principle. Never convert B or C into A.\n\n"
+            "STRICT PROHIBITION ON LEGAL OVERSTATEMENT:\n"
+            "- Do NOT convert conditional judicial language into absolute conclusions.\n"
+            "- Avoid unsupported phrases (e.g. 'conclusively established', 'definitely grant', 'automatically succeeds', 'completely bars', 'guarantees relief', 'is entitled').\n"
+            "- Prefer: 'The Supreme Court held...', 'The Court observed...', 'The Court considered this factor relevant...', 'The judgment recognised that...', 'The issue depends on the facts and circumstances...'.\n\n"
+            "NO INDEPENDENT LEGAL EXPANSION:\n"
+            "- Do NOT add policy arguments, strategic litigation advice, predictions of future outcomes, assumptions about what another court 'will likely do', or general legal commentary.\n\n"
+            "CITATION DISCIPLINE:\n"
+            "- Every legal proposition must be traceable to a cited judgment or a cited statutory provision.\n"
+            "- If a statement is an inference rather than a direct holding, clearly label it: 'An inference from the cited authorities is...'\n"
+            "- Do not present inference as a court holding.\n\n"
+            "HOLDING ATTRIBUTION MANDATE:\n"
+            "- Do NOT create a 'Court held' statement unless the retrieved judgment contains an identifiable holding from the text of the decision.\n"
+            "- If only a headnote or editorial summary is available, label it as:\n"
+            "  '- **The judgment record indicates**: [Summary of observation / principle]'\n"
+            "  rather than '- **Court held**:'.\n\n"
+            "REQUIRED FINAL ANSWER FORMAT:\n"
+            "## Legal Issue\n"
+            "[One or two sentences stating the exact legal issue]\n\n"
+            "## Relevant Provisions\n"
+            "[If statutory text is unavailable in retrieved sources, insert: > Statutory text unavailable in retrieved sources. The analysis is based only on judicial references.]\n"
+            "- [Act/Statute name] — [Section number]: [Short explanation]\n\n"
+            "## Judicial Authorities\n"
+            "### [Case Name] — [Citation]\n"
+            "- **Court**: [Court Name]\n"
+            "- **Authority Level**: [Direct Authority | Analogical Authority | Background Authority]\n"
+            "- **Relevant facts**: [Material facts relevant to the issue]\n"
+            "- **Court held** (USE ONLY if the retrieved judgment contains an identifiable holding): [Court's observation / decision]\n"
+            "  OR\n"
+            "- **The judgment record indicates** (USE if only a headnote or summary is available): [Record observation / indication]\n"
+            "- **Ratio decidendi**: [Core legal principle established]\n"
+            "(Repeat only for the 2–5 necessary authorities)\n\n"
+            "## Application to Query\n"
+            "[Apply only the extracted legal principles. Do not introduce new rules.]\n\n"
+            "FINAL QUALITY CHECK BEFORE OUTPUT:\n"
+            "1. Did I state anything stronger than the judgment itself?\n"
+            "2. Did I convert 'may' into 'must'?\n"
+            "3. Did I convert 'factor considered' into 'decisive ground'?\n"
+            "4. Did I cite a case for a proposition it actually decided?\n"
+            "5. Did I add anything that is not from a judgment or statute?\n"
+            "6. Did I include any prohibited sections (Senior Counsel Opinion, Executive Summary & Legal Opinion, Procedural Remedy & Appellate Strategy, Recommendations, Litigation Roadmap, For an Advocate, Legal Opinion, Strategy)?\n"
+            "7. Did the output terminate immediately after the requested verification or application section?\n"
+            "8. Did I use 'Court held' for an authority where only a headnote or summary was available instead of 'The judgment record indicates'?\n"
+            "Default behaviour: concise judicial analysis, not persuasive advocacy.\n"
+            "ZERO DISCLAIMER POLLUTION: Do not include prototype tags, [NOT CHECKED], or verification disclaimers."
+        )
 
     synthesis_max_tokens = int(os.environ.get("MAX_SYNTHESIS_TOKENS", "8192"))
     claude_message = await safe_create_anthropic_message(
@@ -302,6 +493,8 @@ async def process_query_job_legal_ai(
         if getattr(block, "type", None) == "text":
             raw_answer += block.text
 
+    log_runtime_diagnostic("RAW_SYNTHESIS_OUTPUT", raw_answer)
+
     total_in_tok = getattr(getattr(claude_message, "usage", None), "input_tokens", 0) or 0
     total_out_tok = getattr(getattr(claude_message, "usage", None), "output_tokens", 0) or 0
     pipeline_metrics.end_stage("drafting_opinion")
@@ -314,6 +507,22 @@ async def process_query_job_legal_ai(
 
     clean_answer = purge_debug_warnings(raw_answer)
 
+    # Enforce holding attribution (Court held vs The judgment record indicates)
+    clean_answer = enforce_holding_attribution(clean_answer, cards=precedent_cards)
+
+    log_runtime_diagnostic("BOUNDARY_FILTER_INPUT", clean_answer)
+
+    # In Judgment-First Mode, enforce prohibited sections, guardrails, and termination after Application to Query
+    if synthesis_mode != "senior_counsel":
+        clean_answer = enforce_judgment_first_boundaries(
+            clean_answer,
+            allow_strategy=requests_strategy,
+            query_text=effective_user_query,
+            query_plan=legal_query_plan
+        )
+
+    log_runtime_diagnostic("BOUNDARY_FILTER_OUTPUT", clean_answer)
+
     # Stage-6 In-Memory Verification Audit (Zero Banners, < 20ms)
     audit_report = audit_memo(
         memo=clean_answer,
@@ -325,9 +534,23 @@ async def process_query_job_legal_ai(
     if audit_report.body and audit_report.body != clean_answer:
         clean_answer = audit_report.body
     verification_report_payload = audit_report.to_dict()
+    verification_report_payload["shadow_rerank_stats"] = shadow_rerank_stats
+    verification_report_payload["issue_abstention_flags"] = shadow_rerank_stats.get("issue_abstention_flags", {})
 
-    # Ensure Section 8 Appendix is always present even if LLM output was boundary-constrained
-    if "appendix" not in clean_answer.lower():
+    # Re-enforce holding attribution and boundaries after audit
+    clean_answer = enforce_holding_attribution(clean_answer, cards=precedent_cards)
+    if synthesis_mode != "senior_counsel":
+        clean_answer = enforce_judgment_first_boundaries(
+            clean_answer,
+            allow_strategy=requests_strategy,
+            query_text=effective_user_query,
+            query_plan=legal_query_plan
+        )
+
+    log_runtime_diagnostic("FINAL_DISPLAY_OUTPUT", clean_answer)
+
+    # Ensure Section 8 Appendix is ONLY present in Senior Counsel mode, NEVER in judgment_first mode
+    if synthesis_mode == "senior_counsel" and "appendix" not in clean_answer.lower():
         clean_answer += (
             "\n\n### 8. ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES\n\n"
             "All primary superior court authorities analyzed in this memorandum have been verified against reported Pakistani law reports "
@@ -412,6 +635,7 @@ async def process_query_job_legal_ai(
                 "superseding_case_name": None,
                 "doctrinal_note": None,
                 "verification_report": verification_report_payload,
+                "shadow_rerank_stats": shadow_rerank_stats,
             },
             "completed_at": datetime.now(timezone.utc),
             "continue_state": {

@@ -1243,30 +1243,57 @@ def decompose_compound_legal_query(query: str) -> List[str]:
     if any(k in q_lower for k in ["fraud", "collusion", "fraudulent", "substantial injury"]):
         subqueries.append("setting aside auction sale fraud substantial injury Order XXI Rule 90")
 
-    # 6. Offence Ingredients & Applicability to Company Director (Sections 409, 420, 406 PPC)
+    # 6. Rent / Tenancy / Eviction aspect (PRPA 2009 / SRPO 1979)
+    if any(k in q_lower for k in ["rent", "tenant", "landlord", "eviction", "evict", "ejectment", "tenancy", "prpa", "srpo", "arrears of rent", "commercial shop"]):
+        if any(k in q_lower for k in ["lahore", "punjab", "prpa"]):
+            subqueries.append("Punjab Rented Premises Act 2009 Section 15 Section 34 eviction of tenant non-payment of rent arrears Rent Tribunal bar on civil court")
+        elif any(k in q_lower for k in ["karachi", "sindh", "srpo"]):
+            subqueries.append("Sindh Rented Premises Ordinance 1979 Section 15 eviction of tenant default in payment of rent Rent Controller")
+        else:
+            subqueries.append("eviction of tenant default in payment of rent arrears Rent Tribunal exclusive jurisdiction bar on civil suit")
+
+    # 7. Cheque Dishonour / Section 489-F PPC
+    if any(k in q_lower for k in ["489-f", "489f", "cheque", "dishonoured", "dishonored", "bounced", "prosecute over cheque", "cheque bounce"]):
+        subqueries.append("Section 489-F PPC dishonour of cheque dishonest issuance loan repayment obligation bounced cheque")
+
+    # 8. Concurrent Civil Eviction & Criminal Cheque Prosecution aspect
+    if any(k in q_lower for k in ["rent", "tenant", "evict", "eviction"]) and any(k in q_lower for k in ["cheque", "bounced", "489-f", "prosecute", "prosecution"]):
+        subqueries.append("concurrent civil eviction Rent Tribunal and criminal prosecution Section 489-F PPC dishonoured cheque maintainability simultaneous proceedings")
+
+    # 9. Offence Ingredients & Applicability to Company Director (Sections 409, 420, 406 PPC)
     if any(k in q_lower for k in ["409", "420", "406", "breach of trust", "misappropriat", "entrustment", "cheating"]):
         if any(k in q_lower for k in ["director", "company", "banker", "merchant", "agent", "public servant"]):
             subqueries.append("Section 409 Section 420 PPC criminal breach of trust company director agent entrustment dominion over property")
         else:
             subqueries.append("Section 409 Section 420 Section 406 PPC criminal breach of trust dishonest misappropriation entrustment cheating")
 
-    # 7. Civil dispute vs Criminal breach of trust / dishonest intention at inception
+    # 10. Civil dispute vs Criminal breach of trust / dishonest intention at inception
     if any(k in q_lower for k in ["civil", "commercial", "contract", "contractual", "loan", "repayment", "quash", "561-a", "dispute"]):
         if any(k in q_lower for k in ["409", "420", "406", "breach of trust", "fir", "criminal"]):
             subqueries.append("criminal breach of trust vs civil dispute dishonest intention at inception commercial transaction loan repayment quashment")
 
-    # 8. Pre-arrest / Post-arrest Bail (Section 498, 497 Cr.P.C.)
+    # 11. Pre-arrest / Post-arrest Bail (Section 498, 497 Cr.P.C.)
     if any(k in q_lower for k in ["bail", "pre-arrest", "pre arrest", "post-arrest", "498", "497"]):
         statute_ctx = "Section 409 Section 420 PPC" if any(k in q_lower for k in ["409", "420", "406", "breach of trust"]) else ""
         subqueries.append(f"Section 498 Section 497 CrPC pre-arrest bail mala fide ulterior motive civil dispute commercial recovery arrest humiliation {statute_ctx}".strip())
 
-    # 9. Corporate Director / Board / Company Funds / Loan aspect
-    if any(k in q_lower for k in ["director", "board of directors", "company funds", "consultancy fee", "shareholder", "corporate governance", "companies act"]):
+    # 12. Corporate Director / Board / Company Funds / Loan aspect (only when company management/funds in issue)
+    if any(k in q_lower for k in ["board of directors", "company funds", "consultancy fee", "corporate governance", "companies act", "shareholder", "director loan"]) or (
+        "director" in q_lower and any(k in q_lower for k in ["funds", "misappropriat", "breach of trust", "board", "shares", "fiduciary"])
+    ):
         subqueries.append("company director unauthorized transfer company funds consultancy fee director loan fiduciary duty Companies Act")
 
-    # 10. Cheque Dishonour / Section 489-F PPC
-    if any(k in q_lower for k in ["489-f", "489f", "dishonoured cheque", "dishonored cheque", "cheque bounce"]):
-        subqueries.append("Section 489-F PPC dishonour of cheque dishonest issuance loan repayment compromise settlement")
+    # 13. Injunction / Interim Relief aspect (Order XXXIX CPC / Specific Relief Act)
+    if any(k in q_lower for k in ["injunction", "stay order", "interim relief", "order xxxix", "o.xxxix", "o.39"]):
+        subqueries.append("Order XXXIX Rules 1 and 2 CPC temporary injunction prima facie case balance of convenience irreparable loss Specific Relief Act")
+
+    # 14. Adverse Possession / Government Land aspect
+    if any(k in q_lower for k in ["adverse possession", "animus possidendi", "hostile title", "state land", "government land", "art 144", "art 149", "sec 28"]):
+        subqueries.append("adverse possession Section 28 Limitation Act Article 144 Article 149 state land government land permissive possession animus possidendi")
+
+    # 15. Civil Servant / Service Tribunal aspect (Article 212 Constitution / STA 1973)
+    if any(k in q_lower for k in ["civil servant", "service tribunal", "peeda", "removal from service", "dismissal from service", "show cause", "article 212"]):
+        subqueries.append("Article 212 Constitution bar on High Court writ Section 4 Service Tribunals Act departmental appeal civil servant dismissal")
 
     # If subqueries were identified and there are at least 2 distinct prongs, return them alongside a normalized core query
     if len(subqueries) >= 2:
@@ -1410,6 +1437,9 @@ def extract_positive_query_anchors(query: str) -> List[str]:
     )
     for g in sec_groups:
         for m in re.findall(r'\b(\d+[a-z]?(?:-[a-z]+)?)\b', g, re.IGNORECASE):
+            raw_num = re.match(r'^\d+', m)
+            if raw_num and 1800 <= int(raw_num.group(0)) <= 2099:
+                continue  # Filter out 4-digit enactment years (1800-2099)
             anchors.add(f"section {m.lower()}")
 
     # 2. Direct section numbers tied to statute abbreviations (e.g. "409 PPC", "420 PPC", "498 CrPC", "489-F PPC")
@@ -1418,11 +1448,21 @@ def extract_positive_query_anchors(query: str) -> List[str]:
         q_clean, re.IGNORECASE
     )
     for m in stat_sec_matches:
+        raw_num = re.match(r'^\d+', m)
+        if raw_num:
+            val = int(raw_num.group(0))
+            if 1800 <= val <= 2099:
+                continue
+            if val > 511 and any(x in q_clean.lower() for x in ["ppc", "pakistan penal code"]):
+                continue
         anchors.add(f"section {m.lower()}")
 
     # 3. Standard fallback for single section numbers
     sec_matches = re.findall(r'\b(?:section|sec\.?|s\.)\s*(\d+[a-z]?(?:\(\d+\))*(?:-[a-z]+)?)\b', q_clean, re.IGNORECASE)
     for m in sec_matches:
+        raw_num = re.match(r'^\d+', m)
+        if raw_num and 1800 <= int(raw_num.group(0)) <= 2099:
+            continue
         anchors.add(f"section {m.lower()}")
 
     art_matches = re.findall(r'\b(?:article|art\.?)\s*(\d+[a-z]?(?:\(\d+\))*)\b', q_clean, re.IGNORECASE)

@@ -35,6 +35,9 @@ def filter_candidate_quality_before_ranking(
     questions_str = " ".join(query_plan.legal_questions or []).lower()
     provisions_str = " ".join(query_plan.provisions or []).lower()
 
+    matter_types = [str(m).lower() for m in getattr(query_plan, "matter_type", [])] if query_plan else []
+    is_rent = "rent" in matter_types or any(k in domains or k in questions_str or k in provisions_str for k in ["rent", "tenant", "landlord", "eviction", "prpa", "srpo"])
+
     is_financial_or_fraud_or_bail = any(k in domains or k in questions_str or k in provisions_str for k in [
         "409", "420", "406", "489-f", "489f", "cheating", "breach of trust", "misappropriat",
         "director", "corporate", "loan", "bail", "498", "497"
@@ -88,11 +91,12 @@ def filter_candidate_quality_before_ranking(
                     rejection_counts["unrelated_subject"] += 1
                     continue
 
-            # Pure rent / tenancy filter
-            if any(k in haystack for k in ["rent restriction", "ejectment petition", "fair rent", "tenant", "landlord"]):
-                if not any(k in haystack for k in ["409", "420", "breach of trust", "fir", "bail"]):
-                    rejection_counts["mismatched_domain"] += 1
-                    continue
+            # Pure rent / tenancy filter (only when query does NOT engage rent/tenancy)
+            if not is_rent:
+                if any(k in haystack for k in ["rent restriction", "ejectment petition", "fair rent", "tenant", "landlord"]):
+                    if not any(k in haystack for k in ["409", "420", "breach of trust", "fir", "bail", "cheque", "489"]):
+                        rejection_counts["mismatched_domain"] += 1
+                        continue
 
         clean_candidates.append(c)
 

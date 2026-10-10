@@ -13,6 +13,12 @@ from collections import defaultdict, deque
 import re
 import json
 
+import os
+import sys
+import time
+import json
+import re
+from pathlib import Path
 import httpx
 import jwt
 from jwt.algorithms import RSAAlgorithm
@@ -27,7 +33,7 @@ from hybrid_search import BM25Index, HybridSearchEngine, reciprocal_rank_fusion,
 from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks, Request
 from fastapi.responses import StreamingResponse, HTMLResponse, JSONResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from prompts.pleading_generator import PLEADING_SYSTEM_PROMPT
 from core.document_builder import generate_court_docx
@@ -285,9 +291,19 @@ if not ALLOWED_ORIGINS and not IS_PRODUCTION:
     print("⚠️ WARNING: ALLOWED_ORIGINS is not set in development mode.")
 
 def _origin_is_allowed(origin: str) -> bool:
+    if not origin:
+        return False
+    if ALLOWED_ORIGINS and origin in ALLOWED_ORIGINS:
+        return True
+    # Allow dynamic Lovable preview subdomains (e.g. https://id-preview--*.lovable.app, https://*.lovableproject.com)
+    # whenever a lovable domain is present in ALLOWED_ORIGINS
+    if any("lovable.app" in o for o in (ALLOWED_ORIGINS or [])):
+        import re
+        if re.match(r"^https://[a-zA-Z0-9_\-.]+\.(lovable\.app|lovableproject\.com)$", origin):
+            return True
     if IS_PRODUCTION:
-        # In production, NEVER mirror arbitrary origins. Origin must be explicitly in ALLOWED_ORIGINS.
-        return bool(ALLOWED_ORIGINS and origin in ALLOWED_ORIGINS)
+        # In production, NEVER mirror arbitrary origins. Origin must be explicitly in ALLOWED_ORIGINS or allowed preview.
+        return False
     return (not ALLOWED_ORIGINS) or (origin in ALLOWED_ORIGINS)
 
 @app.middleware("http")
@@ -3414,9 +3430,14 @@ class QueryRequest(BaseModel):
         extra = "allow"
 
 class FeedbackRequest(BaseModel):
-    query_id: str
-    original_answer: str
-    correct_answer: str
+    query_id: str = Field(..., max_length=128)
+    original_answer: Optional[str] = Field(default="", max_length=25000)
+    correct_answer: Optional[str] = Field(default="", max_length=25000)
+    feedback_type: str = Field(default="this_is_wrong", max_length=64)
+    item_id: Optional[str] = Field(default=None, max_length=256)
+    citation: Optional[str] = Field(default=None, max_length=256)
+    comment: Optional[str] = Field(default=None, max_length=5000)
+    category: Optional[str] = Field(default=None, max_length=64)
 
 class DiaryEntryPayload(BaseModel):
     case_title: str
@@ -3775,9 +3796,17 @@ def cleanup_old_jobs():
     try:
         now = datetime.now(timezone.utc)
         expiry = timedelta(minutes=15)
-        to_delete = [jid for jid, job in jobs_store.items() if now - job.get("created_at", now) > expiry]
+        to_delete = []
+        for jid, job in list(jobs_store.items()):
+            c_at = job.get("created_at")
+            if isinstance(c_at, (int, float)):
+                c_at = datetime.fromtimestamp(c_at, tz=timezone.utc)
+            elif not isinstance(c_at, datetime):
+                continue
+            if now - c_at > expiry:
+                to_delete.append(jid)
         for jid in to_delete:
-            del jobs_store[jid]
+            jobs_store.pop(jid, None)
     except Exception as e:
         print(f"⚠️ Error cleaning up old jobs: {e}", file=sys.stderr)
 
@@ -5910,29 +5939,50 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     }
                 ]
             })
-            synthesis_instruction = (
-                "\n\n[MANDATORY SYSTEM DIRECTIVE]: The case law search has been executed and results are provided above. "
-                "Synthesize an authoritative, advocate-grade legal memorandum tailored to the advocate's query. "
-                "Tone must be confident, thorough, analytical, and professional—NOT defensive boilerplate.\n\n"
-                "STRUCTURE REQUIREMENTS (8-PART MEMORANDUM):\n"
-                "- ### EXECUTIVE SUMMARY & LEGAL OPINION: Direct, crisp actionable opinion on the issues raised. Summarize whether offences apply, whether dispute is civil or criminal, and prospects of bail.\n"
-                "- ### STATUTORY & PROCEDURAL FRAMEWORK: Exact statutory provisions from the verified context (Section 409 PPC, Section 420 PPC, Section 498 Cr.P.C., Section 497 Cr.P.C., etc.). Present verbatim text and analyze each legal ingredient.\n"
-                "- ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX: Present retrieved superior court authorities in a clear markdown table (Citation | Court | Judge | Key Holding / Ratio | Application). Ground every entry strictly in retrieved context.\n"
-                "- ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE (CIVIL DISPUTE VS. CRIMINAL BREACH OF TRUST): Comprehensive doctrine analysis: distinguish dishonest intention at inception vs. subsequent contractual breach, conversion of civil debt/loan into criminal FIR, and applicability of Section 409 PPC to company directors as agents/fiduciaries.\n"
-                "- ### APPLICATION OF LAW TO FACTS: Apply substantive law to the client facts (consultancy fee vs undocumented loan repayment, lack of board approval, company asset dominion, transfer to relative account).\n"
-                "- ### PRE-ARREST BAIL STRATEGY (SECTION 498 CR.P.C.): Ground bail strategy in settled principles (mala fide, ulterior motives, preventing police arrest/humiliation for civil recovery, absence of custodial interrogation need). Detail mandatory procedural steps (supporting affidavit, interim pre-arrest bail petition, High Court / Sessions Court jurisdiction).\n"
-                "- ### RECOMMENDATIONS & LITIGATION ROADMAP: Immediate step-by-step guidance for the advocate (e.g. filing pre-arrest bail before Sessions/High Court, joining investigation, placing company loan ledgers on record, Section 249-A CrPC / 561-A CrPC quashment options).\n"
-                "- ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES: Confine all research limitations, database scope notes, and unlocated specific points strictly to this final appendix. DO NOT let negative findings or defensive disclaimers pollute the substantive memorandum body.\n\n"
-                "CRITICAL CITATION ACCURACY & NON-OVERSTATEMENT RULES:\n"
-                "1. NEVER extrapolate or speculate on what a case held beyond the exact text in the retrieved snippet.\n"
-                "2. When discussing statutory rules, stick strictly to the exact statutory text and established provisos.\n"
-                "3. Ensure all mandatory sections are fully articulated with at least 25 words per section and <<<CARDS>>> JSON.\n"
-                "4. NEVER describe an interlocutory direction, deposit order, or statutory provision as 'ultra vires' or declare 'no precedent exists' unless a cited judgment explicitly uses those exact words.\n"
-                "5. In the procedural risks and recommendations sections, always explicitly advise on the consequence of non-compliance and recommend practical protective steps.\n"
-                "6. DO NOT cite ungrounded Constitutional Articles (such as Article 199) unless explicitly present in the retrieved authorities or raised in the query. Ground criminal and bail remedies directly in the Cr.P.C. (Sections 497, 498, 561-A, 249-A).\n"
-                "7. Keep each section comprehensive yet focused (approx. 200–400 words per section) so that ALL 8 sections from EXECUTIVE SUMMARY through RECOMMENDATIONS & LITIGATION ROADMAP and APPENDIX are fully written without truncation.\n"
-                "8. ZERO DISCLAIMER POLLUTION: NEVER include currency tags (such as [NOT CHECKED]), system notices, or defensive disclaimers in the EXECUTIVE SUMMARY or substantive sections. Present verified provisions as in force under Pakistan Code, and confine any research notes or limitations exclusively to the APPENDIX.\n"
-            )
+            is_senior_counsel = os.environ.get("SYNTHESIS_MODE", "judgment_first").lower() == "senior_counsel"
+            if is_senior_counsel:
+                synthesis_instruction = (
+                    "\n\n[MANDATORY SYSTEM DIRECTIVE]: The case law search has been executed and results are provided above. "
+                    "Synthesize an authoritative, advocate-grade legal memorandum tailored to the advocate's query. "
+                    "Tone must be confident, thorough, analytical, and professional—NOT defensive boilerplate.\n\n"
+                    "STRUCTURE REQUIREMENTS (8-PART MEMORANDUM):\n"
+                    "- ### EXECUTIVE SUMMARY & LEGAL OPINION: Direct, crisp actionable opinion on the issues raised. Summarize whether offences apply, whether dispute is civil or criminal, and prospects of bail.\n"
+                    "- ### STATUTORY & PROCEDURAL FRAMEWORK: Exact statutory provisions from the verified context (Section 409 PPC, Section 420 PPC, Section 498 Cr.P.C., Section 497 Cr.P.C., etc.). Present verbatim text and analyze each legal ingredient.\n"
+                    "- ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX: Present retrieved superior court authorities in a clear markdown table (Citation | Court | Judge | Key Holding / Ratio | Application). Ground every entry strictly in retrieved context.\n"
+                    "- ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE (CIVIL DISPUTE VS. CRIMINAL BREACH OF TRUST): Comprehensive doctrine analysis: distinguish dishonest intention at inception vs. subsequent contractual breach, conversion of civil debt/loan into criminal FIR, and applicability of Section 409 PPC to company directors as agents/fiduciaries.\n"
+                    "- ### APPLICATION OF LAW TO FACTS: Apply substantive law to the client facts (consultancy fee vs undocumented loan repayment, lack of board approval, company asset dominion, transfer to relative account).\n"
+                    "- ### PRE-ARREST BAIL STRATEGY (SECTION 498 CR.P.C.): Ground bail strategy in settled principles (mala fide, ulterior motives, preventing police arrest/humiliation for civil recovery, absence of custodial interrogation need). Detail mandatory procedural steps (supporting affidavit, interim pre-arrest bail petition, High Court / Sessions Court jurisdiction).\n"
+                    "- ### RECOMMENDATIONS & LITIGATION ROADMAP: Immediate step-by-step guidance for the advocate (e.g. filing pre-arrest bail before Sessions/High Court, joining investigation, placing company loan ledgers on record, Section 249-A CrPC / 561-A CrPC quashment options).\n"
+                    "- ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES: Confine all research limitations, database scope notes, and unlocated specific points strictly to this final appendix. DO NOT let negative findings or defensive disclaimers pollute the substantive memorandum body.\n\n"
+                    "CRITICAL CITATION ACCURACY & NON-OVERSTATEMENT RULES:\n"
+                    "1. NEVER extrapolate or speculate on what a case held beyond the exact text in the retrieved snippet.\n"
+                    "2. When discussing statutory rules, stick strictly to the exact statutory text and established provisos.\n"
+                    "3. Ensure all mandatory sections are fully articulated with at least 25 words per section and <<<CARDS>>> JSON.\n"
+                    "4. NEVER describe an interlocutory direction, deposit order, or statutory provision as 'ultra vires' or declare 'no precedent exists' unless a cited judgment explicitly uses those exact words.\n"
+                    "5. In the procedural risks and recommendations sections, always explicitly advise on the consequence of non-compliance and recommend practical protective steps.\n"
+                    "6. DO NOT cite ungrounded Constitutional Articles (such as Article 199) unless explicitly present in the retrieved authorities or raised in the query. Ground criminal and bail remedies directly in the Cr.P.C. (Sections 497, 498, 561-A, 249-A).\n"
+                    "7. Keep each section comprehensive yet focused (approx. 200–400 words per section) so that ALL 8 sections from EXECUTIVE SUMMARY through RECOMMENDATIONS & LITIGATION ROADMAP and APPENDIX are fully written without truncation.\n"
+                    "8. ZERO DISCLAIMER POLLUTION: NEVER include currency tags (such as [NOT CHECKED]), system notices, or defensive disclaimers in the EXECUTIVE SUMMARY or substantive sections. Present verified provisions as in force under Pakistan Code, and confine any research notes or limitations exclusively to the APPENDIX.\n"
+                )
+            else:
+                synthesis_instruction = (
+                    "\n\n[MANDATORY SYSTEM DIRECTIVE]: The case law search has been executed and results are provided above. "
+                    "Synthesize an authoritative, judgment-grounded legal research memorandum strictly tailored to the advocate's query. "
+                    "Tone must be concise, analytical, rigorous, and professional.\n\n"
+                    "STRUCTURE REQUIREMENTS (JUDGMENT-FIRST MODE):\n"
+                    "- ### LEGAL ISSUE: Crisp framing of the legal question.\n"
+                    "- ### RELEVANT PROVISIONS & STATUTORY VERIFICATION: Exact statutory provisions from the verified context.\n"
+                    "- ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX: Present retrieved superior court authorities in a clear markdown table.\n"
+                    "- ### APPLICATION / VERIFICATION: Apply the extracted legal principles directly to the query facts.\n\n"
+                    "STRICT PROHIBITION: Do NOT include sections titled 'Senior Counsel Opinion', 'Executive Summary & Legal Opinion', "
+                    "'Procedural Remedy & Appellate Strategy', 'Recommendations', 'Litigation Roadmap', or 'For an Advocate'. "
+                    "THE OUTPUT MUST TERMINATE IMMEDIATELY AFTER THE REQUESTED APPLICATION / VERIFICATION SECTION.\n\n"
+                    "CRITICAL CITATION ACCURACY & NON-OVERSTATEMENT RULES:\n"
+                    "1. NEVER extrapolate or speculate on what a case held beyond the exact text in the retrieved snippet.\n"
+                    "2. When discussing statutory rules, stick strictly to the exact statutory text and established provisos.\n"
+                    "3. Ensure all substantive propositions are strictly grounded in retrieved precedents.\n"
+                    "4. ZERO DISCLAIMER POLLUTION: NEVER include currency tags or system notices.\n"
+                )
             messages.append({
                 "role": "user",
                 "content": [
@@ -5998,28 +6048,48 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                         result_text = "Unknown tool."
                     tool_result_blocks.append({"type": "tool_result", "tool_use_id": tc.id, "content": result_text})
 
-                synthesis_instruction = (
-                    "\n\n[MANDATORY SYSTEM DIRECTIVE]: You have executed the search. Now immediately synthesize and deliver your complete, "
-                    "authoritative, advocate-grade legal memorandum tailored to the advocate's query. "
-                    "Tone must be confident, thorough, analytical, and professional—NOT defensive boilerplate.\n\n"
-                    "STRUCTURE REQUIREMENTS (8-PART MEMORANDUM):\n"
-                    "- ### EXECUTIVE SUMMARY & LEGAL OPINION: Direct, crisp actionable opinion on the issues raised. Summarize whether offences apply, whether dispute is civil or criminal, and prospects of bail.\n"
-                    "- ### STATUTORY & PROCEDURAL FRAMEWORK: Exact statutory provisions from the verified context (Section 409 PPC, Section 420 PPC, Section 498 Cr.P.C., Section 497 Cr.P.C., etc.). Present verbatim text and analyze each legal ingredient.\n"
-                    "- ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX: Present retrieved superior court authorities in a clear markdown table (Citation | Court | Judge | Key Holding / Ratio | Application). Ground every entry strictly in retrieved context.\n"
-                    "- ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE (CIVIL DISPUTE VS. CRIMINAL BREACH OF TRUST): Comprehensive doctrine analysis: distinguish dishonest intention at inception vs. subsequent contractual breach, conversion of civil debt/loan into criminal FIR, and applicability of Section 409 PPC to company directors as agents/fiduciaries.\n"
-                    "- ### APPLICATION OF LAW TO FACTS: Apply substantive law to the client facts (consultancy fee vs undocumented loan repayment, lack of board approval, company asset dominion, transfer to relative account).\n"
-                    "- ### PRE-ARREST BAIL STRATEGY (SECTION 498 CR.P.C.): Ground bail strategy in settled principles (mala fide, ulterior motives, preventing police arrest/humiliation for civil recovery, absence of custodial interrogation need). Detail mandatory procedural steps (supporting affidavit, interim pre-arrest bail petition, High Court / Sessions Court jurisdiction).\n"
-                    "- ### RECOMMENDATIONS & LITIGATION ROADMAP: Immediate step-by-step guidance for the advocate (e.g. filing pre-arrest bail before Sessions/High Court, joining investigation, placing company loan ledgers on record, Section 249-A CrPC / 561-A CrPC quashment options).\n"
-                    "- ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES: Confine all research limitations, database scope notes, and unlocated specific points strictly to this final appendix. DO NOT let negative findings or defensive disclaimers pollute the substantive memorandum body.\n\n"
-                    "CRITICAL CITATION ACCURACY & NON-OVERSTATEMENT RULES:\n"
-                    "1. NEVER extrapolate or speculate on what a case held beyond the exact text in the retrieved snippet.\n"
-                    "2. When discussing statutory rules, stick strictly to the exact statutory text and established provisos.\n"
-                    "3. Ensure all mandatory sections are fully articulated with at least 25 words per section and <<<CARDS>>> JSON.\n"
-                    "4. NEVER describe an interlocutory direction, deposit order, or statutory provision as 'ultra vires' or declare 'no precedent exists' unless a cited judgment explicitly uses those exact words.\n"
-                    "5. In the procedural risks and recommendations sections, always explicitly advise on the consequence of non-compliance and recommend practical protective steps.\n"
-                    "6. DO NOT cite ungrounded Constitutional Articles (such as Article 199) unless explicitly present in the retrieved authorities or raised in the query. Ground criminal and bail remedies directly in the Cr.P.C. (Sections 497, 498, 561-A, 249-A).\n"
-                    "7. Keep each section comprehensive yet focused (approx. 200–400 words per section) so that ALL 8 sections from EXECUTIVE SUMMARY through RECOMMENDATIONS & LITIGATION ROADMAP and APPENDIX are fully written without truncation.\n"
-                )
+                is_senior_counsel = os.environ.get("SYNTHESIS_MODE", "judgment_first").lower() == "senior_counsel"
+                if is_senior_counsel:
+                    synthesis_instruction = (
+                        "\n\n[MANDATORY SYSTEM DIRECTIVE]: You have executed the search. Now immediately synthesize and deliver your complete, "
+                        "authoritative, advocate-grade legal memorandum tailored to the advocate's query. "
+                        "Tone must be confident, thorough, analytical, and professional—NOT defensive boilerplate.\n\n"
+                        "STRUCTURE REQUIREMENTS (8-PART MEMORANDUM):\n"
+                        "- ### EXECUTIVE SUMMARY & LEGAL OPINION: Direct, crisp actionable opinion on the issues raised. Summarize whether offences apply, whether dispute is civil or criminal, and prospects of bail.\n"
+                        "- ### STATUTORY & PROCEDURAL FRAMEWORK: Exact statutory provisions from the verified context (Section 409 PPC, Section 420 PPC, Section 498 Cr.P.C., Section 497 Cr.P.C., etc.). Present verbatim text and analyze each legal ingredient.\n"
+                        "- ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX: Present retrieved superior court authorities in a clear markdown table (Citation | Court | Judge | Key Holding / Ratio | Application). Ground every entry strictly in retrieved context.\n"
+                        "- ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE (CIVIL DISPUTE VS. CRIMINAL BREACH OF TRUST): Comprehensive doctrine analysis: distinguish dishonest intention at inception vs. subsequent contractual breach, conversion of civil debt/loan into criminal FIR, and applicability of Section 409 PPC to company directors as agents/fiduciaries.\n"
+                        "- ### APPLICATION OF LAW TO FACTS: Apply substantive law to the client facts (consultancy fee vs undocumented loan repayment, lack of board approval, company asset dominion, transfer to relative account).\n"
+                        "- ### PRE-ARREST BAIL STRATEGY (SECTION 498 CR.P.C.): Ground bail strategy in settled principles (mala fide, ulterior motives, preventing police arrest/humiliation for civil recovery, absence of custodial interrogation need). Detail mandatory procedural steps (supporting affidavit, interim pre-arrest bail petition, High Court / Sessions Court jurisdiction).\n"
+                        "- ### RECOMMENDATIONS & LITIGATION ROADMAP: Immediate step-by-step guidance for the advocate (e.g. filing pre-arrest bail before Sessions/High Court, joining investigation, placing company loan ledgers on record, Section 249-A CrPC / 561-A CrPC quashment options).\n"
+                        "- ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES: Confine all research limitations, database scope notes, and unlocated specific points strictly to this final appendix. DO NOT let negative findings or defensive disclaimers pollute the substantive memorandum body.\n\n"
+                        "CRITICAL CITATION ACCURACY & NON-OVERSTATEMENT RULES:\n"
+                        "1. NEVER extrapolate or speculate on what a case held beyond the exact text in the retrieved snippet.\n"
+                        "2. When discussing statutory rules, stick strictly to the exact statutory text and established provisos.\n"
+                        "3. Ensure all mandatory sections are fully articulated with at least 25 words per section and <<<CARDS>>> JSON.\n"
+                        "4. NEVER describe an interlocutory direction, deposit order, or statutory provision as 'ultra vires' or declare 'no precedent exists' unless a cited judgment explicitly uses those exact words.\n"
+                        "5. In the procedural risks and recommendations sections, always explicitly advise on the consequence of non-compliance and recommend practical protective steps.\n"
+                        "6. DO NOT cite ungrounded Constitutional Articles (such as Article 199) unless explicitly present in the retrieved authorities or raised in the query. Ground criminal and bail remedies directly in the Cr.P.C. (Sections 497, 498, 561-A, 249-A).\n"
+                        "7. Keep each section comprehensive yet focused (approx. 200–400 words per section) so that ALL 8 sections from EXECUTIVE SUMMARY through RECOMMENDATIONS & LITIGATION ROADMAP and APPENDIX are fully written without truncation.\n"
+                    )
+                else:
+                    synthesis_instruction = (
+                        "\n\n[MANDATORY SYSTEM DIRECTIVE]: You have executed the search. Now immediately synthesize and deliver your concise, "
+                        "judgment-grounded legal research memorandum strictly tailored to the advocate's query. "
+                        "Tone must be concise, analytical, rigorous, and professional.\n\n"
+                        "STRUCTURE REQUIREMENTS (JUDGMENT-FIRST MODE):\n"
+                        "- ### LEGAL ISSUE: Crisp framing of the legal question.\n"
+                        "- ### RELEVANT PROVISIONS & STATUTORY VERIFICATION: Exact statutory provisions from the verified context.\n"
+                        "- ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX: Present retrieved superior court authorities in a clear markdown table.\n"
+                        "- ### APPLICATION / VERIFICATION: Apply the extracted legal principles directly to the query facts.\n\n"
+                        "STRICT PROHIBITION: Do NOT include sections titled 'Senior Counsel Opinion', 'Executive Summary & Legal Opinion', "
+                        "'Procedural Remedy & Appellate Strategy', 'Recommendations', 'Litigation Roadmap', or 'For an Advocate'. "
+                        "THE OUTPUT MUST TERMINATE IMMEDIATELY AFTER THE REQUESTED APPLICATION / VERIFICATION SECTION.\n\n"
+                        "CRITICAL CITATION ACCURACY & NON-OVERSTATEMENT RULES:\n"
+                        "1. NEVER extrapolate or speculate on what a case held beyond the exact text in the retrieved snippet.\n"
+                        "2. When discussing statutory rules, stick strictly to the exact statutory text and established provisos.\n"
+                        "3. Ensure all substantive propositions are strictly grounded in retrieved precedents.\n"
+                    )
                 if tool_result_blocks:
                     tool_result_blocks[0]["content"] = str(tool_result_blocks[0]["content"]) + synthesis_instruction
 
@@ -6028,6 +6098,8 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                 continue
 
             raw_model_output = "".join(getattr(b, "text", "") for b in claude_message.content if getattr(b, "type", None) == "text").strip()
+            from legal_ai.synthesis.memorandum_generator import log_runtime_diagnostic
+            log_runtime_diagnostic("RAW_SYNTHESIS_OUTPUT", raw_model_output)
             is_token_truncated = (stop_reason == "max_tokens")
             break
 
@@ -6508,6 +6580,27 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
         # Strip all prototype, completeness, gate, and currency warnings from user-facing answer
         display_answer = purge_debug_warnings(display_answer)
+        from legal_ai.synthesis.memorandum_generator import log_runtime_diagnostic
+        log_runtime_diagnostic("BOUNDARY_FILTER_INPUT", display_answer)
+
+        if os.environ.get("SYNTHESIS_MODE", "judgment_first").lower() != "senior_counsel":
+            from legal_ai.synthesis.memorandum_generator import (
+                enforce_judgment_first_boundaries,
+                query_requests_strategy,
+                enforce_holding_attribution,
+            )
+            display_answer = enforce_holding_attribution(
+                display_answer,
+                cards=review_context or []
+            )
+            display_answer = enforce_judgment_first_boundaries(
+                display_answer,
+                allow_strategy=query_requests_strategy(request.query_text),
+                query_text=request.query_text
+            )
+
+        log_runtime_diagnostic("BOUNDARY_FILTER_OUTPUT", display_answer)
+        log_runtime_diagnostic("FINAL_DISPLAY_OUTPUT", display_answer)
 
         inserted_row_id = str(uuid.uuid4())
         if supabase:
@@ -7433,13 +7526,19 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
     job = jobs_store[job_id]
     if job["user_id"] != authenticated_user_id:
         raise HTTPException(status_code=403, detail="Not authorized to access this job.")
-    return {"status": job["status"], "stage": job.get("stage"), "result": job.get("result"), "error": job.get("error")}
+    return {
+        "status": job["status"],
+        "stage": job.get("stage"),
+        "early_display": job.get("early_display"),
+        "result": job.get("result"),
+        "error": job.get("error")
+    }
 
 @app.get("/query/{job_id}/stream")
 async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depends(verify_clerk_session)):
     """
     SSE / EventStream endpoint for Lovable and frontend streaming clients.
-    Emits query progress, sends complete payload upon completion, and terminates with 'data: [DONE]\\n\\n'.
+    Emits query progress, sends early_display (plan, statutes, precedent_cards), complete payload upon completion, and terminates with 'data: [DONE]\n\n'.
     """
     cleanup_old_jobs()
     if job_id not in jobs_store:
@@ -7453,8 +7552,16 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
                     async def db_sse():
                         ans = db_job.get("answer_text", "")
                         yield f"data: {json.dumps({'status': 'done', 'result': {'answer': ans, 'response': ans, 'truncated': False}})}\n\n"
-                        yield "data: [DONE]\n\n"
-                    return StreamingResponse(db_sse(), media_type="text/event-stream")
+                    return StreamingResponse(
+                        db_sse(),
+                        media_type="text/event-stream",
+                        headers={
+                            "Cache-Control": "no-cache, no-transform",
+                            "Connection": "keep-alive",
+                            "Content-Type": "text/event-stream; charset=utf-8",
+                            "X-Accel-Buffering": "no"
+                        }
+                    )
             except HTTPException:
                 raise
             except Exception as e:
@@ -7468,6 +7575,7 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
     async def sse_generator():
         last_status = None
         last_stage = None
+        last_early_keys = set()
         max_wait_seconds = 300
         start_time = asyncio.get_event_loop().time()
         last_ping_time = start_time
@@ -7482,14 +7590,24 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
             now = asyncio.get_event_loop().time()
             status = current_job.get("status")
             stage = current_job.get("stage", "retrieval")
-            if status != last_status or stage != last_stage:
+            early_display = current_job.get("early_display")
+            current_early_keys = set(early_display.keys()) if isinstance(early_display, dict) else set()
+
+            if status != last_status or stage != last_stage or current_early_keys != last_early_keys:
                 last_status = status
                 last_stage = stage
-                yield f"data: {json.dumps({'status': status, 'stage': stage, 'progress': stage})}\n\n"
+                last_early_keys = current_early_keys
+                evt = {'status': status, 'stage': stage, 'progress': stage}
+                if early_display:
+                    evt['early_display'] = early_display
+                yield f"data: {json.dumps(evt)}\n\n"
 
             if status == "done":
                 res = current_job.get("result") or {}
-                yield f"data: {json.dumps({'status': 'done', 'stage': 'done', 'result': res})}\n\n"
+                evt = {'status': 'done', 'stage': 'done', 'result': res}
+                if early_display:
+                    evt['early_display'] = early_display
+                yield f"data: {json.dumps(evt)}\n\n"
                 yield "data: [DONE]\n\n"
                 break
             elif status == "error":
@@ -7503,7 +7621,10 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
                 last_ping_time = now
                 current_stage = current_job.get("stage", "generating")
                 yield ": keepalive\n\n"
-                yield f"data: {json.dumps({'status': status or 'processing', 'stage': current_stage, 'progress': current_stage})}\n\n"
+                evt = {'status': status or 'processing', 'stage': current_stage, 'progress': current_stage}
+                if early_display:
+                    evt['early_display'] = early_display
+                yield f"data: {json.dumps(evt)}\n\n"
 
             if now - start_time > max_wait_seconds:
                 yield f"data: {json.dumps({'status': 'error', 'error': 'Query processing timeout'})}\n\n"
@@ -7559,21 +7680,79 @@ async def continue_query_answer(job_id: str, authenticated_user_id: str = Depend
     continuation_message = await safe_create_anthropic_message(**continuation_kwargs)
     added_text = "".join(getattr(b, "text", "") for b in continuation_message.content)
     updated_raw = continue_state["raw_model_answer"] + added_text
-    updated_raw = strip_agent_narration(updated_raw)
     updated_raw, _, _ = fail_closed_citation_grounding(updated_raw, retrieved_records=continue_state.get("citations_payload", []), strict_mode=True)
+    if os.environ.get("SYNTHESIS_MODE", "judgment_first").lower() != "senior_counsel":
+        from legal_ai.synthesis.memorandum_generator import enforce_judgment_first_boundaries, query_requests_strategy
+        updated_raw = enforce_judgment_first_boundaries(
+            updated_raw,
+            allow_strategy=query_requests_strategy(continue_state.get("claude_message_content", "")),
+            query_text=continue_state.get("claude_message_content", "")
+        )
 
     return {"answer": updated_raw, "status": "done"}
 
 @app.post("/feedback")
 async def submit_feedback(request: FeedbackRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
-    if not supabase: raise HTTPException(status_code=503, detail="Database offline.")
-    res = supabase.table("feedback").insert({
-        "query_id": request.query_id,
-        "original_answer": request.original_answer,
-        "correct_answer": request.correct_answer,
-        "user_id": authenticated_user_id
-    }).execute()
-    return {"status": "success", "message": "Feedback recorded.", "data": res.data}
+    def _clean_str(val: Optional[str], max_len: int = 5000) -> str:
+        if val is None:
+            return ""
+        return re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', str(val))[:max_len].strip()
+
+    feedback_entry = {
+        "query_id": _clean_str(request.query_id, 128),
+        "original_answer": _clean_str(request.original_answer, 25000),
+        "correct_answer": _clean_str(request.correct_answer, 25000),
+        "feedback_type": _clean_str(request.feedback_type, 64) or "this_is_wrong",
+        "item_id": _clean_str(request.item_id, 256) or None,
+        "citation": _clean_str(request.citation, 256) or None,
+        "comment": _clean_str(request.comment, 5000) or None,
+        "category": _clean_str(request.category, 64) or None,
+        "user_id": authenticated_user_id,
+        "timestamp": time.time(),
+    }
+
+    # Durable local audit logging
+    try:
+        feedback_dir = Path("data/feedback")
+        feedback_dir.mkdir(parents=True, exist_ok=True)
+        with open(feedback_dir / "feedback_events.jsonl", "a", encoding="utf-8") as f:
+            f.write(json.dumps(feedback_entry, ensure_ascii=False) + "\n")
+    except Exception as e:
+        print(f"Feedback local logging notice: {e}", file=sys.stderr)
+
+    # Supabase persistence if available
+    db_data = None
+    if supabase:
+        try:
+            res = supabase.table("feedback").insert({
+                "query_id": request.query_id,
+                "original_answer": request.original_answer or "",
+                "correct_answer": request.correct_answer or "",
+                "feedback_type": request.feedback_type,
+                "comment": request.comment,
+                "user_id": authenticated_user_id,
+            }).execute()
+            db_data = res.data
+        except Exception:
+            try:
+                res = supabase.table("feedback").insert({
+                    "query_id": request.query_id,
+                    "original_answer": request.original_answer or "",
+                    "correct_answer": request.correct_answer or "",
+                    "user_id": authenticated_user_id,
+                }).execute()
+                db_data = res.data
+            except Exception as e2:
+                print(f"Supabase feedback notice: {e2}", file=sys.stderr)
+    elif IS_PRODUCTION:
+        raise HTTPException(status_code=503, detail="Database offline.")
+
+    return {
+        "status": "success",
+        "message": "Feedback recorded.",
+        "feedback_type": request.feedback_type,
+        "data": db_data or [feedback_entry]
+    }
 
 # ADMIN ENDPOINTS
 def parse_date_to_iso(date_str: Optional[str]) -> Optional[str]:

@@ -59,6 +59,14 @@ def filter_candidate_quality_before_ranking(
         "director", "corporate", "loan", "bail", "498", "497"
     ])
 
+    matter_types = [str(m).lower() for m in getattr(query_plan, "matter_type", [])] if query_plan else []
+    target_province = str(getattr(query_plan, "province", "Federal")).strip().title()
+
+    is_rent = "rent" in matter_types or any(k in domains or k in questions_str for k in ["rent", "eviction", "prpa", "tenant"])
+    is_adverse_possession = any(k in domains or k in questions_str for k in ["adverse possession", "animus possidendi", "limitation act"])
+    is_injunction = any(k in domains or k in questions_str for k in ["injunction", "order xxxix", "o.xxxix", "o.39"])
+    is_family = "family" in matter_types or any(k in domains for k in ["family", "khula", "custody", "dower"])
+
     for c in raw_candidates:
         meta = c.get("metadata") if isinstance(c.get("metadata"), dict) else c
         c_type = str(c.get("content_type") or meta.get("content_type") or "").lower()
@@ -112,11 +120,12 @@ def filter_candidate_quality_before_ranking(
                     rejection_counts["unrelated_subject"] += 1
                     continue
 
-            # Pure rent / tenancy filter
-            if any(k in haystack for k in ["rent restriction", "ejectment petition", "fair rent", "tenant", "landlord"]):
-                if not any(k in haystack for k in ["409", "420", "breach of trust", "fir", "bail"]):
-                    rejection_counts["mismatched_domain"] += 1
-                    continue
+            # Pure rent / tenancy filter (only when query does NOT engage rent/tenancy)
+            if not is_rent:
+                if any(k in haystack for k in ["rent restriction", "ejectment petition", "fair rent", "tenant", "landlord"]):
+                    if not any(k in haystack for k in ["409", "420", "breach of trust", "fir", "bail", "cheque", "489"]):
+                        rejection_counts["mismatched_domain"] += 1
+                        continue
 
             # Pure tax / customs / revenue assessment filter
             if any(k in haystack for k in [
@@ -134,6 +143,35 @@ def filter_candidate_quality_before_ranking(
             ]):
                 rejection_counts["mismatched_domain"] += 1
                 continue
+
+        if is_rent:
+            # Filter out pure murder, narcotics, family khula
+            if any(k in haystack for k in ["section 302 ppc", "murder trial", "cnsa", "narcotic", "charas", "heroin", "khula", "dower", "custody of minor"]):
+                if not any(k in haystack for k in ["tenant", "landlord", "rent", "prpa", "cheque", "489"]):
+                    rejection_counts["mismatched_domain"] += 1
+                    continue
+            if not is_financial_or_fraud_or_bail and any(k in haystack for k in ["pre-arrest bail", "post-arrest bail"]):
+                if not any(k in haystack for k in ["tenant", "landlord", "rent", "prpa"]):
+                    rejection_counts["mismatched_domain"] += 1
+                    continue
+            # Filter out non-binding provincial rent statute if Punjab is target province
+            if target_province == "Punjab" and any(k in haystack for k in ["sindh rented premises ordinance", "srpo 1979", "srpo, 1979"]):
+                if not any(k in haystack for k in ["punjab", "prpa", "lahore"]):
+                    rejection_counts["mismatched_domain"] += 1
+                    continue
+
+        if is_adverse_possession or is_injunction:
+            # Filter out murder, narcotics, family
+            if any(k in haystack for k in ["section 302 ppc", "murder trial", "cnsa", "narcotic", "pre-arrest bail", "khula", "dower"]):
+                if not any(k in haystack for k in ["possession", "injunction", "cpc", "limitation", "specific relief"]):
+                    rejection_counts["mismatched_domain"] += 1
+                    continue
+
+        if is_family:
+            if any(k in haystack for k in ["section 302 ppc", "cnsa", "commercial court", "fio 2001", "ejectment petition"]):
+                if not any(k in haystack for k in ["family", "guardian", "marriage", "khula", "custody"]):
+                    rejection_counts["mismatched_domain"] += 1
+                    continue
 
         clean_candidates.append(c)
 

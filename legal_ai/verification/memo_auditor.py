@@ -36,6 +36,15 @@ from legal_ai.verification.statute_matcher import (
 )
 
 CARDS_RE = re.compile(r"<<<CARDS>>>(.*?)<<<END_CARDS>>>", re.DOTALL)
+CASE_TITLE_RE = re.compile(
+    r"\b([A-Z][A-Za-z0-9\.\'\s\-]+?\s+(?:v\.|vs\.?|versus)\s+[A-Z][A-Za-z0-9\.\'\s\-]+?)(?=[,\.;:\n\(\)]|\s+reported|\s+held|\s+decided|\s+stated|\s+observed|\s+affirmed|\s+relied|\s+applied|\s+cited|\s+wherein|\s+dated|\s+case|\s+judgment|$)",
+    re.MULTILINE
+)
+NON_PARTY_WORDS = {
+    "article", "articles", "art", "section", "sections", "sec", "order", "rule", "rules", "part",
+    "clause", "schedule", "constitution", "act", "code", "ordinance", "statute", "proviso", "chapter",
+    "plaintiff", "defendant", "petitioner", "respondent", "appellant"
+}
 ERROR, WARN, INFO = "error", "warn", "info"
 
 
@@ -121,15 +130,20 @@ def split_cards(memo: str) -> Tuple[str, List[Dict[str, Any]], bool]:
 
 
 def _prov_regex(p: Dict[str, Any]) -> Optional[re.Pattern]:
+    if "_compiled_rx" in p:
+        return p["_compiled_rx"]
+    rx = None
     if p.get("pattern"):
-        return re.compile(p["pattern"], re.IGNORECASE)
-    ident = re.escape(p["id"])
-    lead = r"(?:\d+[\-A-Z]*\s*(?:,|&|and|to)\s*)*"
-    if p["kind"] == "section":
-        return re.compile(rf"(?:sections?|ss?\.)\s*{lead}{ident}\b", re.IGNORECASE)
-    if p["kind"] == "article":
-        return re.compile(rf"(?:articles?|arts?\.)\s*{lead}{ident}\b", re.IGNORECASE)
-    return None
+        rx = re.compile(p["pattern"], re.IGNORECASE)
+    else:
+        ident = re.escape(p["id"])
+        lead = r"(?:\d+[\-A-Z]*\s*(?:,|&|and|to)\s*)*"
+        if p["kind"] == "section":
+            rx = re.compile(rf"(?:sections?|ss?\.)\s*{lead}{ident}\b", re.IGNORECASE)
+        elif p["kind"] == "article":
+            rx = re.compile(rf"(?:articles?|arts?\.)\s*{lead}{ident}\b", re.IGNORECASE)
+    p["_compiled_rx"] = rx
+    return rx
 
 
 def _act_near(store: StatuteAuthorityStore, act: str, s: str, start: int, end: int) -> bool:
@@ -199,7 +213,7 @@ def audit_memo(
 
     body, cards, cards_ok = split_cards(memo)
     full_context = query + "\n" + body
-    topics = detect_topics(full_context)
+    topics = detect_topics(full_context, query_only_text=query)
     inferred_matter = matter_type or (classify_matter_type(query) if query else classify_matter_type(body))
 
     F: List[Finding] = []
@@ -297,7 +311,7 @@ def audit_memo(
                         break
 
     # 4. Quotes verification (8+ words against loaded bare acts or judgments)
-    statute_norm = [norm_text(x) for x in store.all_statute_texts()]
+    statute_norm = store.all_statute_norm_texts()
     judg_norm = [j.norm for j in store.judgments.values()]
     for q, pos in _quotes(body):
         nq = norm_text(q)
@@ -320,21 +334,90 @@ def audit_memo(
                 q[:200]
             )
 
-    # 5. Citations: format + must come from retrieved set
-    known = {case_key(store, c["citation"], c.get("court")) for c in retrieved if c.get("citation")}
-    known |= {case_key(store, c["citation"].split(" and ")[0], c.get("court")) for c in cards if c.get("citation")} | set(store.judgments)
+    # 5. Citations: format + must come from supplied retrieved set (Phase 3 Closed-World Grounding)
+    supplied_known = {case_key(store, c["citation"], c.get("court")) for c in retrieved if c.get("citation")}
+    supplied_known |= {case_key(store, c["citation"].split(" and ")[0], c.get("court")) for c in cards if c.get("citation")}
     fixes = {}
     for raw, a, b in find_citations(body):
         canon = case_key(store, raw, None)
         if canon != raw and "?" not in canon:
             fixes[raw] = canon
         if "?" in canon:
-            add("CITATION_COURT_UNRESOLVED", WARN, "PLD citation lacks a court code and could not be resolved from the index.", raw)
-        elif canon not in known:
-            add("UNRETRIEVED_CITATION", ERROR, "Case cited in the memo was not in the retrieved set (possible invented or recalled authority).", raw, "Remove or retrieve it.")
+            add("CITATION_COURT_UNRESOLVED", WARN, "PLD citation lacks a court code and could not be resolved from the index.", raw, rule_status="pending_review")
+        elif canon not in supplied_known:
+            # Check existence in primary database/store
+            in_store = canon in store.judgments
+            audit_note = "exists in judgments DB" if in_store else "not found in judgments DB (hallucinated citation)"
+            add(
+                "UNRETRIEVED_CITATION",
+                WARN,
+                f"Case cited in memo ({raw}) was not in the supplied retrieved set [{audit_note}].",
+                raw,
+                "Restrict citations to supplied precedents.",
+                rule_status="pending_review"
+            )
     for raw, canon in fixes.items():
         body = body.replace(raw, canon)
         add("CITATION_FORMAT", INFO, f"Normalised '{raw}' to '{canon}'.", auto_fixed=True)
+
+    # 5.1 Case titles: verify that case titles cited in text match retrieved/known authorities
+    known_titles_norm = set()
+    for c in (retrieved or []):
+        for k in ("title", "case_name"):
+            val = c.get(k)
+            if val:
+                known_titles_norm.add(re.sub(r"[^\w\s]", "", val.lower()).strip())
+    for c in cards:
+        for k in ("case_name", "title"):
+            val = c.get(k)
+            if val:
+                known_titles_norm.add(re.sub(r"[^\w\s]", "", val.lower()).strip())
+    for entry in store.citation_index.values():
+        val = entry.get("title")
+        if val:
+            known_titles_norm.add(re.sub(r"[^\w\s]", "", val.lower()).strip())
+
+    seen_case_names = set()
+    for m in CASE_TITLE_RE.finditer(body):
+        raw_name = m.group(1).strip()
+        parts = re.split(r"\s+(?:v\.|vs\.?|versus)\s+", raw_name, flags=re.I)
+        if len(parts) != 2:
+            continue
+        p1, p2 = parts[0].strip(), parts[1].strip()
+        p1_words = [w.lower() for w in re.findall(r"\b\w+\b", p1)]
+        p2_words = [w.lower() for w in re.findall(r"\b\w+\b", p2)]
+        if not p1_words or not p2_words:
+            continue
+        if any(w in NON_PARTY_WORDS for w in p1_words[:2]) or any(w in NON_PARTY_WORDS for w in p2_words[:2]):
+            continue
+        if len(p1_words) + len(p2_words) < 3 or len(raw_name) < 10:
+            continue
+
+        norm_cand = re.sub(r"[^\w\s]", "", raw_name.lower()).strip()
+        if norm_cand in seen_case_names:
+            continue
+        seen_case_names.add(norm_cand)
+
+        matched = False
+        p1_clean = re.sub(r"[^\w\s]", "", p1.lower()).strip()
+        p2_clean = re.sub(r"[^\w\s]", "", p2.lower()).strip()
+        for kt in known_titles_norm:
+            if norm_cand in kt or kt in norm_cand:
+                matched = True
+                break
+            if p1_clean and p1_clean in kt and p2_clean and p2_clean in kt:
+                matched = True
+                break
+
+        if not matched:
+            add(
+                "UNRETRIEVED_CASE_NAME",
+                WARN,
+                f"Case title cited in memo ('{raw_name}') was not in the supplied retrieved set or registered authorities.",
+                raw_name[:140],
+                "Restrict citations to supplied precedents.",
+                rule_status="pending_review"
+            )
 
     # 6. Relevance gate over retrieved + cards
     cases: Dict[str, Dict[str, Any]] = {}

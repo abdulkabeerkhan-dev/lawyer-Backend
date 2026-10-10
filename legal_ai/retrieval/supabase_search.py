@@ -93,12 +93,12 @@ async def search_supabase_judgments(
                 def _query_exact():
                     res = sb.table("full_judgments").select(
                         "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
-                    ).or_(
-                        f"neutral_citation.eq.{target_cit},case_id.eq.{norm_cid}"
+                    ).eq(
+                        "case_id", norm_cid
                     ).limit(5).execute()
                     return res.data or []
 
-                exact_records = safe_supabase_query(_query_exact, retries=2)
+                exact_records = safe_supabase_query(_query_exact, retries=1)
                 for r in exact_records:
                     cid = str(r.get("case_id") or r.get("id"))
                     if cid not in seen_ids:
@@ -118,7 +118,7 @@ async def search_supabase_judgments(
                     ).limit(2).execute()
                     return res.data or []
 
-                cid_records = safe_supabase_query(_query_cid, retries=2)
+                cid_records = safe_supabase_query(_query_cid, retries=1)
                 for r in cid_records:
                     cid = str(r.get("case_id") or r.get("id"))
                     if cid not in seen_ids:
@@ -127,21 +127,19 @@ async def search_supabase_judgments(
             except Exception:
                 pass
 
-        # 3. Case Title & Section Keyword Search (Fast Indexed Search)
-        # Strips boilerplate words and builds tsquery for title
+        # 3. Case Title Keyword Search
         STOP_WORDS = {
             'the', 'of', 'and', 'a', 'in', 'to', 'is', 'for', 'on', 'with', 'by', 'at', 'from',
             'an', 'as', 'be', 'under', 'versus', 'vs', 'v', 'state', 'act', 'code', 'law',
             'order', 'section', 'sec', 'petition', 'appeal', 'criminal', 'civil'
         }
-        words = [w for w in re.sub(r'[^\w\s]', ' ', q_clean).split() if len(w) > 2 and w.lower() not in STOP_WORDS]
-        if words:
-            title_ts = " & ".join(words[:3])
+        words = [w for w in re.sub(r'[^\w\s]', ' ', q_clean).split() if len(w) > 3 and w.lower() not in STOP_WORDS]
+        if words and len(words) >= 2:
             try:
                 def _query_title():
                     res = sb.table("full_judgments").select(
                         "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
-                    ).limit(5).text_search("case_title", title_ts).execute()
+                    ).ilike("case_title", f"%{words[0]}%{words[1]}%").limit(5).execute()
                     return res.data or []
 
                 title_records = safe_supabase_query(_query_title, retries=1)
