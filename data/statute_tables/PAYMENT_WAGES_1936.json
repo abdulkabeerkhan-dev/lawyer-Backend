@@ -1,0 +1,64 @@
+[
+  {
+    "act_code": "PAYMENT_WAGES_1936",
+    "act_name": "Payment of Wages Act, 1936 (Act IV of 1936)",
+    "provision_type": "section",
+    "primary_num": "15",
+    "secondary_num": null,
+    "canonical_id": "PAYMENT_WAGES_1936_SEC_15",
+    "display_name": "Section 15",
+    "title": "Claims arising out of deductions from wages or delay in payment",
+    "verbatim_text": "The Provincial Government may appoint an Authority to hear and decide all claims arising out of deductions from wages, or delay in payment of the wages of persons employed. Where contrary to the provisions of this Act any deduction has been made from wages, or any payment of wages has been delayed, the person employed or any legal practitioner or registered trade union may apply to the Authority for a direction.",
+    "provisos": [
+      "Provided that every such application shall be presented within three years from the date on which the deduction from the wages was made or from the date on which the payment of the wages was due to be made."
+    ],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Payment of Wages Act, 1936 (Act IV of 1936)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "PAYMENT_WAGES_1936",
+    "act_name": "Payment of Wages Act, 1936 (Act IV of 1936)",
+    "provision_type": "section",
+    "primary_num": "17",
+    "secondary_num": null,
+    "canonical_id": "PAYMENT_WAGES_1936_SEC_17",
+    "display_name": "Section 17",
+    "title": "Appeal to Labour Court",
+    "verbatim_text": "An appeal against an order dismissing an application under sub-section (2) of section 15, or against a direction made under sub-section (3) of that section may be preferred within thirty days to the Labour Court.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Payment of Wages Act, 1936 (Act IV of 1936)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

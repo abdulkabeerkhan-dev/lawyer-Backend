@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "EVACUEE_PROPERTY_1957",
+    "act_name": "Pakistan (Administration of Evacuee Property) Act, 1957 (Act XII of 1957)",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "canonical_id": "EVACUEE_PROPERTY_1957_SEC_3",
+    "display_name": "Section 3",
+    "title": "Bar against declaring property evacuee after specified date",
+    "verbatim_text": "Notwithstanding anything contained in this Act, no person or property not treated as evacuee before the first day of January, 1957, shall be treated or declared as evacuee property, and no proceedings shall lie in respect thereof.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Pakistan (Administration of Evacuee Property) Act, 1957 (Act XII of 1957)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "EVACUEE_PROPERTY_1957",
+    "act_name": "Pakistan (Administration of Evacuee Property) Act, 1957 (Act XII of 1957)",
+    "provision_type": "section",
+    "primary_num": "41",
+    "secondary_num": null,
+    "canonical_id": "EVACUEE_PROPERTY_1957_SEC_41",
+    "display_name": "Section 41",
+    "title": "Jurisdiction of Civil Courts barred",
+    "verbatim_text": "Save as otherwise expressly provided in this Act, no civil or revenue court shall have jurisdiction to entertain or adjudicate upon any question whether any person is or is not an evacuee, or whether any property is or is not evacuee property.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Pakistan (Administration of Evacuee Property) Act, 1957 (Act XII of 1957)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

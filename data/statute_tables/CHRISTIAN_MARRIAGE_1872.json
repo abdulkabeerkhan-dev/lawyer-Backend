@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "CHRISTIAN_MARRIAGE_1872",
+    "act_name": "Christian Marriage Act, 1872 (Act XV of 1872) & Divorce Act, 1869 (Act IV of 1869)",
+    "provision_type": "section",
+    "primary_num": "4",
+    "secondary_num": null,
+    "canonical_id": "CHRISTIAN_MARRIAGE_1872_SEC_4",
+    "display_name": "Section 4",
+    "title": "Marriages to be solemnized according to Act",
+    "verbatim_text": "Every marriage between persons, one or both of whom is or are a Christian or Christians, shall be solemnized in accordance with the provisions of the next following section; and any such marriage solemnized otherwise than in accordance with such provisions shall be void.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Christian Marriage Act, 1872 (Act XV of 1872) & Divorce Act, 1869 (Act IV of 1869)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "CHRISTIAN_MARRIAGE_1872",
+    "act_name": "Christian Marriage Act, 1872 (Act XV of 1872) & Divorce Act, 1869 (Act IV of 1869)",
+    "provision_type": "section",
+    "primary_num": "10",
+    "secondary_num": null,
+    "canonical_id": "CHRISTIAN_MARRIAGE_1872_SEC_10",
+    "display_name": "Section 10",
+    "title": "Divorce Act 1869: When husband or wife may petition for dissolution",
+    "verbatim_text": "Any husband may present a petition to the Family Court or District Court praying that his marriage may be dissolved on the ground that his wife has been guilty of adultery. Any wife may present a petition praying that her marriage may be dissolved on the ground that her husband has been guilty of incestuous adultery, bigamy with adultery, rape, sodomy, bestiality, or adultery coupled with cruelty or desertion without reasonable excuse for two years or upwards.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Christian Marriage Act, 1872 (Act XV of 1872) & Divorce Act, 1869 (Act IV of 1869)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

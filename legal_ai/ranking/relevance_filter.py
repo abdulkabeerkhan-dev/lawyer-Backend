@@ -14,6 +14,11 @@ import re
 from typing import Dict, List, Any, Tuple, Optional
 
 
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 def filter_candidate_quality_before_ranking(
     raw_candidates: List[Dict[str, Any]],
     query_plan: Any
@@ -56,7 +61,7 @@ def filter_candidate_quality_before_ranking(
 
     is_financial_or_fraud_or_bail = any(k in domains or k in questions_str or k in provisions_str for k in [
         "409", "420", "406", "489-f", "489f", "cheating", "breach of trust", "misappropriat",
-        "director", "corporate", "loan", "bail", "498", "497"
+        "director", "corporate", "loan", "bail", "498", "497", "cheque", "bounced", "dishonour", "ni act", "negotiable"
     ])
 
     matter_types = [str(m).lower() for m in getattr(query_plan, "matter_type", [])] if query_plan else []
@@ -66,6 +71,14 @@ def filter_candidate_quality_before_ranking(
     is_adverse_possession = any(k in domains or k in questions_str for k in ["adverse possession", "animus possidendi", "limitation act"])
     is_injunction = any(k in domains or k in questions_str for k in ["injunction", "order xxxix", "o.xxxix", "o.39"])
     is_family = "family" in matter_types or any(k in domains for k in ["family", "khula", "custody", "dower"])
+
+    # Relevance gate targets
+    is_tax_query = any(k in f"{questions_str} {' '.join(domains)} {provisions_str}" for k in [
+        "income tax", "sales tax", "customs", "revenue assessment", "taxation", "fbr", "inland revenue"
+    ])
+    is_land_acq_query = any(k in f"{questions_str} {' '.join(domains)} {provisions_str}" for k in [
+        "land acquisition", "collector land acquisition", "acquisition of land"
+    ])
 
     for c in raw_candidates:
         meta = c.get("metadata") if isinstance(c.get("metadata"), dict) else c
@@ -90,6 +103,7 @@ def filter_candidate_quality_before_ranking(
         if any(fj in court_norm for fj in ["supreme court of india", "india", "delhi high court", "all england", "calcutta", "bombay", "madras", "privy council"]) or cid.startswith("air_") or "state of u. p" in title:
             if "pakistan" not in court_norm:
                 rejection_counts["foreign_jurisdiction"] += 1
+                logger.info(f"[RELEVANCE_GATE_DROP] Dropped foreign candidate '{cid}' ({title})")
                 continue
 
         raw_txt = str(c.get("preview") or c.get("full_text") or c.get("snippet") or c.get("text") or meta.get("full_text") or meta.get("text") or "").strip()
@@ -100,24 +114,49 @@ def filter_candidate_quality_before_ranking(
 
         haystack = f"{title} {raw_txt.lower()} {court_norm}"
 
+        # GLOBAL RELEVANCE GATE 1: Tax / Customs / Revenue (unless query explicitly concerns tax/revenue)
+        if not is_tax_query:
+            if any(k in haystack for k in [
+                "sales tax act", "income tax ordinance", "appellate tribunal inland revenue",
+                "customs duty", "special prosecutor customs", "directorate of intelligence",
+                "anti-money laundering act", "customs act", "customs court", "fbr vs",
+                "commissioner inland revenue", "recovery of tax", "tax assessment", "assessing officer"
+            ]):
+                rejection_counts["mismatched_domain"] += 1
+                logger.info(f"[RELEVANCE_GATE_DROP] Dropped tax candidate '{cid}' ({title}): query does not concern tax/revenue")
+                continue
+
+        # GLOBAL RELEVANCE GATE 2: Land Acquisition (unless query explicitly concerns land acquisition)
+        if not is_land_acq_query:
+            if any(k in haystack for k in [
+                "land acquisition act", "collector land acquisition", "collector, land acquisition",
+                "acquisition of land", "enhancement of compensation", "land acquisition reference", "award of the collector"
+            ]):
+                rejection_counts["mismatched_domain"] += 1
+                logger.info(f"[RELEVANCE_GATE_DROP] Dropped land acquisition candidate '{cid}' ({title}): query does not concern land acquisition")
+                continue
+
         # 4. Hard Drop: Unrelated subject matter
         if is_financial_or_fraud_or_bail:
             # Defamation filter (e.g. Gurmani)
             if any(k in haystack for k in ["mushtaq ahmad gurmani", "z. a. suleri", "defamation", "defamatory", "section 500 ppc", "sec 500"]):
                 if not any(k in haystack for k in ["409", "420", "406", "breach of trust", "misappropriat", "entrustment"]):
                     rejection_counts["unrelated_subject"] += 1
+                    logger.info(f"[RELEVANCE_GATE_DROP] Dropped defamation candidate '{cid}' ({title})")
                     continue
 
             # Pure narcotics filter (CNSA)
             if any(k in haystack for k in ["control of narcotic substances act", "cnsa", "charas", "heroin", "opium", "methamphetamine"]):
                 if not any(k in haystack for k in ["409", "420", "406", "breach of trust", "consultancy fee"]):
                     rejection_counts["unrelated_subject"] += 1
+                    logger.info(f"[RELEVANCE_GATE_DROP] Dropped narcotics candidate '{cid}' ({title})")
                     continue
 
             # Pure murder / 302 PPC filter
             if any(k in haystack for k in ["section 302 ppc", "302/34 ppc", "murder trial", "firearm injury", "post-mortem report"]):
                 if not any(k in haystack for k in ["409", "420", "406", "breach of trust"]):
                     rejection_counts["unrelated_subject"] += 1
+                    logger.info(f"[RELEVANCE_GATE_DROP] Dropped murder candidate '{cid}' ({title})")
                     continue
 
             # Pure rent / tenancy filter (only when query does NOT engage rent/tenancy)
@@ -125,16 +164,8 @@ def filter_candidate_quality_before_ranking(
                 if any(k in haystack for k in ["rent restriction", "ejectment petition", "fair rent", "tenant", "landlord"]):
                     if not any(k in haystack for k in ["409", "420", "breach of trust", "fir", "bail", "cheque", "489"]):
                         rejection_counts["mismatched_domain"] += 1
+                        logger.info(f"[RELEVANCE_GATE_DROP] Dropped rent candidate '{cid}' ({title}) from non-rent query")
                         continue
-
-            # Pure tax / customs / revenue assessment filter
-            if any(k in haystack for k in [
-                "sales tax act", "income tax ordinance", "appellate tribunal inland revenue",
-                "customs duty", "special prosecutor customs", "directorate of intelligence",
-                "anti-money laundering act", "customs act", "customs court", "fbr vs"
-            ]):
-                rejection_counts["mismatched_domain"] += 1
-                continue
 
             # Pure labour / trade union filter
             if any(k in haystack for k in [
@@ -142,6 +173,7 @@ def filter_candidate_quality_before_ranking(
                 "standing orders ordinance", "wage board"
             ]):
                 rejection_counts["mismatched_domain"] += 1
+                logger.info(f"[RELEVANCE_GATE_DROP] Dropped labour candidate '{cid}' ({title})")
                 continue
 
         if is_rent:

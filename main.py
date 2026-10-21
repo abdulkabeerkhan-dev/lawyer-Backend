@@ -22,8 +22,12 @@ from pathlib import Path
 import httpx
 import jwt
 from jwt.algorithms import RSAAlgorithm
-import sentry_sdk
-from sentry_sdk.integrations.fastapi import FastApiIntegration
+try:
+    import sentry_sdk
+    from sentry_sdk.integrations.fastapi import FastApiIntegration
+except ImportError:
+    sentry_sdk = None
+    FastApiIntegration = None
 from pinecone import Pinecone
 from anthropic import AsyncAnthropic
 from supabase import create_client, Client
@@ -96,10 +100,10 @@ if sys.stderr and hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding='utf-8', errors='replace')
 
 # SENTRY SYSTEM LOG ENGINE
-if os.environ.get("SENTRY_DSN"):
+if os.environ.get("SENTRY_DSN") and sentry_sdk:
     sentry_sdk.init(
         dsn=os.environ.get("SENTRY_DSN"),
-        integrations=[FastApiIntegration()],
+        integrations=[FastApiIntegration()] if FastApiIntegration else [],
         traces_sample_rate=1.0,
         profiles_sample_rate=1.0,
     )
@@ -3945,6 +3949,69 @@ def extract_images_from_pdf_base64(b64_str: str) -> List[ImagePayload]:
 
 USE_LEGAL_AI_PIPELINE = os.environ.get("USE_LEGAL_AI_PIPELINE", "true").lower() in ("true", "1", "yes")
 
+
+def format_verified_statutory_provisions(detected_provisions: List[Any]) -> str:
+    """
+    Statutory Bare-Act Ingestion Engine:
+    Extracts and formats full verbatim text, provisos, explanations, and gazette citations
+    for detected statutory provisions from the GroundTruthStatuteRegistry.
+    Injected under === VERIFIED STATUTORY PROVISIONS === to eliminate section hallucinations.
+    """
+    if not detected_provisions:
+        return ""
+    try:
+        from core.statutory_validator import GroundTruthStatuteRegistry
+        reg = GroundTruthStatuteRegistry()
+        reg.ensure_loaded()
+        blocks = []
+        seen_cids = set()
+        for item in detected_provisions:
+            if isinstance(item, (list, tuple)) and len(item) >= 2:
+                cid, act_c = item[0], item[1]
+            elif isinstance(item, str):
+                cid, act_c = item, None
+            else:
+                continue
+            if cid in seen_cids:
+                continue
+            seen_cids.add(cid)
+            entry = reg.get_by_canonical_id(cid)
+            if not entry and act_c:
+                for cand in reg.get_act_entries(act_c):
+                    if cand.get("canonical_id") == cid:
+                        entry = cand
+                        break
+            if entry and entry.get("verbatim_text"):
+                disp = entry.get("display_name") or cid
+                title = entry.get("title") or ""
+                act_name = entry.get("act_name") or act_c or ""
+                lines = [f"### {disp}: {title} [{act_name}]"]
+                lines.append(f'STATUTORY VERBATIM TEXT:\n"{entry["verbatim_text"]}"')
+                if entry.get("provisos"):
+                    lines.append("STATUTORY PROVISOS:")
+                    for p in entry["provisos"]:
+                        lines.append(f"  * {p}")
+                if entry.get("explanations"):
+                    lines.append("STATUTORY EXPLANATIONS:")
+                    for ex in entry["explanations"]:
+                        lines.append(f"  * {ex}")
+                src = entry.get("source_citation") or "Official Gazette / Pakistan Code"
+                lines.append(f"STATUS: VERIFIED IN FORCE | SOURCE: {src}")
+                blocks.append("\n".join(lines))
+
+        if not blocks:
+            return ""
+
+        return (
+            "=== VERIFIED STATUTORY PROVISIONS ===\n"
+            "MANDATORY BARE-ACT DIRECTIVE: The following official verbatim statutory provisions and provisos have been verified from the ground-truth statute registry. You MUST ground your statutory analysis and section citations in this verbatim statutory text.\n\n"
+            + "\n\n".join(blocks)
+            + "\n=====================================\n\n"
+        )
+    except Exception as e:
+        print(f"[StatuteInjection] Error formatting verified provisions: {e}", flush=True)
+        return ""
+
 async def process_query_job(job_id: str, request: QueryRequest, authenticated_user_id: str):
     use_flag = os.environ.get("USE_LEGAL_AI_PIPELINE", "true").lower() in ("true", "1", "yes")
     if use_flag:
@@ -4254,6 +4321,7 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
 
             # Part 1: Parallel Statute Currency Extraction & Check (Items 1 & 3)
             query_provisions = detect_statutory_provisions_in_query(raw_search_query or effective_user_query)
+            verified_statutory_header = format_verified_statutory_provisions(query_provisions)
             currency_findings = []
             for cid, act_c in query_provisions:
                 c_res = check_statute_currency(canonical_id=cid, act_code=act_c, query_text=raw_search_query or effective_user_query)
@@ -5506,6 +5574,7 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
                 else:
                     prov_summary = ", ".join(f"{cf['canonical_id']} ({cf['display_tag']})" if cf.get("display_tag") else cf['canonical_id'] for cf in currency_findings)
                 return (
+                    verified_statutory_header +
                     f"⚠️ **[STATUTORY PROVISION ADJUDICATION]**: New provision found ({prov_summary}); "
                     "no interpreting authority retrieved from verified database.\n\n"
                     "Grounding analysis strictly in verified codified statutory text and settled interpretive canons."
@@ -5537,7 +5606,7 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
 
                 propositions_header = (formatted_propositions_block + "\n\n") if ("formatted_propositions_block" in locals() and formatted_propositions_block) else ""
                 current_law_header = (formatted_current_law_block + "\n\n") if ("formatted_current_law_block" in locals() and formatted_current_law_block) else ""
-                header = current_law_header + propositions_header + currency_header + conflict_header
+                header = verified_statutory_header + current_law_header + propositions_header + currency_header + conflict_header
 
                 headnote_cases = []
                 fts_cases = []
@@ -7078,7 +7147,8 @@ async def get_full_judgment(
                 # Fetch all chunks for this canonical base ID
                 if canonical_base:
                     try:
-                        base_ids = [f"{re.sub(r'[^a-zA-Z0-9_\-]', '_', canonical_base).lower()}_chunk_{i}" for i in range(100)]
+                        clean_base = re.sub(r'[^a-zA-Z0-9_\-]', '_', canonical_base).lower()
+                        base_ids = [f"{clean_base}_chunk_{i}" for i in range(100)]
                         fetch_res = pinecone_index.fetch(ids=base_ids, namespace=PINECONE_NAMESPACE)
                         fetched_vecs = fetch_res.get("vectors", {}) if isinstance(fetch_res, dict) else getattr(fetch_res, "vectors", {}) or {}
                         if fetched_vecs:

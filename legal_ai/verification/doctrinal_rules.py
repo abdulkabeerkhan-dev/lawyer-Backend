@@ -176,13 +176,62 @@ PATTERN_RULES: List[Dict[str, Any]] = [
         "code": "STATUTE_MISSTATEMENT",
         "id": "O39_R2A_INDIAN_IMPORT",
         "severity": "error",
-        "status": "pending_review",
+        "status": "reviewed",
         "topics": ["injunction"],
         "all_of": [
-            r"(?:order\s*xxxix|o\.?\s*xxxix|o\s*39|order\s*39)[^.]{0,30}rule\s*2-?[aA]\b|rule\s*2-?[aA]\b[^.]{0,30}(?:order\s*xxxix|o\.?\s*xxxix|o\s*39|order\s*39)"
+            r"(?:order\s*xxxix|o\.?\s*xxxix|o\s*39|order\s*39)[^.]{0,30}rule\s*2-?[aA]\b|rule\s*2-?[aA]\b"
         ],
-        "message": "Order XXXIX Rule 2A is an Indian CPC amendment (Act 104 of 1976) that does not exist in the Pakistan Code. In Pakistan, disobedience or breach of an injunction is governed strictly by Order XXXIX Rule 2(3) CPC 1908.",
-        "fix": "Replace citation of Order XXXIX Rule 2A with Order XXXIX Rule 2(3) CPC 1908.",
+        "none_of": [
+            r"indian", r"india", r"foreign", r"comparative", r"does not exist in pakistan",
+            r"not part of the pakistan", r"governed by order xxxix rule 2\(3\)",
+            r"governed by rule 2\(3\)", r"rule 2\(3\)"
+        ],
+        "message": "Order XXXIX Rule 2A CPC is an Indian amendment (Act 104 of 1976) that does not exist in the Pakistan Code. In Pakistan, the remedy for disobedience or breach of an interim injunction is governed by Order XXXIX Rule 2(3) CPC (see e.g. 2006 YLR 2758).",
+        "fix": "Cite Order XXXIX Rule 2(3) CPC for disobedience or breach of an injunction in Pakistan.",
+    },
+    {
+        "code": "SCHEDULE_II_MISCLASSIFICATION",
+        "id": "SCHEDULE_II_PPC_420_PROHIBITORY_CLAUSE_MISMATCH",
+        "severity": "error",
+        "status": "deprecated",  # Disabled: Section 420 PPC is verified non-bailable under Schedule II (non-prohibitory clause)
+        "topics": ["fraud", "bail"],
+        "all_of": [
+            r"section\s*420|s\.\s*420"
+        ],
+        "any_of": [
+            r"prohibitory clause of section 497"
+        ],
+        "none_of": [
+            r"non-prohibitory",
+            r"outside the prohibitory clause",
+            r"406",
+            r"409"
+        ],
+        "message": "Under Cr.P.C. 1898 Schedule II, Section 420 PPC is non-bailable but carries up to 7 years imprisonment, falling outside the prohibitory clause of Section 497 Cr.P.C. Bail is a rule and refusal an exception per Hakeem v. State (2026 SCMR 792).",
+        "fix": "State that Section 420 PPC is non-bailable under Schedule II, falling in the non-prohibitory clause of Section 497 Cr.P.C. where bail is a rule.",
+    },
+    {
+        "code": "SCHEDULE_II_MISCLASSIFICATION",
+        "id": "SCHEDULE_II_PPC_489F_PROHIBITORY_CLAUSE",
+        "severity": "error",
+        "status": "reviewed",
+        "topics": ["cheque", "bail"],
+        "all_of": [
+            r"489-?f"
+        ],
+        "any_of": [
+            r"prohibitory clause of section 497",
+            r"falls within the prohibitory clause",
+            r"exceptional circumstances under section 497"
+        ],
+        "none_of": [
+            r"not fall within",
+            r"outside the prohibitory clause",
+            r"does not attract the prohibitory clause",
+            r"falls outside"
+        ],
+        "message": "Under Cr.P.C. 1898 Schedule II (as amended by Ordinance LXXXV of 2002), Section 489-F PPC is non-bailable, but carries up to 3 years imprisonment, which falls outside the prohibitory clause of Section 497 Cr.P.C. Bail is a rule and refusal is an exception (Tariq Bashir v. State PLD 1995 SC 34). It is legally incorrect to state that Section 489-F falls within the prohibitory clause.",
+        "fix": "State that Section 489-F PPC is non-bailable but falls outside the prohibitory clause of Section 497 Cr.P.C., where bail is granted as a rule.",
     },
     {
         "code": "STATUTE_MISSTATEMENT",
@@ -386,8 +435,8 @@ PATTERN_RULES: List[Dict[str, Any]] = [
     {
         "code": "STATUTE_MISSTATEMENT",
         "id": "NI_ACT_S138_IMPORT",
-        "severity": "warn",
-        "status": "pending_review",
+        "severity": "error",
+        "status": "reviewed",
         "topics": [],
         "all_of": [
             r"(?:negotiable\s+instruments\s+act|n\.?i\.?\s+act)[^.]{0,40}section\s*138|section\s*138[^.]{0,40}(?:negotiable\s+instruments\s+act|n\.?i\.?\s+act)"

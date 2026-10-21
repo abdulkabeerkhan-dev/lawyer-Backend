@@ -42,6 +42,10 @@ from legal_ai.verification.memo_auditor import (
     RelevanceResult,
     VerificationReport,
 )
+from legal_ai.verification.claim_verifier import (
+    verify_and_scrub_memo_claims,
+    ClaimVerificationResult,
+)
 
 __all__ = [
     "repair_ocr_citation",

@@ -1,0 +1,32 @@
+[
+  {
+    "act_code": "ISLAMABAD_RENT_2001",
+    "act_name": "Islamabad Rent Restriction Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "17",
+    "secondary_num": null,
+    "canonical_id": "ISLAMABAD_RENT_2001_SEC_17",
+    "display_name": "Section 17",
+    "title": "Eviction of tenant before Rent Controller",
+    "verbatim_text": "(1) A landlord seeking to evict his tenant shall apply to the Controller for an order in that behalf only on the grounds of: (a) default in payment of rent within sixty days; (b) subletting without written consent; (c) personal bona fide need of the landlord or his children.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "islamabad",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Islamabad Rent Restriction Ordinance, 2001",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

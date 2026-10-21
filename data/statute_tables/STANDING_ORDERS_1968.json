@@ -1,0 +1,66 @@
+[
+  {
+    "act_code": "STANDING_ORDERS_1968",
+    "act_name": "Industrial and Commercial Employment (Standing Orders) Ordinance, 1968 (W.P. Ordinance VI of 1968)",
+    "provision_type": "section",
+    "primary_num": "12",
+    "secondary_num": null,
+    "canonical_id": "STANDING_ORDERS_1968_SEC_12",
+    "display_name": "Section 12",
+    "title": "Standing Order 12: Termination of employment and notice",
+    "verbatim_text": "For terminating employment of a permanent workman, one month's notice in writing shall be given either by the employer or by the workman, or one month's wages shall be paid in lieu of notice. The services of a workman shall not be terminated nor shall a workman be removed, retrenched, discharged or dismissed from service except by an order in writing which shall explicitly state the reason for the action taken.",
+    "provisos": [
+      "Provided that where a workman is retrenched, the employer shall retrench the workman who was the last person to be employed in that category."
+    ],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Industrial and Commercial Employment (Standing Orders) Ordinance, 1968 (W.P. Ordinance VI of 1968)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "STANDING_ORDERS_1968",
+    "act_name": "Industrial and Commercial Employment (Standing Orders) Ordinance, 1968 (W.P. Ordinance VI of 1968)",
+    "provision_type": "section",
+    "primary_num": "15",
+    "secondary_num": null,
+    "canonical_id": "STANDING_ORDERS_1968_SEC_15",
+    "display_name": "Section 15",
+    "title": "Standing Order 15: Punishments and disciplinary procedure for misconduct",
+    "verbatim_text": "A workman may be reprimanded, fined, suspended, or dismissed without notice or payment in lieu of notice for misconduct. No order of dismissal shall be made unless the workman concerned is informed in writing of the alleged misconduct within one month of the date of misconduct and is given an opportunity to explain the circumstances and an independent inquiry is held.",
+    "provisos": [
+      "Provided that where the workman is suspended pending inquiry, the period of suspension shall not exceed four weeks except where the matter is pending before an arbitrator or Court."
+    ],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Industrial and Commercial Employment (Standing Orders) Ordinance, 1968 (W.P. Ordinance VI of 1968)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

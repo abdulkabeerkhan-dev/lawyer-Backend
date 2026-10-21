@@ -1,9 +1,16 @@
-from docx import Document
-from docx.shared import Inches, Pt, RGBColor
-from docx.enum.text import WD_ALIGN_PARAGRAPH
+try:
+    from docx import Document
+    from docx.shared import Inches, Pt, RGBColor
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+except ImportError:
+    Document = None
+    Inches = Pt = RGBColor = None
+    WD_ALIGN_PARAGRAPH = None
 import io
 
 def generate_court_docx(case_title, court_name, pleading_text):
+    if Document is None:
+        raise RuntimeError("python-docx is not installed in the environment")
     if isinstance(case_title, dict):
         from core.case_title_taxonomy import get_effective_title
         case_title = get_effective_title(case_title) or "Cause Title"

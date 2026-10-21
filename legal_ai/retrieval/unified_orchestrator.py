@@ -19,7 +19,7 @@ from legal_ai.retrieval.supabase_search import search_supabase_judgments
 from legal_ai.retrieval.pinecone_search import search_pinecone_dense
 from legal_ai.retrieval.bm25_search import search_bm25_sparse
 from legal_ai.retrieval.external_search import search_external_judgments
-from scripts.propose_court_metadata_repair import resolve_court_and_province
+from legal_ai.ranking.court_weighting import resolve_court_and_province
 
 
 def merge_candidates_with_rrf(
@@ -130,6 +130,50 @@ def merge_candidates_with_rrf(
     return final_list
 
 
+def anchor_provision_token(token: str, query_plan: Any = None) -> Optional[str]:
+    """
+    Anchors provision numbers to their parent statute name before use as a search token.
+    Never returns bare section numbers (e.g. '138', 'Section 138').
+    """
+    t = str(token or "").strip()
+    if not t or len(t) < 3:
+        return None
+
+    # Disallow bare digits (e.g. "138", "420")
+    if t.isdigit():
+        return None
+
+    # If already anchored with parent statute, keep it
+    if re.search(r'\b(ppc|crpc|cpc|qso|sra|prpa|srpo|limitation|constitution|penal|contract|negotiable|instruments|family)\b', t, re.I):
+        return t
+
+    # If bare "Section X" without statute:
+    m_bare = re.match(r'^(?:sections?|secs?\.?|s\.)\s*([0-9]+(?:-[a-z])?)$', t, re.IGNORECASE)
+    if m_bare:
+        num = m_bare.group(1).upper()
+        gov = getattr(query_plan, "governing_statutes", []) if query_plan else []
+        if gov:
+            return f"Section {num} {gov[0]}"
+        # Infer parent statute from known numbers
+        clean_d = re.sub(r'[^0-9]', '', num)
+        val = int(clean_d) if clean_d else 0
+        if val in [409, 420, 406, 489, 302, 376, 380, 468, 471]:
+            return f"Section {num} Pakistan Penal Code, 1860"
+        elif val in [497, 498, 561, 154, 161, 164, 173]:
+            return f"Section {num} Code of Criminal Procedure, 1898"
+        elif val in [115, 12, 151, 96, 100]:
+            return f"Section {num} Code of Civil Procedure, 1908"
+        elif val in [118, 138, 4, 13]:
+            return f"Section {num} Negotiable Instruments Act, 1881"
+        elif val in [28, 5, 14, 19]:
+            return f"Section {num} Limitation Act, 1908"
+        elif val in [9, 42, 8, 39, 54]:
+            return f"Section {num} Specific Relief Act, 1877"
+        return None
+
+    return t
+
+
 async def retrieve_candidates_parallel(
     query_text: str,
     query_plan: Any = None,
@@ -158,12 +202,12 @@ async def retrieve_candidates_parallel(
                 if la not in search_terms:
                     search_terms.append(la)
 
-    # Priority 2: Canonical statutory provisions from query plan
+    # Priority 2: Canonical statutory provisions from query plan (anchored to parent statute)
     provisions = getattr(query_plan, "provisions", []) if hasattr(query_plan, "provisions") else []
     for p in provisions:
-        p_str = str(p).strip()
-        if p_str and p_str not in search_terms:
-            search_terms.append(p_str)
+        anchored = anchor_provision_token(str(p), query_plan=query_plan)
+        if anchored and anchored not in search_terms:
+            search_terms.append(anchored)
 
     # Priority 3: Doctrinal issue queries and search lanes
     lanes = getattr(query_plan, "search_lanes", []) if hasattr(query_plan, "search_lanes") else []
@@ -183,6 +227,12 @@ async def retrieve_candidates_parallel(
     # Priority 4: Raw user query
     if query_text not in search_terms:
         search_terms.append(query_text)
+
+    # Hard filter: Eliminate any bare numbers or unanchored section tokens
+    search_terms = [
+        st for st in search_terms
+        if not re.match(r'^(?:sections?|secs?\.?|s\.)?\s*\d+$', st.strip(), re.IGNORECASE)
+    ]
 
     # 2. Build multi-lane queries for Pinecone dense semantic search
     dense_queries = [query_text]

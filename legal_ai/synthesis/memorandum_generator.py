@@ -60,7 +60,24 @@ def purge_debug_warnings(text: str) -> str:
     clean = re.sub(r'(?is)####\s*Statutory Currency Verification Status.*?(?=(?:\n\s*###|\n\s*####|\n\n|\Z))', '', clean)
     clean = re.sub(r'(?is)###\s*(?:\d+\.?\s*)?APPENDIX:\s*STATUTORY\s*CURRENCY.*?(?=(?:\n\s*###|\Z))', '', clean)
 
-    # 5. Clean excessive empty lines and trailing horizontal rules
+    # 5. Strip artificial certification blocks and declarations
+    clean = re.sub(
+        r'(?is)(?:\n\s*---\s*)?(?:###\s*)?(?:\*{0,2})(?:Counsel\'?s?\s*Certification|Certification\s*of\s*Counsel|Prepared\s*by\s*(?:Senior\s*)?Counsel|Senior\s*Appellate\s*Counsel\s*Certification)[\s\S]*?(?=(?:\n\s*###|\Z))',
+        '',
+        clean
+    )
+
+    # 6. Strip fake metadata, word count, and completion declarations
+    clean = re.sub(r'(?i)^\s*(?:Word\s*Count|Total\s*Words?)\s*:\s*[0-9,]+.*$', '', clean, flags=re.MULTILINE)
+    clean = re.sub(r'(?i)^\s*All\s*8\s*Sections\s*Completed.*$', '', clean, flags=re.MULTILINE)
+    clean = re.sub(r'(?i)^\s*all\s*citations\s*verified\s*active\s*status.*$', '', clean, flags=re.MULTILINE)
+    clean = re.sub(r'(?i)^\s*no\s*conflicting\s*decisions\s*identified.*$', '', clean, flags=re.MULTILINE)
+    clean = re.sub(r'(?i)^\s*Word\s*Count\s*Budget.*$', '', clean, flags=re.MULTILINE)
+
+    # 7. Strip placeholder dates like [Current Date], [Date], [Insert Date]
+    clean = re.sub(r'\[(?:Current\s*Date|Date|Insert\s*Date)\]', '', clean, flags=re.IGNORECASE)
+
+    # 8. Clean excessive empty lines and trailing horizontal rules
     clean = re.sub(r'\n{3,}', '\n\n', clean).strip()
     clean = re.sub(r'\n---\s*$', '', clean).strip()
     return clean

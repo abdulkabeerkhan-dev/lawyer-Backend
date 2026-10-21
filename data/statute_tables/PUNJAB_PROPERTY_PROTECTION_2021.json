@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "PUNJAB_PROPERTY_PROTECTION_2021",
+    "act_name": "Punjab Protection of Ownership of Immovable Property Act, 2021 (Act XXVIII of 2021)",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "canonical_id": "PUNJAB_PROPERTY_PROTECTION_2021_SEC_3",
+    "display_name": "Section 3",
+    "title": "Protection against illegal possession and grabbing",
+    "verbatim_text": "No person shall enter upon or hold or grab any immovable property without lawful authority, title or permission of the lawful owner or lawful possessor.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "punjab",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Punjab Protection of Ownership of Immovable Property Act, 2021 (Act XXVIII of 2021)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "PUNJAB_PROPERTY_PROTECTION_2021",
+    "act_name": "Punjab Protection of Ownership of Immovable Property Act, 2021 (Act XXVIII of 2021)",
+    "provision_type": "section",
+    "primary_num": "4",
+    "secondary_num": null,
+    "canonical_id": "PUNJAB_PROPERTY_PROTECTION_2021_SEC_4",
+    "display_name": "Section 4",
+    "title": "Filing of complaint and inquiry by Deputy Commissioner",
+    "verbatim_text": "Any lawful owner or possessor of immovable property who is dispossessed illegally or threatened with illegal dispossession may file a complaint before the Deputy Commissioner who shall conduct a summary inquiry within thirty days and order restoration of possession through police assistance.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "punjab",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Punjab Protection of Ownership of Immovable Property Act, 2021 (Act XXVIII of 2021)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

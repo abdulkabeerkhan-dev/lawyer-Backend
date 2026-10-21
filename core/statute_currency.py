@@ -504,14 +504,6 @@ class StatuteVersionStore:
 global_statute_store = StatuteVersionStore()
 
 
-# Baseline acts with official ground-truth bare-act tables in data/statute_tables
-SUPPORTED_STATUTE_TABLES = {
-    "CNSA_1997", "CONST_1973", "CPC_1908", "CRPC_1898", "DMMA_1939",
-    "FAMILY_COURTS_1964", "FIO_2001", "LIMITATION_1908", "MFLO_1961",
-    "PPC_1860", "PREEMPTION_1991", "PRPA_2009", "QSO_1984"
-}
-
-
 def check_statute_currency(
     canonical_id: str,
     act_code: str,
@@ -530,7 +522,8 @@ def check_statute_currency(
     Returns currency label, status, and effective dates.
     """
     # If the statute itself is not in the official baseline bare-act tables:
-    if act_code not in SUPPORTED_STATUTE_TABLES:
+    statute_file = os.path.join(TABLES_DIR, f"{act_code}.json")
+    if not os.path.exists(statute_file):
         if os.environ.get("STATUTE_CURRENCY_LABELS", "").strip().lower() == "off":
             display_tag = ""
         else:
@@ -547,6 +540,7 @@ def check_statute_currency(
             "ordinance_expiry_date": None,
             "title_only": None,
             "text_available": False,
+            "text": None,
             "jurisdiction": "federal",
             "valid_from": None,
             "valid_to": None,
@@ -695,7 +689,7 @@ def check_statute_currency(
         "ordinance_expiry_date": latest.get("ordinance_expiry_date"),
         "title_only": latest.get("title_only") or latest.get("title"),
         "text_available": bool(latest.get("text_available", False)),
-        "text": latest.get("text"),
+        "text": latest.get("text") or latest.get("verbatim_text"),
         "jurisdiction": latest.get("jurisdiction", "federal"),
         "valid_from": latest.get("valid_from"),
         "valid_to": latest.get("valid_to"),
@@ -804,66 +798,119 @@ def detect_statutory_provisions_in_query(query: str) -> List[Tuple[str, str]]:
     """
     Part 1, Item 2:
     Extracts canonical statutory provisions (canonical_id, act_code) from a query.
-    Used for parallel currency checks.
+    Enhanced to detect:
+    - Standard legal shorthand (489-F PPC, 497 CrPC, 302(b) PPC, 12(2) CPC, 7/11 CPC, O. 39, r. 1 CPC, 199 Const).
+    - Disambiguate sections using entire query context (e.g. SRA 12 specific performance vs CPC 12).
     """
     if not query:
         return []
-    from core.statutory_validator import parse_statutory_citation, generate_canonical_id, ACT_ALIASES
+    from core.statutory_validator import parse_statutory_citation, generate_canonical_id
     provisions = []
     seen = set()
 
-    # Detect any explicitly mentioned act in the whole query to establish primary context
-    query_lower = query.lower()
-    context_act_code = None
-    for alias, code in sorted(ACT_ALIASES.items(), key=lambda x: len(x[0]), reverse=True):
-        if re.search(rf'\b{re.escape(alias)}\b', query_lower):
-            context_act_code = code
-            break
+    # 1. First, check direct shorthand tokens and order/rule patterns in the full query
+    # Shorthand 7/11
+    if re.search(r'\b7\s*[/\\-]\s*11\b', query):
+        cid = "CPC_1908_ORD_VII_R_11"
+        if cid not in seen:
+            seen.add(cid)
+            provisions.append((cid, "CPC_1908"))
 
-    if not context_act_code:
-        m_dyn = re.search(
-            r'\b(?:of\s+(?:the\s+)?)([a-z\s]+(?:act|ordinance|code|order))(?:\s*,\s*(\d{4}))?\b',
-            query_lower
-        )
-        if m_dyn:
-            raw_act_name = m_dyn.group(1).strip()
-            act_yr = m_dyn.group(2)
-            norm_name = re.sub(r'[^a-z0-9]+', '_', raw_act_name).strip('_').upper()
-            context_act_code = f"{norm_name}_{act_yr}" if act_yr else norm_name
+    # Mask 7/11 and Order/Rule patterns to avoid rule numbers falsely triggering Section matches
+    masked_query = re.sub(r'\b7\s*[/\\-]\s*11\b', 'CPC_7_11_MASKED', query)
+    masked_query = re.sub(
+        r'\b(?:order|ord\.?|o\.?)\s*([ivxlcdm]+|\d+)\s*[,/\.\s\-]*\s*(?:rule|r\.?)\s*(\d+)(?:\s*\(\s*(\d+)\s*\))?',
+        'ORD_RULE_MASKED',
+        masked_query,
+        flags=re.IGNORECASE
+    )
 
-    clauses = re.split(r'[,;.\n]|\band\b', query)
+    # Shorthand Section + Act (e.g. 489-F PPC, 497 CrPC, 302 PPC, 12(2) CPC, 561-A CrPC, 22-A CrPC)
+    for m in re.finditer(
+        r'\b(\d+(?:-[A-Za-z]+|[A-Za-z])?)(?:\s*\(\s*(\d+)\s*\))?(?:\s*\(\s*([a-zA-Z])\s*\))?\s*(ppc|crpc|cr\.p\.c\.?|cpc|c\.p\.c\.?|qso|mflo|fio|sra|tpa|peca|ata|nab|nao|ito|gwa|nia|cnsa|const|constitution)\b',
+        masked_query, re.IGNORECASE
+    ):
+        parsed = parse_statutory_citation(m.group(0), context=query)
+        if parsed and parsed.get("is_valid") and parsed.get("act_code"):
+            act_code = parsed["act_code"]
+            prov_type = parsed.get("provision_type", "section")
+            primary_num = parsed.get("primary_num")
+            rule_num = parsed.get("rule_num")
+            sub = parsed.get("subsection")
+            cl = parsed.get("clause")
+            cid = generate_canonical_id(
+                act_code=act_code,
+                primary_num=primary_num or "",
+                subsection=sub,
+                clause=cl,
+                rule_num=rule_num,
+                provision_type=prov_type
+            )
+            if cid and cid not in seen:
+                seen.add(cid)
+                provisions.append((cid, act_code))
+
+    # Punctuation-tolerant Order & Rule (e.g. O. 39, r. 1 CPC, Order 39 Rule 2)
+    for m in re.finditer(
+        r'\b(?:order|ord\.?|o\.?)\s*([ivxlcdm]+|\d+)\s*[,/\.\s\-]*\s*(?:rule|r\.?)\s*(\d+)(?:\s*\(\s*(\d+)\s*\))?',
+        query, re.IGNORECASE
+    ):
+        parsed = parse_statutory_citation(m.group(0), context=query)
+        if parsed and parsed.get("is_valid"):
+            act_code = parsed.get("act_code", "CPC_1908")
+            cid = generate_canonical_id(
+                act_code=act_code,
+                primary_num=parsed.get("primary_num", ""),
+                rule_num=parsed.get("rule_num"),
+                provision_type="order_rule"
+            )
+            if cid and cid not in seen:
+                seen.add(cid)
+                provisions.append((cid, act_code))
+
+    # Constitutional Articles (e.g. Article 199, Art 184(3), 199 Const)
+    for m in re.finditer(
+        r'\b(?:article|art\.?)\s*(\d+[A-Za-z]?)(?:\s*\(\s*(\d+)\s*\))?(?:\s*\(\s*([a-zA-Z])\s*\))?',
+        query, re.IGNORECASE
+    ):
+        parsed = parse_statutory_citation(m.group(0), context=query)
+        if parsed and parsed.get("is_valid"):
+            act_code = parsed.get("act_code", "CONST_1973")
+            cid = generate_canonical_id(
+                act_code=act_code,
+                primary_num=parsed.get("primary_num", ""),
+                subsection=parsed.get("subsection"),
+                clause=parsed.get("clause"),
+                provision_type="article"
+            )
+            if cid and cid not in seen:
+                seen.add(cid)
+                provisions.append((cid, act_code))
+
+    # 2. General clause scanning with full query context
+    # Mask 7/11 so it does not falsely trigger bare Section 11
+    clean_query_for_clauses = re.sub(r'\b7\s*[/\\-]\s*11\b', ' ', query)
+    clauses = re.split(r'[,;.\n]|\band\b', clean_query_for_clauses)
     clauses = [query] + clauses
 
     for clause in clauses:
         clause_clean = clause.strip()
-        if len(clause_clean) < 4:
+        if len(clause_clean) < 3:
             continue
-        parsed = parse_statutory_citation(clause_clean)
-        if parsed and parsed.get("is_valid"):
-            act_code = parsed.get("act_code") or context_act_code
-            if not act_code:
-                continue
+        parsed = parse_statutory_citation(clause_clean, context=query)
+        if parsed and parsed.get("is_valid") and parsed.get("act_code"):
+            act_code = parsed["act_code"]
             prov_type = parsed.get("provision_type", "section")
             primary_num = parsed.get("primary_num")
             rule_num = parsed.get("rule_num")
-
-            # Disambiguate PPC offence sections and CrPC procedural/bail sections
-            p_str = str(primary_num or "").lower().strip()
-            if act_code == "CRPC_1898" and p_str in ("405", "406", "408", "409", "415", "420", "489-f", "489f", "302", "376"):
-                if any(k in query_lower for k in ["ppc", "penal code", "409", "420", "breach of trust", "cheating"]):
-                    act_code = "PPC_1860"
-            elif act_code == "PPC_1860" and p_str in ("496", "497", "498", "498-a", "561-a", "561a"):
-                if any(k in query_lower for k in ["crpc", "criminal procedure", "bail", "quash"]):
-                    act_code = "CRPC_1898"
-
-            # CPC substantive sections only go up to 158
-            if act_code == "CPC_1908" and prov_type == "section" and primary_num and primary_num.isdigit() and int(primary_num) > 158:
-                continue
-
+            sub = parsed.get("subsection")
+            cl = parsed.get("clause")
             if primary_num or rule_num:
                 cid = generate_canonical_id(
                     act_code=act_code,
                     primary_num=primary_num or "",
+                    subsection=sub,
+                    clause=cl,
                     rule_num=rule_num,
                     provision_type=prov_type
                 )

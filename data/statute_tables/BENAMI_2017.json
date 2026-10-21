@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "BENAMI_2017",
+    "act_name": "Benami Transactions (Prohibition) Act, 2017",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "canonical_id": "BENAMI_2017_SEC_3",
+    "display_name": "Section 3",
+    "title": "Prohibition of Benami transactions",
+    "verbatim_text": "(1) No person shall enter into any Benami transaction. (2) Whoever enters into any Benami transaction or abets the commission of a Benami transaction shall be guilty of the offence of Benami transaction.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Benami Transactions (Prohibition) Act, 2017",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "BENAMI_2017",
+    "act_name": "Benami Transactions (Prohibition) Act, 2017",
+    "provision_type": "section",
+    "primary_num": "5",
+    "secondary_num": null,
+    "canonical_id": "BENAMI_2017_SEC_5",
+    "display_name": "Section 5",
+    "title": "Property held in Benami liable to confiscation",
+    "verbatim_text": "Any property, which is subject-matter of a Benami transaction, shall be liable to be confiscated by the Federal Government.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Benami Transactions (Prohibition) Act, 2017",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

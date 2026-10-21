@@ -1,0 +1,64 @@
+[
+  {
+    "act_code": "PUNJAB_CONSUMER_2005",
+    "act_name": "Punjab Consumer Protection Act, 2005",
+    "provision_type": "section",
+    "primary_num": "13",
+    "secondary_num": null,
+    "canonical_id": "PUNJAB_CONSUMER_2005_SEC_13",
+    "display_name": "Section 13",
+    "title": "Liability for defective products",
+    "verbatim_text": "The manufacturer of a product shall be liable to a consumer for damages proximately caused by a characteristic of the product that renders the product defective when such damage arose from a reasonably anticipated use of the product.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "punjab",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette / Lahore High Court / Pakistan Code, Punjab Consumer Protection Act, 2005",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "PUNJAB_CONSUMER_2005",
+    "act_name": "Punjab Consumer Protection Act, 2005",
+    "provision_type": "section",
+    "primary_num": "28",
+    "secondary_num": null,
+    "canonical_id": "PUNJAB_CONSUMER_2005_SEC_28",
+    "display_name": "Section 28",
+    "title": "Filing of claims before Consumer Court (15-Day Written Notice)",
+    "verbatim_text": "(1) A consumer who has suffered damage, or an authority on behalf of consumers, may file a claim before the Consumer Court having territorial jurisdiction: Provided that the consumer shall first give a written notice of fifteen days to the manufacturer or service provider.",
+    "provisos": [
+      "Provided that the consumer shall first give a written notice of fifteen days to the manufacturer or service provider."
+    ],
+    "explanations": [],
+    "jurisdiction": "punjab",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette / Lahore High Court / Pakistan Code, Punjab Consumer Protection Act, 2005",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

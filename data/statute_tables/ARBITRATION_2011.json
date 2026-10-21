@@ -1,0 +1,77 @@
+[
+  {
+    "act_code": "ARBITRATION_2011",
+    "act_name": "Recognition and Enforcement (Arbitration Agreements and Foreign Arbitral Awards) Act, 2011",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "canonical_id": "ARBITRATION_2011_SEC_3",
+    "display_name": "Section 3",
+    "title": "Jurisdiction of Court",
+    "verbatim_text": "Notwithstanding anything contained in any other law for the time being in force, the High Court shall have exclusive jurisdiction to hear and determine applications and matters under this Act.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act XVII of 2011",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "ARBITRATION_2011",
+    "act_name": "Recognition and Enforcement (Arbitration Agreements and Foreign Arbitral Awards) Act, 2011",
+    "provision_type": "section",
+    "primary_num": "4",
+    "secondary_num": null,
+    "canonical_id": "ARBITRATION_2011_SEC_4",
+    "display_name": "Section 4",
+    "title": "Enforcement of arbitration agreements",
+    "verbatim_text": "(1) A party to an arbitration agreement against whom legal proceedings have been brought in respect of a matter which is the subject of the agreement may apply to the court to stay the proceedings. (2) The Court shall refer the parties to arbitration unless it finds that the agreement is null and void, inoperative or incapable of being performed.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act XVII of 2011",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "ARBITRATION_2011",
+    "act_name": "Recognition and Enforcement (Arbitration Agreements and Foreign Arbitral Awards) Act, 2011",
+    "provision_type": "section",
+    "primary_num": "6",
+    "secondary_num": null,
+    "canonical_id": "ARBITRATION_2011_SEC_6",
+    "display_name": "Section 6",
+    "title": "Enforcement of foreign arbitral awards",
+    "verbatim_text": "(1) A foreign arbitral award shall be recognized and enforced in the same manner as a judgment or order of a High Court in Pakistan.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act XVII of 2011",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  }
+]

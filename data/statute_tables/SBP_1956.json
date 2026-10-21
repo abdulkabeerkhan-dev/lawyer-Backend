@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "SBP_1956",
+    "act_name": "State Bank of Pakistan Act, 1956 (Act XXXIII of 1956)",
+    "provision_type": "section",
+    "primary_num": "9A",
+    "secondary_num": null,
+    "canonical_id": "SBP_1956_SEC_9A",
+    "display_name": "Section 9A",
+    "title": "Monetary and Fiscal Policies Co-ordination and SBP Autonomy",
+    "verbatim_text": "The Bank shall be an autonomous body having the primary objective of maintaining domestic price stability, and without prejudice to price stability, supporting the economic policies of the Federal Government to foster development and fuller utilization of productive resources.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), State Bank of Pakistan Act, 1956 (Act XXXIII of 1956)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "SBP_1956",
+    "act_name": "State Bank of Pakistan Act, 1956 (Act XXXIII of 1956)",
+    "provision_type": "section",
+    "primary_num": "17",
+    "secondary_num": null,
+    "canonical_id": "SBP_1956_SEC_17",
+    "display_name": "Section 17",
+    "title": "Business which the Bank may transact",
+    "verbatim_text": "The Bank is authorized to carry on and transact several kinds of business, including the issuing of notes, acceptance of deposits from banks and Government, purchase and rediscount of bills of exchange, and regulation of credit and liquidity in the banking system.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), State Bank of Pakistan Act, 1956 (Act XXXIII of 1956)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

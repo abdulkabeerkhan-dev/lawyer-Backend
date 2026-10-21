@@ -45,6 +45,8 @@ class LegalQueryPlan(BaseModel):
     # Task 3.1 upgraded fields:
     forum_hierarchy: List[str] = Field(default_factory=list)
     employee_status_branching: Optional[Dict[str, Any]] = None
+    # Fix B: Query-premise checks
+    premise_corrections: List[Dict[str, Any]] = Field(default_factory=list)
 
 
 def resolve_jurisdiction_hierarchy(province: str) -> Tuple[List[str], List[str]]:
@@ -119,6 +121,57 @@ Output ONLY valid JSON matching this schema:
 """
 
 
+def check_query_premises(query: str) -> List[Dict[str, Any]]:
+    """
+    Extracts provisions and statutes from query and verifies them against the Pakistan statute store.
+    Returns structured premise checks for any confirmed absent, unverified, or existing provisions.
+    """
+    from legal_ai.statutes.statute_store import get_statute_store
+    store = get_statute_store()
+    extracted = store.extract_provisions_from_query(query)
+    checks: List[Dict[str, Any]] = []
+
+    for statute_hint, prov_str in extracted:
+        res = store.lookup(statute_hint, prov_str)
+        if res.status == "CONFIRMED_ABSENT":
+            checks.append({
+                "queried_statute": statute_hint,
+                "queried_provision": prov_str,
+                "status": "CONFIRMED_ABSENT",
+                "is_foreign": res.is_foreign_statute,
+                "pakistani_equivalent": res.pakistani_equivalent,
+                "explanation": res.explanation,
+                "mandatory_opening_thesis": (
+                    f"PREMISE CORRECTION: {prov_str} ({statute_hint}) does not apply in Pakistan. "
+                    f"{res.explanation} "
+                    f"Controlling Pakistani law: {res.pakistani_equivalent}."
+                ),
+                "schedule_ii": res.schedule_ii
+            })
+        elif res.status == "UNVERIFIED":
+            checks.append({
+                "queried_statute": statute_hint,
+                "queried_provision": prov_str,
+                "status": "UNVERIFIED",
+                "is_foreign": False,
+                "explanation": res.explanation,
+                "mandatory_opening_thesis": f"Verification status: Could not verify '{prov_str}' in database."
+            })
+        elif res.status == "EXISTS":
+            checks.append({
+                "queried_statute": statute_hint,
+                "queried_provision": prov_str,
+                "status": "EXISTS",
+                "canonical_id": res.canonical_id,
+                "display_name": res.display_name,
+                "title": res.title,
+                "text": res.text,
+                "schedule_ii": res.schedule_ii
+            })
+
+    return checks
+
+
 def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
     """
     Robust rule-based fallback if LLM planner fails or is unreachable.
@@ -127,6 +180,8 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
     q_low = query.lower()
     anchors = extract_positive_query_anchors(query)
     decomposed = decompose_compound_legal_query(query)
+    premise_checks = check_query_premises(query)
+    premise_corrections = [c for c in premise_checks if c["status"] in ("CONFIRMED_ABSENT", "UNVERIFIED")]
 
     # 1. Detect province
     province = "Federal"
@@ -146,6 +201,7 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
     # 2. Detect matter_type and domains
     domains = []
     matter_type = []
+    questions: List[str] = []
     if any(k in q_low for k in ["fir", "bail", "ppc", "crpc", "offence", "accused", "arrest", "police", "custody", "prosecute", "prosecution", "cheque", "dishonour", "dishonored", "bounced", "489"]):
         domains.append("criminal law")
         if "criminal" not in matter_type:
@@ -284,6 +340,61 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                 if not any(default_p.split()[1] in p for p in provisions):
                     provisions.append(default_p)
 
+    # Premise correction routing
+    for check in premise_checks:
+        if check["status"] == "CONFIRMED_ABSENT":
+            q_stat = str(check.get("queried_statute") or "")
+            q_prov = str(check.get("queried_provision") or "")
+            clean_sec = re.sub(r'[^0-9a-z]', '', q_prov.lower())
+            # Filter out absent provision from provisions list
+            provisions = [
+                p for p in provisions 
+                if not (q_prov.lower() == p.lower() or (clean_sec and clean_sec == re.sub(r'[^0-9a-z]', '', p.lower())))
+            ]
+            if "138" in q_prov and ("ni" in q_stat.lower() or "negotiable" in q_stat.lower() or "cheque" in q_low or "bounced" in q_low):
+                if not any("489-f" in p.lower() for p in provisions):
+                    provisions.append("Section 489-F PPC")
+                if not any("order xxxvii" in p.lower() for p in provisions):
+                    provisions.append("Order XXXVII Rule 2 CPC")
+                if not any("118" in p.lower() for p in provisions):
+                    provisions.append("Section 118 Negotiable Instruments Act, 1881")
+                if "Pakistan Penal Code, 1860" not in statutes:
+                    statutes.append("Pakistan Penal Code, 1860")
+                if "Code of Criminal Procedure, 1898" not in statutes:
+                    statutes.append("Code of Criminal Procedure, 1898")
+                if "Code of Civil Procedure, 1908" not in statutes:
+                    statutes.append("Code of Civil Procedure, 1908")
+                if "Negotiable Instruments Act, 1881" not in statutes:
+                    statutes.append("Negotiable Instruments Act, 1881")
+                if "cheque dishonour" not in domains:
+                    domains.append("cheque dishonour")
+                if "criminal" not in matter_type:
+                    matter_type.append("criminal")
+                forum = "Judicial Magistrate 1st Class (criminal) / District Judge (civil summary suit Order XXXVII)"
+                questions.append("criminal punishment for cheque dishonour under Section 489-F PPC (up to 3 years imprisonment or fine or both)")
+                questions.append("absence of Section 138 in Pakistan Negotiable Instruments Act 1881 and civil vs criminal remedies for bounced cheque")
+            elif "420" in q_prov and ("indian" in q_stat.lower() or "ipc" in q_stat.lower()):
+                if not any("420" in p.lower() and "ppc" in p.lower() for p in provisions):
+                    provisions.append("Section 420 PPC")
+                if not any("496" in p.lower() for p in provisions):
+                    provisions.append("Section 496 CrPC")
+                if "Pakistan Penal Code, 1860" not in statutes:
+                    statutes.append("Pakistan Penal Code, 1860")
+                if "Code of Criminal Procedure, 1898" not in statutes:
+                    statutes.append("Code of Criminal Procedure, 1898")
+                if "criminal" not in matter_type:
+                    matter_type.append("criminal")
+                forum = "Court of Session or Magistrate of the first class"
+            elif "2a" in q_prov.lower() or "2-a" in q_prov.lower() or ("cpc" in q_stat.lower() and "2" in q_prov.lower()):
+                if not any("rule 2(3)" in p.lower() for p in provisions):
+                    provisions.append("Order XXXIX Rule 2(3) CPC")
+                if "Code of Civil Procedure, 1908" not in statutes:
+                    statutes.append("Code of Civil Procedure, 1908")
+                if "civil" not in matter_type:
+                    matter_type.append("civil")
+                forum = "Civil Court / Court granting injunction"
+                questions.append("remedy for disobedience or breach of interim injunction under Order XXXIX Rule 2(3) CPC (attachment of property and detention in civil prison; 2006 YLR 2758)")
+
     forum_hierarchy = ["Civil Court", "District Judge", "High Court", "Supreme Court of Pakistan"]
     employee_status_branching = None
 
@@ -315,7 +426,6 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
             ]
         }
 
-    questions = []
     if any(k in q_low for k in ["civil", "criminal", "breach of trust", "loan"]):
         questions.append("civil dispute vs criminal breach of trust (dishonest intention at inception)")
     if any(k in q_low for k in ["409", "misappropriat"]) or ("director" in q_low and any(k in q_low for k in ["funds", "misappropriat", "breach of trust", "board", "shares", "fiduciary"])):
@@ -348,8 +458,16 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
             lane_name = "concurrent_civil_criminal_remedies"
         elif "rent" in dq_low or "eviction" in dq_low or "tenant" in dq_low or "prpa" in dq_low:
             lane_name = "rent_tribunal_eviction"
-        elif "489" in dq_low or "cheque" in dq_low or "bounced" in dq_low or "dishonour" in dq_low:
+        elif "489" in dq_low or "cheque" in dq_low or "bounced" in dq_low or "dishonour" in dq_low or "138" in dq_low:
             lane_name = "cheque_dishonour_489f"
+            # Anchor query to Pakistani Section 489-F PPC
+            dq = "Section 489-F PPC cheque dishonour bounced cheque ingredients punishment dishonest issuance"
+        elif "420" in dq_low and ("indian" in dq_low or "ipc" in dq_low):
+            lane_name = "cheating_fraud_420ppc"
+            dq = "Section 420 PPC cheating dishonestly inducing delivery of property ingredients punishment Schedule II"
+        elif "rule 2a" in dq_low or "rule 2-a" in dq_low or "rule 2(3)" in dq_low or "disobedience" in dq_low:
+            lane_name = "injunction_breach_rule_2_3"
+            dq = "Order XXXIX Rule 2(3) CPC disobedience breach of injunction stay order attachment of property detention in civil prison 2006 YLR 2758"
         elif "409" in dq_low or "breach of trust" in dq_low:
             lane_name = "offence_ingredients"
         elif "civil dispute" in dq_low or "dishonest intention" in dq_low:
@@ -361,6 +479,37 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         elif "injunction" in dq_low or "order xxxix" in dq_low:
             lane_name = "interim_injunction_remedy"
         lanes.append({"lane": lane_name, "query": dq})
+
+    # Add dedicated lanes if premise corrections were triggered
+    for check in premise_checks:
+        if check["status"] == "CONFIRMED_ABSENT" and "138" in str(check.get("queried_provision")):
+            if not any(l["lane"] == "cheque_dishonour_489f" for l in lanes):
+                lanes.insert(0, {
+                    "lane": "cheque_dishonour_489f",
+                    "query": "Section 489-F PPC dishonour of cheque ingredients punishment dishonest issuance"
+                })
+            if not any(l["lane"] == "cheque_civil_recovery" for l in lanes):
+                lanes.append({
+                    "lane": "cheque_civil_recovery",
+                    "query": "Order XXXVII Rule 2 CPC summary suit dishonoured cheque Section 118 NI Act presumption"
+                })
+        elif check["status"] == "CONFIRMED_ABSENT" and "420" in str(check.get("queried_provision")):
+            if not any(l["lane"] == "cheating_fraud_420ppc" for l in lanes):
+                lanes.insert(0, {
+                    "lane": "cheating_fraud_420ppc",
+                    "query": "Section 420 PPC cheating dishonestly inducing delivery of property ingredients punishment"
+                })
+            if not any(l["lane"] == "crpc_bail_schedule_ii" for l in lanes):
+                lanes.append({
+                    "lane": "crpc_bail_schedule_ii",
+                    "query": "Section 420 PPC Schedule II non-bailable cognizable Section 497 CrPC non-prohibitory clause bail as rule"
+                })
+        elif check["status"] == "CONFIRMED_ABSENT" and ("rule 2a" in str(check.get("queried_provision")).lower() or "rule 2-a" in str(check.get("queried_provision")).lower()):
+            if not any(l["lane"] == "injunction_breach_rule_2_3" for l in lanes):
+                lanes.insert(0, {
+                    "lane": "injunction_breach_rule_2_3",
+                    "query": "Order XXXIX Rule 2(3) CPC disobedience breach of injunction stay order attachment of property detention in civil prison 2006 YLR 2758"
+                })
 
     return LegalQueryPlan(
         legal_domain=domains,
@@ -378,7 +527,8 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         binding_courts=binding_courts,
         persuasive_courts=persuasive_courts,
         forum_hierarchy=forum_hierarchy,
-        employee_status_branching=employee_status_branching
+        employee_status_branching=employee_status_branching,
+        premise_corrections=premise_corrections
     )
 
 
@@ -418,10 +568,23 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> LegalQueryPlan:
                     provisions.append(p_str)
 
                 fallback = create_deterministic_fallback_plan(query)
+                premise_corrections = fallback.premise_corrections
+
+                # If premise corrections exist, ensure absent provisions are scrubbed and replaced with Pakistani equivalents
+                if premise_corrections:
+                    for pc in premise_corrections:
+                        if pc.get("status") == "CONFIRMED_ABSENT":
+                            absent_p = str(pc.get("queried_provision") or "").lower()
+                            provisions = [p for p in provisions if absent_p not in p.lower()]
+                            for fp in fallback.provisions:
+                                if fp not in provisions:
+                                    provisions.append(fp)
+                            search_lanes = fallback.search_lanes
+
                 if not provisions:
                     provisions = fallback.provisions
 
-                search_lanes = data.get("search_lanes", [])
+                search_lanes = search_lanes or data.get("search_lanes", [])
                 if not search_lanes:
                     search_lanes = fallback.search_lanes
 
@@ -444,7 +607,10 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> LegalQueryPlan:
                     governing_statutes=data.get("governing_statutes") or fallback.governing_statutes,
                     issues=issues,
                     binding_courts=binding_courts,
-                    persuasive_courts=persuasive_courts
+                    persuasive_courts=persuasive_courts,
+                    forum_hierarchy=fallback.forum_hierarchy,
+                    employee_status_branching=fallback.employee_status_branching,
+                    premise_corrections=premise_corrections
                 )
         except Exception:
             # Fallback cleanly without stopping execution

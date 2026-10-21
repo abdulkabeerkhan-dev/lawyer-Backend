@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "POLICE_ORDER_2002",
+    "act_name": "Police Order, 2002",
+    "provision_type": "article",
+    "primary_num": "18",
+    "secondary_num": null,
+    "canonical_id": "POLICE_ORDER_2002_ART_18",
+    "display_name": "Article 18",
+    "title": "Separation of Investigation from Operation",
+    "verbatim_text": "(1) There shall be a separate investigation staff in each district headed by an officer of appropriate rank. (2) The investigation staff shall not be diverted to any other duties except under the written permission of the Provincial Police Officer.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Police Order, 2002",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "POLICE_ORDER_2002",
+    "act_name": "Police Order, 2002",
+    "provision_type": "article",
+    "primary_num": "155",
+    "secondary_num": null,
+    "canonical_id": "POLICE_ORDER_2002_ART_155",
+    "display_name": "Article 155",
+    "title": "Penalty for vexatious entry, search, arrest, seizure of property, torturing, etc.",
+    "verbatim_text": "Any police officer who: (a) without lawful authority vexatiously searches or arrests any person; (b) vexatiously seizes the property of any person; or (c) inflicts torture on any person in his custody, shall be punished with imprisonment for a term which may extend to five years, and with fine.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Police Order, 2002",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

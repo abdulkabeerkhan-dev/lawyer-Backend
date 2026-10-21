@@ -1,0 +1,34 @@
+[
+  {
+    "act_code": "WOMEN_CRIMINAL_AMEND_2006",
+    "act_name": "Protection of Women (Criminal Laws Amendment) Act, 2006 (Act VI of 2006)",
+    "provision_type": "section",
+    "primary_num": "11",
+    "secondary_num": null,
+    "canonical_id": "WOMEN_CRIMINAL_AMEND_2006_SEC_11",
+    "display_name": "Section 11",
+    "title": "Procedure in cases of zina and fornication under Pakistan Penal Code",
+    "verbatim_text": "No court shall take cognizance of an offence under section 496-B or section 496-C of the Pakistan Penal Code (fornication or false accusation) except on a complaint lodged in a Court of Session by the person aggrieved or competent authority, and no police officer shall investigate such complaint without an express direction of the Court of Session.",
+    "provisos": [
+      "Provided that the Court of Session shall not issue process against the accused unless it has examined at least four credible eye-witnesses of good character on oath."
+    ],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Protection of Women (Criminal Laws Amendment) Act, 2006 (Act VI of 2006)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

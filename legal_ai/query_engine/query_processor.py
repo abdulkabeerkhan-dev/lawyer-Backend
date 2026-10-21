@@ -36,6 +36,7 @@ from legal_ai.verification import (
     detect_topics,
     build_pre_synthesis_trap_instructions,
     audit_memo,
+    verify_and_scrub_memo_claims,
 )
 from legal_ai.synthesis.memorandum_generator import (
     purge_debug_warnings,
@@ -261,12 +262,15 @@ async def process_query_job_legal_ai(
     )
 
     # Phase 3 Stage 2 Candidate Relevance Gating and Reranking Engine (SHADOW MODE)
-    from legal_ai.ranking.shadow_reranker import evaluate_candidate_relevance_shadow
-    shadow_candidates, shadow_rerank_stats = evaluate_candidate_relevance_shadow(
-        candidates=clean_candidates,
-        query_plan=legal_query_plan,
-        query_text=effective_user_query
-    )
+    try:
+        from legal_ai.ranking.shadow_reranker import evaluate_candidate_relevance_shadow
+        shadow_candidates, shadow_rerank_stats = evaluate_candidate_relevance_shadow(
+            candidates=clean_candidates,
+            query_plan=legal_query_plan,
+            query_text=effective_user_query
+        )
+    except (ImportError, ModuleNotFoundError):
+        shadow_candidates, shadow_rerank_stats = clean_candidates, {}
 
     detected_topics = detect_topics(effective_user_query)
     admitted_candidates, rejected_by_topic, abstain_topics = filter_topic_relevance(
@@ -342,12 +346,24 @@ async def process_query_job_legal_ai(
     synthesis_mode = os.environ.get("SYNTHESIS_MODE", "judgment_first").lower()
     requests_strategy = query_requests_strategy(effective_user_query)
 
+    current_system_date = datetime.now(timezone.utc).strftime("%d %B %Y")
+    premise_directives = ""
+    premise_corrections = getattr(legal_query_plan, "premise_corrections", []) if legal_query_plan else []
+    if premise_corrections:
+        pc_lines = ["MANDATORY PREMISE CORRECTION DIRECTIVE:"]
+        for pc in premise_corrections:
+            pc_lines.append(f"- {pc.get('mandatory_opening_thesis')}")
+        pc_lines.append("You MUST open Section 1 with this explicit premise correction.\n")
+        premise_directives = "\n".join(pc_lines)
+
     if synthesis_mode == "senior_counsel":
         user_synthesis_content = (
             f"FACTUAL MATRIX / LEGAL QUERY:\n{effective_user_query}\n\n"
+            f"CURRENT SYSTEM DATE: {current_system_date}\n\n"
             f"STATUTORY & CURRENT LAW FRAMEWORK:\n{formatted_current_law_block}\n\n"
             f"{precedent_context_block}\n\n"
             f"{trap_instructions}\n\n"
+            f"{premise_directives}\n\n"
             "Draft the exhaustive, authoritative 8-part Senior Counsel legal opinion addressing this query.\n\n"
             "MANDATORY PACING & STRUCTURE INSTRUCTIONS:\n"
             "1. TOTAL WORD BUDGET: The entire memorandum should be between 2,500 and 3,500 words across all 8 sections (approx 300-400 words per section). Keep analysis crisp, incisive, and authoritative so that you never exhaust the token window before concluding.\n"
@@ -367,7 +383,13 @@ async def process_query_job_legal_ai(
             "   - STRICT RATIO GROUNDING: Every citing sentence MUST strictly reflect what the cited case actually decided as set forth in 'Holding / Ratio' and 'Key Paragraphs'. Do NOT extrapolate beyond the exact legal proposition decided.\n"
             "   - RESPECT NEGATIVE BOUNDARIES: Strictly adhere to 'Negative Boundary (What this case does NOT decide)'—never claim an authority decided matters outside its holding, never convert a leave grant into an automatic decree, and do NOT add statutory durations or penalties not affirmed in the ratio.\n"
             "   - NO BARE STRING-CITATIONS: Never cite a precedent as part of an ungrounded string-citation without substantive doctrinal engagement in the narrative.\n"
-            "6. ZERO DISCLAIMER POLLUTION: Do not include prototype tags, [NOT CHECKED], or verification disclaimers in substantive sections."
+            "6. STRICT PROHIBITION ON ARTIFICIAL CERTIFICATIONS & FAKE METADATA:\n"
+            "   - NEVER append 'Counsel's Certification', 'Prepared by Senior Counsel', '[Current Date]', 'Word Count: ...', or 'All 8 Sections Completed'.\n"
+            "   - Output substantive legal analysis only; conclude Section 8 cleanly without appending any signatory or certification metadata.\n"
+            "7. STRICT RULE ON SPECIFIC PROPOSITION QUERIES:\n"
+            "   - When the user asks 'Cite the judgment holding [X]', if none of the retrieved precedents squarely decides X, you MUST state: 'I did not find a case that squarely holds this. The closest decisions are: [A, B] but note their limits: [why they do not reach X].'\n"
+            "   - Banned unless grounded: 'definitively held', 'landmark authority', 'settled landmark precedent'.\n"
+            "8. ZERO DISCLAIMER POLLUTION: Do not include prototype tags, [NOT CHECKED], or verification disclaimers in substantive sections."
         )
     else:
         # Default: Judgment-First Mode
@@ -452,7 +474,7 @@ async def process_query_job_legal_ai(
             "## Legal Issue\n"
             "[One or two sentences stating the exact legal issue]\n\n"
             "## Relevant Provisions\n"
-            "[If statutory text is unavailable in retrieved sources, insert: > Statutory text unavailable in retrieved sources. The analysis is based only on judicial references.]\n"
+            "[If bare-act text is provided in the STATUTORY & CURRENT LAW FRAMEWORK above, cite and extract the provisions directly without stating that statutory text is unavailable. ONLY if statutory text was completely unavailable in the framework, insert: > Statutory text unavailable in retrieved sources. The analysis is based only on judicial references.]\n"
             "- [Act/Statute name] — [Section number]: [Short explanation]\n\n"
             "## Judicial Authorities\n"
             "### [Case Name] — [Citation]\n"
@@ -507,6 +529,15 @@ async def process_query_job_legal_ai(
 
     clean_answer = purge_debug_warnings(raw_answer)
 
+    # Claim-to-source verification and scrubbing pass
+    claim_verification = verify_and_scrub_memo_claims(
+        clean_answer,
+        retrieved_precedents=precedent_cards,
+        statutory_context=formatted_current_law_block,
+        query_text=effective_user_query
+    )
+    clean_answer = claim_verification.cleaned_text
+
     # Enforce holding attribution (Court held vs The judgment record indicates)
     clean_answer = enforce_holding_attribution(clean_answer, cards=precedent_cards)
 
@@ -534,6 +565,10 @@ async def process_query_job_legal_ai(
     if audit_report.body and audit_report.body != clean_answer:
         clean_answer = audit_report.body
     verification_report_payload = audit_report.to_dict()
+    verification_report_payload["claim_verification"] = {
+        "violations": claim_verification.violations,
+        "verified_claims": claim_verification.verified_claims
+    }
     verification_report_payload["shadow_rerank_stats"] = shadow_rerank_stats
     verification_report_payload["issue_abstention_flags"] = shadow_rerank_stats.get("issue_abstention_flags", {})
 

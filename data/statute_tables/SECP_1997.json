@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "SECP_1997",
+    "act_name": "Securities and Exchange Commission of Pakistan Act, 1997 (Act XLII of 1997)",
+    "provision_type": "section",
+    "primary_num": "20",
+    "secondary_num": null,
+    "canonical_id": "SECP_1997_SEC_20",
+    "display_name": "Section 20",
+    "title": "Functions and powers of the Commission",
+    "verbatim_text": "The Commission shall have all powers and functions necessary to regulate corporate affairs, capital markets, securities exchanges, insurance companies, non-banking finance companies, and modarabas, and to protect the interest of investors.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Securities and Exchange Commission of Pakistan Act, 1997 (Act XLII of 1997)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "SECP_1997",
+    "act_name": "Securities and Exchange Commission of Pakistan Act, 1997 (Act XLII of 1997)",
+    "provision_type": "section",
+    "primary_num": "33",
+    "secondary_num": null,
+    "canonical_id": "SECP_1997_SEC_33",
+    "display_name": "Section 33",
+    "title": "Investigation and prosecution by Commission",
+    "verbatim_text": "Where the Commission has reason to believe that any person has committed a contravention of this Act or any administered legislation or is engaged in insider trading, market abuse or corporate fraud, the Commission may appoint an investigating officer to conduct an investigation and exercise powers of search, seizure and summoning of witnesses.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Securities and Exchange Commission of Pakistan Act, 1997 (Act XLII of 1997)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

@@ -39,6 +39,7 @@ ACT_PRETTY_NAMES: Dict[str, str] = {
     "SRA_1877": "Specific Relief Act, 1877",
     "REGISTRATION_1908": "Registration Act, 1908",
     "TPA_1882": "Transfer of Property Act, 1882",
+    "NI_ACT_1881": "Negotiable Instruments Act, 1881",
 }
 
 
@@ -116,8 +117,17 @@ class StatuteInjector:
                 ord_val = m_ord.group(1).upper()
                 r_val = m_ord.group(2)
                 if r_val:
+                    if ord_val == "XXXIX" and r_val.upper() in ("2A", "2-A"):
+                        # In Pakistan, disobedience is Order XXXIX Rule 2(3) CPC (2006 YLR 2758)
+                        return act_code, "CPC_1908_ORD_XXXIX_R_2_SR_3", "Order XXXIX Rule 2(3), Code of Civil Procedure, 1908 (disobedience / breach of injunction)"
+                    m_sub = re.match(r'(\d+[a-z]?)\s*\(([0-9a-z]+)\)', r_val, re.I)
+                    if m_sub:
+                        r_main = m_sub.group(1).upper()
+                        r_sub = m_sub.group(2).upper()
+                        return act_code, f"{act_code}_ORD_{ord_val}_R_{r_main}_SR_{r_sub}", f"Order {ord_val} Rule {r_val}, Code of Civil Procedure, 1908"
                     r_clean = re.sub(r'[\(\)]', '', r_val).upper()
-                    return act_code, f"{act_code}_ORD_{ord_val}_R_{r_clean}", f"Order {ord_val} Rule {r_val}, Code of Civil Procedure, 1908"
+                    r_disp = r_val.upper()
+                    return act_code, f"{act_code}_ORD_{ord_val}_R_{r_clean}", f"Order {ord_val} Rule {r_disp}, Code of Civil Procedure, 1908"
                 return act_code, f"{act_code}_ORD_{ord_val}", f"Order {ord_val}, Code of Civil Procedure, 1908"
             m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
             if m_sec:
@@ -182,6 +192,14 @@ class StatuteInjector:
                 art_num = m_art.group(1).upper()
                 return act_code, f"{act_code}_ART_{art_num}", f"Article {art_num}, Constitution of Pakistan, 1973"
 
+        # 10. Negotiable Instruments Act 1881
+        if "negotiable" in p_low or "ni act" in p_low:
+            act_code = "NI_ACT_1881"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Negotiable Instruments Act, 1881"
+
         # Default fallback
         m_num = re.search(r'\b(\d+[a-z]?)\b', p_clean)
         num_str = m_num.group(1).upper() if m_num else "UNKNOWN"
@@ -219,6 +237,9 @@ class StatuteInjector:
                 "token_estimate": 0
             }
 
+        from legal_ai.statutes.statute_store import get_statute_store
+        store = get_statute_store()
+
         # Gather target provisions
         target_provisions: List[str] = []
         if query_plan:
@@ -240,15 +261,17 @@ class StatuteInjector:
                 if not any(m.split()[1] in p for p in target_provisions):
                     target_provisions.append(m)
 
-        if any(k in q_comb for k in ["injunction", "order xxxix", "o.xxxix", "o.39"]):
+        if any(k in q_comb for k in ["injunction", "order xxxix", "o.xxxix", "o.39", "stay order", "disobedience", "breach of injunction"]):
             mandatory_inj = [
                 "Order XXXIX Rule 1 CPC",
                 "Order XXXIX Rule 2 CPC",
+                "Order XXXIX Rule 2(3) CPC",
                 "Order XLIII Rule 1(r) CPC",
                 "Section 115 CPC"
             ]
             for m in mandatory_inj:
-                if not any(m.split()[1] in p for p in target_provisions):
+                m_short = m.split()[-2] + " " + m.split()[-1] if len(m.split()) >= 3 else m
+                if not any(m_short.lower() in p.lower() for p in target_provisions):
                     target_provisions.append(m)
 
         if any(k in q_comb for k in ["rent", "tenant", "landlord", "eviction", "prpa"]):
@@ -262,19 +285,79 @@ class StatuteInjector:
                     if not any(m.split()[1] in p for p in target_provisions):
                         target_provisions.append(m)
 
-        if any(k in q_comb for k in ["cheque", "bounced", "dishonour", "dishonored", "489-f", "489f"]):
+        if any(k in q_comb for k in ["cheque", "bounced", "dishonour", "dishonored", "489-f", "489f", "138"]):
             mandatory_cheque = [
-                "Section 489-F PPC"
+                "Section 489-F PPC",
+                "Order XXXVII Rule 2 CPC",
+                "Section 118 Negotiable Instruments Act, 1881"
             ]
             for m in mandatory_cheque:
-                if not any("489" in p for p in target_provisions):
+                if not any(m.split()[1].lower() in p.lower() for p in target_provisions):
+                    target_provisions.append(m)
+
+        if any(k in q_comb for k in ["cheating", "fraud", "420"]):
+            mandatory_fraud = [
+                "Section 420 PPC",
+                "Section 497 CrPC"
+            ]
+            for m in mandatory_fraud:
+                if not any(m.split()[1].lower() in p.lower() for p in target_provisions):
+                    target_provisions.append(m)
+
+        if any(k in q_comb for k in ["breach of trust", "406", "criminal breach"]):
+            mandatory_cbt = [
+                "Section 405 PPC",
+                "Section 406 PPC",
+                "Section 497 CrPC",
+                "Section 498 CrPC"
+            ]
+            for m in mandatory_cbt:
+                if not any(m.split()[1].lower() in p.lower() for p in target_provisions):
+                    target_provisions.append(m)
+
+        if any(k in q_comb for k in ["specific performance", "specific relief", "agreement to sell"]):
+            mandatory_sra = [
+                "Section 12 Specific Relief Act",
+                "Section 22 Specific Relief Act",
+                "Section 24 Specific Relief Act",
+                "Section 27 Specific Relief Act",
+                "Article 113 Limitation Act"
+            ]
+            for m in mandatory_sra:
+                if not any(m.split()[1].lower() in p.lower() for p in target_provisions):
+                    target_provisions.append(m)
+
+        if any(k in q_comb for k in ["promissory note", "promissory", "negotiable instrument"]) and any(k in q_comb for k in ["limitation", "period", "suit"]):
+            mandatory_pn = [
+                "Article 73 Limitation Act",
+                "Article 80 Limitation Act",
+                "Article 64A Limitation Act",
+                "Section 4 Negotiable Instruments Act, 1881",
+                "Section 19 Negotiable Instruments Act, 1881"
+            ]
+            for m in mandatory_pn:
+                if not any(m.split()[1].lower() in p.lower() for p in target_provisions):
                     target_provisions.append(m)
 
         lines: List[str] = [
             "### STATUTORY FRAMEWORK & VERIFIED BARE-ACT PROVISIONS ON RECORD:\n",
             "CRITICAL INSTRUCTION: You may quote bare-act statutory language ONLY for provisions containing verbatim text below.",
-            "If a provision displays '[NOT_RETRIEVED: do not quote or describe]', you MUST NOT fabricate, quote, or paraphrase statutory text from memory.\n"
+            "If a provision displays '[Statutory text not found in verified database]', you MUST NOT fabricate, quote, or paraphrase statutory text from memory.",
+            "You MUST output '[Statutory text not found in verified database]' under Section 2 instead.\n"
         ]
+
+        # Check for premise corrections from query plan
+        premise_corrections = getattr(query_plan, "premise_corrections", []) if query_plan else []
+        if premise_corrections:
+            lines.append("### MANDATORY QUERY PREMISE CORRECTIONS:")
+            for pc in premise_corrections:
+                lines.append(f"- Query Premise Correction: {pc.get('mandatory_opening_thesis')}")
+                if pc.get('explanation'):
+                    lines.append(f"  Explanation: {pc.get('explanation')}")
+                if pc.get('schedule_ii'):
+                    sch = pc['schedule_ii']
+                    lines.append(f"  Cr.P.C. Schedule II: Cognizable={sch.get('cognizable')}, Bail={sch.get('bailable_status')}, Punishment={sch.get('punishment')}")
+            lines.append("CRITICAL: You MUST open the Executive Summary / Legal Issue section with this explicit premise correction.\n")
 
         seen_cids: Set[str] = set()
         injected: List[str] = []
@@ -306,14 +389,34 @@ class StatuteInjector:
             if title:
                 lines.append(f"Subject / Title: {title}")
 
+            # Schedule II injection for PPC offences
+            if act_code == "PPC_1860":
+                m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?(?:-[a-z])?)\b', display_name, re.I)
+                sec_token = m_sec.group(1).upper() if m_sec else ""
+                sched = store.get_schedule_ii(sec_token)
+                if sched:
+                    lines.append("Cr.P.C. Schedule II Classification:")
+                    lines.append(f"- Offence: {sched.get('offence')}")
+                    lines.append(f"- Police Powers: {sched.get('police_arrest')} ({'Cognizable' if sched.get('cognizable') else 'Non-cognizable'})")
+                    if sched.get('bailable'):
+                        bail_expl = "Bailable as of right under Section 496 Cr.P.C."
+                    elif sched.get('max_imprisonment_years', 0) >= 10:
+                        bail_expl = "Non-bailable (within prohibitory clause of Section 497 Cr.P.C.: bail may not be granted except under statutory provisos)"
+                    else:
+                        bail_expl = "Non-bailable (falls outside prohibitory clause of Section 497 Cr.P.C.: grant of bail is rule and refusal exception per Hakeem v. State 2026 SCMR 792 and Tariq Bashir PLD 1995 SC 34)"
+                    lines.append(f"- Bailable Status: {sched.get('bailable_status')} [Cr.P.C. Schedule II Column 5: {sched.get('schedule_ii_column_5', sched.get('bailable_status'))}] ({bail_expl})")
+                    lines.append(f"- Compoundable: {sched.get('compoundable')}")
+                    lines.append(f"- Punishment: {sched.get('punishment')}")
+                    lines.append(f"- Trial Forum: {sched.get('triable_by')}")
+
             if raw_text and len(raw_text) > 10:
                 with_text.append(display_name)
                 lines.append("Verbatim Bare-Act Text in Force:")
                 lines.append(f'"{raw_text}"\n')
             else:
                 not_retrieved.append(display_name)
-                lines.append("Verbatim Bare-Act Text: [NOT_RETRIEVED: do not quote or describe]")
-                lines.append("Note: Official bare-act text is not loaded in primary local stores. Do not draft, quote, or invent statutory language from memory.\n")
+                lines.append("Verbatim Bare-Act Text: [Statutory text not found in verified database]")
+                lines.append("Note: Official bare-act text is not loaded in primary local stores. You must output '[Statutory text not found in verified database]' under Section 2 instead of drafting, quoting, or inventing statutory language from memory.\n")
 
         full_block = "\n".join(lines)
         token_est = len(full_block) // 4

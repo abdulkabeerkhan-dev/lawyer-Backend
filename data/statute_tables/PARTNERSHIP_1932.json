@@ -1,0 +1,52 @@
+[
+  {
+    "act_code": "PARTNERSHIP_1932",
+    "act_name": "Partnership Act, 1932",
+    "provision_type": "section",
+    "primary_num": "4",
+    "secondary_num": null,
+    "canonical_id": "PARTNERSHIP_1932_SEC_4",
+    "display_name": "Section 4",
+    "title": "Definition of 'Partnership', 'partner', 'firm' and 'firm name'",
+    "verbatim_text": "'Partnership' is the relation between persons who have agreed to share the profits of a business carried on by all or any of them acting for all. Persons who have entered into partnership with one another are called individually 'partners' and collectively 'a firm', and the name under which their business is carried on is called the 'firm name'.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act IX of 1932",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "PARTNERSHIP_1932",
+    "act_name": "Partnership Act, 1932",
+    "provision_type": "section",
+    "primary_num": "69",
+    "secondary_num": null,
+    "canonical_id": "PARTNERSHIP_1932_SEC_69",
+    "display_name": "Section 69",
+    "title": "Effect of non-registration",
+    "verbatim_text": "(1) No suit to enforce a right arising from a contract or conferred by this Act shall be instituted in any Court by or on behalf of any person suing as a partner in a firm against the firm or any person alleged to be or to have been a partner in the firm unless the firm is registered and the person suing is or has been shown in the Register of Firms as a partner in the firm.\n(2) No suit to enforce a right arising from a contract shall be instituted in any Court by or on behalf of a firm against any third party unless the firm is registered and the persons suing are or have been shown in the Register of Firms as partners in the firm.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act IX of 1932",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  }
+]

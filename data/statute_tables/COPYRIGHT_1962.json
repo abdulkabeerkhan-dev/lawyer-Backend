@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "COPYRIGHT_1962",
+    "act_name": "Copyright Ordinance, 1962",
+    "provision_type": "section",
+    "primary_num": "56",
+    "secondary_num": null,
+    "canonical_id": "COPYRIGHT_1962_SEC_56",
+    "display_name": "Section 56",
+    "title": "When copyright infringed",
+    "verbatim_text": "Copyright in a work shall be deemed to be infringed: (a) when any person, without a licence granted by the owner of the copyright or the Registrar under this Ordinance or in contravention of the conditions of a licence so granted or of any condition imposed by a competent authority under this Ordinance: (i) does anything, the sole right to do which is by this Ordinance conferred upon the owner of the copyright.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Copyright Ordinance, 1962",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "COPYRIGHT_1962",
+    "act_name": "Copyright Ordinance, 1962",
+    "provision_type": "section",
+    "primary_num": "60",
+    "secondary_num": null,
+    "canonical_id": "COPYRIGHT_1962_SEC_60",
+    "display_name": "Section 60",
+    "title": "Civil remedies for infringement of copyright",
+    "verbatim_text": "(1) Where copyright in any work has been infringed, the owner of the copyright shall, except as otherwise provided by this Ordinance, be entitled to all such remedies by way of injunction, damages, accounts and otherwise as are or may be conferred by law for the infringement of a right.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Copyright Ordinance, 1962",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "BANKING_COMPANIES_1962",
+    "act_name": "Banking Companies Ordinance, 1962",
+    "provision_type": "section",
+    "primary_num": "7",
+    "secondary_num": null,
+    "canonical_id": "BANKING_COMPANIES_1962_SEC_7",
+    "display_name": "Section 7",
+    "title": "Forms of business in which banking companies may engage",
+    "verbatim_text": "(1) In addition to the business of banking, a banking company may engage in any one or more of the following forms of business, namely: (a) borrowing, raising or taking up of money; lending or advancing of money; (b) acting as agents for any Government or local authority or any other person; (c) contracting for public and private loans and negotiating and issuing the same.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Banking Companies Ordinance, 1962",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "BANKING_COMPANIES_1962",
+    "act_name": "Banking Companies Ordinance, 1962",
+    "provision_type": "section",
+    "primary_num": "83",
+    "secondary_num": null,
+    "canonical_id": "BANKING_COMPANIES_1962_SEC_83",
+    "display_name": "Section 83",
+    "title": "Penalties for contravention of Banking Companies Ordinance",
+    "verbatim_text": "(1) Whoever in any return, balance-sheet or other document or in any information required or furnished by or under or for the purposes of any provision of this Ordinance, wilfully makes a statement which is false in any material particular, knowing it to be false, or wilfully omits to make a material statement, shall be punishable with imprisonment for a term which may extend to three years and shall also be liable to fine.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Banking Companies Ordinance, 1962",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

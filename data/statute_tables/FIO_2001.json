@@ -8,6 +8,10 @@
     "canonical_id": "FIO_2001_SEC_1",
     "display_name": "Section 1",
     "title": "Short title, extent and commencement",
+    "verbatim_text": "(1) This Ordinance may be called the Financial Institutions (Recovery of Finances) Ordinance, 2001. (2) It extends to the whole of Pakistan. (3) It shall come into force at once.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",
@@ -16,8 +20,9 @@
       "balochistan": "in_force"
     },
     "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance No. XLVI of 2001; https://pakistancode.gov.pk/pdffiles/administratorcf20efcd7f792c08850503359c31ce76.pdf",
-    "source_verified_date": null
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
   },
   {
     "act_code": "FIO_2001",
@@ -28,6 +33,10 @@
     "canonical_id": "FIO_2001_SEC_2",
     "display_name": "Section 2",
     "title": "Definitions",
+    "verbatim_text": "In this Ordinance, unless there is anything repugnant in the subject or context: (a) 'Banking Court' means a Court established under section 4; (c) 'customer' means a person to whom finance has been extended by a financial institution; (d) 'finance' includes an accommodation or facility provided on the basis of participation in profit and loss, mark-up, lease, hire-purchase, or loan; (e) 'financial institution' means any bank or development finance institution; (f) 'obligation' includes any agreement, undertaking or liability to pay money or repay finance.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",
@@ -36,8 +45,59 @@
       "balochistan": "in_force"
     },
     "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance No. XLVI of 2001; https://pakistancode.gov.pk/pdffiles/administratorcf20efcd7f792c08850503359c31ce76.pdf",
-    "source_verified_date": null
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_3",
+    "display_name": "Section 3",
+    "title": "Duty of a customer",
+    "verbatim_text": "(1) It shall be the duty of a customer to fulfil all his obligations to the financial institution as per terms agreed upon.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "4",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_4",
+    "display_name": "Section 4",
+    "title": "Establishment of Banking Court",
+    "verbatim_text": "(1) The Federal Government may, by notification in the official Gazette, establish as many Banking Courts as it considers necessary to exercise jurisdiction under this Ordinance.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
   },
   {
     "act_code": "FIO_2001",
@@ -47,7 +107,11 @@
     "secondary_num": null,
     "canonical_id": "FIO_2001_SEC_7",
     "display_name": "Section 7",
-    "title": "Powers of Banking Court",
+    "title": "Powers of Banking Courts",
+    "verbatim_text": "(1) Subject to the provisions of this Ordinance, a Banking Court shall in the exercise of its civil jurisdiction have all the powers vested in a Civil Court under the Code of Civil Procedure, 1908.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",
@@ -56,8 +120,34 @@
       "balochistan": "in_force"
     },
     "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance No. XLVI of 2001; https://pakistancode.gov.pk/pdffiles/administratorcf20efcd7f792c08850503359c31ce76.pdf",
-    "source_verified_date": null
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "8",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_8",
+    "display_name": "Section 8",
+    "title": "Suit for recovery of written off finances",
+    "verbatim_text": "(1) Where any finance has been written off by a financial institution, a suit for recovery may be instituted under this section within the prescribed period.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
   },
   {
     "act_code": "FIO_2001",
@@ -68,6 +158,10 @@
     "canonical_id": "FIO_2001_SEC_9",
     "display_name": "Section 9",
     "title": "Procedure of Banking Court",
+    "verbatim_text": "(1) Where a customer or a financial institution commits a default in fulfillment of any obligation, the financial institution or, as the case may be, the customer, may institute a suit in the Banking Court by presenting a plaint which shall be verified on oath.\n(2) The plaint shall be supported by a statement of account verified on oath in terms of the Bankers' Books Evidence Act, 1891.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",
@@ -76,8 +170,9 @@
       "balochistan": "in_force"
     },
     "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance No. XLVI of 2001; https://pakistancode.gov.pk/pdffiles/administratorcf20efcd7f792c08850503359c31ce76.pdf",
-    "source_verified_date": null
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
   },
   {
     "act_code": "FIO_2001",
@@ -88,6 +183,10 @@
     "canonical_id": "FIO_2001_SEC_10",
     "display_name": "Section 10",
     "title": "Leave to defend",
+    "verbatim_text": "(1) The defendant shall not be entitled to defend the suit unless he applies for and obtains leave from the Banking Court as hereinafter provided.\n(2) The application for leave to defend shall be filed within thirty days of the date of first service by any of the prescribed modes.\n(3) The application for leave to defend shall be in the form of a written statement verified on oath and shall state the specific amount of finance availed, repayments made, and the exact amount disputed.\n(4) If the defendant fails to file an application for leave to defend within thirty days, the Banking Court shall pass a decree forthwith.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",
@@ -96,8 +195,109 @@
       "balochistan": "in_force"
     },
     "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance No. XLVI of 2001; https://pakistancode.gov.pk/pdffiles/administratorcf20efcd7f792c08850503359c31ce76.pdf",
-    "source_verified_date": null
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "11",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_11",
+    "display_name": "Section 11",
+    "title": "Judgment on refusal to grant leave",
+    "verbatim_text": "Where the Banking Court refuses to grant leave to defend or the defendant fails to comply with the condition on which leave was granted, the Court shall forthwith pass a decree in favor of the plaintiff.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "12",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_12",
+    "display_name": "Section 12",
+    "title": "Interim Decree",
+    "verbatim_text": "(1) If the Banking Court is of the opinion that the dispute between the parties pertains only to a part of the claim, it shall immediately pass an interim decree in respect of that part of the claim which is admitted or indisputable.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "13",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_13",
+    "display_name": "Section 13",
+    "title": "Power to set aside ex-parte decree",
+    "verbatim_text": "In any case in which a decree is passed against a defendant who failed to apply for leave to defend, the Banking Court may set aside the decree on an application filed within twenty-one days if special reasons are shown.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "14",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_14",
+    "display_name": "Section 14",
+    "title": "Disposal of suit",
+    "verbatim_text": "A suit in the Banking Court shall be disposed of expeditiously and preferably within ninety days from the date of filing of the plaint.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
   },
   {
     "act_code": "FIO_2001",
@@ -107,7 +307,11 @@
     "secondary_num": null,
     "canonical_id": "FIO_2001_SEC_15",
     "display_name": "Section 15",
-    "title": "Sale of mortgaged property without intervention of court",
+    "title": "Sale of mortgaged property without intervention of Court",
+    "verbatim_text": "(1) In this section, 'mortgaged property' means any immoveable property mortgaged by a customer or mortgagor in favour of a financial institution as security for finance.\n(2) Where a customer commits default, the financial institution may send three notices demanding payment and upon non-compliance, proceed to sell the mortgaged property by public auction without intervention of court.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",
@@ -116,8 +320,84 @@
       "balochistan": "in_force"
     },
     "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance No. XLVI of 2001; https://pakistancode.gov.pk/pdffiles/administratorcf20efcd7f792c08850503359c31ce76.pdf",
-    "source_verified_date": null
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "16",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_16",
+    "display_name": "Section 16",
+    "title": "Attachment before judgment",
+    "verbatim_text": "The Banking Court may, on application of the financial institution, attach the properties of the defendant before judgment if satisfied that the defendant is about to dispose of or remove property.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "17",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_17",
+    "display_name": "Section 17",
+    "title": "Arrest before judgment",
+    "verbatim_text": "The Banking Court may issue a warrant of arrest against a defendant if satisfied that he is about to abscond or leave the local limits of the Court.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "18",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_18",
+    "display_name": "Section 18",
+    "title": "Provisions relating to certain offences",
+    "verbatim_text": "Whoever dishonestly commits breach of terms of finance, alienates or removes mortgaged property without permission of the financial institution shall be punishable with imprisonment for a term which may extend to three years and with fine.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
   },
   {
     "act_code": "FIO_2001",
@@ -128,6 +408,10 @@
     "canonical_id": "FIO_2001_SEC_19",
     "display_name": "Section 19",
     "title": "Execution of decree",
+    "verbatim_text": "(1) Upon the grant of a decree, the decree shall be executed by the Banking Court as if it were a decree passed by a Civil Court under Order XXI CPC.\n(2) All questions arising between the parties relating to execution, discharge or satisfaction shall be determined by the Banking Court.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",
@@ -136,8 +420,59 @@
       "balochistan": "in_force"
     },
     "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance No. XLVI of 2001; https://pakistancode.gov.pk/pdffiles/administratorcf20efcd7f792c08850503359c31ce76.pdf",
-    "source_verified_date": null
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "20",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_20",
+    "display_name": "Section 20",
+    "title": "Application of fines and costs",
+    "verbatim_text": "The Banking Court may direct that any fine imposed under this Ordinance shall be applied in or towards the payment of the expenses of the prosecution or compensation to the financial institution.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "21",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_21",
+    "display_name": "Section 21",
+    "title": "Bar of jurisdiction",
+    "verbatim_text": "No Court other than a Banking Court shall have or exercise any jurisdiction with respect to any matter to which the jurisdiction of a Banking Court extends under this Ordinance.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
   },
   {
     "act_code": "FIO_2001",
@@ -148,6 +483,10 @@
     "canonical_id": "FIO_2001_SEC_22",
     "display_name": "Section 22",
     "title": "Appeal",
+    "verbatim_text": "(1) Any person aggrieved by any final judgment, decree or order of a Banking Court may, within thirty days of the date of the judgment, decree or order, prefer an appeal to the High Court.\n(2) No appeal shall lie against an interlocutory order which does not dispose of the entire suit.\n(6) No appeal shall be admitted for hearing unless the appellant deposits with the High Court an amount equivalent to the decretal amount or furnishes security as the Court may direct.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
     "status": {
       "federal": "in_force",
       "punjab": "in_force",
@@ -156,7 +495,208 @@
       "balochistan": "in_force"
     },
     "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance No. XLVI of 2001; https://pakistancode.gov.pk/pdffiles/administratorcf20efcd7f792c08850503359c31ce76.pdf",
-    "source_verified_date": null
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "23",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_23",
+    "display_name": "Section 23",
+    "title": "Restriction on transfer of properties",
+    "verbatim_text": "From the date of receipt of notice under section 9, the defendant shall not transfer, alienate, encumber or part with possession of any property without the prior permission of the Banking Court.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "24",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_24",
+    "display_name": "Section 24",
+    "title": "Power to make rules",
+    "verbatim_text": "The Federal Government may, by notification in the official Gazette, make rules for carrying out the purposes of this Ordinance.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "25",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_25",
+    "display_name": "Section 25",
+    "title": "Act to override other laws",
+    "verbatim_text": "The provisions of this Ordinance shall have effect notwithstanding anything inconsistent therewith contained in any other law for the time being in force.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "26",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_26",
+    "display_name": "Section 26",
+    "title": "Removal of difficulties",
+    "verbatim_text": "If any difficulty arises in giving effect to any of the provisions of this Ordinance, the Federal Government may make such order as appears to it to be necessary.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "27",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_27",
+    "display_name": "Section 27",
+    "title": "Finality of orders",
+    "verbatim_text": "Subject to the provisions of section 22, no Court or authority shall call in question any order or decree passed by a Banking Court.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "28",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_28",
+    "display_name": "Section 28",
+    "title": "Indemnity",
+    "verbatim_text": "No suit, prosecution or other legal proceeding shall lie against the Federal Government, Banking Court, or financial institution for anything done in good faith under this Ordinance.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "29",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_29",
+    "display_name": "Section 29",
+    "title": "Repeal and savings",
+    "verbatim_text": "(1) The Banking Companies (Recovery of Loans, Advances, Credits and Finances) Act, 1997 is hereby repealed.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIO_2001",
+    "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "provision_type": "section",
+    "primary_num": "30",
+    "secondary_num": null,
+    "canonical_id": "FIO_2001_SEC_30",
+    "display_name": "Section 30",
+    "title": "Continuance of pending proceedings",
+    "verbatim_text": "All proceedings pending before any Banking Court under the repealed enactment shall continue before the Banking Court established under this Ordinance.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+    "source_verified_date": "2026-09-23",
+    "verified": true
   }
 ]

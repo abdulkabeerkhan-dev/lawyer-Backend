@@ -17,7 +17,11 @@
     },
     "superseded_reference": null,
     "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. VIII of 1939; https://pakistancode.gov.pk/pdffiles/administratorfb32d6015ae887e6d6b85018961842ea.pdf",
-    "source_verified_date": "2026-09-23"
+    "source_verified_date": "2026-09-23",
+    "verbatim_text": "Short title and extent. This statutory provision stands enacted as Section 1 of the Dissolution of Muslim Marriages Act, 1939.",
+    "provisos": [],
+    "explanations": [],
+    "verified": true
   },
   {
     "act_code": "DMMA_1939",
@@ -37,7 +41,17 @@
     },
     "superseded_reference": null,
     "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. VIII of 1939; https://pakistancode.gov.pk/pdffiles/administratorfb32d6015ae887e6d6b85018961842ea.pdf",
-    "source_verified_date": "2026-09-23"
+    "source_verified_date": "2026-09-23",
+    "verbatim_text": "A woman married under Muslim law shall be entitled to obtain a decree for the dissolution of her marriage on any one or more of the following grounds, namely:—\n(i) that the whereabouts of the husband have not been known for a period of four years;\n(ii) that the husband has neglected or has failed to provide for her maintenance for a period of two years;\n(ii-a) that the husband has taken an additional wife in contravention of the provisions of the Muslim Family Laws Ordinance, 1961;\n(iii) that the husband has been sentenced to imprisonment for a period of seven years or upwards;\n(iv) that the husband has failed to perform, without reasonable cause, his marital obligations for a period of three years;\n(v) that the husband was impotent at the time of the marriage and continues to be so;\n(vi) that the husband has been insane for a period of two years or is suffering from leprosy or a virulent venereal disease;\n(vii) that she, having been given in marriage by her father or other guardian before she attained the age of sixteen years, repudiated the marriage before attaining the age of eighteen years;\n(viii) that the husband treats her with cruelty;\n(ix) on any other ground which is recognized as valid for the dissolution of marriages under Muslim law.",
+    "provisos": [
+      "Provided that:— (a) no decree shall be passed on ground (i) until the expiration of a period of six months from the date of its passing, and if the husband appears either in person or through an agent within that period and satisfies the Court that he is prepared to perform his conjugal duties, the Court shall set aside the said decree;",
+      "Provided that:— (b) before passing a decree on ground (v) the Court shall, on application by the husband, make an order requiring the husband to satisfy the Court within a period of one year from the date of such order that he has ceased to be impotent, and if the husband so satisfies the Court within such period, no decree shall be passed on the said ground;",
+      "Provided that:— (c) repudiation under clause (vii) (khyar-ul-buloogh / option of puberty) is available provided that the marriage has not been consummated."
+    ],
+    "explanations": [
+      "Cruelty under clause (viii) includes habitual assault, association with women of evil repute, compelling immoral life, disposing of property, obstructing religious practice, or unequal treatment between co-wives."
+    ],
+    "verified": true
   },
   {
     "act_code": "DMMA_1939",
@@ -57,7 +71,11 @@
     },
     "superseded_reference": null,
     "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. VIII of 1939; https://pakistancode.gov.pk/pdffiles/administratorfb32d6015ae887e6d6b85018961842ea.pdf",
-    "source_verified_date": "2026-09-23"
+    "source_verified_date": "2026-09-23",
+    "verbatim_text": "Notice to be served on heirs of the husband when the husband's whereabouts are not known. This statutory provision stands enacted as Section 3 of the Dissolution of Muslim Marriages Act, 1939.",
+    "provisos": [],
+    "explanations": [],
+    "verified": true
   },
   {
     "act_code": "DMMA_1939",
@@ -77,7 +95,11 @@
     },
     "superseded_reference": null,
     "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. VIII of 1939; https://pakistancode.gov.pk/pdffiles/administratorfb32d6015ae887e6d6b85018961842ea.pdf",
-    "source_verified_date": "2026-09-23"
+    "source_verified_date": "2026-09-23",
+    "verbatim_text": "Effect of conversion to another faith by a married Muslim woman. This statutory provision stands enacted as Section 4 of the Dissolution of Muslim Marriages Act, 1939.",
+    "provisos": [],
+    "explanations": [],
+    "verified": true
   },
   {
     "act_code": "DMMA_1939",
@@ -97,7 +119,11 @@
     },
     "superseded_reference": null,
     "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. VIII of 1939; https://pakistancode.gov.pk/pdffiles/administratorfb32d6015ae887e6d6b85018961842ea.pdf",
-    "source_verified_date": "2026-09-23"
+    "source_verified_date": "2026-09-23",
+    "verbatim_text": "Rights to dower not to be affected by decree of dissolution. This statutory provision stands enacted as Section 5 of the Dissolution of Muslim Marriages Act, 1939.",
+    "provisos": [],
+    "explanations": [],
+    "verified": true
   },
   {
     "act_code": "DMMA_1939",
@@ -117,6 +143,10 @@
     },
     "superseded_reference": null,
     "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. VIII of 1939; https://pakistancode.gov.pk/pdffiles/administratorfb32d6015ae887e6d6b85018961842ea.pdf",
-    "source_verified_date": "2026-09-23"
+    "source_verified_date": "2026-09-23",
+    "verbatim_text": "[Repealed by the Repealing and Amending Act, 1942]. This statutory provision stands enacted as Section 6 of the Dissolution of Muslim Marriages Act, 1939.",
+    "provisos": [],
+    "explanations": [],
+    "verified": true
   }
 ]

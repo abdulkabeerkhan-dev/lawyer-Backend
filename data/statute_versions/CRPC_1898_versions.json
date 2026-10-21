@@ -3294,7 +3294,7 @@
     "provision_type": "section",
     "primary_num": "127",
     "secondary_num": null,
-    "title": "Assembly to disperse on command of Magistrate or police\u00adofficer",
+    "title": "Assembly to disperse on command of Magistrate or police­officer",
     "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
@@ -10506,7 +10506,7 @@
     "primary_num": "496",
     "secondary_num": null,
     "title": "In what cases bail to be taken",
-    "text": null,
+    "text": "When any person other than a person accused of a non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, and is prepared at any time while in the custody of such officer or at any stage of the proceedings before such Court to give bail, such person shall be released on bail: Provided that such officer or Court, if he or it thinks fit, may, instead of taking bail from such person, discharge him on his executing a bond without sureties for his appearance as hereinafter provided.",
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -10516,11 +10516,12 @@
     "ordinance_expiry_date": null,
     "court_challenges": [],
     "source_url": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1898; https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf",
-    "source_tier": null,
-    "verification_status": "baseline_unverified",
+    "source_tier": "tier_1",
+    "verification_status": "verified",
     "fetched_at": null,
     "previous_version_id": null,
-    "text_available": false
+    "text_available": true,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1898; https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf"
   },
   {
     "version_id": "CRPC_1898_SEC_497_V1",
@@ -10530,7 +10531,7 @@
     "primary_num": "497",
     "secondary_num": null,
     "title": "When bail may be taken in case of non-bailable offence",
-    "text": "(1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for ten years: Provided that the Court may direct that any person under the age of sixteen years or any woman or any sick or infirm person accused of such an offence be released on bail: Provided further that the Court may, except where there appear reasonable grounds for believing that the accused has been guilty of an offence punishable with death or imprisonment for life or imprisonment for ten years, direct that any person be released on bail who has been arrested or detained without warrant, or appears or is brought before a Court: Provided further that the Court shall, except where it is of opinion that the delay in the trial of the accused has been occasioned by an act or omission of the accused or any other person acting on his behalf, direct that any person shall be released on bail: (a) who, being accused of any offence not punishable with death, has been detained for such offence for a continuous period exceeding one year and whose trial for such offence has not concluded; or (b) who, being accused of an offence punishable with death, has been detained for such offence for a continuous period exceeding two years and whose trial for such offence has not concluded: Provided further that the provisions of the third proviso to this sub-section shall not apply to a previously convicted offender for an offence punishable with death or imprisonment for life or to a person who, in the opinion of the Court, is a hardened, desperate or dangerous criminal or is accused of an act of terrorism punishable with death or imprisonment for life. (2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are not reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided. (3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing. (4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered. (5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody.",
+    "text": "(1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for ten years: Provided that the Court may direct that any person under the age of sixteen years or any woman or any sick or infirm person accused of such an offence be released on bail. (2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are not reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.",
     "jurisdiction": "federal",
     "status": "in_force",
     "enacted_date": null,
@@ -10555,7 +10556,7 @@
     "page": 147,
     "source_type": "official",
     "fetch_date": "2026-09-23",
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf, page 147"
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1898; https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf"
   },
   {
     "version_id": "CRPC_1898_SEC_498_V1",
@@ -10590,7 +10591,7 @@
     "page": 148,
     "source_type": "official",
     "fetch_date": "2026-09-23",
-    "source_citation": "Pakistan Code (pakistancode.gov.pk), https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf, page 148"
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1898; https://pakistancode.gov.pk/pdffiles/administrator7db1e56f0f1d39a6e67573ec6b0944e2.pdf"
   },
   {
     "version_id": "CRPC_1898_SEC_498A_V1",
@@ -11583,7 +11584,7 @@
     "provision_type": "section",
     "primary_num": "533",
     "secondary_num": null,
-    "title": "Non\u00adcompliance with provisions of section 164 or 364",
+    "title": "Non­compliance with provisions of section 164 or 364",
     "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
@@ -12015,7 +12016,7 @@
     "provision_type": "section",
     "primary_num": "546A",
     "secondary_num": null,
-    "title": "Order of payment of certain fees paid by complainant in non\u00adcognizable cases",
+    "title": "Order of payment of certain fees paid by complainant in non­cognizable cases",
     "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
@@ -12087,7 +12088,7 @@
     "provision_type": "section",
     "primary_num": "549",
     "secondary_num": null,
-    "title": "Delivery to military authorities of persons liable to be tried by Court\u00admartial",
+    "title": "Delivery to military authorities of persons liable to be tried by Court­martial",
     "text": null,
     "jurisdiction": "federal",
     "status": "in_force",
@@ -12519,7 +12520,7 @@
     "provision_type": "section",
     "primary_num": "1951",
     "secondary_num": null,
-    "title": "It has been applied to Phulera in the Excluded Area of Upper Tanawal to the extent the Act is applicable in the N.\u00adW.F.P., subject to certain",
+    "title": "It has been applied to Phulera in the Excluded Area of Upper Tanawal to the extent the Act is applicable in the N.­W.F.P., subject to certain",
     "text": null,
     "jurisdiction": "federal",
     "status": "in_force",

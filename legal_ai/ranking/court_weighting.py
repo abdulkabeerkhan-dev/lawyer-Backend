@@ -103,3 +103,66 @@ def get_recency_weight(year: Optional[int], current_year: int = 2026) -> float:
         return 0.85
     else:
         return 0.80
+
+
+def resolve_court_and_province(
+    citation: str = "",
+    court_name: str = "",
+    preview: str = ""
+) -> Dict[str, str]:
+    """
+    Authoritatively maps citation, court name, and preview text to canonical court and province.
+    """
+    raw_court = normalize_court_name(court_name)
+    low_court = raw_court.lower()
+    low_cit = str(citation or "").lower()
+    low_prev = str(preview or "").lower()
+
+    if "supreme court" in low_court or "scmr" in low_cit or "pld" in low_cit and "sc" in low_cit:
+        return {
+            "canonical_court_name": "Supreme Court of Pakistan",
+            "court_name": "Supreme Court of Pakistan",
+            "province": "Federal"
+        }
+    if "lahore" in low_court or "lahore" in low_cit or "lahore" in low_prev:
+        return {
+            "canonical_court_name": "Lahore High Court",
+            "court_name": "Lahore High Court",
+            "province": "Punjab"
+        }
+    if "sindh" in low_court or "karachi" in low_cit or "karachi" in low_prev:
+        return {
+            "canonical_court_name": "High Court of Sindh",
+            "court_name": "High Court of Sindh",
+            "province": "Sindh"
+        }
+    if "peshawar" in low_court or "peshawar" in low_cit or "peshawar" in low_prev:
+        return {
+            "canonical_court_name": "Peshawar High Court",
+            "court_name": "Peshawar High Court",
+            "province": "Khyber Pakhtunkhwa"
+        }
+    if "balochistan" in low_court or "quetta" in low_cit or "quetta" in low_prev:
+        return {
+            "canonical_court_name": "High Court of Balochistan",
+            "court_name": "High Court of Balochistan",
+            "province": "Balochistan"
+        }
+    if "islamabad" in low_court or "ihc" in low_cit or "islamabad" in low_prev:
+        return {
+            "canonical_court_name": "Islamabad High Court",
+            "court_name": "Islamabad High Court",
+            "province": "Islamabad"
+        }
+    if "shariat" in low_court or "fsc" in low_cit:
+        return {
+            "canonical_court_name": "Federal Shariat Court",
+            "court_name": "Federal Shariat Court",
+            "province": "Federal"
+        }
+
+    return {
+        "canonical_court_name": raw_court,
+        "court_name": raw_court,
+        "province": "Federal"
+    }

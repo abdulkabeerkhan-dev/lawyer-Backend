@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "GENERAL_CLAUSES_1897",
+    "act_name": "General Clauses Act, 1897",
+    "provision_type": "section",
+    "primary_num": "6",
+    "secondary_num": null,
+    "canonical_id": "GENERAL_CLAUSES_1897_SEC_6",
+    "display_name": "Section 6",
+    "title": "Effect of repeal",
+    "verbatim_text": "Where this Act, or any Central Act or Regulation made after the commencement of this Act, repeals any enactment hitherto made or hereafter to be made, then, unless a different intention appears, the repeal shall not: (a) revive anything not in force or existing at the time at which the repeal takes effect; or (b) affect the previous operation of any enactment so repealed or anything duly done or suffered thereunder; or (c) affect any right, privilege, obligation or liability acquired, accrued or incurred under any enactment so repealed; or (d) affect any penalty, forfeiture or punishment incurred in respect of any offence committed against any enactment so repealed; or (e) affect any investigation, legal proceeding or remedy in respect of any such right, privilege, obligation, liability, penalty, forfeiture or punishment as aforesaid.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, General Clauses Act, 1897",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "GENERAL_CLAUSES_1897",
+    "act_name": "General Clauses Act, 1897",
+    "provision_type": "section",
+    "primary_num": "24",
+    "secondary_num": null,
+    "canonical_id": "GENERAL_CLAUSES_1897_SEC_24",
+    "display_name": "Section 24",
+    "title": "Continuation of orders, etc., issued under enactments repealed and re-enacted",
+    "verbatim_text": "Where any Central Act or Regulation is, after the commencement of this Act, repealed and re-enacted with or without modification, then, unless it is otherwise expressly provided, any appointment, notification, order, scheme, rule, form or bye-law, made or issued under the repealed Act or Regulation, shall, so far as it is not inconsistent with the provisions re-enacted, continue in force.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, General Clauses Act, 1897",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

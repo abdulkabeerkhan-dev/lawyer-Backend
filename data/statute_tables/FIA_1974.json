@@ -1,0 +1,52 @@
+[
+  {
+    "act_code": "FIA_1974",
+    "act_name": "Federal Investigation Agency Act, 1974",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "canonical_id": "FIA_1974_SEC_3",
+    "display_name": "Section 3",
+    "title": "Constitution of the Agency",
+    "verbatim_text": "(1) Notwithstanding anything contained in any other law for the time being in force, the Federal Government may constitute an Agency to be called the Federal Investigation Agency for inquiry into, and investigation of, the offences specified in the Schedule, including an attempt or conspiracy to commit, and abetment of, any such offence.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act VIII of 1975",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  },
+  {
+    "act_code": "FIA_1974",
+    "act_name": "Federal Investigation Agency Act, 1974",
+    "provision_type": "section",
+    "primary_num": "5",
+    "secondary_num": null,
+    "canonical_id": "FIA_1974_SEC_5",
+    "display_name": "Section 5",
+    "title": "Powers of the members of the Agency",
+    "verbatim_text": "(1) Subject to any order which the Federal Government may make in this behalf, members of the Agency shall, for the purpose of an inquiry or investigation under this Act, have throughout Pakistan all the powers of search, arrest of persons and seizure of property, and all other powers, duties, privileges and liabilities which police officers of a Province have in connection with the investigation of offences.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act VIII of 1975",
+    "source_verified_date": "2026-09-23",
+    "verified": true
+  }
+]

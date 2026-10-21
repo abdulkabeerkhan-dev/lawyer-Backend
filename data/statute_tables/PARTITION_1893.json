@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "PARTITION_1893",
+    "act_name": "Partition Act, 1893 (Act IV of 1893)",
+    "provision_type": "section",
+    "primary_num": "2",
+    "secondary_num": null,
+    "canonical_id": "PARTITION_1893_SEC_2",
+    "display_name": "Section 2",
+    "title": "Power to court to order sale instead of division in partition suits",
+    "verbatim_text": "Whenever in any suit for partition in which, if instituted prior to the commencement of this Act, a decree for partition might have been made, it appears to the court that, by reason of the nature of the property to which the suit relates, or of the number of the shareholders therein, or of any other special circumstance, a division of the property cannot reasonably or conveniently be made, and that a sale of the property and distribution of the proceeds would be more beneficial for all the shareholders, the court may, if it thinks fit, on the request of any of such shareholders interested individually or collectively to the extent of one moiety or upwards, direct a sale of the property and a distribution of the proceeds.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Partition Act, 1893 (Act IV of 1893)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "PARTITION_1893",
+    "act_name": "Partition Act, 1893 (Act IV of 1893)",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "canonical_id": "PARTITION_1893_SEC_3",
+    "display_name": "Section 3",
+    "title": "Procedure when sharer undertakes to buy",
+    "verbatim_text": "If, in any case in which the court is requested under the last foregoing section to direct a sale, any other shareholder applies for leave to buy at a valuation the share or shares of the party or parties asking for a sale, the court shall order a valuation of the share or shares in such manner as it may think fit and offer to sell the same to such shareholder at the price so ascertained.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Partition Act, 1893 (Act IV of 1893)",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

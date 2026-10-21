@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "MENTAL_HEALTH_2001",
+    "act_name": "Mental Health Ordinance, 2001 / Punjab Mental Health Act, 2014",
+    "provision_type": "section",
+    "primary_num": "19",
+    "secondary_num": null,
+    "canonical_id": "MENTAL_HEALTH_2001_SEC_19",
+    "display_name": "Section 19",
+    "title": "Assessment of mental capacity in civil and criminal proceedings",
+    "verbatim_text": "Where in any proceeding before a Civil or Criminal Court the mental condition or capacity of any party or accused person is questioned, the Court may order such person to be examined by a Medical Board comprising certified psychiatrists.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette / Lahore High Court / Pakistan Code, Mental Health Ordinance, 2001 / Punjab Mental Health Act, 2014",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "MENTAL_HEALTH_2001",
+    "act_name": "Mental Health Ordinance, 2001 / Punjab Mental Health Act, 2014",
+    "provision_type": "section",
+    "primary_num": "49",
+    "secondary_num": null,
+    "canonical_id": "MENTAL_HEALTH_2001_SEC_49",
+    "display_name": "Section 49",
+    "title": "Judicial inquisition into unsoundness of mind and management of property",
+    "verbatim_text": "The Court of Session or District Judge may, on application, direct an inquisition whether a person subject to its jurisdiction is of unsound mind and incapable of managing his property, and appoint a manager of such estate.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Official Gazette / Lahore High Court / Pakistan Code, Mental Health Ordinance, 2001 / Punjab Mental Health Act, 2014",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]

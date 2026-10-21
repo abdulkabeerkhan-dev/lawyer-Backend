@@ -1,0 +1,62 @@
+[
+  {
+    "act_code": "ANTI_RAPE_2021",
+    "act_name": "Anti-Rape (Investigation and Trial) Act, 2021",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "canonical_id": "ANTI_RAPE_2021_SEC_3",
+    "display_name": "Section 3",
+    "title": "Establishment of Special Courts for rape trials",
+    "verbatim_text": "(1) The Federal Government, in consultation with the Chief Justice of the High Court, shall establish Special Courts to try scheduled rape and sexual assault offences with designated trial timelines of six months.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Anti-Rape (Investigation and Trial) Act, 2021",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  },
+  {
+    "act_code": "ANTI_RAPE_2021",
+    "act_name": "Anti-Rape (Investigation and Trial) Act, 2021",
+    "provision_type": "section",
+    "primary_num": "12",
+    "secondary_num": null,
+    "canonical_id": "ANTI_RAPE_2021_SEC_12",
+    "display_name": "Section 12",
+    "title": "Prohibition of two-finger virginity test",
+    "verbatim_text": "No medical examination of a female victim of a scheduled offence shall include any virginity test, hymen examination or two-finger test, which is hereby strictly prohibited and illegal.",
+    "provisos": [],
+    "explanations": [],
+    "jurisdiction": "federal",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Anti-Rape (Investigation and Trial) Act, 2021",
+    "source_verified_date": "2026-10-21",
+    "verified": true,
+    "federal": "in_force",
+    "punjab": "in_force",
+    "sindh": "in_force",
+    "kp": "in_force",
+    "balochistan": "in_force"
+  }
+]
