@@ -176,6 +176,19 @@ def filter_candidate_quality_before_ranking(
                 logger.info(f"[RELEVANCE_GATE_DROP] Dropped labour candidate '{cid}' ({title})")
                 continue
 
+            # Pure bail filter: Drop unrelated constitutional PIL / protocol judgments
+            is_bail_matter = "bail" in domains or "post-arrest bail" in domains or "pre-arrest bail" in domains or any(k in questions_str for k in ["bail", "496", "497", "498"])
+            if is_bail_matter:
+                if any(k in haystack for k in [
+                    "article 184(3)", "art. 184(3)", "184(3)", "public interest litigation",
+                    "suo motu", "former chief justice", "extra security", "security protocol",
+                    "writ of certiorari acts in exercise of supervisory and not appellate"
+                ]):
+                    if not any(k in haystack for k in ["section 497", "section 498", "section 496", "bail application", "pre-arrest bail", "post-arrest bail"]):
+                        rejection_counts["unrelated_subject"] += 1
+                        logger.info(f"[RELEVANCE_GATE_DROP] Dropped unrelated constitutional PIL/protocol candidate '{cid}' ({title}) from bail query")
+                        continue
+
         if is_rent:
             # Filter out pure murder, narcotics, family khula
             if any(k in haystack for k in ["section 302 ppc", "murder trial", "cnsa", "narcotic", "charas", "heroin", "khula", "dower", "custody of minor"]):

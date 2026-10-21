@@ -160,7 +160,7 @@ class StatuteInjector:
                 return act_code, f"{act_code}_SEC_{sec_clean}", f"Section {sec_num}, Pakistan Penal Code, 1860"
 
         # 6. Code of Criminal Procedure (CrPC)
-        if "crpc" in p_low or any(k in p_low for k in ["497", "498", "561-a", "561a", "154", "249-a"]):
+        if "crpc" in p_low or "criminal procedure" in p_low or any(k in p_low for k in ["496", "497", "498", "561-a", "561a", "154", "249-a", "249a", "265-k", "265k", "22-a", "22a", "54", "61"]):
             act_code = "CRPC_1898"
             m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?(?:-[a-z])?)\b', p_low)
             if m_sec:
@@ -313,6 +313,19 @@ class StatuteInjector:
             ]
             for m in mandatory_cbt:
                 if not any(m.split()[1].lower() in p.lower() for p in target_provisions):
+                    target_provisions.append(m)
+
+        if any(k in q_comb for k in ["bail", "bailable", "non-bailable", "non bailable", "pre-arrest bail", "post-arrest bail", "arrest without"]):
+            mandatory_bail = [
+                "Section 496 CrPC",
+                "Section 497 CrPC",
+                "Section 498 CrPC"
+            ]
+            if any(k in q_comb for k in ["without warrant", "without a warrant", "arrest without", "arrested without"]):
+                mandatory_bail.extend(["Section 54 CrPC", "Section 61 CrPC"])
+            for m in mandatory_bail:
+                m_num = m.split()[1].lower()
+                if not any(m_num in p.lower() for p in target_provisions):
                     target_provisions.append(m)
 
         if any(k in q_comb for k in ["specific performance", "specific relief", "agreement to sell"]):

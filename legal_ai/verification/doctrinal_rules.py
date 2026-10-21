@@ -235,6 +235,50 @@ PATTERN_RULES: List[Dict[str, Any]] = [
     },
     {
         "code": "STATUTE_MISSTATEMENT",
+        "id": "CRPC_ARTICLE_12",
+        "severity": "error",
+        "status": "reviewed",
+        "topics": ["bail"],
+        "all_of": [
+            r"article\s*12\b[^.\n]{0,40}cr\.?p\.?c|cr\.?p\.?c[^.\n]{0,40}article\s*12"
+        ],
+        "message": "The Code of Criminal Procedure 1898 has Sections, not Articles. Furthermore, Section 12 Cr.P.C. relates to Special Magistrates, not Sessions Judges. Sessions Courts are established under Section 9 Cr.P.C., and their bail jurisdiction arises under Sections 497 and 498 Cr.P.C.",
+        "fix": "Cite Sections 497 and 498 Cr.P.C. for Sessions Court bail jurisdiction.",
+    },
+    {
+        "code": "STATUTE_MISSTATEMENT",
+        "id": "BAILABLE_UNDER_497",
+        "severity": "error",
+        "status": "reviewed",
+        "topics": ["bail"],
+        "all_of": [
+            r"bailable\s+offence[^.\n]{0,50}(?:under\s+)?section\s*497\(1\)|section\s*497\(1\)[^.\n]{0,50}bailable\s+offence"
+        ],
+        "message": "Section 497 Cr.P.C. applies exclusively to non-bailable offences. Bail in bailable offences is governed by Section 496 Cr.P.C., where bail is an absolute, unconditional statutory right.",
+        "fix": "Cite Section 496 Cr.P.C. for bailable offences.",
+    },
+    {
+        "code": "FORUM_PROVISION_MISMATCH",
+        "id": "BAIL_WRIT_199",
+        "severity": "error",
+        "status": "reviewed",
+        "topics": ["bail"],
+        "all_of": [
+            r"article\s*199[^.\n]{0,60}\bbail\b|\bbail\b[^.\n]{0,60}article\s*199"
+        ],
+        "none_of": [
+            r"not\s+maintainable",
+            r"cannot\s+be\s+invoked",
+            r"alternate\s+remedy",
+            r"bar",
+            r"instead\s+of",
+            r"statutory\s+remedy"
+        ],
+        "message": "An Article 199 Constitutional Writ Petition does not lie for routine bail because an adequate, direct statutory remedy exists under Sections 497 and 498 Cr.P.C. before the High Court in its concurrent statutory jurisdiction.",
+        "fix": "Cite Section 497/498 Cr.P.C. before the High Court rather than Article 199.",
+    },
+    {
+        "code": "STATUTE_MISSTATEMENT",
         "id": "O39_R2_FINAL_EXECUTION",
         "severity": "error",
         "status": "pending_review",
@@ -1075,15 +1119,18 @@ def rule_matches_sentence(
 
 
 def build_pre_synthesis_trap_instructions(
-    matter_type: str,
-    topics: List[str],
-    abstain_topics: Optional[List[str]] = None
+    matter_type: Any,
+    topics: Optional[List[str]] = None,
+    abstain_topics: Optional[List[str]] = None,
+    query_text: str = ""
 ) -> str:
     """
     Generates concise pre-synthesis instructions detailing known traps to avoid,
     grounding rules, and mandatory section headings without adding LLM latency.
     Includes explicit negative directives for the verified doctrinal rules from Phase 1.1.
     """
+    topics_list = topics or []
+    query_comb = f"{query_text} {' '.join(topics_list)} {str(matter_type)}".lower()
     lines: List[str] = [
         "CRITICAL DOCTRINAL & VERIFICATION DIRECTIVES (Zero Exceptions):",
         "1. Never cite non-retrieved or unverified authorities from memory. Cite ONLY the supplied superior court precedents.",
@@ -1110,18 +1157,35 @@ def build_pre_synthesis_trap_instructions(
         "12. Tenancy, Rent & Concurrent Remedies: In Punjab, urban shop and residential building tenancies are governed by the Punjab Rented Premises Act 2009 (PRPA). "
         "The Punjab Tenancy Act 1887 applies only to agricultural land tenancies. "
         "Under Section 34 PRPA, civil courts are strictly barred. Civil eviction petitions lie before the Special Judge (Rent) / Rent Tribunal, while Section 489-F PPC proceedings are criminal and can proceed concurrently without legal impediment. "
-        "Section 34 CPC relates to interest/cost of funds in money decrees, not concurrent remedies."
+        "Section 34 CPC relates to interest/cost of funds in money decrees, not concurrent remedies.",
+        "13. Bail Statutory Binary & Court Hierarchy: In bailable offences, bail is governed EXCLUSIVELY by Section 496 Cr.P.C. (NOT Section 497). "
+        "Under Section 496, bail is a mandatory, absolute legal right; neither the Police Station SHO nor the Magistrate has discretion to refuse bail if surety is tendered. "
+        "In non-bailable offences, bail is discretionary under Section 497 Cr.P.C. (concession/grace). For offences outside the prohibitory clause (punishable with less than 10 years, e.g. S. 489-F, S. 420), bail is the rule and refusal is the exception (Tariq Bashir v. State, PLD 1995 SC 34). "
+        "The Cr.P.C. consists of SECTIONS, NEVER Articles. Section 12 Cr.P.C. relates to Special Magistrates, NOT Sessions Judges (Sessions Courts are established under Section 9, bail jurisdiction under Sections 497 and 498). "
+        "Forum hierarchy for post-arrest bail: Area Judicial Magistrate (under S. 496 for bailable; under S. 497 at remand stage for non-bailable) -> Court of Session (under S. 497/498) -> High Court (under S. 497/498 concurrent statutory jurisdiction). "
+        "Do NOT advise filing an Article 199 Constitutional Writ Petition or Section 561-A Cr.P.C. for routine bail refusal, because direct statutory remedies exist under Sections 497/498 Cr.P.C. Supreme Court review is via CPLA under Article 185(3) of the Constitution (NOT Article 184(3))."
     ]
 
-    if "criminal" not in matter_type:
+    if "post-arrest bail" in matter_type or ("criminal" in matter_type and any(k in query_comb for k in ["arrested", "in custody", "without a warrant", "without warrant", "post-arrest"])):
         lines.append(
-            "13. SECTION 6 HEADING: Title Section 6 strictly '### 6. ### PROCEDURAL REMEDY & APPELLATE STRATEGY'. "
-            "Do NOT discuss pre-arrest bail, FIR, or criminal procedures in purely civil, property, or rent matters."
+            "14. SECTION 6 HEADING: Title Section 6 strictly '### 6. ### POST-ARREST BAIL STRATEGY & PROCEDURAL ROADMAP'. "
+            "Focus on statutory post-arrest bail under Section 496 Cr.P.C. for bailable offences (mandatory right) and Section 497/498 Cr.P.C. for non-bailable offences (discretionary concession, prohibitory vs non-prohibitory clause, statutory delay provisos). "
+            "Do NOT confuse post-arrest bail with pre-arrest bail under Section 498."
+        )
+    elif "pre-arrest bail" in matter_type or ("criminal" in matter_type and any(k in query_comb for k in ["pre-arrest", "pre arrest", "anticipatory"])):
+        lines.append(
+            "14. SECTION 6 HEADING: Title Section 6 strictly '### 6. ### PRE-ARREST BAIL STRATEGY & PROCEDURAL ROADMAP'. "
+            "Focus on statutory pre-arrest bail under Section 498 Cr.P.C. before the Court of Session or High Court, demonstrating mala fide, ulterior motive, and apprehension of imminent arrest."
+        )
+    elif "criminal" in matter_type:
+        lines.append(
+            "14. SECTION 6 HEADING: Title Section 6 strictly '### 6. ### BAIL STRATEGY & PROCEDURAL ROADMAP'. "
+            "Focus on statutory bail regimes under Cr.P.C. (Section 496 for bailable, Section 497 for non-bailable, Section 498 for concurrent jurisdiction)."
         )
     else:
         lines.append(
-            "13. SECTION 6 HEADING: Title Section 6 '### 6. ### PRE-ARREST BAIL STRATEGY (OR PROCEDURAL REMEDY)'. "
-            "Focus on statutory pre-arrest bail under Section 498 Cr.P.C. or concurrent procedural remedy for dual civil/criminal matters."
+            "14. SECTION 6 HEADING: Title Section 6 strictly '### 6. ### PROCEDURAL REMEDY & APPELLATE STRATEGY'. "
+            "Do NOT discuss pre-arrest bail, FIR, or criminal procedures in purely civil, property, or rent matters."
         )
 
     if abstain_topics:

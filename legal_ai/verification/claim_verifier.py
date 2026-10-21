@@ -85,6 +85,45 @@ def verify_and_scrub_memo_claims(
             })
             cleaned = re.sub(pat, replacement, cleaned, flags=re.IGNORECASE)
 
+    # 1b. Bail and procedural statute hallucination patterns
+    procedural_patterns = [
+        (
+            r'\barticle\s*12\s*(?:of\s+(?:the\s+)?)?cr\.?p\.?c\.?|\bcr\.?p\.?c\.?\s*article\s*12\b',
+            "Hallucinated Article 12 Cr.P.C.; Cr.P.C. has sections (Section 12 is for Special Magistrates, Sessions Courts are established under Section 9, bail under Sections 497/498)",
+            "Section 9 and Sections 497/498 Cr.P.C."
+        ),
+        (
+            r'\bbailable\s+offences?\s*\((?:under\s+)?section\s*497\(1\)\)',
+            "Bailable offences are governed exclusively by Section 496 Cr.P.C. (mandatory right), not Section 497(1)",
+            "bailable offences (Section 496 Cr.P.C.)"
+        ),
+        (
+            r'\b(?:under\s+)?section\s*497\(1\)\s*(?:for|governs?|applies\s+to)\s+bailable\s+offences?\b',
+            "Bailable offences are governed exclusively by Section 496 Cr.P.C.",
+            "Section 496 Cr.P.C. for bailable offences"
+        ),
+        (
+            r'\bappeal\s+lies\s+to\s+the\s+High\s+Court\s+under\s+Section\s+561-A\s+Cr\.?P\.?C\.?\s+or\s+Article\s+199\b',
+            "Routine bail refusal is not appealed under Article 199 or 561-A; direct statutory petition lies under Section 498 Cr.P.C. before the High Court",
+            "post-arrest bail petition lies before the High Court under Section 498 Cr.P.C. (concurrent statutory jurisdiction)"
+        ),
+        (
+            r'\b(?:file|filing)\s+(?:an?\s+)?article\s*199\s+(?:writ\s+)?petition\s+for\s+bail\b',
+            "Article 199 writ is barred where direct statutory bail remedies exist under Section 497/498 Cr.P.C.",
+            "filing a bail petition before the High Court under Section 498 Cr.P.C."
+        )
+    ]
+    for pat, desc, replacement in procedural_patterns:
+        m = re.search(pat, cleaned, re.IGNORECASE)
+        if m:
+            violations.append({
+                "type": "PROCEDURAL_STATUTE_HALLUCINATION",
+                "matched": m.group(0),
+                "description": desc,
+                "replacement": replacement
+            })
+            cleaned = re.sub(pat, replacement, cleaned, flags=re.IGNORECASE)
+
     # 2. General Claim-to-Headnote Verification
     # For every retrieved precedent cited in the memo, check if the asserted holding
     # is grounded in the retrieved candidate's holding / headnote / text.

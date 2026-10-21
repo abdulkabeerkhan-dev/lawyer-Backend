@@ -917,4 +917,61 @@ def detect_statutory_provisions_in_query(query: str) -> List[Tuple[str, str]]:
                 if cid and cid not in seen:
                     seen.add(cid)
                     provisions.append((cid, act_code))
+
+    # 3. Conceptual Intent Gating (When query poses a legal question without specifying section numbers)
+    q_low = query.lower()
+
+    # Bail & Arrest without warrant intent
+    if "bail" in q_low:
+        if any(w in q_low for w in ["bailable", "non-bailable", "non bailable", "arrest", "custody", "warrant", "post-arrest", "pre-arrest", "which section"]):
+            for cid, act in [("CRPC_1898_SEC_496", "CRPC_1898"), ("CRPC_1898_SEC_497", "CRPC_1898")]:
+                if cid not in seen:
+                    seen.add(cid)
+                    provisions.append((cid, act))
+        if any(w in q_low for w in ["pre-arrest", "anticipatory", "jurisdiction", "which court", "sessions", "high court", "appeal"]):
+            cid, act = "CRPC_1898_SEC_498", "CRPC_1898"
+            if cid not in seen:
+                seen.add(cid)
+                provisions.append((cid, act))
+        if any(w in q_low for w in ["without a warrant", "without warrant", "arrest without"]):
+            for cid, act in [("CRPC_1898_SEC_54", "CRPC_1898"), ("CRPC_1898_SEC_61", "CRPC_1898")]:
+                if cid not in seen:
+                    seen.add(cid)
+                    provisions.append((cid, act))
+
+    # Dishonour of cheque intent
+    if any(w in q_low for w in ["cheque", "check"]) and any(w in q_low for w in ["dishonour", "dishonored", "bounced", "bouncing"]):
+        for cid, act in [("PPC_1860_SEC_489F", "PPC_1860"), ("NI_ACT_1881_SEC_138", "NI_ACT_1881")]:
+            if cid not in seen:
+                seen.add(cid)
+                provisions.append((cid, act))
+
+    # Specific performance intent
+    if "specific performance" in q_low:
+        for cid, act in [("SRA_1877_SEC_12", "SRA_1877"), ("SRA_1877_SEC_22", "SRA_1877")]:
+            if cid not in seen:
+                seen.add(cid)
+                provisions.append((cid, act))
+
+    # Rejection of plaint intent
+    if "rejection of plaint" in q_low or "reject the plaint" in q_low or "reject plaint" in q_low:
+        cid, act = "CPC_1908_ORD_VII_R_11", "CPC_1908"
+        if cid not in seen:
+            seen.add(cid)
+            provisions.append((cid, act))
+
+    # Temporary injunction intent
+    if any(w in q_low for w in ["temporary injunction", "interim injunction", "stay order"]):
+        for cid, act in [("CPC_1908_ORD_XXXIX_R_1", "CPC_1908"), ("CPC_1908_ORD_XXXIX_R_2", "CPC_1908")]:
+            if cid not in seen:
+                seen.add(cid)
+                provisions.append((cid, act))
+
+    # Adverse possession intent
+    if "adverse possession" in q_low or "animus possidendi" in q_low:
+        for cid, act in [("LIMITATION_1908_SEC_28", "LIMITATION_1908"), ("LIMITATION_1908_ART_144", "LIMITATION_1908")]:
+            if cid not in seen:
+                seen.add(cid)
+                provisions.append((cid, act))
+
     return provisions

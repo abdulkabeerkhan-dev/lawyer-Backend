@@ -212,8 +212,19 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         domains.append("corporate crime")
         if "corporate" not in matter_type:
             matter_type.append("corporate")
-    if any(k in q_low for k in ["pre-arrest bail", "bail", "498", "497"]):
+    if any(k in q_low for k in ["pre-arrest bail", "pre arrest bail", "anticipatory bail"]):
         domains.append("pre-arrest bail")
+        if "criminal" not in matter_type:
+            matter_type.append("criminal")
+    elif any(k in q_low for k in ["post-arrest bail", "post arrest bail", "arrested", "custody", "in jail"]) and "bail" in q_low:
+        domains.append("post-arrest bail")
+        if "criminal" not in matter_type:
+            matter_type.append("criminal")
+    elif any(k in q_low for k in ["bail", "496", "497", "498"]):
+        if any(k in q_low for k in ["arrested", "custody", "without a warrant", "without warrant"]):
+            domains.append("post-arrest bail")
+        else:
+            domains.append("bail")
         if "criminal" not in matter_type:
             matter_type.append("criminal")
     if any(k in q_low for k in ["rent", "tenant", "landlord", "eviction", "evict", "ejectment", "prpa", "srpo", "tenancy", "commercial shop"]):
@@ -287,7 +298,7 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                 num_int = int(clean_digit) if clean_digit else 0
                 if num_int in [409, 420, 406, 489, 302, 376, 380, 468, 471, 324, 34, 109]:
                     stat_suffix = "PPC"
-                elif num_int in [497, 498, 561, 154, 161, 164, 173, 249, 265, 342]:
+                elif num_int in [496, 497, 498, 561, 154, 161, 164, 173, 249, 265, 342, 54, 61, 22]:
                     stat_suffix = "CrPC"
                 elif num_int in [115, 12, 151, 96, 100, 114]:
                     stat_suffix = "CPC"
@@ -320,6 +331,16 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
             provisions.append(a.title())
 
     # Topic-specific mandatory provision inclusions
+    if "bail" in q_low:
+        if any(k in q_low for k in ["bailable", "non-bailable", "non bailable", "arrest", "which section", "custody"]):
+            for bp in ["Section 496 CrPC", "Section 497 CrPC", "Section 498 CrPC"]:
+                if not any(bp.split()[1] in p for p in provisions):
+                    provisions.append(bp)
+            if any(k in q_low for k in ["without warrant", "without a warrant", "arrest without"]):
+                for ap in ["Section 54 CrPC", "Section 61 CrPC"]:
+                    if not any(ap.split()[1] in p for p in provisions):
+                        provisions.append(ap)
+
     if any(k in q_low for k in ["cheque", "bounced", "dishonour", "489-f", "489f"]):
         if not any("489" in p for p in provisions):
             provisions.append("Section 489-F PPC")
@@ -430,8 +451,13 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         questions.append("civil dispute vs criminal breach of trust (dishonest intention at inception)")
     if any(k in q_low for k in ["409", "misappropriat"]) or ("director" in q_low and any(k in q_low for k in ["funds", "misappropriat", "breach of trust", "board", "shares", "fiduciary"])):
         questions.append("applicability of Section 409 PPC to company director managing corporate funds")
-    if any(k in q_low for k in ["bail", "498", "arrest"]):
-        questions.append("grounds for pre-arrest bail under Section 498 CrPC (mala fide and ulterior motive)")
+    if "bail" in q_low or any(k in q_low for k in ["496", "497", "498"]):
+        if any(k in q_low for k in ["arrested", "in custody", "without a warrant", "without warrant", "post-arrest"]):
+            questions.append("statutory distinction between bailable offences under Section 496 CrPC (mandatory right, no discretion to refuse) vs non-bailable offences under Section 497 CrPC (judicial discretion)")
+            questions.append("scope of prohibitory clause (punishable with death, life, or 10+ years) vs non-prohibitory clause (bail is rule, refusal exception per Tariq Bashir PLD 1995 SC 34)")
+            questions.append("forum hierarchy: Area Judicial Magistrate / SHO (S. 496/497) -> Court of Session (S. 497/498) -> High Court (S. 497/498 concurrent statutory jurisdiction, not Art. 199 writ)")
+        else:
+            questions.append("grounds for pre-arrest bail under Section 498 CrPC (demonstration of mala fide, ulterior motive, and apprehension of imminent arrest)")
     if any(k in q_low for k in ["adverse possession", "provincial government", "state land"]):
         questions.append("whether adverse possession can mature against Provincial Government under Section 28 Limitation Act")
         questions.append("statutory limitation period for Government recovery of land under Article 149 (60 years) vs Article 144")
@@ -510,6 +536,24 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                     "lane": "injunction_breach_rule_2_3",
                     "query": "Order XXXIX Rule 2(3) CPC disobedience breach of injunction stay order attachment of property detention in civil prison 2006 YLR 2758"
                 })
+
+    # Dedicated lanes for Bail queries
+    if "bail" in q_low and any(k in q_low for k in ["bailable", "non-bailable", "non bailable", "arrest", "which section"]):
+        if not any(l["lane"] == "bail_bailable_s496" for l in lanes):
+            lanes.insert(0, {
+                "lane": "bail_bailable_s496",
+                "query": "Section 496 CrPC bailable offence bail as matter of right not favor police station magistrate"
+            })
+        if not any(l["lane"] == "bail_non_bailable_s497" for l in lanes):
+            lanes.insert(1, {
+                "lane": "bail_non_bailable_s497",
+                "query": "Section 497 CrPC non-bailable prohibitory clause Tariq Bashir PLD 1995 SC 34 concession grace judicial discretion"
+            })
+        if not any(l["lane"] == "bail_concurrent_jurisdiction_s498" for l in lanes):
+            lanes.append({
+                "lane": "bail_concurrent_jurisdiction_s498",
+                "query": "Section 498 CrPC concurrent jurisdiction Court of Session High Court bail application"
+            })
 
     return LegalQueryPlan(
         legal_domain=domains,
