@@ -18094,5 +18094,29 @@
     "provisos": [],
     "explanations": [],
     "verified": true
+  },
+  {
+    "act_code": "CPC_1908",
+    "act_name": "Code of Civil Procedure, 1908",
+    "provision_type": "order_rule",
+    "primary_num": "XXXIX",
+    "secondary_num": "2(3)",
+    "canonical_id": "CPC_1908_ORD_XXXIX_R_2_SR_3",
+    "display_name": "Order XXXIX Rule 2(3)",
+    "title": "Disobedience or breach of injunction: Attachment of property and detention in civil prison",
+    "status": {
+      "federal": "in_force",
+      "punjab": "in_force",
+      "sindh": "in_force",
+      "kp": "in_force",
+      "balochistan": "in_force"
+    },
+    "superseded_reference": null,
+    "source_citation": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
+    "source_verified_date": "2026-09-23",
+    "verbatim_text": "(3) In case of disobedience, or of breach of any such terms, the Court granting an injunction may order the property of the person guilty of such disobedience or breach to be attached, and may also order such person to be detained in the civil prison for a term not exceeding six months, unless in the meantime the Court directs his release.\n(4) No attachment under this rule shall remain in force for more than one year, at the end of which time, if the disobedience or breach continues, the property attached may be sold, and out of the proceeds the Court may award such compensation as it thinks fit, and shall pay the balance, if any, to the property owner.",
+    "provisos": [],
+    "explanations": [],
+    "verified": true
   }
 ]
