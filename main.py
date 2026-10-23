@@ -158,7 +158,7 @@ def health_check():
         "status": "ok",
         "healthy": True,
         "model": CLAUDE_MODEL,
-        "version": "2.4.1-remediation",
+        "version": "2.4.2-statutory-100",
         "build": os.environ.get("RAILWAY_GIT_COMMIT_SHA", os.environ.get("BUILD_SHA", "deploy-trigger"))[:7]
     }
 
