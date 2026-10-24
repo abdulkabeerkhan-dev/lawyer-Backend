@@ -1,0 +1,42 @@
+[
+  {
+    "canonical_id": "ANTI_RAPE_2021_SEC_3",
+    "act_code": "ANTI_RAPE_2021",
+    "act_name": "Anti-Rape (Investigation and Trial) Act, 2021",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "title": "Establishment of Special Courts for rape trials",
+    "text": "(1) The Federal Government, in consultation with the Chief Justice of the High Court, shall establish Special Courts to try scheduled rape and sexual assault offences with designated trial timelines of six months.",
+    "missing_reason": null,
+    "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Anti-Rape (Investigation and Trial) Act, 2021",
+    "source_page": "unspecified",
+    "content_hash": "a906d44f3441054db31b0c60a18ac41cd8a66f1047ae929d714f768bbed1a742",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
+    "jurisdiction": "federal",
+    "effective_from": "2026-10-21",
+    "effective_to": null
+  },
+  {
+    "canonical_id": "ANTI_RAPE_2021_SEC_12",
+    "act_code": "ANTI_RAPE_2021",
+    "act_name": "Anti-Rape (Investigation and Trial) Act, 2021",
+    "provision_type": "section",
+    "primary_num": "12",
+    "secondary_num": null,
+    "title": "Prohibition of two-finger virginity test",
+    "text": "No medical examination of a female victim of a scheduled offence shall include any virginity test, hymen examination or two-finger test, which is hereby strictly prohibited and illegal.",
+    "missing_reason": null,
+    "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Anti-Rape (Investigation and Trial) Act, 2021",
+    "source_page": "unspecified",
+    "content_hash": "df16db1d2d02f69cf24b4b323dd1bec01571c8295ec0c71494f7fa6a75f30647",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
+    "jurisdiction": "federal",
+    "effective_from": "2026-10-21",
+    "effective_to": null
+  }
+]

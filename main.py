@@ -99,13 +99,29 @@ if sys.stdout and hasattr(sys.stdout, "reconfigure"):
 if sys.stderr and hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding='utf-8', errors='replace')
 
-# SENTRY SYSTEM LOG ENGINE
+# SENTRY SYSTEM LOG ENGINE (PRIVACY-HARDENED)
+def _sentry_privacy_scrubber(event, hint):
+    """Strips query strings, request bodies, PII, and client legal facts before dispatch."""
+    if "request" in event:
+        req = event["request"]
+        if "data" in req:
+            req["data"] = "[REDACTED_REQUEST_BODY]"
+        if "query_string" in req:
+            req["query_string"] = "[REDACTED_QUERY_STRING]"
+        if "headers" in req and isinstance(req["headers"], dict):
+            for h in ["authorization", "cookie", "x-api-key", "clerk-auth-token"]:
+                if h in req["headers"]:
+                    req["headers"][h] = "[REDACTED]"
+    return event
+
 if os.environ.get("SENTRY_DSN") and sentry_sdk:
     sentry_sdk.init(
         dsn=os.environ.get("SENTRY_DSN"),
-        integrations=[FastApiIntegration()] if FastApiIntegration else [],
-        traces_sample_rate=1.0,
-        profiles_sample_rate=1.0,
+        integrations=[FastApiIntegration(transaction_style="endpoint")] if FastApiIntegration else [],
+        traces_sample_rate=0.05,
+        profiles_sample_rate=0.0,
+        send_default_pii=False,
+        before_send=_sentry_privacy_scrubber
     )
 
 # Directive 3: Invert production detection default -- treat as production UNLESS explicitly set to development
@@ -115,9 +131,24 @@ IS_PRODUCTION = _env_val not in ("development", "dev", "test")
 
 def validate_production_auth_config():
     """
-    Mandates 1 & 2: Refuse startup in production if mandatory CORS or database environment variables are missing.
+    Mandates: Refuse startup in production if mandatory CORS, database environment variables,
+    or if ANY dev auth bypass flag is set.
     """
-    if IS_PRODUCTION:
+    env_val = os.environ.get("ENVIRONMENT", "").strip().lower()
+    is_prod = env_val not in ("development", "dev", "test")
+    if is_prod:
+        # Check fail-closed bypass security
+        bypass_env = os.environ.get("ENABLE_DEV_AUTH_BYPASS", "").strip().lower()
+        if bypass_env in ("true", "1", "yes"):
+            raise RuntimeError(
+                "FATAL: Production startup refused. ENABLE_DEV_AUTH_BYPASS is set in environment. "
+                "All bypass flags must be completely removed or set to false in production mode."
+            )
+        if globals().get("DEV_AUTH_BYPASS_ENABLED", False):
+            raise RuntimeError(
+                "FATAL: Production startup refused. DEV_AUTH_BYPASS_ENABLED evaluated to True."
+            )
+
         missing = []
         if not os.environ.get("ALLOWED_ORIGINS", "").strip():
             missing.append("ALLOWED_ORIGINS")
@@ -151,6 +182,14 @@ app = FastAPI(
     redoc_url=None if IS_PRODUCTION else "/redoc",
     openapi_url=None if IS_PRODUCTION else "/openapi.json"
 )
+
+@app.middleware("http")
+async def block_docs_in_production_middleware(request: Request, call_next):
+    env_mode = os.environ.get("ENVIRONMENT", "").strip().lower()
+    is_prod_runtime = env_mode not in ("development", "dev", "test")
+    if is_prod_runtime and request.url.path in ("/docs", "/redoc", "/openapi.json"):
+        return Response(status_code=404, content="Not Found")
+    return await call_next(request)
 
 @app.get("/health")
 def health_check():
@@ -3981,12 +4020,18 @@ def format_verified_statutory_provisions(detected_provisions: List[Any]) -> str:
                     if cand.get("canonical_id") == cid:
                         entry = cand
                         break
-            if entry and entry.get("verbatim_text"):
+            txt = entry.get("text") or entry.get("verbatim_text") if entry else ""
+            if entry and txt:
                 disp = entry.get("display_name") or cid
                 title = entry.get("title") or ""
                 act_name = entry.get("act_name") or act_c or ""
+                tier_str = entry.get("tier") or "ingested, unreviewed"
+                page_str = entry.get("source_page") or "unspecified"
+                hash_str = entry.get("content_hash") or ""
+                src = entry.get("source_file") or entry.get("source_citation") or "Pakistan Code (pakistancode.gov.pk)"
+
                 lines = [f"### {disp}: {title} [{act_name}]"]
-                lines.append(f'STATUTORY VERBATIM TEXT:\n"{entry["verbatim_text"]}"')
+                lines.append(f'STATUTORY VERBATIM TEXT:\n"{txt}"')
                 if entry.get("provisos"):
                     lines.append("STATUTORY PROVISOS:")
                     for p in entry["provisos"]:
@@ -3995,18 +4040,17 @@ def format_verified_statutory_provisions(detected_provisions: List[Any]) -> str:
                     lines.append("STATUTORY EXPLANATIONS:")
                     for ex in entry["explanations"]:
                         lines.append(f"  * {ex}")
-                src = entry.get("source_citation") or "Official Gazette / Pakistan Code"
-                lines.append(f"STATUS: VERIFIED IN FORCE | SOURCE: {src}")
+                lines.append(f"LABEL: {tier_str} | SOURCE: {src} | PAGE: {page_str} | HASH: {hash_str}")
                 blocks.append("\n".join(lines))
 
         if not blocks:
             return ""
 
         return (
-            "=== VERIFIED STATUTORY PROVISIONS ===\n"
-            "MANDATORY BARE-ACT DIRECTIVE: The following official verbatim statutory provisions and provisos have been verified from the ground-truth statute registry. You MUST ground your statutory analysis and section citations in this verbatim statutory text.\n\n"
+            "=== STATUTORY PROVISIONS (Ingested, Unreviewed) ===\n"
+            "MANDATORY BARE-ACT DIRECTIVE: The following official verbatim statutory provisions have been ingested from official Pakistan Code gazettes. Label this text as 'ingested, unreviewed' with source page and hash. You MUST ground your statutory analysis in this official verbatim text.\n\n"
             + "\n\n".join(blocks)
-            + "\n=====================================\n\n"
+            + "\n===================================================\n\n"
         )
     except Exception as e:
         print(f"[StatuteInjection] Error formatting verified provisions: {e}", flush=True)
@@ -6878,7 +6922,20 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
             else:
                 story.append(Paragraph(safe_p, body_style))
 
-    doc.build(story)
+    def _add_pdf_watermark(canvas, doc_obj):
+        canvas.saveState()
+        canvas.setFont("Helvetica-Bold", 8)
+        canvas.setFillColorRGB(0.5, 0.5, 0.5)
+        canvas.drawCentredString(letter[0] / 2.0, letter[1] - 30, "NOTICE: Reconstructed from database text; not an official copy.")
+        canvas.drawCentredString(letter[0] / 2.0, 20, "NOTICE: Reconstructed from database text; not an official copy.")
+        canvas.setFont("Helvetica-Bold", 42)
+        canvas.setFillColorRGB(0.92, 0.92, 0.92)
+        canvas.translate(letter[0] / 2.0, letter[1] / 2.0)
+        canvas.rotate(45)
+        canvas.drawCentredString(0, 0, "UNOFFICIAL RECONSTRUCTION")
+        canvas.restoreState()
+
+    doc.build(story, onFirstPage=_add_pdf_watermark, onLaterPages=_add_pdf_watermark)
     return buffer.getvalue()
 
 def is_valid_uuid(val: str) -> bool:

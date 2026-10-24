@@ -393,10 +393,14 @@ async def process_query_job_legal_ai(
         )
     else:
         # Default: Judgment-First Mode
+        has_statute_text = "STATUTORY VERBATIM TEXT" in formatted_current_law_block
         is_statute_missing, missing_statute_name = check_missing_statutory_source(
             query_text=effective_user_query,
             query_plan=legal_query_plan
         )
+        if has_statute_text:
+            is_statute_missing = False
+
         missing_statute_directive = ""
         if is_statute_missing:
             missing_statute_directive = (
@@ -474,9 +478,8 @@ async def process_query_job_legal_ai(
             "## Legal Issue\n"
             "[One or two sentences stating the exact legal issue]\n\n"
             "## Relevant Provisions\n"
-            "[If bare-act text is provided in the STATUTORY & CURRENT LAW FRAMEWORK above, cite and extract the provisions directly without stating that statutory text is unavailable. ONLY if statutory text was completely unavailable in the framework, insert: > Statutory text unavailable in retrieved sources. The analysis is based only on judicial references.]\n"
-            "- [Act/Statute name] — [Section number]: [Short explanation]\n\n"
-            "## Judicial Authorities\n"
+            + ("[Official verbatim bare-act statutory text is provided in the STATUTORY & CURRENT LAW FRAMEWORK above. You MUST quote and extract the provisions directly from that text. Do NOT state that statutory text is unavailable. Label the text as 'ingested, unreviewed' with source page and hash.]\n- [Act/Statute name] — [Section number]: [Verbatim quotation and explanation]\n\n" if has_statute_text else "> Statutory text unavailable in retrieved sources. The analysis is based only on judicial references.\n- [Act/Statute name] — [Section number]: [Short explanation]\n\n")
+            + "## Judicial Authorities\n"
             "### [Case Name] — [Citation]\n"
             "- **Court**: [Court Name]\n"
             "- **Authority Level**: [Direct Authority | Analogical Authority | Background Authority]\n"

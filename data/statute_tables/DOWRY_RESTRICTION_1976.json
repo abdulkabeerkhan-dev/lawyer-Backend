@@ -1,32 +1,22 @@
 [
   {
+    "canonical_id": "DOWRY_RESTRICTION_1976_SEC_3",
     "act_code": "DOWRY_RESTRICTION_1976",
     "act_name": "Dowry and Bridal Gifts (Restriction) Act, 1976",
     "provision_type": "section",
     "primary_num": "3",
     "secondary_num": null,
-    "canonical_id": "DOWRY_RESTRICTION_1976_SEC_3",
-    "display_name": "Section 3",
     "title": "Restriction on dowry and presents",
-    "verbatim_text": "(1) The aggregate value of the dowry and presents given to the bride by her parents, and the bridal gifts given to the bridegroom, shall not exceed the prescribed statutory limit.",
-    "provisos": [],
-    "explanations": [],
+    "text": "(1) The aggregate value of the dowry and presents given to the bride by her parents, and the bridal gifts given to the bridegroom, shall not exceed the prescribed statutory limit.",
+    "missing_reason": null,
+    "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Dowry and Bridal Gifts (Restriction) Act, 1976",
+    "source_page": "unspecified",
+    "content_hash": "782fc906175d8b9051eeedd9d058bc06e7097f3c83811e8030a28442f583d0f4",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
     "jurisdiction": "federal",
-    "status": {
-      "federal": "in_force",
-      "punjab": "in_force",
-      "sindh": "in_force",
-      "kp": "in_force",
-      "balochistan": "in_force"
-    },
-    "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Dowry and Bridal Gifts (Restriction) Act, 1976",
-    "source_verified_date": "2026-10-21",
-    "verified": true,
-    "federal": "in_force",
-    "punjab": "in_force",
-    "sindh": "in_force",
-    "kp": "in_force",
-    "balochistan": "in_force"
+    "effective_from": "2026-10-21",
+    "effective_to": null
   }
 ]

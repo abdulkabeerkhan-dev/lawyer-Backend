@@ -463,6 +463,15 @@ ACT_ALIASES = {
     "negotiable instruments act 1881": "NIA_1881",
     "nia 1881": "NIA_1881",
 
+    # Banking Recovery 1997
+    "banking companies (recovery of loans) act": "BANKING_RECOVERY_1997",
+    "banking companies (recovery of loans, advances, credits and finances) act 1997": "BANKING_RECOVERY_1997",
+    "banking companies (recovery of loans) act 1997": "BANKING_RECOVERY_1997",
+    "banking companies recovery of loans act": "BANKING_RECOVERY_1997",
+    "banking companies act 1997": "BANKING_RECOVERY_1997",
+    "banking court": "FIO_2001",
+    "banking court order": "FIO_2001",
+
     # Partnership Act
     "partnership act": "PARTNERSHIP_1932",
     "partnership act 1932": "PARTNERSHIP_1932",
@@ -926,6 +935,35 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
                     resolved_act = "LAND_REVENUE_1967"
                 else:
                     resolved_act = "TPA_1882"
+            elif raw_prim == "22":
+                if any(w in search_context for w in ["1997", "act xv of 1997", "recovery of loans, advances", "banking companies (recovery of loans) act 1997"]):
+                    resolved_act = "BANKING_RECOVERY_1997"
+                elif any(w in search_context for w in ["banking", "bank", "financial institution", "financial institutions", "fio", "loan", "finance", "recovery of finances", "decretal", "banking court", "banking judge"]):
+                    resolved_act = "FIO_2001"
+                elif any(w in search_context for w in ["justice of peace", "peace", "crpc", "fir", "police", "ex-officio"]):
+                    resolved_act = "CRPC_1898"
+                elif any(w in search_context for w in ["transfer of suit", "power to transfer", "subordinate court", "cpc"]):
+                    resolved_act = "CPC_1908"
+                else:
+                    resolved_act = "CPC_1908"
+            elif raw_prim == "138":
+                if any(w in search_context for w in ["cheque", "dishonour", "bounced", "negotiable", "ni act"]):
+                    resolved_act = "NI_ACT_1881"
+                elif any(w in search_context for w in ["railway", "railways"]):
+                    resolved_act = "RAILWAYS_1890"
+                else:
+                    resolved_act = "NI_ACT_1881"
+            elif raw_prim == "7":
+                if any(w in search_context for w in ["ata", "terror", "anti-terrorism", "terrorist"]):
+                    resolved_act = "ATA_1997"
+                elif any(w in search_context for w in ["court fees", "valuation", "stamp"]):
+                    resolved_act = "COURT_FEES_1870"
+                elif any(w in search_context for w in ["cnsa", "narcotics", "contraband"]):
+                    resolved_act = "CNSA_1997"
+                elif any(w in search_context for w in ["mflo", "talaq", "divorce", "arbitration council"]):
+                    resolved_act = "MFLO_1961"
+                else:
+                    resolved_act = "CPC_1908"
             elif raw_prim in ("496", "497", "498", "561A", "22A", "154", "156", "161", "164", "173"):
                 resolved_act = "CRPC_1898"
             elif raw_prim in ("302", "337", "489F", "420", "406", "376", "34", "109"):

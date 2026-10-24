@@ -1,0 +1,42 @@
+[
+  {
+    "canonical_id": "BENAMI_2017_SEC_3",
+    "act_code": "BENAMI_2017",
+    "act_name": "Benami Transactions (Prohibition) Act, 2017",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "title": "Prohibition of Benami transactions",
+    "text": "(1) No person shall enter into any Benami transaction. (2) Whoever enters into any Benami transaction or abets the commission of a Benami transaction shall be guilty of the offence of Benami transaction.",
+    "missing_reason": null,
+    "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Benami Transactions (Prohibition) Act, 2017",
+    "source_page": "unspecified",
+    "content_hash": "06649a07b47e8bb5dfe605772e6b662e891a75f0961badfca618436c920dadb7",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
+    "jurisdiction": "federal",
+    "effective_from": "2026-10-21",
+    "effective_to": null
+  },
+  {
+    "canonical_id": "BENAMI_2017_SEC_5",
+    "act_code": "BENAMI_2017",
+    "act_name": "Benami Transactions (Prohibition) Act, 2017",
+    "provision_type": "section",
+    "primary_num": "5",
+    "secondary_num": null,
+    "title": "Property held in Benami liable to confiscation",
+    "text": "Any property, which is subject-matter of a Benami transaction, shall be liable to be confiscated by the Federal Government.",
+    "missing_reason": null,
+    "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Benami Transactions (Prohibition) Act, 2017",
+    "source_page": "unspecified",
+    "content_hash": "807f6efbae1962180b66c2738a50bd226e36e4e939819823e6caeb5e9b247fa7",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
+    "jurisdiction": "federal",
+    "effective_from": "2026-10-21",
+    "effective_to": null
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "canonical_id": "CIVIL_COURTS_1962_SEC_8",
+    "act_code": "CIVIL_COURTS_1962",
+    "act_name": "West Pakistan Civil Courts Ordinance, 1962 (W.P. Ordinance II of 1962)",
+    "provision_type": "section",
+    "primary_num": "8",
+    "secondary_num": null,
+    "title": "Classes of Civil Courts",
+    "text": "There shall be the following classes of Civil Courts: (a) The Court of the District Judge; (b) The Court of the Additional District Judge; and (c) The Court of the Civil Judge (Class I, Class II, and Class III).",
+    "missing_reason": null,
+    "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), West Pakistan Civil Courts Ordinance, 1962 (W.P. Ordinance II of 1962)",
+    "source_page": "unspecified",
+    "content_hash": "935d10080c0ff808d51763bbec098852a08bdce9762de4a5cd224ccc36f6bf9f",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
+    "jurisdiction": "federal",
+    "effective_from": "2026-10-21",
+    "effective_to": null
+  },
+  {
+    "canonical_id": "CIVIL_COURTS_1962_SEC_18",
+    "act_code": "CIVIL_COURTS_1962",
+    "act_name": "West Pakistan Civil Courts Ordinance, 1962 (W.P. Ordinance II of 1962)",
+    "provision_type": "section",
+    "primary_num": "18",
+    "secondary_num": null,
+    "title": "Appeals from Civil Judges to District Court",
+    "text": "Save as otherwise provided by any enactment, an appeal from a decree or order of a Civil Judge shall lie: (a) to the District Judge where the value of the original suit did not exceed fifty million rupees; and (b) to the High Court in any other case.",
+    "missing_reason": null,
+    "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), West Pakistan Civil Courts Ordinance, 1962 (W.P. Ordinance II of 1962)",
+    "source_page": "unspecified",
+    "content_hash": "18c956627b523d03fbdb45462102d6a527df246f6c540214b5d02026459faf05",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
+    "jurisdiction": "federal",
+    "effective_from": "2026-10-21",
+    "effective_to": null
+  }
+]

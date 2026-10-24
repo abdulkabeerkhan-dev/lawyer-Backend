@@ -174,10 +174,14 @@ def get_anthropic_client():
                 api_key=ANTHROPIC_API_KEY,
                 default_headers=anthropic_headers if anthropic_headers else None
             )
-            try:
-                from langsmith import wrappers
-                _async_anthropic_client = wrappers.wrap_anthropic(raw_client)
-            except Exception:
+            enable_langsmith = os.environ.get("LANGSMITH_CAPTURE_PROMPTS", "false").lower() in ("true", "1", "yes")
+            if enable_langsmith:
+                try:
+                    from langsmith import wrappers
+                    _async_anthropic_client = wrappers.wrap_anthropic(raw_client)
+                except Exception:
+                    _async_anthropic_client = raw_client
+            else:
                 _async_anthropic_client = raw_client
         except Exception as launch_err:
             print(f"⚠️ [legal_ai.config] Anthropic client init warning: {launch_err}", file=sys.stderr, flush=True)

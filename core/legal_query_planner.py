@@ -284,6 +284,36 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
 
     # 5. Identify standard provisions - FILTER ENACTMENT YEARS (Year-to-PPC bug fix)
     provisions = []
+
+    # Priority 1: Ground truth canonical detection from unified statute currency
+    try:
+        from core.statute_currency import detect_statutory_provisions_in_query
+        detected_cids = detect_statutory_provisions_in_query(query)
+        for cid, act_c in detected_cids:
+            m_sec = re.search(r'SEC_([0-9]+[A-Za-z]*)', cid)
+            sec_n = m_sec.group(1) if m_sec else ""
+            act_disp = act_c.replace('_', ' ')
+            if "FIO" in act_c:
+                act_disp = "Financial Institutions (Recovery of Finances) Ordinance 2001"
+            elif "NI_ACT" in act_c:
+                act_disp = "Negotiable Instruments Act, 1881"
+            elif "CRPC" in act_c:
+                act_disp = "CrPC"
+            elif "PPC" in act_c:
+                act_disp = "PPC"
+            elif "CPC" in act_c:
+                act_disp = "CPC"
+            elif "SRA" in act_c:
+                act_disp = "Specific Relief Act, 1877"
+            elif "TPA" in act_c:
+                act_disp = "Transfer of Property Act, 1882"
+
+            p_label = f"Section {sec_n} {act_disp}".strip() if sec_n else cid
+            if p_label not in provisions:
+                provisions.append(p_label)
+    except Exception:
+        pass
+
     sec_matches = re.findall(r'(?:sections?|secs?\.?|ss\.?|s\.)\s*([0-9]+(?:-[a-z])?(?:\s*(?:and|&|,)\s*[0-9]+(?:-[a-z])?)*)\s*(ppc|crpc|cpc|qso|sra|fio)?', q_low)
     for m, statute in sec_matches:
         nums = re.findall(r'[0-9]+(?:-[a-z])?', m)
@@ -298,7 +328,9 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                 num_int = int(clean_digit) if clean_digit else 0
                 if num_int in [409, 420, 406, 489, 302, 376, 380, 468, 471, 324, 34, 109]:
                     stat_suffix = "PPC"
-                elif num_int in [496, 497, 498, 561, 154, 161, 164, 173, 249, 265, 342, 54, 61, 22]:
+                elif num_int in [496, 497, 498, 561, 154, 161, 164, 173, 249, 265, 342, 54, 61]:
+                    stat_suffix = "CrPC"
+                elif num_int == 22 and any(k in q_low for k in ["justice of peace", "peace", "crpc", "fir", "police", "ex-officio"]):
                     stat_suffix = "CrPC"
                 elif num_int in [115, 12, 151, 96, 100, 114]:
                     stat_suffix = "CPC"
@@ -308,6 +340,8 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                     stat_suffix = "Limitation Act"
                 elif "rent" in matter_type:
                     stat_suffix = "PRPA" if province == "Punjab" else "SRPO"
+                elif any(k in q_low for k in ["banking", "bank", "financial institutions", "fio", "loan", "finance"]):
+                    stat_suffix = "Financial Institutions (Recovery of Finances) Ordinance 2001"
                 else:
                     stat_suffix = ""
 
@@ -315,7 +349,8 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                 continue
 
             prov_str = f"Section {num} {stat_suffix}".strip() if stat_suffix else f"Section {num}"
-            if prov_str not in provisions:
+            already_covered = any(f"section {num} " in p.lower() or p.lower() == f"section {num}" for p in provisions)
+            if not already_covered and prov_str not in provisions:
                 provisions.append(prov_str)
 
     # Fallback to extracted anchors
@@ -323,6 +358,11 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         m_yr = re.search(r'\b(18\d\d|19\d\d|20\d\d)\b', a)
         if m_yr:
             continue
+        m_sec = re.search(r'\bsection\s*([0-9]+(?:-[a-z])?)\b', a.lower())
+        if m_sec:
+            sec_val = m_sec.group(1)
+            if any(f"section {sec_val}" in p.lower() for p in provisions):
+                continue
         if a.startswith("section ") and a not in [p.lower() for p in provisions]:
             provisions.append(a.title())
         elif a.startswith("article ") and a not in [p.lower() for p in provisions]:

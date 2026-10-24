@@ -1,0 +1,42 @@
+[
+  {
+    "canonical_id": "EVACUEE_PROPERTY_1957_SEC_3",
+    "act_code": "EVACUEE_PROPERTY_1957",
+    "act_name": "Pakistan (Administration of Evacuee Property) Act, 1957 (Act XII of 1957)",
+    "provision_type": "section",
+    "primary_num": "3",
+    "secondary_num": null,
+    "title": "Bar against declaring property evacuee after specified date",
+    "text": "Notwithstanding anything contained in this Act, no person or property not treated as evacuee before the first day of January, 1957, shall be treated or declared as evacuee property, and no proceedings shall lie in respect thereof.",
+    "missing_reason": null,
+    "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Pakistan (Administration of Evacuee Property) Act, 1957 (Act XII of 1957)",
+    "source_page": "unspecified",
+    "content_hash": "c0e8857abe0b8b5eb8d4296b8dde272f27ed5a9e44a566444cf55e38f41917c3",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
+    "jurisdiction": "federal",
+    "effective_from": "2026-10-21",
+    "effective_to": null
+  },
+  {
+    "canonical_id": "EVACUEE_PROPERTY_1957_SEC_41",
+    "act_code": "EVACUEE_PROPERTY_1957",
+    "act_name": "Pakistan (Administration of Evacuee Property) Act, 1957 (Act XII of 1957)",
+    "provision_type": "section",
+    "primary_num": "41",
+    "secondary_num": null,
+    "title": "Jurisdiction of Civil Courts barred",
+    "text": "Save as otherwise expressly provided in this Act, no civil or revenue court shall have jurisdiction to entertain or adjudicate upon any question whether any person is or is not an evacuee, or whether any property is or is not evacuee property.",
+    "missing_reason": null,
+    "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Pakistan (Administration of Evacuee Property) Act, 1957 (Act XII of 1957)",
+    "source_page": "unspecified",
+    "content_hash": "f5fec332f81f7fba15bba0612ca5ba544f1fb8554e7511a75bc3bd33283712b6",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
+    "jurisdiction": "federal",
+    "effective_from": "2026-10-21",
+    "effective_to": null
+  }
+]

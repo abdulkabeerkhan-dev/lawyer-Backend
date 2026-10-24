@@ -1,34 +1,22 @@
 [
   {
+    "canonical_id": "STAMP_ACT_1899_SEC_35",
     "act_code": "STAMP_ACT_1899",
     "act_name": "Stamp Act, 1899",
     "provision_type": "section",
     "primary_num": "35",
     "secondary_num": null,
-    "canonical_id": "STAMP_ACT_1899_SEC_35",
-    "display_name": "Section 35",
     "title": "Instruments not duly stamped inadmissible in evidence",
-    "verbatim_text": "No instrument chargeable with duty shall be admitted in evidence for any purpose by any person having by law or consent of parties authority to receive evidence, or shall be acted upon, registered or authenticated by any such person or by any public officer, unless such instrument is duly stamped: Provided that any such instrument shall, subject to all just exceptions, be admitted in evidence on payment of the duty with which the same is chargeable, or, in the case of an instrument insufficiently stamped, of the amount required to make up such duty, together with a penalty of ten times the amount of the proper duty or of deficient portion thereof.",
-    "provisos": [
-      "Provided that any such instrument shall, subject to all just exceptions, be admitted in evidence on payment of the duty with which the same is chargeable, or, in the case of an instrument insufficiently stamped, of the amount required to make up such duty, together with a penalty of ten times the amount of the proper duty or of deficient portion thereof."
-    ],
-    "explanations": [],
+    "text": "No instrument chargeable with duty shall be admitted in evidence for any purpose by any person having by law or consent of parties authority to receive evidence, or shall be acted upon, registered or authenticated by any such person or by any public officer, unless such instrument is duly stamped: Provided that any such instrument shall, subject to all just exceptions, be admitted in evidence on payment of the duty with which the same is chargeable, or, in the case of an instrument insufficiently stamped, of the amount required to make up such duty, together with a penalty of ten times the amount of the proper duty or of deficient portion thereof.",
+    "missing_reason": null,
+    "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Stamp Act, 1899",
+    "source_page": "unspecified",
+    "content_hash": "162978fcfa1f923877da743cca2a55170a0976a69f3bd44f274e3cd485e00222",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
     "jurisdiction": "federal",
-    "status": {
-      "federal": "in_force",
-      "punjab": "in_force",
-      "sindh": "in_force",
-      "kp": "in_force",
-      "balochistan": "in_force"
-    },
-    "superseded_reference": null,
-    "source_citation": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Stamp Act, 1899",
-    "source_verified_date": "2026-10-21",
-    "verified": true,
-    "federal": "in_force",
-    "punjab": "in_force",
-    "sindh": "in_force",
-    "kp": "in_force",
-    "balochistan": "in_force"
+    "effective_from": "2026-10-21",
+    "effective_to": null
   }
 ]

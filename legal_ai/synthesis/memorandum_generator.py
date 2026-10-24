@@ -31,55 +31,55 @@ REQUIRED_12_FIELDS: List[str] = [
 
 def purge_debug_warnings(text: str) -> str:
     """
-    Strips prototype warnings, verification notices, completeness notices,
-    and statutory currency warning tags from user-facing output.
+    Splits banner handling into:
+    (1) Developer artifacts: removed (prototype banners, internal appendic notices, fake certifications, word counts).
+    (2) Substantive user-facing warnings: preserved and rendered in a structured footer.
     """
     if not text:
         return ""
     clean = text
 
-    # 1. Strip Prototype warning banners
+    # Capture substantive user-facing warnings
+    user_warnings = []
+    if "[NOT CHECKED" in clean:
+        user_warnings.append("Statutory Currency: One or more provisions carry pending currency verification.")
+    if "Unverified Quotation" in clean:
+        user_warnings.append("Quotation Integrity: One or more judicial quotations are unverified against authoritative law reports.")
+    if "JUDICIAL REVIEW GATE" in clean:
+        user_warnings.append("Judicial Review: Headnote/precedent record has not undergone complete appellate review corroboration.")
+
+    # 1. Strip developer artifacts
     clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}Prototype\..*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
     clean = re.sub(r'(?is)###\s*(?:\d+\.?\s*)?APPENDIX:\s*SYSTEM\s*&\s*VERIFICATION\s*NOTICE.*?(?=(?:\n\s*###|\Z))', '', clean)
     clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}Notice\*{0,2}:\s*This result was found via full-text keyword search.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
     clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}Notice on Case Law Grounding\*{0,2}:.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
-
-    # 2. Strip Judicial Review Corroboration and Gate notices
-    clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}\[?JUDICIAL REVIEW CORROBORATION NOTICE\]?\*{0,2}.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
-    clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}\[?JUDICIAL REVIEW GATE:\s*NOT REVIEWED\]?\*{0,2}.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
-    clean = re.sub(r'(?is)###\s*(?:\d+\.?\s*)?APPENDIX:\s*JUDICIAL\s*REVIEW\s*CORROBORATION\s*NOTICE.*?(?=(?:\n\s*###|\Z))', '', clean)
     clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}\[?LEGAL MEMO NOTICE\]?\*{0,2}.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
     clean = re.sub(r'(?is)###\s*(?:\d+\.?\s*)?APPENDIX:\s*LEGAL\s*MEMO\s*NOTICES.*?(?=(?:\n\s*###|\Z))', '', clean)
     clean = re.sub(r'(?is)⚠️\s*\*{0,2}\[?GENERATION INCOMPLETE NOTICE\]?\*{0,2}:?.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
-
-    # 3. Strip unverified quotation notices
-    clean = re.sub(r'(?is)⚠️\s*\*{0,2}Unverified Quotation Notice\*{0,2}:.*?(?=(?:\n\s*###|\n\s*1\.|\n\s*\*{1,2}[A-Z]|\n\n|\Z))', '', clean)
-
-    # 4. Strip statutory currency warning tags
-    clean = re.sub(r'\s*\[NOT CHECKED\]', '', clean)
-    clean = re.sub(r'(?is)####\s*Statutory Currency Verification Status.*?(?=(?:\n\s*###|\n\s*####|\n\n|\Z))', '', clean)
-    clean = re.sub(r'(?is)###\s*(?:\d+\.?\s*)?APPENDIX:\s*STATUTORY\s*CURRENCY.*?(?=(?:\n\s*###|\Z))', '', clean)
-
-    # 5. Strip artificial certification blocks and declarations
     clean = re.sub(
         r'(?is)(?:\n\s*---\s*)?(?:###\s*)?(?:\*{0,2})(?:Counsel\'?s?\s*Certification|Certification\s*of\s*Counsel|Prepared\s*by\s*(?:Senior\s*)?Counsel|Senior\s*Appellate\s*Counsel\s*Certification)[\s\S]*?(?=(?:\n\s*###|\Z))',
-        '',
-        clean
+        '', clean
     )
-
-    # 6. Strip fake metadata, word count, and completion declarations
     clean = re.sub(r'(?i)^\s*(?:Word\s*Count|Total\s*Words?)\s*:\s*[0-9,]+.*$', '', clean, flags=re.MULTILINE)
     clean = re.sub(r'(?i)^\s*All\s*8\s*Sections\s*Completed.*$', '', clean, flags=re.MULTILINE)
     clean = re.sub(r'(?i)^\s*all\s*citations\s*verified\s*active\s*status.*$', '', clean, flags=re.MULTILINE)
     clean = re.sub(r'(?i)^\s*no\s*conflicting\s*decisions\s*identified.*$', '', clean, flags=re.MULTILINE)
     clean = re.sub(r'(?i)^\s*Word\s*Count\s*Budget.*$', '', clean, flags=re.MULTILINE)
-
-    # 7. Strip placeholder dates like [Current Date], [Date], [Insert Date]
     clean = re.sub(r'\[(?:Current\s*Date|Date|Insert\s*Date)\]', '', clean, flags=re.IGNORECASE)
 
-    # 8. Clean excessive empty lines and trailing horizontal rules
+    # Clean inline banner markers
+    clean = re.sub(r'\s*\[NOT CHECKED[^\]]*\]', '', clean)
+    clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}\[?JUDICIAL REVIEW.*?\]?\*{0,2}.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
+    clean = re.sub(r'(?is)⚠️\s*\*{0,2}Unverified Quotation Notice\*{0,2}:.*?(?=(?:\n\s*###|\n\s*1\.|\n\s*\*{1,2}[A-Z]|\n\n|\Z))', '', clean)
+
     clean = re.sub(r'\n{3,}', '\n\n', clean).strip()
     clean = re.sub(r'\n---\s*$', '', clean).strip()
+
+    if user_warnings:
+        clean += "\n\n---\n### Statutory & Evidentiary Disclosures\n"
+        for w in user_warnings:
+            clean += f"- **Notice**: {w}\n"
+
     return clean
 
 

@@ -825,9 +825,9 @@ def detect_statutory_provisions_in_query(query: str) -> List[Tuple[str, str]]:
         flags=re.IGNORECASE
     )
 
-    # Shorthand Section + Act (e.g. 489-F PPC, 497 CrPC, 302 PPC, 12(2) CPC, 561-A CrPC, 22-A CrPC)
+    # Shorthand Section + Act (e.g. 489-F PPC, 497 CrPC, s.22(6) FIO, section 22(6) of FIO)
     for m in re.finditer(
-        r'\b(\d+(?:-[A-Za-z]+|[A-Za-z])?)(?:\s*\(\s*(\d+)\s*\))?(?:\s*\(\s*([a-zA-Z])\s*\))?\s*(ppc|crpc|cr\.p\.c\.?|cpc|c\.p\.c\.?|qso|mflo|fio|sra|tpa|peca|ata|nab|nao|ito|gwa|nia|cnsa|const|constitution)\b',
+        r'(?:sections?|secs?\.?|ss\.?|s\.)?\s*\b(\d+(?:-[A-Za-z]+|[A-Za-z])?)(?:\s*\(\s*(\d+)\s*\))?(?:\s*\(\s*([a-zA-Z])\s*\))?\s*(?:of\s+(?:the\s+)?)?\s*(ppc|crpc|cr\.p\.c\.?|cpc|c\.p\.c\.?|qso|mflo|fio|sra|tpa|peca|ata|nab|nao|ito|gwa|nia|cnsa|const|constitution)\b',
         masked_query, re.IGNORECASE
     ):
         parsed = parse_statutory_citation(m.group(0), context=query)
@@ -888,9 +888,10 @@ def detect_statutory_provisions_in_query(query: str) -> List[Tuple[str, str]]:
                 provisions.append((cid, act_code))
 
     # 2. General clause scanning with full query context
-    # Mask 7/11 so it does not falsely trigger bare Section 11
+    # Mask 7/11 and law report citations so years do not falsely trigger section numbers
     clean_query_for_clauses = re.sub(r'\b7\s*[/\\-]\s*11\b', ' ', query)
-    clauses = re.split(r'[,;.\n]|\band\b', clean_query_for_clauses)
+    clean_query_for_clauses = re.sub(r'\b(19\d\d|20\d\d)\s+[A-Za-z]+(?:\s+[A-Za-z]+)?\s+\d+\b', ' LAW_REPORT_CITATION_MASKED ', clean_query_for_clauses)
+    clauses = re.split(r'[,;.\n]|\b(?:and|or|vs|versus|read with)\b', clean_query_for_clauses)
     clauses = [query] + clauses
 
     for clause in clauses:

@@ -1,0 +1,22 @@
+[
+  {
+    "canonical_id": "ARMS_1965_SEC_13",
+    "act_code": "ARMS_1965",
+    "act_name": "West Pakistan Arms Ordinance, 1965",
+    "provision_type": "section",
+    "primary_num": "13",
+    "secondary_num": null,
+    "title": "Penalty for possessing unlicensed arms, ammunition or military stores",
+    "text": "Whoever acquires, possesses, or carries any firearm or ammunition without a valid license shall be punished with imprisonment for a term which may extend to seven years, or with fine, or with both.",
+    "missing_reason": null,
+    "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, West Pakistan Arms Ordinance, 1965",
+    "source_page": "unspecified",
+    "content_hash": "379323d415a50953ae74cdcc1edda7047a8695c2d6577c67e7204fd69d7a9499",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
+    "jurisdiction": "federal",
+    "effective_from": "2026-10-21",
+    "effective_to": null
+  }
+]

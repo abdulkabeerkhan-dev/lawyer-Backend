@@ -1,0 +1,42 @@
+[
+  {
+    "canonical_id": "PARTNERSHIP_1932_SEC_4",
+    "act_code": "PARTNERSHIP_1932",
+    "act_name": "Partnership Act, 1932",
+    "provision_type": "section",
+    "primary_num": "4",
+    "secondary_num": null,
+    "title": "Definition of 'Partnership', 'partner', 'firm' and 'firm name'",
+    "text": "'Partnership' is the relation between persons who have agreed to share the profits of a business carried on by all or any of them acting for all. Persons who have entered into partnership with one another are called individually 'partners' and collectively 'a firm', and the name under which their business is carried on is called the 'firm name'.",
+    "missing_reason": null,
+    "source_file": "Pakistan Code (pakistancode.gov.pk), Act IX of 1932",
+    "source_page": "unspecified",
+    "content_hash": "223a30e34675720dd0c6ad9714bf597d28fda4cbb31a1d0e23b7719be57bee31",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
+    "jurisdiction": "federal",
+    "effective_from": "2026-09-23",
+    "effective_to": null
+  },
+  {
+    "canonical_id": "PARTNERSHIP_1932_SEC_69",
+    "act_code": "PARTNERSHIP_1932",
+    "act_name": "Partnership Act, 1932",
+    "provision_type": "section",
+    "primary_num": "69",
+    "secondary_num": null,
+    "title": "Effect of non-registration",
+    "text": "(1) No suit to enforce a right arising from a contract or conferred by this Act shall be instituted in any Court by or on behalf of any person suing as a partner in a firm against the firm or any person alleged to be or to have been a partner in the firm unless the firm is registered and the person suing is or has been shown in the Register of Firms as a partner in the firm.\n(2) No suit to enforce a right arising from a contract shall be instituted in any Court by or on behalf of a firm against any third party unless the firm is registered and the persons suing are or have been shown in the Register of Firms as partners in the firm.",
+    "missing_reason": null,
+    "source_file": "Pakistan Code (pakistancode.gov.pk), Act IX of 1932",
+    "source_page": "unspecified",
+    "content_hash": "3e842dab59884afe38846b5bcf820b3abb0d2656b94585048b22da7da86e8816",
+    "tier": "ingested_unreviewed",
+    "verification_status": "ingested_unreviewed",
+    "status": "in_force",
+    "jurisdiction": "federal",
+    "effective_from": "2026-09-23",
+    "effective_to": null
+  }
+]
