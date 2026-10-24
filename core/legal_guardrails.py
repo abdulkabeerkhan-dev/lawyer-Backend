@@ -1538,10 +1538,10 @@ def derive_court_from_judgment_header(text: str, fallback_meta: Optional[str] = 
     """
     header_sample = (text or "")[:1500].upper()
     fallback_clean = (fallback_meta or "").strip()
-    is_lhc = any(k in header_sample for k in ["LAHORE HIGH COURT", "HIGH COURT LAHORE", "RAWALPINDI BENCH", "MULTAN BENCH", "BAHAWALPUR BENCH"])
-    is_shc = any(k in header_sample for k in ["HIGH COURT OF SINDH", "SINDH HIGH COURT", "BENCH AT SUKKUR", "CIRCUIT COURT HYDERABAD"])
-    is_phc = any(k in header_sample for k in ["PESHAWAR HIGH COURT", "HIGH COURT PESHAWAR", "ABBOTTABAD BENCH"])
-    is_bhc = any(k in header_sample for k in ["HIGH COURT OF BALOCHISTAN", "BALOCHISTAN HIGH COURT"])
+    is_lhc = any(k in header_sample for k in ["LAHORE HIGH COURT", "HIGH COURT LAHORE", "RAWALPINDI BENCH", "MULTAN BENCH", "BAHAWALPUR BENCH", "HIGH-COURT-LAHORE", "HIGH-COURT-PUNJAB", "LAHORE-HIGH-COURT"])
+    is_shc = any(k in header_sample for k in ["HIGH COURT OF SINDH", "SINDH HIGH COURT", "BENCH AT SUKKUR", "CIRCUIT COURT HYDERABAD", "HIGH-COURT-SINDH", "KARACHI-HIGH-COURT", "SINDH-HIGH-COURT"])
+    is_phc = any(k in header_sample for k in ["PESHAWAR HIGH COURT", "HIGH COURT PESHAWAR", "ABBOTTABAD BENCH", "HIGH-COURT-PESHAWAR", "PESHAWAR-HIGH-COURT"])
+    is_bhc = any(k in header_sample for k in ["HIGH COURT OF BALOCHISTAN", "BALOCHISTAN HIGH COURT", "HIGH-COURT-BALOCHISTAN", "QUETTA-HIGH-COURT"])
     is_ihc = "ISLAMABAD HIGH COURT" in header_sample
     is_fcc = any(k in header_sample for k in ["FEDERAL CONSTITUTIONAL COURT", "CONSTITUTIONAL COURT OF PAKISTAN", "FEDERAL CONSTITUTIONAL"])
     is_fsc = any(k in header_sample for k in ["FEDERAL SHARIAT COURT", "SHARIAT APPELLATE BENCH", "IN THE FEDERAL SHARIAT COURT"])

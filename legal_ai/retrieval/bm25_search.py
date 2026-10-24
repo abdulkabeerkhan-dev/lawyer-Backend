@@ -43,7 +43,7 @@ def search_bm25_sparse(
     try:
         raw_results = bm25_index_instance.search(query_text, top_k=top_k)
     except Exception as b_err:
-        print(f"⚠️ [BM25Search] Search error for query '{query_text[:50]}': {b_err}", file=sys.stderr)
+        print(f"⚠️ [BM25Search] Search error for query of length {len(query_text)}: {b_err}", file=sys.stderr)
         return []
 
     candidates: List[Dict[str, Any]] = []

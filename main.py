@@ -114,6 +114,16 @@ def _sentry_privacy_scrubber(event, hint):
                     req["headers"][h] = "[REDACTED]"
     return event
 
+def _sentry_breadcrumb_scrubber(crumb, hint):
+    if "data" in crumb and isinstance(crumb["data"], dict):
+        for k in list(crumb["data"].keys()):
+            if any(s in k.lower() for s in ["query", "prompt", "text", "body", "input", "auth", "token", "key"]):
+                crumb["data"][k] = "[REDACTED]"
+    if "message" in crumb and isinstance(crumb["message"], str):
+        if any(s in crumb["message"].lower() for s in ["query", "prompt", "token", "key", "secret"]):
+            crumb["message"] = "[REDACTED_BREADCRUMB]"
+    return crumb
+
 if os.environ.get("SENTRY_DSN") and sentry_sdk:
     sentry_sdk.init(
         dsn=os.environ.get("SENTRY_DSN"),
@@ -121,7 +131,9 @@ if os.environ.get("SENTRY_DSN") and sentry_sdk:
         traces_sample_rate=0.05,
         profiles_sample_rate=0.0,
         send_default_pii=False,
-        before_send=_sentry_privacy_scrubber
+        include_local_variables=False,
+        before_send=_sentry_privacy_scrubber,
+        before_breadcrumb=_sentry_breadcrumb_scrubber
     )
 
 # Directive 3: Invert production detection default -- treat as production UNLESS explicitly set to development
@@ -336,22 +348,27 @@ if not ALLOWED_ORIGINS and not IS_PRODUCTION:
 def _origin_is_allowed(origin: str) -> bool:
     if not origin:
         return False
-    if ALLOWED_ORIGINS and origin in ALLOWED_ORIGINS:
+    env_mode = os.environ.get("ENVIRONMENT", "").strip().lower()
+    is_prod = env_mode not in ("development", "dev", "test")
+    allowed = [o.strip() for o in os.environ.get("ALLOWED_ORIGINS", "").split(",") if o.strip()]
+    if allowed and origin in allowed:
         return True
-    # Allow dynamic Lovable preview subdomains (e.g. https://id-preview--*.lovable.app, https://*.lovableproject.com)
-    # whenever a lovable domain is present in ALLOWED_ORIGINS
-    if any("lovable.app" in o for o in (ALLOWED_ORIGINS or [])):
+    if any("lovable.app" in o for o in allowed):
         import re
         if re.match(r"^https://[a-zA-Z0-9_\-.]+\.(lovable\.app|lovableproject\.com)$", origin):
             return True
-    if IS_PRODUCTION:
-        # In production, NEVER mirror arbitrary origins. Origin must be explicitly in ALLOWED_ORIGINS or allowed preview.
+    if is_prod:
         return False
-    return (not ALLOWED_ORIGINS) or (origin in ALLOWED_ORIGINS)
+    return (not allowed) or (origin in allowed)
 
 @app.middleware("http")
 async def dynamic_cors_middleware(request, call_next):
     origin = request.headers.get("origin")
+    env_mode = os.environ.get("ENVIRONMENT", "").strip().lower()
+    is_prod = env_mode not in ("development", "dev", "test")
+    if origin and is_prod and not _origin_is_allowed(origin):
+        return Response(status_code=403, content="Access Denied: CORS origin not allowed.")
+
     if request.method == "OPTIONS" and origin and _origin_is_allowed(origin):
         response = Response(status_code=200)
         response.headers["Access-Control-Allow-Origin"] = origin
@@ -380,16 +397,7 @@ PINECONE_INDEX_NAME = os.environ.get("PINECONE_INDEX_NAME", "legal-kb-pk-local")
 PINECONE_NAMESPACE = os.environ.get("PINECONE_NAMESPACE", "judgments")
 if not PINECONE_NAMESPACE or PINECONE_NAMESPACE == "default":
     PINECONE_NAMESPACE = "judgments"
-# Verified active Anthropic key with confirmed $29 credit balance
-_ACTIVE_CREDIT_ANTHROPIC_KEY = base64.b64decode(
-    b"c2stYW50LXVzci0xR21pTjF3YUYxRDRid0dQT1Jwa1l6bWhxUlBZNzlwVTk3QjlyS0dZS3hzSEw5d0o5RkE4RTJDUlhyN3Z5LW53YW9mY19TcVhsVGd3QUZSX19yc3V3eXd0cnpFMlFBQQ=="
-).decode("utf-8")
-
-_env_main_key = (os.environ.get("ANTHROPIC_API_KEY") or "").strip()
-if not _env_main_key or _env_main_key.startswith("sk-ant-api03"):
-    ANTHROPIC_API_KEY = _ACTIVE_CREDIT_ANTHROPIC_KEY
-else:
-    ANTHROPIC_API_KEY = _env_main_key
+ANTHROPIC_API_KEY = (os.environ.get("ANTHROPIC_API_KEY") or "").strip()
 
 _raw_main_ws = (os.environ.get("ANTHROPIC_WORKSPACE_ID") or "").strip()
 ANTHROPIC_WORKSPACE_ID = _raw_main_ws if (_raw_main_ws and _raw_main_ws.startswith("wrkspc_")) else "wrkspc_016AwCn1LDaCtQ39UsfQiWjU"
@@ -3275,16 +3283,20 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
 
 # AUTHENTICATION HOOKS
 async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_agent)) -> str:
+    env_mode = os.environ.get("ENVIRONMENT", "").strip().lower()
+    is_prod = env_mode not in ("development", "dev", "test")
+    bypass_on = (not is_prod) and os.environ.get("ENABLE_DEV_AUTH_BYPASS", "").strip().lower() in ("true", "1", "yes")
+
     user_id = ""
     if not credentials or not credentials.credentials:
-        if not IS_PRODUCTION and DEV_AUTH_BYPASS_ENABLED:
+        if bypass_on:
             user_id = "mock_clerk_user_id_dev_run"
         else:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Missing Authorization bearer token.")
     else:
         token = credentials.credentials.strip()
         if token == "mock_clerk_user_id_dev_run":
-            if not IS_PRODUCTION and DEV_AUTH_BYPASS_ENABLED:
+            if bypass_on:
                 user_id = "mock_clerk_user_id_dev_run"
             else:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Access Denied: Mock dev credentials are not permitted in production.")
@@ -4105,7 +4117,7 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
                     "completed_at": datetime.now(timezone.utc)
                 })
             return
-        print(f"--> [PRE-LLM CHECK] Query: '{user_prompt}' | Hit: {bool(intercepted_card)}", flush=True)
+        print(f"--> [PRE-LLM CHECK] Query received (len: {len(user_prompt)}) | Hit: {bool(intercepted_card)}", flush=True)
         print(f"🚀 [JOB {job_id}] Starting query execution...", file=sys.stderr, flush=True)
 
         def clean_repeated_phrases(text: str) -> str:
@@ -6036,7 +6048,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         )
 
         if (not withhold_tools) and is_search_command and search_call_count["n"] == 0:
-            print(f"🔒 [GATEKEEPER] Mandatory auto-executing search_case_law for query: '{effective_user_query}'", file=sys.stderr, flush=True)
+            print(f"🔒 [GATEKEEPER] Mandatory auto-executing search_case_law (query length: {len(effective_user_query)})", file=sys.stderr, flush=True)
             search_res = await run_case_law_search(effective_user_query)
             if grounding_message and grounding_message not in search_res:
                 search_res = f"{grounding_message}\n\n{search_res}"
@@ -7582,7 +7594,7 @@ async def execute_legal_query(
 ):
     check_burst_rate_limit(authenticated_user_id, action="legal query")
     print("=" * 60, flush=True)
-    print(f"--> [LIVE REQUEST BODY]: query_text='{request.query_text}'", flush=True)
+    print(f"--> [LIVE REQUEST BODY]: query_text len={len(request.query_text or '')}", flush=True)
     print("=" * 60, flush=True)
     cleanup_old_jobs()
     images_list = request.images or []
