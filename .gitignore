@@ -68,3 +68,7 @@ docs/*.pkl
 scratch_*
 
 
+
+*.orig_backup
+*.txt
+
