@@ -206,6 +206,9 @@ def format_current_law_context(provisions_verification: List[Dict[str, Any]]) ->
         if text:
             lines.append(f"STATUTORY VERBATIM TEXT:\n\"{text}\"")
             lines.append(f"LABEL: {tier_str} | PAGE: {page_str} | HASH: {hash_str}")
+            if item.get("canonical_id") == "FIO_2001_SEC_22" or (item.get("act_code") == "FIO_2001" and str(item.get("primary_num")) == "22"):
+                lines.append("RENDERER NOTE: Sub-section (7) refers to sub-section (2); stay conditions appear in the proviso to sub-section (3). Check the Gazette.")
+                lines.append("DIRECTIVE: The memorandum must accurately state that sub-section (7) cross-references sub-section (2) in the official gazette text, while stay deposit requirements are enacted in the proviso to sub-section (3). Do NOT restate (7) as 'stay granted under 22(2)'.")
         else:
             lines.append("Verbatim Bare-Act Text: [Statutory text not found in verified database]")
             lines.append("Note: Official bare-act text is not loaded in primary local stores. You must output '[Statutory text not found in verified database]' under Section 2 instead of drafting, quoting, or inventing statutory language from memory.")

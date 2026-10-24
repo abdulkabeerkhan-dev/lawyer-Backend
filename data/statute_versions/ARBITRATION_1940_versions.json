@@ -47,17 +47,18 @@
     "primary_num": "20",
     "secondary_num": null,
     "title": "Application to file in Court arbitration agreement",
-    "text": "(1) Where any persons have agreed that any difference between them shall be referred to arbitration, and an arbitration has not been commenced, any person interested in the agreement may apply to a Court having jurisdiction to which the subject-matter of the difference refers for an order that the agreement be filed in Court. (4) Where no sufficient cause is shown, the Court shall order the agreement to be filed, and shall make an order of reference to the arbitrator.",
+    "text": "20. Application to file in Court arbitration agreement.__ (1) Where any persons have entered into an arbitration agreement before the institution of any suit with respect to the subject-matter of the agreement or any part of it, and where a difference has arisen to which the agreement applies, they or any of them, instead of proceeding under Chapter II, may apply to a Court having jurisdiction in the matter to which the agreement relates, that the agreement be filed in Court.\n(2) The application shall be in writing and shall be numbered and registered as a suit between one or more of the parties interested or claiming to be interested as plaintiff or plaintiffs and the remainder as defendant or defendants, if the application has been presented by all the parties, or, if otherwise, between the applicant as plaintiff and the other parties as defendants.\n(3) On such application being made, the Court shall direct notice thereof to be given to all parties to the agreement other than the applicants, requiring them to show cause within the time specified in the notice why the agreement should not be filed.\n(4) Where no sufficient cause is shown, the Court shall order the agreement to be filed, and shall make an order of reference to the arbitrator appointed by the parties, whether in the agreement or otherwise, or, where the parties cannot agree upon an arbitrator, to an arbitrator appointed by the Court.\n(5) Thereafter the arbitration shall proceed in accordance with, and shall be governed by, the other provisions of this Act so far as they can be made applicable.",
     "missing_reason": null,
-    "source_file": "Pakistan Code (pakistancode.gov.pk), Arbitration Act, 1940",
-    "source_page": "unspecified",
-    "content_hash": "dbe6abec3b4c14956567dab585136b9785acd7a8edf652b63b2405868fdf7b4e",
+    "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. X of 1940; https://pakistancode.gov.pk/pdffiles/administrator0a802e3468735238090ceede22ccfd11.pdf",
+    "source_page": "9-10",
+    "content_hash": "2591b102cca934746a0bfa531c86c84a73ae16c25f3a45b40e80a4db85cdbedc",
     "tier": "ingested_unreviewed",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "text_cleaned": "20. Application to file in Court arbitration agreement.__ (1) Where any persons have entered into an arbitration agreement before the institution of any suit with respect to the subject-matter of the agreement or any part of it, and where a difference has arisen to which the agreement applies, they or any of them, instead of proceeding under Chapter II, may apply to a Court having jurisdiction in the matter to which the agreement relates, that the agreement be filed in Court.\n(2) The application shall be in writing and shall be numbered and registered as a suit between one or more of the parties interested or claiming to be interested as plaintiff or plaintiffs and the remainder as defendant or defendants, if the application has been presented by all the parties, or, if otherwise, between the applicant as plaintiff and the other parties as defendants.\n(3) On such application being made, the Court shall direct notice thereof to be given to all parties to the agreement other than the applicants, requiring them to show cause within the time specified in the notice why the agreement should not be filed.\n(4) Where no sufficient cause is shown, the Court shall order the agreement to be filed, and shall make an order of reference to the arbitrator appointed by the parties, whether in the agreement or otherwise, or, where the parties cannot agree upon an arbitrator, to an arbitrator appointed by the Court.\n(5) Thereafter the arbitration shall proceed in accordance with, and shall be governed by, the other provisions of this Act so far as they can be made applicable."
   },
   {
     "canonical_id": "ARBITRATION_1940_SEC_30",

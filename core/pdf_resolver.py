@@ -7,11 +7,15 @@ Resolves and delivers working PDFs for 100% of judgment cards:
 2. Generates dynamic signed URLs with 24-hour expiration for verified bucket assets.
 3. If pre-existing storage PDF is unavailable, falls back cleanly to dynamically compiled
    verified ReportLab PDFs served via backend proxy endpoint.
-4. Guarantees zero broken links and 100% viewer availability.
+4. HMAC-SHA256 URL signing with expiration and user/job binding to prevent bulk URL scraping.
+5. Guarantees zero broken links and 100% viewer availability.
 """
 
 import os
 import re
+import time
+import hmac
+import hashlib
 import urllib.parse
 from typing import Dict, Any, Optional
 
@@ -38,6 +42,42 @@ def extract_journal_and_year(citation: str, case_id: str = "") -> tuple:
     page = m_page.group(1) if m_page else None
 
     return journal, year, page
+
+
+def create_hmac_pdf_token(case_id: str, user_id: str = "anonymous", expires_in: int = 86400, secret: str = "") -> str:
+    """
+    Creates a secure cryptographically bound HMAC-SHA256 signature containing
+    case_id, user_id, and unix expiration timestamp.
+    """
+    if not secret:
+        secret = os.environ.get("PDF_SIGNING_SECRET") or os.environ.get("SECRET_KEY") or "section_ai_pdf_signing_secret_prod_secure"
+    exp = int(time.time()) + expires_in
+    payload = f"{case_id}|{user_id}|{exp}"
+    sig = hmac.new(secret.encode('utf-8'), payload.encode('utf-8'), hashlib.sha256).hexdigest()
+    return f"{exp}.{user_id}.{sig}"
+
+
+def verify_hmac_pdf_token(token: str, case_id: str, secret: str = "") -> bool:
+    """
+    Verifies that the HMAC token is cryptographically authentic for case_id and not expired.
+    """
+    if not token or "." not in token:
+        return False
+    parts = token.split(".", 2)
+    if len(parts) != 3:
+        return False
+    exp_str, user_id, sig = parts
+    try:
+        exp = int(exp_str)
+    except ValueError:
+        return False
+    if time.time() > exp:
+        return False  # Expired
+    if not secret:
+        secret = os.environ.get("PDF_SIGNING_SECRET") or os.environ.get("SECRET_KEY") or "section_ai_pdf_signing_secret_prod_secure"
+    expected_payload = f"{case_id}|{user_id}|{exp}"
+    expected_sig = hmac.new(secret.encode('utf-8'), expected_payload.encode('utf-8'), hashlib.sha256).hexdigest()
+    return hmac.compare_digest(sig, expected_sig)
 
 
 def resolve_supabase_storage_path(
@@ -143,12 +183,13 @@ def fetch_storage_pdf_bytes(
 def resolve_judgment_pdf_url(
     candidate: Dict[str, Any],
     supabase_client: Any = None,
-    backend_base_url: str = "https://lawyer-backend-production-26c7.up.railway.app"
+    backend_base_url: str = "https://lawyer-backend-production-26c7.up.railway.app",
+    user_id: str = "user"
 ) -> str:
     """
     Resolves the working PDF URL for a judgment card.
     Guarantees:
-    1. Returns a secure backend streaming proxy URL: /judgment-pdf/{target_id}
+    1. Returns a secure backend streaming proxy URL: /judgment-pdf/{target_id}?token={signed_token}
     2. Frontend NEVER accesses Supabase storage directly.
     3. Zero broken links and 100% viewer availability.
     """
@@ -158,4 +199,5 @@ def resolve_judgment_pdf_url(
 
     target_id = case_id or citation or "judgment"
     clean_base = backend_base_url.rstrip("/")
-    return f"{clean_base}/judgment-pdf/{urllib.parse.quote(str(target_id))}"
+    token = create_hmac_pdf_token(target_id, user_id=user_id)
+    return f"{clean_base}/judgment-pdf/{urllib.parse.quote(str(target_id))}?token={token}"
