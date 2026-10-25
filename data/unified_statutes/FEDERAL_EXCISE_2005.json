@@ -12,14 +12,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Federal Excise Act, 2005 (Act VII of 2005)",
     "source_page": "unspecified",
     "content_hash": "9a60b627b4d914c8b2876636fc5f740714d990349568be3005101ddde54818d1",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "There shall be levied and collected in such manner as may be prescribed, duties of excise on goods produced or manufactured in Pakistan, goods imported into Pakistan, and services provided in Pakistan, at the rates specified in the First Schedule."
+    "text_normalized": "There shall be levied and collected in such manner as may be prescribed, duties of excise on goods produced or manufactured in Pakistan, goods imported into Pakistan, and services provided in Pakistan, at the rates specified in the First Schedule.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "FEDERAL_EXCISE_2005_SEC_14",
@@ -34,14 +36,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Federal Excise Act, 2005 (Act VII of 2005)",
     "source_page": "unspecified",
     "content_hash": "c8d91761b4d25d08c38087b9fdd8b8bc6e318d21c67d09f9575e2763f381a424",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Where any duty has not been levied or paid or has been short-levied or short-paid or erroneously refunded, the officer of Inland Revenue shall serve a notice on the person liable requiring him to show cause why he should not pay the amount specified therein."
+    "text_normalized": "Where any duty has not been levied or paid or has been short-levied or short-paid or erroneously refunded, the officer of Inland Revenue shall serve a notice on the person liable requiring him to show cause why he should not pay the amount specified therein.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "FEDERAL_EXCISE_2005_SEC_33",
@@ -56,13 +60,15 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Federal Excise Act, 2005 (Act VII of 2005)",
     "source_page": "unspecified",
     "content_hash": "63a5548b7f36c1de977774b469e7c6b4802c19120b235d85f4245c383d606feb",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Any person aggrieved by any decision or order passed by an officer of Inland Revenue under this Act may, within thirty days of the date of receipt of the order, prefer an appeal to the Commissioner (Appeals)."
+    "text_normalized": "Any person aggrieved by any decision or order passed by an officer of Inland Revenue under this Act may, within thirty days of the date of receipt of the order, prefer an appeal to the Commissioner (Appeals).",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

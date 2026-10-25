@@ -12,14 +12,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Punjab Protection of Ownership of Immovable Property Act, 2021 (Act XXVIII of 2021)",
     "source_page": "unspecified",
     "content_hash": "17d61b9f5f4fb8c15058c343c1dd82842db7015deb92b2c8902e3b681e7ece51",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "No person shall enter upon or hold or grab any immovable property without lawful authority, title or permission of the lawful owner or lawful possessor."
+    "text_normalized": "No person shall enter upon or hold or grab any immovable property without lawful authority, title or permission of the lawful owner or lawful possessor.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PUNJAB_PROPERTY_PROTECTION_2021_SEC_4",
@@ -34,13 +36,15 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Punjab Protection of Ownership of Immovable Property Act, 2021 (Act XXVIII of 2021)",
     "source_page": "unspecified",
     "content_hash": "9770b1438c367fabe7db2a27ea30b0acd55b750f007b1cc1295e9b827ef110da",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Any lawful owner or possessor of immovable property who is dispossessed illegally or threatened with illegal dispossession may file a complaint before the Deputy Commissioner who shall conduct a summary inquiry within thirty days and order restoration of possession through police assistance."
+    "text_normalized": "Any lawful owner or possessor of immovable property who is dispossessed illegally or threatened with illegal dispossession may file a complaint before the Deputy Commissioner who shall conduct a summary inquiry within thirty days and order restoration of possession through police assistance.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

@@ -12,14 +12,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Industrial and Commercial Employment (Standing Orders) Ordinance, 1968 (W.P. Ordinance VI of 1968)",
     "source_page": "unspecified",
     "content_hash": "666363dbd5f151358b46511df71c804ec290f9a63a128c350a98362758f6c180",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "For terminating employment of a permanent workman, one month's notice in writing shall be given either by the employer or by the workman, or one month's wages shall be paid in lieu of notice. The services of a workman shall not be terminated nor shall a workman be removed, retrenched, discharged or dismissed from service except by an order in writing which shall explicitly state the reason for the action taken."
+    "text_normalized": "For terminating employment of a permanent workman, one month's notice in writing shall be given either by the employer or by the workman, or one month's wages shall be paid in lieu of notice. The services of a workman shall not be terminated nor shall a workman be removed, retrenched, discharged or dismissed from service except by an order in writing which shall explicitly state the reason for the action taken.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "STANDING_ORDERS_1968_SEC_15",
@@ -34,13 +36,15 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Industrial and Commercial Employment (Standing Orders) Ordinance, 1968 (W.P. Ordinance VI of 1968)",
     "source_page": "unspecified",
     "content_hash": "720dd202a0b5664030f589dbd6b187bf2d6a75ff366f744e25e1eb018e056560",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "A workman may be reprimanded, fined, suspended, or dismissed without notice or payment in lieu of notice for misconduct. No order of dismissal shall be made unless the workman concerned is informed in writing of the alleged misconduct within one month of the date of misconduct and is given an opportunity to explain the circumstances and an independent inquiry is held."
+    "text_normalized": "A workman may be reprimanded, fined, suspended, or dismissed without notice or payment in lieu of notice for misconduct. No order of dismissal shall be made unless the workman concerned is informed in writing of the alleged misconduct within one month of the date of misconduct and is given an opportunity to explain the circumstances and an independent inquiry is held.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

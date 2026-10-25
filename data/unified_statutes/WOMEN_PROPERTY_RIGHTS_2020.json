@@ -12,14 +12,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Enforcement of Women's Property Rights Act, 2020 / Punjab 2021",
     "source_page": "unspecified",
     "content_hash": "cdb7198016e838e82d491eeb6a2e1f295d61ffa5982d28623d5171f3ca66e27d",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Any woman who is deprived of ownership or possession of her property, by any person through fraud, coercion, force or any illegal means, may file a complaint to the Ombudsman: Provided that the Ombudsman shall decide the complaint within sixty days from receipt thereof."
+    "text_normalized": "(1) Any woman who is deprived of ownership or possession of her property, by any person through fraud, coercion, force or any illegal means, may file a complaint to the Ombudsman: Provided that the Ombudsman shall decide the complaint within sixty days from receipt thereof.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "WOMEN_PROPERTY_RIGHTS_2020_SEC_5",
@@ -34,13 +36,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Enforcement of Women's Property Rights Act, 2020 / Punjab 2021",
     "source_page": "unspecified",
     "content_hash": "25ead96f512dfc91034e9d683f0070d7938533aa491d4084c54e6b36d0fd3bb4",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) The Ombudsman may, on finding that a woman has been illegally deprived of possession of her property, direct the Deputy Commissioner or local administration to restore possession of the property to the complainant."
+    "text_normalized": "(1) The Ombudsman may, on finding that a woman has been illegally deprived of possession of her property, direct the Deputy Commissioner or local administration to restore possession of the property to the complainant.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

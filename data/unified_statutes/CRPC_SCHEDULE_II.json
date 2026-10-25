@@ -20,7 +20,9 @@
     "verification_status": "VERIFIED_PAKISTAN_CODE",
     "note": "Verified directly from official Pakistan Code bare act PDF. Section 420 Column 5 is Ditto under Section 419 (Not bailable substituted by Ord. XXXIII of 1981, s. 3).",
     "schedule_ii_column_5": "Not bailable",
-    "tier": "title_only"
+    "tier": "unsourced",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   "406": {
     "section": "406",
@@ -42,7 +44,9 @@
     "verification_status": "VERIFIED_PAKISTAN_CODE",
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
-    "tier": "title_only"
+    "tier": "unsourced",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   "409": {
     "section": "409",
@@ -64,7 +68,9 @@
     "verification_status": "VERIFIED_PAKISTAN_CODE",
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
-    "tier": "title_only"
+    "tier": "unsourced",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   "489-F": {
     "section": "489-F",
@@ -86,7 +92,9 @@
     "verification_status": "VERIFIED_PAKISTAN_CODE",
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
-    "tier": "title_only"
+    "tier": "unsourced",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   "489F": {
     "section": "489-F",
@@ -108,7 +116,9 @@
     "verification_status": "VERIFIED_PAKISTAN_CODE",
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
-    "tier": "title_only"
+    "tier": "unsourced",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   "419": {
     "section": "419",
@@ -130,7 +140,9 @@
     "verification_status": "VERIFIED_PAKISTAN_CODE",
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
-    "tier": "title_only"
+    "tier": "unsourced",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   "468": {
     "section": "468",
@@ -152,7 +164,9 @@
     "verification_status": "VERIFIED_PAKISTAN_CODE",
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
-    "tier": "title_only"
+    "tier": "unsourced",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   "471": {
     "section": "471",
@@ -174,7 +188,9 @@
     "verification_status": "VERIFIED_PAKISTAN_CODE",
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Bailable",
-    "tier": "title_only"
+    "tier": "unsourced",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   "302": {
     "section": "302",
@@ -196,6 +212,8 @@
     "verification_status": "VERIFIED_PAKISTAN_CODE",
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
-    "tier": "title_only"
+    "tier": "unsourced",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 }

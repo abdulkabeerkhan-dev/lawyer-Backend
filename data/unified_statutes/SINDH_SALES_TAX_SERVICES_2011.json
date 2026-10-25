@@ -12,14 +12,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Sindh Sales Tax on Services Act, 2011 (Sindh Act XII of 2011)",
     "source_page": "unspecified",
     "content_hash": "0420082b28fdcfc5ca1ef9be1a1876803d8b855c9f1d5c6e376e7ec0abd407eb",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "sindh",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "A taxable service is a service listed in the Second Schedule which is provided by a person from his place of business in Sindh, or in the course of an economic activity carried on in Sindh."
+    "text_normalized": "A taxable service is a service listed in the Second Schedule which is provided by a person from his place of business in Sindh, or in the course of an economic activity carried on in Sindh.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "SINDH_SALES_TAX_SERVICES_2011_SEC_9",
@@ -34,14 +36,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Sindh Sales Tax on Services Act, 2011 (Sindh Act XII of 2011)",
     "source_page": "unspecified",
     "content_hash": "44cc8dccf1beba5022102d4a1c9fe17bfebfb6f98bf4b2502c4e4988a1c96a93",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "sindh",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Subject to this Act, there shall be levied and collected a tax called the Sindh sales tax on the value of a taxable service at the rate specified in the Second Schedule, provided that the standard rate of tax shall be thirteen percent."
+    "text_normalized": "Subject to this Act, there shall be levied and collected a tax called the Sindh sales tax on the value of a taxable service at the rate specified in the Second Schedule, provided that the standard rate of tax shall be thirteen percent.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "SINDH_SALES_TAX_SERVICES_2011_SEC_61",
@@ -56,13 +60,15 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Sindh Sales Tax on Services Act, 2011 (Sindh Act XII of 2011)",
     "source_page": "unspecified",
     "content_hash": "cd8f517878a7fb513ba251e69f2a7770f8c0e717eddef0338a6e6460b2198ff8",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "sindh",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Any person aggrieved by an order passed by an officer of the Sindh Revenue Board (SRB) may, within thirty days of the service of the order, appeal to the Commissioner (Appeals)."
+    "text_normalized": "Any person aggrieved by an order passed by an officer of the Sindh Revenue Board (SRB) may, within thirty days of the service of the order, appeal to the Commissioner (Appeals).",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

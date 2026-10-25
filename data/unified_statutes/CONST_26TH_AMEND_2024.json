@@ -12,14 +12,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Constitution (Twenty-sixth Amendment) Act, 2024",
     "source_page": "unspecified",
     "content_hash": "015bd335541bb6305318fe04865ead0d930cc6a99ffa960893972c7cc523f419",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "There shall be Constitutional Benches of the Supreme Court comprising such Judges of the Supreme Court and for such term as may be nominated by the Judicial Commission of Pakistan. The Constitutional Benches shall have exclusive jurisdiction in respect of: (a) original jurisdiction under Article 184; (b) appellate jurisdiction involving substantial questions of law as to the interpretation of the Constitution under Article 185; and (c) advisory jurisdiction under Article 186."
+    "text_normalized": "There shall be Constitutional Benches of the Supreme Court comprising such Judges of the Supreme Court and for such term as may be nominated by the Judicial Commission of Pakistan. The Constitutional Benches shall have exclusive jurisdiction in respect of: (a) original jurisdiction under Article 184; (b) appellate jurisdiction involving substantial questions of law as to the interpretation of the Constitution under Article 185; and (c) advisory jurisdiction under Article 186.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "CONST_26TH_AMEND_2024_SEC_7",
@@ -34,14 +36,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Constitution (Twenty-sixth Amendment) Act, 2024",
     "source_page": "unspecified",
     "content_hash": "a1d1baf69b8789760394a633dc375505f8e42d3bbd806ca4dc8945eb25ad499e",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "The Judicial Commission of Pakistan for appointment of Judges of Supreme Court and High Courts shall consist of the Chief Justice of Pakistan, the three senior-most Judges of the Supreme Court, the Federal Minister for Law and Justice, the Attorney-General for Pakistan, an advocate of Supreme Court, two members of the Senate, and two members of the National Assembly."
+    "text_normalized": "The Judicial Commission of Pakistan for appointment of Judges of Supreme Court and High Courts shall consist of the Chief Justice of Pakistan, the three senior-most Judges of the Supreme Court, the Federal Minister for Law and Justice, the Attorney-General for Pakistan, an advocate of Supreme Court, two members of the Senate, and two members of the National Assembly.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "CONST_26TH_AMEND_2024_ART_191A",
@@ -56,14 +60,16 @@
     "source_file": "Gazette of Pakistan, Constitution (Twenty-sixth Amendment) Act, 2024",
     "source_page": "unspecified",
     "content_hash": "015bd335541bb6305318fe04865ead0d930cc6a99ffa960893972c7cc523f419",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "There shall be Constitutional Benches of the Supreme Court comprising such Judges of the Supreme Court and for such term as may be nominated by the Judicial Commission of Pakistan. The Constitutional Benches shall have exclusive jurisdiction in respect of: (a) original jurisdiction under Article 184; (b) appellate jurisdiction involving substantial questions of law as to the interpretation of the Constitution under Article 185; and (c) advisory jurisdiction under Article 186."
+    "text_normalized": "There shall be Constitutional Benches of the Supreme Court comprising such Judges of the Supreme Court and for such term as may be nominated by the Judicial Commission of Pakistan. The Constitutional Benches shall have exclusive jurisdiction in respect of: (a) original jurisdiction under Article 184; (b) appellate jurisdiction involving substantial questions of law as to the interpretation of the Constitution under Article 185; and (c) advisory jurisdiction under Article 186.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "CONST_26TH_AMEND_2024_ART_175A",
@@ -78,13 +84,15 @@
     "source_file": "Gazette of Pakistan, Constitution (Twenty-sixth Amendment) Act, 2024",
     "source_page": "unspecified",
     "content_hash": "a1d1baf69b8789760394a633dc375505f8e42d3bbd806ca4dc8945eb25ad499e",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "The Judicial Commission of Pakistan for appointment of Judges of Supreme Court and High Courts shall consist of the Chief Justice of Pakistan, the three senior-most Judges of the Supreme Court, the Federal Minister for Law and Justice, the Attorney-General for Pakistan, an advocate of Supreme Court, two members of the Senate, and two members of the National Assembly."
+    "text_normalized": "The Judicial Commission of Pakistan for appointment of Judges of Supreme Court and High Courts shall consist of the Chief Justice of Pakistan, the three senior-most Judges of the Supreme Court, the Federal Minister for Law and Justice, the Attorney-General for Pakistan, an advocate of Supreme Court, two members of the Senate, and two members of the National Assembly.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

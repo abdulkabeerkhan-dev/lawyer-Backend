@@ -12,14 +12,16 @@
     "source_file": "Official Gazette / Lahore High Court / Pakistan Code, Industrial Relations Act, 2012",
     "source_page": "unspecified",
     "content_hash": "774de06052c6a0926dfa84ab9676f51e711bdaf54f4509882302fe9685f7539c",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "No employer or trade union of employers and no person acting on their behalf shall: (a) impose any condition in a contract of employment seeking to restrain the right of a person to join a trade union; (b) refuse to employ or dismiss or threaten to dismiss a workman on account of trade union activities; (c) transfer, suspend, discharge or punish a workman on grounds of trade union membership."
+    "text_normalized": "No employer or trade union of employers and no person acting on their behalf shall: (a) impose any condition in a contract of employment seeking to restrain the right of a person to join a trade union; (b) refuse to employ or dismiss or threaten to dismiss a workman on account of trade union activities; (c) transfer, suspend, discharge or punish a workman on grounds of trade union membership.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "IRA_2012_SEC_33",
@@ -34,13 +36,15 @@
     "source_file": "Official Gazette / Lahore High Court / Pakistan Code, Industrial Relations Act, 2012",
     "source_page": "unspecified",
     "content_hash": "43a4b196771ca94066435bd7291e423974f10e3385ad43eb694203443d4e235e",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) A worker may bring his grievance in respect of any right guaranteed or secured to him by or under any law, award, or settlement to the notice of his employer in writing, either himself or through his trade union, within ninety days of the day on which cause of such grievance arises. (2) If the employer fails to communicate a decision within fifteen days or communicates a decision with which the worker is dissatisfied, the worker may take the matter to the Labour Court within thirty days."
+    "text_normalized": "(1) A worker may bring his grievance in respect of any right guaranteed or secured to him by or under any law, award, or settlement to the notice of his employer in writing, either himself or through his trade union, within ninety days of the day on which cause of such grievance arises. (2) If the employer fails to communicate a decision within fifteen days or communicates a decision with which the worker is dissatisfied, the worker may take the matter to the Labour Court within thirty days.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

@@ -12,14 +12,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Offence of Zina (Enforcement of Hudood) Ordinance, 1979",
     "source_page": "unspecified",
     "content_hash": "b87dab9141b12739c4a77b5f4a2915b9fbaf2dc6f6f07fc4ea229a36673fd3df",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "A man and a woman are said to commit 'Zina' if they wilfully have sexual intercourse without being validly married to each other."
+    "text_normalized": "A man and a woman are said to commit 'Zina' if they wilfully have sexual intercourse without being validly married to each other.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "HUDOOD_ZINA_1979_SEC_5",
@@ -34,14 +36,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Offence of Zina (Enforcement of Hudood) Ordinance, 1979",
     "source_page": "unspecified",
     "content_hash": "bfb70a17e3448d639e7649f472b3455c84fea07dbc7ad771a958e67241101d2e",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Zina is Zina liable to Hadd if: (a) it is committed by a man who is an adult and is not insane with an adult woman who is not insane; and (b) it is committed by a person with a person to whom he is not married."
+    "text_normalized": "(1) Zina is Zina liable to Hadd if: (a) it is committed by a man who is an adult and is not insane with an adult woman who is not insane; and (b) it is committed by a person with a person to whom he is not married.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "HUDOOD_ZINA_1979_SEC_10",
@@ -56,13 +60,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Offence of Zina (Enforcement of Hudood) Ordinance, 1979",
     "source_page": "unspecified",
     "content_hash": "5260e55c04d1569d2e859aa2f298feb139e9de655a9d5dcde77486b6535642da",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "A person is said to commit Zina-bil-jabr if he or she has sexual intercourse with a person to whom he or she is not validly married without the consent of that person, or against that person's will. Following the Protection of Women Act, 2006, offences of rape are tried under Section 375 and 376 of the Pakistan Penal Code."
+    "text_normalized": "A person is said to commit Zina-bil-jabr if he or she has sexual intercourse with a person to whom he or she is not validly married without the consent of that person, or against that person's will. Following the Protection of Women Act, 2006, offences of rape are tried under Section 375 and 376 of the Pakistan Penal Code.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

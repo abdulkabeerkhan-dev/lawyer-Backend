@@ -12,14 +12,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Prohibition (Enforcement of Hadd) Order, 1979 (President's Order No. 4 of 1979)",
     "source_page": "unspecified",
     "content_hash": "f7e8ad2cd9bdea0cc3ee172352cf27382391a9a6c21b11e6ccff6ec91e02eb4d",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever: (a) imports, exports, transports, manufactures or processes any intoxicant; or (b) bottles any intoxicant; or (c) sells or serves any intoxicant; or (d) allows any of the acts aforesaid upon premises owned by him or in his possession; shall be punished with imprisonment of either description for a term which may extend to five years and with whipping not exceeding thirty stripes, and shall also be liable to fine: Provided that if the intoxicant is raw opium or coca leaf, the imprisonment may extend to fourteen years."
+    "text_normalized": "Whoever: (a) imports, exports, transports, manufactures or processes any intoxicant; or (b) bottles any intoxicant; or (c) sells or serves any intoxicant; or (d) allows any of the acts aforesaid upon premises owned by him or in his possession; shall be punished with imprisonment of either description for a term which may extend to five years and with whipping not exceeding thirty stripes, and shall also be liable to fine: Provided that if the intoxicant is raw opium or coca leaf, the imprisonment may extend to fourteen years.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PROHIBITION_HADD_1979_ART_4",
@@ -34,14 +36,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Prohibition (Enforcement of Hadd) Order, 1979 (President's Order No. 4 of 1979)",
     "source_page": "unspecified",
     "content_hash": "529677ddc483eeca3ca017f57ce18c5b0bcbbc07f35cbd873602047e8d91d554",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever owns, possesses or keeps in his custody any intoxicant shall be punished with imprisonment of either description for a term which may extend to two years, or with whipping not exceeding thirty stripes, and shall also be liable to fine: Provided that if the intoxicant is heroin, cocaine, raw opium or coca leaf, the imprisonment shall be for life or with imprisonment which shall not be less than two years and with whipping not exceeding thirty stripes."
+    "text_normalized": "Whoever owns, possesses or keeps in his custody any intoxicant shall be punished with imprisonment of either description for a term which may extend to two years, or with whipping not exceeding thirty stripes, and shall also be liable to fine: Provided that if the intoxicant is heroin, cocaine, raw opium or coca leaf, the imprisonment shall be for life or with imprisonment which shall not be less than two years and with whipping not exceeding thirty stripes.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PROHIBITION_HADD_1979_ART_8",
@@ -56,14 +60,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Prohibition (Enforcement of Hadd) Order, 1979 (President's Order No. 4 of 1979)",
     "source_page": "unspecified",
     "content_hash": "682f35d830e9894314bbe3776100f167da24033c0cb1bbe7f76a35c0a1dfebee",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whosoever, being an adult Muslim, takes intoxicating liquor by mouth is guilty of drinking liable to hadd and shall be punished with whipping of eighty stripes: Provided that the punishment of whipping shall not be executed until the conviction is confirmed by the Federal Shariat Court."
+    "text_normalized": "Whosoever, being an adult Muslim, takes intoxicating liquor by mouth is guilty of drinking liable to hadd and shall be punished with whipping of eighty stripes: Provided that the punishment of whipping shall not be executed until the conviction is confirmed by the Federal Shariat Court.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PROHIBITION_HADD_1979_ART_11",
@@ -78,13 +84,15 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Prohibition (Enforcement of Hadd) Order, 1979 (President's Order No. 4 of 1979)",
     "source_page": "unspecified",
     "content_hash": "ca7f0cefe71868af1aa0dd9d0f1251678f006d84c111261c40c4603be6e44c3f",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever takes intoxicating liquor in a public place or, being a non-Muslim citizen of Pakistan, takes intoxicating liquor at a place other than a place licensed by the Provincial Government, shall be punished with imprisonment of either description for a term which may extend to three years, or with whipping not exceeding thirty stripes, or with both."
+    "text_normalized": "Whoever takes intoxicating liquor in a public place or, being a non-Muslim citizen of Pakistan, takes intoxicating liquor at a place other than a place licensed by the Provincial Government, shall be punished with imprisonment of either description for a term which may extend to three years, or with whipping not exceeding thirty stripes, or with both.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

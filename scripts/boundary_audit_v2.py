@@ -20,10 +20,31 @@ if hasattr(sys.stdout, "reconfigure"):
 REPO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATUTES_DIR = os.path.join(REPO_DIR, "data", "unified_statutes")
 
-FOOTNOTE_LINE_RE = re.compile(
-    r'^\s*(?:\*+|\d+\s*(?:Ins\.|Ins\b|Subs\.|Subs\b|Omitted\b|Added\b|Renumbered\b|Amended\b|Word\b|Words\b|Clause\b|Sub-section\b|Section\b))',
-    re.IGNORECASE
+WIDENED_FOOTNOTE_RE = re.compile(
+    r'^\s*(?:\*+|\d+\s*(?:[A-Z][a-zA-Z\.\(\)\,\s\d\-]+))'
 )
+
+def is_footnote_line(line):
+    l = line.strip()
+    if not l:
+        return False
+    # If it is a normal section/rule heading like '83. Penalties.', '2B. Expiration...', '498A. No bail...', it's NOT a footnote
+    if re.match(r'^\s*\d+[A-Za-z\-]*\.\s+[A-Z]', l):
+        return False
+    # If it is a normal subsection like '(1) Whoever' or '1[(1) Whoever', it's NOT a footnote
+    if re.match(r'^\s*(?:\d+\[)?\([0-9a-zA-Z]+\)', l):
+        return False
+    if WIDENED_FOOTNOTE_RE.match(l):
+        fn_keywords = [
+            "subs", "ins", "omitted", "added", "renumber", "amend", "rep",
+            "the word", "the words", "explanation", "for the purposes of",
+            "for modifications", "act", "ordinance", "order", "sch", "w.e.f",
+            "g. g. in c", "l. g.", "govt", "a. o.", "a.o."
+        ]
+        l_low = l.lower()
+        if any(k in l_low for k in fn_keywords) or l.startswith("*"):
+            return True
+    return False
 
 LEADING_FRAGMENT_RE = re.compile(r'^\s*\d+\[')
 TRAILING_FRAGMENT_RE = re.compile(r'\d+\[\s*$')
@@ -51,7 +72,7 @@ def audit_record(cid, text):
     # (c) Embedded footnote lines
     fn_lines = []
     for l_idx, line in enumerate(clean.splitlines(), 1):
-        if FOOTNOTE_LINE_RE.search(line):
+        if is_footnote_line(line):
             fn_lines.append((l_idx, line.strip()[:60]))
     if fn_lines:
         issues.append(f"Embedded footnote lines detected ({len(fn_lines)} lines, e.g. L{fn_lines[0][0]}: {repr(fn_lines[0][1])})")

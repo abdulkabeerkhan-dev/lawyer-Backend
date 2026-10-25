@@ -12,14 +12,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act IV of 1969",
     "source_page": "unspecified",
     "content_hash": "5332b46e92b69303608231bbc5650eecbaaf6e652e2f90ae7ebe904eaa2e621a",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Except as hereinafter provided, customs duties shall be levied at such rates as may be prescribed under the First Schedule or under any other law for the time being in force on: (a) goods imported into Pakistan; and (b) goods brought from any foreign country to any customs-station."
+    "text_normalized": "(1) Except as hereinafter provided, customs duties shall be levied at such rates as may be prescribed under the First Schedule or under any other law for the time being in force on: (a) goods imported into Pakistan; and (b) goods brought from any foreign country to any customs-station.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "CUSTOMS_1969_SEC_25",
@@ -34,14 +36,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act IV of 1969",
     "source_page": "unspecified",
     "content_hash": "d7cc4b515ec12f190d8635d0ccde21967fe6411c4dbfe7cb25f2224e79043ff8",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Transaction value: The customs value of imported goods shall be the transaction value, that is the price actually paid or payable for the goods when sold for export to Pakistan.\n(2) If transaction value cannot be determined, customs value shall be determined sequentially using transaction value of identical goods, similar goods, deductive value, computed value, or fall-back value method."
+    "text_normalized": "(1) Transaction value: The customs value of imported goods shall be the transaction value, that is the price actually paid or payable for the goods when sold for export to Pakistan.\n(2) If transaction value cannot be determined, customs value shall be determined sequentially using transaction value of identical goods, similar goods, deductive value, computed value, or fall-back value method.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "CUSTOMS_1969_SEC_32",
@@ -56,14 +60,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act IV of 1969",
     "source_page": "unspecified",
     "content_hash": "f33f2c13284da1ecc5e41711162087b295d175eb50e6bf2f476ab892a618f423",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) If any person in connection with any matter of customs: (a) makes or signs any declaration, statement or document; or (b) produces or delivers any declaration which is untrue or incorrect in any material particular, he shall be guilty of an offence under this section."
+    "text_normalized": "(1) If any person in connection with any matter of customs: (a) makes or signs any declaration, statement or document; or (b) produces or delivers any declaration which is untrue or incorrect in any material particular, he shall be guilty of an offence under this section.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "CUSTOMS_1969_SEC_156",
@@ -78,14 +84,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act IV of 1969",
     "source_page": "unspecified",
     "content_hash": "a958a1852abd282fe8f4f862b97fbeb9ad8a492112221cce2d434598514bb812",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Whoever commits any offence specified in the Table shall be punishable with the penalties and punishments set out in the third column of that Table (including confiscation of smuggled goods and imprisonment for smuggling under clause 8)."
+    "text_normalized": "(1) Whoever commits any offence specified in the Table shall be punishable with the penalties and punishments set out in the third column of that Table (including confiscation of smuggled goods and imprisonment for smuggling under clause 8).",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "CUSTOMS_1969_SEC_168",
@@ -100,13 +108,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act IV of 1969",
     "source_page": "unspecified",
     "content_hash": "6615c741f170e5a4280199e93b72f7727ab9e899b7fb23d35c06846a951b0cbb",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) The appropriate officer may seize any goods in respect of which any offence has been committed or is suspected to have been committed under this Act."
+    "text_normalized": "(1) The appropriate officer may seize any goods in respect of which any offence has been committed or is suspected to have been committed under this Act.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

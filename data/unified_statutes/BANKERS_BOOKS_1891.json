@@ -12,13 +12,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Bankers' Books Evidence Act, 1891",
     "source_page": "unspecified",
     "content_hash": "96b4096b01606defa3a45c0cafa7e72fc0ab6f31f09ab0bb0e44c2adcf95f0a9",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Subject to the provisions of this Act, a certified copy of any entry in a banker's book shall in all legal proceedings be received as prima facie evidence of the existence of such entry, and shall be admitted as evidence of the matters, transactions and accounts therein recorded in every case where, and to the same extent as, the original entry itself is now by law admissible, but not further or otherwise."
+    "text_normalized": "Subject to the provisions of this Act, a certified copy of any entry in a banker's book shall in all legal proceedings be received as prima facie evidence of the existence of such entry, and shall be admitted as evidence of the matters, transactions and accounts therein recorded in every case where, and to the same extent as, the original entry itself is now by law admissible, but not further or otherwise.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

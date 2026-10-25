@@ -462,12 +462,6 @@
         "reason": "Apparent typographical error ('no' for 'nor') in official Gazette print layer."
       },
       {
-        "provision_subpart": "FIO_2001_SEC_22(3) Proviso",
-        "printed_in_gazette": "such amount; and in the event",
-        "proposed_correction": "such amount, and in the event",
-        "reason": "Official Gazette print layer contains Unicode character U+037E (Greek question mark glyph printing as semicolon) rather than comma."
-      },
-      {
         "provision_subpart": "FIO_2001_SEC_22(7)",
         "printed_in_gazette": "passed under sub-section (2)",
         "proposed_correction": "passed under sub-section (3)",

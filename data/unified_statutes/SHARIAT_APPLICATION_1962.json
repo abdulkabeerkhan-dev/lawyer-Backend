@@ -12,14 +12,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), West Pakistan Muslim Personal Law (Shariat) Application Act, 1962 (W.P. Act V of 1962)",
     "source_page": "unspecified",
     "content_hash": "e1f0df61d134177f98c3d0476d97e79faa33818a0327962bea2df3262e3d6313",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Notwithstanding any custom or usage to the contrary, in all questions regarding succession (whether testate or intestate), special property of females, betrothal, marriage, divorce, dower, maintenance, guardianship, minority, bastardy, family relations, wills, legacies, gifts, waqf, trusts and trust properties, the rule of decision, where the parties are Muslims, shall be the Muslim Personal Law (Shariat)."
+    "text_normalized": "Notwithstanding any custom or usage to the contrary, in all questions regarding succession (whether testate or intestate), special property of females, betrothal, marriage, divorce, dower, maintenance, guardianship, minority, bastardy, family relations, wills, legacies, gifts, waqf, trusts and trust properties, the rule of decision, where the parties are Muslims, shall be the Muslim Personal Law (Shariat).",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "SHARIAT_APPLICATION_1962_SEC_3",
@@ -34,14 +36,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), West Pakistan Muslim Personal Law (Shariat) Application Act, 1962 (W.P. Act V of 1962)",
     "source_page": "unspecified",
     "content_hash": "dfebbf75823f81d9a13d5186b8473040bd419711df9a83c8a3711168f9e0f977",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "The limited estates in respect of immovable property held by Muslim females under the customary law are hereby terminated and shall dissolve upon the persons who would have been entitled to succeed as Muslim heirs on the death of the last full owner."
+    "text_normalized": "The limited estates in respect of immovable property held by Muslim females under the customary law are hereby terminated and shall dissolve upon the persons who would have been entitled to succeed as Muslim heirs on the death of the last full owner.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "SHARIAT_APPLICATION_1962_SEC_5",
@@ -56,13 +60,15 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), West Pakistan Muslim Personal Law (Shariat) Application Act, 1962 (W.P. Act V of 1962)",
     "source_page": "unspecified",
     "content_hash": "6da4e5d2f6888db0ad5771dd17ca9c0410a4690d73e9ed33e6364d34bc14d48b",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "On the death of any person who was holding property under custom as a life estate, the property shall devolve upon the persons who would have been the heirs of the last full owner under the Muslim Personal Law (Shariat) had he died at the time of the death of such life tenant."
+    "text_normalized": "On the death of any person who was holding property under custom as a life estate, the property shall devolve upon the persons who would have been the heirs of the last full owner under the Muslim Personal Law (Shariat) had he died at the time of the death of such life tenant.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

@@ -12,14 +12,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Police Order, 2002",
     "source_page": "unspecified",
     "content_hash": "7054aba21a8dade7364aa3250e610712bdebd34971e0aec306fe294f63e0e3a4",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) There shall be a separate investigation staff in each district headed by an officer of appropriate rank. (2) The investigation staff shall not be diverted to any other duties except under the written permission of the Provincial Police Officer."
+    "text_normalized": "(1) There shall be a separate investigation staff in each district headed by an officer of appropriate rank. (2) The investigation staff shall not be diverted to any other duties except under the written permission of the Provincial Police Officer.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "POLICE_ORDER_2002_ART_155",
@@ -34,13 +36,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Police Order, 2002",
     "source_page": "unspecified",
     "content_hash": "53384b66e9665a31faee97b98e9f9004570275c9e46ba7b107b0e22f736b94d8",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Any police officer who: (a) without lawful authority vexatiously searches or arrests any person; (b) vexatiously seizes the property of any person; or (c) inflicts torture on any person in his custody, shall be punished with imprisonment for a term which may extend to five years, and with fine."
+    "text_normalized": "Any police officer who: (a) without lawful authority vexatiously searches or arrests any person; (b) vexatiously seizes the property of any person; or (c) inflicts torture on any person in his custody, shall be punished with imprisonment for a term which may extend to five years, and with fine.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

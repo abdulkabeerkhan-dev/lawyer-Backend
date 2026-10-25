@@ -12,14 +12,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act II of 1947",
     "source_page": "unspecified",
     "content_hash": "24c4a7862e2da37847500f2031b953b4aa9d21160b5d2681c71c8f1317727a93",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Where in any trial of an offence punishable under section 161 or section 165 of the Pakistan Penal Code, it is proved that an accused person has accepted or obtained any gratification or valuable thing, it shall be presumed, unless the contrary is proved, that he accepted or obtained that gratification or valuable thing as a motive or reward."
+    "text_normalized": "Where in any trial of an offence punishable under section 161 or section 165 of the Pakistan Penal Code, it is proved that an accused person has accepted or obtained any gratification or valuable thing, it shall be presumed, unless the contrary is proved, that he accepted or obtained that gratification or valuable thing as a motive or reward.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PCA_1947_SEC_5",
@@ -34,14 +36,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act II of 1947",
     "source_page": "unspecified",
     "content_hash": "6ec0225d61313795661960b50f02e0d5d2df4a664d1f745b2c75a03323a6c651",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) A public servant is said to commit the offence of criminal misconduct: (a) if he habitually accepts or obtains any gratification; (b) if he dishonestly or fraudulently misappropriates property; (c) if he by corrupt or illegal means obtains for himself or for any other person any valuable thing or pecuniary advantage; (d) if he or any person on his behalf is in possession of pecuniary resources or property disproportionate to his known sources of income.\n(2) Any public servant who commits criminal misconduct shall be punishable with imprisonment for a term which may extend to seven years, or with fine, or with both."
+    "text_normalized": "(1) A public servant is said to commit the offence of criminal misconduct: (a) if he habitually accepts or obtains any gratification; (b) if he dishonestly or fraudulently misappropriates property; (c) if he by corrupt or illegal means obtains for himself or for any other person any valuable thing or pecuniary advantage; (d) if he or any person on his behalf is in possession of pecuniary resources or property disproportionate to his known sources of income.\n(2) Any public servant who commits criminal misconduct shall be punishable with imprisonment for a term which may extend to seven years, or with fine, or with both.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PCA_1947_SEC_5A",
@@ -56,13 +60,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act II of 1947",
     "source_page": "unspecified",
     "content_hash": "e8ad8d676e24ebedbd83628cac8e471a4e5adef9806ada1254b6ae275573659d",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Notwithstanding anything contained in the Code of Criminal Procedure, 1898, no police officer below the rank of Inspector shall investigate any offence punishable under this Act without the order of a Magistrate of the first class."
+    "text_normalized": "Notwithstanding anything contained in the Code of Criminal Procedure, 1898, no police officer below the rank of Inspector shall investigate any offence punishable under this Act without the order of a Magistrate of the first class.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

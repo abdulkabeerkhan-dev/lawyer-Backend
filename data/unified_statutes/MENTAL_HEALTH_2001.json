@@ -12,14 +12,16 @@
     "source_file": "Official Gazette / Lahore High Court / Pakistan Code, Mental Health Ordinance, 2001 / Punjab Mental Health Act, 2014",
     "source_page": "unspecified",
     "content_hash": "91daf15902d6f15d350549dcb773d01995156efe063f03a1bbeb5d8ba67647d6",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Where in any proceeding before a Civil or Criminal Court the mental condition or capacity of any party or accused person is questioned, the Court may order such person to be examined by a Medical Board comprising certified psychiatrists."
+    "text_normalized": "Where in any proceeding before a Civil or Criminal Court the mental condition or capacity of any party or accused person is questioned, the Court may order such person to be examined by a Medical Board comprising certified psychiatrists.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "MENTAL_HEALTH_2001_SEC_49",
@@ -34,13 +36,15 @@
     "source_file": "Official Gazette / Lahore High Court / Pakistan Code, Mental Health Ordinance, 2001 / Punjab Mental Health Act, 2014",
     "source_page": "unspecified",
     "content_hash": "ca08df4b41c427a50cf6394800fb16791e7e642303bc88fc982ea3d0eface547",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "The Court of Session or District Judge may, on application, direct an inquisition whether a person subject to its jurisdiction is of unsound mind and incapable of managing his property, and appoint a manager of such estate."
+    "text_normalized": "The Court of Session or District Judge may, on application, direct an inquisition whether a person subject to its jurisdiction is of unsound mind and incapable of managing his property, and appoint a manager of such estate.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

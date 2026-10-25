@@ -12,13 +12,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Dowry and Bridal Gifts (Restriction) Act, 1976",
     "source_page": "unspecified",
     "content_hash": "782fc906175d8b9051eeedd9d058bc06e7097f3c83811e8030a28442f583d0f4",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) The aggregate value of the dowry and presents given to the bride by her parents, and the bridal gifts given to the bridegroom, shall not exceed the prescribed statutory limit."
+    "text_normalized": "(1) The aggregate value of the dowry and presents given to the bride by her parents, and the bridal gifts given to the bridegroom, shall not exceed the prescribed statutory limit.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

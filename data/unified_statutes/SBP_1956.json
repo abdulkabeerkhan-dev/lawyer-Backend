@@ -12,14 +12,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), State Bank of Pakistan Act, 1956 (Act XXXIII of 1956)",
     "source_page": "unspecified",
     "content_hash": "87ea1fc53bc061a61167a37e3a7881f16313d8a08642ec6de0fed464cb72f99d",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "The Bank shall be an autonomous body having the primary objective of maintaining domestic price stability, and without prejudice to price stability, supporting the economic policies of the Federal Government to foster development and fuller utilization of productive resources."
+    "text_normalized": "The Bank shall be an autonomous body having the primary objective of maintaining domestic price stability, and without prejudice to price stability, supporting the economic policies of the Federal Government to foster development and fuller utilization of productive resources.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "SBP_1956_SEC_17",
@@ -34,13 +36,15 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), State Bank of Pakistan Act, 1956 (Act XXXIII of 1956)",
     "source_page": "unspecified",
     "content_hash": "c6440f9f7a76029781226683f881380c0213c2c3471bb70ca4aa349ef1d5f715",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "The Bank is authorized to carry on and transact several kinds of business, including the issuing of notes, acceptance of deposits from banks and Government, purchase and rediscount of bills of exchange, and regulation of credit and liquidity in the banking system."
+    "text_normalized": "The Bank is authorized to carry on and transact several kinds of business, including the issuing of notes, acceptance of deposits from banks and Government, purchase and rediscount of bills of exchange, and regulation of credit and liquidity in the banking system.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

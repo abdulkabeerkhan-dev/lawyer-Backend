@@ -12,14 +12,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act X of 1940",
     "source_page": "unspecified",
     "content_hash": "d9b1c1c4c4aee5c9bb08eb461837a8148f7f6b61af18ac7a5640a8ea3d0cc30e",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) When the arbitrators or umpire have made their award, they shall sign it and give notice in writing to the parties of the making and signing thereof. (2) The arbitrators or umpire shall, at the request of any party to the arbitration agreement or if so directed by the Court, cause the award or a signed copy of it to be filed in Court."
+    "text_normalized": "(1) When the arbitrators or umpire have made their award, they shall sign it and give notice in writing to the parties of the making and signing thereof. (2) The arbitrators or umpire shall, at the request of any party to the arbitration agreement or if so directed by the Court, cause the award or a signed copy of it to be filed in Court.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "ARBITRATION_1940_SEC_17",
@@ -34,14 +36,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act X of 1940",
     "source_page": "unspecified",
     "content_hash": "d5ed39bb8f27a59f8c928f091181de7e38badce578db07fe2e1802dae71e2650",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Where the Court sees no cause to remit the award or any of the matters referred to arbitration for reconsideration or to set aside the award, the Court shall, after the time for making an application to set aside the award has expired, proceed to pronounce judgment according to the award, and upon the judgment so pronounced a decree shall follow."
+    "text_normalized": "Where the Court sees no cause to remit the award or any of the matters referred to arbitration for reconsideration or to set aside the award, the Court shall, after the time for making an application to set aside the award has expired, proceed to pronounce judgment according to the award, and upon the judgment so pronounced a decree shall follow.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "ARBITRATION_1940_SEC_20",
@@ -56,7 +60,7 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. X of 1940; https://pakistancode.gov.pk/pdffiles/administrator0a802e3468735238090ceede22ccfd11.pdf",
     "source_page": "9-10",
     "content_hash": "2591b102cca934746a0bfa531c86c84a73ae16c25f3a45b40e80a4db85cdbedc",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
@@ -64,7 +68,9 @@
     "effective_to": null,
     "text_cleaned": "20. Application to file in Court arbitration agreement.__ (1) Where any persons have entered into an arbitration agreement before the institution of any suit with respect to the subject-matter of the agreement or any part of it, and where a difference has arisen to which the agreement applies, they or any of them, instead of proceeding under Chapter II, may apply to a Court having jurisdiction in the matter to which the agreement relates, that the agreement be filed in Court.\n(2) The application shall be in writing and shall be numbered and registered as a suit between one or more of the parties interested or claiming to be interested as plaintiff or plaintiffs and the remainder as defendant or defendants, if the application has been presented by all the parties, or, if otherwise, between the applicant as plaintiff and the other parties as defendants.\n(3) On such application being made, the Court shall direct notice thereof to be given to all parties to the agreement other than the applicants, requiring them to show cause within the time specified in the notice why the agreement should not be filed.\n(4) Where no sufficient cause is shown, the Court shall order the agreement to be filed, and shall make an order of reference to the arbitrator appointed by the parties, whether in the agreement or otherwise, or, where the parties cannot agree upon an arbitrator, to an arbitrator appointed by the Court.\n(5) Thereafter the arbitration shall proceed in accordance with, and shall be governed by, the other provisions of this Act so far as they can be made applicable.",
     "footnotes": [],
-    "text_normalized": "20. Application to file in Court arbitration agreement.— (1) Where any persons have entered into an arbitration agreement before the institution of any suit with respect to the subject-matter of the agreement or any part of it, and where a difference has arisen to which the agreement applies, they or any of them, instead of proceeding under Chapter II, may apply to a Court having jurisdiction in the matter to which the agreement relates, that the agreement be filed in Court.\n(2) The application shall be in writing and shall be numbered and registered as a suit between one or more of the parties interested or claiming to be interested as plaintiff or plaintiffs and the remainder as defendant or defendants, if the application has been presented by all the parties, or, if otherwise, between the applicant as plaintiff and the other parties as defendants.\n(3) On such application being made, the Court shall direct notice thereof to be given to all parties to the agreement other than the applicants, requiring them to show cause within the time specified in the notice why the agreement should not be filed.\n(4) Where no sufficient cause is shown, the Court shall order the agreement to be filed, and shall make an order of reference to the arbitrator appointed by the parties, whether in the agreement or otherwise, or, where the parties cannot agree upon an arbitrator, to an arbitrator appointed by the Court.\n(5) Thereafter the arbitration shall proceed in accordance with, and shall be governed by, the other provisions of this Act so far as they can be made applicable."
+    "text_normalized": "20. Application to file in Court arbitration agreement.— (1) Where any persons have entered into an arbitration agreement before the institution of any suit with respect to the subject-matter of the agreement or any part of it, and where a difference has arisen to which the agreement applies, they or any of them, instead of proceeding under Chapter II, may apply to a Court having jurisdiction in the matter to which the agreement relates, that the agreement be filed in Court.\n(2) The application shall be in writing and shall be numbered and registered as a suit between one or more of the parties interested or claiming to be interested as plaintiff or plaintiffs and the remainder as defendant or defendants, if the application has been presented by all the parties, or, if otherwise, between the applicant as plaintiff and the other parties as defendants.\n(3) On such application being made, the Court shall direct notice thereof to be given to all parties to the agreement other than the applicants, requiring them to show cause within the time specified in the notice why the agreement should not be filed.\n(4) Where no sufficient cause is shown, the Court shall order the agreement to be filed, and shall make an order of reference to the arbitrator appointed by the parties, whether in the agreement or otherwise, or, where the parties cannot agree upon an arbitrator, to an arbitrator appointed by the Court.\n(5) Thereafter the arbitration shall proceed in accordance with, and shall be governed by, the other provisions of this Act so far as they can be made applicable.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "ARBITRATION_1940_SEC_30",
@@ -79,14 +85,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Arbitration Act, 1940",
     "source_page": "unspecified",
     "content_hash": "c7ba8758ff52c8ea476d9b022b6b272529b58b9fe120796b6f7296d3f834a2c2",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "An award shall not be set aside except on one or more of the following grounds, namely: (a) that an arbitrator or umpire has misconducted himself or the proceedings; (b) that an award has been made after the issue of an order by the Court superseding the arbitration or after arbitration proceedings have become invalid under section 35; (c) that an award has been improperly procured or is otherwise invalid."
+    "text_normalized": "An award shall not be set aside except on one or more of the following grounds, namely: (a) that an arbitrator or umpire has misconducted himself or the proceedings; (b) that an award has been made after the issue of an order by the Court superseding the arbitration or after arbitration proceedings have become invalid under section 35; (c) that an award has been improperly procured or is otherwise invalid.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "ARBITRATION_1940_SEC_34",
@@ -101,13 +109,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Arbitration Act, 1940",
     "source_page": "unspecified",
     "content_hash": "0cc3eb8c73d9df34f624f1d2f417d2b704c2a77bf8874f30b475a9a090de8069",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Where any party to an arbitration agreement commences any legal proceedings against any other party to the agreement in respect of any matter agreed to be referred, any party to such legal proceedings may, at any time before filing a written statement or taking any other steps in the proceedings, apply to the judicial authority before which the proceedings are pending to stay the proceedings; and if satisfied that there is no sufficient reason why the matter should not be referred in accordance with the arbitration agreement, such authority may make an order staying the proceedings."
+    "text_normalized": "Where any party to an arbitration agreement commences any legal proceedings against any other party to the agreement in respect of any matter agreed to be referred, any party to such legal proceedings may, at any time before filing a written statement or taking any other steps in the proceedings, apply to the judicial authority before which the proceedings are pending to stay the proceedings; and if satisfied that there is no sufficient reason why the matter should not be referred in accordance with the arbitration agreement, such authority may make an order staying the proceedings.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

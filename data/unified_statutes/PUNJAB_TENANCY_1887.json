@@ -12,14 +12,16 @@
     "source_file": "Official Gazette / Lahore High Court / Pakistan Code, Punjab Tenancy Act, 1887",
     "source_page": "unspecified",
     "content_hash": "321b082cf03fc4b88cfab6f707b7da67780f2857bf0606b3aeb8b475a3dcf3ad",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "If a tenant having a right of occupancy fails for more than one year without sufficient cause to cultivate his tenancy, either by himself or through another person, and to arrange for payment of the rent thereof as it falls due, the right of occupancy shall be extinguished from the end of that year."
+    "text_normalized": "If a tenant having a right of occupancy fails for more than one year without sufficient cause to cultivate his tenancy, either by himself or through another person, and to arrange for payment of the rent thereof as it falls due, the right of occupancy shall be extinguished from the end of that year.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PUNJAB_TENANCY_1887_SEC_77",
@@ -34,13 +36,15 @@
     "source_file": "Official Gazette / Lahore High Court / Pakistan Code, Punjab Tenancy Act, 1887",
     "source_page": "unspecified",
     "content_hash": "9cbbe6928e4cd16091f62061a81b2674170127b631835694a363aca12e3c781b",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) The following applications and suits shall be instituted in, heard and determined by Revenue Courts, and no other Court shall take cognizance of any dispute or matter with respect to which any such suit might be instituted: (e) suits by a landlord to eject a tenant; (f) suits by a tenant to contest liability to ejectment; (g) suits by a tenant for recovery of possession or for compensation for wrongful dispossession."
+    "text_normalized": "(1) The following applications and suits shall be instituted in, heard and determined by Revenue Courts, and no other Court shall take cognizance of any dispute or matter with respect to which any such suit might be instituted: (e) suits by a landlord to eject a tenant; (f) suits by a tenant to contest liability to ejectment; (g) suits by a tenant for recovery of possession or for compensation for wrongful dispossession.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

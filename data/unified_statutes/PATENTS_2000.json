@@ -12,14 +12,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Patents Ordinance, 2000 (Ordinance LXI of 2000)",
     "source_page": "unspecified",
     "content_hash": "6a2b125e010459a5993f8a908ed52030782311b8210b9230fe3c98c4a0f3d205",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "An invention is patentable if it is new, involves an inventive step and is capable of industrial application. A patent shall not be granted for discoveries, scientific theories and mathematical methods, literary, dramatic, musical or artistic works, or schemes for performing mental acts or doing business."
+    "text_normalized": "An invention is patentable if it is new, involves an inventive step and is capable of industrial application. A patent shall not be granted for discoveries, scientific theories and mathematical methods, literary, dramatic, musical or artistic works, or schemes for performing mental acts or doing business.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PATENTS_2000_SEC_13",
@@ -34,14 +36,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Patents Ordinance, 2000 (Ordinance LXI of 2000)",
     "source_page": "unspecified",
     "content_hash": "f1ce0f58aa8148ae366b02b1bac96be6b4f5c1920e5c8693d6a368fe11eb1bef",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "An invention shall be considered to be new if it does not form part of the prior art. The prior art shall consist of everything which has been made available to the public in Pakistan or anywhere in the world by means of written or oral description, by use, or in any other way."
+    "text_normalized": "An invention shall be considered to be new if it does not form part of the prior art. The prior art shall consist of everything which has been made available to the public in Pakistan or anywhere in the world by means of written or oral description, by use, or in any other way.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PATENTS_2000_SEC_60",
@@ -56,13 +60,15 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Patents Ordinance, 2000 (Ordinance LXI of 2000)",
     "source_page": "unspecified",
     "content_hash": "44de1c572da70a37ad6065658d0c3b1ee7c05f83b84b8bb4bfd9c84adb7ce33f",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "The patentee may institute a suit in a District Court against any person who makes, uses, sells, offers for sale or imports the patented product or uses the patented process without his consent. The Court may award an injunction, damages or account of profits and delivery-up of infringing articles."
+    "text_normalized": "The patentee may institute a suit in a District Court against any person who makes, uses, sells, offers for sale or imports the patented product or uses the patented process without his consent. The Court may award an injunction, damages or account of profits and delivery-up of infringing articles.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

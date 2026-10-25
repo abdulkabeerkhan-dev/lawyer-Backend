@@ -12,14 +12,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Oaths Act, 1873 (Act X of 1873)",
     "source_page": "unspecified",
     "content_hash": "94d4f3dda72a1ab470bfcbed3a13c2e4f2ac26b4383cc4cfd9866a2d080e08cf",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "If any party to, or witness in, any judicial proceeding offers to give evidence on oath in any form common amongst, or held binding by, persons of the race or persuasion to which he belongs, and not repugnant to justice or decency, the Court may, if it thinks fit, tender such oath or solemn affirmation to him."
+    "text_normalized": "If any party to, or witness in, any judicial proceeding offers to give evidence on oath in any form common amongst, or held binding by, persons of the race or persuasion to which he belongs, and not repugnant to justice or decency, the Court may, if it thinks fit, tender such oath or solemn affirmation to him.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "OATHS_1873_SEC_9",
@@ -34,14 +36,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Oaths Act, 1873 (Act X of 1873)",
     "source_page": "unspecified",
     "content_hash": "08c619707cc31bbbc43224d4e9bdf74d79c2ca0d66d9b5a067eae86557523220",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "If any party to any judicial proceeding offers to be bound by any such oath or solemn affirmation as is mentioned in section 8, if such oath or solemn affirmation is made by the other party to, or by any witness in, such proceeding, the Court may ask such party or witness, or cause him to be asked, whether or not he will make the oath or affirmation."
+    "text_normalized": "If any party to any judicial proceeding offers to be bound by any such oath or solemn affirmation as is mentioned in section 8, if such oath or solemn affirmation is made by the other party to, or by any witness in, such proceeding, the Court may ask such party or witness, or cause him to be asked, whether or not he will make the oath or affirmation.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "OATHS_1873_SEC_11",
@@ -56,13 +60,15 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Oaths Act, 1873 (Act X of 1873)",
     "source_page": "unspecified",
     "content_hash": "0956593c430e92b5a0a3a1fd0f7b27269b3af480a5ba3129debc0da22e758b8e",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "The evidence so given shall, as against the person who offered to be bound as aforesaid, be the conclusive proof of the matter stated."
+    "text_normalized": "The evidence so given shall, as against the person who offered to be bound as aforesaid, be the conclusive proof of the matter stated.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

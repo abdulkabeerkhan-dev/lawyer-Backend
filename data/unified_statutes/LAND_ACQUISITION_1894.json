@@ -12,14 +12,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act I of 1894",
     "source_page": "unspecified",
     "content_hash": "075d89f4957e990f3331d70e50bc9717c98e1a543d15ca4680cebde6f55a5a04",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Whenever it appears to the Provincial Government that land in any locality is needed or is likely to be needed for any public purpose, a notification to that effect shall be published in the official Gazette."
+    "text_normalized": "(1) Whenever it appears to the Provincial Government that land in any locality is needed or is likely to be needed for any public purpose, a notification to that effect shall be published in the official Gazette.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "LAND_ACQUISITION_1894_SEC_18",
@@ -34,14 +36,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act I of 1894",
     "source_page": "unspecified",
     "content_hash": "ea31c9e001ad4a7ea7cf8c81c4ec9210b849cc4d15e313d78b898ea61f6a1a23",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Any person interested who has not accepted the award may, by written application to the Collector, require that the matter be referred by the Collector for the determination of the Court, whether his objection be to the measurement of the land, the amount of the compensation, the persons to whom it is payable, or the apportionment of the compensation among the persons interested."
+    "text_normalized": "(1) Any person interested who has not accepted the award may, by written application to the Collector, require that the matter be referred by the Collector for the determination of the Court, whether his objection be to the measurement of the land, the amount of the compensation, the persons to whom it is payable, or the apportionment of the compensation among the persons interested.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "LAND_ACQUISITION_1894_SEC_23",
@@ -56,13 +60,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act I of 1894",
     "source_page": "unspecified",
     "content_hash": "ac82ff7a1b6fd5498a0625d998eb4a1319ca61c624ef5b5c040e06178b0bd990",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) In determining the amount of compensation to be awarded for land acquired under this Act, the Court shall take into consideration: first, the market-value of the land at the date of the publication of the notification under section 4, sub-section (1); secondly, the damage sustained by the person interested by reason of the taking of any standing crops or trees; thirdly, the damage by reason of severing such land from his other land; and in addition the Court shall award fifteen percentum on such market-value in consideration of the compulsory nature of the acquisition."
+    "text_normalized": "(1) In determining the amount of compensation to be awarded for land acquired under this Act, the Court shall take into consideration: first, the market-value of the land at the date of the publication of the notification under section 4, sub-section (1); secondly, the damage sustained by the person interested by reason of the taking of any standing crops or trees; thirdly, the damage by reason of severing such land from his other land; and in addition the Court shall award fifteen percentum on such market-value in consideration of the compulsory nature of the acquisition.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

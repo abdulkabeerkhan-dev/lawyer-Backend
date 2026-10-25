@@ -12,14 +12,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act VIII of 1975",
     "source_page": "unspecified",
     "content_hash": "bbad3e7953c5f548dadf82498d441996e90648b3baa8f492b30fe102df2a50b1",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Notwithstanding anything contained in any other law for the time being in force, the Federal Government may constitute an Agency to be called the Federal Investigation Agency for inquiry into, and investigation of, the offences specified in the Schedule, including an attempt or conspiracy to commit, and abetment of, any such offence."
+    "text_normalized": "(1) Notwithstanding anything contained in any other law for the time being in force, the Federal Government may constitute an Agency to be called the Federal Investigation Agency for inquiry into, and investigation of, the offences specified in the Schedule, including an attempt or conspiracy to commit, and abetment of, any such offence.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "FIA_1974_SEC_5",
@@ -34,13 +36,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act VIII of 1975",
     "source_page": "unspecified",
     "content_hash": "24f73666c53c23d3a9e9b985d1b7d94dc3dcc2d07f2b447fba8dd151fd1cd865",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Subject to any order which the Federal Government may make in this behalf, members of the Agency shall, for the purpose of an inquiry or investigation under this Act, have throughout Pakistan all the powers of search, arrest of persons and seizure of property, and all other powers, duties, privileges and liabilities which police officers of a Province have in connection with the investigation of offences."
+    "text_normalized": "(1) Subject to any order which the Federal Government may make in this behalf, members of the Agency shall, for the purpose of an inquiry or investigation under this Act, have throughout Pakistan all the powers of search, arrest of persons and seizure of property, and all other powers, duties, privileges and liabilities which police officers of a Province have in connection with the investigation of offences.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

@@ -12,14 +12,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Benami Transactions (Prohibition) Act, 2017",
     "source_page": "unspecified",
     "content_hash": "06649a07b47e8bb5dfe605772e6b662e891a75f0961badfca618436c920dadb7",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) No person shall enter into any Benami transaction. (2) Whoever enters into any Benami transaction or abets the commission of a Benami transaction shall be guilty of the offence of Benami transaction."
+    "text_normalized": "(1) No person shall enter into any Benami transaction. (2) Whoever enters into any Benami transaction or abets the commission of a Benami transaction shall be guilty of the offence of Benami transaction.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "BENAMI_2017_SEC_5",
@@ -34,13 +36,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Benami Transactions (Prohibition) Act, 2017",
     "source_page": "unspecified",
     "content_hash": "807f6efbae1962180b66c2738a50bd226e36e4e939819823e6caeb5e9b247fa7",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Any property, which is subject-matter of a Benami transaction, shall be liable to be confiscated by the Federal Government."
+    "text_normalized": "Any property, which is subject-matter of a Benami transaction, shall be liable to be confiscated by the Federal Government.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

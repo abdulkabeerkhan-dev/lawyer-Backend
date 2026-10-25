@@ -12,14 +12,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Christian Marriage Act, 1872 (Act XV of 1872) & Divorce Act, 1869 (Act IV of 1869)",
     "source_page": "unspecified",
     "content_hash": "753488332d5564205b83912d60d5c4bfad680ffb0179105a5b7a9127f276c0f0",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Every marriage between persons, one or both of whom is or are a Christian or Christians, shall be solemnized in accordance with the provisions of the next following section; and any such marriage solemnized otherwise than in accordance with such provisions shall be void."
+    "text_normalized": "Every marriage between persons, one or both of whom is or are a Christian or Christians, shall be solemnized in accordance with the provisions of the next following section; and any such marriage solemnized otherwise than in accordance with such provisions shall be void.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "CHRISTIAN_MARRIAGE_1872_SEC_10",
@@ -34,13 +36,15 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Christian Marriage Act, 1872 (Act XV of 1872) & Divorce Act, 1869 (Act IV of 1869)",
     "source_page": "unspecified",
     "content_hash": "e35a24c37c9a9fce1aa98b14b7281edd116d9dd2691eedbab9ab6d59f3482340",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Any husband may present a petition to the Family Court or District Court praying that his marriage may be dissolved on the ground that his wife has been guilty of adultery. Any wife may present a petition praying that her marriage may be dissolved on the ground that her husband has been guilty of incestuous adultery, bigamy with adultery, rape, sodomy, bestiality, or adultery coupled with cruelty or desertion without reasonable excuse for two years or upwards."
+    "text_normalized": "Any husband may present a petition to the Family Court or District Court praying that his marriage may be dissolved on the ground that his wife has been guilty of adultery. Any wife may present a petition praying that her marriage may be dissolved on the ground that her husband has been guilty of incestuous adultery, bigamy with adultery, rape, sodomy, bestiality, or adultery coupled with cruelty or desertion without reasonable excuse for two years or upwards.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

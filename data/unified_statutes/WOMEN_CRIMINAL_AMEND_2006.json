@@ -12,13 +12,15 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), Protection of Women (Criminal Laws Amendment) Act, 2006 (Act VI of 2006)",
     "source_page": "unspecified",
     "content_hash": "08e57c68398e72ff5cf760f6520203ab40ad68072461f1602cadf0ce7c25dc71",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "No court shall take cognizance of an offence under section 496-B or section 496-C of the Pakistan Penal Code (fornication or false accusation) except on a complaint lodged in a Court of Session by the person aggrieved or competent authority, and no police officer shall investigate such complaint without an express direction of the Court of Session."
+    "text_normalized": "No court shall take cognizance of an offence under section 496-B or section 496-C of the Pakistan Penal Code (fornication or false accusation) except on a complaint lodged in a Court of Session by the person aggrieved or competent authority, and no police officer shall investigate such complaint without an express direction of the Court of Session.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

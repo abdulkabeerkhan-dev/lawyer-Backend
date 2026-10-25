@@ -12,14 +12,16 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), West Pakistan Maintenance of Public Order Ordinance, 1960 (W.P. Ordinance XXXI of 1960)",
     "source_page": "unspecified",
     "content_hash": "affafc6a851b6dc010dfb83225f61dc4d90800dc8cf8d8a35ab57474ba4030f4",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Government, or the District Magistrate, if satisfied with respect to any particular person that with a view to preventing him from acting in any manner prejudicial to public safety or the maintenance of public order it is necessary so to do, may by order in writing direct that such person be arrested and detained for such period as may be specified in the order, not exceeding three months."
+    "text_normalized": "Government, or the District Magistrate, if satisfied with respect to any particular person that with a view to preventing him from acting in any manner prejudicial to public safety or the maintenance of public order it is necessary so to do, may by order in writing direct that such person be arrested and detained for such period as may be specified in the order, not exceeding three months.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "MPO_1960_SEC_16",
@@ -34,13 +36,15 @@
     "source_file": "Official Gazette of Pakistan / Pakistan Code (pakistancode.gov.pk), West Pakistan Maintenance of Public Order Ordinance, 1960 (W.P. Ordinance XXXI of 1960)",
     "source_page": "unspecified",
     "content_hash": "46ee38bde6e805ce465eea237ca011007eb06050ea42c246c3803d5712091bb0",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever makes, publishes or disseminates any statement, rumor or report which is calculated to cause fear or alarm to the public or any section of the public, or to incite any person to commit an offence against public peace, shall be punished with imprisonment which may extend to three years, or with fine, or with both."
+    "text_normalized": "Whoever makes, publishes or disseminates any statement, rumor or report which is calculated to cause fear or alarm to the public or any section of the public, or to incite any person to commit an offence against public peace, shall be punished with imprisonment which may extend to three years, or with fine, or with both.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

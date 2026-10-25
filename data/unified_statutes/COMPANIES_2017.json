@@ -12,14 +12,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act XIX of 2017",
     "source_page": "unspecified",
     "content_hash": "33df0a1f3beba2ca2e021212731e714dabeae20211dfd5b09a0e708dec3bdeb2",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "The registration of a company has the effect that the subscribers to the memorandum, together with such other persons as may from time to time become members of the company, are a body corporate by the name contained in the certificate of incorporation, capable of exercising all the functions of an incorporated company, having perpetual succession and a common seal, with power to hold land."
+    "text_normalized": "The registration of a company has the effect that the subscribers to the memorandum, together with such other persons as may from time to time become members of the company, are a body corporate by the name contained in the certificate of incorporation, capable of exercising all the functions of an incorporated company, having perpetual succession and a common seal, with power to hold land.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_89",
@@ -34,14 +36,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act XIX of 2017",
     "source_page": "unspecified",
     "content_hash": "5ff785bd4e92f50d1019b4b93ff9b146815831b73530390ec3e084fbe4db0b47",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "The shares or other interest of any member in a company shall be moveable property, transferable in the manner provided by the articles of the company."
+    "text_normalized": "The shares or other interest of any member in a company shall be moveable property, transferable in the manner provided by the articles of the company.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_130",
@@ -56,14 +60,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act XIX of 2017",
     "source_page": "unspecified",
     "content_hash": "a6ab7887ac6f55dbfa7d9365adbefebd7aadf95cebf1f6370be21a103ccfb8a3",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Every company shall keep a register of its members and enter therein: (a) the name, address, CNIC, and nationality of each member; (b) the shares held by each member; (c) the date at which each person was entered in the register as a member."
+    "text_normalized": "(1) Every company shall keep a register of its members and enter therein: (a) the name, address, CNIC, and nationality of each member; (b) the shares held by each member; (c) the date at which each person was entered in the register as a member.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_279",
@@ -78,14 +84,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act XIX of 2017",
     "source_page": "unspecified",
     "content_hash": "035402c6c8300f9d39b94c0681f6de3e98a3b818a0146fd6247e8ad7ad2e81da",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Where a compromise or arrangement is proposed between a company and its creditors or any class of them, or between the company and its members or any class of them, the Commission or the Court may, on the application of the company or any creditor or member, order a meeting of the creditors or members."
+    "text_normalized": "(1) Where a compromise or arrangement is proposed between a company and its creditors or any class of them, or between the company and its members or any class of them, the Commission or the Court may, on the application of the company or any creditor or member, order a meeting of the creditors or members.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_286",
@@ -100,14 +108,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act XIX of 2017",
     "source_page": "unspecified",
     "content_hash": "f2c110d31797587858de479836576aef1454d26b23f564fc35347c6569c9261c",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Any member or members holding not less than ten percent of the issued share capital of a company, or any creditor, may file an application to the Court for an order under section 287 where the affairs of the company are being conducted in an unlawful or fraudulent manner or in a manner oppressive to the members."
+    "text_normalized": "(1) Any member or members holding not less than ten percent of the issued share capital of a company, or any creditor, may file an application to the Court for an order under section 287 where the affairs of the company are being conducted in an unlawful or fraudulent manner or in a manner oppressive to the members.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_301",
@@ -122,13 +132,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act XIX of 2017",
     "source_page": "unspecified",
     "content_hash": "61b3b0bf8e647f8a84f412bb8573a55fd0f4b96a1154fb17b1b9359aa2cf3bb5",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "A company may be wound up by the Court: (a) if the company has by special resolution resolved that it be wound up by the Court; (b) if default is made in holding the statutory meeting; (c) if the company does not commence its business within a year; (d) if the number of members is reduced below the statutory minimum; (e) if the company is unable to pay its debts; (f) if the Court is of opinion that it is just and equitable that the company should be wound up."
+    "text_normalized": "A company may be wound up by the Court: (a) if the company has by special resolution resolved that it be wound up by the Court; (b) if default is made in holding the statutory meeting; (c) if the company does not commence its business within a year; (d) if the number of members is reduced below the statutory minimum; (e) if the company is unable to pay its debts; (f) if the Court is of opinion that it is just and equitable that the company should be wound up.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]

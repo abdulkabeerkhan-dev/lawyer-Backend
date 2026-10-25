@@ -12,14 +12,16 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Supreme Court Rules, 1980",
     "source_page": "unspecified",
     "content_hash": "a32a3f8ad891f48040221e06fb55f980da8a3a8eb62fc5ee09764d474cab5d4f",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "In every civil appeal by leave of the Court, the petition for leave to appeal shall be lodged within thirty days from the date of the judgment or order sought to be appealed from."
+    "text_normalized": "In every civil appeal by leave of the Court, the petition for leave to appeal shall be lodged within thirty days from the date of the judgment or order sought to be appealed from.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   },
   {
     "canonical_id": "SC_RULES_1980_ORD_XXVI_R_1",
@@ -34,13 +36,15 @@
     "source_file": "Pakistan Code (pakistancode.gov.pk) / Official Gazette, Supreme Court Rules, 1980",
     "source_page": "unspecified",
     "content_hash": "18bb3868d690d85e0ca8868575c3698745811a6b97e46cfba392679d2f00cae8",
-    "tier": "ingested_unreviewed",
+    "tier": "unsourced",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "An application for review of a judgment or order of the Court shall be filed within thirty days from the date of the pronouncement of the judgment or the making of the order, and shall be drawn up by the advocate who appeared at the hearing of the case."
+    "text_normalized": "An application for review of a judgment or order of the Court shall be filed within thirty days from the date of the pronouncement of the judgment or the making of the order, and shall be drawn up by the advocate who appeared at the hearing of the case.",
+    "in_force": "unknown",
+    "quoting_allowed": false
   }
 ]
