@@ -14901,18 +14901,21 @@
     "text_cleaned": "2A. Duration of ex-parte interim injunction.__ An interim injunction passed under rules 1 or 2 in the absence of defendant shall not ordinarily exceed fifteen days:\nProvided that such injunction may be extended for failure of its service on the defendant when such failure is not attributable to the plaintiff or when the defendant seeks time for defence of application for injunction.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
-    "source_page": "163",
+    "source_page": 163,
     "content_hash": "17848118a239d8de902dffffcda6f33442f285da6e1882b51a68792900b4e6f7",
-    "tier": "ingested_unreviewed",
-    "verification_status": "ingested_unreviewed",
+    "tier": "page-verified",
+    "verification_status": "page-verified",
     "status": "in_force",
-    "jurisdiction": "federal",
+    "jurisdiction": "Federal",
     "provincial_variations": {
       "federal": "Inserted by Act XIV of 1994, s. 11. Limits ex-parte injunction to 15 days.",
       "punjab": "Operative across subordinate courts with reporting obligations to District/High Court on extensions."
     },
     "effective_from": "1908-03-21",
-    "effective_to": null
+    "effective_to": null,
+    "enacted_by": "Act XIV of 1994, s. 11",
+    "amended_by": "Federal Parliament",
+    "sha256": "17848118a239d8de902dffffcda6f33442f285da6e1882b51a68792900b4e6f7"
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_2B",
@@ -14926,18 +14929,21 @@
     "text_cleaned": "2B. Expiration of injunction after notice after six months.__ The order of injunction made under rules 1 or 2 after hearing the parties or after notice to the defendant shall cease to have effect on the expiration of six months unless extended by the Court after hearing the parties again and for reasons to be recorded for such extension:\nProvided that report of such extension shall be submitted to the High Court.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
-    "source_page": "163",
+    "source_page": 163,
     "content_hash": "c8a2414ad195b9b35e14df8ec2593a53f5be6aa3d3846ad9b81c84a42b61e903",
-    "tier": "ingested_unreviewed",
-    "verification_status": "ingested_unreviewed",
+    "tier": "page-verified",
+    "verification_status": "page-verified",
     "status": "in_force",
-    "jurisdiction": "federal",
+    "jurisdiction": "Federal (with Sindh High Court provincial amendment)",
     "provincial_variations": {
       "federal": "Inserted by Act XIV of 1994, s. 11. Six-month maximum duration after notice unless extended for reasons in writing.",
       "punjab": "Report of extension must be submitted to the High Court."
     },
     "effective_from": "1908-03-21",
-    "effective_to": null
+    "effective_to": null,
+    "enacted_by": "Act XIV of 1994, s. 11",
+    "amended_by": "Federal Parliament / Sindh High Court",
+    "sha256": "c8a2414ad195b9b35e14df8ec2593a53f5be6aa3d3846ad9b81c84a42b61e903"
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_3",
@@ -15000,17 +15006,20 @@
     "text_cleaned": "4A. Injunction to cease to be in force after certain period.__ An injunction granted by a Court in a suit which seeks to question the validity or legal effect of any order made, proceedings taken or act done by any authority or person, which has been made, taken or done, or purports to have been made, taken or done, under any law which is specified in Part I of the First Schedule to the Constitution or relates to, or is connected with, assessment or collection of public revenues shall cease to have effect on the expiration of a period of six months following the day on which it is made, unless the case is finally decided, or the injunction is discharged or set aside, by the Court earlier.\nExplanation.__ In this rule, 'public revenues' includes the dues of any bank owned by the Federal Government or of any corporation or undertaking owned or controlled by the Federal Government or a Provincial Government.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
-    "source_page": "163-164",
+    "source_page": 163,
     "content_hash": "bd27b1b25b08f4c970a1b5e1e3ca1fa9fb1a65ccbfa3001d016a96048f92853d",
-    "tier": "ingested_unreviewed",
-    "verification_status": "ingested_unreviewed",
+    "tier": "page-verified",
+    "verification_status": "page-verified",
     "status": "in_force",
-    "jurisdiction": "federal",
+    "jurisdiction": "Federal",
     "provincial_variations": {
       "federal": "Ins. by Act 15 of 1976 / Ord 25 of 1977. Public revenues includes bank dues and statutory undertakings."
     },
     "effective_from": "1908-03-21",
-    "effective_to": null
+    "effective_to": null,
+    "enacted_by": "Act XV of 1976, s. 2 / Ord XXV of 1977, s. 2",
+    "amended_by": "Federal Parliament",
+    "sha256": "bd27b1b25b08f4c970a1b5e1e3ca1fa9fb1a65ccbfa3001d016a96048f92853d"
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_5",

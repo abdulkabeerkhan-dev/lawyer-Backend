@@ -163,20 +163,23 @@ def verify_and_scrub_memo_claims(
                     full_match_text = m_claim.group(0)
                     cleaned = cleaned.replace(full_match_text, replacement_context)
 
-    # 3. Order XXXIX Rule 2A CPC Foreign Provision Correction
-    # Rule 2A is an Indian CPC amendment (Act 104 of 1976); in Pakistan disobedience is governed by Order XXXIX Rule 2(3) CPC (2006 YLR 2758).
-    r2a_match = re.search(
-        r'(?i)\b(?:Order\s*XXXIX\s*Rule\s*2-?[aA]|Rule\s*2-?[aA])\b',
+    # 3. Order XXXIX Rule 2A CPC Misattribution Correction
+    # In Pakistan CPC, Order XXXIX Rule 2A (inserted by Act XIV of 1994, s. 11) restricts ex-parte interim injunctions to 15 days.
+    # However, disobedience/breach of injunction is governed by Order XXXIX Rule 2(3) CPC (2006 YLR 2758).
+    # Only flag if Rule 2A is cited as a remedy for breach/disobedience/detention/attachment.
+    r2a_breach_match = re.search(
+        r'(?i)\b(?:Order\s*XXXIX\s*Rule\s*2-?[aA]|Rule\s*2-?[aA])\b[^.\n]*?\b(?:breach|disobey|disobedience|violation|contempt|detention|prison|attach)\b',
         cleaned
     )
-    if r2a_match and not re.search(r'(?i)\bRule\s*2\(3\)\b', cleaned):
+    if r2a_breach_match and not re.search(r'(?i)\bRule\s*2\(3\)\b', cleaned):
         violations.append({
-            "type": "O39_R2A_INDIAN_IMPORT",
-            "matched": r2a_match.group(0),
-            "description": "Order XXXIX Rule 2A CPC is an Indian amendment (Act 104 of 1976). In Pakistan, disobedience or breach of injunction is governed by Order XXXIX Rule 2(3) CPC (2006 YLR 2758)."
+            "type": "O39_R2A_BREACH_MISATTRIBUTION",
+            "matched": r2a_breach_match.group(0),
+            "description": "In Pakistan, disobedience or breach of an interim injunction is governed by Order XXXIX Rule 2(3) CPC (attachment and civil prison up to 6 months), whereas Rule 2A governs 15-day ex-parte injunctions.",
+            "remedy": "Cite Order XXXIX Rule 2(3) CPC for breach of injunction."
         })
         cleaned = re.sub(
-            r'(?i)\b(?:Order\s*XXXIX\s*Rule\s*2-?[aA]|Rule\s*2-?[aA])\b',
+            r'(?i)\b(?:Order\s*XXXIX\s*Rule\s*2-?[aA]|Rule\s*2-?[aA])\b(?=[^.\n]*?\b(?:breach|disobey|disobedience|violation|contempt|detention|prison|attach)\b)',
             'Order XXXIX Rule 2(3) CPC (providing for attachment of property and detention in civil prison; see 2006 YLR 2758)',
             cleaned
         )

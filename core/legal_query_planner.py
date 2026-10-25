@@ -401,6 +401,10 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                 if not any(default_p.split()[1] in p for p in provisions):
                     provisions.append(default_p)
 
+    if any(k in q_low for k in ["banking court decree", "banking decree", "banking court judgment"]):
+        if not any("fio" in p.lower() or "financial institutions" in p.lower() for p in provisions):
+            provisions.append("Section 22 Financial Institutions (Recovery of Finances) Ordinance 2001")
+
     # Premise correction routing
     for check in premise_checks:
         if check["status"] == "CONFIRMED_ABSENT":
@@ -410,7 +414,7 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
             # Filter out absent provision from provisions list
             provisions = [
                 p for p in provisions 
-                if not (q_prov.lower() == p.lower() or (clean_sec and clean_sec == re.sub(r'[^0-9a-z]', '', p.lower())))
+                if not (q_prov.lower() == p.lower() or (clean_sec and clean_sec in re.sub(r'[^0-9a-z]', '', p.lower()) and any(k in p.lower() for k in ["ni", "negotiable", "ipc", "indian"])))
             ]
             if "138" in q_prov and ("ni" in q_stat.lower() or "negotiable" in q_stat.lower() or "cheque" in q_low or "bounced" in q_low):
                 if not any("489-f" in p.lower() for p in provisions):
@@ -447,6 +451,8 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                     matter_type.append("criminal")
                 forum = "Court of Session or Magistrate of the first class"
             elif "2a" in q_prov.lower() or "2-a" in q_prov.lower() or ("cpc" in q_stat.lower() and "2" in q_prov.lower()):
+                if not any("rule 2a" in p.lower() for p in provisions):
+                    provisions.append("Order XXXIX Rule 2A CPC")
                 if not any("rule 2(3)" in p.lower() for p in provisions):
                     provisions.append("Order XXXIX Rule 2(3) CPC")
                 if "Code of Civil Procedure, 1908" not in statutes:
@@ -454,7 +460,7 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                 if "civil" not in matter_type:
                     matter_type.append("civil")
                 forum = "Civil Court / Court granting injunction"
-                questions.append("remedy for disobedience or breach of interim injunction under Order XXXIX Rule 2(3) CPC (attachment of property and detention in civil prison; 2006 YLR 2758)")
+                questions.append("duration of ex-parte interim injunction under Order XXXIX Rule 2A CPC (15 days) and remedy for disobedience or breach under Order XXXIX Rule 2(3) CPC (attachment of property and detention in civil prison; 2006 YLR 2758)")
 
     forum_hierarchy = ["Civil Court", "District Judge", "High Court", "Supreme Court of Pakistan"]
     employee_status_branching = None
@@ -570,9 +576,14 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                     "lane": "crpc_bail_schedule_ii",
                     "query": "Section 420 PPC Schedule II non-bailable cognizable Section 497 CrPC non-prohibitory clause bail as rule"
                 })
-        elif check["status"] == "CONFIRMED_ABSENT" and ("rule 2a" in str(check.get("queried_provision")).lower() or "rule 2-a" in str(check.get("queried_provision")).lower()):
-            if not any(l["lane"] == "injunction_breach_rule_2_3" for l in lanes):
+        elif ("rule 2a" in str(check.get("queried_provision")).lower() or "rule 2-a" in str(check.get("queried_provision")).lower()):
+            if not any(l["lane"] == "injunction_duration_rule_2a" for l in lanes):
                 lanes.insert(0, {
+                    "lane": "injunction_duration_rule_2a",
+                    "query": "Order XXXIX Rule 2A CPC interim injunction duration fifteen days ex-parte defendant"
+                })
+            if not any(l["lane"] == "injunction_breach_rule_2_3" for l in lanes):
+                lanes.append({
                     "lane": "injunction_breach_rule_2_3",
                     "query": "Order XXXIX Rule 2(3) CPC disobedience breach of injunction stay order attachment of property detention in civil prison 2006 YLR 2758"
                 })

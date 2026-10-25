@@ -174,19 +174,21 @@ PATTERN_RULES: List[Dict[str, Any]] = [
     },
     {
         "code": "STATUTE_MISSTATEMENT",
-        "id": "O39_R2A_INDIAN_IMPORT",
+        "id": "O39_R2A_BREACH_MISATTRIBUTION",
         "severity": "error",
         "status": "reviewed",
         "topics": ["injunction"],
         "all_of": [
-            r"(?:order\s*xxxix|o\.?\s*xxxix|o\s*39|order\s*39)[^.]{0,30}rule\s*2-?[aA]\b|rule\s*2-?[aA]\b"
+            r"(?:order\s*xxxix|o\.?\s*xxxix|o\s*39|order\s*39)[^.]{0,30}rule\s*2-?[aA]\b|rule\s*2-?[aA]\b",
+            r"breach|disobey|disobedience|violation|contempt|detention|prison|attach"
         ],
         "none_of": [
-            r"indian", r"india", r"foreign", r"comparative", r"does not exist in pakistan",
-            r"not part of the pakistan", r"governed by order xxxix rule 2\(3\)",
-            r"governed by rule 2\(3\)", r"rule 2\(3\)"
+            r"indian", r"india", r"foreign", r"comparative",
+            r"governed by order xxxix rule 2\(3\)",
+            r"governed by rule 2\(3\)", r"rule 2\(3\)",
+            r"fifteen days|15 days"
         ],
-        "message": "Order XXXIX Rule 2A CPC is an Indian amendment (Act 104 of 1976) that does not exist in the Pakistan Code. In Pakistan, the remedy for disobedience or breach of an interim injunction is governed by Order XXXIX Rule 2(3) CPC (see e.g. 2006 YLR 2758).",
+        "message": "In Pakistan CPC, Order XXXIX Rule 2A (inserted by Act XIV of 1994, s. 11) restricts ex-parte interim injunctions to 15 days. Remedy for breach or disobedience of an injunction is governed by Order XXXIX Rule 2(3) CPC (detention in civil prison and attachment; see 2006 YLR 2758).",
         "fix": "Cite Order XXXIX Rule 2(3) CPC for disobedience or breach of an injunction in Pakistan.",
     },
     {
@@ -1141,7 +1143,7 @@ def build_pre_synthesis_trap_instructions(
         "6. Limitation Act Articles (e.g. Art. 144, 149, 181) are periods of limitation in the First Schedule, NOT sources of court jurisdiction.",
         "7. Limitation Act Section 5 has NO express proviso excluding Government; Government has no preferential treatment on condonation.",
         "8. Injunctions Framework: Order XXXIX Rule 1 governs temporary injunction grounds; Rule 2 covers breach restraint. "
-        "Rule 2A does NOT exist in Pakistan CPC; penalty for disobedience is Order XXXIX Rule 2(3) (detention/attachment). "
+        "In Pakistan CPC, Order XXXIX Rule 2A limits ex-parte injunctions to 15 days; penalty for disobedience is Order XXXIX Rule 2(3) (detention/attachment). "
         "Order XXXIX Rule 1 does NOT create categories of final or declaratory injunctions (which fall under Specific Relief Act). "
         "Injunctions are not exclusive to Order XXXIX (s.94(c), s.151 CPC and SRA ss.52-57 also apply). "
         "Appeals lie under Order XLIII Rule 1(r) C.P.C.",

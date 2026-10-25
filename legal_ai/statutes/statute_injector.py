@@ -40,6 +40,10 @@ ACT_PRETTY_NAMES: Dict[str, str] = {
     "REGISTRATION_1908": "Registration Act, 1908",
     "TPA_1882": "Transfer of Property Act, 1882",
     "NI_ACT_1881": "Negotiable Instruments Act, 1881",
+    "ITO_2001": "Income Tax Ordinance, 2001",
+    "COMPANIES_2017": "Companies Act, 2017",
+    "CONTRACT_1872": "Contract Act, 1872",
+    "ARBITRATION_1940": "Arbitration Act, 1940",
 }
 
 
@@ -97,6 +101,21 @@ class StatuteInjector:
         p_clean = prov_str.strip()
         p_low = p_clean.lower()
 
+        # 0. Direct canonical ID format e.g. 'CPC_1908_ORD_XXXIX_R_2' or 'FIO_2001_SEC_22'
+        m_cid = re.match(r'^([A-Z0-9]+(?:_[A-Z0-9]+)*)_(SEC|ORD|ART)_(.*)$', p_clean)
+        if m_cid:
+            act_code, typ, rest = m_cid.groups()
+            pretty_act = ACT_PRETTY_NAMES.get(act_code, act_code)
+            if typ == "SEC":
+                return act_code, p_clean, f"Section {rest}, {pretty_act}"
+            elif typ == "ART":
+                return act_code, p_clean, f"Article {rest}, {pretty_act}"
+            elif typ == "ORD":
+                parts = rest.split("_R_")
+                disp = f"Order {parts[0]} Rule {parts[1]}, {pretty_act}" if len(parts) == 2 else f"Order {rest}, {pretty_act}"
+                return act_code, p_clean, disp
+            return act_code, p_clean, f"{p_clean} ({pretty_act})"
+
         # 1. Limitation Act (Sections & Articles)
         if "limitation" in p_low or "art 144" in p_low or "art 149" in p_low or "sec 28" in p_low:
             act_code = "LIMITATION_1908"
@@ -117,24 +136,115 @@ class StatuteInjector:
                 ord_val = m_ord.group(1).upper()
                 r_val = m_ord.group(2)
                 if r_val:
-                    if ord_val == "XXXIX" and r_val.upper() in ("2A", "2-A"):
-                        # In Pakistan, disobedience is Order XXXIX Rule 2(3) CPC (2006 YLR 2758)
-                        return act_code, "CPC_1908_ORD_XXXIX_R_2_SR_3", "Order XXXIX Rule 2(3), Code of Civil Procedure, 1908 (disobedience / breach of injunction)"
+                    r_clean = r_val.upper().replace("-", "")
+                    if ord_val == "XXXIX":
+                        if r_clean in ("2A", "2-A"):
+                            return act_code, "CPC_1908_ORD_XXXIX_R_2A", "Order XXXIX Rule 2A, Code of Civil Procedure, 1908 (15-day limit on ex-parte injunction)"
+                        if r_clean in ("2B", "2-B"):
+                            return act_code, "CPC_1908_ORD_XXXIX_R_2B", "Order XXXIX Rule 2B, Code of Civil Procedure, 1908"
+                        if r_clean in ("4A", "4-A"):
+                            return act_code, "CPC_1908_ORD_XXXIX_R_4A", "Order XXXIX Rule 4A, Code of Civil Procedure, 1908"
+                        if "2(3)" in r_clean or "2(1)" in r_clean or "2(2)" in r_clean or r_clean == "23":
+                            return act_code, "CPC_1908_ORD_XXXIX_R_2", "Order XXXIX Rule 2(3), Code of Civil Procedure, 1908 (disobedience / breach of injunction)"
+
                     m_sub = re.match(r'(\d+[a-z]?)\s*\(([0-9a-z]+)\)', r_val, re.I)
                     if m_sub:
                         r_main = m_sub.group(1).upper()
                         r_sub = m_sub.group(2).upper()
-                        return act_code, f"{act_code}_ORD_{ord_val}_R_{r_main}_SR_{r_sub}", f"Order {ord_val} Rule {r_val}, Code of Civil Procedure, 1908"
-                    r_clean = re.sub(r'[\(\)]', '', r_val).upper()
-                    r_disp = r_val.upper()
-                    return act_code, f"{act_code}_ORD_{ord_val}_R_{r_clean}", f"Order {ord_val} Rule {r_disp}, Code of Civil Procedure, 1908"
+                        cid_sub = f"{act_code}_ORD_{ord_val}_R_{r_main}_SR_{r_sub}"
+                        if self.get_provision_record(act_code, cid_sub):
+                            return act_code, cid_sub, f"Order {ord_val} Rule {r_val}, Code of Civil Procedure, 1908"
+                        return act_code, f"{act_code}_ORD_{ord_val}_R_{r_main}", f"Order {ord_val} Rule {r_val}, Code of Civil Procedure, 1908"
+
+                    r_clean_val = re.sub(r'[\(\)]', '', r_val).upper()
+                    return act_code, f"{act_code}_ORD_{ord_val}_R_{r_clean_val}", f"Order {ord_val} Rule {r_val.upper()}, Code of Civil Procedure, 1908"
                 return act_code, f"{act_code}_ORD_{ord_val}", f"Order {ord_val}, Code of Civil Procedure, 1908"
             m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
             if m_sec:
                 sec_num = m_sec.group(1).upper()
                 return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Code of Civil Procedure, 1908"
 
-        # 3. Punjab Rented Premises Act (PRPA)
+        # 3. FIO 2001
+        if "fio" in p_low or "financial institutions" in p_low or "recovery of finances" in p_low or "banking court" in p_low:
+            act_code = "FIO_2001"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Financial Institutions (Recovery of Finances) Ordinance, 2001"
+
+        # 4. ITO 2001
+        if "ito" in p_low or "income tax" in p_low:
+            act_code = "ITO_2001"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Income Tax Ordinance, 2001"
+
+        # 5. MFLO 1961
+        if "mflo" in p_low or "muslim family laws" in p_low:
+            act_code = "MFLO_1961"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Muslim Family Laws Ordinance, 1961"
+
+        # 6. Family Courts Act 1964
+        if "family courts" in p_low or "family court act" in p_low:
+            act_code = "FAMILY_COURTS_1964"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Family Courts Act, 1964"
+
+        # 7. Arbitration Act 1940
+        if "arbitration" in p_low:
+            act_code = "ARBITRATION_1940"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Arbitration Act, 1940"
+
+        # 8. CNSA 1997
+        if "cnsa" in p_low or "narcotic" in p_low:
+            act_code = "CNSA_1997"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Control of Narcotic Substances Act, 1997"
+
+        # 9. Contract Act 1872
+        if "contract act" in p_low or ("contract" in p_low and "1872" in p_low):
+            act_code = "CONTRACT_1872"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Contract Act, 1872"
+
+        # 10. Transfer of Property Act 1882
+        if "transfer of property" in p_low or "tpa" in p_low:
+            act_code = "TPA_1882"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Transfer of Property Act, 1882"
+
+        # 11. Companies Act 2017
+        if "companies" in p_low:
+            act_code = "COMPANIES_2017"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Companies Act, 2017"
+
+        # 12. Punjab Pre-emption Act 1991
+        if "preemption" in p_low or "pre-emption" in p_low:
+            act_code = "PREEMPTION_1991"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Punjab Pre-emption Act, 1991"
+
+        # 13. Punjab Rented Premises Act (PRPA)
         if "prpa" in p_low or "punjab rented" in p_low:
             act_code = "PRPA_2009"
             m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
@@ -142,7 +252,7 @@ class StatuteInjector:
                 sec_num = m_sec.group(1).upper()
                 return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Punjab Rented Premises Act, 2009"
 
-        # 4. Sindh Rented Premises Ordinance (SRPO)
+        # 14. Sindh Rented Premises Ordinance (SRPO)
         if "srpo" in p_low or "sindh rented" in p_low:
             act_code = "SRPO_1979"
             m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
@@ -150,7 +260,7 @@ class StatuteInjector:
                 sec_num = m_sec.group(1).upper()
                 return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Sindh Rented Premises Ordinance, 1979"
 
-        # 5. Pakistan Penal Code (PPC)
+        # 15. Pakistan Penal Code (PPC)
         if "ppc" in p_low or any(k in p_low for k in ["409", "420", "406", "489-f", "489f", "302", "376"]):
             act_code = "PPC_1860"
             m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?(?:-[a-z])?)\b', p_low)
@@ -159,7 +269,7 @@ class StatuteInjector:
                 sec_clean = sec_num.replace("-", "")
                 return act_code, f"{act_code}_SEC_{sec_clean}", f"Section {sec_num}, Pakistan Penal Code, 1860"
 
-        # 6. Code of Criminal Procedure (CrPC)
+        # 16. Code of Criminal Procedure (CrPC)
         if "crpc" in p_low or "criminal procedure" in p_low or any(k in p_low for k in ["496", "497", "498", "561-a", "561a", "154", "249-a", "249a", "265-k", "265k", "22-a", "22a", "54", "61"]):
             act_code = "CRPC_1898"
             m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?(?:-[a-z])?)\b', p_low)
@@ -168,7 +278,7 @@ class StatuteInjector:
                 sec_clean = sec_num.replace("-", "")
                 return act_code, f"{act_code}_SEC_{sec_clean}", f"Section {sec_num}, Code of Criminal Procedure, 1898"
 
-        # 7. Specific Relief Act (SRA)
+        # 17. Specific Relief Act (SRA)
         if "sra" in p_low or "specific relief" in p_low:
             act_code = "SRA_1877"
             m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
@@ -176,7 +286,7 @@ class StatuteInjector:
                 sec_num = m_sec.group(1).upper()
                 return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Specific Relief Act, 1877"
 
-        # 8. Registration Act
+        # 18. Registration Act
         if "registration" in p_low:
             act_code = "REGISTRATION_1908"
             m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
@@ -184,7 +294,7 @@ class StatuteInjector:
                 sec_num = m_sec.group(1).upper()
                 return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Registration Act, 1908"
 
-        # 9. Constitution 1973
+        # 19. Constitution 1973
         if "constitution" in p_low or "const" in p_low or "article 199" in p_low or "article 184" in p_low:
             act_code = "CONST_1973"
             m_art = re.search(r'\b(?:articles?|art\.?)\s*(\d+[a-z]?)\b', p_low)
@@ -192,7 +302,7 @@ class StatuteInjector:
                 art_num = m_art.group(1).upper()
                 return act_code, f"{act_code}_ART_{art_num}", f"Article {art_num}, Constitution of Pakistan, 1973"
 
-        # 10. Negotiable Instruments Act 1881
+        # 20. Negotiable Instruments Act 1881
         if "negotiable" in p_low or "ni act" in p_low:
             act_code = "NI_ACT_1881"
             m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
@@ -212,12 +322,21 @@ class StatuteInjector:
         if act_code in self._version_cache:
             if cid_upper in self._version_cache[act_code]:
                 return self._version_cache[act_code][cid_upper]
+            if "_SR_" in cid_upper:
+                parent_cid = cid_upper.split("_SR_")[0]
+                if parent_cid in self._version_cache[act_code]:
+                    return self._version_cache[act_code][parent_cid]
 
         # 2. Check table cache
         if act_code in self._table_cache:
             for item in self._table_cache[act_code]:
                 if str(item.get("canonical_id", "")).upper() == cid_upper:
                     return item
+            if "_SR_" in cid_upper:
+                parent_cid = cid_upper.split("_SR_")[0]
+                for item in self._table_cache[act_code]:
+                    if str(item.get("canonical_id", "")).upper() == parent_cid:
+                        return item
         return None
 
     def inject_statutory_framework(
@@ -269,6 +388,8 @@ class StatuteInjector:
                 "Order XLIII Rule 1(r) CPC",
                 "Section 115 CPC"
             ]
+            if any(k in q_comb for k in ["rule 2a", "2a", "15 days", "fifteen days", "ex parte", "ex-parte"]):
+                mandatory_inj.append("Order XXXIX Rule 2A CPC")
             for m in mandatory_inj:
                 m_short = m.split()[-2] + " " + m.split()[-1] if len(m.split()) >= 3 else m
                 if not any(m_short.lower() in p.lower() for p in target_provisions):

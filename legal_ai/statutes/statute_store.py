@@ -298,35 +298,28 @@ class StatuteStore:
 
             # Handle Order & Rule for CPC
             if act_code == "CPC_1908":
-                # Check for Rule 2A in Order XXXIX:
-                # Rule 2A is an Indian CPC amendment (Act 104 of 1976); in Pakistan, disobedience is governed by Rule 2(3) (2006 YLR 2758).
-                if re.search(r'\b(?:orders?|ord\.?|o\.)\s*(?:xxxix|39)\b.*?\b(?:rules?|r\.?)\s*2-?[aA]\b', prov_clean, re.I) or re.search(r'\brule\s*2-?[aA]\b', prov_clean, re.I):
-                    return LookupResult(
-                        status="CONFIRMED_ABSENT",
-                        exists=False,
-                        confirmed_absent=True,
-                        act_code="CPC_1908",
-                        act_name="Code of Civil Procedure, 1908",
-                        display_name="Order XXXIX Rule 2A, Code of Civil Procedure, 1908",
-                        is_foreign_statute=True,
-                        pakistani_equivalent="Order XXXIX Rule 2(3) CPC",
-                        explanation=(
-                            "Order XXXIX Rule 2A does not exist in the Pakistan Code of Civil Procedure 1908 "
-                            "(it was inserted in India by Act 104 of 1976). In Pakistan, the statutory provision for "
-                            "disobedience or breach of an interim injunction is Order XXXIX Rule 2(3) CPC "
-                            "(providing for attachment of property and detention in civil prison; see e.g. 2006 YLR 2758)."
-                        ),
-                        source="Pakistan Code (Act V of 1908)"
-                    )
-
                 m_ord = re.search(r'\b(?:orders?|ord\.?|o\.)\s*([ivxlcdm\d]+)(?:[\s,]+(?:rules?|r\.?)\s*(\d+[a-z]?(?:\s*\([0-9a-z]+\))?))?', p_low)
-                if m_ord:
+                if not m_ord:
+                    # check for bare "Rule 2A", "Rule 2B", "Rule 4A" in CPC context
+                    m_bare_r = re.search(r'\b(?:rules?|r\.?)\s*(2-?[a-bA-B]|4-?[a-bA-B]|\d+[a-z]?)\b', prov_clean, re.I)
+                    if m_bare_r and any(k in p_low for k in ["xxxix", "39", "injunction", "stay"]):
+                        r_tok = m_bare_r.group(1).upper().replace("-", "")
+                        cand_cids = [f"CPC_1908_ORD_XXXIX_R_{r_tok}"]
+                        for c in cand_cids:
+                            if c in provisions:
+                                matched_rec = provisions[c]
+                                matched_cid = c
+                                break
+                else:
                     ord_val = m_ord.group(1).upper()
                     r_val = m_ord.group(2)
                     if r_val:
-                        r_clean = re.sub(r'[\(\)\s]', '', r_val).upper()
+                        r_clean = re.sub(r'[\(\)\s]', '', r_val).upper().replace("-", "")
+                        m_base = re.match(r'(\d+[a-zA-Z]?)', r_val)
+                        base_r = m_base.group(1).upper() if m_base else r_clean
                         cand_cids = [
                             f"CPC_1908_ORD_{ord_val}_R_{r_clean}",
+                            f"CPC_1908_ORD_{ord_val}_R_{base_r}",
                             f"CPC_1908_ORD_{ord_val}_R_{r_clean[0]}_SR_{r_clean[1:]}" if len(r_clean) > 1 else "",
                             f"CPC_1908_ORD_{ord_val}_R_{r_clean.replace('A', '_A')}",
                         ]
@@ -378,6 +371,15 @@ class StatuteStore:
                     primary = str(matched_rec.get("primary_num", "")).upper()
                     sched_ii = self.get_schedule_ii(primary)
 
+                explanation = None
+                if matched_cid == "CPC_1908_ORD_XXXIX_R_2A" and any(k in prov_clean.lower() for k in ["breach", "disobey", "disobedience", "violation"]):
+                    explanation = (
+                        "In Pakistan CPC, Order XXXIX Rule 2A (inserted by Act XIV of 1994, s. 11) governs the "
+                        "15-day maximum duration of ex-parte interim injunctions. Remedy for breach or disobedience "
+                        "of an interim injunction in Pakistan is governed by Order XXXIX Rule 2(3) CPC "
+                        "(providing for attachment of property and detention in civil prison up to 6 months; see 2006 YLR 2758)."
+                    )
+
                 return LookupResult(
                     status="EXISTS",
                     exists=True,
@@ -389,7 +391,8 @@ class StatuteStore:
                     title=matched_rec.get("title"),
                     text=text,
                     source=matched_rec.get("source_citation"),
-                    schedule_ii=sched_ii
+                    schedule_ii=sched_ii,
+                    explanation=explanation
                 )
             else:
                 # If statute is known to be fully indexed, check if number is out of bounds

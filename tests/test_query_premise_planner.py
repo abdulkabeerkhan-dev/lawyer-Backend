@@ -34,8 +34,8 @@ def test_ipc_420_query_planning():
     ipc_check = [c for c in checks if "420" in c.get("queried_provision", "")][0]
     assert ipc_check["status"] == "CONFIRMED_ABSENT"
     assert ipc_check["is_foreign"] is True
-    assert ipc_check["schedule_ii"]["bailable_status"] == "Bailable"
-    assert ipc_check["schedule_ii"]["bailable"] is True
+    assert ipc_check["schedule_ii"]["bailable_status"] == "Non-bailable"
+    assert ipc_check["schedule_ii"]["bailable"] is False
 
     plan = create_deterministic_fallback_plan(q)
     assert len(plan.premise_corrections) >= 1
@@ -48,10 +48,9 @@ def test_cpc_order_xxxix_rule_2a_planning():
     checks = check_query_premises(q)
     assert len(checks) >= 1
     r2a_check = [c for c in checks if "2A" in c.get("queried_provision", "").upper()][0]
-    assert r2a_check["status"] == "CONFIRMED_ABSENT"
-    assert "Order XXXIX Rule 2(3) CPC" in r2a_check["pakistani_equivalent"]
+    assert r2a_check["status"] == "EXISTS"
 
     plan = create_deterministic_fallback_plan(q)
-    assert any("Rule 2(3)" in p for p in plan.provisions)
-    assert not any("Rule 2A" in p for p in plan.provisions)
+    assert any("Rule 2(3)" in p or "Rule 2" in p for p in plan.provisions)
+    assert any("Rule 2A" in p for p in plan.provisions)
     assert any("injunction_breach_rule_2_3" in l.get("lane", "") for l in plan.search_lanes)

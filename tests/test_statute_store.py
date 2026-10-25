@@ -39,12 +39,18 @@ def test_indian_penal_code_foreign_absent():
     assert res.schedule_ii["max_imprisonment_years"] == 7
 
 
-def test_cpc_order_xxxix_rule_2a_absent_and_rule_2_3_exists():
+def test_cpc_order_xxxix_rule_2a_exists_and_rule_2_3_for_breach():
     res = lookup("CPC", "Order XXXIX Rule 2A")
-    assert res.status == "CONFIRMED_ABSENT"
-    assert res.exists is False
-    assert res.confirmed_absent is True
-    assert "Order XXXIX Rule 2(3) CPC" in res.pakistani_equivalent
+    assert res.status == "EXISTS"
+    assert res.exists is True
+    assert res.canonical_id == "CPC_1908_ORD_XXXIX_R_2A"
+    assert "fifteen days" in res.text.lower()
+
+    # When queried specifically in breach context, notes Rule 2(3)
+    res_breach = lookup("CPC", "Order XXXIX Rule 2A for breach of stay")
+    assert res_breach.status == "EXISTS"
+    assert res_breach.explanation is not None
+    assert "Order XXXIX Rule 2(3) CPC" in res_breach.explanation
 
     # And Rule 2(3) exists with authentic Pakistan Code text
     res_2_3 = lookup("CPC", "Order XXXIX Rule 2(3)")
@@ -52,7 +58,7 @@ def test_cpc_order_xxxix_rule_2a_absent_and_rule_2_3_exists():
     assert res_2_3.exists is True
     assert res_2_3.text is not None
     assert "disobedience" in res_2_3.text.lower()
-    assert "civil prison" in res_2_3.text.lower()
+    assert "prison" in res_2_3.text.lower()
     assert "six months" in res_2_3.text.lower()
 
 

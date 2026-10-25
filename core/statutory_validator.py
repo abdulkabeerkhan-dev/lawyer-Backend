@@ -851,7 +851,14 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
         primary_num = art_match.group(1).upper()
         sub = art_match.group(2)
         cl = art_match.group(3)
-        resolved_act = act_code or ("LIMITATION_1908" if "limitation" in lower_text else "CONST_1973")
+        if act_code in ("CONST_1973", "QSO_1984", "LIMITATION_1908", "SC_RULES_1980"):
+            resolved_act = act_code
+        elif "qso" in lower_text or "shahadat" in lower_text:
+            resolved_act = "QSO_1984"
+        elif "limitation" in lower_text or ("limitation" in search_context and int(re.sub(r'[^0-9]', '', primary_num) or 0) <= 183):
+            resolved_act = "LIMITATION_1908"
+        else:
+            resolved_act = "CONST_1973"
         return {
             "is_valid": True,
             "status": "parsed",

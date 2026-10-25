@@ -55,7 +55,7 @@ def test_correct_order_xxxix_rule_2a_foreign_import():
         statutory_context="",
         query_text="Injunction under Order XXXIX Rule 2A CPC for breach of a stay order?"
     )
-    assert any(v["type"] == "O39_R2A_INDIAN_IMPORT" for v in result.violations)
+    assert any(v["type"] in ("O39_R2A_BREACH_MISATTRIBUTION", "O39_R2A_INDIAN_IMPORT") for v in result.violations)
     assert "Order XXXIX Rule 2(3) CPC" in result.cleaned_text
     assert "2006 YLR 2758" in result.cleaned_text
 

@@ -5968,13 +5968,9 @@ def purge_debug_warnings(text: str) -> str:
 
 
 
-    # 4. Strip statutory currency warning tags
-
-    clean = re.sub(r'\s*\[NOT CHECKED\]', '', clean)
-
-    clean = re.sub(r'(?is)####\s*Statutory Currency Verification Status.*?(?=(?:\n\s*###|\n\s*####|\n\n|\Z))', '', clean)
-
-    clean = re.sub(r'(?is)###\s*(?:\d+\.?\s*)?APPENDIX:\s*STATUTORY\s*CURRENCY.*?(?=(?:\n\s*###|\Z))', '', clean)
+    # 4. Preserve statutory currency warning tags as user-facing disclosures per Phase 1.7
+    # clean = re.sub(r'\s*\[NOT CHECKED\]', '', clean)
+    # Currency verification status and [NOT CHECKED] are intentionally preserved for transparency
 
 
 
@@ -7662,6 +7658,56 @@ def trigger_background_headnote_worker(case_id: str = "", citation: str = "", ti
 
 jobs_store: Dict[str, Dict[str, Any]] = {}
 
+_IN_FLIGHT_JOBS_FILE = Path(__file__).resolve().parent / "data" / "in_flight_jobs.json"
+_IN_FLIGHT_JOBS_LOCK = threading.Lock()
+
+def _load_in_flight_jobs() -> Dict[str, Dict[str, Any]]:
+    if not _IN_FLIGHT_JOBS_FILE.exists():
+        return {}
+    try:
+        with open(_IN_FLIGHT_JOBS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def _save_in_flight_jobs(store: Dict[str, Dict[str, Any]]):
+    try:
+        _IN_FLIGHT_JOBS_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with open(_IN_FLIGHT_JOBS_FILE, "w", encoding="utf-8") as f:
+            json.dump(store, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        logger.warning(f"Failed to persist in-flight jobs: {e}")
+
+def persist_in_flight_job_state(job_id: str, stage: str, status: str = "running", extra: Optional[Dict[str, Any]] = None):
+    with _IN_FLIGHT_JOBS_LOCK:
+        store = _load_in_flight_jobs()
+        rec = store.get(job_id, {})
+        rec.update({
+            "job_id": job_id,
+            "stage": stage,
+            "status": status,
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        })
+        if extra:
+            rec.update(extra)
+        store[job_id] = rec
+        _save_in_flight_jobs(store)
+
+    if job_id in jobs_store:
+        jobs_store[job_id]["stage"] = stage
+        jobs_store[job_id]["status"] = status
+        if extra:
+            jobs_store[job_id].update(extra)
+
+    if supabase:
+        try:
+            safe_supabase_query(lambda: supabase.table("queries").update({
+                "status": status,
+                "stage": stage
+            }).eq("id", job_id).execute())
+        except Exception:
+            pass
+
 
 
 def cleanup_old_jobs():
@@ -8521,6 +8567,7 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
         if job_id in jobs_store:
 
             jobs_store[job_id]["stage"] = "understanding_query"
+            persist_in_flight_job_state(job_id, "understanding_query", "running")
 
             jobs_store[job_id].setdefault("stage_timings", {})["understanding_query_start"] = time.perf_counter()
 
@@ -8547,6 +8594,7 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
         if job_id in jobs_store:
 
             jobs_store[job_id]["stage"] = "checking_law"
+            persist_in_flight_job_state(job_id, "checking_law", "running")
 
             jobs_store[job_id].setdefault("stage_timings", {})["checking_law_start"] = time.perf_counter()
 
@@ -8699,6 +8747,7 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
             if job_id in jobs_store:
 
                 jobs_store[job_id]["stage"] = "retrieving_authorities"
+                persist_in_flight_job_state(job_id, "retrieving_authorities", "running")
 
                 jobs_store[job_id].setdefault("stage_timings", {})["retrieval_start"] = time.perf_counter()
 
@@ -9971,6 +10020,7 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
             if job_id in jobs_store:
 
                 jobs_store[job_id]["stage"] = "ranking_authorities"
+                persist_in_flight_job_state(job_id, "ranking_authorities", "running")
 
                 jobs_store[job_id].setdefault("stage_timings", {})["ranking_start"] = time.perf_counter()
 
@@ -12211,6 +12261,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         if job_id in jobs_store:
 
             jobs_store[job_id]["stage"] = "drafting_opinion"
+            persist_in_flight_job_state(job_id, "drafting_opinion", "running")
 
             jobs_store[job_id].setdefault("stage_timings", {})["drafting_opinion_start"] = time.perf_counter()
 
@@ -12463,6 +12514,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         if job_id in jobs_store:
 
             jobs_store[job_id]["stage"] = "verifying_output"
+            persist_in_flight_job_state(job_id, "verifying_output", "running")
 
             jobs_store[job_id].setdefault("stage_timings", {})["verifying_output_start"] = time.perf_counter()
 
@@ -13629,6 +13681,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         if job_id in jobs_store:
 
             jobs_store[job_id]["stage"] = "done"
+            persist_in_flight_job_state(job_id, "done", "done")
         if supabase and inserted_row_id:
             try:
                 cits_to_store = [c.get("citation") for c in precedent_cards if isinstance(c, dict) and c.get("citation")]
@@ -14818,41 +14871,63 @@ def get_real_client_ip(request: Request) -> str:
 
     """
 
+    # Check Cloudflare CF-Connecting-IP
+    cf_ip = request.headers.get("cf-connecting-ip")
+    if cf_ip and cf_ip.strip():
+        return cf_ip.strip()
+
+    # Check X-Forwarded-For (leftmost client IP)
+    xff = request.headers.get("x-forwarded-for")
+    if xff and xff.strip():
+        client_cand = xff.split(",")[0].strip()
+        if client_cand:
+            return client_cand
+
     envoy_ip = request.headers.get("x-envoy-external-address")
-
     if envoy_ip and envoy_ip.strip():
-
         return envoy_ip.strip()
+
+    real_ip = request.headers.get("x-real-ip")
+    if real_ip and real_ip.strip():
+        return real_ip.strip()
 
     return request.client.host if request.client else "unknown"
 
+_RATE_LIMIT_PERSIST_FILE = Path(__file__).resolve().parent / "data" / "rate_limit_state.json"
+_RATE_LIMIT_PERSIST_LOCK = threading.Lock()
 
+def _load_rate_limit_store() -> Dict[str, List[float]]:
+    if not _RATE_LIMIT_PERSIST_FILE.exists():
+        return {}
+    try:
+        with open(_RATE_LIMIT_PERSIST_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def _save_rate_limit_store(store: Dict[str, List[float]]):
+    try:
+        _RATE_LIMIT_PERSIST_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with open(_RATE_LIMIT_PERSIST_FILE, "w", encoding="utf-8") as f:
+            json.dump(store, f)
+    except Exception as e:
+        logger.warning(f"Failed to persist rate limit state: {e}")
 
 def check_access_request_rate_limit(request: Request, max_requests: int = 5, window_seconds: int = 60):
-
     client_ip = get_real_client_ip(request)
-
     now = time.time()
-
-    with _request_access_lock:
-
-        timestamps = _request_access_ip_history.get(client_ip, [])
-
+    with _RATE_LIMIT_PERSIST_LOCK:
+        store = _load_rate_limit_store()
+        timestamps = store.get(client_ip, [])
         timestamps = [t for t in timestamps if now - t < window_seconds]
-
         if len(timestamps) >= max_requests:
-
             raise HTTPException(
-
                 status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-
                 detail=f"Rate limit exceeded: Maximum {max_requests} access requests per minute."
-
             )
-
         timestamps.append(now)
-
-        _request_access_ip_history[client_ip] = timestamps
+        store[client_ip] = timestamps
+        _save_rate_limit_store(store)
 
 
 
@@ -15204,6 +15279,7 @@ async def execute_legal_query(
         "user_id": authenticated_user_id
 
     }
+    persist_in_flight_job_state(job_id, "pending", "running", extra={"user_id": authenticated_user_id, "query_text": request.query_text})
 
     background_tasks.add_task(process_query_job, job_id, request, authenticated_user_id)
 
@@ -15218,6 +15294,28 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
     cleanup_old_jobs()
 
     if job_id not in jobs_store:
+        # Check local persistent in-flight store first (survives restart)
+        in_flight_store = _load_in_flight_jobs()
+        if job_id in in_flight_store:
+            persisted = in_flight_store[job_id]
+            if persisted.get("user_id") and persisted["user_id"] != authenticated_user_id:
+                raise HTTPException(status_code=403, detail="Not authorized to access this job.")
+            if persisted.get("status") == "running":
+                return {
+                    "status": "running",
+                    "stage": persisted.get("stage", "processing"),
+                    "early_display": persisted.get("early_display"),
+                    "result": None,
+                    "error": None
+                }
+            elif persisted.get("status") == "done" and persisted.get("result"):
+                return {
+                    "status": "done",
+                    "stage": "done",
+                    "early_display": persisted.get("early_display"),
+                    "result": persisted.get("result"),
+                    "error": None
+                }
 
         if supabase:
 
@@ -15354,6 +15452,28 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
     cleanup_old_jobs()
 
     if job_id not in jobs_store:
+        # Check local persistent in-flight store first (survives restart)
+        in_flight_store = _load_in_flight_jobs()
+        if job_id in in_flight_store:
+            persisted = in_flight_store[job_id]
+            if persisted.get("user_id") and persisted["user_id"] != authenticated_user_id:
+                raise HTTPException(status_code=403, detail="Not authorized to access this job.")
+            if persisted.get("status") == "running":
+                return {
+                    "status": "running",
+                    "stage": persisted.get("stage", "processing"),
+                    "early_display": persisted.get("early_display"),
+                    "result": None,
+                    "error": None
+                }
+            elif persisted.get("status") == "done" and persisted.get("result"):
+                return {
+                    "status": "done",
+                    "stage": "done",
+                    "early_display": persisted.get("early_display"),
+                    "result": persisted.get("result"),
+                    "error": None
+                }
 
         if supabase:
 
@@ -17234,6 +17354,12 @@ async def delete_user_query(query_id: str, authenticated_user_id: str = Depends(
     """Deletes a specific query record belonging to the authenticated user."""
     if not supabase:
         raise HTTPException(status_code=503, detail="Database service offline.")
+    existing = safe_supabase_query(lambda: supabase.table("queries").select("id, user_id").eq("id", query_id).execute())
+    if not existing or not existing.data:
+        raise HTTPException(status_code=404, detail="Query not found.")
+    query_record = existing.data[0]
+    if query_record.get("user_id") and query_record.get("user_id") != authenticated_user_id:
+        raise HTTPException(status_code=403, detail="Forbidden: Cannot delete another user's query.")
     safe_supabase_query(lambda: supabase.table("queries").delete().eq("id", query_id).eq("user_id", authenticated_user_id).execute())
     return {"status": "success", "deleted_query_id": query_id}
 
