@@ -72,4 +72,5 @@ scratch_*
 *.orig_backup
 *.txt
 !requirements.txt
+!data/evidence/**
 
