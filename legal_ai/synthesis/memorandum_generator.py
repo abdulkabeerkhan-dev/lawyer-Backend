@@ -8,7 +8,7 @@ Production-grade Senior Counsel Legal Opinion Synthesis and Precedent Normalizer
 
 Features:
 
-1. Zero Disclaimer Pollution: Purges prototype disclaimers, currency warning tags,
+1. Clean Opinion Synthesis: Generates structured legal opinions
 
    and incomplete generation notices.
 
