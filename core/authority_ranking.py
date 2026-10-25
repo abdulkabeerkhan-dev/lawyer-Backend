@@ -50,7 +50,7 @@ def is_irrelevant_subject(candidate: Dict[str, Any], query_plan: LegalQueryPlan)
 
         # Pure narcotics filter (CNSA)
         if any(k in haystack for k in ["control of narcotic substances act", "cnsa", "charas", "heroin", "opium", "methamphetamine"]):
-            if not any(k in haystack for k in ["409", "420", "406", "breach of trust", "consultancy fee", "director"]):
+            if not any(k in haystack for k in ["409", "420", "406", "breach of trust", "director"]):
                 return True
 
         # Pure murder / 302 PPC filter
@@ -147,7 +147,7 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: LegalQueryP
     combined_questions = " ".join(query_plan.legal_questions or []).lower()
     key_terms = [
         "breach of trust", "dishonest intention", "civil dispute", "contractual breach",
-        "pre-arrest bail", "mala fide", "ulterior motive", "director", "consultancy fee",
+        "pre-arrest bail", "mala fide", "ulterior motive", "director",
         "cheating", "entrustment", "quashment", "fiduciary"
     ]
     matched_terms = 0

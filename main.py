@@ -70,13 +70,13 @@ from hybrid_search import BM25Index, HybridSearchEngine, reciprocal_rank_fusion,
 
 
 
-from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks, Request
+from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks, Request, Query
 
 from fastapi.responses import StreamingResponse, HTMLResponse, JSONResponse
 
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 
@@ -140,7 +140,7 @@ from core.legal_proposition_extractor import extract_legal_propositions, format_
 
 from core.current_law_verifier import verify_current_law_for_provisions, format_current_law_context
 
-from core.pdf_resolver import resolve_judgment_pdf_url, fetch_storage_pdf_bytes, extract_journal_and_year
+from core.pdf_resolver import resolve_judgment_pdf_url, fetch_storage_pdf_bytes, extract_journal_and_year, verify_hmac_pdf_token
 
 from analytics.legal_ai_metrics import PipelineMetricsTracker
 
@@ -407,6 +407,14 @@ async def block_docs_in_production_middleware(request: Request, call_next):
     return await call_next(request)
 
 
+
+
+@app.on_event("startup")
+async def on_startup_reap_jobs():
+    try:
+        reap_interrupted_jobs_on_startup()
+    except Exception as e:
+        print(f"Startup job reaper notice: {e}")
 
 @app.get("/health")
 
@@ -2080,14 +2088,14 @@ if ANTHROPIC_API_KEY:
 
         raw_client = AsyncAnthropic(api_key=ANTHROPIC_API_KEY, default_headers=anthropic_headers if anthropic_headers else None)
 
-        try:
-
-            from langsmith import wrappers
-
-            async_anthropic_client = wrappers.wrap_anthropic(raw_client)
-
-        except Exception:
-
+        enable_langsmith = os.environ.get("ENABLE_LANGSMITH_TRACING", "").strip().lower() in ("true", "1", "yes")
+        if enable_langsmith:
+            try:
+                from langsmith import wrappers
+                async_anthropic_client = wrappers.wrap_anthropic(raw_client)
+            except Exception:
+                async_anthropic_client = raw_client
+        else:
             async_anthropic_client = raw_client
 
     except Exception as launch_err:
@@ -6496,27 +6504,24 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
 
 
 
-    # 12. verification_status (Verified Full Judgment, Verified Headnote, Unverified Metadata)
-
+    # 12. verification_status (Full Judgment (unreviewed), Headnote (unreviewed), Unverified Metadata)
     c_type = str(c.get("content_type", "")).lower()
+    raw_txt = str(c.get("raw_judgment_text", "") or c.get("text", "") or c.get("full_text", "") or "").strip()
+    words = len(raw_txt.split()) if raw_txt else 0
 
-    raw_vstatus = c.get("verification_status")
+    if c_type in ("full_text", "fresh_court_fetch") and words >= 150:
+        c["verification_status"] = "Full Judgment (unreviewed)"
+    elif c_type in ("headnote_only", "editorial_summary", "headnote") or (0 < words < 150):
+        c["verification_status"] = "Headnote (unreviewed)"
+    else:
+        c["verification_status"] = "Unverified Metadata"
 
-    if not raw_vstatus:
-
-        if c_type in ("full_text", "fresh_court_fetch") and len(str(c.get("raw_judgment_text", "")).split()) >= 150:
-
-            raw_vstatus = "Verified Full Judgment"
-
-        elif c_type in ("headnote_only", "editorial_summary", "headnote"):
-
-            raw_vstatus = "Verified Headnote"
-
-        else:
-
-            raw_vstatus = "Verified Full Judgment" if c.get("is_boosted") or c.get("verified_source") else "Unverified Metadata"
-
-    c["verification_status"] = str(raw_vstatus)
+    # Score handling: never display synthetic 0.99 score as similarity
+    if c.get("is_boosted") or c.get("direct_citation_match") or c.get("score") == 0.99:
+        if c.get("score") == 0.99:
+            c["score"] = None
+            c["similarity"] = None
+            c["match_type"] = "exact_citation"
 
 
 
@@ -6823,6 +6828,7 @@ class UserSyncPayload(BaseModel):
 
 
 class ProfileUpdatePayload(BaseModel):
+    model_config = ConfigDict(extra='forbid')
 
     first_name: Optional[str] = None
 
@@ -7749,6 +7755,59 @@ def persist_in_flight_job_state(job_id: str, stage: str, status: str = "running"
             logger.debug(f"Failed to upsert job {job_id} to query_jobs table: {e}")
 
 
+
+
+def reap_interrupted_jobs_on_startup() -> int:
+    """
+    Startup reaper: marks any stuck running or processing jobs as interrupted.
+    When server launches, any previously in-flight jobs were abandoned by process restart.
+    """
+    reaped_count = 0
+    now_iso = datetime.now(timezone.utc).isoformat()
+    if supabase:
+        try:
+            res = safe_supabase_query(
+                lambda: supabase.table("query_jobs")
+                .select("job_id, status, stage")
+                .in_("status", ["running", "processing"])
+                .execute()
+            )
+            if res and hasattr(res, "data") and res.data:
+                for row in res.data:
+                    jid = row.get("job_id")
+                    if jid:
+                        try:
+                            safe_supabase_query(
+                                lambda: supabase.table("query_jobs")
+                                .update({
+                                    "status": "interrupted",
+                                    "stage": "server_restarted",
+                                    "updated_at": now_iso
+                                })
+                                .eq("job_id", jid)
+                                .execute()
+                            )
+                            reaped_count += 1
+                        except Exception as up_err:
+                            logger.debug(f"Failed to mark job {jid} as interrupted: {up_err}")
+        except Exception as q_err:
+            logger.debug(f"Failed to query query_jobs during startup reap: {q_err}")
+
+    with _IN_FLIGHT_JOBS_LOCK:
+        for jid, rec in list(_IN_FLIGHT_JOBS_CACHE.items()):
+            if rec.get("status") in ("running", "processing"):
+                rec["status"] = "interrupted"
+                rec["stage"] = "server_restarted"
+                rec["updated_at"] = now_iso
+                reaped_count += 1
+
+    for jid, job in list(jobs_store.items()):
+        if job.get("status") in ("running", "processing"):
+            job["status"] = "interrupted"
+            job["stage"] = "server_restarted"
+
+    print(f"--> [STARTUP JOB REAPER]: Reaped {reaped_count} zombie in-flight job(s).")
+    return reaped_count
 
 def cleanup_old_jobs():
 
@@ -9039,7 +9098,7 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
 
                         boosted_matches.append({
 
-                            "score": 0.99,
+                            "score": None, "match_type": "exact_citation",
 
                             "is_boosted": True,
 
@@ -11998,7 +12057,7 @@ STRUCTURE & LAYOUT DIRECTIVE (SHIREEN MAZARI LEGAL OPINION STANDARDS):
 
                 "citation": c_cit,
 
-                "score": 0.99,
+                "score": None, "match_type": "exact_citation",
 
                 "content_type": c_type,
 
@@ -12204,19 +12263,19 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
                     "- ### EXECUTIVE SUMMARY & LEGAL OPINION: Direct, crisp actionable opinion on the issues raised. Summarize whether offences apply, whether dispute is civil or criminal, and prospects of bail.\n"
 
-                    "- ### STATUTORY & PROCEDURAL FRAMEWORK: Exact statutory provisions from the verified context (Section 409 PPC, Section 420 PPC, Section 498 Cr.P.C., Section 497 Cr.P.C., etc.). Present verbatim text and analyze each legal ingredient.\n"
+                    "- ### STATUTORY & PROCEDURAL FRAMEWORK: Exact statutory provisions from the retrieved context. Verbatim statutory text is supplied by code; analyze each legal ingredient.\n"
 
                     "- ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX: Present retrieved superior court authorities in a clear markdown table (Citation | Court | Judge | Key Holding / Ratio | Application). Ground every entry strictly in retrieved context.\n"
 
-                    "- ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE (CIVIL DISPUTE VS. CRIMINAL BREACH OF TRUST): Comprehensive doctrine analysis: distinguish dishonest intention at inception vs. subsequent contractual breach, conversion of civil debt/loan into criminal FIR, and applicability of Section 409 PPC to company directors as agents/fiduciaries.\n"
+                    "- ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE: Comprehensive legal analysis grounded in retrieved statutory provisions and precedents.\n"
 
-                    "- ### APPLICATION OF LAW TO FACTS: Apply substantive law to the client facts (consultancy fee vs undocumented loan repayment, lack of board approval, company asset dominion, transfer to relative account).\n"
+                    "- ### APPLICATION OF LAW TO FACTS: Apply substantive law directly to the facts presented in the advocate's query.\n"
 
-                    "- ### PRE-ARREST BAIL STRATEGY (SECTION 498 CR.P.C.): Ground bail strategy in settled principles (mala fide, ulterior motives, preventing police arrest/humiliation for civil recovery, absence of custodial interrogation need). Detail mandatory procedural steps (supporting affidavit, interim pre-arrest bail petition, High Court / Sessions Court jurisdiction).\n"
+                    "- ### PROCEDURAL REMEDIES & STRATEGY: Ground procedural remedies strictly in applicable statutory provisions and settled principles. Detail mandatory procedural steps.\n"
 
-                    "- ### RECOMMENDATIONS & LITIGATION ROADMAP: Immediate step-by-step guidance for the advocate (e.g. filing pre-arrest bail before Sessions/High Court, joining investigation, placing company loan ledgers on record, Section 249-A CrPC / 561-A CrPC quashment options).\n"
+                    "- ### RECOMMENDATIONS & LITIGATION ROADMAP: Immediate step-by-step guidance for the advocate based strictly on retrieved authorities.\n"
 
-                    "- ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES: Confine all research limitations, database scope notes, and unlocated specific points strictly to this final appendix. DO NOT let negative findings or defensive disclaimers pollute the substantive memorandum body.\n\n"
+                    "- ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES: Research limitations, database scope notes, and unlocated specific points appear here.\n\n"
 
                     "CRITICAL CITATION ACCURACY & NON-OVERSTATEMENT RULES:\n"
 
@@ -12224,17 +12283,17 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
                     "2. When discussing statutory rules, stick strictly to the exact statutory text and established provisos.\n"
 
-                    "3. Ensure all mandatory sections are fully articulated with at least 25 words per section and <<<CARDS>>> JSON.\n"
+                    "3. Ensure all relevant sections are articulated with <<<CARDS>>> JSON.\n"
 
                     "4. NEVER describe an interlocutory direction, deposit order, or statutory provision as 'ultra vires' or declare 'no precedent exists' unless a cited judgment explicitly uses those exact words.\n"
 
                     "5. In the procedural risks and recommendations sections, always explicitly advise on the consequence of non-compliance and recommend practical protective steps.\n"
 
-                    "6. DO NOT cite ungrounded Constitutional Articles (such as Article 199) unless explicitly present in the retrieved authorities or raised in the query. Ground criminal and bail remedies directly in the Cr.P.C. (Sections 497, 498, 561-A, 249-A).\n"
+                    "6. DO NOT cite ungrounded Constitutional Articles (such as Article 199) unless explicitly present in the retrieved authorities or raised in the query.\n"
 
                     "7. Keep each section comprehensive yet focused (approx. 200–400 words per section) so that ALL 8 sections from EXECUTIVE SUMMARY through RECOMMENDATIONS & LITIGATION ROADMAP and APPENDIX are fully written without truncation.\n"
 
-                    "8. ZERO DISCLAIMER POLLUTION: NEVER include currency tags (such as [NOT CHECKED]), system notices, or defensive disclaimers in the EXECUTIVE SUMMARY or substantive sections. Present verified provisions as in force under Pakistan Code, and confine any research notes or limitations exclusively to the APPENDIX.\n"
+                    "8. STATUTORY FIDELITY: Statutory text is supplied verbatim by code. Clearly note any research scope limitations or unlocated provisions.\n"
 
                 )
 
@@ -12272,7 +12331,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
                     "3. Ensure all substantive propositions are strictly grounded in retrieved precedents.\n"
 
-                    "4. ZERO DISCLAIMER POLLUTION: NEVER include currency tags or system notices.\n"
+                    "4. GROUNDING: Ensure all legal propositions are strictly grounded in retrieved authorities.\n"
 
                 )
 
@@ -12423,19 +12482,19 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
                         "- ### EXECUTIVE SUMMARY & LEGAL OPINION: Direct, crisp actionable opinion on the issues raised. Summarize whether offences apply, whether dispute is civil or criminal, and prospects of bail.\n"
 
-                        "- ### STATUTORY & PROCEDURAL FRAMEWORK: Exact statutory provisions from the verified context (Section 409 PPC, Section 420 PPC, Section 498 Cr.P.C., Section 497 Cr.P.C., etc.). Present verbatim text and analyze each legal ingredient.\n"
+                        "- ### STATUTORY & PROCEDURAL FRAMEWORK: Exact statutory provisions from the retrieved context. Verbatim statutory text is supplied by code; analyze each legal ingredient.\n"
 
                         "- ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX: Present retrieved superior court authorities in a clear markdown table (Citation | Court | Judge | Key Holding / Ratio | Application). Ground every entry strictly in retrieved context.\n"
 
-                        "- ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE (CIVIL DISPUTE VS. CRIMINAL BREACH OF TRUST): Comprehensive doctrine analysis: distinguish dishonest intention at inception vs. subsequent contractual breach, conversion of civil debt/loan into criminal FIR, and applicability of Section 409 PPC to company directors as agents/fiduciaries.\n"
+                        "- ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE: Comprehensive legal analysis grounded in retrieved statutory provisions and precedents.\n"
 
-                        "- ### APPLICATION OF LAW TO FACTS: Apply substantive law to the client facts (consultancy fee vs undocumented loan repayment, lack of board approval, company asset dominion, transfer to relative account).\n"
+                        "- ### APPLICATION OF LAW TO FACTS: Apply substantive law directly to the facts presented in the advocate's query.\n"
 
-                        "- ### PRE-ARREST BAIL STRATEGY (SECTION 498 CR.P.C.): Ground bail strategy in settled principles (mala fide, ulterior motives, preventing police arrest/humiliation for civil recovery, absence of custodial interrogation need). Detail mandatory procedural steps (supporting affidavit, interim pre-arrest bail petition, High Court / Sessions Court jurisdiction).\n"
+                        "- ### PROCEDURAL REMEDIES & STRATEGY: Ground procedural remedies strictly in applicable statutory provisions and settled principles. Detail mandatory procedural steps.\n"
 
-                        "- ### RECOMMENDATIONS & LITIGATION ROADMAP: Immediate step-by-step guidance for the advocate (e.g. filing pre-arrest bail before Sessions/High Court, joining investigation, placing company loan ledgers on record, Section 249-A CrPC / 561-A CrPC quashment options).\n"
+                        "- ### RECOMMENDATIONS & LITIGATION ROADMAP: Immediate step-by-step guidance for the advocate based strictly on retrieved authorities.\n"
 
-                        "- ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES: Confine all research limitations, database scope notes, and unlocated specific points strictly to this final appendix. DO NOT let negative findings or defensive disclaimers pollute the substantive memorandum body.\n\n"
+                        "- ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES: Research limitations, database scope notes, and unlocated specific points appear here.\n\n"
 
                         "CRITICAL CITATION ACCURACY & NON-OVERSTATEMENT RULES:\n"
 
@@ -12443,13 +12502,13 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
                         "2. When discussing statutory rules, stick strictly to the exact statutory text and established provisos.\n"
 
-                        "3. Ensure all mandatory sections are fully articulated with at least 25 words per section and <<<CARDS>>> JSON.\n"
+                        "3. Ensure all relevant sections are articulated with <<<CARDS>>> JSON.\n"
 
                         "4. NEVER describe an interlocutory direction, deposit order, or statutory provision as 'ultra vires' or declare 'no precedent exists' unless a cited judgment explicitly uses those exact words.\n"
 
                         "5. In the procedural risks and recommendations sections, always explicitly advise on the consequence of non-compliance and recommend practical protective steps.\n"
 
-                        "6. DO NOT cite ungrounded Constitutional Articles (such as Article 199) unless explicitly present in the retrieved authorities or raised in the query. Ground criminal and bail remedies directly in the Cr.P.C. (Sections 497, 498, 561-A, 249-A).\n"
+                        "6. DO NOT cite ungrounded Constitutional Articles (such as Article 199) unless explicitly present in the retrieved authorities or raised in the query.\n"
 
                         "7. Keep each section comprehensive yet focused (approx. 200–400 words per section) so that ALL 8 sections from EXECUTIVE SUMMARY through RECOMMENDATIONS & LITIGATION ROADMAP and APPENDIX are fully written without truncation.\n"
 
@@ -12690,7 +12749,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
             print(f"⚠️ Legal Guardrails & Completeness Issues (round {ref_round+1}): {all_issues}. Triggering reflection loop...", file=sys.stderr)
 
-            reflection_prompt = f"CRITICAL INSTRUCTION: Do NOT output conversational meta-commentary. Silently correct these legal/completeness issues in your answer and re-output the full completed response (ensuring all 5 mandatory sections: ### EXECUTIVE SUMMARY & LEGAL OPINION, ### STATUTORY & PROCEDURAL FRAMEWORK, ### CASE LAW & APPELLATE PRECEDENTS, ### LEGAL ANALYSIS & PROCEDURAL RISKS, ### RECOMMENDATIONS & NEXT STEPS, with at least 25 words per section and valid <<<CARDS>>> JSON): {'; '.join(all_issues)}"
+            "3. Ensure all relevant sections are articulated with <<<CARDS>>> JSON.\n"
 
             reflection_messages = list(messages) + [
 
@@ -14297,112 +14356,125 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
 
 
 
-@app.get("/api/judgments/{judgment_id:path}/pdf")
 
-async def get_api_judgment_pdf_endpoint(judgment_id: str):
+async def _authorize_pdf_access(
+    case_id: str,
+    request: Request,
+    token: Optional[str] = None,
+    credentials: Optional[HTTPAuthorizationCredentials] = None
+) -> str:
+    """
+    Authorizes PDF streaming access:
+    1. If HMAC token provided (?token=...), verifies cryptographic signature and expiration.
+    2. Otherwise, requires a valid Clerk authentication session (Bearer token).
+    3. Enforces sliding-window burst rate limiting.
+    Fails closed with 401 if unauthenticated or signature is invalid.
+    """
+    caller_identifier = None
+
+    # Option 1: HMAC token authentication
+    if token:
+        decoded_id = urllib.parse.unquote(case_id).strip()
+        is_valid = verify_hmac_pdf_token(token, decoded_id) or verify_hmac_pdf_token(token, case_id)
+        if not is_valid:
+            match_record = find_judgment_by_id_or_canonical(decoded_id)
+            if match_record:
+                for alt in [match_record.get("citation"), match_record.get("neutral_citation"), match_record.get("case_id"), match_record.get("id")]:
+                    if alt and verify_hmac_pdf_token(token, str(alt)):
+                        is_valid = True
+                        break
+        if is_valid:
+            parts = token.split(".", 2)
+            caller_identifier = parts[1] if len(parts) == 3 else "hmac_pdf_client"
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Access Denied: Invalid or expired PDF access token."
+            )
+
+    # Option 2: Clerk session authentication
+    if not caller_identifier:
+        if credentials and credentials.credentials:
+            caller_identifier = await verify_clerk_session(credentials)
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Access Denied: Missing authorization credentials or signed PDF token."
+            )
+
+    # Sliding-window burst rate limiting
+    rate_limit_id = caller_identifier
+    if not rate_limit_id or rate_limit_id in ("anonymous", "user", "hmac_pdf_client"):
+        rate_limit_id = getattr(getattr(request, "client", None), "host", "unknown_ip") or "unknown_ip"
+    check_burst_rate_limit(rate_limit_id, action="pdf stream")
+
+    return caller_identifier
+
+@app.get("/api/judgments/{judgment_id:path}/pdf")
+async def get_api_judgment_pdf_endpoint(
+    judgment_id: str,
+    request: Request,
+    token: Optional[str] = Query(None),
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_agent)
+):
+    await _authorize_pdf_access(judgment_id, request, token=token, credentials=credentials)
 
     decoded_id = urllib.parse.unquote(judgment_id).strip()
-
     match_record = find_judgment_by_id_or_canonical(decoded_id)
 
-
-
     # 1. Download authentic PDF bytes from Supabase Storage on backend side (zero direct frontend storage calls)
-
     if match_record and supabase:
-
         cit_lookup = match_record.get("neutral_citation") or match_record.get("citation") or ""
-
         journal, year, page = extract_journal_and_year(cit_lookup, decoded_id)
-
         if journal and year:
-
             storage_pdf_bytes = fetch_storage_pdf_bytes(supabase, journal, year, page, decoded_id)
-
             if storage_pdf_bytes:
-
                 safe_filename = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_id).strip('_') + ".pdf"
-
                 return Response(
-
                     content=storage_pdf_bytes,
-
                     media_type="application/pdf",
-
                     headers={
-
                         "Content-Disposition": f'inline; filename="{safe_filename}"',
-
-                        "Access-Control-Allow-Origin": "*",
-
                         "Content-Type": "application/pdf"
-
                     }
-
                 )
 
-
-
     title = (get_effective_title(match_record) if match_record else decoded_id) or decoded_id
-
     citation = (match_record.get("neutral_citation") if match_record else "") or ""
-
     court = (get_effective_court(match_record) if match_record else "Supreme Court of Pakistan") or "Supreme Court of Pakistan"
-
     text = (match_record.get("full_text") if match_record else f"Full judgment record for {decoded_id} is currently undergoing index synchronization.") or ""
 
-
-
     pdf_bytes = build_judgment_pdf_bytes(title, citation, court, text)
-
     safe_filename = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_id).strip('_') + ".pdf"
-
     return Response(
-
         content=pdf_bytes,
-
         media_type="application/pdf",
-
         headers={
-
             "Content-Disposition": f'inline; filename="{safe_filename}"',
-
-            "Access-Control-Allow-Origin": "*",
-
             "Content-Type": "application/pdf"
-
         }
-
     )
 
 
-
 @app.get("/api/judgments/{judgment_id:path}")
-
 async def get_api_judgment_endpoint(
-
     judgment_id: str,
-
     authenticated_user_id: str = Depends(verify_clerk_session)
-
 ):
-
     match_record = find_judgment_by_id_or_canonical(judgment_id)
-
     if not match_record:
-
         raise HTTPException(status_code=404, detail=f"Judgment '{judgment_id}' not found.")
-
     match_record["full_text"] = format_clean_judgment_paragraphs(match_record.get("full_text", ""))
-
     return match_record
 
-
-
 @app.get("/judgment-pdf/{case_id:path}")
-
-async def get_judgment_pdf_endpoint(case_id: str):
-
+async def get_judgment_pdf_endpoint(
+    case_id: str,
+    request: Request,
+    token: Optional[str] = Query(None),
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_agent)
+):
+    return await get_api_judgment_pdf_endpoint(case_id, request=request, token=token, credentials=credentials)
     return await get_api_judgment_pdf_endpoint(case_id)
 
 

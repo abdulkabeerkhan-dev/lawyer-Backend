@@ -1278,10 +1278,10 @@ def decompose_compound_legal_query(query: str) -> List[str]:
         subqueries.append(f"Section 498 Section 497 CrPC pre-arrest bail mala fide ulterior motive civil dispute commercial recovery arrest humiliation {statute_ctx}".strip())
 
     # 12. Corporate Director / Board / Company Funds / Loan aspect (only when company management/funds in issue)
-    if any(k in q_lower for k in ["board of directors", "company funds", "consultancy fee", "corporate governance", "companies act", "shareholder", "director loan"]) or (
+    if any(k in q_lower for k in ["board of directors", "company funds", "corporate governance", "companies act", "shareholder", "director loan"]) or (
         "director" in q_lower and any(k in q_lower for k in ["funds", "misappropriat", "breach of trust", "board", "shares", "fiduciary"])
     ):
-        subqueries.append("company director unauthorized transfer company funds consultancy fee director loan fiduciary duty Companies Act")
+        subqueries.append("company director unauthorized transfer company funds director loan fiduciary duty Companies Act")
 
     # 13. Injunction / Interim Relief aspect (Order XXXIX CPC / Specific Relief Act)
     if any(k in q_lower for k in ["injunction", "stay order", "interim relief", "order xxxix", "o.xxxix", "o.39"]):

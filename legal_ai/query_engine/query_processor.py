@@ -330,7 +330,7 @@ def _load_system_prompt() -> str:
 
 
 
-        "ZERO DISCLAIMER POLLUTION: Do not include prototype disclaimers, currency tags, or verification notices."
+        "ACCURACY: Ensure all statements are strictly grounded in retrieved sources."
 
 
 
@@ -1588,8 +1588,7 @@ async def process_query_job_legal_ai(
 
 
 
-            "8. ZERO DISCLAIMER POLLUTION: Do not include prototype tags, [NOT CHECKED], or verification disclaimers in substantive sections.\n"
-            "9. STATUTE CROSS-REFERENCE FIDELITY: For Section 22 FIO 2001, note accurately that sub-section (7) in the official Gazette refers to sub-section (2), whereas stay deposit conditions appear in the proviso to sub-section (3). Check the Gazette. Do NOT state that sub-section (2) grants stay orders."
+            "8. FIDELITY: Ensure all statutory references and holdings reflect the exact retrieved text without extrapolation.\n"
 
 
 
@@ -2037,7 +2036,7 @@ async def process_query_job_legal_ai(
 
 
 
-            "ZERO DISCLAIMER POLLUTION: Do not include prototype tags, [NOT CHECKED], or verification disclaimers."
+        "ACCURACY: Ensure all statements are strictly grounded in retrieved sources."
 
 
 

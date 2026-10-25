@@ -115,7 +115,7 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: Any) -> Tup
     combined_questions = " ".join([str(q) for q in questions]).lower()
     key_terms = [
         "breach of trust", "dishonest intention", "civil dispute", "contractual breach",
-        "pre-arrest bail", "mala fide", "ulterior motive", "director", "consultancy fee",
+        "pre-arrest bail", "mala fide", "ulterior motive", "director",
         "cheating", "entrustment", "quashment", "fiduciary", "misappropriat", "inducement",
         "delivery of property", "recovery", "accountability"
     ]

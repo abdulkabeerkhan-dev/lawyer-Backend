@@ -81,7 +81,7 @@ def filter_candidate_quality_before_ranking(
 
             # Pure narcotics filter (CNSA)
             if any(k in haystack for k in ["control of narcotic substances act", "cnsa", "charas", "heroin", "opium", "methamphetamine"]):
-                if not any(k in haystack for k in ["409", "420", "406", "breach of trust", "consultancy fee", "director"]):
+                if not any(k in haystack for k in ["409", "420", "406", "breach of trust", "director"]):
                     rejection_counts["unrelated_subject"] += 1
                     continue
 
