@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The Family Court may, on being satisfied that violence has taken place or is likely to take place, pass a protection order prohibiting the defendant from: (a) committing any act of violence; (b) aiding or abetting in commission of violence; (c) entering the place of employment or residence of the aggrieved woman; or (d) attempting to communicate in any form with the aggrieved person."
   },
   {
     "canonical_id": "PUNJAB_WOMEN_VIOLENCE_2016_SEC_5",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The Court may pass a residence order: (a) restraining the defendant from dispossessing or throwing out the aggrieved person from the shared household; (b) directing the defendant to remove himself from the shared household; or (c) securing alternate accommodation for the aggrieved person identical to the status of the parties."
   },
   {
     "canonical_id": "PUNJAB_WOMEN_VIOLENCE_2016_SEC_6",
@@ -57,6 +61,8 @@
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The Court may direct the defendant to pay monetary relief to meet the expenses incurred and losses suffered by the aggrieved woman and child as a result of violence, including medical expenses and loss of earnings."
   }
 ]

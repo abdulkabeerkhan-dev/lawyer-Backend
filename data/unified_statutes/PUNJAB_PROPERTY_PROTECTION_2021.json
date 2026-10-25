@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "No person shall enter upon or hold or grab any immovable property without lawful authority, title or permission of the lawful owner or lawful possessor."
   },
   {
     "canonical_id": "PUNJAB_PROPERTY_PROTECTION_2021_SEC_4",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Any lawful owner or possessor of immovable property who is dispossessed illegally or threatened with illegal dispossession may file a complaint before the Deputy Commissioner who shall conduct a summary inquiry within thirty days and order restoration of possession through police assistance."
   }
 ]

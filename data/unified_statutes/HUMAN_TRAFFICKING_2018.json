@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Any person who recruits, harbours, transports, provides or obtains another person, or attempts to do so, for compelled labour or commercial sex acts, through the use of force, fraud or coercion, commits the offence of trafficking in persons and shall be punished with imprisonment for a term which may extend to seven years and fine which may extend to one million rupees."
   },
   {
     "canonical_id": "HUMAN_TRAFFICKING_2018_SEC_4",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever commits trafficking in persons in respect of a child or a woman, or where the offence involves organized criminal groups, torture or life-threatening harm, shall be punished with imprisonment for a term which shall not be less than seven years and may extend to fourteen years and fine which shall not be less than one million rupees."
   },
   {
     "canonical_id": "HUMAN_TRAFFICKING_2018_SEC_6",
@@ -57,6 +61,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "All offences punishable under this Act shall be cognizable, non-bailable and non-compoundable."
   }
 ]

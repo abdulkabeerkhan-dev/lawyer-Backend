@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "In this Act, unless there is anything repugnant in the subject or context: (a) 'child' means a person who, if a male, is under eighteen years of age, and if a female, is under sixteen years of age (in Punjab: under eighteen years for both); (b) 'child marriage' means a marriage to which either of the contracting parties is a child."
   },
   {
     "canonical_id": "CHILD_MARRIAGE_1929_SEC_4",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever, being a male above eighteen years of age, contracts a child marriage shall be punishable with simple imprisonment which may extend to six months, or with fine which may extend to fifty thousand rupees, or with both."
   }
 ]

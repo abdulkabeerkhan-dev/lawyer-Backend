@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) No right as executor or legatee can be established in any Court of Justice, unless a Court of competent jurisdiction in Pakistan has granted probate of the will under which the right is claimed, or has granted letters of administration with the will or with a copy of an authenticated copy of the will annexed."
   },
   {
     "canonical_id": "SUCCESSION_1925_SEC_370",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) A certificate shall not be granted under this Part with respect to any debt or security to which a right is required by section 212 or section 213 to be established by letters of administration or probate."
   },
   {
     "canonical_id": "SUCCESSION_1925_SEC_372",
@@ -57,7 +61,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Application for such a certificate shall be made to the District Judge by a petition signed and verified by or on behalf of the applicant in the manner prescribed by the Code of Civil Procedure, 1908, for the signing and verification of a plaint, setting forth: (a) the time and place of the death of the deceased; (b) the ordinary residence of the deceased; (c) the family or other near relatives of the deceased and their respective residences; (d) the right in which the petitioner claims; and (e) the debts and securities in respect of which the certificate is applied for."
   },
   {
     "canonical_id": "SUCCESSION_1925_SEC_381",
@@ -77,7 +83,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Subject to the provisions of this Part, the certificate of the District Judge shall, with respect to the debts and securities specified therein, be conclusive as against the persons owing such debts or liable on such securities, and shall afford full indemnity to all such persons as regards all payments made, or dealings had, in good faith in respect of such debts or securities."
   },
   {
     "canonical_id": "SUCCESSION_1925_SEC_383",
@@ -97,6 +105,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "A certificate granted under this Part may be revoked for any of the following causes, namely: (a) that the proceedings to obtain the certificate were defective in substance; (b) that the certificate was obtained fraudulently by the making of a false suggestion, or by the concealment from the Court of something material to the case; (c) that the certificate was obtained by means of an untrue allegation of a fact essential in point of law; (d) that the certificate has become useless and inoperative through circumstances."
   }
 ]

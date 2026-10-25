@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The manufacturer of a product shall be liable to a consumer for damages proximately caused by a characteristic of the product that renders the product defective when such damage arose from a reasonably anticipated use of the product."
   },
   {
     "canonical_id": "PUNJAB_CONSUMER_2005_SEC_28",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) A consumer who has suffered damage, or an authority on behalf of consumers, may file a claim before the Consumer Court having territorial jurisdiction: Provided that the consumer shall first give a written notice of fifteen days to the manufacturer or service provider."
   }
 ]

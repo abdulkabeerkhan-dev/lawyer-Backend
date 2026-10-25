@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Where in any proceeding before a Civil or Criminal Court the mental condition or capacity of any party or accused person is questioned, the Court may order such person to be examined by a Medical Board comprising certified psychiatrists."
   },
   {
     "canonical_id": "MENTAL_HEALTH_2001_SEC_49",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The Court of Session or District Judge may, on application, direct an inquisition whether a person subject to its jurisdiction is of unsound mind and incapable of managing his property, and appoint a manager of such estate."
   }
 ]

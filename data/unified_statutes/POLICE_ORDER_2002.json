@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) There shall be a separate investigation staff in each district headed by an officer of appropriate rank. (2) The investigation staff shall not be diverted to any other duties except under the written permission of the Provincial Police Officer."
   },
   {
     "canonical_id": "POLICE_ORDER_2002_ART_155",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Any police officer who: (a) without lawful authority vexatiously searches or arrests any person; (b) vexatiously seizes the property of any person; or (c) inflicts torture on any person in his custody, shall be punished with imprisonment for a term which may extend to five years, and with fine."
   }
 ]

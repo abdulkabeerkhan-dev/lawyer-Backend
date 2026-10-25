@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The Bank shall be an autonomous body having the primary objective of maintaining domestic price stability, and without prejudice to price stability, supporting the economic policies of the Federal Government to foster development and fuller utilization of productive resources."
   },
   {
     "canonical_id": "SBP_1956_SEC_17",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The Bank is authorized to carry on and transact several kinds of business, including the issuing of notes, acceptance of deposits from banks and Government, purchase and rediscount of bills of exchange, and regulation of credit and liquidity in the banking system."
   }
 ]

@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Subject to the provisions of this Act, there shall be charged, levied and paid a tax known as sales tax at the rate of eighteen per cent of the value of: (a) taxable supplies made by a registered person in the course or furtherance of any taxable activity carried on by him; and (b) goods imported into Pakistan."
   },
   {
     "canonical_id": "SALES_TAX_1990_SEC_7",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) For the purpose of determining his tax liability in respect of taxable supplies made during a tax period, a registered person shall be entitled to deduct input tax paid or payable during the tax period for the purpose of taxable supplies made or to be made by him from the output tax."
   },
   {
     "canonical_id": "SALES_TAX_1990_SEC_8",
@@ -57,7 +61,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Notwithstanding anything contained in this Act, a registered person shall not be entitled to reclaim or deduct input tax paid on: (a) goods or services used or to be used for any purpose other than for taxable supplies made; (b) extra-commercial purposes; (c) fake or flying invoices."
   },
   {
     "canonical_id": "SALES_TAX_1990_SEC_11",
@@ -77,7 +83,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Where a person who is required to file a tax return fails to file such return for a tax period, an officer of Inland Revenue shall make an assessment of the tax payable by him having regard to the business activity and available records."
   },
   {
     "canonical_id": "SALES_TAX_1990_SEC_33",
@@ -97,6 +105,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever commits any of the offences specified in column (2) of the Table shall be liable to the penalty specified against that offence in column (3) thereof (including penalties for non-filing, invoice evasion, tax fraud)."
   }
 ]

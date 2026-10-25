@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Government, or the District Magistrate, if satisfied with respect to any particular person that with a view to preventing him from acting in any manner prejudicial to public safety or the maintenance of public order it is necessary so to do, may by order in writing direct that such person be arrested and detained for such period as may be specified in the order, not exceeding three months."
   },
   {
     "canonical_id": "MPO_1960_SEC_16",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever makes, publishes or disseminates any statement, rumor or report which is calculated to cause fear or alarm to the public or any section of the public, or to incite any person to commit an offence against public peace, shall be punished with imprisonment which may extend to three years, or with fine, or with both."
   }
 ]

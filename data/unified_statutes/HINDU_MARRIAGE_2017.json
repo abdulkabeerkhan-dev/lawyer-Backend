@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "A Hindu marriage may be solemnized in accordance with the customary rites and ceremonies if: (a) at the time of marriage, neither party has a spouse living; (b) neither party is incapable of giving valid consent due to unsoundness of mind; (c) the parties have completed eighteen years of age; and (d) the parties are not within degrees of prohibited relationship (Sapinda relationship)."
   },
   {
     "canonical_id": "HINDU_MARRIAGE_2017_SEC_7",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Every marriage solemnized under this Act shall be registered with the Marriage Registrar appointed by the local government, and the Marriage Registrar shall issue a certificate of marriage (Shaadipattar) to the parties."
   },
   {
     "canonical_id": "HINDU_MARRIAGE_2017_SEC_12",
@@ -57,6 +61,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Any Hindu husband or wife may present a petition to the Family Court praying for dissolution of marriage by a decree of termination on grounds of desertion for not less than two years, conversion to another religion, cruelty, incurable insanity, or venereal disease."
   }
 ]

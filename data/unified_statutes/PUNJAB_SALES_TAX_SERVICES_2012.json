@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "A taxable service is a service listed in the Second Schedule to this Act which is provided: (a) by a registered person from his registered office or place of business in the Punjab; or (b) to a resident person in the Punjab by a person outside the Punjab."
   },
   {
     "canonical_id": "PUNJAB_SALES_TAX_SERVICES_2012_SEC_11",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Subject to the provisions of this Act, there shall be levied and collected a tax called the Punjab sales tax on the value of a taxable service at the rate specified in the Second Schedule, provided that the standard rate of tax shall be sixteen percent."
   },
   {
     "canonical_id": "PUNJAB_SALES_TAX_SERVICES_2012_SEC_66",
@@ -57,6 +61,8 @@
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Any person aggrieved by any order passed by an officer of the Punjab Revenue Authority (PRA) may, within thirty days of the date of communication of the order, appeal to the Commissioner (Appeals)."
   }
 ]

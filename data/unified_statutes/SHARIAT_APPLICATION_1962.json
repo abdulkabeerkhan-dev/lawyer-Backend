@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Notwithstanding any custom or usage to the contrary, in all questions regarding succession (whether testate or intestate), special property of females, betrothal, marriage, divorce, dower, maintenance, guardianship, minority, bastardy, family relations, wills, legacies, gifts, waqf, trusts and trust properties, the rule of decision, where the parties are Muslims, shall be the Muslim Personal Law (Shariat)."
   },
   {
     "canonical_id": "SHARIAT_APPLICATION_1962_SEC_3",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The limited estates in respect of immovable property held by Muslim females under the customary law are hereby terminated and shall dissolve upon the persons who would have been entitled to succeed as Muslim heirs on the death of the last full owner."
   },
   {
     "canonical_id": "SHARIAT_APPLICATION_1962_SEC_5",
@@ -57,6 +61,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "On the death of any person who was holding property under custom as a life estate, the property shall devolve upon the persons who would have been the heirs of the last full owner under the Muslim Personal Law (Shariat) had he died at the time of the death of such life tenant."
   }
 ]

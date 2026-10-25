@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Every cause, appeal or matter before the Supreme Court shall be heard and disposed of by a Bench constituted by the Committee comprising the Chief Justice of Pakistan and the two next senior-most Judges, in order of seniority."
   },
   {
     "canonical_id": "SC_PRACTICE_PROCEDURE_2023_SEC_3",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Any matter invoking exercise of original jurisdiction under clause (3) of Article 184 of the Constitution shall be first placed before the Committee constituted under section 2 for examination, and if the Committee is of the view that a question of public importance with reference to enforcement of any Fundamental Rights is involved, it shall constitute a Bench of not less than three Judges."
   },
   {
     "canonical_id": "SC_PRACTICE_PROCEDURE_2023_SEC_5",
@@ -57,6 +61,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "An appeal shall lie within thirty days from an order of a Bench of the Supreme Court exercising jurisdiction under clause (3) of Article 184 of the Constitution to a larger Bench of the Supreme Court, and such appeal shall be heard within a period not exceeding fourteen days."
   }
 ]

@@ -58,14 +58,31 @@ class StatuteInjector:
         else:
             self.root = Path(__file__).resolve().parent.parent.parent
 
+        self.unified_dir = self.root / "data" / "unified_statutes"
         self.tables_dir = self.root / "data" / "statute_tables"
         self.versions_dir = self.root / "data" / "statute_versions"
+        self._unified_cache: Dict[str, Dict[str, Dict[str, Any]]] = {}
         self._table_cache: Dict[str, List[Dict[str, Any]]] = {}
         self._version_cache: Dict[str, Dict[str, Dict[str, Any]]] = {}
         self._load_caches()
 
     def _load_caches(self) -> None:
-        """Eagerly loads version maps for fast O(1) in-memory retrieval."""
+        """Eagerly loads unified statutes and version maps for fast O(1) in-memory retrieval."""
+        if self.unified_dir.exists():
+            for ufile in self.unified_dir.glob("*.json"):
+                act_code = ufile.stem
+                try:
+                    with open(ufile, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                    records = data if isinstance(data, list) else list(data.values()) if isinstance(data, dict) else []
+                    by_cid: Dict[str, Dict[str, Any]] = {}
+                    for item in records:
+                        if isinstance(item, dict) and item.get("canonical_id"):
+                            by_cid[str(item["canonical_id"]).upper()] = item
+                    self._unified_cache[act_code] = by_cid
+                except Exception as e:
+                    logger.warning(f"Error loading {ufile.name}: {e}")
+
         if self.versions_dir.exists():
             for vfile in self.versions_dir.glob("*_versions.json"):
                 act_code = vfile.name.replace("_versions.json", "")
@@ -316,8 +333,17 @@ class StatuteInjector:
         return "UNKNOWN_ACT", f"UNKNOWN_SEC_{num_str}", p_clean
 
     def get_provision_record(self, act_code: str, canonical_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieves provision record from versions cache or tables cache."""
+        """Retrieves provision record from unified cache, versions cache, or tables cache."""
         cid_upper = canonical_id.upper()
+        # 0. Check primary authoritative unified cache
+        if act_code in self._unified_cache:
+            if cid_upper in self._unified_cache[act_code]:
+                return self._unified_cache[act_code][cid_upper]
+            if "_SR_" in cid_upper:
+                parent_cid = cid_upper.split("_SR_")[0]
+                if parent_cid in self._unified_cache[act_code]:
+                    return self._unified_cache[act_code][parent_cid]
+
         # 1. Check version cache
         if act_code in self._version_cache:
             if cid_upper in self._version_cache[act_code]:
@@ -509,9 +535,13 @@ class StatuteInjector:
             raw_text = ""
             title = ""
             status = "in_force"
+            tier = ""
+            in_force = True
             if rec:
                 raw_text = str(rec.get("text") or rec.get("statutory_text") or "").strip()
                 title = str(rec.get("title") or rec.get("display_name") or "").strip()
+                tier = str(rec.get("tier") or "").lower().strip()
+                in_force = rec.get("in_force", True)
                 stat_dict = rec.get("status")
                 if isinstance(stat_dict, dict):
                     status = stat_dict.get("punjab") or stat_dict.get("federal") or "in_force"
@@ -522,6 +552,30 @@ class StatuteInjector:
             lines.append(f"Status in Force: {status.replace('_', ' ').title()}")
             if title:
                 lines.append(f"Subject / Title: {title}")
+
+            # Check in_force status gating (Item 6)
+            if in_force is False:
+                lines.append("********************************************************************************")
+                lines.append(f"CRITICAL REFUSAL: {display_name} IS NOT IN FORCE (REPEALED / OMITTED).")
+                lines.append("The engine strictly refuses to quote repealed or omitted provisions as operative law.")
+                lines.append("You MUST open your response with:")
+                lines.append(f"> [!CAUTION]")
+                lines.append(f"> **PROVISION NOT IN FORCE**: {display_name} is omitted or repealed from the statute book and cannot be quoted or applied as operative law.")
+                lines.append("********************************************************************************")
+                raw_text = "[REPEALED / OMITTED - NOT IN FORCE: The engine refuses to quote this provision as operative law]"
+
+            # Check disputed tier warning gating (Item 8 & Item 10)
+            elif tier == "disputed":
+                lines.append("********************************************************************************")
+                lines.append(f"CRITICAL WARNING: {display_name} IS TAGGED AS DISPUTED IN OFFICIAL STORE.")
+                lines.append("Reason: Text not yet checked against page images by a human.")
+                lines.append("You MUST print the following banner at the very top of your memo:")
+                lines.append("> [!WARNING]")
+                lines.append(f"> **DISPUTED STATUTORY PROVISION — HUMAN CHECK REQUIRED**:")
+                lines.append(f"> Statutory text for {display_name} is currently classified as DISPUTED.")
+                lines.append("> Reason: Text not yet checked against page images by a human.")
+                lines.append("> Human advocate verification against official Gazette page images is required before relying on this text.")
+                lines.append("********************************************************************************")
 
             # Schedule II injection for PPC offences
             if act_code == "PPC_1860":

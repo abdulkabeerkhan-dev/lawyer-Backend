@@ -297,7 +297,9 @@
     "status": "not_applicable",
     "jurisdiction": "punjab",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) A landlord may seek eviction of one or more tenants from the rented premises by filing an application before the Special Judge (Rent) on any of the following grounds: (a) expiry of tenancy period; (b) default in payment of rent for more than thirty days from the due date; (c) breach of any condition of tenancy; (d) subletting without written consent; (e) acts causing material impairment; (f) personal bona fide requirement of the landlord or his spouse or child."
   },
   {
     "canonical_id": "PRPA_2009_SEC_16",
@@ -377,7 +379,9 @@
     "status": "not_applicable",
     "jurisdiction": "punjab",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) The tenant shall not be entitled to defend the application for eviction unless he files an application for leave to contest supported by an affidavit within ten days of the date of appearance.\n(2) If the tenant fails to file an application for leave to contest, the Rent Tribunal shall pass an eviction order forthwith."
   },
   {
     "canonical_id": "PRPA_2009_SEC_20",
@@ -417,7 +421,9 @@
     "status": "not_applicable",
     "jurisdiction": "punjab",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) The Rent Tribunal shall, on the application of the landlord, direct the tenant to deposit the arrears of rent and continue depositing the monthly rent by the tenth of each calendar month until the final decision of the application.\n(2) If the tenant fails to deposit the rent as directed, his defence shall be struck off and an order of eviction shall be passed forthwith."
   },
   {
     "canonical_id": "PRPA_2009_SEC_22",

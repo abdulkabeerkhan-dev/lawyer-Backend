@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Whenever it appears to the Provincial Government that land in any locality is needed or is likely to be needed for any public purpose, a notification to that effect shall be published in the official Gazette."
   },
   {
     "canonical_id": "LAND_ACQUISITION_1894_SEC_18",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Any person interested who has not accepted the award may, by written application to the Collector, require that the matter be referred by the Collector for the determination of the Court, whether his objection be to the measurement of the land, the amount of the compensation, the persons to whom it is payable, or the apportionment of the compensation among the persons interested."
   },
   {
     "canonical_id": "LAND_ACQUISITION_1894_SEC_23",
@@ -57,6 +61,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) In determining the amount of compensation to be awarded for land acquired under this Act, the Court shall take into consideration: first, the market-value of the land at the date of the publication of the notification under section 4, sub-section (1); secondly, the damage sustained by the person interested by reason of the taking of any standing crops or trees; thirdly, the damage by reason of severing such land from his other land; and in addition the Court shall award fifteen percentum on such market-value in consideration of the compulsory nature of the acquisition."
   }
 ]

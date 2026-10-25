@@ -97,7 +97,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Subject to the provisions of the Muslim Family Laws Ordinance, 1961, and the Conciliation Courts Ordinance, 1961, the Family Courts shall have exclusive jurisdiction to entertain, hear and adjudicate upon matters specified in Part I of the Schedule (including Dissolution of Marriage, Dower, Maintenance, Restitution of Conjugal Rights, Custody of Children and Guardianship, Jactitation of Marriage, Dowry)."
   },
   {
     "canonical_id": "FAMILY_COURTS_1964_SEC_6",
@@ -197,7 +199,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) When the written statement is filed, the Court shall fix an early date for a pre-trial hearing.\n(3) At the pre-trial hearing, the Court shall examine the plaint, the written statement, and documents, and if it deems fit, the parties, and shall ascertain the points at issue between them and attempt to effect a compromise or reconciliation between the parties."
   },
   {
     "canonical_id": "FAMILY_COURTS_1964_SEC_11",
@@ -297,7 +301,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Notwithstanding anything contained in any other law, an appeal shall lie from a judgment, decree or order of a Family Court: (a) to the High Court, where the Family Court is presided over by a District Judge, an Additional District Judge; and (b) to the District Court, in any other case.\n(2) No appeal shall lie from a decree passed by a Family Court: (a) for dissolution of marriage, except in the case of dissolution for reasons specified in clause (a) of item (viii) of section 2 of the Dissolution of Muslim Marriages Act, 1939; (b) for dower not exceeding fifteen thousand rupees; (c) for maintenance of one thousand rupees or less per month."
   },
   {
     "canonical_id": "FAMILY_COURTS_1964_SEC_15",
@@ -357,7 +363,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Save as otherwise expressly provided by or under this Act, the provisions of the Evidence Act, 1872, and the Code of Civil Procedure, 1908, except sections 10 and 11, shall not apply to proceedings before any Family Court."
   },
   {
     "canonical_id": "FAMILY_COURTS_1964_SEC_17A",
@@ -377,7 +385,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) At any stage of proceedings in a suit for maintenance, the Family Court may, on its own motion or on the application of any party, pass an interim order for maintenance of the wife or child, which shall be payable on or before the tenth of each month.\n(2) If the defendant fails to deposit the interim maintenance as directed, the Family Court may strike off his defence and pass an ex-parte decree."
   },
   {
     "canonical_id": "FAMILY_COURTS_1964_SEC_17B",

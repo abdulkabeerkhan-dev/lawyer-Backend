@@ -677,7 +677,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "When a criminal act is done by several persons, in furtherance of the common intention of all, each of such persons is liable for that act in the same manner as if it were done by him alone."
   },
   {
     "canonical_id": "PPC_1860_SEC_35",
@@ -2237,7 +2239,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever abets any offence shall, if the act abetted is committed in consequence of the abetment, and no express provision is made by this Code for the punishment of such abetment, be punished with the punishment provided for the offence."
   },
   {
     "canonical_id": "PPC_1860_SEC_110",
@@ -6797,7 +6801,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever, with the intention of causing death or with the intention of causing bodily injury to a person, by doing an act which in the ordinary course of nature is likely to cause death, or with the knowledge that his act is so imminently dangerous that it must in all probability cause death, causes the death of such person, is said to commit Qatl-e-Amd."
   },
   {
     "canonical_id": "PPC_1860_SEC_301",
@@ -6837,7 +6843,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable."
   },
   {
     "canonical_id": "PPC_1860_SEC_303",
@@ -7617,7 +7625,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Shajjah: Whoever causes on the head or face of any person, any hurt which does not amount to itlaf-i-udw or itlaf-i-salahiyyat-i-udw, is said to cause shajjah (Shajjah-i-Khafifah, Mudihah, Hashimah, Munaqqilah, Ammah, Damighah)."
   },
   {
     "canonical_id": "PPC_1860_SEC_337A",
@@ -9297,7 +9307,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Whoever commits rape shall be punished with death or imprisonment of either description for a term which shall not be less than ten years nor more than twenty-five years, and shall also be liable to fine.\n(2) When rape is committed by two or more persons in furtherance of common intention of all, each of such persons shall be punished with death or imprisonment for life.\n(3) Whoever commits rape of a minor or a person with mental or physical disability shall be punished with death or imprisonment for life."
   },
   {
     "canonical_id": "PPC_1860_SEC_376A",
@@ -10037,7 +10049,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever, being in any manner entrusted with property, or with any dominion over property, dishonestly misappropriates or converts to his own use that property, or dishonestly uses or disposes of that property in violation of any direction of law prescribing the mode in which such trust is to be discharged, or of any legal contract, express or implied, which he has made touching the discharge of such trust, or wilfully suffers any other person so to do, commits 'criminal breach of trust'."
   },
   {
     "canonical_id": "PPC_1860_SEC_406",
@@ -10057,7 +10071,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever commits criminal breach of trust shall be punished with imprisonment of either description for a term which may extend to seven years, or with fine, or with both."
   },
   {
     "canonical_id": "PPC_1860_SEC_407",
@@ -10117,7 +10133,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever, being in any manner entrusted with property, or with any dominion over property in his capacity of a public servant or in the way of his business as a banker, merchant, factor, broker, attorney or agent, commits criminal breach of trust in respect of that property, shall be punished with imprisonment for life, or with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine."
   },
   {
     "canonical_id": "PPC_1860_SEC_410",
@@ -10225,13 +10243,20 @@
     "primary_num": "415",
     "secondary_num": null,
     "title": "Cheating",
-    "text": "415. Cheating. Whoever, by deceiving any person, fraudulently or dishonest1y induces the\nperson so deceived to deliver any property to any person, or to consent that any person shall retain any\n1Subs. by the Law Reforms Ordinance, 1972 (12 of 1972), s. 2 and Sch., for “transportation for life”.\n2The word “the” before the words “offence of” was rep. by the Amending Act, 1891 (12 of 1891), and the words “offence of” were rep. by s. 9 of the\nIndian Penal Code Amdt. Act, 1882 (8 of 1882).\n3Ins. by Act 8 of 1882, s. 9.\n4Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (21 of 1960), s. 3 and 2nd Sch., (w.e.f. 14th October, 1955), for “the Provinces and the\nCapital of the Federation” which had been subs. by A. O., 1949, Arts. 3(2) and 4, for “British India”.\n5Subs. by the Law Reforms Ordinance, 1972 (12 of 1972), s. 2 and Sch., for “transportation for life”.",
+    "text": "415. Cheating. Whoever, by deceiving any person, fraudulently or dishonest1y induces the\nperson so deceived to deliver any property to any person, or to consent that any person shall retain any\n2The word “the” before the words “offence of” was rep. by the Amending Act, 1891 (12 of 1891), and the words “offence of” were rep. by s. 9 of the\nIndian Penal Code Amdt. Act, 1882 (8 of 1882).\nCapital of the Federation” which had been subs. by A. O., 1949, Arts. 3(2) and 4, for “British India”.",
     "tier": "ingested_unreviewed",
     "status": "in_force",
     "verification_status": "ingested_unreviewed",
     "source_page": 145,
-    "content_hash": "c72d257642ccca6532641092f9ea56d273ce329c2ddcac1c9267ef5340580535",
-    "missing_reason": null
+    "content_hash": "96926c91855ebeca6f1a611238d0006a80e09ec09347bd9e6a4d6f5bb157eb09",
+    "missing_reason": null,
+    "footnotes": [
+      "1Subs. by the Law Reforms Ordinance, 1972 (12 of 1972), s. 2 and Sch., for “transportation for life”.",
+      "3Ins. by Act 8 of 1882, s. 9.",
+      "4Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (21 of 1960), s. 3 and 2nd Sch., (w.e.f. 14th October, 1955), for “the Provinces and the",
+      "5Subs. by the Law Reforms Ordinance, 1972 (12 of 1972), s. 2 and Sch., for “transportation for life”."
+    ],
+    "text_normalized": "415. Cheating. Whoever, by deceiving any person, fraudulently or dishonest1y induces the\nperson so deceived to deliver any property to any person, or to consent that any person shall retain any\n2The word “the” before the words “offence of” was rep. by the Amending Act, 1891 (12 of 1891), and the words “offence of” were rep. by s. 9 of the\nIndian Penal Code Amdt. Act, 1882 (8 of 1882).\nCapital of the Federation” which had been subs. by A. O., 1949, Arts. 3(2) and 4, for “British India”."
   },
   {
     "canonical_id": "PPC_1860_SEC_416",
@@ -10265,7 +10290,9 @@
     "verification_status": "ingested_unreviewed",
     "source_page": 147,
     "content_hash": "30ab17a8ac2581713bc1affb953f93b384a15a4f79db4a0ca78c1e1d7d0fb0f1",
-    "missing_reason": null
+    "missing_reason": null,
+    "footnotes": [],
+    "text_normalized": "417. Punishment for cheating. Whoever cheats shall be punished with imprisonment of\neither description for a term which may extend to one year, or with fine, or with both."
   },
   {
     "canonical_id": "PPC_1860_SEC_418",
@@ -10325,7 +10352,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever cheats and thereby dishonestly induces the person deceived to deliver any property to any person, or to make, alter or destroy the whole or any part of a valuable security, or anything which is signed or sealed, and which is capable of being converted into a valuable security, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine."
   },
   {
     "canonical_id": "PPC_1860_SEC_421",
@@ -12159,13 +12188,15 @@
     "missing_reason": null,
     "source_file": "https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
     "source_page": 138,
-    "content_hash": "d8d82a70fb29633156933039436a1f83e26c1c98c7bde933fe8d21e2d60a6d85",
+    "content_hash": "1a2f4c4ad675943b4f9aa88ba8cb0a9179aa06fd0a963b94fdfb4a64fc903809",
     "tier": "ingested_unreviewed",
     "verification_status": "ingested_unreviewed",
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2002-10-25",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever dishonestly issues a cheque towards repayment of a loan or fulfillment of an obligation which is dishonoured on presentation, shall be punishable with imprisonment which may extend to three years, or with fine, or with both, unless he can establish, for which the burden of proof shall rest on him, that he had made arrangements with his bank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the cheque."
   },
   {
     "canonical_id": "PPC_1860_SEC_489G",
@@ -12805,7 +12836,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable."
   },
   {
     "canonical_id": "PPC_1860_SEC_302_B",
@@ -12825,7 +12858,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available."
   },
   {
     "canonical_id": "PPC_1860_SEC_302_C",
@@ -12845,7 +12880,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable."
   },
   {
     "canonical_id": "PPC_1860_SEC_22A",

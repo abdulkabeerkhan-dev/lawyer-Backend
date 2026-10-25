@@ -46,14 +46,14 @@ def main():
         print("-" * 110)
         
         for idx, check in enumerate(checks, 1):
-            prov = check.get("provision", "")
-            span = check.get("quoted_span", "")
+            prov = check.get("statutory_provision") or check.get("provision", "")
+            span = check.get("supporting_span_from_store") or check.get("quoted_span", "")
             req = check.get("requirement", "")
             chk_status = "PASS" if check.get("passed") else "FAIL"
             print(f"  Check #{idx}: [{chk_status}]")
-            print(f"    Target Provision:  {prov}")
-            print(f"    Requirement:       {req}")
-            print(f"    Exact Target Span: \"{span}\"")
+            print(f"    Target Provision:       {prov}")
+            print(f"    Requirement:            {req}")
+            print(f"    Supporting Store Span:  \"{span}\"")
         print()
 
     print("=" * 110)

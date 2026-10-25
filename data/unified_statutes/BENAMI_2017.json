@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) No person shall enter into any Benami transaction. (2) Whoever enters into any Benami transaction or abets the commission of a Benami transaction shall be guilty of the offence of Benami transaction."
   },
   {
     "canonical_id": "BENAMI_2017_SEC_5",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Any property, which is subject-matter of a Benami transaction, shall be liable to be confiscated by the Federal Government."
   }
 ]

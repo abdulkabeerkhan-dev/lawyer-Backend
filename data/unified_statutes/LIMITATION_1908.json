@@ -57,7 +57,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Subject to the provisions contained in sections 4 to 25 (inclusive), every suit instituted, appeal preferred, and application made after the period of limitation prescribed therefor by the first schedule shall be dismissed, although limitation has not been set up as a defence."
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_4",
@@ -77,7 +79,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Where the period of limitation prescribed for any suit, appeal or application expires on a day when the Court is closed, the suit, appeal or application may be instituted, preferred or made on the day that the Court re-opens."
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_5",
@@ -97,7 +101,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Any appeal or application for a revision or a review of judgment or for leave to appeal or any other application to which this section may be made applicable by or under any enactment for the time being in force may be admitted after the period of limitation prescribed therefor, when the appellant or applicant satisfies the Court that he had sufficient cause for not preferring the appeal or making the application within such period."
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_6",
@@ -237,7 +243,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) In computing the period of limitation prescribed for any suit, appeal or application, the day from which such period is to be reckoned shall be excluded. (2) In computing the period of limitation prescribed for an appeal, an application for leave to appeal and an application for a review of judgment, the day on which the judgment complained of was pronounced, and the time requisite for obtaining a copy of the decree, sentence or order appealed from or sought to be reviewed, shall be excluded."
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_13",
@@ -277,7 +285,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) In computing the period of limitation prescribed for any suit, the time during which the plaintiff has been prosecuting with due diligence another civil proceeding, whether in a Court of first instance or in a Court of appeal, against the defendant, shall be excluded, where the proceeding is founded upon the same cause of action and is prosecuted in good faith in a Court which, from defect of jurisdiction, or other cause of a like nature, is unable to entertain it."
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_15",
@@ -377,7 +387,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Where, before the expiration of the period prescribed for a suit or application in respect of any property or right, an acknowledgment of liability in respect of such property or right has been made in writing signed by the party against whom such property or right is claimed, or by some person through whom he derives title or liability, a fresh period of limitation shall be computed from the time when the acknowledgment was so signed."
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_20",
@@ -397,7 +409,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Where payment on account of a debt or of interest on a legacy is made before the expiration of the prescribed period by the person liable to pay the debt or legacy, or by his agent duly authorized in this behalf, a fresh period of limitation shall be computed from the time when the payment was made."
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_21",
@@ -557,7 +571,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "At the determination of the period hereby limited to any person for instituting a suit for possession of any property, his right to such property shall be extinguished."
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_29",
@@ -737,7 +753,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Any appeal or application for a revision or a review of judgment or for leave to appeal or any other application to which this section may be made applicable by or under any enactment for the time being in force may be admitted after the period of limitation prescribed therefor, when the appellant or applicant satisfies the Court that he had sufficient cause for not preferring the appeal or making the application within such period."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_6",
@@ -2017,7 +2035,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "On a bill of exchange or promissory note payable at a fixed time after date. Period of limitation: Three years. Time from which period begins to run: When the bill or note falls due."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_70",
@@ -2077,7 +2097,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "On a bill of exchange or promissory note payable at a fixed time after sight or after demand. Period of limitation: Three years. Time from which period begins to run: When the fixed time expires."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_73",
@@ -2091,7 +2113,9 @@
     "verification_status": "ingested_unreviewed",
     "source_page": 26,
     "content_hash": "7e729adb239efc9e765d2628ac69417bd32ed5d69637913575733b754ae33d93",
-    "missing_reason": null
+    "missing_reason": null,
+    "footnotes": [],
+    "text_normalized": "Description of suit: On a bill of exchange or promissory note payable on demand and not accompanied by any writing restraining or postponing the right to sue.\nPeriod of limitation: Three years\nTime from which period begins to run: The date of the bill or note."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_74",
@@ -2111,7 +2135,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "On a promissory note or bond payable by instalments. Period of limitation: Three years. Time from which period begins to run: The expiration of the first term of payment as to the part then payable; and for the other parts the expiration of the respective terms of payment."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_75",
@@ -2131,7 +2157,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "On a promissory note or bond payable by instalments, which provides that if default be made in payment of one or more instalments, the whole shall be due. Period of limitation: Three years. Time from which period begins to run: When the default is made, unless where the payee or obligee waives the benefit of the provision, and then when fresh default is made in respect of which there is not such waiver."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_76",
@@ -2151,7 +2179,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "On a promissory note given by the maker to a third person to be delivered to the payee after a certain event should happen. Period of limitation: Three years. Time from which period begins to run: The date of the delivery to the payee."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_77",
@@ -2225,7 +2255,9 @@
     "verification_status": "ingested_unreviewed",
     "source_page": 27,
     "content_hash": "d406366a11266584e278c13612ff1d5417b8a30d8a8ceaa37eb214d0f13083c3",
-    "missing_reason": null
+    "missing_reason": null,
+    "footnotes": [],
+    "text_normalized": "Description of suit: Suit on a bill of exchange, promissory note or bond not herein expressly provided for.\nPeriod of limitation: Three years\nTime from which period begins to run: When the bill, note or bond becomes payable."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_81",
@@ -2885,7 +2917,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "For specific performance of a contract. Period of limitation: Three years. Time from which period begins to run: The date fixed for the performance, or, if no such date is fixed, when the plaintiff has notice that performance is refused."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_114",
@@ -2919,7 +2953,9 @@
     "verification_status": "ingested_unreviewed",
     "source_page": 32,
     "content_hash": "c15f621e9e6b2b7ae8cd7bb65a12ada52e09e4326cb51d1efeece28f3c23f6d0",
-    "missing_reason": null
+    "missing_reason": null,
+    "footnotes": [],
+    "text_normalized": "Description of suit: For compensation for the breach of any contract, express or implied, not in writing registered and not herein specially provided for.\nPeriod of limitation: Three years\nTime from which period begins to run: When the contract is broken, or (where there are successive breaches) when the breach in respect of which the suit is instituted occurs, or (where the breach is continuing) when it ceases."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_116",
@@ -2933,7 +2969,9 @@
     "verification_status": "ingested_unreviewed",
     "source_page": 32,
     "content_hash": "11c9383dca403dd3851c9410b0e535e9ac43a353f5f2fe2ad7222f3d4c59275b",
-    "missing_reason": null
+    "missing_reason": null,
+    "footnotes": [],
+    "text_normalized": "Description of suit: For compensation for the breach of a contract in writing registered.\nPeriod of limitation: Six years\nTime from which period begins to run: When the period of limitation would begin to run against a suit brought on a contract not registered."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_117",
@@ -3247,7 +3285,9 @@
     "verification_status": "ingested_unreviewed",
     "source_page": 34,
     "content_hash": "e76eab3eee56e0791bf6d962b8f858217c510be7190bb98fa8d0db0528684afe",
-    "missing_reason": null
+    "missing_reason": null,
+    "footnotes": [],
+    "text_normalized": "Description of suit: To enforce payment of money charged upon immoveable property.\nExplanation.—For the purposes of this article—\n(a) the allowance and fees respectively called malikana and haqqs, and\n(b) the value of any agricultural produce accrued on a mortgage are deemed to be money charged upon immoveable property.\nPeriod of limitation: Twelve years\nTime from which period begins to run: When the money sued for becomes due."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_133",
@@ -3487,7 +3527,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "For possession of immoveable property or any interest therein not hereby otherwise specially provided for. Period of limitation: Twelve years. Time from which period begins to run: When the possession of the defendant becomes adverse to the plaintiff."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_145",
@@ -3587,7 +3629,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Any suit by or on behalf of the Federal Government or any Provincial Government. Period of limitation: Sixty years. Time from which period begins to run: When the period of limitation would begin to run under this Act against a like suit by a private person."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_150",
@@ -3927,7 +3971,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Under the same Code [Code of Civil Procedure, 1908] to set aside a sale in execution of a decree including any such application by a Judgment-debtor. Period of limitation: Thirty days. Time from which period begins to run: The date of the sale."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_167",
@@ -4221,7 +4267,9 @@
     "verification_status": "ingested_unreviewed",
     "source_page": 46,
     "content_hash": "1544456276d14e4c1860dc46278cc7c83ef462228c2329c92e8909c234624012",
-    "missing_reason": null
+    "missing_reason": null,
+    "footnotes": [],
+    "text_normalized": "Description of suit: Applications for which no period of limitation is provided elsewhere in this schedule or by section 48 of the Code of Civil Procedure, 1908 (V of 1908).\nPeriod of limitation: Three years\nTime from which period begins to run: When the right to apply accrues."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_182",
@@ -4229,13 +4277,16 @@
     "primary_num": "182",
     "secondary_num": null,
     "title": "Execution of a decree or order of Civil Court [OMITTED]",
-    "text": "Description of suit: Article 182 omitted by the Law Reforms Ordinance, 1972 (12 of 1972), Section 2 and Schedule (previously provided for execution of a decree or order of any Civil Court not provided for by Article 183 or by Section 48 of the Code of Civil Procedure, 1908).\nPeriod of limitation: Omitted\nTime from which period begins to run: Omitted",
+    "text": "Description of suit: Article 182 omitted by the Law Reforms Ordinance, 1972 (12 of 1972), Section 2 and Schedule (previously provided for execution of a decree or order of any Civil Court not provided for by Article 183 or by Section 48 of the Code of Civil Procedure, 1908).\nPeriod of limitation: Omitted\nTime from which period begins to run: Omitted.",
     "tier": "ingested_unreviewed",
     "status": "repealed_or_omitted",
     "verification_status": "title_only",
     "source_page": 46,
-    "content_hash": "e5e4469c4634ffc6371cdf8e29fc9c8b01987287974043e841791c5a289ccfd7",
-    "missing_reason": "Omitted by Law Reforms Ordinance, 1972 (12 of 1972), s.2 and Sch."
+    "content_hash": "ad8e4831873e2a1f4c3decfcafef32f332a35f102a75ac7ebf51068e4d57b1b5",
+    "missing_reason": "Omitted by Law Reforms Ordinance, 1972 (12 of 1972), s.2 and Sch.",
+    "footnotes": [],
+    "text_normalized": "Description of suit: Article 182 omitted by the Law Reforms Ordinance, 1972 (12 of 1972), Section 2 and Schedule (previously provided for execution of a decree or order of any Civil Court not provided for by Article 183 or by Section 48 of the Code of Civil Procedure, 1908).\nPeriod of limitation: Omitted\nTime from which period begins to run: Omitted.",
+    "in_force": false
   },
   {
     "canonical_id": "LIMITATION_1908_ART_183",
@@ -4275,6 +4326,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2001-01-01",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Under Order XXXVII of the Code of Civil Procedure. Period of limitation: Three years. Time from which period begins to run: When the debt becomes payable."
   }
 ]

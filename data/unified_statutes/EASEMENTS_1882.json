@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "An easement is a right which the owner or occupier of certain land possesses, as such, for the beneficial enjoyment of that land, to do and continue to do something, or to prevent and continue to prevent something being done, in or upon, or in respect of, certain other land not his own."
   },
   {
     "canonical_id": "EASEMENTS_1882_SEC_13",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Where one person transfers or bequeaths immovable property to another: (a) if an easement in other immovable property of the transferor or testator is necessary for enjoying the subject of the transfer or bequest, the transferee or legatee shall be entitled to such easement; (b) if such an easement is apparent and continuous and necessary for enjoying the subject as it was enjoyed before, the transferee or legatee shall, unless a different intention is expressed, be entitled to such easement."
   },
   {
     "canonical_id": "EASEMENTS_1882_SEC_15",
@@ -57,7 +61,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Where the access and use of light or air to and for any building have been peaceably enjoyed therewith, as an easement, without interruption, and for twenty years, and where any way or watercourse, or the use of any water, or any other easement has been peaceably and openly enjoyed by any person claiming title thereto, as an easement, and as of right, without interruption, and for twenty years, the right to such access and use of light, air, way, watercourse, use of water, or other easement, shall be absolute and indefeasible."
   },
   {
     "canonical_id": "EASEMENTS_1882_SEC_33",
@@ -77,6 +83,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The owner of any interest in the dominant heritage, or the occupier of such heritage, may institute a suit for aid, or other relief, for the disturbance of the easement or of any right accessory thereto: Provided that the disturbance has actually caused substantial damage to the plaintiff."
   }
 ]

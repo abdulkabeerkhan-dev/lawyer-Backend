@@ -197,7 +197,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever contravenes the provisions of section 6, 7 or 8 with respect to: (a) narcotic dirt, cannabis or leaves of the coca plant where quantity is 100 grams or less, shall be punishable with imprisonment which may extend to two years, or with fine, or with both;\n(b) where quantity exceeds 100 grams but does not exceed 1000 grams, shall be punishable with imprisonment which may extend to seven years and with fine;\n(c) where quantity exceeds 1000 grams, shall be punishable with death, or imprisonment for life, or imprisonment for a term which may extend to fourteen years and with fine which may be up to one million rupees."
   },
   {
     "canonical_id": "CNSA_1997_SEC_10",
@@ -1077,7 +1079,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Notwithstanding anything contained in sections 496 and 497 of the Code of Criminal Procedure, 1898, no person accused of an offence punishable under this Act with death or imprisonment for life or imprisonment for a term exceeding five years shall be released on bail unless the prosecution has been given notice and there appear reasonable grounds for believing that the accused is not guilty of such offence."
   },
   {
     "canonical_id": "CNSA_1997_SEC_52",
@@ -1657,7 +1661,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever contravenes the provisions of section 6, 7 or 8 with respect to: (a) narcotic dirt, cannabis or leaves of the coca plant where quantity is 100 grams or less, shall be punishable with imprisonment which may extend to two years, or with fine, or with both;\n(b) where quantity exceeds 100 grams but does not exceed 1000 grams, shall be punishable with imprisonment which may extend to seven years and with fine;\n(c) where quantity exceeds 1000 grams, shall be punishable with death, or imprisonment for life, or imprisonment for a term which may extend to fourteen years and with fine which may be up to one million rupees."
   },
   {
     "canonical_id": "CNSA_1997_SEC_9_B",
@@ -1677,7 +1683,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever contravenes the provisions of section 6, 7 or 8 with respect to: (a) narcotic dirt, cannabis or leaves of the coca plant where quantity is 100 grams or less, shall be punishable with imprisonment which may extend to two years, or with fine, or with both;\n(b) where quantity exceeds 100 grams but does not exceed 1000 grams, shall be punishable with imprisonment which may extend to seven years and with fine;\n(c) where quantity exceeds 1000 grams, shall be punishable with death, or imprisonment for life, or imprisonment for a term which may extend to fourteen years and with fine which may be up to one million rupees."
   },
   {
     "canonical_id": "CNSA_1997_SEC_9_C",
@@ -1697,6 +1705,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "where quantity exceeds 1000 grams, shall be punishable with death, or imprisonment for life, or imprisonment for a term which may extend to fourteen years and with fine which may be up to one million rupees."
   }
 ]

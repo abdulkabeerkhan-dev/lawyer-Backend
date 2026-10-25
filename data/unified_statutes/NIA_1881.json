@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "A 'promissory note' is an instrument in writing (not being a bank-note or a currency-note) containing an unconditional undertaking, signed by the maker, to pay a certain sum of money only to, or to the order of, a certain person, or to the bearer of the instrument."
   },
   {
     "canonical_id": "NIA_1881_SEC_5",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "A 'bill of exchange' is an instrument in writing containing an unconditional order, signed by the maker, directing a certain person to pay a certain sum of money only to, or to the order of, a certain person or to the bearer of the instrument."
   },
   {
     "canonical_id": "NIA_1881_SEC_6",
@@ -57,7 +61,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "A 'cheque' is a bill of exchange drawn on a specified banker and not expressed to be payable otherwise than on demand."
   },
   {
     "canonical_id": "NIA_1881_SEC_30",
@@ -77,7 +83,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The drawer of a bill of exchange or cheque is bound, in case of dishonour by the drawee or acceptor thereof, to compensate the holder, provided due notice of dishonour has been given to, or received by, the drawer as hereinafter provided."
   },
   {
     "canonical_id": "NIA_1881_SEC_118",
@@ -97,6 +105,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Until the contrary is proved, the following presumptions shall be made: (a) of consideration: that every negotiable instrument was made or drawn for consideration, and that every such instrument, when it has been accepted, endorsed, negotiated or transferred, was accepted, endorsed, negotiated or transferred for consideration; (b) as to date: that every negotiable instrument bearing a date was made or drawn on such date; (c) as to time of acceptance: that every accepted bill of exchange was accepted within a reasonable time after its date and before its maturity; (e) as to order of endorsements: that the endorsements appearing upon a negotiable instrument were made in the order in which they appear thereon; (g) that holder is a holder in due course: that the holder of a negotiable instrument is a holder in due course."
   }
 ]

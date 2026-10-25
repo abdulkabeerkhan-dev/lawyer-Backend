@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "There shall be Constitutional Benches of the Supreme Court comprising such Judges of the Supreme Court and for such term as may be nominated by the Judicial Commission of Pakistan. The Constitutional Benches shall have exclusive jurisdiction in respect of: (a) original jurisdiction under Article 184; (b) appellate jurisdiction involving substantial questions of law as to the interpretation of the Constitution under Article 185; and (c) advisory jurisdiction under Article 186."
   },
   {
     "canonical_id": "CONST_26TH_AMEND_2024_SEC_7",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The Judicial Commission of Pakistan for appointment of Judges of Supreme Court and High Courts shall consist of the Chief Justice of Pakistan, the three senior-most Judges of the Supreme Court, the Federal Minister for Law and Justice, the Attorney-General for Pakistan, an advocate of Supreme Court, two members of the Senate, and two members of the National Assembly."
   },
   {
     "canonical_id": "CONST_26TH_AMEND_2024_ART_191A",
@@ -57,7 +61,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "There shall be Constitutional Benches of the Supreme Court comprising such Judges of the Supreme Court and for such term as may be nominated by the Judicial Commission of Pakistan. The Constitutional Benches shall have exclusive jurisdiction in respect of: (a) original jurisdiction under Article 184; (b) appellate jurisdiction involving substantial questions of law as to the interpretation of the Constitution under Article 185; and (c) advisory jurisdiction under Article 186."
   },
   {
     "canonical_id": "CONST_26TH_AMEND_2024_ART_175A",
@@ -77,6 +83,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The Judicial Commission of Pakistan for appointment of Judges of Supreme Court and High Courts shall consist of the Chief Justice of Pakistan, the three senior-most Judges of the Supreme Court, the Federal Minister for Law and Justice, the Attorney-General for Pakistan, an advocate of Supreme Court, two members of the Senate, and two members of the National Assembly."
   }
 ]

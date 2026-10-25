@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "If any party to, or witness in, any judicial proceeding offers to give evidence on oath in any form common amongst, or held binding by, persons of the race or persuasion to which he belongs, and not repugnant to justice or decency, the Court may, if it thinks fit, tender such oath or solemn affirmation to him."
   },
   {
     "canonical_id": "OATHS_1873_SEC_9",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "If any party to any judicial proceeding offers to be bound by any such oath or solemn affirmation as is mentioned in section 8, if such oath or solemn affirmation is made by the other party to, or by any witness in, such proceeding, the Court may ask such party or witness, or cause him to be asked, whether or not he will make the oath or affirmation."
   },
   {
     "canonical_id": "OATHS_1873_SEC_11",
@@ -57,6 +61,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The evidence so given shall, as against the person who offered to be bound as aforesaid, be the conclusive proof of the matter stated."
   }
 ]

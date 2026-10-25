@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "A person shall be guilty of offence of money laundering if the person: (a) acquires, converts, possesses, uses or transfers property, knowing or having reason to believe that such property is proceeds of crime; (b) conceals or disguises the true nature, origin, location, disposition, movement or ownership of property, knowing or having reason to believe that such property is proceeds of crime; (c) holds or possesses on behalf of any other person any property knowing or having reason to believe that such property is proceeds of crime; or (d) participates in, associates, conspires to commit, attempts to commit, aids, abets, facilitates, or counsels the commission of any of the acts specified above."
   },
   {
     "canonical_id": "AMLA_2010_SEC_4",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever commits the offence of money laundering shall be punishable with rigorous imprisonment for a term which shall not be less than one year but may extend to ten years and shall also be liable to fine which may extend to twenty-five million rupees and shall also be liable to forfeiture of property involved in money laundering."
   },
   {
     "canonical_id": "AMLA_2010_SEC_8",
@@ -57,7 +61,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Where the investigating officer has reason to believe, on the basis of material in his possession, that any person is in possession of any proceeds of crime and such proceeds of crime are likely to be concealed, transferred or dealt with in any manner which may result in frustrating any proceedings, he may, by order in writing, provisionally attach such property for a period not exceeding ninety days."
   },
   {
     "canonical_id": "AMLA_2010_SEC_9",
@@ -77,6 +83,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The Court shall, after considering the reply of the aggrieved person and giving reasonable opportunity of being heard, pass an order confirming the attachment of property or releasing the property if found not to be proceeds of crime."
   }
 ]

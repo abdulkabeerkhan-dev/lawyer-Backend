@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Notwithstanding anything contained in this Act, no person or property not treated as evacuee before the first day of January, 1957, shall be treated or declared as evacuee property, and no proceedings shall lie in respect thereof."
   },
   {
     "canonical_id": "EVACUEE_PROPERTY_1957_SEC_41",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Save as otherwise expressly provided in this Act, no civil or revenue court shall have jurisdiction to entertain or adjudicate upon any question whether any person is or is not an evacuee, or whether any property is or is not evacuee property."
   }
 ]

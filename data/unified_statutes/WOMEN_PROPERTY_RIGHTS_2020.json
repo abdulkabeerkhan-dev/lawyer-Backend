@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Any woman who is deprived of ownership or possession of her property, by any person through fraud, coercion, force or any illegal means, may file a complaint to the Ombudsman: Provided that the Ombudsman shall decide the complaint within sixty days from receipt thereof."
   },
   {
     "canonical_id": "WOMEN_PROPERTY_RIGHTS_2020_SEC_5",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) The Ombudsman may, on finding that a woman has been illegally deprived of possession of her property, direct the Deputy Commissioner or local administration to restore possession of the property to the complainant."
   }
 ]

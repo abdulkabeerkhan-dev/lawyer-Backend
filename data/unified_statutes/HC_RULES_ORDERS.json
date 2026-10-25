@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Judges of Civil Courts shall ensure that issues are framed specifically on contested points of fact and law arising out of pleadings. Decrees must agree with the judgment and bear the exact specifications of relief granted."
   },
   {
     "canonical_id": "HC_RULES_ORDERS_VOL_III_CH_10",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Magistrates shall not grant police remand mechanically. Reasons for remand must be recorded in writing under Section 167 Cr.P.C. Bail bonds must be accepted promptly without imposing onerous surety conditions on poor accused."
   },
   {
     "canonical_id": "HC_RULES_ORDERS_VOL_V_CH_4",
@@ -57,6 +61,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Every petition under Article 199 of the Constitution shall be accompanied by an affidavit stating that no other petition on the same subject-matter has been instituted or is pending before any Court."
   }
 ]

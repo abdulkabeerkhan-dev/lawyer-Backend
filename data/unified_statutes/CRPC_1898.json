@@ -3357,7 +3357,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Every information relating to the commission of a cognizable offence if given orally to an officer in charge of a police-station, shall be reduced to writing by him or under his direction, and be read over to the informant; and every such information, whether given in writing or reduced to writing as aforesaid, shall be signed by the person giving it, and the substance thereof shall be entered in a book to be kept by such officer in such form as the Provincial Government may prescribe in this behalf."
   },
   {
     "canonical_id": "CRPC_1898_SEC_155",
@@ -3397,7 +3399,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Any officer in charge of a police-station may, without the order of a Magistrate, investigate any cognizable case which a Court having jurisdiction over the local area within the limits of such station would have power to inquire into or try under the provisions of Chapter XV relating to the place of inquiry or trial.\n(2) No proceeding of a police-officer in any such case shall at any stage be called in question on the ground that the case was one which such officer was not empowered under this section to investigate.\n(3) Any Magistrate empowered under section 190 may order such an investigation as above-mentioned."
   },
   {
     "canonical_id": "CRPC_1898_SEC_156A",
@@ -3537,7 +3541,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Any police-officer making an investigation under this Chapter or any police-officer not below such rank as the Provincial Government may, by general or special order, prescribe in this behalf, acting on the requisition of such officer, may examine orally any person supposed to be acquainted with the facts and circumstances of the case.\n(2) Such person shall be bound to answer truly all questions relating to such case put to him by such officer, other than questions the answers to which would have a tendency to expose him to a criminal charge or to a penalty or forfeiture.\n(3) The police-officer may reduce into writing any statement made to him in the course of an examination under this section, and if he does so he shall make a separate record of the statement, of each such person whose statement he records."
   },
   {
     "canonical_id": "CRPC_1898_SEC_161A",
@@ -3617,7 +3623,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Any Magistrate of the first class and any Magistrate of the second class specially empowered in this behalf by the Provincial Government may, if he is not a police-officer record any statement or confession made to him in the course of an investigation under this Chapter or under any other law for the time being in force or at any time afterwards before the commencement of the inquiry or trial.\n(1A) Any statement of the victim or witness may be recorded through audio-video electronic means.\n(2) Such statements shall be recorded in such of the manners hereinafter prescribed for recording evidence as is, in his opinion, best fitted for the circumstances of the case. Such confessions shall be recorded and signed in the manner provided in section 364, and such statement or confession shall then be forwarded to the Magistrate by whom the case is to be inquired into or tried."
   },
   {
     "canonical_id": "CRPC_1898_SEC_164A",
@@ -3837,7 +3845,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Every investigation under this Chapter shall be completed without unnecessary delay, and, as soon as it is completed, the officer in charge of the police-station shall through the Public Prosecutor submit to a Magistrate empowered to take cognizance of the offence on a police-report, a report in the form prescribed by the Provincial Government, stating the names of the parties, the nature of the information, the names of the persons who appear to be acquainted with the circumstances of the case, and stating whether the accused (if arrested) has been forwarded in custody, or has been released on his bond, and, if so, whether with or without sureties.\n(2) Where a superior officer of police has been appointed under section 158, the report shall, in any case in which the Provincial Government by general or special order so directs, be submitted through that officer, and he may, pending the orders of the Magistrate, direct the officer in charge of the police-station to make further investigation."
   },
   {
     "canonical_id": "CRPC_1898_SEC_174",
@@ -4557,7 +4567,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The Magistrate before whom a complaint is made or to whom it has been transferred, may dismiss the complaint, if, after considering the statement on oath (if any) of the complainant and the result of the investigation or inquiry (if any) under section 202, there is in his judgment no sufficient ground for proceeding. In such case he shall briefly record his reasons for so doing."
   },
   {
     "canonical_id": "CRPC_1898_SEC_203A",
@@ -8762,7 +8774,9 @@
     "source_pages": [
       166,
       167
-    ]
+    ],
+    "footnotes": [],
+    "text_normalized": "496. In what cases bail to be taken. When any person other than a person accused of a non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, and is prepared at any time while in the custody of such officer or at any stage of the proceedings before such Court to give bail, such person shall be released on bail : Provided that such officer or Court, if he or it thinks fit, may, instead of taking bail from such person, discharge him on his executing a bond without sureties for his appearance as hereinafter provided :\nProvided, further, that nothing in this section shall be deemed to affect the provisions of section 107, sub-section (4), or section 117, sub-section (3)."
   },
   {
     "canonical_id": "CRPC_1898_SEC_497",
@@ -8787,7 +8801,9 @@
     "source_pages": [
       167,
       168
-    ]
+    ],
+    "footnotes": [],
+    "text_normalized": "497. When bail may be taken in case of non-bailable offence. — (1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for ten years:\nProvided that the Court may direct that any person under the age of sixteen years or any woman or any sick or infirm person accused of such an offence be released on bail:\nProvided further that the Court shall, except where it is of the opinion that the delay in the trial of the accused has been occasioned by an act or omission of the accused or any other person acting on his behalf, direct that any person shall be released on bail—\n(a) Who, being accused of any offence not punishable with death, has been detained for such offence for a continuous period exceeding one year or in case of a woman exceeding six months and whose trial for such offence has not concluded; or\n(b) Who, being accused of an offence punishable with death, has been detained for such offence for a continuous period exceeding two years and in case of a woman exceeding one year and whose trial for such offence has not concluded:\nProvided further that the provisions of the third proviso to this sub-section shall not apply to a previously convicted offender for an offence punishable with death or imprisonment for life or to a person who, in the opinion of the Court, is a hardened, desperate or dangerous criminal or is accused of an act of terrorism punishable with death or imprisonment for life:\nProvided further that the Court shall, in cases where a person has been released on bail under this sub-section, by order in writing, record its reasons for so doing.\n(2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are not reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\n(3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\n(4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before Judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\n(5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody."
   },
   {
     "canonical_id": "CRPC_1898_SEC_498",
@@ -8811,7 +8827,9 @@
     "source_pdf": "data/official_pdfs/crpc_1898.pdf",
     "source_pages": [
       168
-    ]
+    ],
+    "footnotes": [],
+    "text_normalized": "498. Power to direct admission to bail or reduction of bail. The amount of every bond executed under this Chapter shall be fixed with due regard to the circumstances of the case, and shall not be excessive ; and the High Court or Court of Session may, in any case, whether there be an appeal on conviction or not, direct that any person be admitted to bail, or that the bail required by a police-officer or Magistrate be reduced."
   },
   {
     "canonical_id": "CRPC_1898_SEC_498A",
@@ -8835,7 +8853,9 @@
     "source_pdf": "data/official_pdfs/crpc_1898.pdf",
     "source_pages": [
       168
-    ]
+    ],
+    "footnotes": [],
+    "text_normalized": "498A. No bail to be granted to a person not in custody, in court or against whom no case is registered, etc. Nothing in section 497 or section 498 shall be deemed to require or authorise a Court to release on bail, or to direct to be admitted to bail, any person who is not in custody or is not present in court or against whom no case stands registered for the time being and an order for the release of a person on bail, or a direction that a person be admitted to bail, shall be effective only in respect of the case that so stands registered against him and is specified in the order or direction."
   },
   {
     "canonical_id": "CRPC_1898_SEC_499",
@@ -10335,7 +10355,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Nothing in this Code shall be deemed to limit or affect the inherent power of the High Court to make such orders as may be necessary to give effect to any order under this Code, or to prevent abuse of the process of any Court or otherwise to secure the ends of justice."
   },
   {
     "canonical_id": "CRPC_1898_SEC_562",
@@ -10455,7 +10477,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "An Ex-officio Justice of the Peace may issue appropriate directions to the police authorities on a complaint, in respect of: (i) non-registration of a criminal case; (ii) transfer of investigation from one police officer to another; and (iii) neglect, failure or excesses committed by a police authority in relation to its functions and duties."
   },
   {
     "canonical_id": "CRPC_1898_SEC_22A_6_A",
@@ -10495,7 +10519,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for 10 years.\n(2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are no reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\n(3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\n(4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\n(5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody."
   },
   {
     "canonical_id": "CRPC_1898_SEC_497_2",
@@ -10515,7 +10541,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for 10 years.\n(2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are no reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\n(3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\n(4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\n(5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody."
   },
   {
     "canonical_id": "CRPC_1898_SEC_497_5",
@@ -10535,7 +10563,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for 10 years.\n(2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are no reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\n(3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\n(4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\n(5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody."
   },
   {
     "canonical_id": "CRPC_1898_SEC_498_1",
@@ -10555,6 +10585,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "The amount of every bond executed under this Chapter shall be fixed with due regard to the circumstances of the case, and shall not be excessive; and the High Court or Court of Session may, in any case, whether there be an appeal on conviction or not, direct that any person be admitted to bail, or that the bail required by a police-officer or Magistrate be reduced."
   }
 ]

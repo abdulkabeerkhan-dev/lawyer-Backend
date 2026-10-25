@@ -37,7 +37,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) In this Order, unless there is anything repugnant in the subject or context: (a) 'Court' includes all Judges and Magistrates, and all persons, except arbitrators, legally authorized to take evidence; (b) 'document' means any matter expressed or described upon any substance by means of letters, figures or marks, or by more than one of those means, intended to be used, or which may be used, for the purpose of recording that matter; (c) 'evidence' means and includes: (i) all statements which the Court permits or requires to be made before it by witnesses (oral evidence); and (ii) all documents produced for the inspection of the Court (documentary evidence)."
   },
   {
     "canonical_id": "QSO_1984_ART_3",
@@ -337,7 +339,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) The competence of a person to testify, and the number of witnesses required in any case shall be determined in accordance with the Injunctions of Islam as laid down in the Holy Quran and Sunnah.\n(2) Unless otherwise provided in any law relating to the enforcement of Hudood or any other special law: (a) in matters pertaining to financial or future obligations, if reduced to writing, the instrument shall be attested by two men, or one man and two women, so that one may remind the other; and (b) in all other matters, the Court may accept, or act on, the testimony of one man or one woman or such other evidence as the circumstances of the case may warrant."
   },
   {
     "canonical_id": "QSO_1984_ART_18",
@@ -2277,7 +2281,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "When one person has, by his declaration, act or omission, intentionally caused or permitted another person to believe a thing to be true and to act upon such belief, neither he nor his representative shall be allowed, in any suit or proceeding between himself and such person or his representative, to deny the truth of that thing (Estoppel)."
   },
   {
     "canonical_id": "QSO_1984_ART_115",
@@ -3277,7 +3283,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "In such cases as the Court may consider appropriate, the Court may allow to be produced or take into consideration any evidence that may have become available because of modern devices or techniques, such as audio-video recording, electronic data, forensic science and computer printouts."
   },
   {
     "canonical_id": "QSO_1984_ART_165",

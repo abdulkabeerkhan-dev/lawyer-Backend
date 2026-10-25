@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever with dishonest intention gains unauthorized access to any information system or data shall be punished with imprisonment for a term which may extend to three months or with fine which may extend to fifty thousand rupees or with both."
   },
   {
     "canonical_id": "PECA_2016_SEC_10",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever commits or threatens to commit any electronic crime to coerce, intimidate or overawe the Government or public, or create fear and panic, shall be punished with imprisonment of either description for a term which may extend to fourteen years or with fine which may extend to fifty million rupees or with both."
   },
   {
     "canonical_id": "PECA_2016_SEC_16",
@@ -57,7 +61,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever obtains, sells, possesses or transmits another person's identity information without authorization shall be punished with imprisonment for a term which may extend to three years or with fine which may extend to five million rupees or with both."
   },
   {
     "canonical_id": "PECA_2016_SEC_20",
@@ -77,7 +83,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever intentionally and publicly exhibits or displays or transmits any information through any information system, which he knows to be false and intimidates or harms the reputation or privacy of a natural person, shall be punished with imprisonment for a term which may extend to three years or with fine which may extend to one million rupees or with both."
   },
   {
     "canonical_id": "PECA_2016_SEC_21",
@@ -97,6 +105,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever intentionally superimposes a photograph of the face of any person over any sexually explicit video or image, or distributes sexually explicit material of another person without consent, shall be punished with imprisonment for a term which may extend to five years or with fine which may extend to five million rupees or with both."
   }
 ]

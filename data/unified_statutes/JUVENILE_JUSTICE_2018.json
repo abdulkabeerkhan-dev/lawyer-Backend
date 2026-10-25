@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) The High Court may designate one or more Courts of Sessions or Judicial Magistrates to exercise jurisdiction as a Juvenile Court under this Act."
   },
   {
     "canonical_id": "JUVENILE_JUSTICE_2018_SEC_6",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) A juvenile accused of a bailable offence shall be released by the police officer or the Juvenile Court on bail with or without sureties. (2) A juvenile accused of a non-bailable offence shall be released on bail unless there are reasonable grounds for believing that the release of the juvenile can bring him into association with criminals or expose him to moral danger."
   }
 ]

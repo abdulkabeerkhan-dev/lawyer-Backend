@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "sindh",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "A taxable service is a service listed in the Second Schedule which is provided by a person from his place of business in Sindh, or in the course of an economic activity carried on in Sindh."
   },
   {
     "canonical_id": "SINDH_SALES_TAX_SERVICES_2011_SEC_9",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "sindh",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Subject to this Act, there shall be levied and collected a tax called the Sindh sales tax on the value of a taxable service at the rate specified in the Second Schedule, provided that the standard rate of tax shall be thirteen percent."
   },
   {
     "canonical_id": "SINDH_SALES_TAX_SERVICES_2011_SEC_61",
@@ -57,6 +61,8 @@
     "status": "in_force",
     "jurisdiction": "sindh",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Any person aggrieved by an order passed by an officer of the Sindh Revenue Board (SRB) may, within thirty days of the service of the order, appeal to the Commissioner (Appeals)."
   }
 ]

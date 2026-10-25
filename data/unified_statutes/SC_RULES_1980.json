@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "In every civil appeal by leave of the Court, the petition for leave to appeal shall be lodged within thirty days from the date of the judgment or order sought to be appealed from."
   },
   {
     "canonical_id": "SC_RULES_1980_ORD_XXVI_R_1",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "An application for review of a judgment or order of the Court shall be filed within thirty days from the date of the pronouncement of the judgment or the making of the order, and shall be drawn up by the advocate who appeared at the hearing of the case."
   }
 ]

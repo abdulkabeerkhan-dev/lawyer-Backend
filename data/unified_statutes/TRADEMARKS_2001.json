@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) A person infringes a registered trade mark if he uses in the course of trade a sign which is identical with the trade mark in relation to goods or services which are identical with those for which it is registered. (2) A person infringes a registered trade mark if he uses in the course of trade a sign where because: (a) the sign is identical with the trade mark and is used in relation to goods or services similar to those for which the trade mark is registered; or (b) the sign is similar to the trade mark and is used in relation to goods or services identical with or similar to those for which the trade mark is registered, there exists a likelihood of confusion on the part of the public."
   },
   {
     "canonical_id": "TRADEMARKS_2001_SEC_46",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "No person shall be entitled to institute any proceeding to prevent, or to recover damages for, the infringement of an unregistered trade mark: Provided that nothing in this Ordinance shall be deemed to affect rights of action against any person for passing off goods or services as the goods of another person or services provided by another person, or the remedies in respect thereof."
   }
 ]

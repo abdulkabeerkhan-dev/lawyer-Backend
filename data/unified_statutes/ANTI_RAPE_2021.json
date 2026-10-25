@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) The Federal Government, in consultation with the Chief Justice of the High Court, shall establish Special Courts to try scheduled rape and sexual assault offences with designated trial timelines of six months."
   },
   {
     "canonical_id": "ANTI_RAPE_2021_SEC_12",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "No medical examination of a female victim of a scheduled offence shall include any virginity test, hymen examination or two-finger test, which is hereby strictly prohibited and illegal."
   }
 ]

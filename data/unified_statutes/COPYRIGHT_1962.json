@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Copyright in a work shall be deemed to be infringed: (a) when any person, without a licence granted by the owner of the copyright or the Registrar under this Ordinance or in contravention of the conditions of a licence so granted or of any condition imposed by a competent authority under this Ordinance: (i) does anything, the sole right to do which is by this Ordinance conferred upon the owner of the copyright."
   },
   {
     "canonical_id": "COPYRIGHT_1962_SEC_60",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Where copyright in any work has been infringed, the owner of the copyright shall, except as otherwise provided by this Ordinance, be entitled to all such remedies by way of injunction, damages, accounts and otherwise as are or may be conferred by law for the infringement of a right."
   }
 ]

@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "If a tenant having a right of occupancy fails for more than one year without sufficient cause to cultivate his tenancy, either by himself or through another person, and to arrange for payment of the rent thereof as it falls due, the right of occupancy shall be extinguished from the end of that year."
   },
   {
     "canonical_id": "PUNJAB_TENANCY_1887_SEC_77",
@@ -37,6 +39,8 @@
     "status": "in_force",
     "jurisdiction": "punjab",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) The following applications and suits shall be instituted in, heard and determined by Revenue Courts, and no other Court shall take cognizance of any dispute or matter with respect to which any such suit might be instituted: (e) suits by a landlord to eject a tenant; (f) suits by a tenant to contest liability to ejectment; (g) suits by a tenant for recovery of possession or for compensation for wrongful dispossession."
   }
 ]

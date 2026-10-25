@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) This Act may be called the Anti-Terrorism Act, 1997.\n(2) It extends to the whole of Pakistan.\n(3) It shall come into force at once."
   },
   {
     "canonical_id": "ATA_1997_SEC_6",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) In this Act, 'terrorism' means the use or threat of action where: (a) the action falls within the meaning of sub-section (2), and the use or threat is designed to coerce and intimidate or overawe the Government or the public or a section of the public or community or sect or create a sense of fear or insecurity in society; or (b) the action involves the serious risk to safety of the public or a section of the public; or (c) the action involves severe damage to property or firing on religious places. (2) An 'action' shall fall within the meaning of sub-section (1) if it involves: (a) serious violence against a person or grievous bodily hurt; (b) grievous damage to property; (c) the doing of anything that causes a serious risk to the health or safety of the public."
   },
   {
     "canonical_id": "ATA_1997_SEC_7",
@@ -57,7 +61,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "Whoever commits an act of terrorism under section 6: (a) if the act causes death of any person, shall be punished with death or imprisonment for life, and shall also be liable to fine; (b) if the act causes grievous violence or bodily hurt, shall be punishable with imprisonment for a term not less than five years and up to imprisonment for life; (c) if the act causes extortion of property or kidnapping for ransom, shall be punished with death or imprisonment for life."
   },
   {
     "canonical_id": "ATA_1997_SEC_11EEEE",
@@ -77,7 +83,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) The Government or, where the provisions of section 4 have been invoked, the armed forces or civil armed forces, as the case may be, subject to the orders of the Government, may, by order, direct that any person who has been concerned in any offence under this Act or against whom a reasonable suspicion exists of his having been so concerned, be detained for inquiry for such period not exceeding ninety days on each occasion."
   },
   {
     "canonical_id": "ATA_1997_SEC_11EE",
@@ -97,7 +105,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) The Federal Government or Provincial Government may list in the Fourth Schedule any person who is concerned in terrorism, or a leader, member, or activist of a proscribed organization. (2) A person whose name is listed in the Fourth Schedule shall be subject to restrictions regarding his movement, check on bank accounts, and must execute a bond with sureties for good behavior."
   },
   {
     "canonical_id": "ATA_1997_SEC_19",
@@ -117,7 +127,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) An Anti-Terrorism Court may take cognizance of any offence without the accused being committed to it for trial. (7) The Court shall proceed with the trial from day to day and shall decide the case within seven days."
   },
   {
     "canonical_id": "ATA_1997_SEC_21D",
@@ -137,7 +149,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-10-21",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) Notwithstanding anything contained in the Code of Criminal Procedure, 1898, an Anti-Terrorism Court or High Court shall not release an accused on bail if there are reasonable grounds for believing that the accused has been guilty of an offence punishable with death or imprisonment for life or for a term exceeding ten years under this Act."
   },
   {
     "canonical_id": "ATA_1997_SEC_25",
@@ -157,6 +171,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "footnotes": [],
+    "text_normalized": "(1) An appeal against the final judgment or order of an Anti-Terrorism Court shall lie to the High Court within thirty days of the passing of the sentence or order."
   }
 ]
