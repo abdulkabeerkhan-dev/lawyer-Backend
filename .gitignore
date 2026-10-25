@@ -71,4 +71,5 @@ scratch_*
 
 *.orig_backup
 *.txt
+!requirements.txt
 

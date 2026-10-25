@@ -10,3 +10,4 @@ for p in ['/app/lawyer-Backend-master', '/app/lawyer-backend']:
                 shutil.move(src, dst)
 
 print('Verified files in /app:', len(os.listdir('/app')))
+assert os.path.exists('/app/requirements.txt'), f"requirements.txt missing from /app! Contents: {os.listdir('/app')[:10]}"
