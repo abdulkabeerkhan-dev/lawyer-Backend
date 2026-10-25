@@ -8,3 +8,7 @@ __pycache__
 .env
 .env.*
 scratch
+*.orig_backup
+*.bak
+*.log
+build_log.txt
