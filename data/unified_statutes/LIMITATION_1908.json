@@ -4230,7 +4230,7 @@
     "secondary_num": null,
     "title": "Execution of a decree or order of Civil Court [OMITTED]",
     "text": "Description of suit: Article 182 omitted by the Law Reforms Ordinance, 1972 (12 of 1972), Section 2 and Schedule (previously provided for execution of a decree or order of any Civil Court not provided for by Article 183 or by Section 48 of the Code of Civil Procedure, 1908).\nPeriod of limitation: Omitted\nTime from which period begins to run: Omitted",
-    "tier": "title_only",
+    "tier": "ingested_unreviewed",
     "status": "repealed_or_omitted",
     "verification_status": "title_only",
     "source_page": 46,

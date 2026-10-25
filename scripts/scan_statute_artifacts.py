@@ -22,12 +22,12 @@ REPO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATUTES_DIR = os.path.join(REPO_DIR, "data", "unified_statutes")
 
 PATTERNS = [
-    (r'\(Index\s*\d*\)?', "(Index"),
-    (r'Page\s+\d+\s+of\s+\d+', "Page N of M"),
-    (r'\[Page\s*\d+\]', "[Page N]"),
-    (r'https?://[^\s]+', "http(s) URL"),
-    (r'THE\s+[A-Z\s]{4,}(?:ACT|ORDINANCE|CODE)', "All-caps Running Header"),
-    (r'PAKISTAN\s+CODE', "PAKISTAN CODE Header")
+    (r'\(Index\s*\d*\)?', "(Index", re.IGNORECASE),
+    (r'Page\s+\d+\s+of\s+\d+', "Page N of M", re.IGNORECASE),
+    (r'\[Page\s*\d+\]', "[Page N]", re.IGNORECASE),
+    (r'https?://[^\s]+', "http(s) URL", re.IGNORECASE),
+    (r'\b(?:PAKISTAN\s+CODE|GOVERNMENT\s+OF\s+PAKISTAN)\b', "Header artifact", re.IGNORECASE),
+    (r'\bTHE\s+[A-Z\s]{4,}(?:ACT|ORDINANCE|CODE)\b', "All-caps Running Header", 0)
 ]
 
 def scan_statutes():
@@ -58,8 +58,8 @@ def scan_statutes():
             cid = r.get("canonical_id", "UNKNOWN")
             text = r.get("text") or r.get("statutory_text") or ""
             
-            for pat, pat_name in PATTERNS:
-                for m in re.finditer(pat, text, re.IGNORECASE):
+            for pat, pat_name, flags in PATTERNS:
+                for m in re.finditer(pat, text, flags):
                     start = max(0, m.start() - 30)
                     end = min(len(text), m.end() + 30)
                     snippet = text[start:end].replace("\n", " ")

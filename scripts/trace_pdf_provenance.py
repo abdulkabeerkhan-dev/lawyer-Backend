@@ -63,11 +63,17 @@ def main():
                     created_at = step.get("created_at", "N/A")
                     tool_calls = step.get("tool_calls", [])
                     for tc in tool_calls:
-                        c_line = tc.get("CommandLine") or tc.get("CommandLine", "")
-                        summary = tc.get("toolSummary", "")
-                        if any(k in str(c_line) for k in ["download", "fetch", "official_pdfs"]):
+                        args = tc.get("args", {})
+                        c_line = args.get("CommandLine") or tc.get("CommandLine", "")
+                        summary = args.get("toolSummary") or tc.get("toolSummary", "")
+                        if any(k in str(c_line) for k in ["download", "fetch", "official_pdfs", "fio_2001_official.pdf", "pakistancode.gov.pk"]):
+                            # Strip outer quotes if present
+                            c_line_str = str(c_line).strip('"')
                             print(f"[Step {step_idx} | {created_at}] {summary}")
-                            print(f"  Command: {c_line}\n")
+                            # print first 200 chars of command
+                            for subline in c_line_str.split("\\n")[:6]:
+                                print(f"  {subline}")
+                            print()
     print("=" * 110)
 
 if __name__ == "__main__":
