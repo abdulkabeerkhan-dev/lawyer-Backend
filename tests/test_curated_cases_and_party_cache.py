@@ -6,11 +6,10 @@ from core.party_cache import PartyFallbackCache
 class TestCuratedCasesAndPartyCache(unittest.TestCase):
     def test_curated_cases_loaded(self):
         cases = get_curated_cases()
-        self.assertGreaterEqual(len(cases), 3)
+        self.assertGreaterEqual(len(cases), 2)
         case_ids = [c["case_id"] for c in cases]
         self.assertIn("1958_PLD_SC_533", case_ids)
         self.assertIn("1958_PLD_SC_138", case_ids)
-        self.assertIn("2013_SCMR_51", case_ids)
 
     def test_find_curated_case_by_citation_and_alias(self):
         # Exact citation match
@@ -28,11 +27,6 @@ class TestCuratedCasesAndPartyCache(unittest.TestCase):
         self.assertIsNotNone(c3)
         self.assertEqual(c3["precedent_status"], "overruled")
 
-        # 2013 SCMR 51 match
-        c4 = find_curated_case(citation="2013 SCMR 51")
-        self.assertIsNotNone(c4)
-        self.assertEqual(c4["court_name"], "Supreme Court of Pakistan")
-
     def test_is_curated_historical_exception(self):
         self.assertTrue(is_curated_historical_exception(year=1958, page=533, journal="PLD"))
         self.assertTrue(is_curated_historical_exception(year=1958, page=138, journal="PLD"))
@@ -41,19 +35,19 @@ class TestCuratedCasesAndPartyCache(unittest.TestCase):
 
     def test_party_cache_ttl_and_hit(self):
         cache = PartyFallbackCache(default_ttl_seconds=10.0)
-        party = "Mian Allah Ditta"
-        data = {"case_id": "2013_SCMR_51", "neutral_citation": "2013 SCMR 51", "title": "Mian Allah Ditta v. State"}
+        party = "Federation of Pakistan"
+        data = {"case_id": "2010_SCMR_1", "neutral_citation": "2010 SCMR 1", "title": "Federation of Pakistan v. Shaukat Ali"}
 
         t0 = 1000.0
-        cache.set(party, data, citation="2013 SCMR 51", current_time=t0)
+        cache.set(party, data, citation="2010 SCMR 1", current_time=t0)
 
         # Hit within TTL
-        hit, res = cache.get(party, citation="2013 SCMR 51", current_time=t0 + 5.0)
+        hit, res = cache.get(party, citation="2010 SCMR 1", current_time=t0 + 5.0)
         self.assertTrue(hit)
-        self.assertEqual(res["case_id"], "2013_SCMR_51")
+        self.assertEqual(res["case_id"], "2010_SCMR_1")
 
         # Miss after TTL
-        hit_expired, res_expired = cache.get(party, citation="2013 SCMR 51", current_time=t0 + 15.0)
+        hit_expired, res_expired = cache.get(party, citation="2010 SCMR 1", current_time=t0 + 15.0)
         self.assertFalse(hit_expired)
         self.assertIsNone(res_expired)
 

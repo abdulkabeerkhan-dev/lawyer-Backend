@@ -7658,40 +7658,74 @@ def trigger_background_headnote_worker(case_id: str = "", citation: str = "", ti
 
 jobs_store: Dict[str, Dict[str, Any]] = {}
 
-_IN_FLIGHT_JOBS_FILE = Path(__file__).resolve().parent / "data" / "in_flight_jobs.json"
+_IN_FLIGHT_JOBS_CACHE: Dict[str, Dict[str, Any]] = {}
 _IN_FLIGHT_JOBS_LOCK = threading.Lock()
 
 def _load_in_flight_jobs() -> Dict[str, Dict[str, Any]]:
-    if not _IN_FLIGHT_JOBS_FILE.exists():
-        return {}
-    try:
-        with open(_IN_FLIGHT_JOBS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
-        return {}
+    """
+    Load in-flight and recent jobs from the persistent database table `query_jobs`.
+    Falls back to memory cache if database is not reachable.
+    Zero query text or client tokens are written to local disk.
+    """
+    store: Dict[str, Dict[str, Any]] = {}
+    if supabase:
+        try:
+            res = safe_supabase_query(
+                lambda: supabase.table("query_jobs")
+                .select("job_id, user_id, stage, status, updated_at, metadata")
+                .order("updated_at", desc=True)
+                .limit(100)
+                .execute()
+            )
+            if res and hasattr(res, "data") and res.data:
+                for row in res.data:
+                    meta = row.get("metadata") or {}
+                    store[row["job_id"]] = {
+                        "job_id": row.get("job_id"),
+                        "user_id": row.get("user_id"),
+                        "stage": row.get("stage", "processing"),
+                        "status": row.get("status", "running"),
+                        "updated_at": row.get("updated_at"),
+                        "early_display": meta.get("early_display"),
+                        "result": meta.get("result")
+                    }
+        except Exception as e:
+            logger.debug(f"Failed to query query_jobs table: {e}")
 
-def _save_in_flight_jobs(store: Dict[str, Dict[str, Any]]):
-    try:
-        _IN_FLIGHT_JOBS_FILE.parent.mkdir(parents=True, exist_ok=True)
-        with open(_IN_FLIGHT_JOBS_FILE, "w", encoding="utf-8") as f:
-            json.dump(store, f, indent=2, ensure_ascii=False)
-    except Exception as e:
-        logger.warning(f"Failed to persist in-flight jobs: {e}")
+    with _IN_FLIGHT_JOBS_LOCK:
+        for k, v in _IN_FLIGHT_JOBS_CACHE.items():
+            if k not in store:
+                store[k] = v
+    return store
 
 def persist_in_flight_job_state(job_id: str, stage: str, status: str = "running", extra: Optional[Dict[str, Any]] = None):
+    """
+    Persist job execution stage and status to PostgreSQL `query_jobs` table.
+    Enforces privacy by stripping raw query text from metadata before storing.
+    """
+    user_id = extra.get("user_id") if extra else None
+    sanitized_metadata = {}
+    if extra:
+        for k, v in extra.items():
+            if k not in ("job_id", "stage", "status", "user_id"):
+                k_lower = k.lower()
+                if not any(term in k_lower for term in ("query", "prompt", "question", "text")):
+                    sanitized_metadata[k] = v
+
+    now_iso = datetime.now(timezone.utc).isoformat()
     with _IN_FLIGHT_JOBS_LOCK:
-        store = _load_in_flight_jobs()
-        rec = store.get(job_id, {})
+        rec = _IN_FLIGHT_JOBS_CACHE.get(job_id, {})
         rec.update({
             "job_id": job_id,
             "stage": stage,
             "status": status,
-            "updated_at": datetime.now(timezone.utc).isoformat()
+            "updated_at": now_iso
         })
-        if extra:
-            rec.update(extra)
-        store[job_id] = rec
-        _save_in_flight_jobs(store)
+        if user_id:
+            rec["user_id"] = user_id
+        if sanitized_metadata:
+            rec.update(sanitized_metadata)
+        _IN_FLIGHT_JOBS_CACHE[job_id] = rec
 
     if job_id in jobs_store:
         jobs_store[job_id]["stage"] = stage
@@ -7701,12 +7735,18 @@ def persist_in_flight_job_state(job_id: str, stage: str, status: str = "running"
 
     if supabase:
         try:
-            safe_supabase_query(lambda: supabase.table("queries").update({
+            payload = {
+                "job_id": job_id,
+                "stage": stage,
                 "status": status,
-                "stage": stage
-            }).eq("id", job_id).execute())
-        except Exception:
-            pass
+                "updated_at": now_iso,
+                "metadata": sanitized_metadata
+            }
+            if user_id:
+                payload["user_id"] = user_id
+            safe_supabase_query(lambda: supabase.table("query_jobs").upsert(payload).execute())
+        except Exception as e:
+            logger.debug(f"Failed to upsert job {job_id} to query_jobs table: {e}")
 
 
 
@@ -14852,46 +14892,37 @@ _request_access_lock = threading.Lock()
 
 
 def get_real_client_ip(request: Request) -> str:
-
     """
-
-    Extracts genuine client IP behind Railway's Envoy edge proxy.
-
-    Railway uses Envoy Proxy at its ingress layer, which sets 'X-Envoy-External-Address'
-
-    to the trusted external client IP and strips/overwrites any client-supplied values.
-
-    Headers like 'CF-Connecting-IP', 'X-Real-IP', or raw 'X-Forwarded-For' are strictly NOT trusted
-
-    because Railway does not run behind Cloudflare by default, allowing attackers to spoof them.
-
-    Falls back to direct connection host (request.client.host) for local development/testing.
-
-    Note: In-memory rate limiting is per-process only.
-
+    Extracts genuine client IP behind edge proxies (Railway Envoy or Cloudflare).
+    - CF-Connecting-IP is trusted ONLY when TRUST_CLOUDFLARE_PROXY is explicitly true.
+    - X-Envoy-External-Address is set directly by Railway's edge Envoy proxy.
+    - For X-Forwarded-For, uses the rightmost untrusted value (ips[-1]),
+      preventing spoofing where an attacker prepends arbitrary fake IPs to the left.
+    - Falls back to request.client.host.
     """
+    # 1. Trust CF-Connecting-IP ONLY if explicitly configured behind Cloudflare
+    trust_cf = os.getenv("TRUST_CLOUDFLARE_PROXY", "false").lower() in ("1", "true", "yes")
+    if trust_cf:
+        cf_ip = request.headers.get("cf-connecting-ip")
+        if cf_ip and cf_ip.strip():
+            return cf_ip.strip()
 
-    # Check Cloudflare CF-Connecting-IP
-    cf_ip = request.headers.get("cf-connecting-ip")
-    if cf_ip and cf_ip.strip():
-        return cf_ip.strip()
-
-    # Check X-Forwarded-For (leftmost client IP)
-    xff = request.headers.get("x-forwarded-for")
-    if xff and xff.strip():
-        client_cand = xff.split(",")[0].strip()
-        if client_cand:
-            return client_cand
-
+    # 2. Check Railway Envoy trusted external address header
     envoy_ip = request.headers.get("x-envoy-external-address")
     if envoy_ip and envoy_ip.strip():
         return envoy_ip.strip()
 
-    real_ip = request.headers.get("x-real-ip")
-    if real_ip and real_ip.strip():
-        return real_ip.strip()
+    # 3. Check X-Forwarded-For: take rightmost entry (nearest proxy hop), never the client-controlled leftmost
+    xff = request.headers.get("x-forwarded-for")
+    if xff and xff.strip():
+        ips = [ip.strip() for ip in xff.split(",") if ip.strip()]
+        if ips:
+            return ips[-1]
 
+    # 4. Direct socket connection host
     return request.client.host if request.client else "unknown"
+
+get_client_ip = get_real_client_ip
 
 _RATE_LIMIT_PERSIST_FILE = Path(__file__).resolve().parent / "data" / "rate_limit_state.json"
 _RATE_LIMIT_PERSIST_LOCK = threading.Lock()

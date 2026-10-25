@@ -539,7 +539,7 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
             dq = "Section 420 PPC cheating dishonestly inducing delivery of property ingredients punishment Schedule II"
         elif "rule 2a" in dq_low or "rule 2-a" in dq_low or "rule 2(3)" in dq_low or "disobedience" in dq_low:
             lane_name = "injunction_breach_rule_2_3"
-            dq = "Order XXXIX Rule 2(3) CPC disobedience breach of injunction stay order attachment of property detention in civil prison 2006 YLR 2758"
+            dq = "Order XXXIX Rule 2(3) CPC disobedience breach of injunction stay order attachment of property detention in civil prison"
         elif "409" in dq_low or "breach of trust" in dq_low:
             lane_name = "offence_ingredients"
         elif "civil dispute" in dq_low or "dishonest intention" in dq_low:
@@ -585,7 +585,7 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
             if not any(l["lane"] == "injunction_breach_rule_2_3" for l in lanes):
                 lanes.append({
                     "lane": "injunction_breach_rule_2_3",
-                    "query": "Order XXXIX Rule 2(3) CPC disobedience breach of injunction stay order attachment of property detention in civil prison 2006 YLR 2758"
+                    "query": "Order XXXIX Rule 2(3) CPC disobedience breach of injunction stay order attachment of property detention in civil prison"
                 })
 
     # Dedicated lanes for Bail queries

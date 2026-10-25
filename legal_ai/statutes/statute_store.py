@@ -377,7 +377,7 @@ class StatuteStore:
                         "In Pakistan CPC, Order XXXIX Rule 2A (inserted by Act XIV of 1994, s. 11) governs the "
                         "15-day maximum duration of ex-parte interim injunctions. Remedy for breach or disobedience "
                         "of an interim injunction in Pakistan is governed by Order XXXIX Rule 2(3) CPC "
-                        "(providing for attachment of property and detention in civil prison up to 6 months; see 2006 YLR 2758)."
+                        "(providing for attachment of property and detention in civil prison up to 6 months)."
                     )
 
                 return LookupResult(

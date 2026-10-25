@@ -17,7 +17,10 @@ import argparse
 import logging
 from typing import List, Dict, Any, Optional, Tuple
 
-csv.field_size_limit(sys.maxsize)
+try:
+    csv.field_size_limit(2147483647)
+except OverflowError:
+    csv.field_size_limit(sys.maxsize)
 try:
     from supabase import create_client
 except ImportError:

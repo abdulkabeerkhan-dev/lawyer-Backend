@@ -123,5 +123,37 @@ class TestStatuteClaimVerifierGeneral(unittest.TestCase):
         correct_violations = verify_case_statute_attribution(correct_memo, precedent_cards)
         self.assertEqual(len(correct_violations), 0)
 
+    def test_zero_verified_claims_strictly_fails(self):
+        """Verify that a memo containing no verified claims fails with 'zero_verified_claims'."""
+        stored_sra = {
+            "SRA_1877_SEC_12": "12. Cases in which specific performance enforceable."
+        }
+        # Memo with no substantive claims or matching section references
+        empty_claim_memo = (
+            "## Relevant Provisions\n"
+            "This general commentary makes no concrete statutory assertions or verifiable propositions.\n"
+        )
+        res = verify_memo_statutory_claims(empty_claim_memo, stored_sra, primary_section="12")
+        self.assertFalse(res.passed)
+        self.assertEqual(len(res.verified_claims), 0)
+        self.assertTrue(any(v.get("type") == "zero_verified_claims" for v in res.violations))
+
+    def test_valid_memo_passes_with_verified_claims(self):
+        """Verify that a genuine memo supported by stored text passes with verified claims."""
+        stored_ppc = {
+            "PPC_1860_SEC_489F": (
+                "489-F. Dishonestly issuing a cheque. Whoever dishonestly issues a cheque ... "
+                "shall be punishable with imprisonment which may extend to three years, or with fine, or with both."
+            )
+        }
+        valid_memo = (
+            "## Relevant Provisions\n"
+            "Under Section 489-F, dishonestly issuing a cheque is punishable with imprisonment which may extend to three years, or with fine.\n"
+        )
+        res = verify_memo_statutory_claims(valid_memo, stored_ppc, primary_section="489f")
+        self.assertTrue(res.passed)
+        self.assertGreater(len(res.verified_claims), 0)
+        self.assertEqual(len(res.violations), 0)
+
 if __name__ == "__main__":
     unittest.main()

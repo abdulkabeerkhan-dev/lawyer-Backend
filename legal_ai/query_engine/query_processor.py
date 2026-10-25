@@ -2332,21 +2332,12 @@ async def process_query_job_legal_ai(
 
 
         stored_claims_map = {}
-
-
-
         for p in verified_statutory_provisions:
-
-
-
-            cid = p.get("canonical_id") or p.get("act_code")
-
-
-
-            stored_claims_map[cid] = p.get("text_cleaned") or p.get("text") or ""
-
-
-
+            cid = str(p.get("canonical_id") or p.get("act_code") or "PROVISION")
+            txt_val = p.get("text_cleaned") or p.get("text") or ""
+            if isinstance(txt_val, dict):
+                txt_val = " ".join(str(v) for v in txt_val.values())
+            stored_claims_map[cid] = str(txt_val)
         claim_support_res = verify_memo_statutory_claims(clean_answer, stored_claims_map)
 
 

@@ -75,13 +75,15 @@ class StatuteClaimVerificationResult:
         }
 
 
-def _normalize_text(txt: str) -> str:
-    return re.sub(r'\s+', ' ', txt.lower()).strip()
+def _normalize_text(txt: Any) -> str:
+    if isinstance(txt, dict):
+        txt = " ".join(str(v) for v in txt.values())
+    return re.sub(r'\s+', ' ', str(txt).lower()).strip()
 
 
 def verify_memo_statutory_claims(
     memo_text: str,
-    stored_provisions: Dict[str, str],
+    stored_provisions: Dict[str, Any],
     primary_section: str = ""
 ) -> StatuteClaimVerificationResult:
     """
@@ -92,7 +94,13 @@ def verify_memo_statutory_claims(
     violations = []
     verified_claims = []
 
-    combined_stored_text = _normalize_text(" ".join(stored_provisions.values()))
+    stored_texts = []
+    for v in stored_provisions.values():
+        if isinstance(v, dict):
+            stored_texts.append(" ".join(str(x) for x in v.values()))
+        else:
+            stored_texts.append(str(v))
+    combined_stored_text = _normalize_text(" ".join(stored_texts))
 
     # Target sections only (Relevant Provisions & Application to Query)
     lines = memo_text.splitlines()
@@ -119,10 +127,11 @@ def verify_memo_statutory_claims(
         line_norm = _normalize_text(line)
 
         # 1. Provision & subsection cross-references
-        refs = re.findall(r'(?:section|s\.)\s*([0-9]+[a-z]?)(?:\(([0-9]+)\))?', line, flags=re.IGNORECASE)
+        refs = re.findall(r'(?:section|s\.)\s*([0-9]+(?:[-][0-9a-z]+|[a-z])?)(?:\(([0-9]+)\))?', line, flags=re.IGNORECASE)
         for sec_num, sub_num in refs:
-            sec_num_clean = sec_num.lower()
-            if primary_section and sec_num_clean == primary_section.lower():
+            sec_num_clean = re.sub(r'[^0-9a-z]', '', sec_num.lower())
+            primary_clean = re.sub(r'[^0-9a-z]', '', primary_section.lower())
+            if primary_section and sec_num_clean == primary_clean:
                 if sub_num:
                     if f"({sub_num})" in combined_stored_text or f"sub-section ({sub_num})" in combined_stored_text or f"subsection ({sub_num})" in combined_stored_text:
                         verified_claims.append({
@@ -143,8 +152,9 @@ def verify_memo_statutory_claims(
                     })
             else:
                 # External cross-reference
-                term_to_find = f"section {sec_num_clean}"
-                if term_to_find in combined_stored_text:
+                term_to_find_1 = f"section {sec_num.lower()}"
+                term_to_find_2 = f"section {sec_num_clean}"
+                if term_to_find_1 in combined_stored_text or term_to_find_2 in combined_stored_text or sec_num.lower() in combined_stored_text:
                     if sub_num:
                         sub_pattern = rf'(?:sub\s*-\s*section\s*\({sub_num}\)|sub-section\s*\({sub_num}\)|\({sub_num}\)).*?section\s*{sec_num_clean}|section\s*{sec_num_clean}.*?\({sub_num}\)'
                         if re.search(sub_pattern, combined_stored_text):
@@ -215,7 +225,19 @@ def verify_memo_statutory_claims(
                         "concept": concept_name
                     })
 
-    passed = len(violations) == 0
+    if len(verified_claims) == 0:
+        violations.append({
+            "type": "zero_verified_claims",
+            "unsupported_term": "zero_verified_claims",
+            "reason": (
+                "Verification failed: zero verified statutory claims found in memo. "
+                "A pass requires at least one verified claim per statutory proposition, and fails on zero."
+            )
+        })
+        passed = False
+    else:
+        passed = len(violations) == 0
+
     return StatuteClaimVerificationResult(passed=passed, violations=violations, verified_claims=verified_claims)
 
 

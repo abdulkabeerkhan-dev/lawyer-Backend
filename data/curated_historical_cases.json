@@ -82,40 +82,5 @@
     ],
     "is_historical_exception": true,
     "precedent_status": "in_force"
-  },
-  {
-    "case_id": "2013_SCMR_51",
-    "stored_case_id": "2013_SCMR_51",
-    "neutral_citation": "2013 SCMR 51",
-    "case_title": "Mian Allah Ditta v. The State",
-    "court_name": "Supreme Court of Pakistan",
-    "court": "Supreme Court of Pakistan",
-    "decision_date": "2012-10-09",
-    "year": 2013,
-    "page": 51,
-    "journal": "SCMR",
-    "court_code": "SC",
-    "tier": 4,
-    "status": "metadata_only",
-    "text_available": false,
-    "full_text": null,
-    "source_url": "https://pakistancode.gov.pk",
-    "source_type": "official",
-    "fetch_date": "2026-10-02",
-    "content_hash": null,
-    "match_keys": [
-      "2013_SCMR_51",
-      "2013 SCMR 51"
-    ],
-    "aliases": [
-      "mian allah ditta",
-      "allah ditta"
-    ],
-    "doctrinal_keywords": [
-      "bail further inquiry",
-      "section 497 crpc"
-    ],
-    "is_historical_exception": false,
-    "precedent_status": "in_force"
   }
 ]

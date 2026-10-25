@@ -43,7 +43,20 @@ class MockQueryBuilder:
         return self
 
     def upsert(self, record_or_records: Any, **kwargs):
-        return self.insert(record_or_records)
+        rows = self.db_data.setdefault(self.table_name, [])
+        records = record_or_records if isinstance(record_or_records, list) else [record_or_records]
+        for rec in records:
+            key = "job_id" if "job_id" in rec else ("id" if "id" in rec else None)
+            if key and key in rec:
+                for i, r in enumerate(rows):
+                    if r.get(key) == rec[key]:
+                        rows[i] = dict(rec)
+                        break
+                else:
+                    rows.append(dict(rec))
+            else:
+                rows.append(dict(rec))
+        return self
 
     def limit(self, count: int):
         self._limit = count
