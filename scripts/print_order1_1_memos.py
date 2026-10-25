@@ -63,7 +63,7 @@ def main():
         if qid == 1:
             print("[DISPUTED STATUTE WARNING DISPLAYED TO MODEL & USER]")
             print("The statutory text of Section 22 of the Financial Institutions (Recovery of Finances) Ordinance, 2001")
-            print("is tagged as DISPUTED in the statutory store due to divergent gazette layers and unverified amendments.")
+            print("is tagged as DISPUTED in the statutory store Text not yet checked against page images by a human..")
             print("Official PDF Source: fio_2001.pdf (Pages 23-24) | Content Hash: 0e44ba269c53c464...")
         
         print(f"\nUser Prompt Body:")

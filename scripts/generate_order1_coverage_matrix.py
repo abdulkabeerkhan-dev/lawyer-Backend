@@ -163,8 +163,11 @@ def analyze_practice_areas():
 
     # Schedule II CrPC
     crpc_sched = load_statute("CRPC_SCHEDULE_II.json") or []
-    sched_entries = len(crpc_sched)
-    print(f"{'CrPC Sched II':<14} | {'CRPC_1898_SCHED_II':<22} | {'ingested_unreviewed':<22} | {sched_entries*180:<8} | {'Substantive':<14} | Schedule II 8-column tabular entries ({sched_entries} provisions)")
+    sched_entries = len(crpc_sched) if isinstance(crpc_sched, list) else 0
+    if sched_entries > 0:
+        print(f"{'CrPC Sched II':<14} | {'CRPC_1898_SCHED_II':<22} | {'ingested_unreviewed':<22} | {sched_entries*180:<8} | {'Substantive':<14} | Schedule II 8-column tabular entries ({sched_entries} provisions)")
+    else:
+        print(f"{'CrPC Sched II':<14} | {'CRPC_1898_SCHED_II':<22} | {'title_only':<22} | {0:<8} | {'Title Only':<14} | Schedule II 8-column tabular entries (No tabular text loaded)")
 
     # -------------------------------------------------------------
     # Area 2: Banking Recovery & Commercial Law
