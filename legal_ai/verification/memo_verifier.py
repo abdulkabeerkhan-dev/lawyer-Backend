@@ -54,18 +54,25 @@ LABEL_DISPUTED_TEXT_NOTICE = "DISPUTED TEXT — human check required"
 LABEL_DISPUTED_TEXT_MISSING_BANNER = "DISPUTED TEXT — missing required structural warning banner"
 LABEL_MISATTRIBUTED_QUOTE = "MISATTRIBUTED QUOTE"
 LABEL_UNSOURCED_ANALYSIS = "UNSOURCED ANALYSIS"
+LABEL_HEADING_ONLY = "PROVISION TEXT NOT IN STORE (heading only)"
+LABEL_DECEPTIVE_ELLIPSIS = "DECEPTIVE ELLIPSIS — omitted material condition"
+LABEL_MODEL_BANNER_DETECTED = "MODEL-INJECTED BANNER STRIPPED"
+
+CONDITION_TERMS = ["if", "unless", "provided", "except", "subject to", "not"]
 
 ELLIPSIS_SPLIT_REGEX = re.compile(r'\[?\s*(?:\.{3,}|\u2026|\.\s+\.\s+\.)\s*\]?')
 
 class QuoteMatchResult(tuple):
-    """3-tuple (matched, cid, diff) with extra attribute omitted."""
-    def __new__(cls, matched: bool, cid: Optional[str], diff: Optional[str], omitted: Optional[List[str]] = None):
+    """3-tuple (matched, cid, diff) with extra attributes for omitted spans and rendered text."""
+    def __new__(cls, matched: bool, cid: Optional[str], diff: Optional[str], omitted: Optional[List[str]] = None, rendered_in_memo: Optional[str] = None, deceptive_flags: Optional[List[str]] = None):
         return super().__new__(cls, (matched, cid, diff))
-    def __init__(self, matched: bool, cid: Optional[str], diff: Optional[str], omitted: Optional[List[str]] = None):
+    def __init__(self, matched: bool, cid: Optional[str], diff: Optional[str], omitted: Optional[List[str]] = None, rendered_in_memo: Optional[str] = None, deceptive_flags: Optional[List[str]] = None):
         self.matched = matched
         self.cid = cid
         self.diff = diff
         self.omitted = omitted or []
+        self.rendered_in_memo = rendered_in_memo or ""
+        self.deceptive_flags = deceptive_flags or []
 
 class CitationMatchResult(tuple):
     """3-tuple (is_valid, reason, rec) with extra attribute cid."""
@@ -76,6 +83,46 @@ class CitationMatchResult(tuple):
         self.reason = reason
         self.rec = rec
         self.cid = cid
+
+def strip_model_banners(memo_text: str) -> Tuple[str, List[Dict[str, Any]]]:
+    """
+    Rule (b): Strips every model-written `> [!...` block before verification.
+    System warning banners must come strictly from the pipeline AFTER verification.
+    """
+    lines = memo_text.splitlines()
+    cleaned_lines = []
+    in_model_banner = False
+    model_banners = []
+    current_banner_lines = []
+    banner_start_line = 0
+
+    for idx, line in enumerate(lines, 1):
+        s = line.strip()
+        if s.startswith("> [!"):
+            if in_model_banner and current_banner_lines:
+                model_banners.append({"line": banner_start_line, "text": "\n".join(current_banner_lines)})
+                current_banner_lines = []
+            in_model_banner = True
+            banner_start_line = idx
+            current_banner_lines.append(line)
+            continue
+
+        if in_model_banner:
+            if s.startswith(">"):
+                current_banner_lines.append(line)
+                continue
+            else:
+                in_model_banner = False
+                if current_banner_lines:
+                    model_banners.append({"line": banner_start_line, "text": "\n".join(current_banner_lines)})
+                    current_banner_lines = []
+
+        cleaned_lines.append(line)
+
+    if in_model_banner and current_banner_lines:
+        model_banners.append({"line": banner_start_line, "text": "\n".join(current_banner_lines)})
+
+    return "\n".join(cleaned_lines), model_banners
 
 class MemorandumVerificationBlockedError(Exception):
     """Raised when a research memorandum fails ground-truth verification."""
@@ -107,10 +154,10 @@ def shared_normalize(text: str) -> str:
     t = re.sub(r'(\w+)\s*-\s*[\r\n]+\s*(\w+)', r'\1\2', t)
     t = re.sub(r'(\w+)\s+-\s+(\w+)', r'\1\2', t)
     # 4. Amendment markers: '1[', '2[', etc. and ']'
-    t = re.sub(r'\d+\[', '', t).replace(']', '')
-    # 5. Deletion markers: '* * *', '***', etc.
-    t = re.sub(r'\[?\s*(?:\*\s*){2,}\]?', '', t)
-    t = re.sub(r'\*+', '', t)
+    t = re.sub(r'\d+\[', ' ', t).replace(']', ' ')
+    # 5. Deletion markers: '* * *', '***', etc. replaced with space
+    t = re.sub(r'\[?\s*(?:\*\s*){2,}\]?', ' ', t)
+    t = re.sub(r'\*+', ' ', t)
     # 6. Typographic quotes and dashes
     t = t.replace('“', '"').replace('”', '"').replace('’', "'").replace('‘', "'")
     t = t.replace('—', ' - ').replace('–', ' - ')
@@ -131,22 +178,38 @@ def to_matching_stream(text: str) -> str:
 def compute_word_diff(quote_text: str, candidate_text: str) -> str:
     """
     Computes a human-readable word-level diff (inserted, deleted, changed words)
-    between a candidate quote and the closest stored provision.
+    between a candidate quote and the closest stored provision, aligned to the best window.
     """
     q_words = shared_normalize(quote_text).split()
     p_words = shared_normalize(candidate_text).split()
 
-    matcher = difflib.SequenceMatcher(None, p_words, q_words, autojunk=False)
+    if not q_words or not p_words:
+        return "Differing punctuation, spacing, or structural markers."
+
+    # Align to best matching window in p_words
+    init_matcher = difflib.SequenceMatcher(None, p_words, q_words, autojunk=False)
+    match = init_matcher.find_longest_match(0, len(p_words), 0, len(q_words))
+
+    if match.size > 0:
+        pad = max(3, len(q_words) // 2)
+        p_start = max(0, match.a - pad)
+        p_end = min(len(p_words), match.a + len(q_words) + pad)
+        p_window = p_words[p_start:p_end]
+    else:
+        p_window = p_words[:len(q_words) + 10]
+
+    matcher = difflib.SequenceMatcher(None, p_window, q_words, autojunk=False)
     diff_lines = []
 
     for tag, i1, i2, j1, j2 in matcher.get_opcodes():
         if tag == 'replace':
-            p_chunk = " ".join(p_words[i1:i2])
+            p_chunk = " ".join(p_window[i1:i2])
             q_chunk = " ".join(q_words[j1:j2])
             diff_lines.append(f"Changed: '{p_chunk}' -> '{q_chunk}'")
         elif tag == 'delete':
-            p_chunk = " ".join(p_words[i1:i2])
-            diff_lines.append(f"Omitted from provision: '{p_chunk}'")
+            p_chunk = " ".join(p_window[i1:i2])
+            if (i2 < len(p_window) and i1 > 0) or len(p_chunk.split()) <= 10:
+                diff_lines.append(f"Omitted from provision: '{p_chunk}'")
         elif tag == 'insert':
             q_chunk = " ".join(q_words[j1:j2])
             diff_lines.append(f"Inserted into quote: '{q_chunk}'")
@@ -346,7 +409,28 @@ class MemoVerifier:
                         cur_pos = pos + len(seg)
 
                     if all_matched:
-                        return QuoteMatchResult(True, prov["canonical_id"], None, omitted_text_list)
+                        # Order 1.8 - Item 4: Check for deceptive omission of material conditions
+                        deceptive_terms = []
+                        rendered_parts = []
+                        for i_seg, seg_raw in enumerate(segments):
+                            rendered_parts.append(seg_raw)
+                            if i_seg < len(omitted_text_list):
+                                om_slice = omitted_text_list[i_seg]
+                                conds = [c for c in CONDITION_TERMS if re.search(r'\b' + re.escape(c) + r'\b', om_slice, re.IGNORECASE)]
+                                if conds:
+                                    deceptive_terms.extend(conds)
+                                    rendered_parts.append(f"[... OMITTED IN QUOTE (DROPS MATERIAL CONDITION '{','.join(conds)}'): \"{om_slice}\" ...]")
+                                else:
+                                    rendered_parts.append(f"[... OMITTED IN QUOTE: \"{om_slice}\" ...]")
+                        rendered_memo_quote = " ".join(rendered_parts)
+
+                        if deceptive_terms:
+                            diff_desc = f"{LABEL_DECEPTIVE_ELLIPSIS}: quote matches '{prov['canonical_id']}' but omits material qualifying condition(s) {list(set(deceptive_terms))}. Omitted text: '" + "; ".join(omitted_text_list) + "'"
+                            res = QuoteMatchResult(False, prov["canonical_id"], diff_desc, omitted_text_list, rendered_memo_quote, deceptive_terms)
+                            return res
+                        else:
+                            res = QuoteMatchResult(True, prov["canonical_id"], None, omitted_text_list, rendered_memo_quote, [])
+                            return res
 
         # 2. Continuous quote stream matching
         q_stream = to_matching_stream(raw_quote)
@@ -529,6 +613,20 @@ class MemoVerifier:
         if isinstance(status, dict):
             status = status.get("federal", "in_force")
 
+        # Order 1.8 - Item 3: Check operative text and title_only tier
+        txt = (rec.get("text") or rec.get("statutory_text") or "").strip()
+        has_operative_text = (
+            bool(rec.get("has_operative_text", True)) and
+            tier != "title_only" and
+            len(txt) > 0 and
+            txt != (rec.get("title") or "").strip() and
+            "[heading only]" not in txt.lower() and
+            rec.get("verification_status") != "stub"
+        )
+        if not has_operative_text or tier == "title_only":
+            reason = f"{LABEL_HEADING_ONLY}: Act {act_code} provision {num} has tier='{tier}', but operative statutory text is not in verified store (title/heading only)"
+            return CitationMatchResult(False, reason, rec, cid)
+
         # Disputed tier policy (Order 1.7 - Item 7)
         if tier == "disputed":
             if has_disputed:
@@ -548,22 +646,36 @@ class MemoVerifier:
 
         return CitationMatchResult(True, None, rec, cid)
 
-    def verify_memo(self, memo_text: str) -> Dict[str, Any]:
+    def verify_memo(self, memo_text: str, is_system_rendered: bool = False) -> Dict[str, Any]:
         """
-        Main entry point for verifying a research memorandum against Orders 1.5 - 1.7.
+        Main entry point for verifying a research memorandum against Orders 1.5 - 1.8.
         """
         failures: List[Dict[str, Any]] = []
         disputed_notices: List[Dict[str, Any]] = []
         omitted_ellipses: List[Dict[str, Any]] = []
+        cited_provisions_meta: List[Dict[str, Any]] = []
 
-        # Check structural disputed banner
-        has_disputed = has_disputed_banner(memo_text)
-        active_order = self.extract_context_order(memo_text)
+        # Order 1.8 - Item 2: Strip every model-written `> [!` block before verification
+        memo_cleaned, stripped_banners = strip_model_banners(memo_text)
+        if stripped_banners and not is_system_rendered:
+            for sb in stripped_banners:
+                failures.append({
+                    "rule": "(b)",
+                    "category": "MODEL_INJECTED_BANNER",
+                    "label": LABEL_MODEL_BANNER_DETECTED,
+                    "issue": f"{LABEL_MODEL_BANNER_DETECTED}: Model-written '> [!' banner detected and stripped. System banners are attached strictly after verification.",
+                    "span": sb["text"],
+                    "line": sb["line"]
+                })
+
+        # Disputed banner check: model-written banners cannot satisfy this check
+        has_disputed = has_disputed_banner(memo_text) if is_system_rendered else False
+        active_order = self.extract_context_order(memo_cleaned)
 
         # -------------------------------------------------------------
         # RULE (a) & (b): BLOCKQUOTE VERIFICATION, ELLIPSES & MISATTRIBUTION
         # -------------------------------------------------------------
-        quotes = self.extract_blockquotes(memo_text)
+        quotes = self.extract_blockquotes(memo_cleaned)
         quotes_passed = 0
         quotes_failed = 0
 
@@ -576,7 +688,9 @@ class MemoVerifier:
                 omitted_ellipses.append({
                     "quote_line": q["line"],
                     "matched_provision": match_cid,
-                    "omitted_text_between_segments": omitted_spans
+                    "omitted_text_between_segments": omitted_spans,
+                    "rendered_in_memo": getattr(q_res, "rendered_in_memo", ""),
+                    "deceptive_flags": getattr(q_res, "deceptive_flags", [])
                 })
 
             if matched:
@@ -656,6 +770,17 @@ class MemoVerifier:
             cit_res = self.verify_statutory_citation(sc["span"], sc["active_order"], has_disputed)
             is_valid, reason, rec = cit_res
             cid = cit_res.cid
+            tier_val = rec.get("tier", "unknown") if rec else "not_found"
+            txt_val = (rec.get("text") or rec.get("statutory_text") or "").strip() if rec else ""
+            has_op = bool(rec.get("has_operative_text", True) and tier_val != "title_only" and len(txt_val) > 0 and txt_val != (rec.get("title") or "").strip() and "[heading only]" not in txt_val.lower() and rec.get("verification_status") != "stub") if rec else False
+            cited_provisions_meta.append({
+                "span": sc["span"],
+                "canonical_id": cid,
+                "tier": tier_val,
+                "has_operative_text": has_op,
+                "is_valid": is_valid,
+                "reason": reason
+            })
             if is_valid:
                 statutes_passed += 1
                 verified_statute_spans.add(sc["span"])
@@ -746,7 +871,10 @@ class MemoVerifier:
             "statutes_failed": statutes_failed,
             "unsourced_sentences_count": unsourced_sentences,
             "disputed_notices": disputed_notices,
-            "omitted_ellipses": omitted_ellipses
+            "omitted_ellipses": omitted_ellipses,
+            "cited_provisions_metadata": cited_provisions_meta,
+            "stripped_model_banners": stripped_banners,
+            "cleaned_memo_text": memo_cleaned
         }
 
 def verify_memorandum_text(memo_text: str) -> Dict[str, Any]:

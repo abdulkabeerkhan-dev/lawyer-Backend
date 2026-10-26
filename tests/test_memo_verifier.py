@@ -130,7 +130,7 @@ def test_rule_d_unsourced_statute_fails(verifier):
     # 1. Present in store but unsourced tier: Article 199 Constitution
     is_valid, reason, rec = verifier.verify_statutory_citation("Article 199 of the Constitution")
     assert is_valid is False
-    assert "tier='unsourced'" in reason or "not sourced" in reason
+    assert "tier='unsourced'" in reason or "not sourced" in reason or "not in verified store" in reason
 
     # 2. Absent from store entirely
     is_valid2, reason2, rec2 = verifier.verify_statutory_citation("Section 18 of the Arbitration Act, 1940")
@@ -272,23 +272,126 @@ def test_holdout_memo_f_fixture_blocked(verifier):
     with open(MEMO_F_PATH, "r", encoding="utf-8") as f:
         memo_text = f.read()
 
-    res = verifier.verify_memo(memo_text)
-    # Fails ONLY on the non-verbatim s.10(1) quote
-    assert res["passed"] is False
-    assert res["verdict"] == "BLOCKED"
-    assert res["total_failures"] == 1
+    # System-rendered evaluation: banner is authenticated, so s.22 is permitted under banner
+    res_sys = verifier.verify_memo(memo_text, is_system_rendered=True)
+    assert res_sys["passed"] is False
+    assert res_sys["verdict"] == "BLOCKED"
+    assert res_sys["total_failures"] == 1
 
-    failure = res["failures"][0]
+    failure = res_sys["failures"][0]
     assert failure["rule"] == "(a)"
     assert failure["category"] == "UNMATCHED_QUOTE"
     assert "FIO_2001_SEC_10" in failure["issue"]
 
     # S.22 quotes must pass
-    assert res["quotes_passed"] == 3
-    assert res["quotes_failed"] == 1
+    assert res_sys["quotes_passed"] == 3
+    assert res_sys["quotes_failed"] == 1
 
     # S.22 citation under structural banner must yield DISPUTED TEXT notice, not block
-    assert len(res["disputed_notices"]) >= 1
-    assert any("FIO_2001_SEC_22" in dn["provision"] for dn in res["disputed_notices"])
-    assert any(dn["label"] == LABEL_DISPUTED_TEXT_NOTICE for dn in res["disputed_notices"])
+    assert len(res_sys["disputed_notices"]) >= 1
+    assert any("FIO_2001_SEC_22" in dn["provision"] for dn in res_sys["disputed_notices"])
+    assert any(dn["label"] == LABEL_DISPUTED_TEXT_NOTICE for dn in res_sys["disputed_notices"])
 
+    # Raw model evaluation: model-written banner is stripped and flagged
+    res_raw = verifier.verify_memo(memo_text, is_system_rendered=False)
+    assert res_raw["passed"] is False
+    assert res_raw["verdict"] == "BLOCKED"
+    assert res_raw["total_failures"] == 3
+    categories = [f["category"] for f in res_raw["failures"]]
+    assert "MODEL_INJECTED_BANNER" in categories
+    assert "DISPUTED_TEXT_UNNOTICED" in categories
+    assert "UNMATCHED_QUOTE" in categories
+
+
+# ---------------------------------------------------------------------------
+# ORDER 1.8 UNIT TESTS
+# ---------------------------------------------------------------------------
+from legal_ai.verification.memo_verifier import (
+    shared_normalize,
+    compute_word_diff,
+    LABEL_HEADING_ONLY,
+    LABEL_DECEPTIVE_ELLIPSIS,
+    LABEL_MODEL_BANNER_DETECTED
+)
+
+def test_order18_banner_stripping_and_blocking(verifier):
+    """
+    Item 2: Strip model-written '> [!' blocks before verification.
+    System adds banners AFTER verification. Test that a model-written banner is stripped/blocked.
+    """
+    memo_with_model_banner = (
+        "> [!NOTE]\n"
+        "> The following advice is verified.\n\n"
+        "Order XXXIX Rule 1 of the Code of Civil Procedure, 1908 governs injunctions.\n"
+    )
+    res_raw = verifier.verify_memo(memo_with_model_banner, is_system_rendered=False)
+    assert res_raw["passed"] is False
+    assert res_raw["verdict"] == "BLOCKED"
+    assert any(f["category"] == "MODEL_INJECTED_BANNER" for f in res_raw["failures"])
+
+    res_sys = verifier.verify_memo(memo_with_model_banner, is_system_rendered=True)
+    assert not any(f["category"] == "MODEL_INJECTED_BANNER" for f in res_sys["failures"])
+
+def test_order18_heading_only_record_blocked(verifier):
+    """
+    Item 3: Rule (d) - If a memo asserts content of a title_only/heading_only record,
+    label PROVISION TEXT NOT IN STORE (heading only).
+    """
+    from core.unified_statute_store import get_unified_statute_store
+    store = get_unified_statute_store()
+    mock_cid = "CPC_1908_SEC_9999"
+    store._by_cid[mock_cid] = {
+        "canonical_id": mock_cid,
+        "act_code": "CPC_1908",
+        "section": "9999",
+        "title": "Mock Title Heading",
+        "text": "Mock Title Heading",
+        "tier": "title_only",
+        "has_operative_text": False
+    }
+    try:
+        is_valid, reason, rec = verifier.verify_statutory_citation("Section 9999 of the Code of Civil Procedure, 1908")
+        assert is_valid is False
+        assert LABEL_HEADING_ONLY in reason
+    finally:
+        store._by_cid.pop(mock_cid, None)
+
+def test_order18_deceptive_ellipsis_flagged(verifier):
+    """
+    Item 4: Ellipsis omitting material conditions (if, unless, provided, except, subject to, not)
+    must be flagged DECEPTIVE ELLIPSIS — omitted material condition.
+    """
+    deceptive_quote = (
+        "> In any case in which the summons has been served on the defendant... "
+        "to defend the same"
+    )
+    q_res = verifier.verify_quote_against_store(deceptive_quote)
+    assert q_res[0] is False
+    assert LABEL_DECEPTIVE_ELLIPSIS in q_res[2]
+    assert any("unless" in d for d in q_res.deceptive_flags)
+
+def test_order18_word_diff_trimmed_and_no_inprison_glue():
+    """
+    Item 5: 1[* * *] marker replacement with space prevents 'inprison' glue.
+    Word diff is localized to aligned window instead of dumping entire provision.
+    """
+    raw_with_marker = "detained in 1[* * *] prison"
+    normalized = shared_normalize(raw_with_marker)
+    assert normalized == "detained in prison"
+    assert "inprison" not in normalized
+
+    large_provision = "word " * 100 + "detained in prison for a term not exceeding six months " + "word " * 100
+    bad_quote = "detained in civil prison for a term not exceeding two years"
+    diff = compute_word_diff(bad_quote, large_provision)
+    assert "civil" in diff
+    assert "two years" in diff
+    assert len(diff) < 300
+
+def test_order18_no_unsourced_text_in_injector_prompt():
+    """
+    Item 7: Test that no unsourced or quarantined record text reaches a prompt.
+    """
+    from legal_ai.statutes.statute_injector import inject_statutory_framework
+    res = inject_statutory_framework("What does Article 199 of the Constitution provide?")
+    assert len(res["provisions_with_text"]) == 0
+    assert "[Statutory text not found in verified database]" in res["statute_block"]

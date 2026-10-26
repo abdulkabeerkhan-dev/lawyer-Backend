@@ -109,3 +109,30 @@ def test_api_status_endpoint_returns_no_memo_on_blocked_job():
             # Blocked text must not be in response body
             assert "civil prison" not in response.text
             assert "2012 SCMR 99999" not in response.text
+
+def test_order18_export_pleading_gate_blocks_bad_memo():
+    """
+    ORDER 1.8 - ITEM 6:
+    Fail-closed gate on court pleading export (/export/court-pleading).
+    Unverified or fabricated memorandum text raises 422 EXPORT_VERIFICATION_BLOCKED.
+    """
+    from fastapi import HTTPException
+    from main import export_court_pleading, PleadingExportRequest
+    import asyncio
+
+    with open(MEMO_E_PATH, "r", encoding="utf-8") as f:
+        bad_memo = f.read()
+
+    req = PleadingExportRequest(
+        court_title="IN THE HIGH COURT OF SINDH AT KARACHI",
+        case_title="TEST WRIT PETITION",
+        memorandum_text=bad_memo
+    )
+
+    with pytest.raises(HTTPException) as exc_info:
+        asyncio.run(export_court_pleading(req, authenticated_user_id="test_user_order18"))
+
+    assert exc_info.value.status_code == 422
+    assert exc_info.value.detail.get("error") == "EXPORT_VERIFICATION_BLOCKED"
+    assert exc_info.value.detail.get("verdict") == "BLOCKED"
+    assert exc_info.value.detail.get("total_failures", 0) > 0

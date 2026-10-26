@@ -14751,6 +14751,22 @@ async def export_court_pleading(
 
     check_burst_rate_limit(authenticated_user_id, action="pleading export")
 
+    # ORDER 1.8 - ITEM 6: FAIL-CLOSED VERIFICATION ON PLEADING EXPORT
+    # Unverified or fabricated memorandum text can NEVER be exported as a legal pleading.
+    if payload.memorandum_text:
+        v_res = verify_memorandum_text(payload.memorandum_text)
+        if not v_res.get("passed", False):
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "error": "EXPORT_VERIFICATION_BLOCKED",
+                    "verdict": "BLOCKED",
+                    "message": "Pleading export rejected: memorandum text failed ground-truth verification.",
+                    "total_failures": v_res.get("total_failures", 0),
+                    "failures": v_res.get("failures", [])
+                }
+            )
+
     if not DOCX_AVAILABLE:
 
         raise HTTPException(status_code=500, detail="python-docx library is not installed on the server environment.")
