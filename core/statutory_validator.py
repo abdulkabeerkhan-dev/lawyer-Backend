@@ -1071,11 +1071,11 @@ def validate_statutory_citation(citation: str, default_act: str = None) -> Dict[
             "is_valid": True,
             "status": "verified",
             "canonical_id": canonical_id,
-            "display_name": record.get("display_name"),
+            "display_name": record.get("display_name") or record.get("title") or citation,
             "title": record.get("title"),
             "status_jurisdiction": record.get("status"),
             "superseded_reference": record.get("superseded_reference"),
-            "source_citation": record.get("source_citation"),
+            "source_citation": record.get("source_citation") or record.get("source_file") or "Pakistan Code",
             "raw_citation": citation
         }
 

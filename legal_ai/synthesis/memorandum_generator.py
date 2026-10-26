@@ -1,3 +1,4 @@
+import hashlib
 """
 
 legal_ai/synthesis/memorandum_generator.py
@@ -975,35 +976,24 @@ def enforce_proposition_confidence_guardrails(text: str, query_text: str = "") -
 
 
 
-def log_runtime_diagnostic(stage: str, text: str) -> None:
-
+def log_runtime_diagnostic(stage: str, text: Any) -> None:
     """
-
     Prints diagnostic runtime logging for output synthesis, boundary enforcement, and final display.
-
+    ORDER 1.9 - ITEM 5: Strips all raw memo text spans from logs. Emits only metadata and counts.
     """
-
     if not text:
+        print(f"[RUNTIME LOG] {stage}: Empty/None", file=sys.stderr, flush=True)
+        return
 
-        preview = "None / Empty"
+    if isinstance(text, dict):
+        safe_keys = {k: v for k, v in text.items() if k not in ("span", "raw", "text", "memo_cleaned", "cleaned_memo_text")}
+        print(f"[RUNTIME LOG] {stage}: dict metadata: {safe_keys}", file=sys.stderr, flush=True)
+        return
 
-        headers = []
-
-    else:
-
-        preview = text.strip()[:200].replace("\n", " ")
-
-        headers = [
-
-            line.strip()
-
-            for line in text.split("\n")
-
-            if re.match(r'^(?:#{1,6}|\*{2}|\d+[\.\)])\s+', line.strip())
-
-        ]
-
-    print(f"[RUNTIME LOG] {stage}: First 200 chars: '{preview}...' | Section Headers: {headers}", file=sys.stderr, flush=True)
+    text_str = str(text)
+    header_count = sum(1 for line in text_str.splitlines() if re.match(r'^(?:#{1,6}|\*{2}|\d+[\.\)])\s+', line.strip()))
+    sha_pref = hashlib.sha256(text_str.encode("utf-8")).hexdigest()[:12]
+    print(f"[RUNTIME LOG] {stage}: length={len(text_str)} chars, lines={len(text_str.splitlines())}, headers_count={header_count}, sha256_prefix={sha_pref}", file=sys.stderr, flush=True)
 
 
 

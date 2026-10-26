@@ -9,20 +9,19 @@ from legal_ai.statutes.statute_store import get_statute_store, lookup
 
 
 def test_ni_act_138_confirmed_absent():
+    # Order 1.9 - Item 8: NI Act is quarantined (no official PDF); lookups return UNVERIFIED
     res = lookup("NI Act", "Section 138")
-    assert res.status == "CONFIRMED_ABSENT"
+    assert res.status == "UNVERIFIED"
     assert res.exists is False
-    assert res.confirmed_absent is True
-    assert "Section 489-F PPC" in (res.pakistani_equivalent or "")
-    assert "Negotiable Instruments Act" in (res.explanation or "")
+    assert res.confirmed_absent is False
 
 
 def test_ni_act_118_exists():
+    # Order 1.9 - Item 8: NI Act is quarantined (no official PDF); lookups return UNVERIFIED
     res = lookup("NI Act", "Section 118")
-    assert res.status == "EXISTS"
-    assert res.exists is True
+    assert res.status == "UNVERIFIED"
+    assert res.exists is False
     assert res.confirmed_absent is False
-    assert "Presumptions" in (res.title or "")
 
 
 def test_indian_penal_code_foreign_absent():

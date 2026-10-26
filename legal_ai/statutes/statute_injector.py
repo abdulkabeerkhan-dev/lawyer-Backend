@@ -272,7 +272,8 @@ class StatuteInjector:
             if m_sec:
                 sec_num = m_sec.group(1).upper()
                 sec_clean = sec_num.replace("-", "")
-                return act_code, f"{act_code}_SEC_{sec_clean}", f"Section {sec_num}, Pakistan Penal Code, 1860"
+                sec_disp = f"{sec_num[:-1]}-{sec_num[-1]}" if re.match(r'^\d+[A-Z]$', sec_num) else sec_num
+                return act_code, f"{act_code}_SEC_{sec_clean}", f"Section {sec_disp}, Pakistan Penal Code, 1860"
 
         # 16. Code of Criminal Procedure (CrPC)
         if "crpc" in p_low or "criminal procedure" in p_low or any(k in p_low for k in ["496", "497", "498", "561-a", "561a", "154", "249-a", "249a", "265-k", "265k", "22-a", "22a", "54", "61"]):
