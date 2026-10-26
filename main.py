@@ -23,6 +23,9 @@ from typing import List, Dict, Any, Optional, cast, Set, Tuple
 from collections import defaultdict, deque
 
 import re
+import logging
+
+logger = logging.getLogger(__name__)
 
 import json
 
@@ -12763,7 +12766,11 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
             print(f"⚠️ Legal Guardrails & Completeness Issues (round {ref_round+1}): {all_issues}. Triggering reflection loop...", file=sys.stderr)
 
-            "3. Ensure all relevant sections are articulated with <<<CARDS>>> JSON.\n"
+            reflection_prompt = (
+                f"Please address the following legal guardrails and completeness issues in your legal memorandum:\n"
+                + "\n".join(f"- {iss}" for iss in all_issues)
+                + "\nStrictly preserve verbatim statutory text and ensure all citations are authentic."
+            )
 
             reflection_messages = list(messages) + [
 
@@ -13587,9 +13594,22 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
         log_runtime_diagnostic("FINAL_DISPLAY_OUTPUT", display_answer)
 
-        # ORDER 1.9 - ITEM 5 & 6: MEMORANDUM VERIFIER GATE WITH BLOCKED UX & AUTO-REGENERATION
-        from legal_ai.verification.memo_verifier import verify_memorandum_text, MemorandumVerificationBlockedError
-        verification_gate = verify_memorandum_text(display_answer)
+        # ORDER 1.9 & 1.10: MEMORANDUM VERIFIER GATE WITH SYSTEM DISPUTED BANNER FLOW
+        from legal_ai.verification.memo_verifier import (
+            verify_memorandum_text,
+            MemorandumVerificationBlockedError,
+            attach_system_disputed_banner
+        )
+        verification_gate = verify_memorandum_text(display_answer, is_system_rendered=False)
+        if not verification_gate.get('passed', False):
+            disputed_notices = verification_gate.get('disputed_notices', [])
+            failures = verification_gate.get('failures', [])
+            if disputed_notices and all(f.get('category') == 'DISPUTED_TEXT_UNNOTICED' for f in failures):
+                bannered_answer = attach_system_disputed_banner(display_answer, disputed_notices)
+                re_gate = verify_memorandum_text(bannered_answer, is_system_rendered=True)
+                if re_gate.get('passed', False):
+                    display_answer = bannered_answer
+                    verification_gate = re_gate
 
         # Automatic regeneration loop (max 2 attempts total) with failure fed back as constraints
         if not verification_gate.get('passed', False) and async_anthropic_client:
@@ -15018,21 +15038,18 @@ async def add_diary_entry(payload: DiaryEntryPayload, authenticated_user_id: str
 
     if not supabase: raise HTTPException(status_code=503, detail="Database offline.")
 
-    # ORDER 1.9 - ITEM 5: DIARY FAIL-CLOSED CITATION & QUOTE GATE
+    # ORDER 1.10 - ITEM 10: DIARY WARNING POLICY (WARN, DO NOT BLOCK)
+    diary_warning = None
     if payload.notes and ("> " in payload.notes or any(k in payload.notes.lower() for k in ["section ", "order ", "article "])):
         from legal_ai.verification.memo_verifier import verify_pleading_citations_and_quotes
         v_diary = verify_pleading_citations_and_quotes(payload.notes)
         if not v_diary.get("passed", False):
-            raise HTTPException(
-                status_code=422,
-                detail={
-                    "error": "DIARY_NOTE_VERIFICATION_BLOCKED",
-                    "verdict": "BLOCKED",
-                    "message": "Diary note rejected: contains unverified legal citations or quotes.",
-                    "total_failures": v_diary.get("total_failures", 0),
-                    "failures": v_diary.get("failures", [])
-                }
-            )
+            diary_warning = {
+                "warning": "UNVERIFIED_LEGAL_CITATIONS",
+                "message": "Note contains unverified legal citations or quotes; check manually before court reliance.",
+                "total_failures": v_diary.get("total_failures", 0),
+                "failures": v_diary.get("failures", [])
+            }
 
     res = supabase.table("user_case_diary").insert({
 
@@ -15052,7 +15069,10 @@ async def add_diary_entry(payload: DiaryEntryPayload, authenticated_user_id: str
 
     }).execute()
 
-    return {"status": "success", "data": res.data[0] if res.data else None}
+    resp_payload = {"status": "success", "data": res.data[0] if res.data else None}
+    if diary_warning:
+        resp_payload["warning"] = diary_warning
+    return resp_payload
 
 
 

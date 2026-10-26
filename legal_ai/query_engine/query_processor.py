@@ -2731,10 +2731,25 @@ async def process_query_job_legal_ai(
 
     pipeline_metrics.finalize()
 
-    # ORDER 1.7 - ITEM 10: MEMORANDUM VERIFIER GATE
-    # Fail-closed gate: if verification fails, the response is BLOCKED and never returned to the user.
-    from legal_ai.verification.memo_verifier import verify_memorandum_text, MemorandumVerificationBlockedError
-    verification_gate = verify_memorandum_text(clean_answer)
+    # ORDER 1.7 & 1.10: MEMORANDUM VERIFIER GATE & SYSTEM DISPUTED BANNER FLOW
+    # Fail-closed gate: if verification fails, check if the ONLY failure is a cited disputed provision lacking banner.
+    # Model cannot set is_system_rendered; only the backend runtime attaches the system banner and passes is_system_rendered=True.
+    from legal_ai.verification.memo_verifier import (
+        verify_memorandum_text,
+        MemorandumVerificationBlockedError,
+        attach_system_disputed_banner
+    )
+    verification_gate = verify_memorandum_text(clean_answer, is_system_rendered=False)
+    if not verification_gate.get('passed', False):
+        disputed_notices = verification_gate.get('disputed_notices', [])
+        failures = verification_gate.get('failures', [])
+        if disputed_notices and all(f.get('category') == 'DISPUTED_TEXT_UNNOTICED' for f in failures):
+            bannered_answer = attach_system_disputed_banner(clean_answer, disputed_notices)
+            re_gate = verify_memorandum_text(bannered_answer, is_system_rendered=True)
+            if re_gate.get('passed', False):
+                clean_answer = bannered_answer
+                verification_gate = re_gate
+
     if not verification_gate.get('passed', False):
         print(
             f'[JOB {job_id}] MEMORANDUM VERIFICATION BLOCKED: {len(verification_gate.get("failures", []))} violations detected.',
