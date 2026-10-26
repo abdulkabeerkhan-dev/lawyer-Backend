@@ -46,6 +46,8 @@ import jwt
 
 from jwt.algorithms import RSAAlgorithm
 
+from legal_ai.verification.memo_verifier import MemorandumVerificationBlockedError, verify_memorandum_text
+
 try:
 
     import sentry_sdk
@@ -8267,6 +8269,18 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             return
 
+        except MemorandumVerificationBlockedError as ve:
+            print(f"[JOB {job_id}] MEMORANDUM BLOCKED BY VERIFIER: {ve}", file=sys.stderr, flush=True)
+            if job_id in jobs_store:
+                jobs_store[job_id].update({
+                    'status': 'error',
+                    'stage': 'verification_blocked',
+                    'error': 'MEMORANDUM_VERIFICATION_FAILED',
+                    'result': None,
+                    'verification_report': ve.verification_report,
+                    'completed_at': datetime.now(timezone.utc),
+                })
+            return
         except Exception as e:
 
             print(f"⚠️ [JOB {job_id}] legal_ai pipeline error: {e}. Falling back to legacy pipeline...", file=sys.stderr, flush=True)
@@ -13573,7 +13587,21 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
         log_runtime_diagnostic("FINAL_DISPLAY_OUTPUT", display_answer)
 
-
+        # ORDER 1.7 - ITEM 10: MEMORANDUM VERIFIER GATE (Legacy pipeline)
+        from legal_ai.verification.memo_verifier import verify_memorandum_text, MemorandumVerificationBlockedError
+        verification_gate = verify_memorandum_text(display_answer)
+        if not verification_gate.get('passed', False):
+            log_runtime_diagnostic('MEMORANDUM_VERIFICATION_BLOCKED', verification_gate)
+            if job_id in jobs_store:
+                jobs_store[job_id].update({
+                    'status': 'error',
+                    'stage': 'verification_blocked',
+                    'error': 'MEMORANDUM_VERIFICATION_FAILED',
+                    'result': None,
+                    'verification_report': verification_gate,
+                    'completed_at': datetime.now(timezone.utc),
+                })
+            raise MemorandumVerificationBlockedError(verification_gate)
 
         inserted_row_id = str(uuid.uuid4())
 

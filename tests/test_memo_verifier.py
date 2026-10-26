@@ -18,10 +18,15 @@ from legal_ai.verification.memo_verifier import (
     MemoVerifier,
     LABEL_UNVERIFIED_AUTHORITY,
     LABEL_CITED_PROVISION_NOT_IN_VERIFIED_STORE,
-    LABEL_UNSOURCED_ANALYSIS
+    LABEL_UNSOURCED_ANALYSIS,
+    LABEL_DISPUTED_TEXT_NOTICE,
+    LABEL_MISATTRIBUTED_QUOTE
 )
 
 FIXTURE_PATH = os.path.join(REPO_DIR, "tests", "fixtures", "q1_bad_memo.txt")
+MEMO_D_PATH = os.path.join(REPO_DIR, "tests", "fixtures", "memo_D.md")
+MEMO_E_PATH = os.path.join(REPO_DIR, "tests", "fixtures", "memo_E.md")
+MEMO_F_PATH = os.path.join(REPO_DIR, "tests", "fixtures", "memo_F.md")
 
 @pytest.fixture(scope="module")
 def verifier():
@@ -184,3 +189,106 @@ def test_q1_bad_memo_fixture_blocked(verifier):
     assert LABEL_UNVERIFIED_AUTHORITY in labels
     assert LABEL_CITED_PROVISION_NOT_IN_VERIFIED_STORE in labels
     assert LABEL_UNSOURCED_ANALYSIS in labels
+
+# ---------------------------------------------------------------------------
+# ORDER 1.7 - ITEM 9: REGRESSION FIXTURES (MEMO D, MEMO E, MEMO F)
+# ---------------------------------------------------------------------------
+def test_holdout_memo_d_fixture_accepted(verifier):
+    """
+    Memo D (clean holdout): Must PASS with verdict ACCEPTED and zero failures.
+    - All quotes verbatim (including 'detained in prison' dropping amendment markers).
+    - All statutory citations valid and in-force.
+    """
+    assert os.path.exists(MEMO_D_PATH), f"Fixture missing: {MEMO_D_PATH}"
+    with open(MEMO_D_PATH, "r", encoding="utf-8") as f:
+        memo_text = f.read()
+
+    res = verifier.verify_memo(memo_text)
+    assert res["passed"] is True, f"Memo D expected to PASS, but failed: {res['failures']}"
+    assert res["verdict"] == "ACCEPTED"
+    assert res["total_failures"] == 0
+    assert res["quotes_passed"] == 3
+    assert res["quotes_failed"] == 0
+    assert res["statutes_failed"] == 0
+    assert res["unsourced_sentences_count"] == 0
+
+def test_holdout_memo_e_fixture_blocked(verifier):
+    """
+    Memo E (adversarial holdout): Must be strictly BLOCKED.
+    Verifies detection of:
+    1. Substantive quote edits ('two years' instead of 'one year', 'in civil prison' instead of 'inprison').
+    2. Misattributed quote (Rule 4 text attributed to Rule 2).
+    3. Unindexed authority (2012 SCMR 99999).
+    4. Unindexed provision (Section 61 FIO -> 'not in verified store').
+    5. Unsourced analysis sentences (including sentence relying on unverified authority).
+    6. Ellipsis quotes parsed with omitted text captured.
+    """
+    assert os.path.exists(MEMO_E_PATH), f"Fixture missing: {MEMO_E_PATH}"
+    with open(MEMO_E_PATH, "r", encoding="utf-8") as f:
+        memo_text = f.read()
+
+    res = verifier.verify_memo(memo_text)
+    assert res["passed"] is False, "Memo E expected to be BLOCKED, but passed"
+    assert res["verdict"] == "BLOCKED"
+    assert res["total_failures"] >= 6
+
+    # 1. Unmatched quotes with word-level diffs
+    unmatched_quotes = [f for f in res["failures"] if f.get("category") == "UNMATCHED_QUOTE"]
+    assert len(unmatched_quotes) >= 2
+    for uq in unmatched_quotes:
+        assert "word-level diff:" in uq["issue"].lower()
+
+    # 2. Misattributed quote
+    misattributed = [f for f in res["failures"] if f.get("category") == "MISATTRIBUTED_QUOTE"]
+    assert len(misattributed) == 1
+    assert misattributed[0]["cited_id"] == "CPC_1908_ORD_XXXIX_R_2"
+    assert misattributed[0]["matched_id"] == "CPC_1908_ORD_XXXIX_R_4"
+
+    # 3. Unverified authority
+    unverified_cases = [f for f in res["failures"] if f.get("category") == "UNVERIFIED_AUTHORITY"]
+    assert len(unverified_cases) == 1
+    assert "2012 SCMR 99999" in unverified_cases[0]["issue"]
+
+    # 4. Missing provision (not in verified store)
+    missing_provisions = [f for f in res["failures"] if f.get("category") == "CITED_PROVISION_NOT_IN_VERIFIED_STORE"]
+    assert any("Section 61" in mp["span"] for mp in missing_provisions)
+    assert any("not in verified store" in mp["issue"] for mp in missing_provisions)
+    assert all("does not exist" not in mp["issue"] for mp in missing_provisions)
+
+    # 5. Unsourced sentences (sentence relying on unverified authority remains flagged)
+    unsourced_sentences = [f for f in res["failures"] if f.get("category") == "UNSOURCED_ANALYSIS"]
+    assert any("2012 SCMR 99999" in us["span"] for us in unsourced_sentences)
+
+    # 6. Ellipsis extracted
+    assert len(res["omitted_ellipses"]) >= 1
+
+def test_holdout_memo_f_fixture_blocked(verifier):
+    """
+    Memo F: Blocks accurately on non-verbatim Section 10(1) quote,
+    while correctly accepting authentic Section 22 text (U+037E semicolon, amendment markers)
+    and allowing disputed Section 22 citation under the structural warning banner.
+    """
+    assert os.path.exists(MEMO_F_PATH), f"Fixture missing: {MEMO_F_PATH}"
+    with open(MEMO_F_PATH, "r", encoding="utf-8") as f:
+        memo_text = f.read()
+
+    res = verifier.verify_memo(memo_text)
+    # Fails ONLY on the non-verbatim s.10(1) quote
+    assert res["passed"] is False
+    assert res["verdict"] == "BLOCKED"
+    assert res["total_failures"] == 1
+
+    failure = res["failures"][0]
+    assert failure["rule"] == "(a)"
+    assert failure["category"] == "UNMATCHED_QUOTE"
+    assert "FIO_2001_SEC_10" in failure["issue"]
+
+    # S.22 quotes must pass
+    assert res["quotes_passed"] == 3
+    assert res["quotes_failed"] == 1
+
+    # S.22 citation under structural banner must yield DISPUTED TEXT notice, not block
+    assert len(res["disputed_notices"]) >= 1
+    assert any("FIO_2001_SEC_22" in dn["provision"] for dn in res["disputed_notices"])
+    assert any(dn["label"] == LABEL_DISPUTED_TEXT_NOTICE for dn in res["disputed_notices"])
+

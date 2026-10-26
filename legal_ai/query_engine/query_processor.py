@@ -2731,11 +2731,26 @@ async def process_query_job_legal_ai(
 
     pipeline_metrics.finalize()
 
-
-
-
-
-
+    # ORDER 1.7 - ITEM 10: MEMORANDUM VERIFIER GATE
+    # Fail-closed gate: if verification fails, the response is BLOCKED and never returned to the user.
+    from legal_ai.verification.memo_verifier import verify_memorandum_text, MemorandumVerificationBlockedError
+    verification_gate = verify_memorandum_text(clean_answer)
+    if not verification_gate.get('passed', False):
+        print(
+            f'[JOB {job_id}] MEMORANDUM VERIFICATION BLOCKED: {len(verification_gate.get("failures", []))} violations detected.',
+            file=sys.stderr,
+            flush=True,
+        )
+        if job_id in jobs_store:
+            jobs_store[job_id].update({
+                'status': 'error',
+                'stage': 'verification_blocked',
+                'error': 'MEMORANDUM_VERIFICATION_FAILED',
+                'result': None,
+                'verification_report': verification_gate,
+                'completed_at': datetime.now(timezone.utc),
+            })
+        raise MemorandumVerificationBlockedError(verification_gate)
 
     # 8. Database Persistence (Supabase queries table)
 
