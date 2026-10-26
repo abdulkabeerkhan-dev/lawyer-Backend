@@ -2331,13 +2331,16 @@ async def process_query_job_legal_ai(
 
 
         stored_claims_map = {}
+        primary_sec = ""
         for p in verified_statutory_provisions:
             cid = str(p.get("canonical_id") or p.get("act_code") or "PROVISION")
             txt_val = p.get("text_cleaned") or p.get("text") or ""
             if isinstance(txt_val, dict):
                 txt_val = " ".join(str(v) for v in txt_val.values())
             stored_claims_map[cid] = str(txt_val)
-        claim_support_res = verify_memo_statutory_claims(clean_answer, stored_claims_map)
+            if not primary_sec:
+                primary_sec = str(p.get("primary_num") or p.get("section") or "")
+        claim_support_res = verify_memo_statutory_claims(clean_answer, stored_claims_map, primary_section=primary_sec)
 
 
 
@@ -2731,14 +2734,14 @@ async def process_query_job_legal_ai(
 
     pipeline_metrics.finalize()
 
-    # ORDER 1.7 & 1.10: MEMORANDUM VERIFIER GATE & SYSTEM DISPUTED BANNER FLOW
-    # Fail-closed gate: if verification fails, check if the ONLY failure is a cited disputed provision lacking banner.
-    # Model cannot set is_system_rendered; only the backend runtime attaches the system banner and passes is_system_rendered=True.
+    # ORDER 1.7 & 1.10 & 1.11: MEMORANDUM VERIFIER GATE, REGENERATION & SYSTEM DISPUTED BANNER FLOW
     from legal_ai.verification.memo_verifier import (
         verify_memorandum_text,
         MemorandumVerificationBlockedError,
         attach_system_disputed_banner
     )
+
+    # Initial verification attempt (Attempt 1)
     verification_gate = verify_memorandum_text(clean_answer, is_system_rendered=False)
     if not verification_gate.get('passed', False):
         disputed_notices = verification_gate.get('disputed_notices', [])
@@ -2750,22 +2753,135 @@ async def process_query_job_legal_ai(
                 clean_answer = bannered_answer
                 verification_gate = re_gate
 
+    # ORDER 1.11 - ITEM 2: Automatic Regeneration Loop (Max 2 Attempts)
+    attempts_history = [{
+        "attempt": 1,
+        "passed": bool(verification_gate.get("passed", False)),
+        "total_failures": verification_gate.get("total_failures", 0),
+        "failures_sample": [f.get("issue") or f.get("reason") for f in verification_gate.get("failures", [])[:5]]
+    }]
+
+    if not verification_gate.get('passed', False):
+        print(f"[JOB {job_id}] Attempt 1 blocked with {verification_gate.get('total_failures', 0)} failures. Triggering Attempt 2 regeneration with feedback constraints...", file=sys.stderr, flush=True)
+        # Formulate feedback constraints from Attempt 1 failures
+        feedback_constraints = "\n\nCRITICAL REMEDIATION CONSTRAINTS (PRIOR DRAFT VIOLATIONS):\n"
+        for f in verification_gate.get("failures", [])[:8]:
+            feedback_constraints += f"- [{f.get('rule', '')} {f.get('category', '')}] {f.get('issue') or f.get('reason')}\n"
+        feedback_constraints += "Enforce: Quote official statutory texts verbatim; cite verified section/subsections only; eliminate unsourced analytical commentary.\n"
+
+        try:
+            regen_content = user_synthesis_content + "\n\n" + feedback_constraints
+            regen_message = await safe_create_anthropic_message(
+                model=CLAUDE_MODEL,
+                max_tokens=synthesis_max_tokens,
+                system=system_prompt,
+                messages=[{"role": "user", "content": regen_content}]
+            )
+            regen_raw = ""
+            for block in getattr(regen_message, "content", []):
+                if getattr(block, "type", None) == "text":
+                    regen_raw += block.text
+
+            if regen_raw.strip():
+                regen_clean = purge_debug_warnings(regen_raw)
+                regen_gate = verify_memorandum_text(regen_clean, is_system_rendered=False)
+                if not regen_gate.get('passed', False):
+                    r_disputed = regen_gate.get('disputed_notices', [])
+                    r_failures = regen_gate.get('failures', [])
+                    if r_disputed and all(f.get('category') == 'DISPUTED_TEXT_UNNOTICED' for f in r_failures):
+                        bannered_regen = attach_system_disputed_banner(regen_clean, r_disputed)
+                        re_re_gate = verify_memorandum_text(bannered_regen, is_system_rendered=True)
+                        if re_re_gate.get('passed', False):
+                            regen_clean = bannered_regen
+                            regen_gate = re_re_gate
+
+                attempts_history.append({
+                    "attempt": 2,
+                    "passed": bool(regen_gate.get("passed", False)),
+                    "total_failures": regen_gate.get("total_failures", 0),
+                    "failures_sample": [f.get("issue") or f.get("reason") for f in regen_gate.get("failures", [])[:5]]
+                })
+
+                if regen_gate.get('passed', False):
+                    clean_answer = regen_clean
+                    verification_gate = regen_gate
+        except Exception as regen_ex:
+            print(f"[JOB {job_id}] Regeneration attempt error: {regen_ex}", file=sys.stderr, flush=True)
+
     if not verification_gate.get('passed', False):
         print(
-            f'[JOB {job_id}] MEMORANDUM VERIFICATION BLOCKED: {len(verification_gate.get("failures", []))} violations detected.',
+            f'[JOB {job_id}] MEMORANDUM VERIFICATION BLOCKED: {len(verification_gate.get("failures", []))} violations detected after {len(attempts_history)} attempt(s).',
             file=sys.stderr,
             flush=True,
         )
-        if job_id in jobs_store:
-            jobs_store[job_id].update({
-                'status': 'error',
-                'stage': 'verification_blocked',
-                'error': 'MEMORANDUM_VERIFICATION_FAILED',
-                'result': None,
-                'verification_report': verification_gate,
-                'completed_at': datetime.now(timezone.utc),
+        # Classify specific error category
+        failures = verification_gate.get("failures", [])
+        categories = {f.get("category") for f in failures}
+        if "MISATTRIBUTED_QUOTE" in categories or "UNMATCHED_QUOTE" in categories:
+            err_cat = "STATUTORY_MISQUOTATION"
+        elif "UNVERIFIED_AUTHORITY" in categories:
+            err_cat = "FABRICATED_CITATION"
+        elif "UNSOURCED_ANALYSIS" in categories:
+            err_cat = "UNSOURCED_ANALYSIS"
+        elif "CITED_PROVISION_NOT_IN_VERIFIED_STORE" in categories:
+            err_cat = "UNSOURCED_PROVISION_CITATION"
+        elif "DISPUTED_TEXT_UNNOTICED" in categories:
+            err_cat = "DISPUTED_TEXT_UNNOTICED"
+        else:
+            err_cat = "VERIFICATION_GATE_REJECTION"
+
+        safe_reason = (
+            "The generated memorandum could not be verified against official statutory gazettes and "
+            "the verified judicial precedent index. Output withheld to protect legal accuracy."
+        )
+        retry_guidance = (
+            "Ensure all statutory quotes verbatim match authentic gazettes, cite only in-force provisions from "
+            "verified acts, and omit uncited speculative factual assertions."
+        )
+
+        # Build verified_statute_fallback with tier labels and disputed banner
+        verified_fallback = []
+        for p in verified_statutory_provisions:
+            cid = p.get("canonical_id") or p.get("act_code") or "PROVISION"
+            tier = p.get("tier", "tier_1")
+            disp_name = p.get("display_name") or p.get("act_name") or cid
+            txt = p.get("text_cleaned") or p.get("text") or ""
+            if isinstance(txt, dict):
+                txt = " ".join(str(v) for v in txt.values())
+
+            # Check if disputed
+            is_disputed = (p.get("verification_status") == "disputed_boundary_repaired" or 
+                           p.get("status") == "disputed" or 
+                           "FIO_2001_SEC_22" in str(cid))
+            banner_prefix = ""
+            if is_disputed:
+                banner_prefix = "> [!WARNING] DISPUTED STATUTORY TEXT — HUMAN CHECK REQUIRED\n> Official prints of this provision contain contested variations.\n\n"
+
+            verified_fallback.append({
+                "canonical_id": cid,
+                "display_name": disp_name,
+                "tier": tier,
+                "is_disputed": is_disputed,
+                "text": banner_prefix + f"[{tier.upper()}] {disp_name}:\n{txt}"
             })
-        raise MemorandumVerificationBlockedError(verification_gate)
+
+        blocked_payload = {
+            'status': 'error',
+            'stage': 'verification_blocked',
+            'error': 'MEMORANDUM_VERIFICATION_FAILED',
+            'error_category': err_cat,
+            'safe_reason': safe_reason,
+            'retry_guidance': retry_guidance,
+            'verified_statute_fallback': verified_fallback,
+            'attempts': attempts_history,
+            'early_display': None,
+            'result': None,
+            'verification_report': verification_gate,
+            'completed_at': datetime.now(timezone.utc),
+        }
+        if job_id in jobs_store:
+            jobs_store[job_id].update(blocked_payload)
+        raise MemorandumVerificationBlockedError(verification_gate, blocked_payload=blocked_payload)
 
     # 8. Database Persistence (Supabase queries table)
 

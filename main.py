@@ -417,7 +417,8 @@ async def block_docs_in_production_middleware(request: Request, call_next):
 @app.on_event("startup")
 async def on_startup_reap_jobs():
     try:
-        reap_interrupted_jobs_on_startup()
+        if check_query_jobs_table_exists():
+            reap_interrupted_jobs_on_startup()
     except Exception as e:
         print(f"Startup job reaper notice: {e}")
 
@@ -2064,6 +2065,8 @@ def safe_supabase_query(query_fn, retries=4):
         except Exception as e:
 
             err_str = str(e)
+            if "PGRST205" in err_str or "schema cache" in err_str or "could not find" in err_str.lower():
+                raise e
 
             if "ConnectionTerminated" in err_str or "connection" in err_str.lower() or attempt < retries - 1:
 
@@ -7671,6 +7674,36 @@ jobs_store: Dict[str, Dict[str, Any]] = {}
 
 _IN_FLIGHT_JOBS_CACHE: Dict[str, Dict[str, Any]] = {}
 _IN_FLIGHT_JOBS_LOCK = threading.Lock()
+_QUERY_JOBS_TABLE_EXISTS: Optional[bool] = None
+
+def check_query_jobs_table_exists() -> bool:
+    """
+    Startup self-check for the PostgreSQL `query_jobs` table.
+    Logs a warning (without failing) if the table is missing from Supabase schema cache.
+    Zero retries; evaluates table presence immediately.
+    """
+    global _QUERY_JOBS_TABLE_EXISTS
+    if _QUERY_JOBS_TABLE_EXISTS is not None:
+        return _QUERY_JOBS_TABLE_EXISTS
+
+    if not supabase:
+        _QUERY_JOBS_TABLE_EXISTS = False
+        return False
+
+    try:
+        supabase.table("query_jobs").select("job_id").limit(1).execute()
+        _QUERY_JOBS_TABLE_EXISTS = True
+        logger.info("[STARTUP SELF-CHECK] Table 'public.query_jobs' verified in Supabase.")
+    except Exception as e:
+        err_msg = str(e)
+        _QUERY_JOBS_TABLE_EXISTS = False
+        if "PGRST205" in err_msg or "schema cache" in err_msg or "not find" in err_msg:
+            print(f"⚠️ [STARTUP SELF-CHECK] Notice: 'public.query_jobs' table is missing in Supabase (PGRST205). In-flight persistence will use memory store. To enable database persistence, apply migrations/query_jobs.sql.", file=sys.stderr, flush=True)
+            logger.warning(f"[STARTUP SELF-CHECK] Table 'public.query_jobs' missing: {err_msg}")
+        else:
+            logger.debug(f"[STARTUP SELF-CHECK] query_jobs check encountered: {err_msg}")
+
+    return _QUERY_JOBS_TABLE_EXISTS
 
 def _load_in_flight_jobs() -> Dict[str, Dict[str, Any]]:
     """
@@ -7744,7 +7777,7 @@ def persist_in_flight_job_state(job_id: str, stage: str, status: str = "running"
         if extra:
             jobs_store[job_id].update(extra)
 
-    if supabase:
+    if supabase and check_query_jobs_table_exists():
         try:
             payload = {
                 "job_id": job_id,
@@ -8275,14 +8308,22 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         except MemorandumVerificationBlockedError as ve:
             print(f"[JOB {job_id}] MEMORANDUM BLOCKED BY VERIFIER: {ve}", file=sys.stderr, flush=True)
             if job_id in jobs_store:
-                jobs_store[job_id].update({
-                    'status': 'error',
-                    'stage': 'verification_blocked',
-                    'error': 'MEMORANDUM_VERIFICATION_FAILED',
-                    'result': None,
-                    'verification_report': ve.verification_report,
-                    'completed_at': datetime.now(timezone.utc),
-                })
+                blocked_data = getattr(ve, "blocked_payload", None)
+                if blocked_data:
+                    jobs_store[job_id].update(blocked_data)
+                else:
+                    jobs_store[job_id].update({
+                        'status': 'error',
+                        'stage': 'verification_blocked',
+                        'error': 'MEMORANDUM_VERIFICATION_FAILED',
+                        'error_category': 'VERIFICATION_GATE_REJECTION',
+                        'safe_reason': 'The research memorandum failed strict ground-truth verification against official statute gazettes and verified precedent indexes.',
+                        'retry_guidance': 'Ensure all statutory quotes verbatim match authentic gazettes and all case citations exist in verified index.',
+                        'verified_statute_fallback': [],
+                        'result': None,
+                        'verification_report': ve.verification_report,
+                        'completed_at': datetime.now(timezone.utc),
+                    })
             return
         except Exception as e:
 
@@ -15666,6 +15707,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
             "safe_reason": job.get("safe_reason"),
             "retry_guidance": job.get("retry_guidance"),
             "verified_statute_fallback": job.get("verified_statute_fallback"),
+            "attempts": job.get("attempts", []),
             "early_display": None,
             "result": None
         }

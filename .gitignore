@@ -74,3 +74,6 @@ scratch_*
 !requirements.txt
 !data/evidence/**
 
+
+# Runtime rate limit state
+data/rate_limit_state.json

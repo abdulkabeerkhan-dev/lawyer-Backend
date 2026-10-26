@@ -133,8 +133,9 @@ def strip_model_banners(memo_text: str) -> Tuple[str, List[Dict[str, Any]]]:
 
 class MemorandumVerificationBlockedError(Exception):
     """Raised when a research memorandum fails ground-truth verification."""
-    def __init__(self, verification_report: Dict[str, Any]):
+    def __init__(self, verification_report: Dict[str, Any], blocked_payload: Optional[Dict[str, Any]] = None):
         self.verification_report = verification_report
+        self.blocked_payload = blocked_payload
         total = verification_report.get("total_failures", 0)
         super().__init__(f"Memorandum failed ground-truth verification with {total} violations.")
 
@@ -801,7 +802,23 @@ class MemoVerifier:
         statutes_failed = 0
         verified_statute_spans = set()
 
+        # Collect blockquote text spans so citations embedded inside verbatim quotes are not double-penalized under Rule (d)
+        blockquote_spans = []
+        for q in quotes:
+            raw_q = q.get("raw", "")
+            if raw_q:
+                s_idx = 0
+                while True:
+                    found_idx = memo_text.find(raw_q, s_idx)
+                    if found_idx == -1:
+                        break
+                    blockquote_spans.append((found_idx, found_idx + len(raw_q)))
+                    s_idx = found_idx + len(raw_q)
+
         for sc in stat_cits:
+            # Skip citations occurring inside verbatim blockquotes (governed by Rule a)
+            if any(b_start <= sc["start"] and sc["end"] <= b_end for b_start, b_end in blockquote_spans):
+                continue
             cit_res = self.verify_statutory_citation(sc["span"], sc["active_order"], has_disputed)
             is_valid, reason, rec = cit_res
             cid = cit_res.cid

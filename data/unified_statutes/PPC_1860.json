@@ -19,7 +19,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_2",
@@ -41,7 +42,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_3",
@@ -63,7 +65,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_4",
@@ -85,7 +88,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_5",
@@ -107,7 +111,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_6",
@@ -129,7 +134,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_7",
@@ -151,7 +157,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_8",
@@ -173,7 +180,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_9",
@@ -195,7 +203,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_10",
@@ -217,7 +226,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_11",
@@ -239,7 +249,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_12",
@@ -261,7 +272,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_13",
@@ -283,7 +295,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_14",
@@ -305,7 +318,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_15",
@@ -327,7 +341,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_16",
@@ -349,7 +364,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_17",
@@ -371,7 +387,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_18",
@@ -393,7 +410,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_19",
@@ -415,7 +433,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_20",
@@ -437,7 +456,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_21",
@@ -459,7 +479,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_22",
@@ -481,7 +502,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_23",
@@ -503,7 +525,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_24",
@@ -525,7 +548,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_25",
@@ -547,7 +571,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_26",
@@ -569,7 +594,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_27",
@@ -591,7 +617,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_28",
@@ -613,7 +640,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_29",
@@ -635,7 +663,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_30",
@@ -657,7 +686,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_31",
@@ -679,7 +709,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_32",
@@ -701,7 +732,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_33",
@@ -723,7 +755,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_34",
@@ -747,7 +780,8 @@
     "footnotes": [],
     "text_normalized": "When a criminal act is done by several persons, in furtherance of the common intention of all, each of such persons is liable for that act in the same manner as if it were done by him alone.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_35",
@@ -769,7 +803,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_36",
@@ -791,7 +826,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_37",
@@ -813,7 +849,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_38",
@@ -835,7 +872,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_39",
@@ -857,7 +895,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_40",
@@ -879,7 +918,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_41",
@@ -901,7 +941,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_42",
@@ -923,7 +964,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_43",
@@ -945,7 +987,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_44",
@@ -967,7 +1010,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_45",
@@ -989,7 +1033,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_46",
@@ -1011,7 +1056,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_47",
@@ -1033,7 +1079,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_48",
@@ -1055,7 +1102,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_49",
@@ -1077,7 +1125,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_50",
@@ -1099,7 +1148,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_51",
@@ -1121,7 +1171,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_52",
@@ -1143,7 +1194,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_52A",
@@ -1165,7 +1217,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_53",
@@ -1187,7 +1240,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_54",
@@ -1209,7 +1263,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_55",
@@ -1231,7 +1286,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_55A",
@@ -1253,7 +1309,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_56",
@@ -1275,7 +1332,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_57",
@@ -1297,7 +1355,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_58",
@@ -1319,7 +1378,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_59",
@@ -1341,7 +1401,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_60",
@@ -1363,7 +1424,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_61",
@@ -1385,7 +1447,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_62",
@@ -1407,7 +1470,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_63",
@@ -1429,7 +1493,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_64",
@@ -1451,7 +1516,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_65",
@@ -1473,7 +1539,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_66",
@@ -1495,7 +1562,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_67",
@@ -1517,7 +1585,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_68",
@@ -1539,7 +1608,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_69",
@@ -1561,7 +1631,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_70",
@@ -1583,7 +1654,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_71",
@@ -1605,7 +1677,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_72",
@@ -1627,7 +1700,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_73",
@@ -1649,7 +1723,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_74",
@@ -1671,7 +1746,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_75",
@@ -1693,7 +1769,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_76",
@@ -1715,7 +1792,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_77",
@@ -1737,7 +1815,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_78",
@@ -1759,7 +1838,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_79",
@@ -1781,7 +1861,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_80",
@@ -1803,7 +1884,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_81",
@@ -1825,7 +1907,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_82",
@@ -1847,7 +1930,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_83",
@@ -1869,7 +1953,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_84",
@@ -1891,7 +1976,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_85",
@@ -1913,7 +1999,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_86",
@@ -1935,7 +2022,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_87",
@@ -1957,7 +2045,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_88",
@@ -1979,7 +2068,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_89",
@@ -2001,7 +2091,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_90",
@@ -2023,7 +2114,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_91",
@@ -2045,7 +2137,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_92",
@@ -2067,7 +2160,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_93",
@@ -2089,7 +2183,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_94",
@@ -2111,7 +2206,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_95",
@@ -2133,7 +2229,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_96",
@@ -2155,7 +2252,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_97",
@@ -2177,7 +2275,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_98",
@@ -2199,7 +2298,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_99",
@@ -2221,7 +2321,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_100",
@@ -2243,7 +2344,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_101",
@@ -2265,7 +2367,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_102",
@@ -2287,7 +2390,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_103",
@@ -2309,7 +2413,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_104",
@@ -2331,7 +2436,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_105",
@@ -2353,7 +2459,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_106",
@@ -2375,7 +2482,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_107",
@@ -2397,7 +2505,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_108",
@@ -2419,7 +2528,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_108A",
@@ -2441,7 +2551,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_109",
@@ -2465,7 +2576,8 @@
     "footnotes": [],
     "text_normalized": "Whoever abets any offence shall, if the act abetted is committed in consequence of the abetment, and no express provision is made by this Code for the punishment of such abetment, be punished with the punishment provided for the offence.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_110",
@@ -2487,7 +2599,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_111",
@@ -2509,7 +2622,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_112",
@@ -2531,7 +2645,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_113",
@@ -2553,7 +2668,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_114",
@@ -2575,7 +2691,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_115",
@@ -2597,7 +2714,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_116",
@@ -2619,7 +2737,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_117",
@@ -2641,7 +2760,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_118",
@@ -2663,7 +2783,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_119",
@@ -2685,7 +2806,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_120",
@@ -2707,7 +2829,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_120A",
@@ -2729,7 +2852,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_120B",
@@ -2751,7 +2875,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_121",
@@ -2773,7 +2898,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_121A",
@@ -2795,7 +2921,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_122",
@@ -2817,7 +2944,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_123",
@@ -2839,7 +2967,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_123A",
@@ -2861,7 +2990,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_123B",
@@ -2883,7 +3013,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_124",
@@ -2905,7 +3036,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_124A",
@@ -2927,7 +3059,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_125",
@@ -2949,7 +3082,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_126",
@@ -2971,7 +3105,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_127",
@@ -2993,7 +3128,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_128",
@@ -3015,7 +3151,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_129",
@@ -3037,7 +3174,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_130",
@@ -3059,7 +3197,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_131",
@@ -3081,7 +3220,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_132",
@@ -3103,7 +3243,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_133",
@@ -3125,7 +3266,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_134",
@@ -3147,7 +3289,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_135",
@@ -3169,7 +3312,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_136",
@@ -3191,7 +3335,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_137",
@@ -3213,7 +3358,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_138",
@@ -3235,7 +3381,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_138A",
@@ -3257,7 +3404,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_139",
@@ -3279,7 +3427,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_140",
@@ -3301,7 +3450,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_141",
@@ -3323,7 +3473,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_142",
@@ -3345,7 +3496,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_143",
@@ -3367,7 +3519,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_144",
@@ -3389,7 +3542,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_145",
@@ -3411,7 +3565,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_146",
@@ -3433,7 +3588,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_147",
@@ -3455,7 +3611,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_148",
@@ -3477,7 +3634,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_149",
@@ -3499,7 +3657,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_150",
@@ -3521,7 +3680,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_151",
@@ -3543,7 +3703,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_152",
@@ -3565,7 +3726,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_153",
@@ -3587,7 +3749,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_153A",
@@ -3609,7 +3772,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_153B",
@@ -3631,7 +3795,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_154",
@@ -3653,7 +3818,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_155",
@@ -3675,7 +3841,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_156",
@@ -3697,7 +3864,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_157",
@@ -3719,7 +3887,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_158",
@@ -3741,7 +3910,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_159",
@@ -3763,7 +3933,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_160",
@@ -3785,7 +3956,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_161",
@@ -3807,7 +3979,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_162",
@@ -3829,7 +4002,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_163",
@@ -3851,7 +4025,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_164",
@@ -3873,7 +4048,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_165",
@@ -3895,7 +4071,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_165A",
@@ -3917,7 +4094,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_165B",
@@ -3939,7 +4117,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_166",
@@ -3961,7 +4140,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_167",
@@ -3983,7 +4163,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_168",
@@ -4005,7 +4186,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_169",
@@ -4027,7 +4209,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_170",
@@ -4049,7 +4232,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_171",
@@ -4071,7 +4255,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_171A",
@@ -4093,7 +4278,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_171B",
@@ -4115,7 +4301,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_171C",
@@ -4137,7 +4324,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_171D",
@@ -4159,7 +4347,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_171E",
@@ -4181,7 +4370,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_171F",
@@ -4203,7 +4393,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_171G",
@@ -4225,7 +4416,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_171H",
@@ -4247,7 +4439,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_171I",
@@ -4269,7 +4462,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_171J",
@@ -4291,7 +4485,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_172",
@@ -4313,7 +4508,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_173",
@@ -4335,7 +4531,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_174",
@@ -4357,7 +4554,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_175",
@@ -4379,7 +4577,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_176",
@@ -4401,7 +4600,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_177",
@@ -4423,7 +4623,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_178",
@@ -4445,7 +4646,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_179",
@@ -4467,7 +4669,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_180",
@@ -4489,7 +4692,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_181",
@@ -4511,7 +4715,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_182",
@@ -4533,7 +4738,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_183",
@@ -4555,7 +4761,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_184",
@@ -4577,7 +4784,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_185",
@@ -4599,7 +4807,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_186",
@@ -4621,7 +4830,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_187",
@@ -4643,7 +4853,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_188",
@@ -4665,7 +4876,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_189",
@@ -4687,7 +4899,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_190",
@@ -4709,7 +4922,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_191",
@@ -4731,7 +4945,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_192",
@@ -4753,7 +4968,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_193",
@@ -4775,7 +4991,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_194",
@@ -4797,7 +5014,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_195",
@@ -4819,7 +5037,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_196",
@@ -4841,7 +5060,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_197",
@@ -4863,7 +5083,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_198",
@@ -4885,7 +5106,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_199",
@@ -4907,7 +5129,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_200",
@@ -4929,7 +5152,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_201",
@@ -4951,7 +5175,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_202",
@@ -4973,7 +5198,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_203",
@@ -4995,7 +5221,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_204",
@@ -5017,7 +5244,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_205",
@@ -5039,7 +5267,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_206",
@@ -5061,7 +5290,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_207",
@@ -5083,7 +5313,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_208",
@@ -5105,7 +5336,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_209",
@@ -5127,7 +5359,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_210",
@@ -5149,7 +5382,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_211",
@@ -5171,7 +5405,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_212",
@@ -5193,7 +5428,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_213",
@@ -5215,7 +5451,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_214",
@@ -5237,7 +5474,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_215",
@@ -5259,7 +5497,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_216",
@@ -5281,7 +5520,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_216A",
@@ -5303,7 +5543,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_216B",
@@ -5325,7 +5566,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_217",
@@ -5347,7 +5589,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_218",
@@ -5369,7 +5612,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_219",
@@ -5391,7 +5635,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_220",
@@ -5413,7 +5658,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_221",
@@ -5435,7 +5681,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_222",
@@ -5457,7 +5704,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_223",
@@ -5479,7 +5727,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_224",
@@ -5501,7 +5750,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_225",
@@ -5523,7 +5773,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_225A",
@@ -5545,7 +5796,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_225B",
@@ -5567,7 +5819,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_226",
@@ -5589,7 +5842,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_227",
@@ -5611,7 +5865,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_228",
@@ -5633,7 +5888,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_229",
@@ -5655,7 +5911,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_230",
@@ -5677,7 +5934,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_231",
@@ -5699,7 +5957,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_232",
@@ -5721,7 +5980,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_233",
@@ -5743,7 +6003,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_234",
@@ -5765,7 +6026,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_235",
@@ -5787,7 +6049,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_236",
@@ -5809,7 +6072,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_237",
@@ -5831,7 +6095,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_238",
@@ -5853,7 +6118,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_239",
@@ -5875,7 +6141,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_240",
@@ -5897,7 +6164,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_241",
@@ -5919,7 +6187,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_242",
@@ -5941,7 +6210,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_243",
@@ -5963,7 +6233,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_244",
@@ -5985,7 +6256,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_245",
@@ -6007,7 +6279,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_246",
@@ -6029,7 +6302,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_247",
@@ -6051,7 +6325,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_248",
@@ -6073,7 +6348,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_249",
@@ -6095,7 +6371,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_250",
@@ -6117,7 +6394,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_251",
@@ -6139,7 +6417,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_252",
@@ -6161,7 +6440,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_253",
@@ -6183,7 +6463,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_254",
@@ -6205,7 +6486,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_255",
@@ -6227,7 +6509,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_256",
@@ -6249,7 +6532,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_257",
@@ -6271,7 +6555,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_258",
@@ -6293,7 +6578,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_259",
@@ -6315,7 +6601,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_260",
@@ -6337,7 +6624,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_261",
@@ -6359,7 +6647,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_262",
@@ -6381,7 +6670,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_263",
@@ -6403,7 +6693,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_263A",
@@ -6425,7 +6716,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_264",
@@ -6447,7 +6739,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_265",
@@ -6469,7 +6762,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_266",
@@ -6491,7 +6785,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_267",
@@ -6513,7 +6808,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_268",
@@ -6535,7 +6831,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_269",
@@ -6557,7 +6854,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_270",
@@ -6579,7 +6877,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_271",
@@ -6601,7 +6900,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_272",
@@ -6623,7 +6923,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_273",
@@ -6645,7 +6946,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_274",
@@ -6667,7 +6969,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_275",
@@ -6689,7 +6992,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_276",
@@ -6711,7 +7015,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_277",
@@ -6733,7 +7038,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_278",
@@ -6755,7 +7061,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_279",
@@ -6777,7 +7084,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_280",
@@ -6799,7 +7107,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_281",
@@ -6821,7 +7130,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_282",
@@ -6843,7 +7153,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_283",
@@ -6865,7 +7176,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_284",
@@ -6887,7 +7199,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_285",
@@ -6909,7 +7222,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_286",
@@ -6931,7 +7245,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_287",
@@ -6953,7 +7268,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_288",
@@ -6975,7 +7291,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_289",
@@ -6997,7 +7314,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_290",
@@ -7019,7 +7337,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_291",
@@ -7041,7 +7360,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_292",
@@ -7063,7 +7383,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_292A",
@@ -7085,7 +7406,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_292B",
@@ -7107,7 +7429,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_292C",
@@ -7129,7 +7452,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_293",
@@ -7151,7 +7475,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_294",
@@ -7173,7 +7498,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_294A",
@@ -7195,7 +7521,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_294B",
@@ -7217,7 +7544,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_295",
@@ -7239,7 +7567,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_295A",
@@ -7261,7 +7590,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_295B",
@@ -7283,7 +7613,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_295C",
@@ -7305,7 +7636,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_296",
@@ -7327,7 +7659,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_297",
@@ -7349,7 +7682,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_298",
@@ -7371,7 +7705,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_298A",
@@ -7393,7 +7728,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_298B",
@@ -7415,7 +7751,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_298C",
@@ -7437,7 +7774,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_299",
@@ -7459,7 +7797,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_300",
@@ -7483,7 +7822,8 @@
     "footnotes": [],
     "text_normalized": "Whoever, with the intention of causing death or with the intention of causing bodily injury to a person, by doing an act which in the ordinary course of nature is likely to cause death, or with the knowledge that his act is so imminently dangerous that it must in all probability cause death, causes the death of such person, is said to commit Qatl-e-Amd.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_301",
@@ -7505,7 +7845,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_302",
@@ -7529,7 +7870,8 @@
     "footnotes": [],
     "text_normalized": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_303",
@@ -7551,7 +7893,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_304",
@@ -7573,7 +7916,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_305",
@@ -7595,7 +7939,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_306",
@@ -7617,7 +7962,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_307",
@@ -7639,7 +7985,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_308",
@@ -7661,7 +8008,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_309",
@@ -7683,7 +8031,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_310",
@@ -7705,7 +8054,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_310A",
@@ -7727,7 +8077,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_311",
@@ -7749,7 +8100,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_312",
@@ -7771,7 +8123,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_313",
@@ -7793,7 +8146,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_314",
@@ -7815,7 +8169,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_315",
@@ -7837,7 +8192,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_316",
@@ -7859,7 +8215,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_317",
@@ -7881,7 +8238,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_318",
@@ -7903,7 +8261,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_319",
@@ -7925,7 +8284,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_320",
@@ -7947,7 +8307,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_321",
@@ -7969,7 +8330,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_322",
@@ -7991,7 +8353,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_323",
@@ -8013,7 +8376,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_324",
@@ -8035,7 +8399,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_325",
@@ -8057,7 +8422,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_326",
@@ -8079,7 +8445,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_327",
@@ -8101,7 +8468,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_328",
@@ -8123,7 +8491,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_328A",
@@ -8145,7 +8514,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_329",
@@ -8167,7 +8537,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_330",
@@ -8189,7 +8560,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_331",
@@ -8211,7 +8583,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_332",
@@ -8233,7 +8606,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_333",
@@ -8255,7 +8629,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_334",
@@ -8277,7 +8652,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_335",
@@ -8299,7 +8675,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_336",
@@ -8321,7 +8698,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_336A",
@@ -8343,7 +8721,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_336B",
@@ -8365,7 +8744,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337",
@@ -8389,7 +8769,8 @@
     "footnotes": [],
     "text_normalized": "Shajjah: Whoever causes on the head or face of any person, any hurt which does not amount to itlaf-i-udw or itlaf-i-salahiyyat-i-udw, is said to cause shajjah (Shajjah-i-Khafifah, Mudihah, Hashimah, Munaqqilah, Ammah, Damighah).",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_337A",
@@ -8411,7 +8792,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337B",
@@ -8433,7 +8815,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337C",
@@ -8455,7 +8838,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337D",
@@ -8477,7 +8861,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337E",
@@ -8499,7 +8884,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337F",
@@ -8521,7 +8907,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337G",
@@ -8543,7 +8930,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337H",
@@ -8565,7 +8953,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337I",
@@ -8587,7 +8976,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337J",
@@ -8609,7 +8999,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337K",
@@ -8631,7 +9022,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337L",
@@ -8653,7 +9045,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337M",
@@ -8675,7 +9068,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337N",
@@ -8697,7 +9091,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337O",
@@ -8719,7 +9114,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337P",
@@ -8741,7 +9137,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337Q",
@@ -8763,7 +9160,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337R",
@@ -8785,7 +9183,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337S",
@@ -8807,7 +9206,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337T",
@@ -8829,7 +9229,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337U",
@@ -8851,7 +9252,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337V",
@@ -8873,7 +9275,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337W",
@@ -8895,7 +9298,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337X",
@@ -8917,7 +9321,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337Y",
@@ -8939,7 +9344,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_337Z",
@@ -8961,7 +9367,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_338",
@@ -8983,7 +9390,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_338A",
@@ -9005,7 +9413,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_338B",
@@ -9027,7 +9436,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_338C",
@@ -9049,7 +9459,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_338D",
@@ -9071,7 +9482,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_338E",
@@ -9093,7 +9505,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_338F",
@@ -9115,7 +9528,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_338G",
@@ -9137,7 +9551,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_338H",
@@ -9159,7 +9574,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_339",
@@ -9181,7 +9597,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_340",
@@ -9203,7 +9620,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_341",
@@ -9225,7 +9643,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_342",
@@ -9247,7 +9666,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_343",
@@ -9269,7 +9689,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_344",
@@ -9291,7 +9712,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_345",
@@ -9313,7 +9735,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_346",
@@ -9335,7 +9758,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_347",
@@ -9357,7 +9781,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_348",
@@ -9379,7 +9804,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_349",
@@ -9401,7 +9827,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_350",
@@ -9423,7 +9850,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_351",
@@ -9445,7 +9873,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_352",
@@ -9467,7 +9896,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_353",
@@ -9489,7 +9919,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_354",
@@ -9511,7 +9942,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_354A",
@@ -9533,7 +9965,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_355",
@@ -9555,7 +9988,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_356",
@@ -9577,7 +10011,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_357",
@@ -9599,7 +10034,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_358",
@@ -9621,7 +10057,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_359",
@@ -9643,7 +10080,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_360",
@@ -9665,7 +10103,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_361",
@@ -9687,7 +10126,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_362",
@@ -9709,7 +10149,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_363",
@@ -9731,7 +10172,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_364",
@@ -9753,7 +10195,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_364A",
@@ -9775,7 +10218,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_365",
@@ -9797,7 +10241,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_365A",
@@ -9819,7 +10264,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_365B",
@@ -9841,7 +10287,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_366",
@@ -9863,7 +10310,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_366A",
@@ -9885,7 +10333,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_366B",
@@ -9907,7 +10356,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_367",
@@ -9929,7 +10379,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_367A",
@@ -9951,7 +10402,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_368",
@@ -9973,7 +10425,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_369",
@@ -9995,7 +10448,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_369A",
@@ -10017,7 +10471,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_370",
@@ -10039,7 +10494,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_371",
@@ -10061,7 +10517,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_371A",
@@ -10083,7 +10540,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_371B",
@@ -10105,7 +10563,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_372",
@@ -10127,7 +10586,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_373",
@@ -10149,7 +10609,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_374",
@@ -10171,7 +10632,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_375",
@@ -10193,7 +10655,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_375A",
@@ -10215,7 +10678,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_376",
@@ -10239,7 +10703,8 @@
     "footnotes": [],
     "text_normalized": "(1) Whoever commits rape shall be punished with death or imprisonment of either description for a term which shall not be less than ten years nor more than twenty-five years, and shall also be liable to fine.\n(2) When rape is committed by two or more persons in furtherance of common intention of all, each of such persons shall be punished with death or imprisonment for life.\n(3) Whoever commits rape of a minor or a person with mental or physical disability shall be punished with death or imprisonment for life.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_376A",
@@ -10261,7 +10726,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_376B",
@@ -10283,7 +10749,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_377",
@@ -10305,7 +10772,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_377A",
@@ -10327,7 +10795,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_377B",
@@ -10349,7 +10818,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_378",
@@ -10371,7 +10841,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_379",
@@ -10393,7 +10864,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_380",
@@ -10415,7 +10887,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_381",
@@ -10437,7 +10910,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_381A",
@@ -10459,7 +10933,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_382",
@@ -10481,7 +10956,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_383",
@@ -10503,7 +10979,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_384",
@@ -10525,7 +11002,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_385",
@@ -10547,7 +11025,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_386",
@@ -10569,7 +11048,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_387",
@@ -10591,7 +11071,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_388",
@@ -10613,7 +11094,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_389",
@@ -10635,7 +11117,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_390",
@@ -10657,7 +11140,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_391",
@@ -10679,7 +11163,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_392",
@@ -10701,7 +11186,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_393",
@@ -10723,7 +11209,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_394",
@@ -10745,7 +11232,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_395",
@@ -10767,7 +11255,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_396",
@@ -10789,7 +11278,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_397",
@@ -10811,7 +11301,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_398",
@@ -10833,7 +11324,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_399",
@@ -10855,7 +11347,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_400",
@@ -10877,7 +11370,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_401",
@@ -10899,7 +11393,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_402",
@@ -10921,7 +11416,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_402A",
@@ -10943,7 +11439,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_402B",
@@ -10965,7 +11462,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_402C",
@@ -10987,7 +11485,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_403",
@@ -11009,7 +11508,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_404",
@@ -11031,7 +11531,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_405",
@@ -11055,7 +11556,8 @@
     "footnotes": [],
     "text_normalized": "Whoever, being in any manner entrusted with property, or with any dominion over property, dishonestly misappropriates or converts to his own use that property, or dishonestly uses or disposes of that property in violation of any direction of law prescribing the mode in which such trust is to be discharged, or of any legal contract, express or implied, which he has made touching the discharge of such trust, or wilfully suffers any other person so to do, commits 'criminal breach of trust'.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_406",
@@ -11079,7 +11581,8 @@
     "footnotes": [],
     "text_normalized": "Whoever commits criminal breach of trust shall be punished with imprisonment of either description for a term which may extend to seven years, or with fine, or with both.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_407",
@@ -11101,7 +11604,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_408",
@@ -11123,7 +11627,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_409",
@@ -11147,7 +11652,8 @@
     "footnotes": [],
     "text_normalized": "Whoever, being in any manner entrusted with property, or with any dominion over property in his capacity of a public servant or in the way of his business as a banker, merchant, factor, broker, attorney or agent, commits criminal breach of trust in respect of that property, shall be punished with imprisonment for life, or with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_410",
@@ -11169,7 +11675,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_411",
@@ -11191,7 +11698,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_412",
@@ -11213,7 +11721,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_413",
@@ -11235,7 +11744,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_414",
@@ -11257,7 +11767,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_415",
@@ -11265,23 +11776,21 @@
     "primary_num": "415",
     "secondary_num": null,
     "title": "Cheating",
-    "text": "415. Cheating. Whoever, by deceiving any person, fraudulently or dishonest1y induces the\nperson so deceived to deliver any property to any person, or to consent that any person shall retain any\nIndian Penal Code Amdt. Act, 1882 (8 of 1882).\nCapital of the Federation” which had been subs. by A. O., 1949, Arts. 3(2) and 4, for “British India”.",
-    "tier": "ingested_unreviewed",
+    "text": "415. Cheating. Whoever, by deceiving any person, fraudulently or dishonestly induces the person so deceived to deliver any property to any person, or to consent that any person shall retain any property, or intentionally induces the person so deceived to do or omit to do anything which he would not do or omit if he were not so deceived, and which act or omission causes or is likely to cause damage or harm to that person 1[or any other person] in body, mind, reputation or property, is said to “cheat”.\n\nExplanation.__ A dishonest concealment of facts is a deception within the meaning of this section.\n\nIllustrations\n(a) A, by falsely pretending to be in the Civil Service, intentionally deceives Z, and thus dishonestly induces Z to let him have on credit goods for which he does not mean, to pay. A cheats.\n(b) A, by putting a counterfeit mark on an article, intentionally deceives Z into a belief that this article was made by a certain celebrated manufacturer, and thus dishonestly induces Z to buy and pay for the article. A cheats.\n(c) A, by exhibiting to Z a false sample of an article, intentionally deceives Z into believing that the article corresponds with the sample, and thereby dishonestly induces Z to buy and pay for the article. A cheats.\n(d) A, by tendering in payment for an article a bill on a house with which A keeps no money, and by which A expects that the bill will be dishonoured, intentionally deceives Z, and thereby dishonestly induces Z to deliver the article, intending not to pay for it. A cheats.\n(e) A, by pleading as diamonds articles, which he knows are not diamonds, intentionally deceives Z, and thereby dishonestly induces Z to lend money. A cheats.\n(f) A, intentionally deceives Z into a belief that A means to repay any money that Z may lend to him and thereby dishonestly induces Z to lend him money, A not intending to repay it. A cheats.\n(g) A intentionally deceives Z into a belief that A means to deliver to Z a certain quantity of indigo plant which he does not intend to deliver, and thereby dishonestly induces Z to advance money upon the faith of such delivery. A cheats ; but if A, at the time of obtaining the money, intends to deliver the indigo plant, and afterwards breaks his contract and does not deliver it, he does not cheat, but is liable only to a civil action for breach of contract.\n(h) A intentionally deceives Z into a belief that A has performed A’s part of a contract made with Z, which he has not performed, and thereby dishonestly induces Z to pay money. A cheats.\n(i) A sells and conveys an estate to B. A, knowing that in consequence of such sale he has no right to the property, sells or mortgages the same to Z, without disclosing the fact of the previous sale and conveyance to B, and receives the purchase or mortgage money from Z. A cheats.",
+    "tier": "tier_1",
     "status": "in_force",
-    "verification_status": "ingested_unreviewed",
-    "source_page": 145,
-    "content_hash": "9b8c99233db23095c08474b389fd1b47bfe1b88e4d1eb65f2079ddfe3d68022e",
+    "verification_status": "page_verified",
+    "source_page": "145-146",
+    "content_hash": "543928d8ce19e10fcc85e9e54540bda75854dca3f848754c70d8b517e02464e6",
     "missing_reason": null,
     "footnotes": [
-      "1Subs. by the Law Reforms Ordinance, 1972 (12 of 1972), s. 2 and Sch., for “transportation for life”.",
-      "3Ins. by Act 8 of 1882, s. 9.",
-      "4Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (21 of 1960), s. 3 and 2nd Sch., (w.e.f. 14th October, 1955), for “the Provinces and the",
-      "5Subs. by the Law Reforms Ordinance, 1972 (12 of 1972), s. 2 and Sch., for “transportation for life”.",
-      "2The word “the” before the words “offence of” was rep. by the Amending Act, 1891 (12 of 1891), and the words “offence of” were rep. by s. 9 of the"
+      "1Ins. by the Pakistan Penal Code (Amdt.) Ordinance, 1980 (41 of 1980), s.2."
     ],
     "text_normalized": "415. Cheating. Whoever, by deceiving any person, fraudulently or dishonest1y induces the\nperson so deceived to deliver any property to any person, or to consent that any person shall retain any\nIndian Penal Code Amdt. Act, 1882 (8 of 1882).\nCapital of the Federation” which had been subs. by A. O., 1949, Arts. 3(2) and 4, for “British India”.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true,
+    "has_operative_text": true
   },
   {
     "canonical_id": "PPC_1860_SEC_416",
@@ -11303,7 +11812,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_417",
@@ -11321,7 +11831,8 @@
     "footnotes": [],
     "text_normalized": "417. Punishment for cheating. Whoever cheats shall be punished with imprisonment of\neither description for a term which may extend to one year, or with fine, or with both.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_418",
@@ -11343,7 +11854,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_419",
@@ -11365,7 +11877,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_420",
@@ -11389,7 +11902,8 @@
     "footnotes": [],
     "text_normalized": "Whoever cheats and thereby dishonestly induces the person deceived to deliver any property to any person, or to make, alter or destroy the whole or any part of a valuable security, or anything which is signed or sealed, and which is capable of being converted into a valuable security, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_421",
@@ -11411,7 +11925,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_422",
@@ -11433,7 +11948,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_423",
@@ -11455,7 +11971,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_424",
@@ -11477,7 +11994,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_425",
@@ -11499,7 +12017,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_426",
@@ -11521,7 +12040,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_427",
@@ -11543,7 +12063,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_428",
@@ -11565,7 +12086,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_429",
@@ -11587,7 +12109,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_430",
@@ -11609,7 +12132,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_431",
@@ -11631,7 +12155,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_432",
@@ -11653,7 +12178,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_433",
@@ -11675,7 +12201,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_434",
@@ -11697,7 +12224,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_435",
@@ -11719,7 +12247,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_436",
@@ -11741,7 +12270,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_437",
@@ -11763,7 +12293,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_438",
@@ -11785,7 +12316,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_439",
@@ -11807,7 +12339,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_440",
@@ -11829,7 +12362,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_441",
@@ -11851,7 +12385,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_442",
@@ -11873,7 +12408,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_443",
@@ -11895,7 +12431,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_444",
@@ -11917,7 +12454,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_445",
@@ -11939,7 +12477,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_446",
@@ -11961,7 +12500,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_447",
@@ -11983,7 +12523,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_448",
@@ -12005,7 +12546,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_449",
@@ -12027,7 +12569,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_450",
@@ -12049,7 +12592,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_451",
@@ -12071,7 +12615,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_452",
@@ -12093,7 +12638,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_453",
@@ -12115,7 +12661,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_454",
@@ -12137,7 +12684,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_455",
@@ -12159,7 +12707,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_456",
@@ -12181,7 +12730,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_457",
@@ -12203,7 +12753,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_458",
@@ -12225,7 +12776,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_459",
@@ -12247,7 +12799,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_460",
@@ -12269,7 +12822,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_461",
@@ -12291,7 +12845,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462",
@@ -12313,7 +12868,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462A",
@@ -12335,7 +12891,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462B",
@@ -12357,7 +12914,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462C",
@@ -12379,7 +12937,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462D",
@@ -12401,7 +12960,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462E",
@@ -12423,7 +12983,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462F",
@@ -12445,7 +13006,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462G",
@@ -12467,7 +13029,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462H",
@@ -12489,7 +13052,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462I",
@@ -12511,7 +13075,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462J",
@@ -12533,7 +13098,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462K",
@@ -12555,7 +13121,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462L",
@@ -12577,7 +13144,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462M",
@@ -12599,7 +13167,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_362N",
@@ -12621,7 +13190,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462O",
@@ -12643,7 +13213,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_462P",
@@ -12665,7 +13236,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_463",
@@ -12687,7 +13259,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_464",
@@ -12709,7 +13282,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_465",
@@ -12731,7 +13305,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_466",
@@ -12753,7 +13328,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_467",
@@ -12775,7 +13351,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_468",
@@ -12797,7 +13374,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_469",
@@ -12819,7 +13397,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_470",
@@ -12841,7 +13420,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_471",
@@ -12863,7 +13443,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_472",
@@ -12885,7 +13466,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_473",
@@ -12907,7 +13489,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_474",
@@ -12929,7 +13512,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_475",
@@ -12951,7 +13535,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_476",
@@ -12973,7 +13558,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_477",
@@ -12995,7 +13581,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_477A",
@@ -13017,7 +13604,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_478",
@@ -13039,7 +13627,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_479",
@@ -13061,7 +13650,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_480",
@@ -13083,7 +13673,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_481",
@@ -13105,7 +13696,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_482",
@@ -13127,7 +13719,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_483",
@@ -13149,7 +13742,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_484",
@@ -13171,7 +13765,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_485",
@@ -13193,7 +13788,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_486",
@@ -13215,7 +13811,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_487",
@@ -13237,7 +13834,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_488",
@@ -13259,7 +13857,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_489",
@@ -13281,7 +13880,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_489A",
@@ -13303,7 +13903,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_489B",
@@ -13325,7 +13926,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_489C",
@@ -13347,7 +13949,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_489D",
@@ -13369,7 +13972,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_489E",
@@ -13391,7 +13995,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_489F",
@@ -13415,7 +14020,8 @@
     "footnotes": [],
     "text_normalized": "Whoever dishonestly issues a cheque towards repayment of a loan or fulfillment of an obligation which is dishonoured on presentation, shall be punishable with imprisonment which may extend to three years, or with fine, or with both, unless he can establish, for which the burden of proof shall rest on him, that he had made arrangements with his bank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the cheque.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_489G",
@@ -13437,7 +14043,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_490",
@@ -13459,7 +14066,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_491",
@@ -13481,7 +14089,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_492",
@@ -13503,7 +14112,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_493",
@@ -13525,7 +14135,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_493A",
@@ -13547,7 +14158,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_494",
@@ -13569,7 +14181,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_495",
@@ -13591,7 +14204,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_496",
@@ -13613,7 +14227,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_496A",
@@ -13635,7 +14250,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_496B",
@@ -13657,7 +14273,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_496C",
@@ -13679,7 +14296,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_497",
@@ -13701,7 +14319,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_498",
@@ -13723,7 +14342,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_498A",
@@ -13745,7 +14365,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_498B",
@@ -13767,7 +14388,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_498C",
@@ -13789,7 +14411,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_499",
@@ -13811,7 +14434,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_500",
@@ -13833,7 +14457,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_501",
@@ -13855,7 +14480,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_502",
@@ -13877,7 +14503,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_502A",
@@ -13899,7 +14526,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_503",
@@ -13921,7 +14549,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_504",
@@ -13943,7 +14572,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_505",
@@ -13965,7 +14595,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_506",
@@ -13987,7 +14618,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_507",
@@ -14009,7 +14641,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_508",
@@ -14031,7 +14664,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_509",
@@ -14053,7 +14687,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_510",
@@ -14075,7 +14710,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_511",
@@ -14097,7 +14733,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_302_A",
@@ -14121,7 +14758,8 @@
     "footnotes": [],
     "text_normalized": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_302_B",
@@ -14145,7 +14783,8 @@
     "footnotes": [],
     "text_normalized": "punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_302_C",
@@ -14169,7 +14808,8 @@
     "footnotes": [],
     "text_normalized": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable.",
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": true
   },
   {
     "canonical_id": "PPC_1860_SEC_22A",
@@ -14191,7 +14831,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_22A_6",
@@ -14213,7 +14854,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   },
   {
     "canonical_id": "PPC_1860_SEC_22A_6_A",
@@ -14235,6 +14877,7 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "quoting_allowed": false
   }
 ]

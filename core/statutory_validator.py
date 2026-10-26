@@ -883,6 +883,11 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
             r'\b(\d+(?:-[A-Za-z]+|[A-Za-z])?)(?:\s*\(\s*(\d+)\s*\))?(?:\s*\(\s*([a-zA-Z])\s*\))?',
             clean_text, re.IGNORECASE
         )
+        if sec_match:
+            candidate_prim = sec_match.group(1).replace("-", "")
+            if candidate_prim.isdigit() and 1800 <= int(candidate_prim) <= 2099:
+                # ORDER 1.11: Standalone calendar years are not section numbers
+                sec_match = None
 
     if sec_match:
         raw_prim = sec_match.group(1).upper().replace("-", "")

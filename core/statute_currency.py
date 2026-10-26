@@ -898,6 +898,10 @@ def detect_statutory_provisions_in_query(query: str) -> List[Tuple[str, str]]:
         clause_clean = clause.strip()
         if len(clause_clean) < 3:
             continue
+        bare_digits = re.sub(r'[^0-9]', '', clause_clean)
+        if bare_digits.isdigit() and 1800 <= int(bare_digits) <= 2099:
+            # ORDER 1.11: Standalone calendar year clauses (e.g. ', 2001?') are never section citations
+            continue
         parsed = parse_statutory_citation(clause_clean, context=query)
         if parsed and parsed.get("is_valid") and parsed.get("act_code"):
             act_code = parsed["act_code"]

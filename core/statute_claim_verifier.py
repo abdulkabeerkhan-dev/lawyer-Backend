@@ -95,12 +95,22 @@ def verify_memo_statutory_claims(
     verified_claims = []
 
     stored_texts = []
-    for v in stored_provisions.values():
-        if isinstance(v, dict):
-            stored_texts.append(" ".join(str(x) for x in v.values()))
-        else:
-            stored_texts.append(str(v))
+    stored_section_texts = {}
+    for k, v in stored_provisions.items():
+        v_str = " ".join(str(x) for x in v.values()) if isinstance(v, dict) else str(v)
+        stored_texts.append(v_str)
+        # Extract section number from key (e.g. FIO_2001_SEC_22 -> 22, PPC_1860_SEC_489F -> 489f, SEC_22 -> 22, 22 -> 22)
+        m = re.search(r'(?:_SEC_|^SEC_|^)([0-9]+(?:[-][0-9a-z]+|[a-z])?)', str(k), re.IGNORECASE)
+        if m:
+            clean_k_sec = re.sub(r'[^0-9a-z]', '', m.group(1).lower())
+            if clean_k_sec:
+                stored_section_texts[clean_k_sec] = _normalize_text(v_str)
+
     combined_stored_text = _normalize_text(" ".join(stored_texts))
+
+    primary_clean = re.sub(r'[^0-9a-z]', '', primary_section.lower()) if primary_section else ""
+    if primary_clean and primary_clean not in stored_section_texts:
+        stored_section_texts[primary_clean] = combined_stored_text
 
     # Target sections only (Relevant Provisions & Application to Query)
     lines = memo_text.splitlines()
@@ -130,10 +140,11 @@ def verify_memo_statutory_claims(
         refs = re.findall(r'(?:section|s\.)\s*([0-9]+(?:[-][0-9a-z]+|[a-z])?)(?:\(([0-9]+)\))?', line, flags=re.IGNORECASE)
         for sec_num, sub_num in refs:
             sec_num_clean = re.sub(r'[^0-9a-z]', '', sec_num.lower())
-            primary_clean = re.sub(r'[^0-9a-z]', '', primary_section.lower())
-            if primary_section and sec_num_clean == primary_clean:
+            is_stored_sec = (sec_num_clean in stored_section_texts) or (primary_clean and sec_num_clean == primary_clean)
+            if is_stored_sec:
+                sec_text_to_check = stored_section_texts.get(sec_num_clean, combined_stored_text)
                 if sub_num:
-                    if f"({sub_num})" in combined_stored_text or f"sub-section ({sub_num})" in combined_stored_text or f"subsection ({sub_num})" in combined_stored_text:
+                    if f"({sub_num})" in sec_text_to_check or f"sub-section ({sub_num})" in sec_text_to_check or f"subsection ({sub_num})" in sec_text_to_check or re.search(rf'\(\s*{sub_num}\s*\)', sec_text_to_check):
                         verified_claims.append({
                             "type": "verified_primary_subsection",
                             "reference": f"Section {sec_num}({sub_num})"
