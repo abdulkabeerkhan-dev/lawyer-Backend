@@ -65,7 +65,7 @@ def audit_record(cid, text):
         issues.append(f"Trailing fragment '{m}'")
 
     # (b) Terminal punctuation check
-    if not re.search(r'[\.\]\)\:\'\"\*]\s*$', clean):
+    if not re.search(r'(?:[\.\]\)\:\'\"”’\*]|Omitted)\s*$', clean):
         last_char = clean[-1] if clean else ""
         issues.append(f"Text ends without full stop or closing bracket (ends with {repr(last_char)})")
 

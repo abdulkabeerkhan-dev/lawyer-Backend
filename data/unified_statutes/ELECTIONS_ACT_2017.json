@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "If, from each report of the Returning Officer or on the basis of material before it, the Commission is satisfied that, by reason of grave illegalities or violation of the provisions of this Act or the Rules, the poll in any constituency or polling station has been vitiated, the Commission may declare the poll void and order a fresh poll.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "ELECTIONS_ACT_2017_SEC_63",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "The Returning Officer shall scrutinize the nomination papers and may reject any nomination paper if he is satisfied that: (a) the candidate is not qualified to be elected; (b) the candidate is disqualified from being elected under Article 62 or 63 of the Constitution; (c) the proposer or seconder is not qualified to subscribe; or (d) any signature is not genuine.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "ELECTIONS_ACT_2017_SEC_137",
@@ -69,7 +73,9 @@
     "footnotes": [],
     "text_normalized": "Every Member of an Assembly and Senate shall submit to the Commission on or before thirty-first day of December each year a copy of his statement of assets and liabilities including assets and liabilities of his spouse and dependent children.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "ELECTIONS_ACT_2017_SEC_140",
@@ -93,6 +99,8 @@
     "footnotes": [],
     "text_normalized": "The Commission shall appoint Election Tribunals for the trial of election petitions in respect of elections to an Assembly or the Senate. An Election Tribunal shall consist of a person who is or has been a Judge of a High Court.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

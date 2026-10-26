@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_2",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_3",
@@ -59,7 +63,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Subject to the provisions contained in sections 4 to 25 (inclusive), every suit instituted, appeal preferred, and application made after the period of limitation prescribed therefor by the first schedule shall be dismissed, although limitation has not been set up as a defence."
+    "text_normalized": "Subject to the provisions contained in sections 4 to 25 (inclusive), every suit instituted, appeal preferred, and application made after the period of limitation prescribed therefor by the first schedule shall be dismissed, although limitation has not been set up as a defence.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_4",
@@ -81,7 +87,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Where the period of limitation prescribed for any suit, appeal or application expires on a day when the Court is closed, the suit, appeal or application may be instituted, preferred or made on the day that the Court re-opens."
+    "text_normalized": "Where the period of limitation prescribed for any suit, appeal or application expires on a day when the Court is closed, the suit, appeal or application may be instituted, preferred or made on the day that the Court re-opens.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_5",
@@ -103,7 +111,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Any appeal or application for a revision or a review of judgment or for leave to appeal or any other application to which this section may be made applicable by or under any enactment for the time being in force may be admitted after the period of limitation prescribed therefor, when the appellant or applicant satisfies the Court that he had sufficient cause for not preferring the appeal or making the application within such period."
+    "text_normalized": "Any appeal or application for a revision or a review of judgment or for leave to appeal or any other application to which this section may be made applicable by or under any enactment for the time being in force may be admitted after the period of limitation prescribed therefor, when the appellant or applicant satisfies the Court that he had sufficient cause for not preferring the appeal or making the application within such period.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_6",
@@ -123,7 +133,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_7",
@@ -143,7 +155,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_8",
@@ -163,7 +177,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_9",
@@ -183,7 +199,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_10",
@@ -203,7 +221,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_11",
@@ -223,7 +243,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_12",
@@ -245,7 +267,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) In computing the period of limitation prescribed for any suit, appeal or application, the day from which such period is to be reckoned shall be excluded. (2) In computing the period of limitation prescribed for an appeal, an application for leave to appeal and an application for a review of judgment, the day on which the judgment complained of was pronounced, and the time requisite for obtaining a copy of the decree, sentence or order appealed from or sought to be reviewed, shall be excluded."
+    "text_normalized": "(1) In computing the period of limitation prescribed for any suit, appeal or application, the day from which such period is to be reckoned shall be excluded. (2) In computing the period of limitation prescribed for an appeal, an application for leave to appeal and an application for a review of judgment, the day on which the judgment complained of was pronounced, and the time requisite for obtaining a copy of the decree, sentence or order appealed from or sought to be reviewed, shall be excluded.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_13",
@@ -265,7 +289,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_14",
@@ -287,7 +313,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) In computing the period of limitation prescribed for any suit, the time during which the plaintiff has been prosecuting with due diligence another civil proceeding, whether in a Court of first instance or in a Court of appeal, against the defendant, shall be excluded, where the proceeding is founded upon the same cause of action and is prosecuted in good faith in a Court which, from defect of jurisdiction, or other cause of a like nature, is unable to entertain it."
+    "text_normalized": "(1) In computing the period of limitation prescribed for any suit, the time during which the plaintiff has been prosecuting with due diligence another civil proceeding, whether in a Court of first instance or in a Court of appeal, against the defendant, shall be excluded, where the proceeding is founded upon the same cause of action and is prosecuted in good faith in a Court which, from defect of jurisdiction, or other cause of a like nature, is unable to entertain it.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_15",
@@ -307,7 +335,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_16",
@@ -327,7 +357,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_17",
@@ -347,7 +379,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_18",
@@ -367,7 +401,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_19",
@@ -389,7 +425,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Where, before the expiration of the period prescribed for a suit or application in respect of any property or right, an acknowledgment of liability in respect of such property or right has been made in writing signed by the party against whom such property or right is claimed, or by some person through whom he derives title or liability, a fresh period of limitation shall be computed from the time when the acknowledgment was so signed."
+    "text_normalized": "(1) Where, before the expiration of the period prescribed for a suit or application in respect of any property or right, an acknowledgment of liability in respect of such property or right has been made in writing signed by the party against whom such property or right is claimed, or by some person through whom he derives title or liability, a fresh period of limitation shall be computed from the time when the acknowledgment was so signed.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_20",
@@ -411,7 +449,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Where payment on account of a debt or of interest on a legacy is made before the expiration of the prescribed period by the person liable to pay the debt or legacy, or by his agent duly authorized in this behalf, a fresh period of limitation shall be computed from the time when the payment was made."
+    "text_normalized": "(1) Where payment on account of a debt or of interest on a legacy is made before the expiration of the prescribed period by the person liable to pay the debt or legacy, or by his agent duly authorized in this behalf, a fresh period of limitation shall be computed from the time when the payment was made.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_21",
@@ -431,7 +471,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_22",
@@ -451,7 +493,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_23",
@@ -471,7 +515,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_24",
@@ -491,7 +537,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_25",
@@ -511,7 +559,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_26",
@@ -531,7 +581,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_27",
@@ -551,7 +603,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_28",
@@ -573,7 +627,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "At the determination of the period hereby limited to any person for instituting a suit for possession of any property, his right to such property shall be extinguished."
+    "text_normalized": "At the determination of the period hereby limited to any person for instituting a suit for possession of any property, his right to such property shall be extinguished.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_29",
@@ -593,7 +649,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_30",
@@ -613,7 +671,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_31",
@@ -633,7 +693,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_SEC_32",
@@ -653,7 +715,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_1",
@@ -673,7 +737,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_2",
@@ -693,7 +759,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_3",
@@ -713,7 +781,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_4",
@@ -733,7 +803,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_5",
@@ -755,7 +827,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Any appeal or application for a revision or a review of judgment or for leave to appeal or any other application to which this section may be made applicable by or under any enactment for the time being in force may be admitted after the period of limitation prescribed therefor, when the appellant or applicant satisfies the Court that he had sufficient cause for not preferring the appeal or making the application within such period."
+    "text_normalized": "Any appeal or application for a revision or a review of judgment or for leave to appeal or any other application to which this section may be made applicable by or under any enactment for the time being in force may be admitted after the period of limitation prescribed therefor, when the appellant or applicant satisfies the Court that he had sufficient cause for not preferring the appeal or making the application within such period.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_6",
@@ -775,7 +849,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_7",
@@ -795,7 +871,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_8",
@@ -815,7 +893,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_9",
@@ -835,7 +915,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_10",
@@ -855,7 +937,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_11",
@@ -875,7 +959,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_12",
@@ -895,7 +981,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_13",
@@ -915,7 +1003,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_14",
@@ -935,7 +1025,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_15",
@@ -955,7 +1047,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_16",
@@ -975,7 +1069,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_17",
@@ -995,7 +1091,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_18",
@@ -1015,7 +1113,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_19",
@@ -1035,7 +1135,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_20",
@@ -1055,7 +1157,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_21",
@@ -1075,7 +1179,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_22",
@@ -1095,7 +1201,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_23",
@@ -1115,7 +1223,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_24",
@@ -1135,7 +1245,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_25",
@@ -1155,7 +1267,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_26",
@@ -1175,7 +1289,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_27",
@@ -1195,7 +1311,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_28",
@@ -1215,7 +1333,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_29",
@@ -1235,7 +1355,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_30",
@@ -1255,7 +1377,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_31",
@@ -1275,7 +1399,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_32",
@@ -1295,7 +1421,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_33",
@@ -1315,7 +1443,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_34",
@@ -1335,7 +1465,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_35",
@@ -1355,7 +1487,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_36",
@@ -1375,7 +1509,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_37",
@@ -1395,7 +1531,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_38",
@@ -1415,7 +1553,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_39",
@@ -1435,7 +1575,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_40",
@@ -1455,7 +1597,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_41",
@@ -1475,7 +1619,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_42",
@@ -1495,7 +1641,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_43",
@@ -1515,7 +1663,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_44",
@@ -1535,7 +1685,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_45",
@@ -1555,7 +1707,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_46",
@@ -1575,7 +1729,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_47",
@@ -1595,7 +1751,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_48",
@@ -1615,7 +1773,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_49",
@@ -1635,7 +1795,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_50",
@@ -1655,7 +1817,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_51",
@@ -1675,7 +1839,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_52",
@@ -1695,7 +1861,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_53",
@@ -1715,7 +1883,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_54",
@@ -1735,7 +1905,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_55",
@@ -1755,7 +1927,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_56",
@@ -1775,7 +1949,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_57",
@@ -1795,7 +1971,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_58",
@@ -1815,7 +1993,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_59",
@@ -1835,7 +2015,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_60",
@@ -1855,7 +2037,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_61",
@@ -1875,7 +2059,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_62",
@@ -1895,7 +2081,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_63",
@@ -1915,7 +2103,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_64",
@@ -1935,7 +2125,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_65",
@@ -1955,7 +2147,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_66",
@@ -1975,7 +2169,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_67",
@@ -1995,7 +2191,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_68",
@@ -2015,7 +2213,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_69",
@@ -2037,7 +2237,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "On a bill of exchange or promissory note payable at a fixed time after date. Period of limitation: Three years. Time from which period begins to run: When the bill or note falls due."
+    "text_normalized": "On a bill of exchange or promissory note payable at a fixed time after date. Period of limitation: Three years. Time from which period begins to run: When the bill or note falls due.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_70",
@@ -2057,7 +2259,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_71",
@@ -2077,7 +2281,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_72",
@@ -2099,7 +2305,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "On a bill of exchange or promissory note payable at a fixed time after sight or after demand. Period of limitation: Three years. Time from which period begins to run: When the fixed time expires."
+    "text_normalized": "On a bill of exchange or promissory note payable at a fixed time after sight or after demand. Period of limitation: Three years. Time from which period begins to run: When the fixed time expires.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_73",
@@ -2115,7 +2323,9 @@
     "content_hash": "7e729adb239efc9e765d2628ac69417bd32ed5d69637913575733b754ae33d93",
     "missing_reason": null,
     "footnotes": [],
-    "text_normalized": "Description of suit: On a bill of exchange or promissory note payable on demand and not accompanied by any writing restraining or postponing the right to sue.\nPeriod of limitation: Three years\nTime from which period begins to run: The date of the bill or note."
+    "text_normalized": "Description of suit: On a bill of exchange or promissory note payable on demand and not accompanied by any writing restraining or postponing the right to sue.\nPeriod of limitation: Three years\nTime from which period begins to run: The date of the bill or note.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_74",
@@ -2137,7 +2347,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "On a promissory note or bond payable by instalments. Period of limitation: Three years. Time from which period begins to run: The expiration of the first term of payment as to the part then payable; and for the other parts the expiration of the respective terms of payment."
+    "text_normalized": "On a promissory note or bond payable by instalments. Period of limitation: Three years. Time from which period begins to run: The expiration of the first term of payment as to the part then payable; and for the other parts the expiration of the respective terms of payment.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_75",
@@ -2159,7 +2371,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "On a promissory note or bond payable by instalments, which provides that if default be made in payment of one or more instalments, the whole shall be due. Period of limitation: Three years. Time from which period begins to run: When the default is made, unless where the payee or obligee waives the benefit of the provision, and then when fresh default is made in respect of which there is not such waiver."
+    "text_normalized": "On a promissory note or bond payable by instalments, which provides that if default be made in payment of one or more instalments, the whole shall be due. Period of limitation: Three years. Time from which period begins to run: When the default is made, unless where the payee or obligee waives the benefit of the provision, and then when fresh default is made in respect of which there is not such waiver.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_76",
@@ -2181,7 +2395,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "On a promissory note given by the maker to a third person to be delivered to the payee after a certain event should happen. Period of limitation: Three years. Time from which period begins to run: The date of the delivery to the payee."
+    "text_normalized": "On a promissory note given by the maker to a third person to be delivered to the payee after a certain event should happen. Period of limitation: Three years. Time from which period begins to run: The date of the delivery to the payee.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_77",
@@ -2201,7 +2417,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_78",
@@ -2221,7 +2439,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_79",
@@ -2241,7 +2461,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_80",
@@ -2257,7 +2479,9 @@
     "content_hash": "d406366a11266584e278c13612ff1d5417b8a30d8a8ceaa37eb214d0f13083c3",
     "missing_reason": null,
     "footnotes": [],
-    "text_normalized": "Description of suit: Suit on a bill of exchange, promissory note or bond not herein expressly provided for.\nPeriod of limitation: Three years\nTime from which period begins to run: When the bill, note or bond becomes payable."
+    "text_normalized": "Description of suit: Suit on a bill of exchange, promissory note or bond not herein expressly provided for.\nPeriod of limitation: Three years\nTime from which period begins to run: When the bill, note or bond becomes payable.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_81",
@@ -2277,7 +2501,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_82",
@@ -2297,7 +2523,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_83",
@@ -2317,7 +2545,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_84",
@@ -2337,7 +2567,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_85",
@@ -2357,7 +2589,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_86",
@@ -2377,7 +2611,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_87",
@@ -2397,7 +2633,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_88",
@@ -2417,7 +2655,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_89",
@@ -2437,7 +2677,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_90",
@@ -2457,7 +2699,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_91",
@@ -2477,7 +2721,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_92",
@@ -2497,7 +2743,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_93",
@@ -2517,7 +2765,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_94",
@@ -2537,7 +2787,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_95",
@@ -2557,7 +2809,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_96",
@@ -2577,7 +2831,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_97",
@@ -2597,7 +2853,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_98",
@@ -2617,7 +2875,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_99",
@@ -2637,7 +2897,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_100",
@@ -2657,7 +2919,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_101",
@@ -2677,7 +2941,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_102",
@@ -2697,7 +2963,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_103",
@@ -2717,7 +2985,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_104",
@@ -2737,7 +3007,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_105",
@@ -2757,7 +3029,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_106",
@@ -2777,7 +3051,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_107",
@@ -2797,7 +3073,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_108",
@@ -2817,7 +3095,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_109",
@@ -2837,7 +3117,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_110",
@@ -2857,7 +3139,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_111",
@@ -2877,7 +3161,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_112",
@@ -2897,7 +3183,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_113",
@@ -2919,7 +3207,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "For specific performance of a contract. Period of limitation: Three years. Time from which period begins to run: The date fixed for the performance, or, if no such date is fixed, when the plaintiff has notice that performance is refused."
+    "text_normalized": "For specific performance of a contract. Period of limitation: Three years. Time from which period begins to run: The date fixed for the performance, or, if no such date is fixed, when the plaintiff has notice that performance is refused.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_114",
@@ -2939,7 +3229,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_115",
@@ -2955,7 +3247,9 @@
     "content_hash": "c15f621e9e6b2b7ae8cd7bb65a12ada52e09e4326cb51d1efeece28f3c23f6d0",
     "missing_reason": null,
     "footnotes": [],
-    "text_normalized": "Description of suit: For compensation for the breach of any contract, express or implied, not in writing registered and not herein specially provided for.\nPeriod of limitation: Three years\nTime from which period begins to run: When the contract is broken, or (where there are successive breaches) when the breach in respect of which the suit is instituted occurs, or (where the breach is continuing) when it ceases."
+    "text_normalized": "Description of suit: For compensation for the breach of any contract, express or implied, not in writing registered and not herein specially provided for.\nPeriod of limitation: Three years\nTime from which period begins to run: When the contract is broken, or (where there are successive breaches) when the breach in respect of which the suit is instituted occurs, or (where the breach is continuing) when it ceases.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_116",
@@ -2971,7 +3265,9 @@
     "content_hash": "11c9383dca403dd3851c9410b0e535e9ac43a353f5f2fe2ad7222f3d4c59275b",
     "missing_reason": null,
     "footnotes": [],
-    "text_normalized": "Description of suit: For compensation for the breach of a contract in writing registered.\nPeriod of limitation: Six years\nTime from which period begins to run: When the period of limitation would begin to run against a suit brought on a contract not registered."
+    "text_normalized": "Description of suit: For compensation for the breach of a contract in writing registered.\nPeriod of limitation: Six years\nTime from which period begins to run: When the period of limitation would begin to run against a suit brought on a contract not registered.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_117",
@@ -2991,7 +3287,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_118",
@@ -3011,7 +3309,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_119",
@@ -3031,7 +3331,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_120",
@@ -3051,7 +3353,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_121",
@@ -3071,7 +3375,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_122",
@@ -3091,7 +3397,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_123",
@@ -3111,7 +3419,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_124",
@@ -3131,7 +3441,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_125",
@@ -3151,7 +3463,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_126",
@@ -3171,7 +3485,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_127",
@@ -3191,7 +3507,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_128",
@@ -3211,7 +3529,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_129",
@@ -3231,7 +3551,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_130",
@@ -3251,7 +3573,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_131",
@@ -3271,7 +3595,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_132",
@@ -3287,7 +3613,9 @@
     "content_hash": "e76eab3eee56e0791bf6d962b8f858217c510be7190bb98fa8d0db0528684afe",
     "missing_reason": null,
     "footnotes": [],
-    "text_normalized": "Description of suit: To enforce payment of money charged upon immoveable property.\nExplanation.—For the purposes of this article—\n(a) the allowance and fees respectively called malikana and haqqs, and\n(b) the value of any agricultural produce accrued on a mortgage are deemed to be money charged upon immoveable property.\nPeriod of limitation: Twelve years\nTime from which period begins to run: When the money sued for becomes due."
+    "text_normalized": "Description of suit: To enforce payment of money charged upon immoveable property.\nExplanation.—For the purposes of this article—\n(a) the allowance and fees respectively called malikana and haqqs, and\n(b) the value of any agricultural produce accrued on a mortgage are deemed to be money charged upon immoveable property.\nPeriod of limitation: Twelve years\nTime from which period begins to run: When the money sued for becomes due.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_133",
@@ -3307,7 +3635,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_134",
@@ -3327,7 +3657,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_135",
@@ -3347,7 +3679,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_136",
@@ -3367,7 +3701,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_137",
@@ -3387,7 +3723,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_138",
@@ -3407,7 +3745,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_139",
@@ -3427,7 +3767,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_140",
@@ -3447,7 +3789,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_141",
@@ -3467,7 +3811,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_142",
@@ -3487,7 +3833,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_143",
@@ -3507,7 +3855,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_144",
@@ -3529,7 +3879,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "For possession of immoveable property or any interest therein not hereby otherwise specially provided for. Period of limitation: Twelve years. Time from which period begins to run: When the possession of the defendant becomes adverse to the plaintiff."
+    "text_normalized": "For possession of immoveable property or any interest therein not hereby otherwise specially provided for. Period of limitation: Twelve years. Time from which period begins to run: When the possession of the defendant becomes adverse to the plaintiff.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_145",
@@ -3549,7 +3901,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_146",
@@ -3569,7 +3923,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_147",
@@ -3589,7 +3945,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_148",
@@ -3609,7 +3967,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_149",
@@ -3631,7 +3991,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Any suit by or on behalf of the Federal Government or any Provincial Government. Period of limitation: Sixty years. Time from which period begins to run: When the period of limitation would begin to run under this Act against a like suit by a private person."
+    "text_normalized": "Any suit by or on behalf of the Federal Government or any Provincial Government. Period of limitation: Sixty years. Time from which period begins to run: When the period of limitation would begin to run under this Act against a like suit by a private person.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_150",
@@ -3651,7 +4013,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_151",
@@ -3671,7 +4035,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_152",
@@ -3691,7 +4057,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_153",
@@ -3711,7 +4079,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_154",
@@ -3731,7 +4101,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_155",
@@ -3751,7 +4123,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_156",
@@ -3771,7 +4145,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_157",
@@ -3791,7 +4167,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_158",
@@ -3811,7 +4189,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_159",
@@ -3831,7 +4211,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_160",
@@ -3851,7 +4233,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_161",
@@ -3871,7 +4255,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_162",
@@ -3891,7 +4277,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_163",
@@ -3911,7 +4299,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_164",
@@ -3931,7 +4321,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_165",
@@ -3951,7 +4343,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_166",
@@ -3973,7 +4367,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Under the same Code [Code of Civil Procedure, 1908] to set aside a sale in execution of a decree including any such application by a Judgment-debtor. Period of limitation: Thirty days. Time from which period begins to run: The date of the sale."
+    "text_normalized": "Under the same Code [Code of Civil Procedure, 1908] to set aside a sale in execution of a decree including any such application by a Judgment-debtor. Period of limitation: Thirty days. Time from which period begins to run: The date of the sale.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_167",
@@ -3993,7 +4389,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_168",
@@ -4013,7 +4411,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_169",
@@ -4033,7 +4433,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_170",
@@ -4053,7 +4455,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_171",
@@ -4073,7 +4477,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_172",
@@ -4093,7 +4499,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_173",
@@ -4113,7 +4521,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_174",
@@ -4133,7 +4543,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_175",
@@ -4153,7 +4565,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_176",
@@ -4173,7 +4587,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_177",
@@ -4193,7 +4609,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_178",
@@ -4213,7 +4631,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_179",
@@ -4233,7 +4653,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_180",
@@ -4253,7 +4675,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_181",
@@ -4269,7 +4693,9 @@
     "content_hash": "1544456276d14e4c1860dc46278cc7c83ef462228c2329c92e8909c234624012",
     "missing_reason": null,
     "footnotes": [],
-    "text_normalized": "Description of suit: Applications for which no period of limitation is provided elsewhere in this schedule or by section 48 of the Code of Civil Procedure, 1908 (V of 1908).\nPeriod of limitation: Three years\nTime from which period begins to run: When the right to apply accrues."
+    "text_normalized": "Description of suit: Applications for which no period of limitation is provided elsewhere in this schedule or by section 48 of the Code of Civil Procedure, 1908 (V of 1908).\nPeriod of limitation: Three years\nTime from which period begins to run: When the right to apply accrues.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_182",
@@ -4277,16 +4703,18 @@
     "primary_num": "182",
     "secondary_num": null,
     "title": "Execution of a decree or order of Civil Court [OMITTED]",
-    "text": "Description of suit: Article 182 omitted by the Law Reforms Ordinance, 1972 (12 of 1972), Section 2 and Schedule (previously provided for execution of a decree or order of any Civil Court not provided for by Article 183 or by Section 48 of the Code of Civil Procedure, 1908).\nPeriod of limitation: Omitted\nTime from which period begins to run: Omitted.",
+    "text": "Description of suit: Article 182 omitted by the Law Reforms Ordinance, 1972 (12 of 1972), Section 2 and Schedule (previously provided for execution of a decree or order of any Civil Court not provided for by Article 183 or by Section 48 of the Code of Civil Procedure, 1908).\nPeriod of limitation: Omitted\nTime from which period begins to run: Omitted",
     "tier": "ingested_unreviewed",
     "status": "repealed_or_omitted",
     "verification_status": "title_only",
     "source_page": 46,
-    "content_hash": "ad8e4831873e2a1f4c3decfcafef32f332a35f102a75ac7ebf51068e4d57b1b5",
+    "content_hash": "e5e4469c4634ffc6371cdf8e29fc9c8b01987287974043e841791c5a289ccfd7",
     "missing_reason": "Omitted by Law Reforms Ordinance, 1972 (12 of 1972), s.2 and Sch.",
     "footnotes": [],
-    "text_normalized": "Description of suit: Article 182 omitted by the Law Reforms Ordinance, 1972 (12 of 1972), Section 2 and Schedule (previously provided for execution of a decree or order of any Civil Court not provided for by Article 183 or by Section 48 of the Code of Civil Procedure, 1908).\nPeriod of limitation: Omitted\nTime from which period begins to run: Omitted.",
-    "in_force": false
+    "text_normalized": "Description of suit: Article 182 omitted by the Law Reforms Ordinance, 1972 (12 of 1972), Section 2 and Schedule (previously provided for execution of a decree or order of any Civil Court not provided for by Article 183 or by Section 48 of the Code of Civil Procedure, 1908).\nPeriod of limitation: Omitted\nTime from which period begins to run: Omitted",
+    "in_force": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_183",
@@ -4306,7 +4734,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "LIMITATION_1908_ART_64A",
@@ -4328,6 +4758,8 @@
     "effective_from": "2001-01-01",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Under Order XXXVII of the Code of Civil Procedure. Period of limitation: Three years. Time from which period begins to run: When the debt becomes payable."
+    "text_normalized": "Under Order XXXVII of the Code of Civil Procedure. Period of limitation: Three years. Time from which period begins to run: When the debt becomes payable.",
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

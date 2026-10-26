@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "(1) No one shall enter into or upon any property to dispossess, grab, control or occupy it without having lawful authority to do so with the intention of dispossessing, grabbing, controlling or occupying the property of owner or lawful occupant. (2) Whoever contravenes the provisions of sub-section (1) shall, without prejudice to any punishment to which he may be liable under any other law, be punishable with imprisonment which may extend to ten years and with fine, and the Court shall also order the accused to restore possession of the property to the owner or lawful occupant.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "ILLEGAL_DISPOSSESSION_2005_SEC_5",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "(1) Upon a complaint the Court may direct the officer in charge of a police station for investigation and report within fifteen days. (2) The Court of Session shall have exclusive jurisdiction to try offences under this Act.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "ILLEGAL_DISPOSSESSION_2005_SEC_8",
@@ -69,6 +73,8 @@
     "footnotes": [],
     "text_normalized": "(1) If during trial the Court is satisfied that any person was unlawfully dispossessed of any property, the Court may pass an order directing that the possession of the property be restored to the owner or lawful occupant even during the pendency of trial.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

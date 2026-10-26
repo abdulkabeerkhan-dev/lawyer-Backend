@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "Government, or the District Magistrate, if satisfied with respect to any particular person that with a view to preventing him from acting in any manner prejudicial to public safety or the maintenance of public order it is necessary so to do, may by order in writing direct that such person be arrested and detained for such period as may be specified in the order, not exceeding three months.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "MPO_1960_SEC_16",
@@ -45,6 +47,8 @@
     "footnotes": [],
     "text_normalized": "Whoever makes, publishes or disseminates any statement, rumor or report which is calculated to cause fear or alarm to the public or any section of the public, or to incite any person to commit an offence against public peace, shall be punished with imprisonment which may extend to three years, or with fine, or with both.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

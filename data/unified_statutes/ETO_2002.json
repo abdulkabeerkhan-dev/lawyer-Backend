@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "No document, record, information, communication or transaction shall be denied legal effect, validity or enforceability solely on the ground that it is in the form of an electronic document.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "ETO_2002_SEC_4",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "The requirement under any law for any document, record, information, communication or transaction to be in writing or in written form shall be deemed satisfied if it is in the form of an electronic document and is accessible so as to be usable for subsequent reference.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "ETO_2002_SEC_7",
@@ -69,7 +73,9 @@
     "footnotes": [],
     "text_normalized": "The requirement under any law for a signature shall be deemed satisfied if an electronic signature is used, provided it identifies the signatory and indicates the signatory's intention in respect of the electronic document.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "ETO_2002_SEC_8",
@@ -93,6 +99,8 @@
     "footnotes": [],
     "text_normalized": "The requirement under any law for any document to be presented or retained in its original form shall be deemed satisfied by an electronic document if there exists a reliable assurance as to the integrity of the information from the time when it was first generated in final form.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

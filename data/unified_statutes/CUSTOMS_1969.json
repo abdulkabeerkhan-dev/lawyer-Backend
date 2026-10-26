@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "(1) Except as hereinafter provided, customs duties shall be levied at such rates as may be prescribed under the First Schedule or under any other law for the time being in force on: (a) goods imported into Pakistan; and (b) goods brought from any foreign country to any customs-station.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CUSTOMS_1969_SEC_25",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "(1) Transaction value: The customs value of imported goods shall be the transaction value, that is the price actually paid or payable for the goods when sold for export to Pakistan.\n(2) If transaction value cannot be determined, customs value shall be determined sequentially using transaction value of identical goods, similar goods, deductive value, computed value, or fall-back value method.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CUSTOMS_1969_SEC_32",
@@ -69,7 +73,9 @@
     "footnotes": [],
     "text_normalized": "(1) If any person in connection with any matter of customs: (a) makes or signs any declaration, statement or document; or (b) produces or delivers any declaration which is untrue or incorrect in any material particular, he shall be guilty of an offence under this section.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CUSTOMS_1969_SEC_156",
@@ -93,7 +99,9 @@
     "footnotes": [],
     "text_normalized": "(1) Whoever commits any offence specified in the Table shall be punishable with the penalties and punishments set out in the third column of that Table (including confiscation of smuggled goods and imprisonment for smuggling under clause 8).",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CUSTOMS_1969_SEC_168",
@@ -117,6 +125,8 @@
     "footnotes": [],
     "text_normalized": "(1) The appropriate officer may seize any goods in respect of which any offence has been committed or is suspected to have been committed under this Act.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

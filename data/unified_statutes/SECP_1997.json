@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "The Commission shall have all powers and functions necessary to regulate corporate affairs, capital markets, securities exchanges, insurance companies, non-banking finance companies, and modarabas, and to protect the interest of investors.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "SECP_1997_SEC_33",
@@ -45,6 +47,8 @@
     "footnotes": [],
     "text_normalized": "Where the Commission has reason to believe that any person has committed a contravention of this Act or any administered legislation or is engaged in insider trading, market abuse or corporate fraud, the Commission may appoint an investigating officer to conduct an investigation and exercise powers of search, seizure and summoning of witnesses.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

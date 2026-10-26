@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "The Family Court may, on being satisfied that violence has taken place or is likely to take place, pass a protection order prohibiting the defendant from: (a) committing any act of violence; (b) aiding or abetting in commission of violence; (c) entering the place of employment or residence of the aggrieved woman; or (d) attempting to communicate in any form with the aggrieved person.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PUNJAB_WOMEN_VIOLENCE_2016_SEC_5",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "The Court may pass a residence order: (a) restraining the defendant from dispossessing or throwing out the aggrieved person from the shared household; (b) directing the defendant to remove himself from the shared household; or (c) securing alternate accommodation for the aggrieved person identical to the status of the parties.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PUNJAB_WOMEN_VIOLENCE_2016_SEC_6",
@@ -69,6 +73,8 @@
     "footnotes": [],
     "text_normalized": "The Court may direct the defendant to pay monetary relief to meet the expenses incurred and losses suffered by the aggrieved woman and child as a result of violence, including medical expenses and loss of earnings.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

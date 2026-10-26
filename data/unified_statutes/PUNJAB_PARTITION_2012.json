@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "(1) This Act may be cited as the Punjab Partition of Immoveable Property Act, 2012.\n(2) It extends to the whole of the Punjab.\n(3) It shall come into force at once.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PUNJAB_PARTITION_2012_SEC_3",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "In a suit for partition of immoveable property, the Court shall, on the date fixed for appearance of the parties or as soon as may be thereafter, examine the pleadings, title documents and determine the shares of the co-owners.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PUNJAB_PARTITION_2012_SEC_4",
@@ -69,7 +73,9 @@
     "footnotes": [],
     "text_normalized": "Where the property is capable of partition by metes and bounds, the Court shall appoint a referee or local commissioner to prepare a scheme of partition.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PUNJAB_PARTITION_2012_SEC_7",
@@ -93,7 +99,9 @@
     "footnotes": [],
     "text_normalized": "(1) If any party to a suit for partition is in possession of the whole or part of the immoveable property and receiving rent or profit, the Court may, on an application of any other party, direct the party in possession to deposit the rental value or actual rent or profit in the Court on monthly basis.\n(2) If the party in possession fails to deposit the amount under subsection (1), the Court may strike out the defence of such party or pass any other appropriate order.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PUNJAB_PARTITION_2012_SEC_8",
@@ -117,7 +125,9 @@
     "footnotes": [],
     "text_normalized": "(1) If the Court is of opinion that the property cannot be partitioned without destroying its intrinsic value or convenience of enjoyment, the Court shall order the sale of the immoveable property by open public auction.\n(2) The co-owners shall have a preferential right of pre-emption to purchase the property at the highest bid price.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PUNJAB_PARTITION_2012_SEC_9",
@@ -141,7 +151,9 @@
     "footnotes": [],
     "text_normalized": "The Court shall, before putting the property to auction, fix the reserve price having regard to the market value and evaluation report of an approved evaluator.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PUNJAB_PARTITION_2012_SEC_14",
@@ -165,6 +177,8 @@
     "footnotes": [],
     "text_normalized": "A suit for partition under this Act shall be heard and decided by the Court as expeditiously as possible and preferably within a period of six months from the date of the appearance of the parties.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

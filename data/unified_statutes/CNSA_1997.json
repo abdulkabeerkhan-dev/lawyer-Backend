@@ -19,7 +19,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_1",
@@ -41,7 +43,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_2",
@@ -63,7 +67,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_3",
@@ -85,7 +91,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_4",
@@ -107,7 +115,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_5",
@@ -129,7 +139,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_6",
@@ -151,7 +163,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_7",
@@ -173,7 +187,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_8",
@@ -195,7 +211,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_9",
@@ -219,7 +237,9 @@
     "footnotes": [],
     "text_normalized": "Whoever contravenes the provisions of section 6, 7 or 8 with respect to: (a) narcotic dirt, cannabis or leaves of the coca plant where quantity is 100 grams or less, shall be punishable with imprisonment which may extend to two years, or with fine, or with both;\n(b) where quantity exceeds 100 grams but does not exceed 1000 grams, shall be punishable with imprisonment which may extend to seven years and with fine;\n(c) where quantity exceeds 1000 grams, shall be punishable with death, or imprisonment for life, or imprisonment for a term which may extend to fourteen years and with fine which may be up to one million rupees.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_10",
@@ -241,7 +261,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_11",
@@ -263,7 +285,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_12",
@@ -285,7 +309,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_13",
@@ -307,7 +333,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_14",
@@ -329,7 +357,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_15",
@@ -351,7 +381,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_16",
@@ -373,7 +405,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_17",
@@ -395,7 +429,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_18",
@@ -417,7 +453,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_19",
@@ -439,7 +477,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_20",
@@ -461,7 +501,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_21",
@@ -483,7 +525,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_22",
@@ -505,7 +549,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_23",
@@ -527,7 +573,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_24",
@@ -549,7 +597,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_25",
@@ -571,7 +621,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_26",
@@ -593,7 +645,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_27",
@@ -615,7 +669,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_28",
@@ -637,7 +693,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_29",
@@ -659,7 +717,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_30",
@@ -681,7 +741,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_31",
@@ -703,7 +765,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_32",
@@ -725,7 +789,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_33",
@@ -747,7 +813,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_34",
@@ -769,7 +837,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_35",
@@ -791,7 +861,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_36",
@@ -813,7 +885,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_37",
@@ -835,7 +909,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_38",
@@ -857,7 +933,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_39",
@@ -879,7 +957,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_40",
@@ -901,7 +981,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_40A",
@@ -923,7 +1005,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_41",
@@ -945,7 +1029,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_42",
@@ -967,7 +1053,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_43",
@@ -989,7 +1077,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_44",
@@ -1011,7 +1101,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_45",
@@ -1033,7 +1125,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_46",
@@ -1055,7 +1149,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_47",
@@ -1077,7 +1173,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_48",
@@ -1099,7 +1197,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_49",
@@ -1121,7 +1221,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_49A",
@@ -1143,7 +1245,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_50",
@@ -1165,7 +1269,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_51",
@@ -1189,7 +1295,9 @@
     "footnotes": [],
     "text_normalized": "(1) Notwithstanding anything contained in sections 496 and 497 of the Code of Criminal Procedure, 1898, no person accused of an offence punishable under this Act with death or imprisonment for life or imprisonment for a term exceeding five years shall be released on bail unless the prosecution has been given notice and there appear reasonable grounds for believing that the accused is not guilty of such offence.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_52",
@@ -1211,7 +1319,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_53",
@@ -1233,7 +1343,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_54",
@@ -1255,7 +1367,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_55",
@@ -1277,7 +1391,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_56",
@@ -1299,7 +1415,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_57",
@@ -1321,7 +1439,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_58",
@@ -1343,7 +1463,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_59",
@@ -1365,7 +1487,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_60",
@@ -1387,7 +1511,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_61",
@@ -1409,7 +1535,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_62",
@@ -1431,7 +1559,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_63",
@@ -1453,7 +1583,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_64",
@@ -1475,7 +1607,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_65",
@@ -1497,7 +1631,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_66",
@@ -1519,7 +1655,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_67",
@@ -1541,7 +1679,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_68",
@@ -1563,7 +1703,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_69",
@@ -1585,7 +1727,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_70",
@@ -1607,7 +1751,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_71",
@@ -1629,7 +1775,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_72",
@@ -1651,7 +1799,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_73",
@@ -1673,7 +1823,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_74",
@@ -1695,7 +1847,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_74A",
@@ -1717,7 +1871,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_75",
@@ -1739,7 +1895,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_76",
@@ -1761,7 +1919,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_77",
@@ -1783,7 +1943,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_78",
@@ -1805,7 +1967,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_9_A",
@@ -1829,7 +1993,9 @@
     "footnotes": [],
     "text_normalized": "Whoever contravenes the provisions of section 6, 7 or 8 with respect to: (a) narcotic dirt, cannabis or leaves of the coca plant where quantity is 100 grams or less, shall be punishable with imprisonment which may extend to two years, or with fine, or with both;\n(b) where quantity exceeds 100 grams but does not exceed 1000 grams, shall be punishable with imprisonment which may extend to seven years and with fine;\n(c) where quantity exceeds 1000 grams, shall be punishable with death, or imprisonment for life, or imprisonment for a term which may extend to fourteen years and with fine which may be up to one million rupees.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_9_B",
@@ -1853,7 +2019,9 @@
     "footnotes": [],
     "text_normalized": "Whoever contravenes the provisions of section 6, 7 or 8 with respect to: (a) narcotic dirt, cannabis or leaves of the coca plant where quantity is 100 grams or less, shall be punishable with imprisonment which may extend to two years, or with fine, or with both;\n(b) where quantity exceeds 100 grams but does not exceed 1000 grams, shall be punishable with imprisonment which may extend to seven years and with fine;\n(c) where quantity exceeds 1000 grams, shall be punishable with death, or imprisonment for life, or imprisonment for a term which may extend to fourteen years and with fine which may be up to one million rupees.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CNSA_1997_SEC_9_C",
@@ -1877,6 +2045,8 @@
     "footnotes": [],
     "text_normalized": "where quantity exceeds 1000 grams, shall be punishable with death, or imprisonment for life, or imprisonment for a term which may extend to fourteen years and with fine which may be up to one million rupees.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

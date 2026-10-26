@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "The Provincial Government may appoint an Authority to hear and decide all claims arising out of deductions from wages, or delay in payment of the wages of persons employed. Where contrary to the provisions of this Act any deduction has been made from wages, or any payment of wages has been delayed, the person employed or any legal practitioner or registered trade union may apply to the Authority for a direction.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PAYMENT_WAGES_1936_SEC_17",
@@ -45,6 +47,8 @@
     "footnotes": [],
     "text_normalized": "An appeal against an order dismissing an application under sub-section (2) of section 15, or against a direction made under sub-section (3) of that section may be preferred within thirty days to the Labour Court.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

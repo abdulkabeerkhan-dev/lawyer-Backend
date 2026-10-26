@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_2",
@@ -37,7 +39,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_3",
@@ -57,7 +61,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_4",
@@ -77,7 +83,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_5",
@@ -97,7 +105,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_6",
@@ -117,7 +127,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_7",
@@ -137,7 +149,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_8",
@@ -157,7 +171,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_9",
@@ -177,7 +193,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_10",
@@ -197,7 +215,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_11",
@@ -217,7 +237,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_12",
@@ -237,7 +259,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_13",
@@ -257,7 +281,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_14",
@@ -277,7 +303,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_15",
@@ -297,7 +325,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_16",
@@ -317,7 +347,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_17",
@@ -337,7 +369,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_18",
@@ -357,7 +391,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_19",
@@ -377,7 +413,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_20",
@@ -397,7 +435,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_21",
@@ -417,7 +457,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_22",
@@ -437,7 +479,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_23",
@@ -457,7 +501,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_24",
@@ -477,7 +523,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_25",
@@ -497,7 +545,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_26",
@@ -517,7 +567,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_27",
@@ -537,7 +589,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_28",
@@ -557,7 +611,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_29",
@@ -577,7 +633,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_30",
@@ -597,7 +655,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_31",
@@ -617,7 +677,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_32",
@@ -637,7 +699,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_33",
@@ -657,7 +721,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_34",
@@ -679,7 +745,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "When a criminal act is done by several persons, in furtherance of the common intention of all, each of such persons is liable for that act in the same manner as if it were done by him alone."
+    "text_normalized": "When a criminal act is done by several persons, in furtherance of the common intention of all, each of such persons is liable for that act in the same manner as if it were done by him alone.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_35",
@@ -699,7 +767,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_36",
@@ -719,7 +789,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_37",
@@ -739,7 +811,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_38",
@@ -759,7 +833,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_39",
@@ -779,7 +855,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_40",
@@ -799,7 +877,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_41",
@@ -819,7 +899,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_42",
@@ -839,7 +921,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_43",
@@ -859,7 +943,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_44",
@@ -879,7 +965,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_45",
@@ -899,7 +987,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_46",
@@ -919,7 +1009,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_47",
@@ -939,7 +1031,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_48",
@@ -959,7 +1053,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_49",
@@ -979,7 +1075,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_50",
@@ -999,7 +1097,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_51",
@@ -1019,7 +1119,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_52",
@@ -1039,7 +1141,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_52A",
@@ -1059,7 +1163,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_53",
@@ -1079,7 +1185,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_54",
@@ -1099,7 +1207,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_55",
@@ -1119,7 +1229,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_55A",
@@ -1139,7 +1251,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_56",
@@ -1159,7 +1273,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_57",
@@ -1179,7 +1295,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_58",
@@ -1199,7 +1317,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_59",
@@ -1219,7 +1339,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_60",
@@ -1239,7 +1361,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_61",
@@ -1259,7 +1383,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_62",
@@ -1279,7 +1405,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_63",
@@ -1299,7 +1427,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_64",
@@ -1319,7 +1449,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_65",
@@ -1339,7 +1471,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_66",
@@ -1359,7 +1493,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_67",
@@ -1379,7 +1515,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_68",
@@ -1399,7 +1537,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_69",
@@ -1419,7 +1559,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_70",
@@ -1439,7 +1581,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_71",
@@ -1459,7 +1603,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_72",
@@ -1479,7 +1625,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_73",
@@ -1499,7 +1647,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_74",
@@ -1519,7 +1669,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_75",
@@ -1539,7 +1691,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_76",
@@ -1559,7 +1713,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_77",
@@ -1579,7 +1735,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_78",
@@ -1599,7 +1757,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_79",
@@ -1619,7 +1779,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_80",
@@ -1639,7 +1801,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_81",
@@ -1659,7 +1823,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_82",
@@ -1679,7 +1845,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_83",
@@ -1699,7 +1867,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_84",
@@ -1719,7 +1889,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_85",
@@ -1739,7 +1911,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_86",
@@ -1759,7 +1933,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_87",
@@ -1779,7 +1955,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_88",
@@ -1799,7 +1977,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_89",
@@ -1819,7 +1999,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_90",
@@ -1839,7 +2021,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_91",
@@ -1859,7 +2043,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_92",
@@ -1879,7 +2065,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_93",
@@ -1899,7 +2087,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_94",
@@ -1919,7 +2109,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_95",
@@ -1939,7 +2131,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_96",
@@ -1959,7 +2153,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_97",
@@ -1979,7 +2175,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_98",
@@ -1999,7 +2197,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_99",
@@ -2019,7 +2219,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_100",
@@ -2039,7 +2241,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_101",
@@ -2059,7 +2263,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_102",
@@ -2079,7 +2285,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_103",
@@ -2099,7 +2307,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_104",
@@ -2119,7 +2329,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_105",
@@ -2139,7 +2351,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_106",
@@ -2159,7 +2373,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_107",
@@ -2179,7 +2395,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_108",
@@ -2199,7 +2417,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_108A",
@@ -2219,7 +2439,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_109",
@@ -2241,7 +2463,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever abets any offence shall, if the act abetted is committed in consequence of the abetment, and no express provision is made by this Code for the punishment of such abetment, be punished with the punishment provided for the offence."
+    "text_normalized": "Whoever abets any offence shall, if the act abetted is committed in consequence of the abetment, and no express provision is made by this Code for the punishment of such abetment, be punished with the punishment provided for the offence.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_110",
@@ -2261,7 +2485,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_111",
@@ -2281,7 +2507,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_112",
@@ -2301,7 +2529,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_113",
@@ -2321,7 +2551,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_114",
@@ -2341,7 +2573,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_115",
@@ -2361,7 +2595,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_116",
@@ -2381,7 +2617,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_117",
@@ -2401,7 +2639,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_118",
@@ -2421,7 +2661,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_119",
@@ -2441,7 +2683,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_120",
@@ -2461,7 +2705,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_120A",
@@ -2481,7 +2727,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_120B",
@@ -2501,7 +2749,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_121",
@@ -2521,7 +2771,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_121A",
@@ -2541,7 +2793,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_122",
@@ -2561,7 +2815,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_123",
@@ -2581,7 +2837,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_123A",
@@ -2601,7 +2859,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_123B",
@@ -2621,7 +2881,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_124",
@@ -2641,7 +2903,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_124A",
@@ -2661,7 +2925,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_125",
@@ -2681,7 +2947,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_126",
@@ -2701,7 +2969,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_127",
@@ -2721,7 +2991,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_128",
@@ -2741,7 +3013,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_129",
@@ -2761,7 +3035,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_130",
@@ -2781,7 +3057,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_131",
@@ -2801,7 +3079,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_132",
@@ -2821,7 +3101,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_133",
@@ -2841,7 +3123,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_134",
@@ -2861,7 +3145,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_135",
@@ -2881,7 +3167,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_136",
@@ -2901,7 +3189,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_137",
@@ -2921,7 +3211,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_138",
@@ -2941,7 +3233,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_138A",
@@ -2961,7 +3255,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_139",
@@ -2981,7 +3277,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_140",
@@ -3001,7 +3299,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_141",
@@ -3021,7 +3321,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_142",
@@ -3041,7 +3343,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_143",
@@ -3061,7 +3365,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_144",
@@ -3081,7 +3387,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_145",
@@ -3101,7 +3409,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_146",
@@ -3121,7 +3431,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_147",
@@ -3141,7 +3453,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_148",
@@ -3161,7 +3475,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_149",
@@ -3181,7 +3497,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_150",
@@ -3201,7 +3519,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_151",
@@ -3221,7 +3541,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_152",
@@ -3241,7 +3563,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_153",
@@ -3261,7 +3585,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_153A",
@@ -3281,7 +3607,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_153B",
@@ -3301,7 +3629,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_154",
@@ -3321,7 +3651,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_155",
@@ -3341,7 +3673,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_156",
@@ -3361,7 +3695,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_157",
@@ -3381,7 +3717,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_158",
@@ -3401,7 +3739,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_159",
@@ -3421,7 +3761,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_160",
@@ -3441,7 +3783,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_161",
@@ -3461,7 +3805,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_162",
@@ -3481,7 +3827,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_163",
@@ -3501,7 +3849,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_164",
@@ -3521,7 +3871,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_165",
@@ -3541,7 +3893,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_165A",
@@ -3561,7 +3915,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_165B",
@@ -3581,7 +3937,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_166",
@@ -3601,7 +3959,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_167",
@@ -3621,7 +3981,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_168",
@@ -3641,7 +4003,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_169",
@@ -3661,7 +4025,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_170",
@@ -3681,7 +4047,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_171",
@@ -3701,7 +4069,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_171A",
@@ -3721,7 +4091,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_171B",
@@ -3741,7 +4113,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_171C",
@@ -3761,7 +4135,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_171D",
@@ -3781,7 +4157,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_171E",
@@ -3801,7 +4179,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_171F",
@@ -3821,7 +4201,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_171G",
@@ -3841,7 +4223,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_171H",
@@ -3861,7 +4245,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_171I",
@@ -3881,7 +4267,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_171J",
@@ -3901,7 +4289,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_172",
@@ -3921,7 +4311,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_173",
@@ -3941,7 +4333,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_174",
@@ -3961,7 +4355,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_175",
@@ -3981,7 +4377,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_176",
@@ -4001,7 +4399,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_177",
@@ -4021,7 +4421,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_178",
@@ -4041,7 +4443,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_179",
@@ -4061,7 +4465,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_180",
@@ -4081,7 +4487,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_181",
@@ -4101,7 +4509,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_182",
@@ -4121,7 +4531,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_183",
@@ -4141,7 +4553,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_184",
@@ -4161,7 +4575,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_185",
@@ -4181,7 +4597,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_186",
@@ -4201,7 +4619,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_187",
@@ -4221,7 +4641,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_188",
@@ -4241,7 +4663,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_189",
@@ -4261,7 +4685,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_190",
@@ -4281,7 +4707,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_191",
@@ -4301,7 +4729,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_192",
@@ -4321,7 +4751,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_193",
@@ -4341,7 +4773,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_194",
@@ -4361,7 +4795,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_195",
@@ -4381,7 +4817,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_196",
@@ -4401,7 +4839,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_197",
@@ -4421,7 +4861,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_198",
@@ -4441,7 +4883,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_199",
@@ -4461,7 +4905,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_200",
@@ -4481,7 +4927,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_201",
@@ -4501,7 +4949,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_202",
@@ -4521,7 +4971,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_203",
@@ -4541,7 +4993,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_204",
@@ -4561,7 +5015,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_205",
@@ -4581,7 +5037,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_206",
@@ -4601,7 +5059,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_207",
@@ -4621,7 +5081,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_208",
@@ -4641,7 +5103,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_209",
@@ -4661,7 +5125,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_210",
@@ -4681,7 +5147,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_211",
@@ -4701,7 +5169,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_212",
@@ -4721,7 +5191,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_213",
@@ -4741,7 +5213,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_214",
@@ -4761,7 +5235,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_215",
@@ -4781,7 +5257,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_216",
@@ -4801,7 +5279,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_216A",
@@ -4821,7 +5301,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_216B",
@@ -4841,7 +5323,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_217",
@@ -4861,7 +5345,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_218",
@@ -4881,7 +5367,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_219",
@@ -4901,7 +5389,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_220",
@@ -4921,7 +5411,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_221",
@@ -4941,7 +5433,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_222",
@@ -4961,7 +5455,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_223",
@@ -4981,7 +5477,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_224",
@@ -5001,7 +5499,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_225",
@@ -5021,7 +5521,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_225A",
@@ -5041,7 +5543,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_225B",
@@ -5061,7 +5565,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_226",
@@ -5081,7 +5587,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_227",
@@ -5101,7 +5609,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_228",
@@ -5121,7 +5631,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_229",
@@ -5141,7 +5653,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_230",
@@ -5161,7 +5675,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_231",
@@ -5181,7 +5697,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_232",
@@ -5201,7 +5719,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_233",
@@ -5221,7 +5741,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_234",
@@ -5241,7 +5763,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_235",
@@ -5261,7 +5785,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_236",
@@ -5281,7 +5807,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_237",
@@ -5301,7 +5829,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_238",
@@ -5321,7 +5851,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_239",
@@ -5341,7 +5873,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_240",
@@ -5361,7 +5895,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_241",
@@ -5381,7 +5917,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_242",
@@ -5401,7 +5939,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_243",
@@ -5421,7 +5961,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_244",
@@ -5441,7 +5983,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_245",
@@ -5461,7 +6005,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_246",
@@ -5481,7 +6027,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_247",
@@ -5501,7 +6049,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_248",
@@ -5521,7 +6071,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_249",
@@ -5541,7 +6093,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_250",
@@ -5561,7 +6115,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_251",
@@ -5581,7 +6137,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_252",
@@ -5601,7 +6159,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_253",
@@ -5621,7 +6181,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_254",
@@ -5641,7 +6203,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_255",
@@ -5661,7 +6225,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_256",
@@ -5681,7 +6247,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_257",
@@ -5701,7 +6269,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_258",
@@ -5721,7 +6291,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_259",
@@ -5741,7 +6313,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_260",
@@ -5761,7 +6335,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_261",
@@ -5781,7 +6357,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_262",
@@ -5801,7 +6379,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_263",
@@ -5821,7 +6401,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_263A",
@@ -5841,7 +6423,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_264",
@@ -5861,7 +6445,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_265",
@@ -5881,7 +6467,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_266",
@@ -5901,7 +6489,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_267",
@@ -5921,7 +6511,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_268",
@@ -5941,7 +6533,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_269",
@@ -5961,7 +6555,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_270",
@@ -5981,7 +6577,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_271",
@@ -6001,7 +6599,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_272",
@@ -6021,7 +6621,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_273",
@@ -6041,7 +6643,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_274",
@@ -6061,7 +6665,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_275",
@@ -6081,7 +6687,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_276",
@@ -6101,7 +6709,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_277",
@@ -6121,7 +6731,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_278",
@@ -6141,7 +6753,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_279",
@@ -6161,7 +6775,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_280",
@@ -6181,7 +6797,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_281",
@@ -6201,7 +6819,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_282",
@@ -6221,7 +6841,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_283",
@@ -6241,7 +6863,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_284",
@@ -6261,7 +6885,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_285",
@@ -6281,7 +6907,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_286",
@@ -6301,7 +6929,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_287",
@@ -6321,7 +6951,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_288",
@@ -6341,7 +6973,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_289",
@@ -6361,7 +6995,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_290",
@@ -6381,7 +7017,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_291",
@@ -6401,7 +7039,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_292",
@@ -6421,7 +7061,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_292A",
@@ -6441,7 +7083,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_292B",
@@ -6461,7 +7105,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_292C",
@@ -6481,7 +7127,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_293",
@@ -6501,7 +7149,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_294",
@@ -6521,7 +7171,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_294A",
@@ -6541,7 +7193,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_294B",
@@ -6561,7 +7215,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_295",
@@ -6581,7 +7237,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_295A",
@@ -6601,7 +7259,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_295B",
@@ -6621,7 +7281,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_295C",
@@ -6641,7 +7303,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_296",
@@ -6661,7 +7325,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_297",
@@ -6681,7 +7347,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_298",
@@ -6701,7 +7369,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_298A",
@@ -6721,7 +7391,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_298B",
@@ -6741,7 +7413,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_298C",
@@ -6761,7 +7435,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_299",
@@ -6781,7 +7457,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_300",
@@ -6803,7 +7481,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever, with the intention of causing death or with the intention of causing bodily injury to a person, by doing an act which in the ordinary course of nature is likely to cause death, or with the knowledge that his act is so imminently dangerous that it must in all probability cause death, causes the death of such person, is said to commit Qatl-e-Amd."
+    "text_normalized": "Whoever, with the intention of causing death or with the intention of causing bodily injury to a person, by doing an act which in the ordinary course of nature is likely to cause death, or with the knowledge that his act is so imminently dangerous that it must in all probability cause death, causes the death of such person, is said to commit Qatl-e-Amd.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_301",
@@ -6823,7 +7503,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_302",
@@ -6845,7 +7527,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable."
+    "text_normalized": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_303",
@@ -6865,7 +7549,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_304",
@@ -6885,7 +7571,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_305",
@@ -6905,7 +7593,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_306",
@@ -6925,7 +7615,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_307",
@@ -6945,7 +7637,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_308",
@@ -6965,7 +7659,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_309",
@@ -6985,7 +7681,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_310",
@@ -7005,7 +7703,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_310A",
@@ -7025,7 +7725,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_311",
@@ -7045,7 +7747,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_312",
@@ -7065,7 +7769,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_313",
@@ -7085,7 +7791,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_314",
@@ -7105,7 +7813,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_315",
@@ -7125,7 +7835,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_316",
@@ -7145,7 +7857,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_317",
@@ -7165,7 +7879,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_318",
@@ -7185,7 +7901,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_319",
@@ -7205,7 +7923,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_320",
@@ -7225,7 +7945,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_321",
@@ -7245,7 +7967,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_322",
@@ -7265,7 +7989,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_323",
@@ -7285,7 +8011,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_324",
@@ -7305,7 +8033,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_325",
@@ -7325,7 +8055,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_326",
@@ -7345,7 +8077,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_327",
@@ -7365,7 +8099,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_328",
@@ -7385,7 +8121,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_328A",
@@ -7405,7 +8143,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_329",
@@ -7425,7 +8165,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_330",
@@ -7445,7 +8187,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_331",
@@ -7465,7 +8209,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_332",
@@ -7485,7 +8231,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_333",
@@ -7505,7 +8253,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_334",
@@ -7525,7 +8275,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_335",
@@ -7545,7 +8297,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_336",
@@ -7565,7 +8319,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_336A",
@@ -7585,7 +8341,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_336B",
@@ -7605,7 +8363,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337",
@@ -7627,7 +8387,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Shajjah: Whoever causes on the head or face of any person, any hurt which does not amount to itlaf-i-udw or itlaf-i-salahiyyat-i-udw, is said to cause shajjah (Shajjah-i-Khafifah, Mudihah, Hashimah, Munaqqilah, Ammah, Damighah)."
+    "text_normalized": "Shajjah: Whoever causes on the head or face of any person, any hurt which does not amount to itlaf-i-udw or itlaf-i-salahiyyat-i-udw, is said to cause shajjah (Shajjah-i-Khafifah, Mudihah, Hashimah, Munaqqilah, Ammah, Damighah).",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337A",
@@ -7647,7 +8409,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337B",
@@ -7667,7 +8431,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337C",
@@ -7687,7 +8453,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337D",
@@ -7707,7 +8475,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337E",
@@ -7727,7 +8497,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337F",
@@ -7747,7 +8519,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337G",
@@ -7767,7 +8541,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337H",
@@ -7787,7 +8563,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337I",
@@ -7807,7 +8585,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337J",
@@ -7827,7 +8607,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337K",
@@ -7847,7 +8629,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337L",
@@ -7867,7 +8651,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337M",
@@ -7887,7 +8673,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337N",
@@ -7907,7 +8695,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337O",
@@ -7927,7 +8717,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337P",
@@ -7947,7 +8739,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337Q",
@@ -7967,7 +8761,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337R",
@@ -7987,7 +8783,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337S",
@@ -8007,7 +8805,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337T",
@@ -8027,7 +8827,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337U",
@@ -8047,7 +8849,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337V",
@@ -8067,7 +8871,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337W",
@@ -8087,7 +8893,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337X",
@@ -8107,7 +8915,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337Y",
@@ -8127,7 +8937,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_337Z",
@@ -8147,7 +8959,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_338",
@@ -8167,7 +8981,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_338A",
@@ -8187,7 +9003,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_338B",
@@ -8207,7 +9025,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_338C",
@@ -8227,7 +9047,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_338D",
@@ -8247,7 +9069,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_338E",
@@ -8267,7 +9091,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_338F",
@@ -8287,7 +9113,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_338G",
@@ -8307,7 +9135,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_338H",
@@ -8327,7 +9157,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_339",
@@ -8347,7 +9179,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_340",
@@ -8367,7 +9201,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_341",
@@ -8387,7 +9223,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_342",
@@ -8407,7 +9245,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_343",
@@ -8427,7 +9267,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_344",
@@ -8447,7 +9289,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_345",
@@ -8467,7 +9311,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_346",
@@ -8487,7 +9333,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_347",
@@ -8507,7 +9355,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_348",
@@ -8527,7 +9377,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_349",
@@ -8547,7 +9399,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_350",
@@ -8567,7 +9421,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_351",
@@ -8587,7 +9443,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_352",
@@ -8607,7 +9465,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_353",
@@ -8627,7 +9487,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_354",
@@ -8647,7 +9509,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_354A",
@@ -8667,7 +9531,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_355",
@@ -8687,7 +9553,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_356",
@@ -8707,7 +9575,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_357",
@@ -8727,7 +9597,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_358",
@@ -8747,7 +9619,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_359",
@@ -8767,7 +9641,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_360",
@@ -8787,7 +9663,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_361",
@@ -8807,7 +9685,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_362",
@@ -8827,7 +9707,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_363",
@@ -8847,7 +9729,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_364",
@@ -8867,7 +9751,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_364A",
@@ -8887,7 +9773,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_365",
@@ -8907,7 +9795,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_365A",
@@ -8927,7 +9817,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_365B",
@@ -8947,7 +9839,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_366",
@@ -8967,7 +9861,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_366A",
@@ -8987,7 +9883,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_366B",
@@ -9007,7 +9905,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_367",
@@ -9027,7 +9927,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_367A",
@@ -9047,7 +9949,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_368",
@@ -9067,7 +9971,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_369",
@@ -9087,7 +9993,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_369A",
@@ -9107,7 +10015,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_370",
@@ -9127,7 +10037,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_371",
@@ -9147,7 +10059,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_371A",
@@ -9167,7 +10081,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_371B",
@@ -9187,7 +10103,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_372",
@@ -9207,7 +10125,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_373",
@@ -9227,7 +10147,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_374",
@@ -9247,7 +10169,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_375",
@@ -9267,7 +10191,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_375A",
@@ -9287,7 +10213,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_376",
@@ -9309,7 +10237,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Whoever commits rape shall be punished with death or imprisonment of either description for a term which shall not be less than ten years nor more than twenty-five years, and shall also be liable to fine.\n(2) When rape is committed by two or more persons in furtherance of common intention of all, each of such persons shall be punished with death or imprisonment for life.\n(3) Whoever commits rape of a minor or a person with mental or physical disability shall be punished with death or imprisonment for life."
+    "text_normalized": "(1) Whoever commits rape shall be punished with death or imprisonment of either description for a term which shall not be less than ten years nor more than twenty-five years, and shall also be liable to fine.\n(2) When rape is committed by two or more persons in furtherance of common intention of all, each of such persons shall be punished with death or imprisonment for life.\n(3) Whoever commits rape of a minor or a person with mental or physical disability shall be punished with death or imprisonment for life.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_376A",
@@ -9329,7 +10259,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_376B",
@@ -9349,7 +10281,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_377",
@@ -9369,7 +10303,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_377A",
@@ -9389,7 +10325,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_377B",
@@ -9409,7 +10347,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_378",
@@ -9429,7 +10369,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_379",
@@ -9449,7 +10391,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_380",
@@ -9469,7 +10413,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_381",
@@ -9489,7 +10435,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_381A",
@@ -9509,7 +10457,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_382",
@@ -9529,7 +10479,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_383",
@@ -9549,7 +10501,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_384",
@@ -9569,7 +10523,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_385",
@@ -9589,7 +10545,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_386",
@@ -9609,7 +10567,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_387",
@@ -9629,7 +10589,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_388",
@@ -9649,7 +10611,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_389",
@@ -9669,7 +10633,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_390",
@@ -9689,7 +10655,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_391",
@@ -9709,7 +10677,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_392",
@@ -9729,7 +10699,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_393",
@@ -9749,7 +10721,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_394",
@@ -9769,7 +10743,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_395",
@@ -9789,7 +10765,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_396",
@@ -9809,7 +10787,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_397",
@@ -9829,7 +10809,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_398",
@@ -9849,7 +10831,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_399",
@@ -9869,7 +10853,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_400",
@@ -9889,7 +10875,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_401",
@@ -9909,7 +10897,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_402",
@@ -9929,7 +10919,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_402A",
@@ -9949,7 +10941,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_402B",
@@ -9969,7 +10963,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_402C",
@@ -9989,7 +10985,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_403",
@@ -10009,7 +11007,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_404",
@@ -10029,7 +11029,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_405",
@@ -10051,7 +11053,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever, being in any manner entrusted with property, or with any dominion over property, dishonestly misappropriates or converts to his own use that property, or dishonestly uses or disposes of that property in violation of any direction of law prescribing the mode in which such trust is to be discharged, or of any legal contract, express or implied, which he has made touching the discharge of such trust, or wilfully suffers any other person so to do, commits 'criminal breach of trust'."
+    "text_normalized": "Whoever, being in any manner entrusted with property, or with any dominion over property, dishonestly misappropriates or converts to his own use that property, or dishonestly uses or disposes of that property in violation of any direction of law prescribing the mode in which such trust is to be discharged, or of any legal contract, express or implied, which he has made touching the discharge of such trust, or wilfully suffers any other person so to do, commits 'criminal breach of trust'.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_406",
@@ -10073,7 +11077,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever commits criminal breach of trust shall be punished with imprisonment of either description for a term which may extend to seven years, or with fine, or with both."
+    "text_normalized": "Whoever commits criminal breach of trust shall be punished with imprisonment of either description for a term which may extend to seven years, or with fine, or with both.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_407",
@@ -10093,7 +11099,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_408",
@@ -10113,7 +11121,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_409",
@@ -10135,7 +11145,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever, being in any manner entrusted with property, or with any dominion over property in his capacity of a public servant or in the way of his business as a banker, merchant, factor, broker, attorney or agent, commits criminal breach of trust in respect of that property, shall be punished with imprisonment for life, or with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine."
+    "text_normalized": "Whoever, being in any manner entrusted with property, or with any dominion over property in his capacity of a public servant or in the way of his business as a banker, merchant, factor, broker, attorney or agent, commits criminal breach of trust in respect of that property, shall be punished with imprisonment for life, or with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_410",
@@ -10155,7 +11167,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_411",
@@ -10175,7 +11189,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_412",
@@ -10195,7 +11211,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_413",
@@ -10215,7 +11233,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_414",
@@ -10235,7 +11255,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_415",
@@ -10257,7 +11279,9 @@
       "5Subs. by the Law Reforms Ordinance, 1972 (12 of 1972), s. 2 and Sch., for “transportation for life”.",
       "2The word “the” before the words “offence of” was rep. by the Amending Act, 1891 (12 of 1891), and the words “offence of” were rep. by s. 9 of the"
     ],
-    "text_normalized": "415. Cheating. Whoever, by deceiving any person, fraudulently or dishonest1y induces the\nperson so deceived to deliver any property to any person, or to consent that any person shall retain any\nIndian Penal Code Amdt. Act, 1882 (8 of 1882).\nCapital of the Federation” which had been subs. by A. O., 1949, Arts. 3(2) and 4, for “British India”."
+    "text_normalized": "415. Cheating. Whoever, by deceiving any person, fraudulently or dishonest1y induces the\nperson so deceived to deliver any property to any person, or to consent that any person shall retain any\nIndian Penal Code Amdt. Act, 1882 (8 of 1882).\nCapital of the Federation” which had been subs. by A. O., 1949, Arts. 3(2) and 4, for “British India”.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_416",
@@ -10277,7 +11301,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_417",
@@ -10293,7 +11319,9 @@
     "content_hash": "30ab17a8ac2581713bc1affb953f93b384a15a4f79db4a0ca78c1e1d7d0fb0f1",
     "missing_reason": null,
     "footnotes": [],
-    "text_normalized": "417. Punishment for cheating. Whoever cheats shall be punished with imprisonment of\neither description for a term which may extend to one year, or with fine, or with both."
+    "text_normalized": "417. Punishment for cheating. Whoever cheats shall be punished with imprisonment of\neither description for a term which may extend to one year, or with fine, or with both.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_418",
@@ -10313,7 +11341,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_419",
@@ -10333,7 +11363,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_420",
@@ -10355,7 +11387,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever cheats and thereby dishonestly induces the person deceived to deliver any property to any person, or to make, alter or destroy the whole or any part of a valuable security, or anything which is signed or sealed, and which is capable of being converted into a valuable security, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine."
+    "text_normalized": "Whoever cheats and thereby dishonestly induces the person deceived to deliver any property to any person, or to make, alter or destroy the whole or any part of a valuable security, or anything which is signed or sealed, and which is capable of being converted into a valuable security, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_421",
@@ -10375,7 +11409,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_422",
@@ -10395,7 +11431,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_423",
@@ -10415,7 +11453,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_424",
@@ -10435,7 +11475,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_425",
@@ -10455,7 +11497,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_426",
@@ -10475,7 +11519,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_427",
@@ -10495,7 +11541,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_428",
@@ -10515,7 +11563,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_429",
@@ -10535,7 +11585,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_430",
@@ -10555,7 +11607,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_431",
@@ -10575,7 +11629,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_432",
@@ -10595,7 +11651,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_433",
@@ -10615,7 +11673,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_434",
@@ -10635,7 +11695,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_435",
@@ -10655,7 +11717,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_436",
@@ -10675,7 +11739,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_437",
@@ -10695,7 +11761,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_438",
@@ -10715,7 +11783,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_439",
@@ -10735,7 +11805,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_440",
@@ -10755,7 +11827,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_441",
@@ -10775,7 +11849,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_442",
@@ -10795,7 +11871,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_443",
@@ -10815,7 +11893,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_444",
@@ -10835,7 +11915,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_445",
@@ -10855,7 +11937,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_446",
@@ -10875,7 +11959,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_447",
@@ -10895,7 +11981,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_448",
@@ -10915,7 +12003,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_449",
@@ -10935,7 +12025,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_450",
@@ -10955,7 +12047,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_451",
@@ -10975,7 +12069,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_452",
@@ -10995,7 +12091,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_453",
@@ -11015,7 +12113,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_454",
@@ -11035,7 +12135,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_455",
@@ -11055,7 +12157,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_456",
@@ -11075,7 +12179,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_457",
@@ -11095,7 +12201,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_458",
@@ -11115,7 +12223,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_459",
@@ -11135,7 +12245,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_460",
@@ -11155,7 +12267,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_461",
@@ -11175,7 +12289,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462",
@@ -11195,7 +12311,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462A",
@@ -11215,7 +12333,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462B",
@@ -11235,7 +12355,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462C",
@@ -11255,7 +12377,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462D",
@@ -11275,7 +12399,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462E",
@@ -11295,7 +12421,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462F",
@@ -11315,7 +12443,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462G",
@@ -11335,7 +12465,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462H",
@@ -11355,7 +12487,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462I",
@@ -11375,7 +12509,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462J",
@@ -11395,7 +12531,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462K",
@@ -11415,7 +12553,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462L",
@@ -11435,7 +12575,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462M",
@@ -11455,7 +12597,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_362N",
@@ -11475,7 +12619,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462O",
@@ -11495,7 +12641,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_462P",
@@ -11515,7 +12663,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_463",
@@ -11535,7 +12685,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_464",
@@ -11555,7 +12707,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_465",
@@ -11575,7 +12729,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_466",
@@ -11595,7 +12751,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_467",
@@ -11615,7 +12773,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_468",
@@ -11635,7 +12795,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_469",
@@ -11655,7 +12817,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_470",
@@ -11675,7 +12839,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_471",
@@ -11695,7 +12861,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_472",
@@ -11715,7 +12883,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_473",
@@ -11735,7 +12905,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_474",
@@ -11755,7 +12927,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_475",
@@ -11775,7 +12949,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_476",
@@ -11795,7 +12971,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_477",
@@ -11815,7 +12993,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_477A",
@@ -11835,7 +13015,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_478",
@@ -11855,7 +13037,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_479",
@@ -11875,7 +13059,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_480",
@@ -11895,7 +13081,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_481",
@@ -11915,7 +13103,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_482",
@@ -11935,7 +13125,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_483",
@@ -11955,7 +13147,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_484",
@@ -11975,7 +13169,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_485",
@@ -11995,7 +13191,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_486",
@@ -12015,7 +13213,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_487",
@@ -12035,7 +13235,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_488",
@@ -12055,7 +13257,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_489",
@@ -12075,7 +13279,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_489A",
@@ -12095,7 +13301,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_489B",
@@ -12115,7 +13323,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_489C",
@@ -12135,7 +13345,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_489D",
@@ -12155,7 +13367,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_489E",
@@ -12175,7 +13389,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_489F",
@@ -12197,7 +13413,9 @@
     "effective_from": "2002-10-25",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever dishonestly issues a cheque towards repayment of a loan or fulfillment of an obligation which is dishonoured on presentation, shall be punishable with imprisonment which may extend to three years, or with fine, or with both, unless he can establish, for which the burden of proof shall rest on him, that he had made arrangements with his bank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the cheque."
+    "text_normalized": "Whoever dishonestly issues a cheque towards repayment of a loan or fulfillment of an obligation which is dishonoured on presentation, shall be punishable with imprisonment which may extend to three years, or with fine, or with both, unless he can establish, for which the burden of proof shall rest on him, that he had made arrangements with his bank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the cheque.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_489G",
@@ -12217,7 +13435,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_490",
@@ -12237,7 +13457,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_491",
@@ -12257,7 +13479,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_492",
@@ -12277,7 +13501,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_493",
@@ -12297,7 +13523,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_493A",
@@ -12317,7 +13545,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_494",
@@ -12337,7 +13567,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_495",
@@ -12357,7 +13589,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_496",
@@ -12377,7 +13611,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_496A",
@@ -12397,7 +13633,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_496B",
@@ -12417,7 +13655,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_496C",
@@ -12437,7 +13677,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_497",
@@ -12457,7 +13699,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_498",
@@ -12477,7 +13721,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_498A",
@@ -12497,7 +13743,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_498B",
@@ -12517,7 +13765,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_498C",
@@ -12537,7 +13787,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_499",
@@ -12557,7 +13809,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_500",
@@ -12577,7 +13831,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_501",
@@ -12597,7 +13853,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_502",
@@ -12617,7 +13875,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_502A",
@@ -12637,7 +13897,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_503",
@@ -12657,7 +13919,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_504",
@@ -12677,7 +13941,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_505",
@@ -12697,7 +13963,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_506",
@@ -12717,7 +13985,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_507",
@@ -12737,7 +14007,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_508",
@@ -12757,7 +14029,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_509",
@@ -12777,7 +14051,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_510",
@@ -12797,7 +14073,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_511",
@@ -12817,7 +14095,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_302_A",
@@ -12839,7 +14119,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable."
+    "text_normalized": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_302_B",
@@ -12861,7 +14143,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available."
+    "text_normalized": "punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_302_C",
@@ -12883,7 +14167,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable."
+    "text_normalized": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_22A",
@@ -12903,7 +14189,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_22A_6",
@@ -12923,7 +14211,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PPC_1860_SEC_22A_6_A",
@@ -12943,6 +14233,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

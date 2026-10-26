@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "Any person who unlawfully and maliciously causes by any explosive substance an explosion of a nature likely to endanger life or to cause serious injury to property shall, whether any injury to person or property has been actually caused or not, be punished with imprisonment for life, or with rigorous imprisonment for a term which may extend to ten years, and shall also be liable to fine.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "EXPLOSIVE_SUBSTANCES_1908_SEC_4",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "Any person who unlawfully and maliciously: (a) does any act with intent to cause by an explosive substance, or conspires to cause an explosion; or (b) makes or has in his possession or under his control any explosive substance with intent to endanger life, shall be punished with imprisonment for a term which may extend to ten years and fine.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "EXPLOSIVE_SUBSTANCES_1908_SEC_5",
@@ -69,6 +73,8 @@
     "footnotes": [],
     "text_normalized": "Any person who makes or knowingly has in his possession or under his control any explosive substance, under such circumstances as to give rise to a reasonable suspicion that he is not making it or does not have it in his possession or under his control for a lawful object, shall, unless he can show that he made it or had it in his possession or under his control for a lawful object, be punishable with imprisonment for a term which may extend to seven years.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

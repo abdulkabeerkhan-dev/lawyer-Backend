@@ -17,7 +17,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_2",
@@ -37,7 +39,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_3",
@@ -57,7 +61,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_4",
@@ -77,7 +83,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_5",
@@ -97,7 +105,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_6",
@@ -117,7 +127,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_7",
@@ -137,7 +149,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_8",
@@ -157,7 +171,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_9",
@@ -177,7 +193,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_10",
@@ -197,7 +215,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_11",
@@ -217,7 +237,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_12",
@@ -237,7 +259,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_13",
@@ -257,7 +281,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_14",
@@ -277,7 +303,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_14A",
@@ -297,7 +325,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_15",
@@ -317,7 +347,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_16",
@@ -337,7 +369,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_17",
@@ -357,7 +391,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_22",
@@ -377,7 +413,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_22A",
@@ -397,7 +435,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_22B",
@@ -417,7 +457,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_25",
@@ -437,7 +479,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_28",
@@ -457,7 +501,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_29",
@@ -477,7 +523,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_29A",
@@ -497,7 +545,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_29B",
@@ -517,7 +567,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_30",
@@ -537,7 +589,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_31",
@@ -557,7 +611,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_32",
@@ -577,7 +633,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_33",
@@ -597,7 +655,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_34",
@@ -617,7 +677,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_34A",
@@ -637,7 +699,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_35",
@@ -657,7 +721,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_36",
@@ -677,7 +743,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_37",
@@ -697,7 +765,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_38",
@@ -717,7 +787,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_39",
@@ -737,7 +809,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_40",
@@ -757,7 +831,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_41",
@@ -777,7 +853,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_42",
@@ -797,7 +875,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_43",
@@ -817,7 +897,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_44",
@@ -837,7 +919,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_45",
@@ -857,7 +941,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_46",
@@ -877,7 +963,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_47",
@@ -897,7 +985,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_48",
@@ -917,7 +1007,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_49",
@@ -937,7 +1029,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_50",
@@ -957,7 +1051,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_51",
@@ -977,7 +1073,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_52",
@@ -997,7 +1095,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_53",
@@ -1017,7 +1117,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_53A",
@@ -1037,7 +1139,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_54",
@@ -1057,7 +1161,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_55",
@@ -1077,7 +1183,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_56",
@@ -1097,7 +1205,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_57",
@@ -1117,7 +1227,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_58",
@@ -1137,7 +1249,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_59",
@@ -1157,7 +1271,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_60",
@@ -1177,7 +1293,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_61",
@@ -1197,7 +1315,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_62",
@@ -1217,7 +1337,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_63",
@@ -1237,7 +1359,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_64",
@@ -1257,7 +1381,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_65",
@@ -1277,7 +1403,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_66",
@@ -1297,7 +1425,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_67",
@@ -1317,7 +1447,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_68",
@@ -1337,7 +1469,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_69",
@@ -1357,7 +1491,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_70",
@@ -1377,7 +1513,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_71",
@@ -1397,7 +1535,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_72",
@@ -1417,7 +1557,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_73",
@@ -1437,7 +1579,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_74",
@@ -1457,7 +1601,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_75",
@@ -1477,7 +1623,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_76",
@@ -1497,7 +1645,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_77",
@@ -1517,7 +1667,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_78",
@@ -1537,7 +1689,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_79",
@@ -1557,7 +1711,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_80",
@@ -1577,7 +1733,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_81",
@@ -1597,7 +1755,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_82",
@@ -1617,7 +1777,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_83",
@@ -1637,7 +1799,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_84",
@@ -1657,7 +1821,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_85",
@@ -1677,7 +1843,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_86",
@@ -1697,7 +1865,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_86A",
@@ -1717,7 +1887,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_87",
@@ -1737,7 +1909,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_88",
@@ -1757,7 +1931,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_89",
@@ -1777,7 +1953,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_90",
@@ -1797,7 +1975,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_91",
@@ -1817,7 +1997,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_92",
@@ -1837,7 +2019,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_93",
@@ -1857,7 +2041,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_93A",
@@ -1877,7 +2063,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_93B",
@@ -1897,7 +2085,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_93C",
@@ -1917,7 +2107,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_94",
@@ -1937,7 +2129,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_95",
@@ -1957,7 +2151,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_96",
@@ -1977,7 +2173,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_97",
@@ -1997,7 +2195,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_98",
@@ -2017,7 +2217,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99",
@@ -2037,7 +2239,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99A",
@@ -2057,7 +2261,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99B",
@@ -2077,7 +2283,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99C",
@@ -2097,7 +2305,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99D",
@@ -2117,7 +2327,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99E",
@@ -2137,7 +2349,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99F",
@@ -2157,7 +2371,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99G",
@@ -2177,7 +2393,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_100",
@@ -2197,7 +2415,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_101",
@@ -2217,7 +2437,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_102",
@@ -2237,7 +2459,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_103",
@@ -2257,7 +2481,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_104",
@@ -2277,7 +2503,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_105",
@@ -2297,7 +2525,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_106",
@@ -2317,7 +2547,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_107",
@@ -2337,7 +2569,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_108",
@@ -2357,7 +2591,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_109",
@@ -2377,7 +2613,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_110",
@@ -2397,7 +2635,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_111",
@@ -2417,7 +2657,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_112",
@@ -2437,7 +2679,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_113",
@@ -2457,7 +2701,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_114",
@@ -2477,7 +2723,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_115",
@@ -2497,7 +2745,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_116",
@@ -2517,7 +2767,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_117",
@@ -2537,7 +2789,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_118",
@@ -2557,7 +2811,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_119",
@@ -2577,7 +2833,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_120",
@@ -2597,7 +2855,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_121",
@@ -2617,7 +2877,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_122",
@@ -2637,7 +2899,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_123",
@@ -2657,7 +2921,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_124",
@@ -2677,7 +2943,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_125",
@@ -2697,7 +2965,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_126",
@@ -2717,7 +2987,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_126A",
@@ -2737,7 +3009,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_127",
@@ -2757,7 +3031,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_128",
@@ -2777,7 +3053,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_129",
@@ -2797,7 +3075,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_130",
@@ -2817,7 +3097,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_131",
@@ -2837,7 +3119,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_131A",
@@ -2857,7 +3141,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_132",
@@ -2877,7 +3163,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_132A",
@@ -2897,7 +3185,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_133",
@@ -2917,7 +3207,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_134",
@@ -2937,7 +3229,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_135",
@@ -2957,7 +3251,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_136",
@@ -2977,7 +3273,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_137",
@@ -2997,7 +3295,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_138",
@@ -3017,7 +3317,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_139",
@@ -3037,7 +3339,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_139A",
@@ -3057,7 +3361,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_140",
@@ -3077,7 +3383,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_141",
@@ -3097,7 +3405,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_142",
@@ -3117,7 +3427,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_143",
@@ -3137,7 +3449,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_144",
@@ -3157,7 +3471,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_145",
@@ -3177,7 +3493,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_146",
@@ -3197,7 +3515,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_147",
@@ -3217,7 +3537,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_148",
@@ -3237,7 +3559,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_149",
@@ -3257,7 +3581,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_150",
@@ -3277,7 +3603,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_151",
@@ -3297,7 +3625,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_152",
@@ -3317,7 +3647,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_153",
@@ -3337,7 +3669,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_154",
@@ -3359,7 +3693,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Every information relating to the commission of a cognizable offence if given orally to an officer in charge of a police-station, shall be reduced to writing by him or under his direction, and be read over to the informant; and every such information, whether given in writing or reduced to writing as aforesaid, shall be signed by the person giving it, and the substance thereof shall be entered in a book to be kept by such officer in such form as the Provincial Government may prescribe in this behalf."
+    "text_normalized": "Every information relating to the commission of a cognizable offence if given orally to an officer in charge of a police-station, shall be reduced to writing by him or under his direction, and be read over to the informant; and every such information, whether given in writing or reduced to writing as aforesaid, shall be signed by the person giving it, and the substance thereof shall be entered in a book to be kept by such officer in such form as the Provincial Government may prescribe in this behalf.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_155",
@@ -3379,7 +3715,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_156",
@@ -3401,7 +3739,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Any officer in charge of a police-station may, without the order of a Magistrate, investigate any cognizable case which a Court having jurisdiction over the local area within the limits of such station would have power to inquire into or try under the provisions of Chapter XV relating to the place of inquiry or trial.\n(2) No proceeding of a police-officer in any such case shall at any stage be called in question on the ground that the case was one which such officer was not empowered under this section to investigate.\n(3) Any Magistrate empowered under section 190 may order such an investigation as above-mentioned."
+    "text_normalized": "(1) Any officer in charge of a police-station may, without the order of a Magistrate, investigate any cognizable case which a Court having jurisdiction over the local area within the limits of such station would have power to inquire into or try under the provisions of Chapter XV relating to the place of inquiry or trial.\n(2) No proceeding of a police-officer in any such case shall at any stage be called in question on the ground that the case was one which such officer was not empowered under this section to investigate.\n(3) Any Magistrate empowered under section 190 may order such an investigation as above-mentioned.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_156A",
@@ -3421,7 +3761,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_156B",
@@ -3441,7 +3783,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_157",
@@ -3461,7 +3805,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_158",
@@ -3481,7 +3827,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_159",
@@ -3501,7 +3849,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_160",
@@ -3521,7 +3871,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_161",
@@ -3543,7 +3895,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Any police-officer making an investigation under this Chapter or any police-officer not below such rank as the Provincial Government may, by general or special order, prescribe in this behalf, acting on the requisition of such officer, may examine orally any person supposed to be acquainted with the facts and circumstances of the case.\n(2) Such person shall be bound to answer truly all questions relating to such case put to him by such officer, other than questions the answers to which would have a tendency to expose him to a criminal charge or to a penalty or forfeiture.\n(3) The police-officer may reduce into writing any statement made to him in the course of an examination under this section, and if he does so he shall make a separate record of the statement, of each such person whose statement he records."
+    "text_normalized": "(1) Any police-officer making an investigation under this Chapter or any police-officer not below such rank as the Provincial Government may, by general or special order, prescribe in this behalf, acting on the requisition of such officer, may examine orally any person supposed to be acquainted with the facts and circumstances of the case.\n(2) Such person shall be bound to answer truly all questions relating to such case put to him by such officer, other than questions the answers to which would have a tendency to expose him to a criminal charge or to a penalty or forfeiture.\n(3) The police-officer may reduce into writing any statement made to him in the course of an examination under this section, and if he does so he shall make a separate record of the statement, of each such person whose statement he records.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_161A",
@@ -3563,7 +3917,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_162",
@@ -3583,7 +3939,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_163",
@@ -3603,7 +3961,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_164",
@@ -3625,7 +3985,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Any Magistrate of the first class and any Magistrate of the second class specially empowered in this behalf by the Provincial Government may, if he is not a police-officer record any statement or confession made to him in the course of an investigation under this Chapter or under any other law for the time being in force or at any time afterwards before the commencement of the inquiry or trial.\n(1A) Any statement of the victim or witness may be recorded through audio-video electronic means.\n(2) Such statements shall be recorded in such of the manners hereinafter prescribed for recording evidence as is, in his opinion, best fitted for the circumstances of the case. Such confessions shall be recorded and signed in the manner provided in section 364, and such statement or confession shall then be forwarded to the Magistrate by whom the case is to be inquired into or tried."
+    "text_normalized": "(1) Any Magistrate of the first class and any Magistrate of the second class specially empowered in this behalf by the Provincial Government may, if he is not a police-officer record any statement or confession made to him in the course of an investigation under this Chapter or under any other law for the time being in force or at any time afterwards before the commencement of the inquiry or trial.\n(1A) Any statement of the victim or witness may be recorded through audio-video electronic means.\n(2) Such statements shall be recorded in such of the manners hereinafter prescribed for recording evidence as is, in his opinion, best fitted for the circumstances of the case. Such confessions shall be recorded and signed in the manner provided in section 364, and such statement or confession shall then be forwarded to the Magistrate by whom the case is to be inquired into or tried.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_164A",
@@ -3645,7 +4007,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_164B",
@@ -3665,7 +4029,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_165",
@@ -3685,7 +4051,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_166",
@@ -3705,7 +4073,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_167",
@@ -3725,7 +4095,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_168",
@@ -3745,7 +4117,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_169",
@@ -3765,7 +4139,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_170",
@@ -3785,7 +4161,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_171",
@@ -3805,7 +4183,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_172",
@@ -3825,7 +4205,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_173",
@@ -3847,7 +4229,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) Every investigation under this Chapter shall be completed without unnecessary delay, and, as soon as it is completed, the officer in charge of the police-station shall through the Public Prosecutor submit to a Magistrate empowered to take cognizance of the offence on a police-report, a report in the form prescribed by the Provincial Government, stating the names of the parties, the nature of the information, the names of the persons who appear to be acquainted with the circumstances of the case, and stating whether the accused (if arrested) has been forwarded in custody, or has been released on his bond, and, if so, whether with or without sureties.\n(2) Where a superior officer of police has been appointed under section 158, the report shall, in any case in which the Provincial Government by general or special order so directs, be submitted through that officer, and he may, pending the orders of the Magistrate, direct the officer in charge of the police-station to make further investigation."
+    "text_normalized": "(1) Every investigation under this Chapter shall be completed without unnecessary delay, and, as soon as it is completed, the officer in charge of the police-station shall through the Public Prosecutor submit to a Magistrate empowered to take cognizance of the offence on a police-report, a report in the form prescribed by the Provincial Government, stating the names of the parties, the nature of the information, the names of the persons who appear to be acquainted with the circumstances of the case, and stating whether the accused (if arrested) has been forwarded in custody, or has been released on his bond, and, if so, whether with or without sureties.\n(2) Where a superior officer of police has been appointed under section 158, the report shall, in any case in which the Provincial Government by general or special order so directs, be submitted through that officer, and he may, pending the orders of the Magistrate, direct the officer in charge of the police-station to make further investigation.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_174",
@@ -3867,7 +4251,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_174A",
@@ -3887,7 +4273,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_175",
@@ -3907,7 +4295,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_176",
@@ -3927,7 +4317,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_177",
@@ -3947,7 +4339,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_178",
@@ -3967,7 +4361,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_179",
@@ -3987,7 +4383,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_180",
@@ -4007,7 +4405,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_181",
@@ -4027,7 +4427,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_182",
@@ -4047,7 +4449,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_183",
@@ -4067,7 +4471,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_184",
@@ -4087,7 +4493,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_185",
@@ -4107,7 +4515,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_186",
@@ -4127,7 +4537,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_187",
@@ -4147,7 +4559,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_188",
@@ -4167,7 +4581,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_189",
@@ -4187,7 +4603,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_190",
@@ -4207,7 +4625,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_191",
@@ -4227,7 +4647,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_192",
@@ -4247,7 +4669,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_193",
@@ -4267,7 +4691,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_194",
@@ -4287,7 +4713,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_195",
@@ -4307,7 +4735,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_196",
@@ -4327,7 +4757,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_196A",
@@ -4347,7 +4779,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_196B",
@@ -4367,7 +4801,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_197",
@@ -4387,7 +4823,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_198",
@@ -4407,7 +4845,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_198A",
@@ -4427,7 +4867,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_199",
@@ -4447,7 +4889,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_199A",
@@ -4467,7 +4911,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_199B",
@@ -4487,7 +4933,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_200",
@@ -4507,7 +4955,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_201",
@@ -4527,7 +4977,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_202",
@@ -4547,7 +4999,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_203",
@@ -4569,7 +5023,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "The Magistrate before whom a complaint is made or to whom it has been transferred, may dismiss the complaint, if, after considering the statement on oath (if any) of the complainant and the result of the investigation or inquiry (if any) under section 202, there is in his judgment no sufficient ground for proceeding. In such case he shall briefly record his reasons for so doing."
+    "text_normalized": "The Magistrate before whom a complaint is made or to whom it has been transferred, may dismiss the complaint, if, after considering the statement on oath (if any) of the complainant and the result of the investigation or inquiry (if any) under section 202, there is in his judgment no sufficient ground for proceeding. In such case he shall briefly record his reasons for so doing.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_203A",
@@ -4589,7 +5045,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_203C",
@@ -4609,7 +5067,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_204",
@@ -4629,7 +5089,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_205",
@@ -4649,7 +5111,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_221",
@@ -4669,7 +5133,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_222",
@@ -4689,7 +5155,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_223",
@@ -4709,7 +5177,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_224",
@@ -4729,7 +5199,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_225",
@@ -4749,7 +5221,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_226",
@@ -4769,7 +5243,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_227",
@@ -4789,7 +5265,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_228",
@@ -4809,7 +5287,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_229",
@@ -4829,7 +5309,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_230",
@@ -4849,7 +5331,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_231",
@@ -4869,7 +5353,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_232",
@@ -4889,7 +5375,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_233",
@@ -4909,7 +5397,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_234",
@@ -4929,7 +5419,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_235",
@@ -4949,7 +5441,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_236",
@@ -4969,7 +5463,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_237",
@@ -4989,7 +5485,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_238",
@@ -5009,7 +5507,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_239",
@@ -5029,7 +5529,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_240",
@@ -5049,7 +5551,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_241",
@@ -5069,7 +5573,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_241A",
@@ -5089,7 +5595,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_242",
@@ -5109,7 +5617,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_243",
@@ -5129,7 +5639,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_244",
@@ -5149,7 +5661,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_244A",
@@ -5169,7 +5683,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_245",
@@ -5189,7 +5705,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_245A",
@@ -5209,7 +5727,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_246",
@@ -5229,7 +5749,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_247",
@@ -5249,7 +5771,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_248",
@@ -5269,7 +5793,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_249",
@@ -5289,7 +5815,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_249A",
@@ -5309,7 +5837,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_250",
@@ -5329,7 +5859,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_250A",
@@ -5349,7 +5881,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_260",
@@ -5369,7 +5903,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_261",
@@ -5389,7 +5925,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_262",
@@ -5409,7 +5947,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_263",
@@ -5429,7 +5969,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_264",
@@ -5449,7 +5991,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265",
@@ -5469,7 +6013,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265A",
@@ -5489,7 +6035,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265B",
@@ -5509,7 +6057,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265C",
@@ -5529,7 +6079,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265D",
@@ -5549,7 +6101,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265E",
@@ -5569,7 +6123,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265F",
@@ -5589,7 +6145,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265G",
@@ -5609,7 +6167,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265H",
@@ -5629,7 +6189,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265I",
@@ -5649,7 +6211,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265J",
@@ -5669,7 +6233,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265K",
@@ -5689,7 +6255,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265L",
@@ -5709,7 +6277,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265M",
@@ -5729,7 +6299,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265N",
@@ -5749,7 +6321,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_337",
@@ -5769,7 +6343,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_338",
@@ -5789,7 +6365,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_339",
@@ -5809,7 +6387,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_339A",
@@ -5829,7 +6409,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_340",
@@ -5849,7 +6431,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_341",
@@ -5869,7 +6453,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_342",
@@ -5889,7 +6475,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_343",
@@ -5909,7 +6497,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_344",
@@ -5929,7 +6519,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_344A",
@@ -5949,7 +6541,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_345",
@@ -5969,7 +6563,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_346",
@@ -5989,7 +6585,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_347",
@@ -6009,7 +6607,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_348",
@@ -6029,7 +6629,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_349",
@@ -6049,7 +6651,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_350",
@@ -6069,7 +6673,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_350A",
@@ -6089,7 +6695,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_351",
@@ -6109,7 +6717,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_352",
@@ -6129,7 +6739,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_353",
@@ -6149,7 +6761,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_354",
@@ -6169,7 +6783,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_355",
@@ -6189,7 +6805,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_356",
@@ -6209,7 +6827,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_357",
@@ -6229,7 +6849,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_358",
@@ -6249,7 +6871,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_359",
@@ -6269,7 +6893,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_360",
@@ -6289,7 +6915,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_361",
@@ -6309,7 +6937,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_362",
@@ -6329,7 +6959,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_363",
@@ -6349,7 +6981,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_364",
@@ -6369,7 +7003,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_365",
@@ -6389,7 +7025,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_366",
@@ -6409,7 +7047,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_367",
@@ -6429,7 +7069,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_368",
@@ -6449,7 +7091,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_369",
@@ -6469,7 +7113,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_370",
@@ -6489,7 +7135,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_371",
@@ -6509,7 +7157,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_372",
@@ -6529,7 +7179,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_373",
@@ -6549,7 +7201,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_374",
@@ -6569,7 +7223,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_375",
@@ -6589,7 +7245,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_376",
@@ -6609,7 +7267,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_377",
@@ -6629,7 +7289,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_378",
@@ -6649,7 +7311,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_379",
@@ -6669,7 +7333,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_380",
@@ -6689,7 +7355,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_381",
@@ -6709,7 +7377,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_382",
@@ -6729,7 +7399,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_382A",
@@ -6749,7 +7421,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_382B",
@@ -6769,7 +7443,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_382C",
@@ -6789,7 +7465,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_383",
@@ -6809,7 +7487,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_384",
@@ -6829,7 +7509,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_385",
@@ -6849,7 +7531,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_386",
@@ -6869,7 +7553,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_387",
@@ -6889,7 +7575,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_388",
@@ -6909,7 +7597,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_389",
@@ -6929,7 +7619,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_390",
@@ -6949,7 +7641,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_391",
@@ -6969,7 +7663,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_392",
@@ -6989,7 +7685,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_393",
@@ -7009,7 +7707,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_394",
@@ -7029,7 +7729,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_395",
@@ -7049,7 +7751,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_396",
@@ -7069,7 +7773,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_397",
@@ -7089,7 +7795,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_398",
@@ -7109,7 +7817,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_399",
@@ -7129,7 +7839,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_400",
@@ -7149,7 +7861,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_401",
@@ -7169,7 +7883,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_402",
@@ -7189,7 +7905,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_402A",
@@ -7209,7 +7927,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_402B",
@@ -7229,7 +7949,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_402C",
@@ -7249,7 +7971,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_402D",
@@ -7269,7 +7993,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_403",
@@ -7289,7 +8015,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_404",
@@ -7309,7 +8037,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_405",
@@ -7329,7 +8059,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_406",
@@ -7349,7 +8081,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_406A",
@@ -7369,7 +8103,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_407",
@@ -7389,7 +8125,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_408",
@@ -7409,7 +8147,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_409",
@@ -7429,7 +8169,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_410",
@@ -7449,7 +8191,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_411",
@@ -7469,7 +8213,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_411A",
@@ -7489,7 +8235,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_412",
@@ -7509,7 +8257,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_413",
@@ -7529,7 +8279,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_414",
@@ -7549,7 +8301,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_414A",
@@ -7569,7 +8323,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_415",
@@ -7589,7 +8345,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_415A",
@@ -7609,7 +8367,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_416",
@@ -7629,7 +8389,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_417",
@@ -7649,7 +8411,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_418",
@@ -7669,7 +8433,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_419",
@@ -7689,7 +8455,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_420",
@@ -7709,7 +8477,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_421",
@@ -7729,7 +8499,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_422",
@@ -7749,7 +8521,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_423",
@@ -7769,7 +8543,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_424",
@@ -7789,7 +8565,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_425",
@@ -7809,7 +8587,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_426",
@@ -7829,7 +8609,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_427",
@@ -7849,7 +8631,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_428",
@@ -7869,7 +8653,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_429",
@@ -7889,7 +8675,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_430",
@@ -7909,7 +8697,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_431",
@@ -7929,7 +8719,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_435",
@@ -7949,7 +8741,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_436",
@@ -7969,7 +8763,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_437",
@@ -7989,7 +8785,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_438",
@@ -8009,7 +8807,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_439",
@@ -8029,7 +8829,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_439A",
@@ -8049,7 +8851,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_440",
@@ -8069,7 +8873,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_441",
@@ -8089,7 +8895,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_442",
@@ -8109,7 +8917,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_464",
@@ -8129,7 +8939,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_465",
@@ -8149,7 +8961,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_466",
@@ -8169,7 +8983,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_467",
@@ -8189,7 +9005,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_468",
@@ -8209,7 +9027,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_469",
@@ -8229,7 +9049,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_470",
@@ -8249,7 +9071,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_471",
@@ -8269,7 +9093,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_472",
@@ -8289,7 +9115,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_473",
@@ -8309,7 +9137,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_474",
@@ -8329,7 +9159,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_475",
@@ -8349,7 +9181,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_476",
@@ -8369,7 +9203,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_476A",
@@ -8389,7 +9225,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_476B",
@@ -8409,7 +9247,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_477",
@@ -8429,7 +9269,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_478",
@@ -8449,7 +9291,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_479",
@@ -8469,7 +9313,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_480",
@@ -8489,7 +9335,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_481",
@@ -8509,7 +9357,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_482",
@@ -8529,7 +9379,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_483",
@@ -8549,7 +9401,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_484",
@@ -8569,7 +9423,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_485",
@@ -8589,7 +9445,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_486",
@@ -8609,7 +9467,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_487",
@@ -8629,7 +9489,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_491",
@@ -8649,7 +9511,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_491A",
@@ -8669,7 +9533,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_492",
@@ -8689,7 +9555,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_493",
@@ -8709,7 +9577,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_494",
@@ -8729,7 +9599,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_495",
@@ -8749,7 +9621,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_496",
@@ -8776,7 +9650,9 @@
       167
     ],
     "footnotes": [],
-    "text_normalized": "496. In what cases bail to be taken. When any person other than a person accused of a non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, and is prepared at any time while in the custody of such officer or at any stage of the proceedings before such Court to give bail, such person shall be released on bail : Provided that such officer or Court, if he or it thinks fit, may, instead of taking bail from such person, discharge him on his executing a bond without sureties for his appearance as hereinafter provided :\nProvided, further, that nothing in this section shall be deemed to affect the provisions of section 107, sub-section (4), or section 117, sub-section (3)."
+    "text_normalized": "496. In what cases bail to be taken. When any person other than a person accused of a non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, and is prepared at any time while in the custody of such officer or at any stage of the proceedings before such Court to give bail, such person shall be released on bail : Provided that such officer or Court, if he or it thinks fit, may, instead of taking bail from such person, discharge him on his executing a bond without sureties for his appearance as hereinafter provided :\nProvided, further, that nothing in this section shall be deemed to affect the provisions of section 107, sub-section (4), or section 117, sub-section (3).",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_497",
@@ -8803,7 +9679,9 @@
       168
     ],
     "footnotes": [],
-    "text_normalized": "497. When bail may be taken in case of non-bailable offence. — (1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for ten years:\nProvided that the Court may direct that any person under the age of sixteen years or any woman or any sick or infirm person accused of such an offence be released on bail:\nProvided further that the Court shall, except where it is of the opinion that the delay in the trial of the accused has been occasioned by an act or omission of the accused or any other person acting on his behalf, direct that any person shall be released on bail—\n(a) Who, being accused of any offence not punishable with death, has been detained for such offence for a continuous period exceeding one year or in case of a woman exceeding six months and whose trial for such offence has not concluded; or\n(b) Who, being accused of an offence punishable with death, has been detained for such offence for a continuous period exceeding two years and in case of a woman exceeding one year and whose trial for such offence has not concluded:\nProvided further that the provisions of the third proviso to this sub-section shall not apply to a previously convicted offender for an offence punishable with death or imprisonment for life or to a person who, in the opinion of the Court, is a hardened, desperate or dangerous criminal or is accused of an act of terrorism punishable with death or imprisonment for life:\nProvided further that the Court shall, in cases where a person has been released on bail under this sub-section, by order in writing, record its reasons for so doing.\n(2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are not reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\n(3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\n(4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before Judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\n(5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody."
+    "text_normalized": "497. When bail may be taken in case of non-bailable offence. — (1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for ten years:\nProvided that the Court may direct that any person under the age of sixteen years or any woman or any sick or infirm person accused of such an offence be released on bail:\nProvided further that the Court shall, except where it is of the opinion that the delay in the trial of the accused has been occasioned by an act or omission of the accused or any other person acting on his behalf, direct that any person shall be released on bail—\n(a) Who, being accused of any offence not punishable with death, has been detained for such offence for a continuous period exceeding one year or in case of a woman exceeding six months and whose trial for such offence has not concluded; or\n(b) Who, being accused of an offence punishable with death, has been detained for such offence for a continuous period exceeding two years and in case of a woman exceeding one year and whose trial for such offence has not concluded:\nProvided further that the provisions of the third proviso to this sub-section shall not apply to a previously convicted offender for an offence punishable with death or imprisonment for life or to a person who, in the opinion of the Court, is a hardened, desperate or dangerous criminal or is accused of an act of terrorism punishable with death or imprisonment for life:\nProvided further that the Court shall, in cases where a person has been released on bail under this sub-section, by order in writing, record its reasons for so doing.\n(2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are not reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\n(3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\n(4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before Judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\n(5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_498",
@@ -8829,7 +9707,9 @@
       168
     ],
     "footnotes": [],
-    "text_normalized": "498. Power to direct admission to bail or reduction of bail. The amount of every bond executed under this Chapter shall be fixed with due regard to the circumstances of the case, and shall not be excessive ; and the High Court or Court of Session may, in any case, whether there be an appeal on conviction or not, direct that any person be admitted to bail, or that the bail required by a police-officer or Magistrate be reduced."
+    "text_normalized": "498. Power to direct admission to bail or reduction of bail. The amount of every bond executed under this Chapter shall be fixed with due regard to the circumstances of the case, and shall not be excessive ; and the High Court or Court of Session may, in any case, whether there be an appeal on conviction or not, direct that any person be admitted to bail, or that the bail required by a police-officer or Magistrate be reduced.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_498A",
@@ -8855,7 +9735,9 @@
       168
     ],
     "footnotes": [],
-    "text_normalized": "498A. No bail to be granted to a person not in custody, in court or against whom no case is registered, etc. Nothing in section 497 or section 498 shall be deemed to require or authorise a Court to release on bail, or to direct to be admitted to bail, any person who is not in custody or is not present in court or against whom no case stands registered for the time being and an order for the release of a person on bail, or a direction that a person be admitted to bail, shall be effective only in respect of the case that so stands registered against him and is specified in the order or direction."
+    "text_normalized": "498A. No bail to be granted to a person not in custody, in court or against whom no case is registered, etc. Nothing in section 497 or section 498 shall be deemed to require or authorise a Court to release on bail, or to direct to be admitted to bail, any person who is not in custody or is not present in court or against whom no case stands registered for the time being and an order for the release of a person on bail, or a direction that a person be admitted to bail, shall be effective only in respect of the case that so stands registered against him and is specified in the order or direction.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_499",
@@ -8875,7 +9757,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_500",
@@ -8895,7 +9779,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_501",
@@ -8915,7 +9801,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_502",
@@ -8935,7 +9823,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_503",
@@ -8955,7 +9845,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_504",
@@ -8975,7 +9867,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_505",
@@ -8995,7 +9889,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_506",
@@ -9015,7 +9911,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_507",
@@ -9035,7 +9933,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_508",
@@ -9055,7 +9955,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_508A",
@@ -9075,7 +9977,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_509",
@@ -9095,7 +9999,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_510",
@@ -9115,7 +10021,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_511",
@@ -9135,7 +10043,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_512",
@@ -9155,7 +10065,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_513",
@@ -9175,7 +10087,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_514",
@@ -9195,7 +10109,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_514A",
@@ -9215,7 +10131,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_514B",
@@ -9235,7 +10153,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_515",
@@ -9255,7 +10175,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_516",
@@ -9275,7 +10197,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_516A",
@@ -9295,7 +10219,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_517",
@@ -9315,7 +10241,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_518",
@@ -9335,7 +10263,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_519",
@@ -9355,7 +10285,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_520",
@@ -9375,7 +10307,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_521",
@@ -9395,7 +10329,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_522",
@@ -9415,7 +10351,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_522A",
@@ -9435,7 +10373,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_523",
@@ -9455,7 +10395,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_524",
@@ -9475,7 +10417,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_525",
@@ -9495,7 +10439,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_526",
@@ -9515,7 +10461,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_526A",
@@ -9535,7 +10483,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_527",
@@ -9555,7 +10505,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_528",
@@ -9575,7 +10527,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_529",
@@ -9595,7 +10549,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_530",
@@ -9615,7 +10571,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_531",
@@ -9635,7 +10593,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_532",
@@ -9655,7 +10615,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_533",
@@ -9675,7 +10637,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_534",
@@ -9695,7 +10659,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_535",
@@ -9715,7 +10681,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_536",
@@ -9735,7 +10703,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_537",
@@ -9755,7 +10725,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_538",
@@ -9775,7 +10747,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_539",
@@ -9795,7 +10769,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_539A",
@@ -9815,7 +10791,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_539B",
@@ -9835,7 +10813,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_540",
@@ -9855,7 +10835,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_540A",
@@ -9875,7 +10857,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_541",
@@ -9895,7 +10879,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_542",
@@ -9915,7 +10901,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_543",
@@ -9935,7 +10923,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_544",
@@ -9955,7 +10945,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_544A",
@@ -9975,7 +10967,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_545",
@@ -9995,7 +10989,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_546",
@@ -10015,7 +11011,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_546A",
@@ -10035,7 +11033,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_547",
@@ -10055,7 +11055,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_548",
@@ -10075,7 +11077,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_549",
@@ -10095,7 +11099,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_550",
@@ -10115,7 +11121,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_551",
@@ -10135,7 +11143,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_552",
@@ -10155,7 +11165,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_553",
@@ -10175,7 +11187,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_554",
@@ -10195,7 +11209,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_555",
@@ -10215,7 +11231,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_556",
@@ -10235,7 +11253,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_557",
@@ -10255,7 +11275,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_558",
@@ -10275,7 +11297,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_559",
@@ -10295,7 +11319,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_560",
@@ -10315,7 +11341,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_561",
@@ -10335,7 +11363,9 @@
     "status": "repealed",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_561A",
@@ -10357,7 +11387,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "Nothing in this Code shall be deemed to limit or affect the inherent power of the High Court to make such orders as may be necessary to give effect to any order under this Code, or to prevent abuse of the process of any Court or otherwise to secure the ends of justice."
+    "text_normalized": "Nothing in this Code shall be deemed to limit or affect the inherent power of the High Court to make such orders as may be necessary to give effect to any order under this Code, or to prevent abuse of the process of any Court or otherwise to secure the ends of justice.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_562",
@@ -10377,7 +11409,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_563",
@@ -10397,7 +11431,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_564",
@@ -10417,7 +11453,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_565",
@@ -10437,7 +11475,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_1951",
@@ -10457,7 +11497,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_22A_6",
@@ -10479,7 +11521,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "An Ex-officio Justice of the Peace may issue appropriate directions to the police authorities on a complaint, in respect of: (i) non-registration of a criminal case; (ii) transfer of investigation from one police officer to another; and (iii) neglect, failure or excesses committed by a police authority in relation to its functions and duties."
+    "text_normalized": "An Ex-officio Justice of the Peace may issue appropriate directions to the police authorities on a complaint, in respect of: (i) non-registration of a criminal case; (ii) transfer of investigation from one police officer to another; and (iii) neglect, failure or excesses committed by a police authority in relation to its functions and duties.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_22A_6_A",
@@ -10499,7 +11543,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_497_1",
@@ -10521,7 +11567,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for 10 years.\n(2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are no reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\n(3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\n(4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\n(5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody."
+    "text_normalized": "(1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for 10 years.\n(2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are no reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\n(3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\n(4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\n(5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_497_2",
@@ -10543,7 +11591,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for 10 years.\n(2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are no reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\n(3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\n(4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\n(5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody."
+    "text_normalized": "(1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for 10 years.\n(2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are no reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\n(3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\n(4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\n(5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_497_5",
@@ -10565,7 +11615,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "(1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for 10 years.\n(2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are no reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\n(3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\n(4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\n(5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody."
+    "text_normalized": "(1) When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police-station, or appears or is brought before a Court, he may be released on bail, but he shall not be so released if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for 10 years.\n(2) If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are no reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\n(3) An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\n(4) If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\n(5) A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody.",
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_498_1",
@@ -10587,6 +11639,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "footnotes": [],
-    "text_normalized": "The amount of every bond executed under this Chapter shall be fixed with due regard to the circumstances of the case, and shall not be excessive; and the High Court or Court of Session may, in any case, whether there be an appeal on conviction or not, direct that any person be admitted to bail, or that the bail required by a police-officer or Magistrate be reduced."
+    "text_normalized": "The amount of every bond executed under this Chapter shall be fixed with due regard to the circumstances of the case, and shall not be excessive; and the High Court or Court of Session may, in any case, whether there be an appeal on conviction or not, direct that any person be admitted to bail, or that the bail required by a police-officer or Magistrate be reduced.",
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

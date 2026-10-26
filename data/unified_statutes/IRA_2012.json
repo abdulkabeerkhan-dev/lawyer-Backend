@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "No employer or trade union of employers and no person acting on their behalf shall: (a) impose any condition in a contract of employment seeking to restrain the right of a person to join a trade union; (b) refuse to employ or dismiss or threaten to dismiss a workman on account of trade union activities; (c) transfer, suspend, discharge or punish a workman on grounds of trade union membership.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "IRA_2012_SEC_33",
@@ -45,6 +47,8 @@
     "footnotes": [],
     "text_normalized": "(1) A worker may bring his grievance in respect of any right guaranteed or secured to him by or under any law, award, or settlement to the notice of his employer in writing, either himself or through his trade union, within ninety days of the day on which cause of such grievance arises. (2) If the employer fails to communicate a decision within fifteen days or communicates a decision with which the worker is dissatisfied, the worker may take the matter to the Labour Court within thirty days.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

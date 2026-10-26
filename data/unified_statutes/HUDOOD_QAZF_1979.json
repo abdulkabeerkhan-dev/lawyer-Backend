@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "Whoever by words either spoken or intended to be read, or by signs or by visible representations, makes or publishes an imputation of Zina concerning any person intending to harm, or knowing or having reason to believe that such imputation will harm the reputation of such person, is said to commit Qazf.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "HUDOOD_QAZF_1979_SEC_7",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "Whoever commits Qazf liable to Hadd shall be punished with whipping numbering eighty stripes, and his testimony shall not thereafter be admitted in any Court of law.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "HUDOOD_QAZF_1979_SEC_14",
@@ -69,6 +73,8 @@
     "footnotes": [],
     "text_normalized": "(1) Where a husband accuses his wife of Zina and the wife does not admit the accusation, the husband shall solemnly declare before the Court four times by Allah that he is speaking the truth, and a fifth time invoke the curse of Allah upon himself if he be of the liars. The wife shall then similarly swear four times by Allah that her husband is of the liars, and a fifth time invoke the wrath of Allah upon herself if her husband speaks the truth. Thereupon the Court shall pass an order dissolving their marriage.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

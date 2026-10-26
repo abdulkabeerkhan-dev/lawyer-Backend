@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "(1) This Ordinance extends to the whole of Pakistan and shall apply to all persons, including those in the service of Pakistan, accused of offences under this Ordinance: Provided that this Ordinance shall not apply to: (a) all matters relating to Federal, Provincial or local taxation, fees or levies; (b) decisions of Federal or Provincial Cabinets, their Committees or Sub-Committees, unless it is shown that the holder of public office has gained monetary benefit; (c) any person or transaction where the value involved is less than five hundred million rupees (as amended by National Accountability (Amendment) Acts, 2022–2023 and affirmed by the Supreme Court of Pakistan).",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "NAO_1999_SEC_9",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "(1) A holder of a public office, or any other person, is said to commit or to have committed the offence of corruption and corrupt practices: (a) if he accepts or obtains any gratification whatever, other than legal remuneration, as a motive or reward; (b) if he accepts or obtains any valuable thing without consideration or for inadequate consideration; (c) if he dishonestly or fraudulently misappropriates or converts to his own use any property entrusted to him; (d) if he, by corrupt, dishonest, or illegal means, obtains or seeks for himself or any other person any property, valuable thing, or pecuniary advantage; (e) if he or any of his dependants is in possession of assets or pecuniary resources disproportionate to his known sources of income, which he cannot reasonably account for.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "NAO_1999_SEC_10",
@@ -69,7 +73,9 @@
     "footnotes": [],
     "text_normalized": "(1) A person who commits the offence of corruption and corrupt practices shall be punishable with rigorous imprisonment for a term which may extend to fourteen years, and with fine, and such of the properties of the accused as are found to be disproportionate to his known sources of income, or acquired by him through corrupt practices, shall be liable to be forfeited to the appropriate Government.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "NAO_1999_SEC_14",
@@ -93,7 +99,9 @@
     "footnotes": [],
     "text_normalized": "(1) Where, in any trial of an offence punishable under section 9, it is proved that an accused person has accepted or obtained any gratification or valuable thing, it shall be presumed, unless the contrary is proved, that he accepted or obtained that gratification or valuable thing as a motive or reward such as is mentioned in section 9. (2) Where the accused is found in possession of property disproportionate to his known sources of income, the burden of proving that such property was lawfully acquired shall lie upon the accused.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "NAO_1999_SEC_15",
@@ -117,7 +125,9 @@
     "footnotes": [],
     "text_normalized": "(a) Where an accused person is convicted of an offence under section 9 of this Ordinance, he shall forthwith cease to hold public office and stand disqualified for a period of ten years for being elected or chosen as a member of Parliament or Provincial Assembly or local government.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "NAO_1999_SEC_24",
@@ -141,7 +151,9 @@
     "footnotes": [],
     "text_normalized": "(1) The Chairman NAB may, at any stage of investigation, issue warrant for the arrest of the accused: Provided that the reasons for arrest shall be communicated to the accused and must satisfy the objective test of necessity of arrest during investigation. (2) The accused person shall be produced before the Accountability Court within twenty-four hours of arrest.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "NAO_1999_SEC_25",
@@ -165,6 +177,8 @@
     "footnotes": [],
     "text_normalized": "(1) Where, before the authorization of investigation, an accused voluntarily makes a return of the assets or gains acquired through corruption, the Chairman NAB may accept the offer. (2) Where, after the authorization of investigation or filing of Reference, the accused applies for a plea bargain, the Chairman NAB may refer the request to the Court, and on payment of the determined amount approved by the Court, the accused shall be deemed to have been convicted and disqualified from holding public office or obtaining bank loans for ten years.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

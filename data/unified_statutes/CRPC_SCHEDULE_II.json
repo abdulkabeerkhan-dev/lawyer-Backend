@@ -22,7 +22,9 @@
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   "406": {
     "section": "406",
@@ -46,7 +48,9 @@
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   "409": {
     "section": "409",
@@ -70,7 +74,9 @@
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   "489-F": {
     "section": "489-F",
@@ -94,7 +100,9 @@
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   "489F": {
     "section": "489-F",
@@ -118,7 +126,9 @@
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   "419": {
     "section": "419",
@@ -142,7 +152,9 @@
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   "468": {
     "section": "468",
@@ -166,7 +178,9 @@
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   "471": {
     "section": "471",
@@ -190,7 +204,9 @@
     "schedule_ii_column_5": "Bailable",
     "tier": "unsourced",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   "302": {
     "section": "302",
@@ -214,6 +230,8 @@
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 }

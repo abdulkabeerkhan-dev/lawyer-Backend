@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "(1) Any wrongful act or publication or circulation of a false statement or representation made orally or in written or visual form which injures the reputation of a person, tends to lower him in the estimation of others or holds him up to ridicule, contempt or dislike, or injures him in his profession or trade, is an actionable wrong.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "DEFAMATION_2002_SEC_8",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "No action shall lie unless the plaintiff has, within two months after the publication came to his knowledge, given to the defendant fourteen days written notice specifying the defamatory matter complained of and requiring him to tender an apology.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "DEFAMATION_2002_SEC_12",
@@ -69,6 +73,8 @@
     "footnotes": [],
     "text_normalized": "An action under this Ordinance shall be instituted within six months after the cause of action has arisen or from the date when the defamatory matter came to the knowledge of the plaintiff.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

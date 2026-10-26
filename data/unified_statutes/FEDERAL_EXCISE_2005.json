@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "There shall be levied and collected in such manner as may be prescribed, duties of excise on goods produced or manufactured in Pakistan, goods imported into Pakistan, and services provided in Pakistan, at the rates specified in the First Schedule.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "FEDERAL_EXCISE_2005_SEC_14",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "Where any duty has not been levied or paid or has been short-levied or short-paid or erroneously refunded, the officer of Inland Revenue shall serve a notice on the person liable requiring him to show cause why he should not pay the amount specified therein.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "FEDERAL_EXCISE_2005_SEC_33",
@@ -69,6 +73,8 @@
     "footnotes": [],
     "text_normalized": "Any person aggrieved by any decision or order passed by an officer of Inland Revenue under this Act may, within thirty days of the date of receipt of the order, prefer an appeal to the Commissioner (Appeals).",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

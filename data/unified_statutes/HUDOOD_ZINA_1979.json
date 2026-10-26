@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "A man and a woman are said to commit 'Zina' if they wilfully have sexual intercourse without being validly married to each other.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "HUDOOD_ZINA_1979_SEC_5",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "(1) Zina is Zina liable to Hadd if: (a) it is committed by a man who is an adult and is not insane with an adult woman who is not insane; and (b) it is committed by a person with a person to whom he is not married.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "HUDOOD_ZINA_1979_SEC_10",
@@ -69,6 +73,8 @@
     "footnotes": [],
     "text_normalized": "A person is said to commit Zina-bil-jabr if he or she has sexual intercourse with a person to whom he or she is not validly married without the consent of that person, or against that person's will. Following the Protection of Women Act, 2006, offences of rape are tried under Section 375 and 376 of the Pakistan Penal Code.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

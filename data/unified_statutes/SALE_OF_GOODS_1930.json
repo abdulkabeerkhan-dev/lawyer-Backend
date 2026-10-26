@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "(1) A contract of sale of goods is a contract whereby the seller transfers or agrees to transfer the property in goods to the buyer for a price. (3) Where under a contract of sale the transfer of the property in the goods is to take place at a future time or subject to some condition thereafter to be fulfilled, the contract is called an agreement to sell.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "SALE_OF_GOODS_1930_SEC_54",
@@ -45,6 +47,8 @@
     "footnotes": [],
     "text_normalized": "(1) Subject to the provisions of this section, a contract of sale is not rescinded by the mere exercise by an unpaid seller of his right of lien or stoppage in transit. (2) Where the goods are of a perishable nature, or where the unpaid seller gives notice to the buyer of his intention to re-sell, the unpaid seller may re-sell the goods and recover damages from the buyer.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

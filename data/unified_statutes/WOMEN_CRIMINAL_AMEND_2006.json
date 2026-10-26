@@ -21,6 +21,8 @@
     "footnotes": [],
     "text_normalized": "No court shall take cognizance of an offence under section 496-B or section 496-C of the Pakistan Penal Code (fornication or false accusation) except on a complaint lodged in a Court of Session by the person aggrieved or competent authority, and no police officer shall investigate such complaint without an express direction of the Court of Session.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

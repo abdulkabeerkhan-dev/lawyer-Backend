@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "An invention is patentable if it is new, involves an inventive step and is capable of industrial application. A patent shall not be granted for discoveries, scientific theories and mathematical methods, literary, dramatic, musical or artistic works, or schemes for performing mental acts or doing business.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PATENTS_2000_SEC_13",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "An invention shall be considered to be new if it does not form part of the prior art. The prior art shall consist of everything which has been made available to the public in Pakistan or anywhere in the world by means of written or oral description, by use, or in any other way.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PATENTS_2000_SEC_60",
@@ -69,6 +73,8 @@
     "footnotes": [],
     "text_normalized": "The patentee may institute a suit in a District Court against any person who makes, uses, sells, offers for sale or imports the patented product or uses the patented process without his consent. The Court may award an injunction, damages or account of profits and delivery-up of infringing articles.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

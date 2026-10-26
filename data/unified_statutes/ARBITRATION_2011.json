@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "Notwithstanding anything contained in any other law for the time being in force, the High Court shall have exclusive jurisdiction to hear and determine applications and matters under this Act.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "ARBITRATION_2011_SEC_4",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "(1) A party to an arbitration agreement against whom legal proceedings have been brought in respect of a matter which is the subject of the agreement may apply to the court to stay the proceedings. (2) The Court shall refer the parties to arbitration unless it finds that the agreement is null and void, inoperative or incapable of being performed.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "ARBITRATION_2011_SEC_6",
@@ -69,6 +73,8 @@
     "footnotes": [],
     "text_normalized": "(1) A foreign arbitral award shall be recognized and enforced in the same manner as a judgment or order of a High Court in Pakistan.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

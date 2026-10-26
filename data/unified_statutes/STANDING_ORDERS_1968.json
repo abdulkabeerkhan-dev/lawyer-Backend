@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "For terminating employment of a permanent workman, one month's notice in writing shall be given either by the employer or by the workman, or one month's wages shall be paid in lieu of notice. The services of a workman shall not be terminated nor shall a workman be removed, retrenched, discharged or dismissed from service except by an order in writing which shall explicitly state the reason for the action taken.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "STANDING_ORDERS_1968_SEC_15",
@@ -45,6 +47,8 @@
     "footnotes": [],
     "text_normalized": "A workman may be reprimanded, fined, suspended, or dismissed without notice or payment in lieu of notice for misconduct. No order of dismissal shall be made unless the workman concerned is informed in writing of the alleged misconduct within one month of the date of misconduct and is given an opportunity to explain the circumstances and an independent inquiry is held.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

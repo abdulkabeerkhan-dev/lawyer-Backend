@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "A landlord who seeks to evict his tenant shall apply to the Controller for an order in that behalf, and the Controller may make an order directing the tenant to put the landlord in possession if he is satisfied that: (a) the tenant has not paid or tendered rent within fifteen days of the due date; (b) the tenant has committed acts impairing the value or utility of the building; (c) the tenant has sub-let the building without written consent; (d) the landlord requires the building in good faith for his own occupation or that of any of his children.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CANTONMENT_RENT_1963_SEC_24",
@@ -45,6 +47,8 @@
     "footnotes": [],
     "text_normalized": "Any person aggrieved by an order passed by the Controller may, within thirty days from the date of such order, prefer an appeal in writing to the District Judge, whose decision thereon shall be final.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

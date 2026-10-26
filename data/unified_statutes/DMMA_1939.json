@@ -19,7 +19,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "DMMA_1939_SEC_2",
@@ -43,7 +45,9 @@
     "footnotes": [],
     "text_normalized": "A woman married under Muslim law shall be entitled to obtain a decree for the dissolution of her marriage on any one or more of the following grounds, namely:—\n(i) that the whereabouts of the husband have not been known for a period of four years;\n(ii) that the husband has neglected or has failed to provide for her maintenance for a period of two years;\n(ii-a) that the husband has taken an additional wife in contravention of the provisions of the Muslim Family Laws Ordinance, 1961;\n(iii) that the husband has been sentenced to imprisonment for a period of seven years or upwards;\n(iv) that the husband has failed to perform, without reasonable cause, his marital obligations for a period of three years;\n(v) that the husband was impotent at the time of the marriage and continues to be so;\n(vi) that the husband has been insane for a period of two years or is suffering from leprosy or a virulent venereal disease;\n(vii) that she, having been given in marriage by her father or other guardian before she attained the age of sixteen years, repudiated the marriage before attaining the age of eighteen years;\n(viii) that the husband treats her with cruelty;\n(ix) on any other ground which is recognized as valid for the dissolution of marriages under Muslim law.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "DMMA_1939_SEC_3",
@@ -65,7 +69,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "DMMA_1939_SEC_4",
@@ -87,7 +93,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "DMMA_1939_SEC_5",
@@ -109,7 +117,9 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "DMMA_1939_SEC_6",
@@ -131,6 +141,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

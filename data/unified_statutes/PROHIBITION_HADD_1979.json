@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "Whoever: (a) imports, exports, transports, manufactures or processes any intoxicant; or (b) bottles any intoxicant; or (c) sells or serves any intoxicant; or (d) allows any of the acts aforesaid upon premises owned by him or in his possession; shall be punished with imprisonment of either description for a term which may extend to five years and with whipping not exceeding thirty stripes, and shall also be liable to fine: Provided that if the intoxicant is raw opium or coca leaf, the imprisonment may extend to fourteen years.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PROHIBITION_HADD_1979_ART_4",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "Whoever owns, possesses or keeps in his custody any intoxicant shall be punished with imprisonment of either description for a term which may extend to two years, or with whipping not exceeding thirty stripes, and shall also be liable to fine: Provided that if the intoxicant is heroin, cocaine, raw opium or coca leaf, the imprisonment shall be for life or with imprisonment which shall not be less than two years and with whipping not exceeding thirty stripes.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PROHIBITION_HADD_1979_ART_8",
@@ -69,7 +73,9 @@
     "footnotes": [],
     "text_normalized": "Whosoever, being an adult Muslim, takes intoxicating liquor by mouth is guilty of drinking liable to hadd and shall be punished with whipping of eighty stripes: Provided that the punishment of whipping shall not be executed until the conviction is confirmed by the Federal Shariat Court.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "PROHIBITION_HADD_1979_ART_11",
@@ -93,6 +99,8 @@
     "footnotes": [],
     "text_normalized": "Whoever takes intoxicating liquor in a public place or, being a non-Muslim citizen of Pakistan, takes intoxicating liquor at a place other than a place licensed by the Provincial Government, shall be punished with imprisonment of either description for a term which may extend to three years, or with whipping not exceeding thirty stripes, or with both.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "(1) Save as otherwise provided by law, an advocate shall be entitled as of right to practice throughout Pakistan, and to appear, plead and act before any Court, tribunal or authority in Pakistan, including the Supreme Court and High Courts upon being duly enrolled.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "BAR_COUNCILS_1973_SEC_41",
@@ -45,6 +47,8 @@
     "footnotes": [],
     "text_normalized": "(1) An advocate may be reprimanded, suspended or removed from practice if he is found guilty of professional misconduct by the Disciplinary Committee of the Bar Council or Tribunal.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "(1) For proper administration of a service, cadre or post, the appointing authority shall cause a seniority list of the members for the time being of such service, cadre or post to be prepared, but nothing herein contained shall be construed to confer any vested right to a particular seniority in such service, cadre or post.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CIVIL_SERVANTS_1973_SEC_9",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "(1) A civil servant possessing such minimum qualifications as may be prescribed shall be eligible for promotion to a higher post for the time being reserved under the rules for departmental promotion in the service or cadre to which he belongs.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "CIVIL_SERVANTS_1973_SEC_4",
@@ -69,6 +73,8 @@
     "footnotes": [],
     "text_normalized": "(1) Any civil servant aggrieved by any final order, whether original or appellate, made by a departmental authority in respect of any of the terms and conditions of his service may, within thirty days of the communication of such order to him, prefer an appeal to the Tribunal: Provided that no appeal shall lie to a Tribunal unless the aggrieved civil servant has preferred an appeal, review or representation to departmental authority and a period of ninety days has elapsed.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]

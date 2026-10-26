@@ -21,7 +21,9 @@
     "footnotes": [],
     "text_normalized": "The Provincial Government may make rules for determining the value of land for purposes of jurisdiction in the suits mentioned in the Court-fees Act, 1870, section 7, paragraphs v and vi, and paragraph x, clause (d).",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "SUITS_VALUATION_1887_SEC_8",
@@ -45,7 +47,9 @@
     "footnotes": [],
     "text_normalized": "Where in suits other than those referred to in the Court-fees Act, 1870, section 7, paragraphs v, vi and ix, and paragraph x, clause (d), court-fees are payable ad valorem under the Court-fees Act, 1870, the value as determinable for the computation of court-fees and the value for purposes of jurisdiction shall be the same.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   },
   {
     "canonical_id": "SUITS_VALUATION_1887_SEC_11",
@@ -69,6 +73,8 @@
     "footnotes": [],
     "text_normalized": "(1) Notwithstanding anything in section 578 of the Code of Civil Procedure, an objection that by reason of the over-valuation or under-valuation of a suit or appeal a Court of first instance or lower Appellate Court which had not jurisdiction with respect to the suit or appeal exercised jurisdiction with respect thereto shall not be entertained by an Appellate Court unless the objection was taken in the Court of first instance or the over-valuation or under-valuation has prejudicially affected the disposal of the suit or appeal on its merits.",
     "in_force": "unknown",
-    "quoting_allowed": false
+    "quoting_allowed": false,
+    "is_canonical": true,
+    "duplicate_of": null
   }
 ]
