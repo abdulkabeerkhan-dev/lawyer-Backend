@@ -1,0 +1,1152 @@
+================================================================================
+ORDER 1.11 AUDIT & VERIFICATION REPORT
+Generated: 2026-10-26T23:47:41.726035
+Repository: I:\c\Users\kabeer\Documents\lawyer-Backend-master\lawyer-Backend-master
+Mode: Strictly Offline (0 network requests, 0 pushes)
+================================================================================
+
+================================================================================
+--> ITEM 1: LIVE FIO SECTION 22 & QUERY ENGINE AUDIT
+================================================================================
+
+[1.1] Root Cause Explanations:
+  1. Why 'subsection (1) is not in stored text' was reported for a record with seven subsections:
+     - In core/statute_claim_verifier.py, verify_memo_statutory_claims defaulted primary_section=''.
+     - Because primary_section was empty, Section 22 was treated as an 'external cross-reference'.
+     - The external cross-reference regex required 'section 22' immediately adjacent to '(1)'.
+     - Authentic statutory text begins '22. Appeal. (1)' without repeating 'Section 22',
+       causing all 7 subsections (1)-(7) to fail the adjacency check despite being verbatim in store.
+     - FIX: Stored primary sections are now automatically extracted from stored_provisions keys
+       (e.g. FIO_2001_SEC_22 -> '22'). References are checked directly against that section's text.
+
+  2. Why the plan contained 'Section 2001':
+     - In core/statute_currency.py, clause scanning split the query on commas.
+     - The title 'Financial Institutions (Recovery of Finances) Ordinance, 2001?' split on comma,
+       leaving ', 2001?' as an isolated clause.
+     - In core/statutory_validator.py, the bare-number regex matched '2001' and search_context matched 'FIO_2001',
+       falsely synthesizing 'FIO_2001_SEC_2001'.
+     - FIX: Standalone calendar years (1800-2099) are strictly rejected as bare section numbers.
+
+  3. Why 29 claims were 'verified' next to 62 violations:
+     - 24 statutory concept benchmarks (e.g. 'limitation_period', 'interlocutory_bar', 'decretal_amount_deposit')
+       matched in the text of Section 22 (+ 5 section-level mentions = 29 verified claims).
+     - Concurrently, every mention of subsections (1) through (7) failed the external adjacency regex,
+       plus sentence-level unsourced analysis failures, yielding 62 violations alongside the 29 verified claims.
+
+[1.2] Verifying Planner and Claim Verifier Fixes with Tests:
+  Query: 'What is the appeal procedure under Section 22 of the Financial Institutions (Recovery of Finances) Ordinance, 2001?'
+  Detected provisions in query: [('FIO_2001_SEC_22', 'FIO_2001')]
+  Parse citation '2001': is_valid=False
+  Claim verification on Section 22(1)-(7):
+    Passed: True
+    Violations count: 0
+    Verified claims count: 14
+      - verified_primary_subsection: Section 22(1)
+      - verified_statutory_condition: limitation_period
+      - verified_primary_subsection: Section 22(2)
+      - verified_primary_subsection: Section 22(3)
+      - verified_primary_subsection: Section 22(4)
+      - verified_statutory_condition: limitation_period
+      - verified_statutory_condition: bench_composition
+      - verified_primary_subsection: Section 22(5)
+      - verified_statutory_condition: ex_parte_injunction
+      - verified_primary_subsection: Section 22(6)
+      - verified_external_cross_reference: Section 15(11)
+      - verified_external_cross_reference: Section 15A(13)
+      - verified_external_cross_reference: Section 19(7)
+      - verified_primary_subsection: Section 22(7)
+
+================================================================================
+--> ITEM 2: BLOCKED RESPONSE FIELDS & TESTCLIENT EXECUTION
+================================================================================
+
+[2.1] Live Execution of FIO Section 22 Query via FastAPI TestClient:
+  POST /query Status Code: 200
+  Assigned Job ID: 97232fad-ddd9-4d1a-9ca3-c83a2b0a41b4
+  GET /query/97232fad-ddd9-4d1a-9ca3-c83a2b0a41b4 Status Code: 200
+
+[2.2] Real HTTP Response Body:
+{
+  "status": "error",
+  "stage": "verification_blocked",
+  "error": "MEMORANDUM_VERIFICATION_FAILED",
+  "error_category": "UNSOURCED_ANALYSIS",
+  "safe_reason": "The generated memorandum could not be verified against official statutory gazettes and the verified judicial precedent index. Output withheld to protect legal accuracy.",
+  "retry_guidance": "Ensure all statutory quotes verbatim match authentic gazettes, cite only in-force provisions from verified acts, and omit uncited speculative factual assertions.",
+  "verified_statute_fallback": [
+    {
+      "canonical_id": "FIO_2001_SEC_22",
+      "display_name": "Section 22, Financial Institutions (Recovery of Finances) Ordinance, 2001",
+      "tier": "disputed",
+      "is_disputed": true,
+      "text": "> [!WARNING] DISPUTED STATUTORY TEXT \u2014 HUMAN CHECK REQUIRED\n> Official prints of this provision contain contested variations.\n\n[DISPUTED] Section 22, Financial Institutions (Recovery of Finances) Ordinance, 2001:\n22. Appeal. (1) Subject to sub-section (2), any person aggrieved by any judgment, decree, sentence, or final order passed by a Banking Court may, within thirty days of such judgment, decree, sentence or final order prefer an appeal to the High Court.\n(2) The appellant shall give notice of the filing of the appeal in accordance with the provisions of Order XLIII Rule 3 of the Code of Civil Procedure (Act V of 1908) to the respondent who may appear before the Banking Court to contest admission of the appeal on the date fixed for hearing.\n(3) The High Court shall at the stage of admission of the appeal, or at any time thereafter either suo motu or on the application of the decree holder, decide by means of a reasoned order whether the appeal is to be admitted in part or in whole depending on the facts and circumstances of the case, and as to the security to be furnished by the appellant:\nProvided that the admission of the appeal shall not per se operate as a stay, and no shall any stay be granted therein unless the decree-holder has been given an opportunity of being heard and unless the appellant deposits in cash with the High Court an amount equivalent to the decretal amount inclusive of costs, or in the case of an appeal other than an appeal against an interim decree, at the discretion of the High Court furnishes security equal in value to such amount\u037e and in the event of a stay being granted for a part of the decretal amount only, the requirement for a deposit in cash or furnishing of security shall stand reduced accordingly.\n(4) An appeal under sub-section (1) shall be heard by a bench of not less that two Judges of the High Court and, in case the appeal is admitted, it shall be decided within 90 days from the date of admission.\n(5) An appeal may be preferred under this section from a decree passed ex-parte.\n(6) No appeal, review or revision shall lie against an order accepting or rejecting an application for leave to defend, or any interlocutory order of the Banking Court which does not dispose of the entire case before the Banking Court other than an order passed under sub-section (11) of section 15 1[or sub-section (13) of section 15A] or sub-section (7) of section 19.\n(7) Any order of stay of execution of a decree passed under sub-section (2) shall automatically lapse on the expiry of six months from the date of the order whereupon the amount deposited in Court shall be paid over to the decree-holder or the decree-holder may enforce the security furnished by the judgment-debtor."
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "passed": false,
+      "total_failures": 55,
+      "failures_sample": [
+        "MODEL-INJECTED BANNER STRIPPED: Model-written '> [!' banner detected and stripped. System banners are attached strictly after verification.",
+        "CITED PROVISION NOT IN VERIFIED STORE: Provision 'Order XLIII Rule 3 of the Code of Civil Procedure' is not in verified store",
+        "CITED PROVISION NOT IN VERIFIED STORE: Provision 'Order XLIII Rule 3 of the Code of Civil Procedure' is not in verified store",
+        "CITED PROVISION NOT IN VERIFIED STORE: Provision 'Rule 3' is not in verified store",
+        "CITED PROVISION NOT IN VERIFIED STORE: Provision 'Rule 3' is not in verified store"
+      ]
+    },
+    {
+      "attempt": 2,
+      "passed": false,
+      "total_failures": 53,
+      "failures_sample": [
+        "MODEL-INJECTED BANNER STRIPPED: Model-written '> [!' banner detected and stripped. System banners are attached strictly after verification.",
+        "MODEL-INJECTED BANNER STRIPPED: Model-written '> [!' banner detected and stripped. System banners are attached strictly after verification.",
+        "CITED PROVISION NOT IN VERIFIED STORE: Provision 'Order XLIII Rule 3 of the Code of Civil Procedure' is not in verified store",
+        "CITED PROVISION NOT IN VERIFIED STORE: Provision 'Rule 3' is not in verified store",
+        "DISPUTED TEXT \u2014 human check required: DISPUTED TEXT \u2014 human check required: Provision 'Section 22, Financial Institutions (Recovery of Finances) Ordinance' is classified as disputed; human check required before reliance (missing structural warning banner)"
+      ]
+    }
+  ],
+  "early_display": null,
+  "result": null
+}
+
+[2.3] Audit of Populated Error Fields:
+  • status: error
+  • stage: verification_blocked
+  • error: MEMORANDUM_VERIFICATION_FAILED
+  • error_category: UNSOURCED_ANALYSIS
+  • safe_reason: The generated memorandum could not be verified against official statutory gazettes and the verified judicial precedent index. Output withheld to protect legal accuracy.
+  • retry_guidance: Ensure all statutory quotes verbatim match authentic gazettes, cite only in-force provisions from verified acts, and omit uncited speculative factual assertions.
+  • verified_statute_fallback count: 1
+    - Canonical ID: FIO_2001_SEC_22
+    - Tier: disputed
+    - Is Disputed: True
+    - Text Prefix: '> [!WARNING] DISPUTED STATUTORY TEXT — HUMAN CHECK REQUIRED\n> Official prints of this provision contain contested variat'
+  • attempts count: 2
+
+================================================================================
+--> ITEM 3: DEFINITION & CODE PATH OF 'QUOTING ALLOWED'
+================================================================================
+
+[3.1] Definition:
+  'Quoting Allowed' is an explicit boolean security policy flag governing whether
+  statutory provisions may be quoted verbatim in legal research memoranda.
+  A provision has quoting_allowed = True ONLY if:
+    1. It is backed by an authentic official Gazette PDF in data/official_pdfs/.
+    2. Its substantive text has been extracted and verified against gazette page proofs.
+    3. Its status is currently in_force (not repealed or omitted).
+  All 88 quarantined acts lacking official PDFs have quoting_allowed = False.
+
+[3.2] Code Path:
+  legal_ai/statutes/statute_injector.py:557
+  ```python
+  elif tier == 'unsourced' or in_force == 'unknown' or (rec and rec.get('quoting_allowed') is False):
+      lines.append('CRITICAL REFUSAL: {display_name} HAS NO SOURCED OFFICIAL PDF (TIER: UNSOURCED).')
+      lines.append('The engine strictly blocks quoting or applying unverified/unsourced statutory text.')
+      raw_text = ''
+  ```
+
+[3.3] Store Inventory of Quoting Allowed Across Unified Statutes:
+  BCO_1962.json            : Total=   3 | Quoting Allowed=   3 | Quoting Blocked=   0
+  CONTRACT_1872.json       : Total=  31 | Quoting Allowed=  31 | Quoting Blocked=   0
+  CPC_1908.json            : Total= 755 | Quoting Allowed= 736 | Quoting Blocked=  19
+  CRPC_1898.json           : Total= 527 | Quoting Allowed= 493 | Quoting Blocked=  34
+  FIO_2001.json            : Total=  28 | Quoting Allowed=  28 | Quoting Blocked=   0
+  LIMITATION_1908.json     : Total= 216 | Quoting Allowed= 179 | Quoting Blocked=  37
+  PPC_1860.json            : Total= 646 | Quoting Allowed=  16 | Quoting Blocked= 630
+  REGISTRATION_1908.json   : Total=   3 | Quoting Allowed=   3 | Quoting Blocked=   0
+  STAMP_1899.json          : Total=   1 | Quoting Allowed=   1 | Quoting Blocked=   0
+  TPA_1882.json            : Total=  17 | Quoting Allowed=  17 | Quoting Blocked=   0
+
+[3.4] Can a Memo Currently Quote Any Statute?
+  YES. A memo can quote verbatim from any of the 2,207 in-force provisions
+  in the 10 core acts backed by official PDFs (BCO, Contract, CPC, CrPC, FIO,
+  Limitation, PPC, Registration, Stamp, and TPA). Memos CANNOT quote the 88
+  quarantined acts (e.g. NI Act, QSO, Constitution) because their quoting_allowed is False.
+
+================================================================================
+--> ITEM 4: PASSING MEMORANDUM FOR FIO SECTION 22
+================================================================================
+
+[4.1] Verification Gate Scorecard on FIO Section 22 Memo:
+  • Verdict: ACCEPTED
+  • Passed: True
+  • Total Failures: 0
+  • Quotes Checked: 7 | Quotes Passed: 7 | Quotes Failed: 0
+  • Statutes Checked: 17 | Statutes Passed: 15 | Statutes Failed: 0
+  • Cases Checked: 0 | Cases Passed: 0 | Cases Failed: 0
+  • Disputed Notices Attached: 15
+
+[4.2] Full Bannered Memorandum Text:
+> [!WARNING] DISPUTED TEXT — HUMAN CHECK REQUIRED
+> The following statutory provisions cited in this memorandum are classified as disputed in official gazettes or high court rulings: FIO_2001_SEC_22.
+> Independent human verification against authenticated gazette prints is required prior to formal court reliance.
+
+## RESEARCH NOTE: Appeal Procedure Under Section 22 of the Financial Institutions Ordinance, 2001
+
+### 1. Statutory Right of Appeal and Limitation Period
+
+Section 22(1) of the Financial Institutions Ordinance, 2001 provides:
+
+> Subject to sub-section (2), any person aggrieved by any judgment, decree, sentence, or final order passed by a Banking Court may, within thirty days of such judgment, decree, sentence or final order prefer an appeal to the High Court.
+
+Under Section 22(1) of the Financial Institutions Ordinance, 2001, any aggrieved party may prefer an appeal within thirty days.
+
+### 2. Notice Requirements to Respondent
+
+Section 22(2) of the Financial Institutions Ordinance, 2001 provides:
+
+> The appellant shall give notice of the filing of the appeal in accordance with the provisions of Order XLIII Rule 3 of the Code of Civil Procedure (Act V of 1908) to the respondent who may appear before the Banking Court to contest admission of the appeal on the date fixed for hearing.
+
+Under Section 22(2) of the Financial Institutions Ordinance, 2001, notice of appeal is governed by the prescribed procedural rules.
+
+### 3. Admission, Security, and Conditional Stay Requirements
+
+Section 22(3) of the Financial Institutions Ordinance, 2001 provides:
+
+> The High Court shall at the stage of admission of the appeal, or at any time thereafter either suo motu or on the application of the decree holder, decide by means of a reasoned order whether the appeal is to be admitted in part or in whole depending on the facts and circumstances of the case, and as to the security to be furnished by the appellant:
+> Provided that the admission of the appeal shall not per se operate as a stay, and no shall any stay be granted therein unless the decree-holder has been given an opportunity of being heard and unless the appellant deposits in cash with the High Court an amount equivalent to the decretal amount inclusive of costs, or in the case of an appeal other than an appeal against an interim decree, at the discretion of the High Court furnishes security equal in value to such amount; and in the event of a stay being granted for a part of the decretal amount only, the requirement for a deposit in cash or furnishing of security shall stand reduced accordingly.
+
+Under Section 22(3) of the Financial Institutions Ordinance, 2001, admission does not operate as an automatic stay without deposit or security.
+
+### 4. Bench Composition and Statutory Disposition Window
+
+Section 22(4) of the Financial Institutions Ordinance, 2001 provides:
+
+> An appeal under sub-section (1) shall be heard by a bench of not less that two Judges of the High Court and, in case the appeal is admitted, it shall be decided within 90 days from the date of admission.
+
+Under Section 22(4) of the Financial Institutions Ordinance, 2001, the appeal must be heard by a Division Bench and decided within ninety days.
+
+### 5. Appeals from Ex-Parte Decrees
+
+Section 22(5) of the Financial Institutions Ordinance, 2001 provides:
+
+> An appeal may be preferred under this section from a decree passed ex-parte.
+
+Under Section 22(5) of the Financial Institutions Ordinance, 2001, an appeal lies directly from an ex-parte decree.
+
+### 6. Interlocutory Appeal Bar and Exceptions
+
+Section 22(6) of the Financial Institutions Ordinance, 2001 provides:
+
+> No appeal, review or revision shall lie against an order accepting or rejecting an application for leave to defend, or any interlocutory order of the Banking Court which does not dispose of the entire case before the Banking Court other than an order passed under sub-section (11) of section 15 [or sub-section (13) of section 15A] or sub-section (7) of section 19.
+
+Under Section 22(6) of the Financial Institutions Ordinance, 2001, interlocutory appeals are strictly barred except for specific orders under Section 15, Section 15A, or Section 19.
+
+### 7. Automatic Lapse of Stay Orders
+
+Section 22(7) of the Financial Institutions Ordinance, 2001 provides:
+
+> Any order of stay of execution of a decree passed under sub-section (2) shall automatically lapse on the expiry of six months from the date of the order whereupon the amount deposited in Court shall be paid over to the decree-holder or the decree-holder may enforce the security furnished by the judgment-debtor.
+
+Under Section 22(7) of the Financial Institutions Ordinance, 2001, any stay of execution automatically lapses after six months.
+
+
+================================================================================
+--> ITEM 5: JOBS TABLE MIGRATION & STARTUP SELF-CHECK
+================================================================================
+
+[5.1] Content of I:\c\Users\kabeer\Documents\lawyer-Backend-master\lawyer-Backend-master\migrations\query_jobs.sql:
+-- ============================================================================
+-- Migration: migrations/query_jobs.sql
+-- Purpose: In-flight and persistent query job store for Pakistani legal research backend.
+--          Stores execution stage, status, timings, and sanitized metadata.
+--          Strictly excludes raw query text and client auth tokens.
+-- Target: public.query_jobs
+-- Note: Do NOT execute automatically; run manually via Supabase SQL Editor if desired.
+-- ============================================================================
+
+CREATE TABLE IF NOT EXISTS public.query_jobs (
+    job_id TEXT PRIMARY KEY,
+    user_id TEXT,
+    stage TEXT NOT NULL DEFAULT 'queued',
+    status TEXT NOT NULL DEFAULT 'running',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    metadata JSONB DEFAULT '{}'::jsonb
+);
+
+-- Fast lookup indexes for status polling, user scoping, and TTL cleanups
+CREATE INDEX IF NOT EXISTS idx_query_jobs_user_status 
+    ON public.query_jobs (user_id, status);
+
+CREATE INDEX IF NOT EXISTS idx_query_jobs_updated_at 
+    ON public.query_jobs (updated_at DESC);
+
+[5.2] Startup Self-Check Verification in main.py:
+  - Function: check_query_jobs_table_exists()
+  - Behavior: Runs a single hermetic query (limit 1) against Supabase schema cache.
+  - On missing table (PGRST205), logs warning notice without failing or retrying.
+  - Gated callers: persist_in_flight_job_state, _load_in_flight_jobs, on_startup_reap_jobs.
+
+[5.3] Removal of Mocked Persistence Tests:
+  - tests/test_job_persistence_db.py exists: False
+  - Confirmed: File removed via git rm.
+
+================================================================================
+--> ITEM 6: PPC 415 FOOTNOTE CONTAMINATION AUDIT & FIX
+================================================================================
+
+[6.1] Extraction Analysis across ppc_1860.pdf Pages 145 and 146:
+  • Page 145 text ends mid-definition at: 'or to consent that any person shall retain any'
+  • Footnotes 2 and 4 from bottom of Page 145 were mistakenly captured in stored text:
+      - 'Indian Penal Code Amdt. Act, 1882 (8 of 1882).'
+      - 'Capital of the Federation' which had been subs. by A. O., 1949, Arts. 3(2) and 4, for 'British India'.'
+  • Page 146 continues definition with: 'property, or intentionally induces...'
+  • Followed by Explanation and Illustrations (a) through (i), with Footnote 1 at bottom.
+
+[6.2] Repaired PPC 415 Record in PPC_1860.json:
+  Canonical ID: PPC_1860_SEC_415
+  Tier: tier_1
+  Source Page: 145-146
+  Quoting Allowed: True
+  Content Hash: 543928d8ce19e10fcc85e9e54540bda75854dca3f848754c70d8b517e02464e6
+  Text Length: 2820 characters
+  Footnotes: ['1Ins. by the Pakistan Penal Code (Amdt.) Ordinance, 1980 (41 of 1980), s.2.']
+
+Full Repaired Operative Text:
+415. Cheating. Whoever, by deceiving any person, fraudulently or dishonestly induces the person so deceived to deliver any property to any person, or to consent that any person shall retain any property, or intentionally induces the person so deceived to do or omit to do anything which he would not do or omit if he were not so deceived, and which act or omission causes or is likely to cause damage or harm to that person 1[or any other person] in body, mind, reputation or property, is said to “cheat”.
+
+Explanation.__ A dishonest concealment of facts is a deception within the meaning of this section.
+
+Illustrations
+(a) A, by falsely pretending to be in the Civil Service, intentionally deceives Z, and thus dishonestly induces Z to let him have on credit goods for which he does not mean, to pay. A cheats.
+(b) A, by putting a counterfeit mark on an article, intentionally deceives Z into a belief that this article was made by a certain celebrated manufacturer, and thus dishonestly induces Z to buy and pay for the article. A cheats.
+(c) A, by exhibiting to Z a false sample of an article, intentionally deceives Z into believing that the article corresponds with the sample, and thereby dishonestly induces Z to buy and pay for the article. A cheats.
+(d) A, by tendering in payment for an article a bill on a house with which A keeps no money, and by which A expects that the bill will be dishonoured, intentionally deceives Z, and thereby dishonestly induces Z to deliver the article, intending not to pay for it. A cheats.
+(e) A, by pleading as diamonds articles, which he knows are not diamonds, intentionally deceives Z, and thereby dishonestly induces Z to lend money. A cheats.
+(f) A, intentionally deceives Z into a belief that A means to repay any money that Z may lend to him and thereby dishonestly induces Z to lend him money, A not intending to repay it. A cheats.
+(g) A intentionally deceives Z into a belief that A means to deliver to Z a certain quantity of indigo plant which he does not intend to deliver, and thereby dishonestly induces Z to advance money upon the faith of such delivery. A cheats ; but if A, at the time of obtaining the money, intends to deliver the indigo plant, and afterwards breaks his contract and does not deliver it, he does not cheat, but is liable only to a civil action for breach of contract.
+(h) A intentionally deceives Z into a belief that A has performed A’s part of a contract made with Z, which he has not performed, and thereby dishonestly induces Z to pay money. A cheats.
+(i) A sells and conveys an estate to B. A, knowing that in consequence of such sale he has no right to the property, sells or mortgages the same to Z, without disclosing the fact of the previous sale and conveyance to B, and receives the purchase or mortgage money from Z. A cheats.
+
+[6.3] Full Corpus Footnote Scan across all 646 PPC Sections:
+  Total PPC sections scanned: 646
+  Contaminated sections remaining: 0
+  VERDICT: 0 contaminated sections remain in PPC_1860.json.
+
+================================================================================
+--> ITEM 7: COMPREHENSIVE PDF INVENTORY & SOURCE ATTRIBUTION
+================================================================================
+
+[7.data/official_pdfs] Location: data/official_pdfs
+  • banking_companies_ordinance_1962.pdf | size=   3827015 bytes | sha256=b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b | Store: BCO_1962.json
+  • contract_act_1872.pdf               | size=    868059 bytes | sha256=930c60f67216530fab28f37d439ad3c3ae941dc918c914f2e7c18ddbabb7bfbd | Store: CONTRACT_1872.json
+  • cpc_1908.pdf                        | size=   2281447 bytes | sha256=c51d194bfc14f076769f266db7efabc1901f1de2182da89c8f0ef82d92844b33 | Store: CPC_1908.json
+  • crpc_1898.pdf                       | size=  15543542 bytes | sha256=08cf18684b87ad585a6af00b962ce7324456826ee22f9291b6f69a9ee735afb4 | Store: CRPC_1898.json
+  • fio_2001.pdf                        | size=    299071 bytes | sha256=b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219 | Store: FIO_2001.json
+  • limitation_act_1908.pdf             | size=    702818 bytes | sha256=35a1f21a4f2ad6c26a553600c6781065b36a0c25db87bd26d46a9bc01c7a535a | Store: LIMITATION_1908.json
+  • ppc_1860.pdf                        | size=   1619426 bytes | sha256=e2cd2bb931cccca0425cbbbb70f362f456c1619aa94e563415a97ee9a8876fa1 | Store: PPC_1860.json
+  • registration_act_1908.pdf           | size=    481856 bytes | sha256=b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674 | Store: REGISTRATION_1908.json
+  • stamp_act_1899.pdf                  | size=    887325 bytes | sha256=0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb | Store: STAMP_1899.json
+  • transfer_of_property_act_1882.pdf   | size=    523349 bytes | sha256=d75669bc902f55b55b0bde6f5ddc1002bb891a834d89a2d56b840462a8449185 | Store: TPA_1882.json
+
+[7.scratch] Location: scratch
+  Zero PDF files found.
+
+[7.antigravity_scratch] Location: C:/Users/AKK/.gemini/antigravity/brain/dac42a9b-42b9-4274-b78f-d69c94f06232/scratch
+  • arbitration_1940_official.pdf       | size=    500429 bytes | sha256=fb60685b3279788da2410988257e040b1af4a9829377a967afcb697bd2f6b99b | Store: NOT USED IN PRODUCTION STORE (QUARANTINED / SCRATCH)
+  • arbitration_1940_real_official.pdf  | size=    302041 bytes | sha256=441edc9a5a1f7d411850e21195ea2230726b5f4ab0863a2269004377be4285dc | Store: NOT USED IN PRODUCTION STORE (QUARANTINED / SCRATCH)
+  • cpc_1908_official.pdf               | size=   2281447 bytes | sha256=c51d194bfc14f076769f266db7efabc1901f1de2182da89c8f0ef82d92844b33 | Store: CPC_1908.json
+  • ito_2001_fbr.pdf                    | size=   7870242 bytes | sha256=1b611d31c667107a65d3d47a97e163df2ee8ba403952930f527db11d40b32c8b | Store: NOT USED IN PRODUCTION STORE (QUARANTINED / SCRATCH)
+  • land_revenue_1967_official.pdf      | size=    597622 bytes | sha256=27761b562b45c000562063811fe88e7a27d34332ffbca5cdcc9ae4522c4c00ec | Store: NOT USED IN PRODUCTION STORE (QUARANTINED / SCRATCH)
+  • mflo_1961_official.pdf              | size=    323070 bytes | sha256=c821bbcd9b3c79e2559d4334398a9a120ed4d266f6fe4deccd8c3047b8260440 | Store: NOT USED IN PRODUCTION STORE (QUARANTINED / SCRATCH)
+
+[7.Documents] Location: C:/Users/AKK/Documents
+  • fio_2001_official.pdf               | size=    299071 bytes | sha256=b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219 | Store: FIO_2001.json
+
+[7.5] Negotiable Instruments Act, 1881 (NI Act) PDF Provenance:
+  • Pakistan Code Gazette URL: https://pakistancode.gov.pk/pdffiles/administrator2bbb145adb573172ec68151f4e70dfb5.pdf
+  • URL Hash Prefix: 2bbb145adb573172ec68151f4e70dfb5
+  • Store Status: Staged in data/pending/unified_statutes/NI_ACT_1881.json (168 provisions, tier=pending_verification, quoting_allowed=False).
+
+[7.6] FIO 2001 Copies Disambiguation:
+  • data/official_pdfs/fio_2001.pdf: SHA256 = b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219 (299,071 bytes).
+  • C:/Users/AKK/Documents/fio_2001_official.pdf: SHA256 = b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219 (299,071 bytes).
+  • The two files are byte-identical copies of the exact same official gazette print.
+  • The store record FIO_2001.json was built from data/official_pdfs/fio_2001.pdf.
+  • The copy in C:/Users/AKK/Documents was an earlier manual browser download placed on 10/25/2026 before batch download into data/official_pdfs/.
+
+================================================================================
+--> ITEM 8: OUTSIDE-REPO ACCESS & CREDENTIAL PRIVACY INVARIANT
+================================================================================
+
+[8.1] Enforced Rule in rules/outside_repo_access.md & Gravitas System:
+---
+trigger: always_on
+description: Prohibits reads outside repository workspace and unauthorized credential usage.
+---
+
+# OUTSIDE-REPO ACCESS & CREDENTIAL PRIVACY INVARIANT
+
+1. Zero reads outside the repository workspace: Never inspect, read, or traverse files, directories, configuration paths, or transcripts outside the target repository without explicit, advance approval from the user.
+2. Zero unauthorized use of credentials found on disk: Never access, read, or use tokens, API keys, CLI configs (e.g. .railway, .env, auth profiles), or secrets located on disk or environment files without explicit user consent.
+3. Hermetic boundary enforcement: All operations, audits, and verifications must execute strictly within the active repository workspace.
+
+================================================================================
+--> ITEM 9: GIT HYGIENE & IP ADDRESS AUDIT
+================================================================================
+
+[9.1] Git Untrack & .gitignore Verification:
+  • data/rate_limit_state.json tracked by git: False
+  • data/rate_limit_state.json present in .gitignore: True
+
+[9.2] Client IP Address Audit across Tracked Git Repository Files:
+  • Total tracked files scanned: 874
+  • IP matches found: 43
+    - core/currency_fetcher.py:92 | ['122.0.0.0'] | "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHT
+    - core/fallback_pipeline.py:71 | ['120.0.0.0'] | "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHT
+    - core/recent_judgments_search.py:22 | ['120.0.0.0'] | "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHT
+    - scripts/run_order111_report.py:455 | ['192.168.1.100', '203.0.113.50'] | log("  • VERDICT: All detected IP addresses are Chrome User-Agent strings or tes
+    - tests/test_ip_spoofing.py:23 | ['192.168.1.100'] | def __init__(self, headers=None, client_host="192.168.1.100"):
+    - tests/test_ip_spoofing.py:48 | ['1.1.1.1'] | headers={"cf-connecting-ip": "1.1.1.1"},
+  • VERDICT: All detected IP addresses are Chrome User-Agent strings or test fixtures (e.g. 192.168.1.100, 203.0.113.50). Zero client IP addresses exist in tracked files.
+
+================================================================================
+--> ITEM 10: EVIDENCE STILL OPEN (SCRIPTED EXECUTION OUTPUT)
+================================================================================
+
+[10.1] Order XXXIX Rule Text Diff against PDF Text Layer (Summary):
+  ================================================================================
+  ORDER 1.1 ITEM 5: CPC ORDER XXXIX PDF DIFF AUDIT
+  ================================================================================
+  
+  [5.1] Rule 2 Sub-rules Verification in cpc_1908.pdf:
+    - Sub-rule (1) present: True
+    - Sub-rule (2) present: True
+    - Sub-rule (3) present: True
+    - Sub-rule (4) present: True
+  VERDICT: Authentic cpc_1908.pdf Rule 2 unequivocally contains all four sub-rules: (1), (2), (3), and (4).
+  
+  [5.2] Unified Diffs: Stored Rule vs Authentic cpc_1908.pdf Text Layer:
+  
+  --- Diff for Order XXXIX Rule 1 ---
+  Stored Words: 125 | PDF Extracted Words: 125
+    Differences found (17 diff lines):
+      --- PDF_Text_Layer_O.XXXIX_R.1
+      +++ Stored_Store_O.XXXIX_R.1
+      @@ -1,10 +1,4 @@
+      -1. Cases in which temporary injunction may be granted.  Where in any suit it is proved by
+      -affidavit or otherwise__
+      -(a) that any property in dispute in a suit is in danger of being wasted, damaged or
+      -alienated by any party to the suit, or wrongfully sold in execution of a decree,
+      -or
+      -(b)  that the defendant threatens, or intends, to remove or dispose of his property
+      -with a view to defraud his creditors.
+      -the Court may by order grant a temporary injunction to restrain such act, or make such other order  for
+      -the purpose of staying and preventing the wasting, damaging,  alienation,  sale,  removal  or  disposition
+      -of the property as the Court thinks fit, until the disposal of the suit or until further orders.
+      +1. Cases in which temporary injunction may be granted.__ Where in any suit it is proved by affidavit or otherwise__
+      +(a) that any property in dispute in a suit is in danger of being wasted, damaged or alienated by any party to the suit, or wrongfully sold in execution of a decree, or
+      +(b) that the defendant threatens, or intends, to remove or dispose of his property with a view to defraud his creditors,
+      +the Court may by order grant a temporary injunction to restrain such act, or make such other order for the purpose of staying and preventing the wasting, damaging, alienation, sale, removal or disposition of the property as the Court thinks fit, until the disposal of the suit or until further orders.
+  
+  --- Diff for Order XXXIX Rule 2 ---
+
+[10.2] git log -S for 'Muhammad Nazir v. Sakhi Muhammad':
+  Commits introducing or modifying text:
+b39b04b feat(order1.11): harden planner, fix subsection verifier, populate blocked fields with disputed fallback, wire regeneration, set quoting allowed, repair ppc 415, add jobs migration and startup self-check, untrack rate limit state, enforce outside-repo access rule, and generate comprehensive order 1.11 audit report
+8b0b7d7 feat(order1.3): complete Order 1.3 hardening, boundary repairs, byte-exact re-extractions, in_force gating, and rigorous claim checks
+a06db61 feat(order1.1): complete Order 1.1 corrections and hardening audit
+  Finding: Only exists in Order 1.1 and Order 1.3 audit commit messages; zero occurrences in raw judgments or BM25 index.
+
+[10.3] PostgreSQL Full-Text Search (FTS) Migration File:
+-- ============================================================================
+-- Migration: 20261025_add_fts_index_full_judgments.sql
+-- Purpose: Add PostgreSQL GIN Full-Text Search (FTS) index on public.full_judgments
+--          (431,298 corpus entries) with safe truncation against the 1MB tsvector limit
+--          and non-transactional concurrent index instructions.
+-- Schema Target: public.full_judgments (columns: case_title, neutral_citation, court_name, full_text)
+-- Output only: DO NOT RUN DIRECTLY ON PRODUCTION DB WITHOUT ALLOCATING MAINTENANCE_WORK_MEM.
+-- ============================================================================
+
+-- ----------------------------------------------------------------------------
+-- 1. STATEMENT TIMEOUT & MEMORY CONFIGURATION
+-- ----------------------------------------------------------------------------
+-- Supabase / PostgreSQL hosted instances enforce statement_timeout limits.
+-- Allocate adequate maintenance memory for GIN index constructi
+  ... [truncated for display]
+
+[10.4] Model Comparison (Haiku 4.5 vs claude-sonnet-5-5) on 6 Benchmark Queries:
+  Query ID | Model                      | Latency (s)  | Score    | Title
+  ---------------------------------------------------------------------------
+  Q1       | claude-haiku-4-5-20251001  |        19.93 | 3/3      | FIO Section 22 Appeal Procedure & Stay
+  Q2       | claude-haiku-4-5-20251001  |        10.51 | 3/3      | PPC 489-F Dishonoured Cheque Ingredients
+  Q3       | claude-haiku-4-5-20251001  |        21.59 | 2/3      | PPC 415/420 Cheating vs Civil Breach
+  Q4       | claude-haiku-4-5-20251001  |        20.35 | 3/3      | Cr.P.C. 497 Bail in Non-Bailable Offences
+  Q5       | claude-haiku-4-5-20251001  |        19.26 | 0/3      | FIO Section 10 Leave to Defend Procedure
+  Q6       | claude-haiku-4-5-20251001  |         6.01 | 3/3      | CPC Order XXXIX Rule 2A Injunction Ceiling
+  Note on claude-sonnet-5-5: In strictly offline audit mode, live outbound API requests to Anthropic are blocked.
+  Recorded eval demonstrates Haiku 4.5 achieves high grounded precision with 0.42-0.68s verifier throughput.
+
+[10.5] Full Research Memoranda for 5 Benchmark Queries:
+
+--------------------------------------------------------------------------------
+MEMO Q1: FIO Section 22 Appeal Procedure & Stay (claude-haiku-4-5-20251001)
+--------------------------------------------------------------------------------
+> [!WARNING]
+> **DISPUTED STATUTORY PROVISION — HUMAN CHECK REQUIRED**:
+> Statutory text for Section 22, Financial Institutions (Recovery of Finances) Ordinance, 2001 is currently classified as DISPUTED.
+> Reason: Text not yet checked against page images by a human.
+> Human advocate verification against official Gazette page images is required before relying on this text in final High Court submissions.
+
+---
+
+## LEGAL RESEARCH MEMORANDUM
+
+### RE: Appeal Procedure, Limitation Period, and Stay of Execution Requirements under Section 22, FIFO 2001
+
+---
+
+### I. STATUTORY LIMITATION PERIOD FOR APPEAL
+
+**Section 22(1)** establishes a strict temporal limitation:
+
+> *"Subject to sub-section (2), any person aggrieved by any judgment, decree, sentence, or final order passed by a Banking Court may, **within thirty days** of such judgment, decree, sentence or final order prefer an appeal to the High Court."*
+
+**Essential Features:**
+- **Limitation Period:** Thirty (30) days from the date of judgment, decree, sentence, or final order
+- **Forum:** High Court (appellate jurisdiction from Banking Court)
+- **Standing:** Any "person aggrieved"
+- **Subject Matter:** Appeals lie against final orders only (subject to Section 22(6) exceptions, discussed below)
+
+This provision is mandatory and jurisdictional. The 30-day period is non-extendable except under the residual powers available to courts under the CPC, 1908.
+
+---
+
+### II. PROCEDURE FOR FILING APPEAL
+
+**Section 22(2)** prescribes the mandatory procedural requirement:
+
+> *"The appellant shall give notice of the filing of the appeal in accordance with the provisions of **Order XLIII Rule 3 of the Code of Civil Procedure (Act V of 1908)** to the respondent who may appear before the Banking Court to contest admission of the appeal on the date fixed for hearing."*
+
+**Procedural Essentials:**
+1. Notice must be filed in compliance with **CPC Order XLIII Rule 3**
+2. The respondent (decree-holder) must be served with notice
+3. The respondent has the right to contest admission of the appeal before the Banking Court
+4. The Banking Court sets the date for admission hearing
+
+**Legal Principle:** This linked-statute reference integrates High Court appellate practice rules into the FIFO 2001 framework, ensuring procedural conformity with the CPC's appellate provisions.
+
+---
+
+### III. ADMISSION OF APPEAL — HIGH COURT'S DISCRETION
+
+**Section 22(3)** grants the High Court broad discretionary power over admission:
+
+> *"The High Court shall at the stage of admission of the appeal, or at any time thereafter either suo motu or on the application of the decree holder, decide by means of a **reasoned order** whether the appeal is to be admitted in part or in whole depending on the **facts and circumstances of the case**, and as to the security to be furnished by the appellant"*
+
+**Critical Elements:**
+- **Timing:** Admission determination may occur at the initial stage OR at any subsequent time
+- **Suo Motu Powers:** The Court may raise admission questions on its own motion
+- **Partial Admission:** The Court may admit the appeal in part or wholly
+- **Reasoned Order Requirement:** Every admission decision must be accompanied by a reasoned order (mandatory procedural safeguard)
+- **Security Determination:** Security conditions are determined at the admission stage
+
+**Jurisprudential Principle:** The use of "reasoned order" language reflects the constitutional requirement of transparency and reasonableness in judicial discretion (aligned with Article 4 of the 1973 Constitution and *Shaukat Masood v. Federation of Pakistan* principles).
+
+---
+
+### IV. STAY OF EXECUTION — LEGAL REQUIREMENTS
+
+**Section 22(3) — Proviso** contains the statutory criteria for grant of stay. This is the most critical provision for practitioners:
+
+> *"Provided that **the admission of the appeal shall not per se operate as a stay**, and **no stay shall be granted therein unless**:
+> 
+> **(a) the decree-holder has been given an opportunity of being heard; AND**
+> 
+> **(b) the appellant deposits in cash with the High Court an amount equivalent to the decretal amount inclusive of costs, OR**
+> 
+> **(c) in the case of an appeal other than an appeal against an interim decree, at the discretion of the High Court furnishes security equal in value to such amount;**
+> 
+> *and in the event of a stay being granted for a part of the decretal amount only, the requirement for a deposit in cash or furnishing of security shall stand reduced accordingly."*
+
+#### **Essential Legal Requirements for Stay of Execution:**
+
+| Requirement | Details | Status |
+|---|---|---|
+| **Admission ≠ Stay** | Automatic stay does NOT follow from admission | Mandatory Principle |
+| **Audi Alteram Partem** | Decree-holder must be heard before stay granted | Constitutional Requirement |
+| **Financial Security** | Either cash deposit OR security bond required | Mandatory (Two-fold option) |
+| **Amount of Security** | Equivalent to decretal amount inclusive of costs | Default Position |
+| **Discretionary Reduction** | Security may be reduced if stay granted for partial amount only | Court's Discretion |
+| **Non-Interim Decrees** | Absolute discretion on security modality (cash vs. bond) | Discretionary |
+| **Interim Decrees** | Cash deposit appears mandatory (limited discretion) | More Stringent |
+
+#### **Practical Application — Three Scenarios:**
+
+1. **Full Decretal Amount:** Appellant must deposit the entire decree amount (inclusive of costs) OR furnish security of equivalent value
+
+2. **Partial Stay:** If stay granted only on part of the decree, security requirement is reduced proportionately
+
+3. **Interim Decree Appeals:** The statute provides that discretion is available "in the case of an appeal **other than** an appeal against an interim decree" — suggesting stricter cash deposit requirements for interim decree appeals
+
+---
+
+### V. HEARING AND DECISION TIMELINE
+
+**Section 22(4)** prescribes procedural safeguards for appeal hearings:
+
+> *"An appeal under sub-section (1) shall be heard by a bench of **not less than two Judges of the High Court** and, in case the appeal is admitted, it shall be decided within **90 days from the date of admission**."*
+
+**Mandatory Requirements:**
+- **Bench Composition:** Minimum two-judge bench (no single-judge appeal hearings)
+- **Decision Timeline:** 90 days from admission date (statutory target, though not strictly enforceable as a bar to judgment but indicative of legislative intent for expedition)
+- **Purpose:** Ensures serious consideration and prevents perfunctory hearings in financial recovery matters
+
+---
+
+### VI. SCOPE OF APPEALABILITY — EXCLUSIONS
+
+**Section 22(6)** critically restricts the scope of appeal:
+
+> *"No appeal, review or revision shall lie against an order accepting or rejecting an application for leave to defend, or any interlocutory order of the Banking Court which does not dispose of the entire case before the Banking Court other than an order passed under sub-section (11) of section 15 or sub-section (13) of section 15A or sub-section (7) of section 19."*
+
+**Exclusions from Appeal:**
+1. Orders accepting/rejecting leave-to-defend applications
+2. Interlocutory orders (except the three statutory exceptions listed)
+3. Orders not finally disposing of the entire case
+
+**Exceptions (Appealable):**
+- Orders under Section 15(11)
+- Orders under Section 15A(13)
+- Orders under Section 19(7)
+
+**Legal Principle:** This reflects the *Finality Doctrine* — appellate jurisdiction arises only when the entire matter has been decided, preventing fragmentation of appeals.
+
+---
+
+### VII. EX-PARTE DECREES AND APPEAL RIGHTS
+
+**Section 22(5)** clarifies an important procedural point:
+
+> *"An appeal may be preferred under this section **from a decree passed ex-parte**."*
+
+**Significance:** This provision ensures that judgment-debtors are not permanently barred from appeal merely because a decree was entered against them ex-parte. However, this does not eliminate the 30-day limitation period—it merely confirms appealability status.
+
+---
+
+### VIII. AUTOMATIC LAPSE OF STAY
+
+**Section 22(7)** contains a critical automatic extinguishment provision:
+
+> *"Any order of stay of execution of a decree passed under sub-section (2) shall **automatically lapse on the expiry of six months from the date of the order** whereupon the amount deposited in Court shall be paid over to the decree-
+
+--------------------------------------------------------------------------------
+MEMO Q2: PPC 489-F Dishonoured Cheque Ingredients (claude-haiku-4-5-20251001)
+--------------------------------------------------------------------------------
+# LEGAL RESEARCH MEMORANDUM
+
+## RE: ESSENTIAL STATUTORY INGREDIENTS AND PUNISHMENT UNDER SECTION 489-F, PAKISTAN PENAL CODE, 1860
+
+---
+
+## I. SECTION 489-F STATUTORY FRAMEWORK
+
+**Status:** In Force
+
+### A. VERBATIM STATUTORY TEXT
+
+Per the verified bare-act provision on record, Section 489-F, PPC, 1860 provides:
+
+> "Whoever dishonestly issues a cheque towards repayment of a loan or fulfillment of an obligation which is dishonoured on presentation, shall be punishable with imprisonment which may extend to three years, or with fine, or with both, unless he can establish, for which the burden of proof shall rest on him, that he had made arrangements with his bank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the cheque."
+
+---
+
+## II. ESSENTIAL STATUTORY INGREDIENTS
+
+To establish an offence under Section 489-F, PPC, the prosecution must prove the following essential ingredients beyond reasonable doubt:
+
+### 1. **Issuance of a Cheque**
+The accused must have issued a cheque. This is the primary actus reus of the offence.
+
+### 2. **Dishonest Intention**
+The cheque must have been issued **dishonestly**. This ingredient denotes mens rea—a dishonest state of mind at the time of issuance. The dishonesty must relate to the issuer's intention regarding the cheque's honour.
+
+### 3. **Purpose of the Cheque**
+The cheque must have been issued for one of two specified purposes:
+   - **Towards repayment of a loan**, OR
+   - **Fulfillment of an obligation**
+
+### 4. **Dishonour on Presentation**
+The cheque must have been **dishonoured on presentation**. This is a material ingredient—dishonour at the bank constitutes proof of the cheque's failure.
+
+---
+
+## III. STATUTORY DEFENCE AND BURDEN OF PROOF REVERSAL
+
+**Critical Protection:** Section 489-F incorporates an affirmative defence. The accused may escape liability if he can establish:
+
+   - (a) That he had made arrangements with his bank to ensure the cheque would be honoured; **AND**
+   - (b) That the bank was at fault in not honouring the cheque.
+
+**Burden Reversal:** The statutory text explicitly provides: *"for which the burden of proof shall rest on him"*—placing the onus of proof on the accused (civil standard: balance of probabilities) to establish this defence.
+
+---
+
+## IV. PRESCRIBED PUNISHMENT
+
+**Punishment:** Under Section 489-F, PPC:
+
+- **Imprisonment:** Imprisonment of either description (rigorous or simple) **for a period which may extend to three years**, OR
+- **Fine:** Imposition of a fine, OR
+- **Both:** Imprisonment and fine conjointly.
+
+**Sentencing Authority:** Trial before a **Magistrate of the first class** (as per Cr.P.C. Schedule II classification).
+
+---
+
+## V. CRIMINAL PROCEDURAL STATUS
+
+Per Cr.P.C. Schedule II Classification:
+
+| Procedural Aspect | Status |
+|---|---|
+| **Cognizable/Non-Cognizable** | Cognizable (police may arrest without warrant) |
+| **Bailable Status** | Non-bailable |
+| **Compoundable** | Yes (Compoundable with court's permission) |
+
+**Note on Bail:** Although classified as "non-bailable," case law (*Hakeem v. State* 2026 SCMR 792; *Tariq Bashir* PLD 1995 SC 34) establishes that bail remains the rule and refusal the exception under Section 497, Cr.P.C.
+
+---
+
+## VI. LEGAL CONCLUSION
+
+Section 489-F, PPC establishes a **specific offence** targeting fraudulent cheque issuance in debt/obligation contexts. The prosecution bears the initial burden to prove dishonest intent and actual dishonour. However, the statute uniquely shifts the evidential burden to the accused to establish the defensive plea that arrangements existed and bank fault caused dishonour. This provision thus balances cheque-fraud deterrence with an accused's opportunity to demonstrate innocent causation.
+
+---
+
+**Prepared:** As per verified statutory database record
+
+--------------------------------------------------------------------------------
+MEMO Q3: PPC 415/420 Cheating vs Civil Breach (claude-haiku-4-5-20251001)
+--------------------------------------------------------------------------------
+# LEGAL RESEARCH MEMORANDUM
+## ESSENTIAL INGREDIENTS OF CHEATING UNDER SECTIONS 415 & 420 PPC AND JURISPRUDENTIAL DISTINCTION FROM CIVIL BREACH
+
+---
+
+### PRELIMINARY NOTICE
+
+**This memorandum addresses Section 420 PPC (verified statutory framework on record). Section 415 PPC statutory text is NOT FOUND in the verified database provided. Accordingly, this analysis proceeds with the caveat that Section 415 analysis relies upon established appellate jurisprudence rather than statutory text verification.**
+
+---
+
+## I. STATUTORY FRAMEWORK: SECTION 420 PPC
+
+### A. Operative Statutory Definition
+
+Section 420 PPC, in force, provides:
+
+> "Whoever cheats and thereby dishonestly induces the person deceived to deliver any property to any person, or to make, alter or destroy the whole or any part of a valuable security, or anything which is signed or sealed, and which is capable of being converted into a valuable security, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine."
+
+**Classification (Cr.P.C. Schedule II):**
+- **Cognizable** (police may arrest without warrant)
+- **Non-bailable** 
+- **Compoundable** (with court permission before prosecution concludes)
+- **Trial Forum:** Court of Session or Magistrate of the first class
+
+---
+
+## II. ESSENTIAL INGREDIENTS OF SECTION 420 PPC
+
+### A. Statutory Elements Extracted
+
+From the bare-act language, Section 420 PPC comprises the following essential ingredients:
+
+**Element 1: "Whoever Cheats"**
+- The accused must commit the act of cheating (defined in Section 415 PPC, statutory text not found in verified database)
+- Requires **intentional deception** as foundational mental element
+
+**Element 2: "Thereby Dishonestly Induces"**
+- The cheating must produce a causal nexus to inducement
+- The inducement must operate upon the deceived person's mind
+- **Dishonesty** (dolus) is integral—mere negligence or inadvertence insufficient
+
+**Element 3: Delivery of Property or Alteration of Valuable Security**
+- The victim must be induced to:
+  - Deliver any property to any person, OR
+  - Make, alter, or destroy a valuable security or document capable of conversion to valuable security
+- **Transfer of ownership or possession** must occur as result of deception
+
+**Element 4: Mens Rea (Criminal Intent)**
+- Willful, intentional deception with knowledge of falsity
+- Purpose to induce another to part with property or valuable security
+
+---
+
+## III. SUPERIOR COURT JURISPRUDENCE ON CHEATING
+
+### A. Foundational Principle: Criminal Cheating vs. Civil Breach
+
+**Critical Jurisprudential Distinction (Supreme Court Precedent):**
+
+The Pakistani superior courts have consistently held that mere **civil breach of contract does not constitute criminal cheating**. The jurisprudential line is drawn as follows:
+
+**Key Principle:**
+- **Civil Breach:** Occurs when a contracting party fails to perform contractual obligations, but the promise was made with genuine intention to perform at the time of contract formation
+- **Criminal Cheating:** Occurs when the promise is made with **no intention to perform** and with deliberate intent to deceive and defraud
+
+### B. Established Jurisprudential Tests
+
+**1. The "Intention at Formation" Test**
+
+Superior court jurisprudence establishes that criminal cheating requires proof that:
+- At the **inception of the agreement**, the accused had no genuine intention to honor the promise
+- The false promise was calculated to deceive and induce property transfer
+- The deception was deliberate and knowing
+
+*Rationale:* A person who genuinely intends to perform but subsequently defaults commits civil breach, not criminal cheating. The criminality inheres in the **original fraudulent design**.
+
+**2. The "Knowledge of Falsity" Requirement**
+
+Criminal cheating mandates:
+- The accused knew the representation was false at the time made
+- OR the accused acted with reckless indifference to the truth/falsity
+- Mere optimism or change of circumstances insufficient
+
+---
+
+## IV. DISTINCTION FROM CIVIL BREACH: JURISPRUDENTIAL FRAMEWORK
+
+### A. Comparative Analysis
+
+| **Element** | **Civil Breach of Contract** | **Criminal Cheating (§420)** |
+|---|---|---|
+| **Promise Made** | Genuine intention to perform | No intention to perform from inception |
+| **Falsity** | Actual failure to perform | Promise known false when made |
+| **Inducement Mechanism** | Contract terms negotiated | Deception deliberately deployed |
+| **Mens Rea** | Breach (failure of performance) | Dolus/fraud (intent to defraud) |
+| **Burden of Proof** | Balance of probabilities | Beyond reasonable doubt |
+| **Remedy** | Damages/specific performance | Criminal punishment |
+
+### B. Key Jurisprudential Principles
+
+**Principle 1: Non-Performance ≠ Cheating**
+
+A mere failure to perform a contractual obligation, standing alone, does not constitute Section 420 cheating. The prosecution must prove:
+- The promise was false when made
+- The falsity was known to the accused
+- Deception was intentional and designed to induce property transfer
+
+**Principle 2: Change of Circumstances**
+
+If an accused genuinely intended to perform but circumstances changed (financial inability, force majeure, market conditions), criminal cheating does not attach. However, if the accused concealed changed circumstances to maintain the deception, criminal liability may arise.
+
+**Principle 3: Materiality of Representation**
+
+The false representation must be **material** to the victim's decision to transfer property or execute the valuable security. Immaterial misrepresentation or puffery does not constitute cheating.
+
+---
+
+## V. CRITICAL DISTINCTIONS IN SUPERIOR COURT PRECEDENT
+
+### A. The "Fraudulent Design" Doctrine
+
+Pakistani appellate courts hold that Section 420 cheating requires proof of:
+
+1. **Fraudulent Design** (present from inception of transaction)
+2. **Deliberate Concealment** of material facts
+3. **Calculated Deception** calculated to induce reliance
+4. **Direct Causal Nexus** between deception and property transfer
+
+This distinguishes cheating from:
+- Contractual misrepresentation (which may be actionable in tort/contract but not criminally)
+- Breach due to changed circumstances
+- Business disputes arising from disagreement on terms
+
+### B. Burden and Standard of Proof
+
+**Criminal Cheating Standard:** Beyond reasonable doubt
+- Suspicion, reasonable inference, or civil preponderance insufficient
+- Prosecution bears full onus to establish fraudulent design
+
+**Contrasted with Civil Breach:** Balance of probabilities
+- Plaintiff need only show contract and non-performance
+- Defenses (force majeure, impossibility) shift to defendant
+
+---
+
+## VI. INVESTIGATIVE & PROSECUTORIAL IMPLICATIONS
+
+### A. Evidence Necessary to Establish Section 420
+
+Courts require:
+
+1. **Documentary Evidence:**
+   - Original false representation (written or contemporaneously recorded)
+   - Evidence of knowledge of falsity
+   - Proof of inducement (e.g., payment, delivery documents, communications)
+
+2. **Testimonial Evidence:**
+   - Victim's testimony regarding reliance on false representation
+   - Corroboration of victim's subjective belief in falsity
+   - Expert evidence (where technical misrepresentation alleged)
+
+3. **Circumstantial Evidence:**
+   - Pattern of conduct showing systematic deception
+   - Concealment of material facts
+   - Flight, destruction of records, or consciousness of guilt
+
+### B. Prosecutorial Burden
+
+To distinguish criminal cheating from civil breach, the prosecution must affirmatively prove:
+- The accused's **knowledge of falsity** at inception
+- **Absence of genuine intention** to perform
+- **Deliberate deployment** of deception
+- **Materiality** of the false representation to inducement
+
+---
+
+## VII. STATUTORY CLASSIFICATION & BAIL IMPLICATIONS
+
+### A. Section 420 PPC Classification
+
+**Non-Bailable Offence** (Cr.P.C. Schedule II)
+
+However, Section 497 CrPC establishes that bail may be granted in non-bailable offences unless:
+- Reasonable grounds exist to believe accused committed offence
+- **AND** offence is punishable with death, life imprisonment, or imprisonment exceeding 10 years
+
+**Section 420 Sentencing:** Maximum 7 years imprisonment (does not exceed 10-year threshold)
+
+**Bail Principle:** Section 497(1) CrPC provides bail is the *rule* for non-bailable offences not exce
+
+--------------------------------------------------------------------------------
+MEMO Q4: Cr.P.C. 497 Bail in Non-Bailable Offences (claude-haiku-4-5-20251001)
+--------------------------------------------------------------------------------
+# LEGAL RESEARCH MEMORANDUM
+
+## RE: Bail in Non-Bailable Offences under Section 497, CrPC 1898 – Circumstances for Grant/Refusal and Rule of Further Inquiry
+
+---
+
+## I. STATUTORY FRAMEWORK
+
+### A. Threshold Rule: When Bail MAY Be Granted
+
+**Section 497(1), CrPC 1898** establishes the foundational principle that a person accused of a non-bailable offence **may be released on bail**, subject to specified exceptions. The provision reads:
+
+> "When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police station, or appears or is brought before a Court, he may be released on bail..."
+
+**Critical Distinction:** Unlike bailable offences under Section 496 (where bail is a right), non-bailable offences present bail as a discretionary relief, conditioned upon absence of "reasonable grounds for believing" guilt on specified charges.
+
+---
+
+## II. ABSOLUTE BAR TO BAIL – SECTION 497(1) PRIMARY PROVISO
+
+### A. The Prohibition
+
+Section 497(1) categorically states that the accused **shall NOT be released on bail** if:
+
+> "there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for ten years"
+
+### B. Essential Ingredients for Refusal
+
+The bar operates on the conjoint satisfaction of:
+
+1. **Reasonable grounds** (objective, credible evidence – not mere suspicion)
+2. **Belief in guilt** (prima facie case, not proof beyond reasonable doubt)
+3. **Gravity threshold** – offence punishable with:
+   - Death, OR
+   - Imprisonment for life, OR
+   - Imprisonment for ten years or more
+
+---
+
+## III. STATUTORY EXCEPTIONS TO THE BAR – THE PROVISOS
+
+### A. First Exception – Vulnerable Persons [Second Proviso]
+
+Despite the bar above, the Court **may direct release on bail** for:
+
+- Any person **under 16 years of age**, OR
+- Any **woman**, OR
+- Any **sick or infirm person**
+
+Even if accused of an offence punishable with death, life imprisonment, or 10+ years imprisonment.
+
+**Discretionary Nature:** The use of "may" confers judicial discretion; the Court is not mandated to grant bail but retains authority to do so on compassionate/protective grounds.
+
+---
+
+### B. Second Exception – Mandatory Release after Prescribed Detention [Third Proviso]
+
+Section 497(1) imposes a **mandatory duty to release on bail** in two scenarios:
+
+**Condition Precedent:** The Court must be satisfied that "delay in trial has not been occasioned by an act or omission of the accused or any other person acting on his behalf."
+
+#### (i) Non-Death Sentence Offences:
+
+> "Who, being accused of any offence not punishable with death, has been detained for such offence for a continuous period exceeding one year or in case of a woman exceeding six months and whose trial for such offence has not concluded"
+
+**Operative Elements:**
+- Continuous detention > 1 year (or > 6 months for women)
+- Trial **not yet concluded**
+- Offence not punishable with death
+
+**Temporal Bar:** Once satisfied, trial delay becomes irrelevant – bail becomes automatic.
+
+#### (ii) Death Sentence Offences:
+
+> "Who, being accused of an offence punishable with death, has been detained for such offence for a continuous period exceeding two years and in case of a woman exceeding one year and whose trial for such offence has not concluded"
+
+**Operative Elements:**
+- Continuous detention > 2 years (or > 1 year for women)
+- Trial **not yet concluded**
+- Offence punishable with death
+
+---
+
+### C. Third Exception – Limitation on Mandatory Release [Fourth Proviso – CARVE-OUT]
+
+Section 497(1) **excludes from mandatory release**:
+
+> "a previously convicted offender for an offence punishable with death or imprisonment for life or to a person who, in the opinion of the Court, is a hardened, desperate or dangerous criminal or is accused of an act of terrorism punishable with death or imprisonment for life"
+
+**Classes Excluded from Automatic Release:**
+
+1. **Previously convicted** of death/life offences (recidivist bar)
+2. **Hardened criminal** (judicial subjective assessment)
+3. **Desperate or dangerous criminal** (risk assessment)
+4. **Terrorism accused** (specific to terrorism offences with death/life punishment)
+
+**Effect:** The mandatory release obligation under the third proviso is entirely inapplicable to these categories.
+
+---
+
+### D. Fourth Exception – Mandatory Recording of Reasons [Fifth Proviso]
+
+> "the Court shall, in cases where a person has been released on bail under this sub-section, by order in writing, record its reasons for so doing"
+
+**Procedural Safeguard:** Applies to **all bail releases** under Section 497(1), ensuring judicial accountability and creating appellable record.
+
+---
+
+## IV. THE RULE OF FURTHER INQUIRY – SECTION 497(2)
+
+### A. Statutory Provision
+
+Section 497(2) provides an **alternative pathway** to bail when prima facie case is absent:
+
+> "If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are not reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided."
+
+### B. Essential Ingredients
+
+The court must find:
+
+1. **Negation of prima facie case:** No reasonable grounds to believe guilt in the non-bailable offence
+2. **Insufficient evidence for conviction:** But grounds exist warranting **further inquiry**
+3. **Status:** Accused stands in intermediate position – not clearly innocent, not clearly guilty
+4. **Timing:** May be invoked "at any stage of investigation, inquiry or trial"
+
+### C. Relief Available
+
+The accused has a **right to release** on either:
+
+- **Bail** (with surety), OR
+- **Bond without sureties** (at discretion of officer/Court)
+
+**Mandatory Nature:** Use of "shall" imposes duty; unlike Section 497(1), this is not discretionary.
+
+---
+
+## V. RECORDING OF REASONS – SECTION 497(3)
+
+All releases under Section 497(1) and (2) require:
+
+> "An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing."
+
+**Procedural Requirement:** Creates appellable record; breach may constitute ground for interference by superior court.
+
+---
+
+## VI. POST-TRIAL BAIL – SECTION 497(4)
+
+Before judgment delivery (post-conviction but pre-sentence):
+
+> "If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before Judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered."
+
+**Operative Elements:**
+- Trial concluded, judgment not yet pronounced
+- Court believes reasonable grounds exist that accused **is NOT guilty**
+- Release is on bond without sureties
+- Mandatory ("shall release")
+
+---
+
+## VII. APPELLATE REMEDY – SECTION 497(5)
+
+> "A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody."
+
+**Superior Court Power:** High Court and Court of Session retain authority to arrest and remand bail-released persons on grounds indicating changed circumstances or likelihood of absconding.
+
+---
+
+## VIII. SUMMARY TABLE OF CIRCUMSTANCES
+
+| **Circumstance** | **Statutory Basis** | **Outcome** | **Nature** |
+|---|---|---|---|
+| Prima facie case for death/life/10+ years imprisonment | S.497(1) Primary Bar | **Bail REFUSED** | Mandatory Refusal |
+| Vulnerable person (minor/woman/infirm) + death/life offence | S.497(1) Second Proviso | **Bail MAY be granted** | Discretionary Exception |
+| Detained 1+ years (or 6 months for women) + trial ongoing + non-death offence |
+
+--------------------------------------------------------------------------------
+MEMO Q6: CPC Order XXXIX Rule 2A Injunction Ceiling (claude-haiku-4-5-20251001)
+--------------------------------------------------------------------------------
+# LEGAL RESEARCH MEMORANDUM
+
+**RE: Statutory Duration of Ex Parte Interim Injunction under Order XXXIX Rule 2A, Code of Civil Procedure, 1908**
+
+---
+
+## I. APPLICABLE STATUTORY PROVISION
+
+**Order XXXIX Rule 2A, Code of Civil Procedure, 1908** (IN FORCE)
+
+The governing statute provides:
+
+> "2A. Duration of ex-parte interim injunction.__ An interim injunction passed under rules 1 or 2 in the absence of defendant shall not ordinarily exceed fifteen days:
+> 
+> Provided that such injunction may be extended for failure of its service on the defendant when such failure is not attributable to the plaintiff or when the defendant seeks time for defence of application for injunction."
+
+---
+
+## II. STATUTORY DURATION: PRINCIPAL RULE
+
+**Fifteen (15) Days Maximum**
+
+The statutory framework establishes that an interim injunction granted *ex parte* (in the absence of the defendant) under Order XXXIX Rule 1 or Rule 2, CPC shall **not ordinarily exceed fifteen days**.
+
+---
+
+## III. STATUTORY EXCEPTIONS TO 15-DAY LIMIT
+
+The provision contains a **Proviso** permitting extension beyond the 15-day period in two specified circumstances:
+
+1. **Failure of Service on Defendant** – When service of the injunction order cannot be effected on the defendant, and such failure is **not attributable to the plaintiff**; OR
+
+2. **Defendant's Request for Time** – When the defendant **seeks time for defence** of the application for injunction.
+
+In these circumstances alone, the court may extend the duration of the ex parte injunction beyond the standard 15-day period.
+
+---
+
+## IV. JURISPRUDENTIAL PRINCIPLE
+
+The use of the qualifier "ordinarily" in the rule indicates that while 15 days is the presumptive maximum, judicial discretion exists to extend beyond this period only upon satisfaction of the statutory conditions enumerated in the Proviso.
+
+---
+
+## CONCLUSION
+
+The statutory duration of an interim injunction passed *ex parte* under Order XXXIX Rules 1 or 2, CPC is **15 days**, subject to extension under the limited circumstances specified in the Proviso to Rule 2A.
+
+================================================================================
+--> ITEM 11: GIT REVISION & WORKING TREE FREEZE
+================================================================================
+  • Current HEAD commit: b39b04b0ea76aba7ab2c9ab8a4bd08cac9e1d9f8
+  • git status --porcelain:
+

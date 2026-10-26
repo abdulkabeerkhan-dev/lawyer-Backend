@@ -77,3 +77,4 @@ scratch_*
 
 # Runtime rate limit state
 data/rate_limit_state.json
+!reports/*.txt
