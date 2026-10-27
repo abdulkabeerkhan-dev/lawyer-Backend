@@ -282,6 +282,34 @@ class MemoVerifier:
                 "in_force": is_in_force
             })
 
+    def ingest_extra_authorities(self, authorities: Optional[List[Dict[str, Any]]]) -> None:
+        """Dynamically ingests verified candidates from retrieval pipeline into in-memory sets."""
+        if not authorities:
+            return
+        for card in authorities:
+            if not isinstance(card, dict):
+                continue
+            cit = card.get("citation") or card.get("neutral_citation") or card.get("case_id")
+            if cit:
+                norm_cit = " ".join(str(cit).upper().split())
+                self.citations_set.add(norm_cit)
+                self.citations_set.add(norm_cit.replace("_", " "))
+            title = card.get("case_title") or card.get("title")
+            if title:
+                clean_t = re.sub(r'^\d+\s+[A-Z0-9\s]+\s+', '', str(title))
+                norm_title = " ".join(clean_t.upper().split())
+                self.case_titles_set.add(norm_title)
+                v_match = re.search(r'(.+?)\s+v(?:s\.?|\.)\s+(.+)', clean_t, re.IGNORECASE)
+                if v_match:
+                    p1 = " ".join(v_match.group(1).strip().upper().split())
+                    p2 = " ".join(v_match.group(2).strip().upper().split())
+                    self.case_titles_set.add(f"{p1} V. {p2}")
+                    self.case_titles_set.add(f"{p1} VS {p2}")
+                    p1_clean = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S)\s+', '', p1).strip()
+                    p2_clean = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S)\s+', '', p2).strip()
+                    self.case_titles_set.add(f"{p1_clean} V. {p2_clean}")
+                    self.case_titles_set.add(f"{p1_clean} VS {p2_clean}")
+
     def _load_corpus_index(self):
         """Loads apex judicial index for Rule (c) precedent checking."""
         if os.path.exists(CACHED_AUTHORITIES_PATH):
@@ -538,7 +566,7 @@ class MemoVerifier:
         clean_text = re.sub(r'[*_]{1,3}', '', text)
 
         case_pattern = re.compile(
-            r'\b([A-Z][A-Za-z0-9\.\']*(?:\s+[A-Z][A-Za-z0-9\.\']*)*)\s+v(?:s\.?|\.)\s+([A-Z][A-Za-z0-9\.\']*(?:\s+(?:of\s+the|in\s+the|for\s+the|of|and|the|&)\s+[A-Z][A-Za-z0-9\.\']*|\s+[A-Z][A-Za-z0-9\.\']*)*)\b'
+            r'\b([A-Z][A-Za-z0-9\.\'\-]*(?:[ \t]+(?:of\s+the|in\s+the|for\s+the|of|and|the|&)[ \t]+[A-Z][A-Za-z0-9\.\'\-]*|[ \t]+[A-Z][A-Za-z0-9\.\'\-]*)*)[ \t]+v(?:s\.?|\.)[ \t]+([A-Z][A-Za-z0-9\.\'\-]*(?:[ \t]+(?:of\s+the|in\s+the|for\s+the|of|and|the|&)[ \t]+[A-Z][A-Za-z0-9\.\'\-]*|[ \t]+[A-Z][A-Za-z0-9\.\'\-]*)*)\b'
         )
         for m in case_pattern.finditer(clean_text):
             p1, p2 = m.group(1).strip(), m.group(2).strip()
@@ -582,6 +610,12 @@ class MemoVerifier:
                 return True
             for ct in self.case_titles_set:
                 if p1 in ct and p2 in ct:
+                    return True
+            # Strip common honorifics/prefixes and re-check: "AL-HAAJ", "MST.", "CH.", "MALIK", etc.
+            p1_clean = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S)\s+', '', p1).strip()
+            p2_clean = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S)\s+', '', p2).strip()
+            for ct in self.case_titles_set:
+                if (p1 in ct or p1_clean in ct) and (p2 in ct or p2_clean in ct):
                     return True
             return False
 
@@ -732,6 +766,9 @@ class MemoVerifier:
         """
         Main entry point for verifying a research memorandum against Orders 1.5 - 1.14.
         """
+        extra_auths = kwargs.get("extra_authorities")
+        if extra_auths:
+            self.ingest_extra_authorities(extra_auths)
         if kwargs.get("is_system_rendered"):
             _is_system_assembled = True
 
@@ -1048,24 +1085,24 @@ class MemoVerifier:
             "cleaned_memo_text": memo_cleaned
         }
 
-def verify_memorandum_text(memo_text: str) -> Dict[str, Any]:
+def verify_memorandum_text(memo_text: str, **kwargs) -> Dict[str, Any]:
     """
     Verifies user/model memorandum text. Caller cannot supply system rendering flags.
     Model text containing system banners is stripped and flagged under Rule (b).
     """
     verifier = MemoVerifier()
-    return verifier.verify_memo(memo_text, _is_system_assembled=False)
+    return verifier.verify_memo(memo_text, _is_system_assembled=False, **kwargs)
 
-def assemble_and_verify_memorandum(memo_text: str, disputed_notices: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
+def assemble_and_verify_memorandum(memo_text: str, disputed_notices: Optional[List[Dict[str, Any]]] = None, **kwargs) -> Dict[str, Any]:
     """
     System assembler: attaches system warning banners for disputed provisions and
     verifies final output under internal system authority (_is_system_assembled=True).
     """
     verifier = MemoVerifier()
-    raw_res = verifier.verify_memo(memo_text, _is_system_assembled=False)
+    raw_res = verifier.verify_memo(memo_text, _is_system_assembled=False, **kwargs)
     all_disputed = disputed_notices or raw_res.get("disputed_notices", [])
     assembled_text = attach_system_disputed_banner(memo_text, all_disputed) if all_disputed else memo_text
-    final_res = verifier.verify_memo(assembled_text, _is_system_assembled=True)
+    final_res = verifier.verify_memo(assembled_text, _is_system_assembled=True, **kwargs)
     final_res["assembled_text"] = assembled_text
     return final_res
 

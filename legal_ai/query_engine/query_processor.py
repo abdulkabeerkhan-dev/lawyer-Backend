@@ -2818,12 +2818,12 @@ async def process_query_job_legal_ai(
     )
 
     # Initial verification attempt (Attempt 1)
-    verification_gate = verify_memorandum_text(clean_answer)
+    verification_gate = verify_memorandum_text(clean_answer, extra_authorities=precedent_cards)
     if not verification_gate.get('passed', False):
         disputed_notices = verification_gate.get('disputed_notices', [])
         failures = verification_gate.get('failures', [])
         if disputed_notices:
-            re_gate = assemble_and_verify_memorandum(clean_answer, disputed_notices)
+            re_gate = assemble_and_verify_memorandum(clean_answer, disputed_notices, extra_authorities=precedent_cards)
             if re_gate.get('passed', False):
                 clean_answer = re_gate.get('assembled_text', attach_system_disputed_banner(clean_answer, disputed_notices))
                 verification_gate = re_gate
@@ -2859,12 +2859,12 @@ async def process_query_job_legal_ai(
 
             if regen_raw.strip():
                 regen_clean = purge_debug_warnings(regen_raw)
-                regen_gate = verify_memorandum_text(regen_clean)
+                regen_gate = verify_memorandum_text(regen_clean, extra_authorities=precedent_cards)
                 if not regen_gate.get('passed', False):
                     r_disputed = regen_gate.get('disputed_notices', [])
                     r_failures = regen_gate.get('failures', [])
                     if r_disputed:
-                        re_re_gate = assemble_and_verify_memorandum(regen_clean, r_disputed)
+                        re_re_gate = assemble_and_verify_memorandum(regen_clean, r_disputed, extra_authorities=precedent_cards)
                         if re_re_gate.get('passed', False):
                             regen_clean = re_re_gate.get('assembled_text', attach_system_disputed_banner(regen_clean, r_disputed))
                             regen_gate = re_re_gate

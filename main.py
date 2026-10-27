@@ -14155,23 +14155,15 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
 
         canvas.saveState()
 
-        canvas.setFont("Helvetica-Bold", 8)
+        canvas.setFont("Helvetica-Bold", 48)
 
-        canvas.setFillColorRGB(0.5, 0.5, 0.5)
-
-        canvas.drawCentredString(letter[0] / 2.0, letter[1] - 30, "NOTICE: Reconstructed from database text; not an official copy.")
-
-        canvas.drawCentredString(letter[0] / 2.0, 20, "NOTICE: Reconstructed from database text; not an official copy.")
-
-        canvas.setFont("Helvetica-Bold", 42)
-
-        canvas.setFillColorRGB(0.92, 0.92, 0.92)
+        canvas.setFillColorRGB(0.94, 0.94, 0.94)
 
         canvas.translate(letter[0] / 2.0, letter[1] / 2.0)
 
         canvas.rotate(45)
 
-        canvas.drawCentredString(0, 0, "UNOFFICIAL RECONSTRUCTION")
+        canvas.drawCentredString(0, 0, "SECTION AI")
 
         canvas.restoreState()
 

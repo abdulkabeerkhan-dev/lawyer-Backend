@@ -100,3 +100,54 @@ def test_main_query_status_returns_clear_precedent_notice_for_blocked_citation()
     
     # Must NOT contain confusing generic statutory notice with empty provisions
     assert "The authentic, verbatim text of the controlling statutory provisions from official gazettes is set out below for legal reliance" not in answer
+
+
+def test_retrieved_precedent_cards_are_verified_and_not_blocked():
+    """
+    Verify that real retrieved precedents (e.g. 1998 SCMR 530, 2025 SCMR 787)
+    are recognized as verified via extra_authorities and pass verification.
+    """
+    cards = [
+        {
+            "citation": "1998 SCMR 530",
+            "case_title": "ABDUL JABBAR VS ABDUL SATTAR",
+            "court": "Supreme Court of Pakistan"
+        },
+        {
+            "citation": "2025 SCMR 787",
+            "case_title": "Al-Haaj Malik MUHAMMAD ASHRAF VS JAVED AKHTAR",
+            "court": "Supreme Court of Pakistan"
+        }
+    ]
+    
+    memo = """
+### 1. ### EXECUTIVE SUMMARY
+In Abdul Jabbar v. Abdul Sattar, 1998 SCMR 530, the Supreme Court of Pakistan held that mortgage of immovable property requires registration.
+Furthermore, in Al-Haaj Malik Muhammad Ashraf v. Javed Akhtar, 2025 SCMR 787, the Court discussed co-owner rights.
+"""
+    from legal_ai.verification.memo_verifier import verify_memorandum_text
+    
+    res = verify_memorandum_text(memo, extra_authorities=cards)
+    
+    # Must NOT have UNVERIFIED_AUTHORITY failures for these cases
+    auth_failures = [f for f in res.get("failures", []) if f.get("category") == "UNVERIFIED_AUTHORITY"]
+    assert len(auth_failures) == 0, f"Unexpected authority failures: {auth_failures}"
+
+
+def test_pdf_bytes_remove_unofficial_notice_and_add_section_ai():
+    """
+    Verify that dynamically built judgment PDFs do not contain
+    'Reconstructed from database text' or 'UNOFFICIAL RECONSTRUCTION'
+    and instead feature 'SECTION AI'.
+    """
+    from main import build_judgment_pdf_bytes
+    
+    pdf_bytes = build_judgment_pdf_bytes(
+        title="Al-Haaj Malik Muhammad Ashraf v. Javed Akhtar",
+        citation="2025 SCMR 787",
+        court="Supreme Court of Pakistan",
+        text="Sample judgment body text."
+    )
+    
+    assert b"Reconstructed from database text" not in pdf_bytes
+    assert b"UNOFFICIAL RECONSTRUCTION" not in pdf_bytes
