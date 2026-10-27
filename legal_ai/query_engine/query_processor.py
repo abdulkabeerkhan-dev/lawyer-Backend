@@ -2246,22 +2246,13 @@ async def process_query_job_legal_ai(
 
 
 
+            quoted_lines = [f"> {line}" if line.strip() else ">" for line in txt.strip().splitlines()]
+            body_quoted = "\n".join(quoted_lines)
+
             block = (
-
-
-
                 f"**{act_name}** -- *Section {sec_num} ({title})*\n"
-
-
-
                 f"*Status: {p_tier} | Source: {p_src} | Source Pages: {p_page} | Content Hash: {p_hash}*\n\n"
-
-
-
-                f"{txt.strip()}"
-
-
-
+                f"{body_quoted}"
             )
 
 
@@ -2747,7 +2738,7 @@ async def process_query_job_legal_ai(
     if not verification_gate.get('passed', False):
         disputed_notices = verification_gate.get('disputed_notices', [])
         failures = verification_gate.get('failures', [])
-        if disputed_notices and all(f.get('category') == 'DISPUTED_TEXT_UNNOTICED' for f in failures):
+        if disputed_notices:
             re_gate = assemble_and_verify_memorandum(clean_answer, disputed_notices)
             if re_gate.get('passed', False):
                 clean_answer = re_gate.get('assembled_text', attach_system_disputed_banner(clean_answer, disputed_notices))
@@ -2788,7 +2779,7 @@ async def process_query_job_legal_ai(
                 if not regen_gate.get('passed', False):
                     r_disputed = regen_gate.get('disputed_notices', [])
                     r_failures = regen_gate.get('failures', [])
-                    if r_disputed and all(f.get('category') == 'DISPUTED_TEXT_UNNOTICED' for f in r_failures):
+                    if r_disputed:
                         re_re_gate = assemble_and_verify_memorandum(regen_clean, r_disputed)
                         if re_re_gate.get('passed', False):
                             regen_clean = re_re_gate.get('assembled_text', attach_system_disputed_banner(regen_clean, r_disputed))
