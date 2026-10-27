@@ -1,0 +1,707 @@
+{
+  "passed": false,
+  "verdict": "BLOCKED",
+  "failures": [
+    {
+      "rule": "(c)",
+      "category": "UNVERIFIED_AUTHORITY",
+      "label": "UNVERIFIED AUTHORITY (not found in our index; check manually)",
+      "issue": "UNVERIFIED AUTHORITY (not found in our index; check manually): 'Criminal Cheating v. Civil Breach\n\nCritical Jurisprudential Distinction' not indexed in judicial corpus",
+      "span": "Criminal Cheating v. Civil Breach\n\nCritical Jurisprudential Distinction"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Accordingly, this analysis proceeds with the caveat that Section 415 analysis relies upon established appellate jurisprudence rather than statutory text verification.**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Classification (Cr.P.C."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Schedule II):**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Cognizable** (police may arrest without warrant)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Non-bailable**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Compoundable** (with court permission before prosecution concludes)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Trial Forum:** Court of Session or Magistrate of the first class"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Requires **intentional deception** as foundational mental element"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- The cheating must produce a causal nexus to inducement"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- The inducement must operate upon the deceived person's mind"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Dishonesty** (dolus) is integral—mere negligence or inadvertence insufficient"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Element 3: Delivery of Property or Alteration of Valuable Security**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Deliver any property to any person, OR"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Make, alter, or destroy a valuable security or document capable of conversion to valuable security"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Transfer of ownership or possession** must occur as result of deception"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Element 4: Mens Rea (Criminal Intent)**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Willful, intentional deception with knowledge of falsity"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Purpose to induce another to part with property or valuable security"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Critical Jurisprudential Distinction (Supreme Court Precedent):**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The Pakistani superior courts have consistently held that mere **civil breach of contract does not constitute criminal cheating**."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Key Principle:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Civil Breach:** Occurs when a contracting party fails to perform contractual obligations, but the promise was made with genuine intention to perform at the time of contract formation"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Criminal Cheating:** Occurs when the promise is made with **no intention to perform** and with deliberate intent to deceive and defraud"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- At the **inception of the agreement**, the accused had no genuine intention to honor the promise"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- The false promise was calculated to deceive and induce property transfer"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- The deception was deliberate and knowing"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "*Rationale:* A person who genuinely intends to perform but subsequently defaults commits civil breach, not criminal cheating."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The criminality inheres in the **original fraudulent design**."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- The accused knew the representation was false at the time made"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- OR the accused acted with reckless indifference to the truth/falsity"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Mere optimism or change of circumstances insufficient"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Principle 1: Non-Performance ≠ Cheating**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "A mere failure to perform a contractual obligation, standing alone, does not constitute Section 420 cheating."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- The promise was false when made"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- The falsity was known to the accused"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Deception was intentional and designed to induce property transfer"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Principle 2: Change of Circumstances**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "If an accused genuinely intended to perform but circumstances changed (financial inability, force majeure, market conditions), criminal cheating does not attach."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "However, if the accused concealed changed circumstances to maintain the deception, criminal liability may arise."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Principle 3: Materiality of Representation**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The false representation must be **material** to the victim's decision to transfer property or execute the valuable security."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Immaterial misrepresentation or puffery does not constitute cheating."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "1. **Fraudulent Design** (present from inception of transaction)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "2. **Deliberate Concealment** of material facts"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "3. **Calculated Deception** calculated to induce reliance"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "4. **Direct Causal Nexus** between deception and property transfer"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Contractual misrepresentation (which may be actionable in tort/contract but not criminally)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Breach due to changed circumstances"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Business disputes arising from disagreement on terms"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Criminal Cheating Standard:** Beyond reasonable doubt"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Suspicion, reasonable inference, or civil preponderance insufficient"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Prosecution bears full onus to establish fraudulent design"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Contrasted with Civil Breach:** Balance of probabilities"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Plaintiff need only show contract and non-performance"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Defenses (force majeure, impossibility) shift to defendant"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "1. **Documentary Evidence:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Original false representation (written or contemporaneously recorded)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Evidence of knowledge of falsity"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Proof of inducement (e.g., payment, delivery documents, communications)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "2. **Testimonial Evidence:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Victim's testimony regarding reliance on false representation"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Corroboration of victim's subjective belief in falsity"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Expert evidence (where technical misrepresentation alleged)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "3. **Circumstantial Evidence:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Pattern of conduct showing systematic deception"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Concealment of material facts"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Flight, destruction of records, or consciousness of guilt"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- The accused's **knowledge of falsity** at inception"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Absence of genuine intention** to perform"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Deliberate deployment** of deception"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Materiality** of the false representation to inducement"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Non-Bailable Offence** (Cr.P.C."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Reasonable grounds exist to believe accused committed offence"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **AND** offence is punishable with death, life imprisonment, or imprisonment exceeding 10 years"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Section 420 Sentencing:** Maximum 7 years imprisonment (does not exceed 10-year threshold)"
+    }
+  ],
+  "total_failures": 76,
+  "quotes_checked": 1,
+  "quotes_passed": 1,
+  "quotes_failed": 0,
+  "cases_checked": 1,
+  "cases_passed": 0,
+  "cases_failed": 1,
+  "statutes_checked": 19,
+  "statutes_passed": 19,
+  "statutes_failed": 0,
+  "unsourced_sentences_count": 75,
+  "disputed_notices": [],
+  "omitted_ellipses": [],
+  "cited_provisions_metadata": [
+    {
+      "span": "Section 420 PPC",
+      "canonical_id": "PPC_1860_SEC_420",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 415 PPC",
+      "canonical_id": "PPC_1860_SEC_415",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "SECTION 420 PPC",
+      "canonical_id": "PPC_1860_SEC_420",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 420 PPC",
+      "canonical_id": "PPC_1860_SEC_420",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "SECTION 420 PPC",
+      "canonical_id": "PPC_1860_SEC_420",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 420 PPC",
+      "canonical_id": "PPC_1860_SEC_420",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 415 PPC",
+      "canonical_id": "PPC_1860_SEC_415",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 420 PPC",
+      "canonical_id": "PPC_1860_SEC_420",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 497 CrPC",
+      "canonical_id": "CRPC_1898_SEC_497",
+      "tier": "page_verified",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 497(1) CrPC",
+      "canonical_id": "CRPC_1898_SEC_497",
+      "tier": "page_verified",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 420 PPC",
+      "canonical_id": "PPC_1860_SEC_420",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 415 PPC",
+      "canonical_id": "PPC_1860_SEC_415",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "SECTION 420 PPC",
+      "canonical_id": "PPC_1860_SEC_420",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 420 PPC",
+      "canonical_id": "PPC_1860_SEC_420",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "SECTION 420 PPC",
+      "canonical_id": "PPC_1860_SEC_420",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 420 PPC",
+      "canonical_id": "PPC_1860_SEC_420",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 415 PPC",
+      "canonical_id": "PPC_1860_SEC_415",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 420 PPC",
+      "canonical_id": "PPC_1860_SEC_420",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 497 CrPC",
+      "canonical_id": "CRPC_1898_SEC_497",
+      "tier": "page_verified",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    }
+  ],
+  "stripped_model_banners": [],
+  "cleaned_memo_text": "# LEGAL RESEARCH MEMORANDUM\n## ESSENTIAL INGREDIENTS OF CHEATING UNDER SECTIONS 415 & 420 PPC AND JURISPRUDENTIAL DISTINCTION FROM CIVIL BREACH\n\n---\n\n### PRELIMINARY NOTICE\n\n**This memorandum addresses Section 420 PPC (verified statutory framework on record). Section 415 PPC statutory text is NOT FOUND in the verified database provided. Accordingly, this analysis proceeds with the caveat that Section 415 analysis relies upon established appellate jurisprudence rather than statutory text verification.**\n\n---\n\n## I. STATUTORY FRAMEWORK: SECTION 420 PPC\n\n### A. Operative Statutory Definition\n\nSection 420 PPC, in force, provides:\n\n> \"Whoever cheats and thereby dishonestly induces the person deceived to deliver any property to any person, or to make, alter or destroy the whole or any part of a valuable security, or anything which is signed or sealed, and which is capable of being converted into a valuable security, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine.\"\n\n**Classification (Cr.P.C. Schedule II):**\n- **Cognizable** (police may arrest without warrant)\n- **Non-bailable** \n- **Compoundable** (with court permission before prosecution concludes)\n- **Trial Forum:** Court of Session or Magistrate of the first class\n\n---\n\n## II. ESSENTIAL INGREDIENTS OF SECTION 420 PPC\n\n### A. Statutory Elements Extracted\n\nFrom the bare-act language, Section 420 PPC comprises the following essential ingredients:\n\n**Element 1: \"Whoever Cheats\"**\n- The accused must commit the act of cheating (defined in Section 415 PPC, statutory text not found in verified database)\n- Requires **intentional deception** as foundational mental element\n\n**Element 2: \"Thereby Dishonestly Induces\"**\n- The cheating must produce a causal nexus to inducement\n- The inducement must operate upon the deceived person's mind\n- **Dishonesty** (dolus) is integral—mere negligence or inadvertence insufficient\n\n**Element 3: Delivery of Property or Alteration of Valuable Security**\n- The victim must be induced to:\n  - Deliver any property to any person, OR\n  - Make, alter, or destroy a valuable security or document capable of conversion to valuable security\n- **Transfer of ownership or possession** must occur as result of deception\n\n**Element 4: Mens Rea (Criminal Intent)**\n- Willful, intentional deception with knowledge of falsity\n- Purpose to induce another to part with property or valuable security\n\n---\n\n## III. SUPERIOR COURT JURISPRUDENCE ON CHEATING\n\n### A. Foundational Principle: Criminal Cheating vs. Civil Breach\n\n**Critical Jurisprudential Distinction (Supreme Court Precedent):**\n\nThe Pakistani superior courts have consistently held that mere **civil breach of contract does not constitute criminal cheating**. The jurisprudential line is drawn as follows:\n\n**Key Principle:**\n- **Civil Breach:** Occurs when a contracting party fails to perform contractual obligations, but the promise was made with genuine intention to perform at the time of contract formation\n- **Criminal Cheating:** Occurs when the promise is made with **no intention to perform** and with deliberate intent to deceive and defraud\n\n### B. Established Jurisprudential Tests\n\n**1. The \"Intention at Formation\" Test**\n\nSuperior court jurisprudence establishes that criminal cheating requires proof that:\n- At the **inception of the agreement**, the accused had no genuine intention to honor the promise\n- The false promise was calculated to deceive and induce property transfer\n- The deception was deliberate and knowing\n\n*Rationale:* A person who genuinely intends to perform but subsequently defaults commits civil breach, not criminal cheating. The criminality inheres in the **original fraudulent design**.\n\n**2. The \"Knowledge of Falsity\" Requirement**\n\nCriminal cheating mandates:\n- The accused knew the representation was false at the time made\n- OR the accused acted with reckless indifference to the truth/falsity\n- Mere optimism or change of circumstances insufficient\n\n---\n\n## IV. DISTINCTION FROM CIVIL BREACH: JURISPRUDENTIAL FRAMEWORK\n\n### A. Comparative Analysis\n\n| **Element** | **Civil Breach of Contract** | **Criminal Cheating (§420)** |\n|---|---|---|\n| **Promise Made** | Genuine intention to perform | No intention to perform from inception |\n| **Falsity** | Actual failure to perform | Promise known false when made |\n| **Inducement Mechanism** | Contract terms negotiated | Deception deliberately deployed |\n| **Mens Rea** | Breach (failure of performance) | Dolus/fraud (intent to defraud) |\n| **Burden of Proof** | Balance of probabilities | Beyond reasonable doubt |\n| **Remedy** | Damages/specific performance | Criminal punishment |\n\n### B. Key Jurisprudential Principles\n\n**Principle 1: Non-Performance ≠ Cheating**\n\nA mere failure to perform a contractual obligation, standing alone, does not constitute Section 420 cheating. The prosecution must prove:\n- The promise was false when made\n- The falsity was known to the accused\n- Deception was intentional and designed to induce property transfer\n\n**Principle 2: Change of Circumstances**\n\nIf an accused genuinely intended to perform but circumstances changed (financial inability, force majeure, market conditions), criminal cheating does not attach. However, if the accused concealed changed circumstances to maintain the deception, criminal liability may arise.\n\n**Principle 3: Materiality of Representation**\n\nThe false representation must be **material** to the victim's decision to transfer property or execute the valuable security. Immaterial misrepresentation or puffery does not constitute cheating.\n\n---\n\n## V. CRITICAL DISTINCTIONS IN SUPERIOR COURT PRECEDENT\n\n### A. The \"Fraudulent Design\" Doctrine\n\nPakistani appellate courts hold that Section 420 cheating requires proof of:\n\n1. **Fraudulent Design** (present from inception of transaction)\n2. **Deliberate Concealment** of material facts\n3. **Calculated Deception** calculated to induce reliance\n4. **Direct Causal Nexus** between deception and property transfer\n\nThis distinguishes cheating from:\n- Contractual misrepresentation (which may be actionable in tort/contract but not criminally)\n- Breach due to changed circumstances\n- Business disputes arising from disagreement on terms\n\n### B. Burden and Standard of Proof\n\n**Criminal Cheating Standard:** Beyond reasonable doubt\n- Suspicion, reasonable inference, or civil preponderance insufficient\n- Prosecution bears full onus to establish fraudulent design\n\n**Contrasted with Civil Breach:** Balance of probabilities\n- Plaintiff need only show contract and non-performance\n- Defenses (force majeure, impossibility) shift to defendant\n\n---\n\n## VI. INVESTIGATIVE & PROSECUTORIAL IMPLICATIONS\n\n### A. Evidence Necessary to Establish Section 420\n\nCourts require:\n\n1. **Documentary Evidence:**\n   - Original false representation (written or contemporaneously recorded)\n   - Evidence of knowledge of falsity\n   - Proof of inducement (e.g., payment, delivery documents, communications)\n\n2. **Testimonial Evidence:**\n   - Victim's testimony regarding reliance on false representation\n   - Corroboration of victim's subjective belief in falsity\n   - Expert evidence (where technical misrepresentation alleged)\n\n3. **Circumstantial Evidence:**\n   - Pattern of conduct showing systematic deception\n   - Concealment of material facts\n   - Flight, destruction of records, or consciousness of guilt\n\n### B. Prosecutorial Burden\n\nTo distinguish criminal cheating from civil breach, the prosecution must affirmatively prove:\n- The accused's **knowledge of falsity** at inception\n- **Absence of genuine intention** to perform\n- **Deliberate deployment** of deception\n- **Materiality** of the false representation to inducement\n\n---\n\n## VII. STATUTORY CLASSIFICATION & BAIL IMPLICATIONS\n\n### A. Section 420 PPC Classification\n\n**Non-Bailable Offence** (Cr.P.C. Schedule II)\n\nHowever, Section 497 CrPC establishes that bail may be granted in non-bailable offences unless:\n- Reasonable grounds exist to believe accused committed offence\n- **AND** offence is punishable with death, life imprisonment, or imprisonment exceeding 10 years\n\n**Section 420 Sentencing:** Maximum 7 years imprisonment (does not exceed 10-year threshold)\n\n**Bail Principle:** Section 497(1) CrPC provides bail is the *rule* for non-bailable offences not exce"
+}

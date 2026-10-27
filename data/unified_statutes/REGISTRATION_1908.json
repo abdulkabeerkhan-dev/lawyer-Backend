@@ -38,7 +38,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_47",
@@ -65,7 +66,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_49",
@@ -86,6 +88,7 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   }
 ]

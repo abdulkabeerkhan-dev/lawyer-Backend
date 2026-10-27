@@ -1,16 +1,17 @@
 """
 tests/test_order113_banner_deadlock.py
 
-ORDER 1.13 - ITEM 1: BANNER DEADLOCK VERIFICATION TEST
+ORDER 1.13 - ITEM 1 / ORDER 1.14 - ITEM 3: BANNER DEADLOCK & SYSTEM ASSEMBLER TESTS
 Verifies that:
-1. Disputed-provision check runs on the final assembled memo (model text + system banner added by code).
+1. Disputed-provision check fails when system banner is skipped.
 2. The model never writes banners (model-written banners are stripped and flagged under Rule b).
-3. A memo citing FIO s.22 passes with the system banner and fails when the system banner step is skipped.
+3. The system assembler attaches system warning banner and verifies final output under system authority.
 """
 
 import pytest
 from legal_ai.verification.memo_verifier import (
     verify_memorandum_text,
+    assemble_and_verify_memorandum,
     attach_system_disputed_banner,
     LABEL_MODEL_BANNER_DETECTED
 )
@@ -28,15 +29,14 @@ SAMPLE_FIO_S22_MEMO = (
 
 def test_memo_fails_when_system_banner_is_skipped():
     """When the system banner attachment is skipped, the memo must fail under Rule (d) with DISPUTED_TEXT_UNNOTICED."""
-    res = verify_memorandum_text(SAMPLE_FIO_S22_MEMO, is_system_rendered=False)
+    res = verify_memorandum_text(SAMPLE_FIO_S22_MEMO)
     assert not res["passed"], "Unbannered memo citing disputed provision must not pass"
     disputed_failures = [f for f in res["failures"] if f.get("category") == "DISPUTED_TEXT_UNNOTICED"]
     assert len(disputed_failures) > 0, "Expected DISPUTED_TEXT_UNNOTICED failure when banner step is skipped"
 
 def test_memo_passes_with_system_banner():
-    """When the code attaches the system banner to create the final assembled memo, it passes verification."""
-    bannered_memo = attach_system_disputed_banner(SAMPLE_FIO_S22_MEMO, [{"provision": "FIO_2001_SEC_22"}])
-    res = verify_memorandum_text(bannered_memo, is_system_rendered=True)
+    """When the system assembler attaches the system banner, it passes verification."""
+    res = assemble_and_verify_memorandum(SAMPLE_FIO_S22_MEMO, [{"provision": "FIO_2001_SEC_22"}])
     assert res["passed"], f"Final assembled memo with system banner must pass, but got failures: {res['failures']}"
     assert len(res["failures"]) == 0
 
@@ -47,7 +47,7 @@ def test_model_injected_banner_is_blocked():
         "> Model generated warning banner.\n\n"
         + SAMPLE_FIO_S22_MEMO
     )
-    res = verify_memorandum_text(fake_model_banner, is_system_rendered=False)
+    res = verify_memorandum_text(fake_model_banner)
     assert not res["passed"]
     b_fails = [f for f in res["failures"] if f.get("rule") == "(b)"]
     assert len(b_fails) > 0, "Model-written banner must trigger Rule (b) failure"

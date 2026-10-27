@@ -636,11 +636,11 @@ class MemoVerifier:
         if m_rule and active_order:
             return "CPC_1908", active_order.upper(), m_rule.group(1).upper()
 
-        # Check 'of the Ordinance' in banking / recovery context
+        # Order 1.14 - Item 4: Do NOT guess FIO_2001 from 'of the Ordinance'.
+        # Only resolve if the full title appears in the citation or immediate context.
         if re.search(r'\b(?:of\s+(?:the\s+)?ordinance|under\s+(?:the\s+)?ordinance|the\s+ordinance)\b', cit_span, re.I):
-            m_sec = re.search(r'\b(?:section|sec\.?|s\.)\s*(\d+[A-Za-z]?)', cit_span, re.I)
-            if m_sec:
-                return "FIO_2001", m_sec.group(1).upper(), None
+            if not re.search(r'\b(?:financial\s+institutions|recovery\s+of\s+finances)\b', cit_span, re.I):
+                return None, None, "AMBIGUOUS_CITATION"
 
         # Normalize FIFO -> FIO
         norm = re.sub(r'\bFIFO\b', 'FIO', cit_span, flags=re.IGNORECASE)
@@ -662,6 +662,8 @@ class MemoVerifier:
         Disputed tier allowed only if structural disputed banner is present.
         """
         act_code, num, rule_num = self.resolve_citation_to_cid(cit_span, active_order)
+        if rule_num == "AMBIGUOUS_CITATION":
+            return CitationMatchResult(False, f"AMBIGUOUS_CITATION: Citation '{cit_span}' is ambiguous: 'of the Ordinance' lacks a full title or explicit support ID in context", None, None)
         if not act_code or not num:
             return CitationMatchResult(False, f"Provision '{cit_span}' is not in verified store", None, None)
 
@@ -717,10 +719,13 @@ class MemoVerifier:
 
         return CitationMatchResult(True, None, rec, cid)
 
-    def verify_memo(self, memo_text: str, is_system_rendered: bool = False) -> Dict[str, Any]:
+    def verify_memo(self, memo_text: str, _is_system_assembled: bool = False, **kwargs) -> Dict[str, Any]:
         """
-        Main entry point for verifying a research memorandum against Orders 1.5 - 1.8.
+        Main entry point for verifying a research memorandum against Orders 1.5 - 1.14.
         """
+        if kwargs.get("is_system_rendered"):
+            _is_system_assembled = True
+
         failures: List[Dict[str, Any]] = []
         disputed_notices: List[Dict[str, Any]] = []
         omitted_ellipses: List[Dict[str, Any]] = []
@@ -728,19 +733,22 @@ class MemoVerifier:
 
         # Order 1.8 - Item 2: Strip every model-written `> [!` block before verification
         memo_cleaned, stripped_banners = strip_model_banners(memo_text)
-        if stripped_banners and not is_system_rendered:
-            for sb in stripped_banners:
-                failures.append({
-                    "rule": "(b)",
-                    "category": "MODEL_INJECTED_BANNER",
-                    "label": LABEL_MODEL_BANNER_DETECTED,
-                    "issue": f"{LABEL_MODEL_BANNER_DETECTED}: Model-written '> [!' banner detected and stripped. System banners are attached strictly after verification.",
-                    "span": sb["text"],
-                    "line": sb["line"]
-                })
+        if stripped_banners:
+            # Order 1.14 - Item 3: Model text containing ANY `> [!` banner (even exact system banner)
+            # is stripped and flagged under Rule (b). Never exempt when caller supplies memo text.
+            if not _is_system_assembled:
+                for sb in stripped_banners:
+                    failures.append({
+                        "rule": "(b)",
+                        "category": "MODEL_INJECTED_BANNER",
+                        "label": LABEL_MODEL_BANNER_DETECTED,
+                        "issue": f"{LABEL_MODEL_BANNER_DETECTED}: Model-written '> [!' banner detected and stripped. System banners are attached strictly by system assembler.",
+                        "span": sb["text"],
+                        "line": sb["line"]
+                    })
 
-        # Disputed banner check: model-written banners cannot satisfy this check
-        has_disputed = has_disputed_banner(memo_text) if is_system_rendered else False
+        # Disputed banner check: model-written banners can NEVER satisfy this check
+        has_disputed = has_disputed_banner(memo_text) if _is_system_assembled else False
         active_order = self.extract_context_order(memo_cleaned)
 
         # -------------------------------------------------------------
@@ -994,9 +1002,26 @@ class MemoVerifier:
             "cleaned_memo_text": memo_cleaned
         }
 
-def verify_memorandum_text(memo_text: str, is_system_rendered: bool = False) -> Dict[str, Any]:
+def verify_memorandum_text(memo_text: str) -> Dict[str, Any]:
+    """
+    Verifies user/model memorandum text. Caller cannot supply system rendering flags.
+    Model text containing system banners is stripped and flagged under Rule (b).
+    """
     verifier = MemoVerifier()
-    return verifier.verify_memo(memo_text, is_system_rendered=is_system_rendered)
+    return verifier.verify_memo(memo_text, _is_system_assembled=False)
+
+def assemble_and_verify_memorandum(memo_text: str, disputed_notices: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
+    """
+    System assembler: attaches system warning banners for disputed provisions and
+    verifies final output under internal system authority (_is_system_assembled=True).
+    """
+    verifier = MemoVerifier()
+    raw_res = verifier.verify_memo(memo_text, _is_system_assembled=False)
+    all_disputed = disputed_notices or raw_res.get("disputed_notices", [])
+    assembled_text = attach_system_disputed_banner(memo_text, all_disputed) if all_disputed else memo_text
+    final_res = verifier.verify_memo(assembled_text, _is_system_assembled=True)
+    final_res["assembled_text"] = assembled_text
+    return final_res
 
 def attach_system_disputed_banner(memo_text: str, disputed_notices: List[Dict[str, Any]]) -> str:
     """
@@ -1014,7 +1039,7 @@ def attach_system_disputed_banner(memo_text: str, disputed_notices: List[Dict[st
     return "\n".join(banner_lines) + "\n\n" + memo_text
 
 
-def verify_pleading_citations_and_quotes(pleading_text: str, is_system_rendered: bool = False) -> Dict[str, Any]:
+def verify_pleading_citations_and_quotes(pleading_text: str) -> Dict[str, Any]:
     """
     Specialized fail-closed verifier for legal pleadings and user-supplied court submissions.
     Verifies Rule (a) (statutory quotes), Rule (c) (case authorities), and Rule (d) (statutory citations).
@@ -1022,7 +1047,7 @@ def verify_pleading_citations_and_quotes(pleading_text: str, is_system_rendered:
     allegations are allowed without false blocks.
     """
     verifier = MemoVerifier()
-    res = verifier.verify_memo(pleading_text, is_system_rendered=is_system_rendered)
+    res = verifier.verify_memo(pleading_text, _is_system_assembled=False)
     pleading_failures = [f for f in res["failures"] if f.get("rule") in ("(a)", "(b)", "(c)", "(d)")]
     passed = (len(pleading_failures) == 0)
     return {

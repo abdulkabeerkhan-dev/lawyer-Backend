@@ -234,13 +234,66 @@ MANDATORY ADJUDICATION RULES:
 """
 
 
-ROMAN_NUMERAL_MAP = {
-    "i": 1, "ii": 2, "iii": 3, "iv": 4, "v": 5, "vi": 6, "vii": 7, "viii": 8, "ix": 9, "x": 10,
-    "xi": 11, "xii": 12, "xiii": 13, "xiv": 14, "xv": 15, "xvi": 16, "xvii": 17, "xviii": 18,
-    "xix": 19, "xx": 20, "xxi": 21, "xxii": 22, "xxiii": 23, "xxiv": 24, "xxv": 25, "xxvi": 26,
-    "xxvii": 27, "xxviii": 28, "xxix": 29, "xxx": 30, "xxxix": 39, "xl": 40, "xli": 41,
-    "xlii": 42, "xliii": 43, "xliv": 44, "xlv": 45, "xlvi": 46, "xlvii": 47, "xlviii": 48, "xlix": 49, "l": 50, "li": 51
+CANONICAL_ROMAN_REGEX = re.compile(
+    r'^M{0,3}(?:CM|CD|D?C{0,3})(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3})$',
+    re.IGNORECASE
+)
+
+ROMAN_VAL_MAP = {
+    'i': 1, 'v': 5, 'x': 10, 'l': 50, 'c': 100, 'd': 500, 'm': 1000
 }
+
+def parse_roman_numeral(s: str) -> Optional[int]:
+    """
+    Parses a Roman numeral into an integer.
+    Strictly enforces canonical Roman subtractive notation.
+    Rejects non-canonical forms (e.g. 'IIII', 'VV', 'IL', 'IC', 'XD', 'XIVX', empty strings).
+    Returns integer value if canonical and valid, else None.
+    """
+    if not s or not isinstance(s, str):
+        return None
+    s_clean = s.strip().lower()
+    if not s_clean:
+        return None
+    if not CANONICAL_ROMAN_REGEX.match(s_clean):
+        return None
+    
+    total = 0
+    prev_val = 0
+    for char in reversed(s_clean):
+        val = ROMAN_VAL_MAP.get(char)
+        if val is None:
+            return None
+        if val < prev_val:
+            total -= val
+        else:
+            total += val
+        prev_val = val
+        
+    return total if total > 0 else None
+
+class CanonicalRomanNumeralMap:
+    """
+    Real Roman numeral parser replacing the hand-typed map (Order 1.14 - Item 4).
+    Validates canonical Roman numerals and rejects non-canonical representations.
+    """
+    def get(self, key, default=None):
+        if isinstance(key, str):
+            val = parse_roman_numeral(key)
+            if val is not None:
+                return val
+        return default
+    
+    def __getitem__(self, key):
+        val = parse_roman_numeral(str(key))
+        if val is not None:
+            return val
+        raise KeyError(f"Non-canonical or invalid Roman numeral: '{key}'")
+
+    def __contains__(self, key):
+        return parse_roman_numeral(str(key)) is not None
+
+ROMAN_NUMERAL_MAP = CanonicalRomanNumeralMap()
 
 def normalize_statute_citation(cit: str) -> str:
     """

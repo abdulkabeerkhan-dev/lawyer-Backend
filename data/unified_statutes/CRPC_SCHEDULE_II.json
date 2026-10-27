@@ -25,7 +25,8 @@
     "quoting_allowed": false,
     "is_canonical": true,
     "duplicate_of": null,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   "406": {
     "section": "406",
@@ -52,7 +53,8 @@
     "quoting_allowed": false,
     "is_canonical": true,
     "duplicate_of": null,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   "409": {
     "section": "409",
@@ -79,7 +81,8 @@
     "quoting_allowed": false,
     "is_canonical": true,
     "duplicate_of": null,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   "489-F": {
     "section": "489-F",
@@ -106,7 +109,8 @@
     "quoting_allowed": false,
     "is_canonical": true,
     "duplicate_of": null,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   "489F": {
     "section": "489-F",
@@ -133,7 +137,8 @@
     "quoting_allowed": false,
     "is_canonical": true,
     "duplicate_of": null,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   "419": {
     "section": "419",
@@ -160,7 +165,8 @@
     "quoting_allowed": false,
     "is_canonical": true,
     "duplicate_of": null,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   "468": {
     "section": "468",
@@ -187,7 +193,8 @@
     "quoting_allowed": false,
     "is_canonical": true,
     "duplicate_of": null,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   "471": {
     "section": "471",
@@ -214,7 +221,8 @@
     "quoting_allowed": false,
     "is_canonical": true,
     "duplicate_of": null,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   "302": {
     "section": "302",
@@ -241,6 +249,7 @@
     "quoting_allowed": false,
     "is_canonical": true,
     "duplicate_of": null,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   }
 }

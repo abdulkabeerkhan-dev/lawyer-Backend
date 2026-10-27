@@ -1,0 +1,115 @@
+{
+  "passed": false,
+  "verdict": "BLOCKED",
+  "failures": [
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Fifteen (15) Days Maximum**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "1. **Failure of Service on Defendant** – When service of the injunction order cannot be effected on the defendant, and such failure is **not attributable to the plaintiff**; OR"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "2. **Defendant's Request for Time** – When the defendant **seeks time for defence** of the application for injunction."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "In these circumstances alone, the court may extend the duration of the ex parte injunction beyond the standard 15-day period."
+    }
+  ],
+  "total_failures": 4,
+  "quotes_checked": 1,
+  "quotes_passed": 1,
+  "quotes_failed": 0,
+  "cases_checked": 0,
+  "cases_passed": 0,
+  "cases_failed": 0,
+  "statutes_checked": 8,
+  "statutes_passed": 8,
+  "statutes_failed": 0,
+  "unsourced_sentences_count": 4,
+  "disputed_notices": [],
+  "omitted_ellipses": [],
+  "cited_provisions_metadata": [
+    {
+      "span": "Order XXXIX Rule 2A",
+      "canonical_id": "CPC_1908_ORD_XXXIX_R_2A",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Order XXXIX Rule 2A",
+      "canonical_id": "CPC_1908_ORD_XXXIX_R_2A",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Order XXXIX Rule 1",
+      "canonical_id": "CPC_1908_ORD_XXXIX_R_1",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Rule 2A",
+      "canonical_id": "CPC_1908_ORD_XXXIX_R_2A",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Rule 2A",
+      "canonical_id": "CPC_1908_ORD_XXXIX_R_2A",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Rule 1",
+      "canonical_id": "CPC_1908_ORD_XXXIX_R_1",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Rule 2",
+      "canonical_id": "CPC_1908_ORD_XXXIX_R_2",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Rule 2A",
+      "canonical_id": "CPC_1908_ORD_XXXIX_R_2A",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    }
+  ],
+  "stripped_model_banners": [],
+  "cleaned_memo_text": "# LEGAL RESEARCH MEMORANDUM\n\n**RE: Statutory Duration of Ex Parte Interim Injunction under Order XXXIX Rule 2A, Code of Civil Procedure, 1908**\n\n---\n\n## I. APPLICABLE STATUTORY PROVISION\n\n**Order XXXIX Rule 2A, Code of Civil Procedure, 1908** (IN FORCE)\n\nThe governing statute provides:\n\n> \"2A. Duration of ex-parte interim injunction.__ An interim injunction passed under rules 1 or 2 in the absence of defendant shall not ordinarily exceed fifteen days:\n> \n> Provided that such injunction may be extended for failure of its service on the defendant when such failure is not attributable to the plaintiff or when the defendant seeks time for defence of application for injunction.\"\n\n---\n\n## II. STATUTORY DURATION: PRINCIPAL RULE\n\n**Fifteen (15) Days Maximum**\n\nThe statutory framework establishes that an interim injunction granted *ex parte* (in the absence of the defendant) under Order XXXIX Rule 1 or Rule 2, CPC shall **not ordinarily exceed fifteen days**.\n\n---\n\n## III. STATUTORY EXCEPTIONS TO 15-DAY LIMIT\n\nThe provision contains a **Proviso** permitting extension beyond the 15-day period in two specified circumstances:\n\n1. **Failure of Service on Defendant** – When service of the injunction order cannot be effected on the defendant, and such failure is **not attributable to the plaintiff**; OR\n\n2. **Defendant's Request for Time** – When the defendant **seeks time for defence** of the application for injunction.\n\nIn these circumstances alone, the court may extend the duration of the ex parte injunction beyond the standard 15-day period.\n\n---\n\n## IV. JURISPRUDENTIAL PRINCIPLE\n\nThe use of the qualifier \"ordinarily\" in the rule indicates that while 15 days is the presumptive maximum, judicial discretion exists to extend beyond this period only upon satisfaction of the statutory conditions enumerated in the Proviso.\n\n---\n\n## CONCLUSION\n\nThe statutory duration of an interim injunction passed *ex parte* under Order XXXIX Rules 1 or 2, CPC is **15 days**, subject to extension under the limited circumstances specified in the Proviso to Rule 2A."
+}

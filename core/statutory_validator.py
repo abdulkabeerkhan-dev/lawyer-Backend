@@ -910,9 +910,9 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
         explicit_act = (act_code is not None)
 
         if not resolved_act:
-            if "ordinance" in search_context and (raw_prim in ("15", "15A", "19", "22") or any(w in search_context for w in ["banking", "bank", "financial institution", "financial institutions", "fio", "recovery of finances", "decretal", "banking court", "leave to defend"])):
-                resolved_act = "FIO_2001"
-            elif raw_prim in ("15", "15A", "19", "22") and "ordinance" in search_context:
+            # Order 1.14 - Item 4: Strictly forbid guessing FIO_2001 from 'of the Ordinance'.
+            # Resolve to FIO_2001 ONLY when the full title appears in context.
+            if "ordinance" in search_context and any(w in search_context for w in ["financial institutions (recovery of finances) ordinance", "financial institutions ordinance", "recovery of finances ordinance"]):
                 resolved_act = "FIO_2001"
             elif raw_prim == "12":
                 if any(w in search_context for w in ["specific performance", "agreement to sell", "contractual", "sra"]):

@@ -1,0 +1,284 @@
+{
+  "passed": false,
+  "verdict": "BLOCKED",
+  "failures": [
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "1. **Reasonable grounds** (objective, credible evidence – not mere suspicion)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "2. **Belief in guilt** (prima facie case, not proof beyond reasonable doubt)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Imprisonment for life, OR"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Imprisonment for ten years or more"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Any person **under 16 years of age**, OR"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Any **woman**, OR"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Any **sick or infirm person**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Even if accused of an offence punishable with death, life imprisonment, or 10+ years imprisonment."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Operative Elements:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Continuous detention > 1 year (or > 6 months for women)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Trial **not yet concluded**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Offence not punishable with death"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Temporal Bar:** Once satisfied, trial delay becomes irrelevant – bail becomes automatic."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Operative Elements:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Continuous detention > 2 years (or > 1 year for women)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Trial **not yet concluded**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Offence punishable with death"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Classes Excluded from Automatic Release:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "1. **Previously convicted** of death/life offences (recidivist bar)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "2. **Hardened criminal** (judicial subjective assessment)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "3. **Desperate or dangerous criminal** (risk assessment)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "4. **Terrorism accused** (specific to terrorism offences with death/life punishment)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Effect:** The mandatory release obligation under the third proviso is entirely inapplicable to these categories."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Procedural Safeguard:** Applies to **all bail releases** under Section 497(1), ensuring judicial accountability and creating appellable record."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "1. **Negation of prima facie case:** No reasonable grounds to believe guilt in the non-bailable offence"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "2. **Insufficient evidence for conviction:** But grounds exist warranting **further inquiry**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "3. **Status:** Accused stands in intermediate position – not clearly innocent, not clearly guilty"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Bail** (with surety), OR"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Bond without sureties** (at discretion of officer/Court)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Procedural Requirement:** Creates appellable record; breach may constitute ground for interference by superior court."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Operative Elements:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Trial concluded, judgment not yet pronounced"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Court believes reasonable grounds exist that accused **is NOT guilty**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Release is on bond without sureties"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Superior Court Power:** High Court and Court of Session retain authority to arrest and remand bail-released persons on grounds indicating changed circumstances or likelihood of absconding."
+    }
+  ],
+  "total_failures": 35,
+  "quotes_checked": 10,
+  "quotes_passed": 10,
+  "quotes_failed": 0,
+  "cases_checked": 0,
+  "cases_passed": 0,
+  "cases_failed": 0,
+  "statutes_checked": 2,
+  "statutes_passed": 2,
+  "statutes_failed": 0,
+  "unsourced_sentences_count": 35,
+  "disputed_notices": [],
+  "omitted_ellipses": [],
+  "cited_provisions_metadata": [
+    {
+      "span": "Section 497, CrPC",
+      "canonical_id": "CRPC_1898_SEC_497",
+      "tier": "page_verified",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 497(1), CrPC",
+      "canonical_id": "CRPC_1898_SEC_497",
+      "tier": "page_verified",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    }
+  ],
+  "stripped_model_banners": [],
+  "cleaned_memo_text": "# LEGAL RESEARCH MEMORANDUM\n\n## RE: Bail in Non-Bailable Offences under Section 497, CrPC 1898 – Circumstances for Grant/Refusal and Rule of Further Inquiry\n\n---\n\n## I. STATUTORY FRAMEWORK\n\n### A. Threshold Rule: When Bail MAY Be Granted\n\n**Section 497(1), CrPC 1898** establishes the foundational principle that a person accused of a non-bailable offence **may be released on bail**, subject to specified exceptions. The provision reads:\n\n> \"When any person accused of any non-bailable offence is arrested or detained without warrant by an officer in charge of a police station, or appears or is brought before a Court, he may be released on bail...\"\n\n**Critical Distinction:** Unlike bailable offences under Section 496 (where bail is a right), non-bailable offences present bail as a discretionary relief, conditioned upon absence of \"reasonable grounds for believing\" guilt on specified charges.\n\n---\n\n## II. ABSOLUTE BAR TO BAIL – SECTION 497(1) PRIMARY PROVISO\n\n### A. The Prohibition\n\nSection 497(1) categorically states that the accused **shall NOT be released on bail** if:\n\n> \"there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life or imprisonment for ten years\"\n\n### B. Essential Ingredients for Refusal\n\nThe bar operates on the conjoint satisfaction of:\n\n1. **Reasonable grounds** (objective, credible evidence – not mere suspicion)\n2. **Belief in guilt** (prima facie case, not proof beyond reasonable doubt)\n3. **Gravity threshold** – offence punishable with:\n   - Death, OR\n   - Imprisonment for life, OR\n   - Imprisonment for ten years or more\n\n---\n\n## III. STATUTORY EXCEPTIONS TO THE BAR – THE PROVISOS\n\n### A. First Exception – Vulnerable Persons [Second Proviso]\n\nDespite the bar above, the Court **may direct release on bail** for:\n\n- Any person **under 16 years of age**, OR\n- Any **woman**, OR\n- Any **sick or infirm person**\n\nEven if accused of an offence punishable with death, life imprisonment, or 10+ years imprisonment.\n\n**Discretionary Nature:** The use of \"may\" confers judicial discretion; the Court is not mandated to grant bail but retains authority to do so on compassionate/protective grounds.\n\n---\n\n### B. Second Exception – Mandatory Release after Prescribed Detention [Third Proviso]\n\nSection 497(1) imposes a **mandatory duty to release on bail** in two scenarios:\n\n**Condition Precedent:** The Court must be satisfied that \"delay in trial has not been occasioned by an act or omission of the accused or any other person acting on his behalf.\"\n\n#### (i) Non-Death Sentence Offences:\n\n> \"Who, being accused of any offence not punishable with death, has been detained for such offence for a continuous period exceeding one year or in case of a woman exceeding six months and whose trial for such offence has not concluded\"\n\n**Operative Elements:**\n- Continuous detention > 1 year (or > 6 months for women)\n- Trial **not yet concluded**\n- Offence not punishable with death\n\n**Temporal Bar:** Once satisfied, trial delay becomes irrelevant – bail becomes automatic.\n\n#### (ii) Death Sentence Offences:\n\n> \"Who, being accused of an offence punishable with death, has been detained for such offence for a continuous period exceeding two years and in case of a woman exceeding one year and whose trial for such offence has not concluded\"\n\n**Operative Elements:**\n- Continuous detention > 2 years (or > 1 year for women)\n- Trial **not yet concluded**\n- Offence punishable with death\n\n---\n\n### C. Third Exception – Limitation on Mandatory Release [Fourth Proviso – CARVE-OUT]\n\nSection 497(1) **excludes from mandatory release**:\n\n> \"a previously convicted offender for an offence punishable with death or imprisonment for life or to a person who, in the opinion of the Court, is a hardened, desperate or dangerous criminal or is accused of an act of terrorism punishable with death or imprisonment for life\"\n\n**Classes Excluded from Automatic Release:**\n\n1. **Previously convicted** of death/life offences (recidivist bar)\n2. **Hardened criminal** (judicial subjective assessment)\n3. **Desperate or dangerous criminal** (risk assessment)\n4. **Terrorism accused** (specific to terrorism offences with death/life punishment)\n\n**Effect:** The mandatory release obligation under the third proviso is entirely inapplicable to these categories.\n\n---\n\n### D. Fourth Exception – Mandatory Recording of Reasons [Fifth Proviso]\n\n> \"the Court shall, in cases where a person has been released on bail under this sub-section, by order in writing, record its reasons for so doing\"\n\n**Procedural Safeguard:** Applies to **all bail releases** under Section 497(1), ensuring judicial accountability and creating appellable record.\n\n---\n\n## IV. THE RULE OF FURTHER INQUIRY – SECTION 497(2)\n\n### A. Statutory Provision\n\nSection 497(2) provides an **alternative pathway** to bail when prima facie case is absent:\n\n> \"If it appears to such officer or Court at any stage of the investigation, inquiry or trial, as the case may be, that there are not reasonable grounds for believing that the accused has committed a non-bailable offence, but that there are sufficient grounds for further inquiry into his guilt, the accused shall, pending such inquiry, be released on bail, or, at the discretion of such officer or Court, on the execution by him of a bond without sureties for his appearance as hereinafter provided.\"\n\n### B. Essential Ingredients\n\nThe court must find:\n\n1. **Negation of prima facie case:** No reasonable grounds to believe guilt in the non-bailable offence\n2. **Insufficient evidence for conviction:** But grounds exist warranting **further inquiry**\n3. **Status:** Accused stands in intermediate position – not clearly innocent, not clearly guilty\n4. **Timing:** May be invoked \"at any stage of investigation, inquiry or trial\"\n\n### C. Relief Available\n\nThe accused has a **right to release** on either:\n\n- **Bail** (with surety), OR\n- **Bond without sureties** (at discretion of officer/Court)\n\n**Mandatory Nature:** Use of \"shall\" imposes duty; unlike Section 497(1), this is not discretionary.\n\n---\n\n## V. RECORDING OF REASONS – SECTION 497(3)\n\nAll releases under Section 497(1) and (2) require:\n\n> \"An officer or a Court releasing any person on bail under sub-section (1) or sub-section (2) shall record in writing his or its reasons for so doing.\"\n\n**Procedural Requirement:** Creates appellable record; breach may constitute ground for interference by superior court.\n\n---\n\n## VI. POST-TRIAL BAIL – SECTION 497(4)\n\nBefore judgment delivery (post-conviction but pre-sentence):\n\n> \"If, at any time after the conclusion of the trial of a person accused of a non-bailable offence and before Judgment is delivered, the Court is of opinion that there are reasonable grounds for believing that the accused is not guilty of any such offence, it shall release the accused, if he is in custody on the execution by him of a bond without sureties for his appearance to hear judgment delivered.\"\n\n**Operative Elements:**\n- Trial concluded, judgment not yet pronounced\n- Court believes reasonable grounds exist that accused **is NOT guilty**\n- Release is on bond without sureties\n- Mandatory (\"shall release\")\n\n---\n\n## VII. APPELLATE REMEDY – SECTION 497(5)\n\n> \"A High Court or Court of Session and, in the case of a person released by itself, any other Court may cause any person who has been released under this section to be arrested and may commit him to custody.\"\n\n**Superior Court Power:** High Court and Court of Session retain authority to arrest and remand bail-released persons on grounds indicating changed circumstances or likelihood of absconding.\n\n---\n\n## VIII. SUMMARY TABLE OF CIRCUMSTANCES\n\n| **Circumstance** | **Statutory Basis** | **Outcome** | **Nature** |\n|---|---|---|---|\n| Prima facie case for death/life/10+ years imprisonment | S.497(1) Primary Bar | **Bail REFUSED** | Mandatory Refusal |\n| Vulnerable person (minor/woman/infirm) + death/life offence | S.497(1) Second Proviso | **Bail MAY be granted** | Discretionary Exception |\n| Detained 1+ years (or 6 months for women) + trial ongoing + non-death offence |"
+}

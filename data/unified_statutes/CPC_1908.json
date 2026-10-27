@@ -22,7 +22,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_2",
@@ -47,7 +48,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_3",
@@ -72,7 +74,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_4",
@@ -97,7 +100,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_5",
@@ -122,7 +126,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_6",
@@ -147,7 +152,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_7",
@@ -172,7 +178,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_8",
@@ -197,7 +204,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_9",
@@ -224,7 +232,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_10",
@@ -251,7 +260,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_11",
@@ -278,7 +288,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_12",
@@ -305,7 +316,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_13",
@@ -330,7 +342,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_14",
@@ -355,7 +368,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_15",
@@ -380,7 +394,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_16",
@@ -405,7 +420,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_17",
@@ -430,7 +446,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_18",
@@ -455,7 +472,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_19",
@@ -480,7 +498,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_20",
@@ -505,7 +524,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_21",
@@ -530,7 +550,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_22",
@@ -555,7 +576,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_23",
@@ -580,7 +602,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_24",
@@ -605,7 +628,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_24A",
@@ -630,7 +654,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_25",
@@ -655,7 +680,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_26",
@@ -680,7 +706,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_27",
@@ -705,7 +732,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_28",
@@ -730,7 +758,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_29",
@@ -755,7 +784,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_30",
@@ -780,7 +810,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_31",
@@ -805,7 +836,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_32",
@@ -830,7 +862,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_33",
@@ -855,7 +888,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_34",
@@ -880,7 +914,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_34A",
@@ -905,7 +940,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_34B",
@@ -930,7 +966,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_35",
@@ -955,7 +992,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_35A",
@@ -980,7 +1018,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_35B",
@@ -1005,7 +1044,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_35C",
@@ -1030,7 +1070,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_36",
@@ -1055,7 +1096,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_37",
@@ -1080,7 +1122,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_38",
@@ -1105,7 +1148,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_39",
@@ -1130,7 +1174,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_40",
@@ -1155,7 +1200,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_41",
@@ -1180,7 +1226,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_42",
@@ -1205,7 +1252,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_43",
@@ -1230,7 +1278,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_44",
@@ -1255,7 +1304,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_44A",
@@ -1280,7 +1330,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_45",
@@ -1305,7 +1356,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_46",
@@ -1330,7 +1382,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_47",
@@ -1355,7 +1408,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_48",
@@ -1380,7 +1434,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_49",
@@ -1405,7 +1460,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_50",
@@ -1430,7 +1486,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_51",
@@ -1455,7 +1512,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_52",
@@ -1480,7 +1538,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_53",
@@ -1505,7 +1564,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_54",
@@ -1530,7 +1590,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_55",
@@ -1555,7 +1616,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_56",
@@ -1580,7 +1642,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_57",
@@ -1605,7 +1668,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_58",
@@ -1630,7 +1694,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_59",
@@ -1655,7 +1720,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_60",
@@ -1680,7 +1746,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_61",
@@ -1705,7 +1772,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_62",
@@ -1730,7 +1798,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_63",
@@ -1755,7 +1824,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_64",
@@ -1780,7 +1850,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_65",
@@ -1805,7 +1876,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_66",
@@ -1830,7 +1902,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_67",
@@ -1855,7 +1928,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_68",
@@ -1880,7 +1954,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_69",
@@ -1905,7 +1980,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_70",
@@ -1930,7 +2006,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_71",
@@ -1955,7 +2032,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_72",
@@ -1980,7 +2058,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_73",
@@ -2005,7 +2084,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_74",
@@ -2030,7 +2110,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_75",
@@ -2055,7 +2136,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_75A",
@@ -2080,7 +2162,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_76",
@@ -2105,7 +2188,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_77",
@@ -2130,7 +2214,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_78",
@@ -2155,7 +2240,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_79",
@@ -2180,7 +2266,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_80",
@@ -2205,7 +2292,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_81",
@@ -2230,7 +2318,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_82",
@@ -2255,7 +2344,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_83",
@@ -2280,7 +2370,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_84",
@@ -2305,7 +2396,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_85",
@@ -2330,7 +2422,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_86",
@@ -2355,7 +2448,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_86A",
@@ -2380,7 +2474,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_87",
@@ -2405,7 +2500,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_87A",
@@ -2430,7 +2526,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_88",
@@ -2455,7 +2552,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_89",
@@ -2480,7 +2578,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_89A",
@@ -2505,7 +2604,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_90",
@@ -2530,7 +2630,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_91",
@@ -2555,7 +2656,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_92",
@@ -2580,7 +2682,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_93",
@@ -2605,7 +2708,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_94",
@@ -2630,7 +2734,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_95",
@@ -2655,7 +2760,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_96",
@@ -2676,7 +2782,8 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_97",
@@ -2701,7 +2808,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_98",
@@ -2726,7 +2834,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_99",
@@ -2751,7 +2860,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_100",
@@ -2776,7 +2886,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_101",
@@ -2801,7 +2912,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_102",
@@ -2826,7 +2938,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_103",
@@ -2851,7 +2964,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_104",
@@ -2876,7 +2990,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_105",
@@ -2901,7 +3016,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_106",
@@ -2926,7 +3042,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_107",
@@ -2951,7 +3068,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_108",
@@ -2976,7 +3094,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_109",
@@ -3001,7 +3120,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_110",
@@ -3026,7 +3146,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_111",
@@ -3051,7 +3172,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_111A",
@@ -3076,7 +3198,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_112",
@@ -3101,7 +3224,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_113",
@@ -3126,7 +3250,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_114",
@@ -3151,7 +3276,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_115",
@@ -3178,7 +3304,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_116",
@@ -3203,7 +3330,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_117",
@@ -3228,7 +3356,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_118",
@@ -3253,7 +3382,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_119",
@@ -3278,7 +3408,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_120",
@@ -3303,7 +3434,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_121",
@@ -3328,7 +3460,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_122",
@@ -3353,7 +3486,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_123",
@@ -3378,7 +3512,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_124",
@@ -3403,7 +3538,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_125",
@@ -3428,7 +3564,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_126",
@@ -3453,7 +3590,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_127",
@@ -3478,7 +3616,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_128",
@@ -3503,7 +3642,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_129",
@@ -3528,7 +3668,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_130",
@@ -3553,7 +3694,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_131",
@@ -3578,7 +3720,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_132",
@@ -3603,7 +3746,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_133",
@@ -3628,7 +3772,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_134",
@@ -3653,7 +3798,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_135",
@@ -3678,7 +3824,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_135A",
@@ -3703,7 +3850,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_136",
@@ -3728,7 +3876,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_137",
@@ -3753,7 +3902,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_138",
@@ -3778,7 +3928,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_139",
@@ -3803,7 +3954,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_140",
@@ -3828,7 +3980,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_141",
@@ -3853,7 +4006,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_142",
@@ -3878,7 +4032,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_143",
@@ -3903,7 +4058,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_144",
@@ -3928,7 +4084,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_145",
@@ -3953,7 +4110,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_146",
@@ -3978,7 +4136,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_147",
@@ -4003,7 +4162,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_148",
@@ -4028,7 +4188,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_149",
@@ -4053,7 +4214,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_150",
@@ -4078,7 +4240,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_151",
@@ -4105,7 +4268,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_152",
@@ -4130,7 +4294,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_153",
@@ -4155,7 +4320,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_154",
@@ -4180,7 +4346,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_155",
@@ -4205,7 +4372,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_156",
@@ -4230,7 +4398,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_157",
@@ -4255,7 +4424,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_158",
@@ -4280,7 +4450,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_159",
@@ -4305,7 +4476,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_SEC_12_2",
@@ -4332,7 +4504,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_1",
@@ -4357,7 +4530,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_2",
@@ -4382,7 +4556,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_3",
@@ -4407,7 +4582,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_4",
@@ -4432,7 +4608,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_5",
@@ -4457,7 +4634,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_6",
@@ -4482,7 +4660,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_7",
@@ -4507,7 +4686,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_8",
@@ -4532,7 +4712,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_9",
@@ -4557,7 +4738,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_10",
@@ -4582,7 +4764,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_11",
@@ -4607,7 +4790,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_12",
@@ -4632,7 +4816,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_13",
@@ -4657,7 +4842,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_II_R_1",
@@ -4682,7 +4868,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_II_R_2",
@@ -4707,7 +4894,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_II_R_3",
@@ -4732,7 +4920,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_II_R_4",
@@ -4757,7 +4946,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_II_R_5",
@@ -4782,7 +4972,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_II_R_6",
@@ -4807,7 +4998,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_II_R_7",
@@ -4832,7 +5024,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_III_R_1",
@@ -4857,7 +5050,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_III_R_2",
@@ -4882,7 +5076,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_III_R_3",
@@ -4907,7 +5102,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_III_R_4",
@@ -4932,7 +5128,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_III_R_5",
@@ -4957,7 +5154,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_III_R_6",
@@ -4982,7 +5180,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_IV_R_1",
@@ -5007,7 +5206,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_IV_R_2",
@@ -5032,7 +5232,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_1",
@@ -5057,7 +5258,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_2",
@@ -5082,7 +5284,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_3",
@@ -5107,7 +5310,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_4",
@@ -5132,7 +5336,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_5",
@@ -5157,7 +5362,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_6",
@@ -5182,7 +5388,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_7",
@@ -5207,7 +5414,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_9",
@@ -5232,7 +5440,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_10",
@@ -5257,7 +5466,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_11",
@@ -5282,7 +5492,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_12",
@@ -5307,7 +5518,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_13",
@@ -5332,7 +5544,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_14",
@@ -5357,7 +5570,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_15",
@@ -5382,7 +5596,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_16",
@@ -5407,7 +5622,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_17",
@@ -5432,7 +5648,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_18",
@@ -5457,7 +5674,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_19",
@@ -5482,7 +5700,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_20",
@@ -5507,7 +5726,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_21",
@@ -5532,7 +5752,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_22",
@@ -5557,7 +5778,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_1949",
@@ -5582,7 +5804,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_23",
@@ -5607,7 +5830,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_24",
@@ -5632,7 +5856,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_25",
@@ -5657,7 +5882,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_426",
@@ -5682,7 +5908,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_27",
@@ -5707,7 +5934,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_28",
@@ -5732,7 +5960,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_29",
@@ -5757,7 +5986,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_30",
@@ -5782,7 +6012,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_1",
@@ -5807,7 +6038,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_2",
@@ -5832,7 +6064,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_3",
@@ -5857,7 +6090,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_4",
@@ -5882,7 +6116,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_5",
@@ -5907,7 +6142,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_6",
@@ -5932,7 +6168,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_7",
@@ -5957,7 +6194,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_8",
@@ -5982,7 +6220,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_9",
@@ -6007,7 +6246,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_10",
@@ -6032,7 +6272,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_11",
@@ -6057,7 +6298,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_12",
@@ -6082,7 +6324,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_13",
@@ -6107,7 +6350,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_14",
@@ -6132,7 +6376,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_15",
@@ -6157,7 +6402,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_16",
@@ -6182,7 +6428,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_17",
@@ -6207,7 +6454,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VI_R_18",
@@ -6232,7 +6480,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_1",
@@ -6257,7 +6506,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_2",
@@ -6282,7 +6532,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_3",
@@ -6307,7 +6558,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_4",
@@ -6332,7 +6584,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_5",
@@ -6357,7 +6610,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_6",
@@ -6382,7 +6636,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_7",
@@ -6407,7 +6662,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_8",
@@ -6432,7 +6688,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_9",
@@ -6457,7 +6714,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_10",
@@ -6482,7 +6740,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_11",
@@ -6509,7 +6768,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_12",
@@ -6534,7 +6794,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_13",
@@ -6559,7 +6820,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_14",
@@ -6584,7 +6846,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_15",
@@ -6609,7 +6872,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_16",
@@ -6634,7 +6898,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_17",
@@ -6659,7 +6924,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_18",
@@ -6684,7 +6950,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_19",
@@ -6709,7 +6976,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_20",
@@ -6734,7 +7002,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_21",
@@ -6759,7 +7028,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_22",
@@ -6784,7 +7054,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_23",
@@ -6809,7 +7080,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_24",
@@ -6834,7 +7106,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_25",
@@ -6859,7 +7132,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VII_R_26",
@@ -6884,7 +7158,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_1",
@@ -6911,7 +7186,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_2",
@@ -6936,7 +7212,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_3",
@@ -6961,7 +7238,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_4",
@@ -6986,7 +7264,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_5",
@@ -7011,7 +7290,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_6",
@@ -7038,7 +7318,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_7",
@@ -7063,7 +7344,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_8",
@@ -7088,7 +7370,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_9",
@@ -7113,7 +7396,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_10",
@@ -7138,7 +7422,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_11",
@@ -7163,7 +7448,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_12",
@@ -7188,7 +7474,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_VIII_R_13",
@@ -7213,7 +7500,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_IX_R_1",
@@ -7238,7 +7526,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_IX_R_3",
@@ -7263,7 +7552,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_IX_R_4",
@@ -7288,7 +7578,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_IX_R_6",
@@ -7313,7 +7604,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_IX_R_8",
@@ -7338,7 +7630,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_IX_R_9",
@@ -7363,7 +7656,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_IX_R_10",
@@ -7388,7 +7682,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_IX_R_11",
@@ -7413,7 +7708,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_IX_R_13",
@@ -7438,7 +7734,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_IX_R_14",
@@ -7463,7 +7760,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_X_R_1",
@@ -7488,7 +7786,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_X_R_2",
@@ -7513,7 +7812,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_X_R_3",
@@ -7538,7 +7838,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_X_R_4",
@@ -7563,7 +7864,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_1",
@@ -7588,7 +7890,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_2",
@@ -7613,7 +7916,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_3",
@@ -7638,7 +7942,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_4",
@@ -7663,7 +7968,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_5",
@@ -7688,7 +7994,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_6",
@@ -7713,7 +8020,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_7",
@@ -7738,7 +8046,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_8",
@@ -7763,7 +8072,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_9",
@@ -7788,7 +8098,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_10",
@@ -7813,7 +8124,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_11",
@@ -7838,7 +8150,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_12",
@@ -7863,7 +8176,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_13",
@@ -7888,7 +8202,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_14",
@@ -7913,7 +8228,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_15",
@@ -7938,7 +8254,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_16",
@@ -7963,7 +8280,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_17",
@@ -7988,7 +8306,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_18",
@@ -8013,7 +8332,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_19",
@@ -8038,7 +8358,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_20",
@@ -8063,7 +8384,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_21",
@@ -8088,7 +8410,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_22",
@@ -8113,7 +8436,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XI_R_23",
@@ -8138,7 +8462,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XII_R_1",
@@ -8163,7 +8488,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XII_R_2",
@@ -8188,7 +8514,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XII_R_3",
@@ -8213,7 +8540,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XII_R_4",
@@ -8238,7 +8566,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XII_R_5",
@@ -8263,7 +8592,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XII_R_6",
@@ -8288,7 +8618,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XII_R_7",
@@ -8313,7 +8644,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XII_R_8",
@@ -8338,7 +8670,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XII_R_9",
@@ -8363,7 +8696,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIII_R_1",
@@ -8388,7 +8722,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIII_R_2",
@@ -8413,7 +8748,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIII_R_3",
@@ -8438,7 +8774,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIII_R_4",
@@ -8463,7 +8800,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIII_R_5",
@@ -8488,7 +8826,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIII_R_6",
@@ -8513,7 +8852,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIII_R_7",
@@ -8538,7 +8878,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIII_R_8",
@@ -8563,7 +8904,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIII_R_9",
@@ -8588,7 +8930,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIII_R_10",
@@ -8613,7 +8956,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIII_R_11",
@@ -8638,7 +8982,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIV_R_1",
@@ -8663,7 +9008,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIV_R_2",
@@ -8688,7 +9034,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIV_R_3",
@@ -8713,7 +9060,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIV_R_4",
@@ -8738,7 +9086,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIV_R_5",
@@ -8763,7 +9112,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIV_R_6",
@@ -8788,7 +9138,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIV_R_7",
@@ -8813,7 +9164,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XV_R_1",
@@ -8838,7 +9190,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XV_R_2",
@@ -8863,7 +9216,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XV_R_3",
@@ -8888,7 +9242,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XV_R_4",
@@ -8913,7 +9268,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_1",
@@ -8938,7 +9294,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_2",
@@ -8963,7 +9320,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_3",
@@ -8988,7 +9346,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_4",
@@ -9013,7 +9372,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_5",
@@ -9038,7 +9398,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_6",
@@ -9063,7 +9424,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_7",
@@ -9088,7 +9450,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_8",
@@ -9113,7 +9476,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_9",
@@ -9138,7 +9502,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_10",
@@ -9163,7 +9528,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_11",
@@ -9188,7 +9554,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_12",
@@ -9213,7 +9580,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_13",
@@ -9238,7 +9606,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_14",
@@ -9263,7 +9632,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_15",
@@ -9288,7 +9658,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_16",
@@ -9313,7 +9684,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_17",
@@ -9338,7 +9710,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_18",
@@ -9363,7 +9736,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_19",
@@ -9388,7 +9762,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_20",
@@ -9413,7 +9788,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVI_R_21",
@@ -9438,7 +9814,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVII_R_1",
@@ -9463,7 +9840,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVII_R_2",
@@ -9488,7 +9866,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVII_R_3",
@@ -9513,7 +9892,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVII_R_4",
@@ -9538,7 +9918,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVII_R_5",
@@ -9563,7 +9944,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_1",
@@ -9588,7 +9970,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_2",
@@ -9613,7 +9996,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_3",
@@ -9638,7 +10022,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_4",
@@ -9663,7 +10048,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_5",
@@ -9688,7 +10074,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_6",
@@ -9713,7 +10100,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_7",
@@ -9738,7 +10126,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_8",
@@ -9763,7 +10152,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_9",
@@ -9788,7 +10178,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_10",
@@ -9813,7 +10204,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_11",
@@ -9838,7 +10230,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_12",
@@ -9863,7 +10256,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_13",
@@ -9888,7 +10282,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_14",
@@ -9913,7 +10308,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_15",
@@ -9938,7 +10334,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XVIII_R_16",
@@ -9963,7 +10360,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIX_R_1",
@@ -9988,7 +10386,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIX_R_2",
@@ -10013,7 +10412,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XIX_R_3",
@@ -10038,7 +10438,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_1",
@@ -10063,7 +10464,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_2",
@@ -10088,7 +10490,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_3",
@@ -10113,7 +10516,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_4",
@@ -10138,7 +10542,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_5",
@@ -10163,7 +10568,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_6",
@@ -10188,7 +10594,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_7",
@@ -10213,7 +10620,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_8",
@@ -10238,7 +10646,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_9",
@@ -10263,7 +10672,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_10",
@@ -10288,7 +10698,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_11",
@@ -10313,7 +10724,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_12",
@@ -10338,7 +10750,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_13",
@@ -10363,7 +10776,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_14",
@@ -10388,7 +10802,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_15",
@@ -10413,7 +10828,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_16",
@@ -10438,7 +10854,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_17",
@@ -10463,7 +10880,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_18",
@@ -10488,7 +10906,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_19",
@@ -10513,7 +10932,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XX_R_20",
@@ -10538,7 +10958,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_1",
@@ -10559,7 +10980,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_2",
@@ -10580,7 +11002,8 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_3",
@@ -10605,7 +11028,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_4",
@@ -10630,7 +11054,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_5",
@@ -10655,7 +11080,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_6",
@@ -10680,7 +11106,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_7",
@@ -10705,7 +11132,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_8",
@@ -10730,7 +11158,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_9",
@@ -10755,7 +11184,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_10",
@@ -10776,7 +11206,8 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_11",
@@ -10797,7 +11228,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_13",
@@ -10822,7 +11254,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_14",
@@ -10847,7 +11280,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_15",
@@ -10872,7 +11306,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_16",
@@ -10897,7 +11332,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_17",
@@ -10922,7 +11358,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_18",
@@ -10947,7 +11384,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_19",
@@ -10972,7 +11410,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_20",
@@ -10997,7 +11436,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_21",
@@ -11022,7 +11462,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_22",
@@ -11045,7 +11486,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_23",
@@ -11070,7 +11512,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_24",
@@ -11091,7 +11534,8 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_25",
@@ -11116,7 +11560,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_26",
@@ -11141,7 +11586,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_27",
@@ -11166,7 +11612,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_29",
@@ -11191,7 +11638,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_30",
@@ -11212,7 +11660,8 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_31",
@@ -11237,7 +11686,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_32",
@@ -11262,7 +11712,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_33",
@@ -11287,7 +11738,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_34",
@@ -11312,7 +11764,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_35",
@@ -11337,7 +11790,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_36",
@@ -11362,7 +11816,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_38",
@@ -11387,7 +11842,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_41",
@@ -11412,7 +11868,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_44",
@@ -11437,7 +11894,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_45",
@@ -11462,7 +11920,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_46",
@@ -11487,7 +11946,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_47",
@@ -11512,7 +11972,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_49",
@@ -11537,7 +11998,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_50",
@@ -11562,7 +12024,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_51",
@@ -11587,7 +12050,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_52",
@@ -11612,7 +12076,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_53",
@@ -11637,7 +12102,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_54",
@@ -11662,7 +12128,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_55",
@@ -11687,7 +12154,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_56",
@@ -11712,7 +12180,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_57",
@@ -11737,7 +12206,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_58",
@@ -11764,7 +12234,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_59",
@@ -11789,7 +12260,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_60",
@@ -11814,7 +12286,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_61",
@@ -11839,7 +12312,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_62",
@@ -11864,7 +12338,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_63",
@@ -11889,7 +12364,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_64",
@@ -11914,7 +12390,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_65",
@@ -11939,7 +12416,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_66",
@@ -11964,7 +12442,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_67",
@@ -11989,7 +12468,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_68",
@@ -12014,7 +12494,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_69",
@@ -12039,7 +12520,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_70",
@@ -12064,7 +12546,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_71",
@@ -12089,7 +12572,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_72",
@@ -12114,7 +12598,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_73",
@@ -12139,7 +12624,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_74",
@@ -12164,7 +12650,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_75",
@@ -12189,7 +12676,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_76",
@@ -12214,7 +12702,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_77",
@@ -12239,7 +12728,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_78",
@@ -12264,7 +12754,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_79",
@@ -12289,7 +12780,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_80",
@@ -12314,7 +12806,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_82",
@@ -12339,7 +12832,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_83",
@@ -12364,7 +12858,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_84",
@@ -12389,7 +12884,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_85",
@@ -12414,7 +12910,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_86",
@@ -12439,7 +12936,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_87",
@@ -12464,7 +12962,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_88",
@@ -12489,7 +12988,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_89",
@@ -12516,7 +13016,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_90",
@@ -12543,7 +13044,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_92",
@@ -12568,7 +13070,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_93",
@@ -12593,7 +13096,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_94",
@@ -12618,7 +13122,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_95",
@@ -12643,7 +13148,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_96",
@@ -12668,7 +13174,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_97",
@@ -12693,7 +13200,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_98",
@@ -12718,7 +13226,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_99",
@@ -12743,7 +13252,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_100",
@@ -12768,7 +13278,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_101",
@@ -12793,7 +13304,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_102",
@@ -12818,7 +13330,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_103",
@@ -12843,7 +13356,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXII_R_1",
@@ -12868,7 +13382,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXII_R_2",
@@ -12893,7 +13408,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXII_R_3",
@@ -12918,7 +13434,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXII_R_4",
@@ -12943,7 +13460,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXII_R_5",
@@ -12968,7 +13486,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXII_R_6",
@@ -12993,7 +13512,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXII_R_7",
@@ -13018,7 +13538,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXII_R_8",
@@ -13043,7 +13564,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXII_R_9",
@@ -13068,7 +13590,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXII_R_10",
@@ -13093,7 +13616,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXII_R_11",
@@ -13118,7 +13642,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXII_R_12",
@@ -13143,7 +13668,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXIII_R_1",
@@ -13168,7 +13694,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXIII_R_2",
@@ -13193,7 +13720,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXIII_R_3",
@@ -13218,7 +13746,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXIII_R_4",
@@ -13243,7 +13772,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXIV_R_1",
@@ -13268,7 +13798,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXIV_R_2",
@@ -13293,7 +13824,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXIV_R_3",
@@ -13318,7 +13850,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXIV_R_4",
@@ -13343,7 +13876,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXV_R_1",
@@ -13368,7 +13902,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXV_R_2",
@@ -13393,7 +13928,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_1",
@@ -13418,7 +13954,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_2",
@@ -13443,7 +13980,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_3",
@@ -13468,7 +14006,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_4",
@@ -13493,7 +14032,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_5",
@@ -13518,7 +14058,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_6",
@@ -13543,7 +14084,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_7",
@@ -13568,7 +14110,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_8",
@@ -13593,7 +14136,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_9",
@@ -13618,7 +14162,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_10",
@@ -13643,7 +14188,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_11",
@@ -13668,7 +14214,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_12",
@@ -13693,7 +14240,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_13",
@@ -13718,7 +14266,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_14",
@@ -13743,7 +14292,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_15",
@@ -13768,7 +14318,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_16",
@@ -13793,7 +14344,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_17",
@@ -13818,7 +14370,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_18",
@@ -13843,7 +14396,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_19",
@@ -13868,7 +14422,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_20",
@@ -13893,7 +14448,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVI_R_21",
@@ -13918,7 +14474,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVII_R_1",
@@ -13943,7 +14500,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVII_R_42",
@@ -13968,7 +14526,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVII_R_3",
@@ -13993,7 +14552,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVII_R_4",
@@ -14018,7 +14578,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVII_R_5",
@@ -14043,7 +14604,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVII_R_6",
@@ -14068,7 +14630,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVII_R_7",
@@ -14093,7 +14656,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVII_R_48",
@@ -14118,7 +14682,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVII_R_2",
@@ -14143,7 +14708,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVIII_R_2",
@@ -14168,7 +14734,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXVIII_R_3",
@@ -14193,7 +14760,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXIX_R_1",
@@ -14218,7 +14786,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXIX_R_2",
@@ -14243,7 +14812,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXIX_R_3",
@@ -14268,7 +14838,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXX_R_1",
@@ -14293,7 +14864,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXX_R_2",
@@ -14318,7 +14890,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXX_R_3",
@@ -14343,7 +14916,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXX_R_4",
@@ -14368,7 +14942,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXX_R_5",
@@ -14393,7 +14968,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXX_R_6",
@@ -14418,7 +14994,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXX_R_7",
@@ -14443,7 +15020,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXX_R_8",
@@ -14468,7 +15046,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXX_R_9",
@@ -14493,7 +15072,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXX_R_10",
@@ -14518,7 +15098,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXI_R_1",
@@ -14543,7 +15124,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXI_R_2",
@@ -14568,7 +15150,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXI_R_3",
@@ -14593,7 +15176,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_1",
@@ -14618,7 +15202,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_2",
@@ -14643,7 +15228,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_3",
@@ -14668,7 +15254,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_4",
@@ -14693,7 +15280,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_5",
@@ -14718,7 +15306,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_6",
@@ -14743,7 +15332,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_7",
@@ -14768,7 +15358,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_8",
@@ -14793,7 +15384,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_9",
@@ -14818,7 +15410,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_10",
@@ -14843,7 +15436,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_11",
@@ -14868,7 +15462,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_12",
@@ -14893,7 +15488,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_13",
@@ -14918,7 +15514,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_14",
@@ -14943,7 +15540,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_15",
@@ -14968,7 +15566,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXII_R_16",
@@ -14993,7 +15592,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_1",
@@ -15018,7 +15618,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_2",
@@ -15043,7 +15644,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_3",
@@ -15068,7 +15670,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_4",
@@ -15093,7 +15696,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_5",
@@ -15118,7 +15722,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_6",
@@ -15143,7 +15748,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_7",
@@ -15168,7 +15774,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_8",
@@ -15193,7 +15800,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_9",
@@ -15218,7 +15826,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_10",
@@ -15243,7 +15852,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_11",
@@ -15268,7 +15878,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_12",
@@ -15293,7 +15904,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_13",
@@ -15318,7 +15930,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_14",
@@ -15343,7 +15956,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIII_R_16",
@@ -15368,7 +15982,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_1",
@@ -15393,7 +16008,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_2",
@@ -15418,7 +16034,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_3",
@@ -15443,7 +16060,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_4",
@@ -15468,7 +16086,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_5",
@@ -15493,7 +16112,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_6",
@@ -15518,7 +16138,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_7",
@@ -15543,7 +16164,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_8",
@@ -15568,7 +16190,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_9",
@@ -15593,7 +16216,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_10",
@@ -15618,7 +16242,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_11",
@@ -15643,7 +16268,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_12",
@@ -15668,7 +16294,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_13",
@@ -15693,7 +16320,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_14",
@@ -15718,7 +16346,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIV_R_15",
@@ -15743,7 +16372,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXV_R_1",
@@ -15768,7 +16398,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXV_R_2",
@@ -15793,7 +16424,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXV_R_3",
@@ -15818,7 +16450,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXV_R_4",
@@ -15843,7 +16476,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXV_R_5",
@@ -15868,7 +16502,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXV_R_6",
@@ -15893,7 +16528,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVI_R_1",
@@ -15918,7 +16554,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVI_R_2",
@@ -15943,7 +16580,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVI_R_3",
@@ -15968,7 +16606,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVI_R_4",
@@ -15993,7 +16632,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVI_R_5",
@@ -16018,7 +16658,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVII_R_1",
@@ -16043,7 +16684,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVII_R_2",
@@ -16068,7 +16710,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVII_R_3",
@@ -16093,7 +16736,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVII_R_4",
@@ -16118,7 +16762,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVII_R_5",
@@ -16143,7 +16788,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVII_R_6",
@@ -16168,7 +16814,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVII_R_7",
@@ -16193,7 +16840,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVIII_R_1",
@@ -16218,7 +16866,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVIII_R_2",
@@ -16243,7 +16892,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVIII_R_3",
@@ -16268,7 +16918,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVIII_R_4",
@@ -16293,7 +16944,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVIII_R_5",
@@ -16318,7 +16970,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVIII_R_6",
@@ -16343,7 +16996,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVIII_R_7",
@@ -16368,7 +17022,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVIII_R_8",
@@ -16393,7 +17048,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVIII_R_9",
@@ -16418,7 +17074,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVIII_R_11",
@@ -16443,7 +17100,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVIII_R_12",
@@ -16468,7 +17126,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXVIII_R_13",
@@ -16493,7 +17152,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XL_R_1",
@@ -16518,7 +17178,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XL_R_2",
@@ -16543,7 +17204,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XL_R_3",
@@ -16568,7 +17230,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XL_R_4",
@@ -16593,7 +17256,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XL_R_5",
@@ -16618,7 +17282,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_1",
@@ -16643,7 +17308,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_2",
@@ -16668,7 +17334,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_3",
@@ -16693,7 +17360,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_5",
@@ -16718,7 +17386,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_6",
@@ -16743,7 +17412,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_17",
@@ -16768,7 +17438,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_8",
@@ -16793,7 +17464,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_9",
@@ -16818,7 +17490,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_10",
@@ -16843,7 +17516,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_11",
@@ -16868,7 +17542,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_12",
@@ -16893,7 +17568,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_13",
@@ -16918,7 +17594,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_14",
@@ -16943,7 +17620,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_15",
@@ -16968,7 +17646,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_16",
@@ -16993,7 +17672,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_19",
@@ -17018,7 +17698,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_21",
@@ -17043,7 +17724,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_23",
@@ -17068,7 +17750,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_24",
@@ -17093,7 +17776,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_26",
@@ -17118,7 +17802,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_27",
@@ -17143,7 +17828,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_28",
@@ -17168,7 +17854,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_29",
@@ -17193,7 +17880,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_30",
@@ -17218,7 +17906,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_31",
@@ -17243,7 +17932,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_32",
@@ -17268,7 +17958,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_33",
@@ -17293,7 +17984,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_34",
@@ -17318,7 +18010,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_35",
@@ -17343,7 +18036,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_36",
@@ -17368,7 +18062,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLI_R_37",
@@ -17393,7 +18088,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLII_R_1",
@@ -17418,7 +18114,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIII_R_1",
@@ -17443,7 +18140,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIII_R_2",
@@ -17467,9 +18165,10 @@
     "is_canonical": true,
     "duplicate_of": null,
     "quoting_allowed": true,
-    "page_verified": true,
     "in_force": true,
-    "has_operative_text": true
+    "has_operative_text": true,
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIII_R_3",
@@ -17482,7 +18181,7 @@
     "text": "3. Notice before presentation of appeal.__ (1) Where an appeal against  an  order  is  preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice  of such  \nappeal to the respondent or his advocate by delivering a copy of the memorandum and  grounds  of \nappeal alongwith a copy of the order appealed against 2[either personally or  through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court.] \n(2) On receipt of notice referred to in sub­rule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine. \n4. Application of Rule  3. The provisions of rule 3  shall, mutatis mutandis , apply to all \napplications filed before an appellate Court during the pendency of a suit.] \n_______ \nORDER XLIV \nPAUPER APPEALS \n1. Who may appeal as pauper.  Any person entitled to prefer an appeal, who is unable to pay \nthe fee required for the memorandum of appeal, may present an application accompanied by a \nmemorandum of appeal, and may be allowed to appeal as a pauper subject, in all matters, including \nthe presentation of such application, to the provisions relating to suits by paupers, in so far as those \nprovisions are applicable: \nProcedure on application for admission of appeal.  Provided that the Court shall reject the \napplication unless, upon a perusal thereof and of the judgment and decree appealed from, it sees reason \nto think that the decree is contrary to law or to some usage having the force of law, or is otherwise \nerroneous or unjust. \n2. Inquiry into pauperism. The inquiry into the pauperism of the applicant may be made either \nby the Appellate Court or under the order of the Appellate Court by the Court from whose decision the \nappeal is preferred: \n \n \n1New sub­rules 3 and 4 added by the Code of Civil Procedure (Amdt.), Ordinance, 1980 (10 of 1980), s.14. \n2Subs. by Act XIV of 1994,s.II.",
     "missing_reason": "title_only_record",
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
-    "source_page": "175",
+    "source_page": 175,
     "content_hash": "05823cc51942eaf621a5ae25dff8a068536b0fcf69b93e3881e6efc7d17eac06",
     "tier": "page_verified",
     "verification_status": "page_verified",
@@ -17493,10 +18192,11 @@
     "is_canonical": true,
     "duplicate_of": null,
     "quoting_allowed": true,
-    "page_verified": true,
     "in_force": true,
     "has_operative_text": true,
-    "statutory_text": "3. Notice before presentation of appeal.__ (1) Where an appeal against  an  order  is  preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice  of such  \nappeal to the respondent or his advocate by delivering a copy of the memorandum and  grounds  of \nappeal alongwith a copy of the order appealed against 2[either personally or  through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court.] \n(2) On receipt of notice referred to in sub­rule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine. \n4. Application of Rule  3. The provisions of rule 3  shall, mutatis mutandis , apply to all \napplications filed before an appellate Court during the pendency of a suit.] \n_______ \nORDER XLIV \nPAUPER APPEALS \n1. Who may appeal as pauper.  Any person entitled to prefer an appeal, who is unable to pay \nthe fee required for the memorandum of appeal, may present an application accompanied by a \nmemorandum of appeal, and may be allowed to appeal as a pauper subject, in all matters, including \nthe presentation of such application, to the provisions relating to suits by paupers, in so far as those \nprovisions are applicable: \nProcedure on application for admission of appeal.  Provided that the Court shall reject the \napplication unless, upon a perusal thereof and of the judgment and decree appealed from, it sees reason \nto think that the decree is contrary to law or to some usage having the force of law, or is otherwise \nerroneous or unjust. \n2. Inquiry into pauperism. The inquiry into the pauperism of the applicant may be made either \nby the Appellate Court or under the order of the Appellate Court by the Court from whose decision the \nappeal is preferred: \n \n \n1New sub­rules 3 and 4 added by the Code of Civil Procedure (Amdt.), Ordinance, 1980 (10 of 1980), s.14. \n2Subs. by Act XIV of 1994,s.II."
+    "statutory_text": "3. Notice before presentation of appeal.__ (1) Where an appeal against  an  order  is  preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice  of such  \nappeal to the respondent or his advocate by delivering a copy of the memorandum and  grounds  of \nappeal alongwith a copy of the order appealed against 2[either personally or  through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court.] \n(2) On receipt of notice referred to in sub­rule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine. \n4. Application of Rule  3. The provisions of rule 3  shall, mutatis mutandis , apply to all \napplications filed before an appellate Court during the pendency of a suit.] \n_______ \nORDER XLIV \nPAUPER APPEALS \n1. Who may appeal as pauper.  Any person entitled to prefer an appeal, who is unable to pay \nthe fee required for the memorandum of appeal, may present an application accompanied by a \nmemorandum of appeal, and may be allowed to appeal as a pauper subject, in all matters, including \nthe presentation of such application, to the provisions relating to suits by paupers, in so far as those \nprovisions are applicable: \nProcedure on application for admission of appeal.  Provided that the Court shall reject the \napplication unless, upon a perusal thereof and of the judgment and decree appealed from, it sees reason \nto think that the decree is contrary to law or to some usage having the force of law, or is otherwise \nerroneous or unjust. \n2. Inquiry into pauperism. The inquiry into the pauperism of the applicant may be made either \nby the Appellate Court or under the order of the Appellate Court by the Court from whose decision the \nappeal is preferred: \n \n \n1New sub­rules 3 and 4 added by the Code of Civil Procedure (Amdt.), Ordinance, 1980 (10 of 1980), s.14. \n2Subs. by Act XIV of 1994,s.II.",
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIII_R_4",
@@ -17520,9 +18220,10 @@
     "is_canonical": true,
     "duplicate_of": null,
     "quoting_allowed": false,
-    "page_verified": false,
     "in_force": true,
-    "has_operative_text": true
+    "has_operative_text": true,
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIV_R_1",
@@ -17547,7 +18248,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIV_R_2",
@@ -17572,7 +18274,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_1",
@@ -17597,7 +18300,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_2",
@@ -17622,7 +18326,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_3",
@@ -17647,7 +18352,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_4",
@@ -17672,7 +18378,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_5",
@@ -17697,7 +18404,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_6",
@@ -17722,7 +18430,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_7",
@@ -17747,7 +18456,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_8",
@@ -17772,7 +18482,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_9",
@@ -17797,7 +18508,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_10",
@@ -17822,7 +18534,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_11",
@@ -17847,7 +18560,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_12",
@@ -17872,7 +18586,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_13",
@@ -17897,7 +18612,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_14",
@@ -17922,7 +18638,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_15",
@@ -17947,7 +18664,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_16",
@@ -17972,7 +18690,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_417",
@@ -17997,7 +18716,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVI_R_1",
@@ -18022,7 +18742,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVI_R_2",
@@ -18047,7 +18768,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVI_R_3",
@@ -18072,7 +18794,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVI_R_4",
@@ -18097,7 +18820,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVI_R_5",
@@ -18122,7 +18846,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVI_R_6",
@@ -18147,7 +18872,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVII_R_1",
@@ -18172,7 +18898,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVII_R_2",
@@ -18197,7 +18924,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVII_R_3",
@@ -18222,7 +18950,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVII_R_4",
@@ -18247,7 +18976,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVII_R_5",
@@ -18272,7 +19002,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVII_R_6",
@@ -18297,7 +19028,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVII_R_7",
@@ -18322,7 +19054,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVII_R_8",
@@ -18347,7 +19080,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVII_R_9",
@@ -18372,7 +19106,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVIII_R_1",
@@ -18397,7 +19132,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVIII_R_2",
@@ -18422,7 +19158,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLVIII_R_3",
@@ -18447,7 +19184,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIX_R_1",
@@ -18472,7 +19210,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIX_R_2",
@@ -18497,7 +19236,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIX_R_3",
@@ -18522,7 +19262,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_L_R_1",
@@ -18547,7 +19288,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_1",
@@ -18579,7 +19321,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_2",
@@ -18614,7 +19357,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_2A",
@@ -18649,7 +19393,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_2B",
@@ -18684,7 +19429,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_3",
@@ -18716,7 +19462,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_4",
@@ -18747,7 +19494,8 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_4A",
@@ -18781,7 +19529,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_5",
@@ -18810,7 +19559,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_6",
@@ -18839,7 +19589,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_7",
@@ -18868,7 +19619,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_8",
@@ -18897,7 +19649,8 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_9",
@@ -18926,7 +19679,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_10",
@@ -18955,6 +19709,7 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   }
 ]

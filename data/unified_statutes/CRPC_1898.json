@@ -22,7 +22,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_2",
@@ -47,7 +48,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_3",
@@ -72,7 +74,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_4",
@@ -97,7 +100,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_5",
@@ -122,7 +126,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_6",
@@ -147,7 +152,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_7",
@@ -172,7 +178,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_8",
@@ -197,7 +204,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_9",
@@ -222,7 +230,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_10",
@@ -247,7 +256,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_11",
@@ -272,7 +282,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_12",
@@ -297,7 +308,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_13",
@@ -322,7 +334,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_14",
@@ -347,7 +360,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_14A",
@@ -372,7 +386,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_15",
@@ -397,7 +412,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_16",
@@ -422,7 +438,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_17",
@@ -447,7 +464,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_22",
@@ -472,7 +490,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_22A",
@@ -497,7 +516,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_22B",
@@ -522,7 +542,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_25",
@@ -547,7 +568,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_28",
@@ -572,7 +594,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_29",
@@ -597,7 +620,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_29A",
@@ -622,7 +646,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_29B",
@@ -647,7 +672,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_30",
@@ -672,7 +698,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_31",
@@ -697,7 +724,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_32",
@@ -722,7 +750,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_33",
@@ -747,7 +776,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_34",
@@ -772,7 +802,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_34A",
@@ -797,7 +828,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_35",
@@ -822,7 +854,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_36",
@@ -847,7 +880,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_37",
@@ -872,7 +906,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_38",
@@ -897,7 +932,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_39",
@@ -922,7 +958,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_40",
@@ -947,7 +984,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_41",
@@ -972,7 +1010,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_42",
@@ -997,7 +1036,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_43",
@@ -1022,7 +1062,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_44",
@@ -1047,7 +1088,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_45",
@@ -1072,7 +1114,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_46",
@@ -1097,7 +1140,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_47",
@@ -1122,7 +1166,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_48",
@@ -1147,7 +1192,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_49",
@@ -1172,7 +1218,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_50",
@@ -1197,7 +1244,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_51",
@@ -1222,7 +1270,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_52",
@@ -1247,7 +1296,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_53",
@@ -1272,7 +1322,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_53A",
@@ -1297,7 +1348,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_54",
@@ -1322,7 +1374,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_55",
@@ -1347,7 +1400,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_56",
@@ -1372,7 +1426,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_57",
@@ -1397,7 +1452,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_58",
@@ -1422,7 +1478,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_59",
@@ -1447,7 +1504,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_60",
@@ -1472,7 +1530,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_61",
@@ -1497,7 +1556,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_62",
@@ -1522,7 +1582,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_63",
@@ -1547,7 +1608,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_64",
@@ -1572,7 +1634,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_65",
@@ -1597,7 +1660,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_66",
@@ -1622,7 +1686,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_67",
@@ -1647,7 +1712,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_68",
@@ -1672,7 +1738,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_69",
@@ -1697,7 +1764,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_70",
@@ -1722,7 +1790,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_71",
@@ -1747,7 +1816,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_72",
@@ -1772,7 +1842,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_73",
@@ -1797,7 +1868,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_74",
@@ -1822,7 +1894,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_75",
@@ -1847,7 +1920,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_76",
@@ -1872,7 +1946,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_77",
@@ -1897,7 +1972,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_78",
@@ -1922,7 +1998,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_79",
@@ -1947,7 +2024,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_80",
@@ -1972,7 +2050,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_81",
@@ -1997,7 +2076,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_82",
@@ -2022,7 +2102,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_83",
@@ -2047,7 +2128,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_84",
@@ -2072,7 +2154,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_85",
@@ -2097,7 +2180,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_86",
@@ -2122,7 +2206,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_86A",
@@ -2147,7 +2232,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_87",
@@ -2172,7 +2258,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_88",
@@ -2197,7 +2284,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_89",
@@ -2222,7 +2310,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_90",
@@ -2247,7 +2336,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_91",
@@ -2272,7 +2362,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_92",
@@ -2297,7 +2388,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_93",
@@ -2322,7 +2414,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_93A",
@@ -2347,7 +2440,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_93B",
@@ -2372,7 +2466,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_93C",
@@ -2397,7 +2492,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_94",
@@ -2422,7 +2518,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_95",
@@ -2447,7 +2544,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_96",
@@ -2472,7 +2570,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_97",
@@ -2497,7 +2596,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_98",
@@ -2522,7 +2622,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99",
@@ -2547,7 +2648,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99A",
@@ -2572,7 +2674,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99B",
@@ -2597,7 +2700,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99C",
@@ -2622,7 +2726,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99D",
@@ -2647,7 +2752,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99E",
@@ -2672,7 +2778,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99F",
@@ -2697,7 +2804,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_99G",
@@ -2722,7 +2830,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_100",
@@ -2747,7 +2856,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_101",
@@ -2772,7 +2882,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_102",
@@ -2797,7 +2908,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_103",
@@ -2822,7 +2934,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_104",
@@ -2847,7 +2960,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_105",
@@ -2872,7 +2986,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_106",
@@ -2897,7 +3012,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_107",
@@ -2922,7 +3038,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_108",
@@ -2947,7 +3064,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_109",
@@ -2972,7 +3090,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_110",
@@ -2997,7 +3116,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_111",
@@ -3022,7 +3142,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_112",
@@ -3047,7 +3168,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_113",
@@ -3072,7 +3194,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_114",
@@ -3097,7 +3220,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_115",
@@ -3122,7 +3246,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_116",
@@ -3147,7 +3272,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_117",
@@ -3172,7 +3298,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_118",
@@ -3197,7 +3324,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_119",
@@ -3222,7 +3350,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_120",
@@ -3247,7 +3376,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_121",
@@ -3272,7 +3402,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_122",
@@ -3297,7 +3428,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_123",
@@ -3322,7 +3454,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_124",
@@ -3347,7 +3480,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_125",
@@ -3372,7 +3506,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_126",
@@ -3397,7 +3532,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_126A",
@@ -3422,7 +3558,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_127",
@@ -3447,7 +3584,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_128",
@@ -3472,7 +3610,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_129",
@@ -3497,7 +3636,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_130",
@@ -3522,7 +3662,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_131",
@@ -3547,7 +3688,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_131A",
@@ -3572,7 +3714,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_132",
@@ -3597,7 +3740,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_132A",
@@ -3622,7 +3766,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_133",
@@ -3647,7 +3792,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_134",
@@ -3672,7 +3818,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_135",
@@ -3697,7 +3844,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_136",
@@ -3722,7 +3870,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_137",
@@ -3747,7 +3896,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_138",
@@ -3772,7 +3922,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_139",
@@ -3797,7 +3948,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_139A",
@@ -3822,7 +3974,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_140",
@@ -3847,7 +4000,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_141",
@@ -3872,7 +4026,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_142",
@@ -3897,7 +4052,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_143",
@@ -3922,7 +4078,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_144",
@@ -3947,7 +4104,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_145",
@@ -3972,7 +4130,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_146",
@@ -3997,7 +4156,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_147",
@@ -4022,7 +4182,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_148",
@@ -4047,7 +4208,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_149",
@@ -4072,7 +4234,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_150",
@@ -4097,7 +4260,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_151",
@@ -4122,7 +4286,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_152",
@@ -4147,7 +4312,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_153",
@@ -4172,7 +4338,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_154",
@@ -4199,7 +4366,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_155",
@@ -4224,7 +4392,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_156",
@@ -4251,7 +4420,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_156A",
@@ -4276,7 +4446,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_156B",
@@ -4301,7 +4472,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_157",
@@ -4326,7 +4498,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_158",
@@ -4351,7 +4524,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_159",
@@ -4376,7 +4550,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_160",
@@ -4401,7 +4576,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_161",
@@ -4428,7 +4604,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_161A",
@@ -4453,7 +4630,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_162",
@@ -4478,7 +4656,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_163",
@@ -4503,7 +4682,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_164",
@@ -4530,7 +4710,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_164A",
@@ -4555,7 +4736,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_164B",
@@ -4580,7 +4762,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_165",
@@ -4605,7 +4788,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_166",
@@ -4630,7 +4814,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_167",
@@ -4655,7 +4840,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_168",
@@ -4680,7 +4866,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_169",
@@ -4705,7 +4892,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_170",
@@ -4730,7 +4918,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_171",
@@ -4755,7 +4944,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_172",
@@ -4780,7 +4970,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_173",
@@ -4807,7 +4998,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_174",
@@ -4832,7 +5024,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_174A",
@@ -4857,7 +5050,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_175",
@@ -4882,7 +5076,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_176",
@@ -4907,7 +5102,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_177",
@@ -4932,7 +5128,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_178",
@@ -4957,7 +5154,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_179",
@@ -4982,7 +5180,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_180",
@@ -5007,7 +5206,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_181",
@@ -5032,7 +5232,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_182",
@@ -5057,7 +5258,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_183",
@@ -5082,7 +5284,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_184",
@@ -5107,7 +5310,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_185",
@@ -5132,7 +5336,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_186",
@@ -5157,7 +5362,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_187",
@@ -5182,7 +5388,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_188",
@@ -5207,7 +5414,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_189",
@@ -5232,7 +5440,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_190",
@@ -5257,7 +5466,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_191",
@@ -5282,7 +5492,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_192",
@@ -5307,7 +5518,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_193",
@@ -5332,7 +5544,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_194",
@@ -5357,7 +5570,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_195",
@@ -5382,7 +5596,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_196",
@@ -5407,7 +5622,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_196A",
@@ -5432,7 +5648,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_196B",
@@ -5457,7 +5674,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_197",
@@ -5482,7 +5700,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_198",
@@ -5507,7 +5726,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_198A",
@@ -5532,7 +5752,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_199",
@@ -5557,7 +5778,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_199A",
@@ -5582,7 +5804,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_199B",
@@ -5607,7 +5830,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_200",
@@ -5632,7 +5856,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_201",
@@ -5657,7 +5882,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_202",
@@ -5682,7 +5908,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_203",
@@ -5709,7 +5936,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_203A",
@@ -5734,7 +5962,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_203C",
@@ -5759,7 +5988,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_204",
@@ -5784,7 +6014,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_205",
@@ -5809,7 +6040,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_221",
@@ -5834,7 +6066,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_222",
@@ -5859,7 +6092,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_223",
@@ -5884,7 +6118,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_224",
@@ -5909,7 +6144,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_225",
@@ -5934,7 +6170,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_226",
@@ -5959,7 +6196,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_227",
@@ -5984,7 +6222,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_228",
@@ -6009,7 +6248,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_229",
@@ -6034,7 +6274,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_230",
@@ -6059,7 +6300,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_231",
@@ -6084,7 +6326,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_232",
@@ -6109,7 +6352,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_233",
@@ -6134,7 +6378,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_234",
@@ -6159,7 +6404,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_235",
@@ -6184,7 +6430,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_236",
@@ -6209,7 +6456,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_237",
@@ -6234,7 +6482,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_238",
@@ -6259,7 +6508,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_239",
@@ -6284,7 +6534,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_240",
@@ -6309,7 +6560,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_241",
@@ -6334,7 +6586,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_241A",
@@ -6359,7 +6612,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_242",
@@ -6384,7 +6638,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_243",
@@ -6409,7 +6664,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_244",
@@ -6434,7 +6690,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_244A",
@@ -6459,7 +6716,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_245",
@@ -6484,7 +6742,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_245A",
@@ -6509,7 +6768,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_246",
@@ -6534,7 +6794,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_247",
@@ -6559,7 +6820,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_248",
@@ -6584,7 +6846,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_249",
@@ -6609,7 +6872,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_249A",
@@ -6634,7 +6898,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_250",
@@ -6659,7 +6924,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_250A",
@@ -6684,7 +6950,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_260",
@@ -6709,7 +6976,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_261",
@@ -6734,7 +7002,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_262",
@@ -6759,7 +7028,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_263",
@@ -6784,7 +7054,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_264",
@@ -6809,7 +7080,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265",
@@ -6834,7 +7106,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265A",
@@ -6859,7 +7132,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265B",
@@ -6884,7 +7158,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265C",
@@ -6909,7 +7184,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265D",
@@ -6934,7 +7210,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265E",
@@ -6959,7 +7236,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265F",
@@ -6984,7 +7262,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265G",
@@ -7009,7 +7288,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265H",
@@ -7034,7 +7314,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265I",
@@ -7059,7 +7340,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265J",
@@ -7084,7 +7366,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265K",
@@ -7109,7 +7392,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265L",
@@ -7134,7 +7418,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265M",
@@ -7159,7 +7444,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_265N",
@@ -7184,7 +7470,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_337",
@@ -7209,7 +7496,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_338",
@@ -7234,7 +7522,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_339",
@@ -7259,7 +7548,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_339A",
@@ -7284,7 +7574,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_340",
@@ -7309,7 +7600,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_341",
@@ -7334,7 +7626,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_342",
@@ -7359,7 +7652,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_343",
@@ -7384,7 +7678,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_344",
@@ -7409,7 +7704,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_344A",
@@ -7434,7 +7730,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_345",
@@ -7459,7 +7756,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_346",
@@ -7484,7 +7782,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_347",
@@ -7509,7 +7808,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_348",
@@ -7534,7 +7834,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_349",
@@ -7559,7 +7860,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_350",
@@ -7584,7 +7886,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_350A",
@@ -7609,7 +7912,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_351",
@@ -7634,7 +7938,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_352",
@@ -7659,7 +7964,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_353",
@@ -7684,7 +7990,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_354",
@@ -7709,7 +8016,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_355",
@@ -7734,7 +8042,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_356",
@@ -7759,7 +8068,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_357",
@@ -7784,7 +8094,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_358",
@@ -7809,7 +8120,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_359",
@@ -7834,7 +8146,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_360",
@@ -7859,7 +8172,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_361",
@@ -7884,7 +8198,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_362",
@@ -7909,7 +8224,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_363",
@@ -7934,7 +8250,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_364",
@@ -7959,7 +8276,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_365",
@@ -7984,7 +8302,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_366",
@@ -8009,7 +8328,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_367",
@@ -8034,7 +8354,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_368",
@@ -8059,7 +8380,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_369",
@@ -8084,7 +8406,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_370",
@@ -8109,7 +8432,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_371",
@@ -8134,7 +8458,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_372",
@@ -8159,7 +8484,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_373",
@@ -8184,7 +8510,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_374",
@@ -8209,7 +8536,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_375",
@@ -8234,7 +8562,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_376",
@@ -8259,7 +8588,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_377",
@@ -8284,7 +8614,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_378",
@@ -8309,7 +8640,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_379",
@@ -8334,7 +8666,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_380",
@@ -8359,7 +8692,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_381",
@@ -8384,7 +8718,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_382",
@@ -8409,7 +8744,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_382A",
@@ -8434,7 +8770,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_382B",
@@ -8459,7 +8796,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_382C",
@@ -8484,7 +8822,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_383",
@@ -8509,7 +8848,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_384",
@@ -8534,7 +8874,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_385",
@@ -8559,7 +8900,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_386",
@@ -8584,7 +8926,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_387",
@@ -8609,7 +8952,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_388",
@@ -8634,7 +8978,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_389",
@@ -8659,7 +9004,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_390",
@@ -8684,7 +9030,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_391",
@@ -8709,7 +9056,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_392",
@@ -8734,7 +9082,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_393",
@@ -8759,7 +9108,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_394",
@@ -8784,7 +9134,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_395",
@@ -8809,7 +9160,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_396",
@@ -8834,7 +9186,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_397",
@@ -8859,7 +9212,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_398",
@@ -8884,7 +9238,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_399",
@@ -8909,7 +9264,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_400",
@@ -8934,7 +9290,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_401",
@@ -8959,7 +9316,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_402",
@@ -8984,7 +9342,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_402A",
@@ -9009,7 +9368,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_402B",
@@ -9034,7 +9394,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_402C",
@@ -9059,7 +9420,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_402D",
@@ -9084,7 +9446,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_403",
@@ -9109,7 +9472,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_404",
@@ -9134,7 +9498,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_405",
@@ -9159,7 +9524,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_406",
@@ -9184,7 +9550,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_406A",
@@ -9209,7 +9576,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_407",
@@ -9234,7 +9602,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_408",
@@ -9259,7 +9628,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_409",
@@ -9284,7 +9654,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_410",
@@ -9309,7 +9680,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_411",
@@ -9334,7 +9706,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_411A",
@@ -9359,7 +9732,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_412",
@@ -9384,7 +9758,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_413",
@@ -9409,7 +9784,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_414",
@@ -9434,7 +9810,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_414A",
@@ -9459,7 +9836,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_415",
@@ -9484,7 +9862,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_415A",
@@ -9509,7 +9888,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_416",
@@ -9534,7 +9914,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_417",
@@ -9559,7 +9940,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_418",
@@ -9584,7 +9966,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_419",
@@ -9609,7 +9992,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_420",
@@ -9634,7 +10018,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_421",
@@ -9659,7 +10044,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_422",
@@ -9684,7 +10070,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_423",
@@ -9709,7 +10096,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_424",
@@ -9734,7 +10122,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_425",
@@ -9759,7 +10148,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_426",
@@ -9784,7 +10174,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_427",
@@ -9809,7 +10200,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_428",
@@ -9834,7 +10226,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_429",
@@ -9859,7 +10252,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_430",
@@ -9884,7 +10278,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_431",
@@ -9909,7 +10304,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_435",
@@ -9934,7 +10330,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_436",
@@ -9959,7 +10356,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_437",
@@ -9984,7 +10382,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_438",
@@ -10009,7 +10408,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_439",
@@ -10034,7 +10434,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_439A",
@@ -10059,7 +10460,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_440",
@@ -10084,7 +10486,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_441",
@@ -10109,7 +10512,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_442",
@@ -10134,7 +10538,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_464",
@@ -10159,7 +10564,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_465",
@@ -10184,7 +10590,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_466",
@@ -10209,7 +10616,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_467",
@@ -10234,7 +10642,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_468",
@@ -10259,7 +10668,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_469",
@@ -10284,7 +10694,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_470",
@@ -10309,7 +10720,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_471",
@@ -10334,7 +10746,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_472",
@@ -10359,7 +10772,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_473",
@@ -10384,7 +10798,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_474",
@@ -10409,7 +10824,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_475",
@@ -10434,7 +10850,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_476",
@@ -10459,7 +10876,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_476A",
@@ -10484,7 +10902,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_476B",
@@ -10509,7 +10928,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_477",
@@ -10534,7 +10954,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_478",
@@ -10559,7 +10980,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_479",
@@ -10584,7 +11006,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_480",
@@ -10609,7 +11032,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_481",
@@ -10634,7 +11058,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_482",
@@ -10659,7 +11084,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_483",
@@ -10684,7 +11110,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_484",
@@ -10709,7 +11136,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_485",
@@ -10734,7 +11162,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_486",
@@ -10759,7 +11188,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_487",
@@ -10784,7 +11214,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_491",
@@ -10809,7 +11240,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_491A",
@@ -10834,7 +11266,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_492",
@@ -10859,7 +11292,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_493",
@@ -10884,7 +11318,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_494",
@@ -10909,7 +11344,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_495",
@@ -10934,7 +11370,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_496",
@@ -10966,7 +11403,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_497",
@@ -10998,7 +11436,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_498",
@@ -11029,7 +11468,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_498A",
@@ -11060,7 +11500,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_499",
@@ -11085,7 +11526,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_500",
@@ -11110,7 +11552,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_501",
@@ -11135,7 +11578,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_502",
@@ -11160,7 +11604,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_503",
@@ -11185,7 +11630,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_504",
@@ -11210,7 +11656,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_505",
@@ -11235,7 +11682,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_506",
@@ -11260,7 +11708,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_507",
@@ -11285,7 +11734,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_508",
@@ -11310,7 +11760,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_508A",
@@ -11335,7 +11786,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_509",
@@ -11360,7 +11812,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_510",
@@ -11385,7 +11838,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_511",
@@ -11410,7 +11864,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_512",
@@ -11435,7 +11890,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_513",
@@ -11460,7 +11916,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_514",
@@ -11485,7 +11942,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_514A",
@@ -11510,7 +11968,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_514B",
@@ -11535,7 +11994,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_515",
@@ -11560,7 +12020,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_516",
@@ -11585,7 +12046,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_516A",
@@ -11610,7 +12072,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_517",
@@ -11635,7 +12098,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_518",
@@ -11660,7 +12124,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_519",
@@ -11685,7 +12150,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_520",
@@ -11710,7 +12176,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_521",
@@ -11735,7 +12202,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_522",
@@ -11760,7 +12228,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_522A",
@@ -11785,7 +12254,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_523",
@@ -11810,7 +12280,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_524",
@@ -11835,7 +12306,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_525",
@@ -11860,7 +12332,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_526",
@@ -11885,7 +12358,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_526A",
@@ -11910,7 +12384,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_527",
@@ -11935,7 +12410,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_528",
@@ -11960,7 +12436,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_529",
@@ -11985,7 +12462,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_530",
@@ -12010,7 +12488,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_531",
@@ -12035,7 +12514,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_532",
@@ -12060,7 +12540,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_533",
@@ -12085,7 +12566,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_534",
@@ -12110,7 +12592,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_535",
@@ -12135,7 +12618,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_536",
@@ -12160,7 +12644,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_537",
@@ -12185,7 +12670,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_538",
@@ -12210,7 +12696,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_539",
@@ -12235,7 +12722,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_539A",
@@ -12260,7 +12748,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_539B",
@@ -12285,7 +12774,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_540",
@@ -12310,7 +12800,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_540A",
@@ -12335,7 +12826,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_541",
@@ -12360,7 +12852,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_542",
@@ -12385,7 +12878,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_543",
@@ -12410,7 +12904,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_544",
@@ -12435,7 +12930,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_544A",
@@ -12460,7 +12956,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_545",
@@ -12485,7 +12982,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_546",
@@ -12510,7 +13008,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_546A",
@@ -12535,7 +13034,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_547",
@@ -12560,7 +13060,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_548",
@@ -12585,7 +13086,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_549",
@@ -12610,7 +13112,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_550",
@@ -12635,7 +13138,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_551",
@@ -12660,7 +13164,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_552",
@@ -12685,7 +13190,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_553",
@@ -12710,7 +13216,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_554",
@@ -12735,7 +13242,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_555",
@@ -12760,7 +13268,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_556",
@@ -12785,7 +13294,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_557",
@@ -12810,7 +13320,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_558",
@@ -12835,7 +13346,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_559",
@@ -12860,7 +13372,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_560",
@@ -12885,7 +13398,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_561",
@@ -12910,7 +13424,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_561A",
@@ -12937,7 +13452,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_562",
@@ -12962,7 +13478,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_563",
@@ -12987,7 +13504,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_564",
@@ -13012,7 +13530,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_565",
@@ -13037,7 +13556,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_1951",
@@ -13062,7 +13582,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_22A_6",
@@ -13089,7 +13610,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_22A_6_A",
@@ -13114,7 +13636,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_497_1",
@@ -13141,7 +13664,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_497_2",
@@ -13168,7 +13692,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_497_5",
@@ -13195,7 +13720,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "CRPC_1898_SEC_498_1",
@@ -13222,6 +13748,7 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   }
 ]

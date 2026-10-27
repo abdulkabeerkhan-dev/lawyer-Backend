@@ -25,6 +25,7 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   }
 ]

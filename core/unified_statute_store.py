@@ -25,12 +25,10 @@ TABLES_DIR = os.path.join(REPO_DIR, "data", "statute_tables")
 VERSIONS_DIR = os.path.join(REPO_DIR, "data", "statute_versions")
 REVIEWS_DIR = os.path.join(REPO_DIR, "data", "reviews")
 
-def verify_reviewed_tier(canonical_id: str, content_hash: str) -> bool:
+def review_file_present(canonical_id: str, content_hash: str) -> bool:
     """
-    Validates whether a provision has been legitimately promoted to 'reviewed' tier.
-    A provision can ONLY be 'reviewed' if a signed review file exists in data/reviews/
-    named <canonical_id>.review.json with matching record_content_hash, reviewer_name,
-    and cryptographic_signature. Agents/models cannot set this tier.
+    Order 1.14 - Item 6: Checks presence of review metadata file on disk.
+    This was previously called verify_reviewed_tier but only checked disk presence.
     """
     review_file = os.path.join(REVIEWS_DIR, f"{canonical_id}.review.json")
     if not os.path.exists(review_file):
@@ -47,6 +45,52 @@ def verify_reviewed_tier(canonical_id: str, content_hash: str) -> bool:
             data.get("status") == "approved" and
             bool(data.get("cryptographic_signature"))
         )
+    except Exception:
+        return False
+
+def verify_reviewed_tier(canonical_id: str, content_hash: str) -> bool:
+    """
+    Order 1.14 - Item 6: Cryptographic public-key signature verification for 'reviewed' tier.
+    The authorized advocate public key is committed in data/reviews/advocate_public_key.pem.
+    The corresponding private key DOES NOT EXIST on this machine and is never generated here.
+    An agent/model cannot sign reviews; any signature made with a throwaway key fails verification.
+    """
+    review_file = os.path.join(REVIEWS_DIR, f"{canonical_id}.review.json")
+    pub_key_file = os.path.join(REVIEWS_DIR, "advocate_public_key.pem")
+    
+    if not os.path.exists(review_file) or not os.path.exists(pub_key_file):
+        return False
+    try:
+        with open(review_file, "r", encoding="utf-8") as rf:
+            data = json.load(rf)
+        if str(data.get("canonical_id")).upper() != str(canonical_id).upper():
+            return False
+        if str(data.get("record_content_hash")) != str(content_hash):
+            return False
+        if data.get("status") != "approved":
+            return False
+        
+        sig_hex = data.get("cryptographic_signature", "")
+        if not sig_hex:
+            return False
+        sig_bytes = bytes.fromhex(sig_hex)
+
+        from cryptography.hazmat.primitives import hashes, serialization
+        from cryptography.hazmat.primitives.asymmetric import padding
+        
+        with open(pub_key_file, "rb") as pf:
+            public_key = serialization.load_pem_public_key(pf.read())
+        
+        # Payload verified is canonical_id + content_hash
+        payload = f"{canonical_id}:{content_hash}".encode("utf-8")
+        
+        public_key.verify(
+            sig_bytes,
+            payload,
+            padding.PKCS1v15(),
+            hashes.SHA256()
+        )
+        return True
     except Exception:
         return False
 
@@ -98,6 +142,12 @@ class UnifiedStatuteStore:
 
                         if not cid and num:
                             cid = f"{act}_SEC_{num}"
+
+                        # Backward compatibility alias for text_layer_matched <-> page_verified
+                        if "text_layer_matched" in r:
+                            r["page_verified"] = r.get("text_layer_matched")
+                        elif "page_verified" in r:
+                            r["text_layer_matched"] = r.get("page_verified")
 
                         if cid:
                             if r.get("tier") == "reviewed":

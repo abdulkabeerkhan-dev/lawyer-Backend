@@ -24,7 +24,8 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_2",
@@ -53,7 +54,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_3",
@@ -80,7 +82,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_4",
@@ -107,7 +110,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_7",
@@ -134,7 +138,8 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_8",
@@ -161,7 +166,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_9",
@@ -190,7 +196,8 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_10",
@@ -219,7 +226,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_11",
@@ -246,7 +254,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_12",
@@ -273,7 +282,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_13",
@@ -300,7 +310,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_14",
@@ -327,7 +338,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_15",
@@ -356,7 +368,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_16",
@@ -383,7 +396,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_17",
@@ -410,7 +424,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_18",
@@ -437,7 +452,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_19",
@@ -464,7 +480,8 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_20",
@@ -491,7 +508,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_21",
@@ -518,7 +536,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_22",
@@ -575,7 +594,8 @@
     "is_canonical": true,
     "duplicate_of": null,
     "quoting_allowed": false,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_23",
@@ -602,7 +622,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_24",
@@ -629,7 +650,8 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_25",
@@ -656,7 +678,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_26",
@@ -683,7 +706,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_27",
@@ -710,7 +734,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_28",
@@ -737,7 +762,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_29",
@@ -764,7 +790,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "FIO_2001_SEC_30",
@@ -791,6 +818,7 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   }
 ]

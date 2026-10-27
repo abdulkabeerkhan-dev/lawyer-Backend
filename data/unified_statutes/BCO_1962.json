@@ -21,7 +21,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "BCO_1962_SEC_83",
@@ -57,7 +58,8 @@
     "duplicate_of": null,
     "quoting_allowed": false,
     "in_force": true,
-    "page_verified": false
+    "text_layer_matched": false,
+    "human_reviewed": null
   },
   {
     "canonical_id": "BCO_1962_SEC_83A",
@@ -78,6 +80,7 @@
     "duplicate_of": null,
     "quoting_allowed": true,
     "in_force": true,
-    "page_verified": true
+    "text_layer_matched": true,
+    "human_reviewed": null
   }
 ]

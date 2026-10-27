@@ -1,0 +1,319 @@
+{
+  "passed": false,
+  "verdict": "BLOCKED",
+  "failures": [
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The provision is currently **in force**."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Critical Elements:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Commencement Date:** The 30-day period runs from the date of **first service** (not from subsequent modes of service)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Service Methods:** Service must be effected through one of the prescribed modes under Section 9(5)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Non-Compliance Consequence:** Failure to file within this period results in automatic deemed admission of factual allegations in the plaint (Section 10(1))"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Conditions for Extension:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Service must have been effected **solely** through newspaper publication"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- The Banking Court retains **discretionary authority** (not mandatory)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- The defendant must establish **lack of knowledge** of the suit"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- This exception does not apply when service is effected through other modes concurrently"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Essential Ingredients:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Written statement format (not oral or skeletal)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Articulation of substantial questions of law"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Articulation of substantial questions of fact"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Identification of issues requiring evidentiary recording"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Critical Disclosure Elements:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Quantum of finance availed"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Payment history with specific dates and amounts"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Outstanding liability as of suit institution date"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Quantified disputes with factual justification"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Payment Appropriation Rule – Section 10(4) Explanation:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Critical Safeguard Elements:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Consequence: Dual – forfeiture of right to defend + mandatory penalty minimum 5% of claim"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Defense Available: Bona fide mistake exception (defendant bears burden of proof)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Application:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Non-compliance with substantive or formal requirements triggers mandatory rejection"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Banking Court has limited discretion to overlook non-compliance"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Section 10(8):**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Section 10(9):**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Test for Grant:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Presence of substantial (not frivolous) questions"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Questions must be justiciable through evidentiary recording"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Section 10(10):**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Section 10(11) – Approval:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Section 10(12) – Rejection or Non-Compliance:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Consequence:** Summary judgment in plaintiff's favor without full trial on merits."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Triple Consequence of Non-Filing:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Loss of right to defend"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Deemed admission of all factual allegations in plaint"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Decree in plaintiff's favor (discretionary assessment of"
+    }
+  ],
+  "total_failures": 40,
+  "quotes_checked": 15,
+  "quotes_passed": 15,
+  "quotes_failed": 0,
+  "cases_checked": 0,
+  "cases_passed": 0,
+  "cases_failed": 0,
+  "statutes_checked": 2,
+  "statutes_passed": 2,
+  "statutes_failed": 0,
+  "unsourced_sentences_count": 40,
+  "disputed_notices": [],
+  "omitted_ellipses": [],
+  "cited_provisions_metadata": [
+    {
+      "span": "Section 10, Financial Institutions (Recovery of Finances) Ordinance",
+      "canonical_id": "FIO_2001_SEC_10",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 10 of the Financial Institutions (Recovery of Finances) Ordinance",
+      "canonical_id": "FIO_2001_SEC_10",
+      "tier": "ingested_unreviewed",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    }
+  ],
+  "stripped_model_banners": [],
+  "cleaned_memo_text": "# LEGAL RESEARCH MEMORANDUM\n\n**RE:** Procedure and Mandatory Timeline for Filing Application for Leave to Defend under Section 10, Financial Institutions (Recovery of Finances) Ordinance, 2001\n\n---\n\n## I. STATUTORY FRAMEWORK\n\nSection 10 of the Financial Institutions (Recovery of Finances) Ordinance, 2001 establishes a specialized procedural regime governing the defendant's right to defend banking suits. The provision is currently **in force**.\n\n---\n\n## II. MANDATORY TIMELINE FOR FILING\n\n### A. Primary Limitation Period\n\n**Section 10(2)** prescribes the foundational timeline:\n\n> \"The defendant shall file the application for leave to defend within **thirty days of the date of first service** by any one of the modes laid down in sub-section (5) of section 9\"\n\n**Critical Elements:**\n- **Commencement Date:** The 30-day period runs from the date of **first service** (not from subsequent modes of service)\n- **Service Methods:** Service must be effected through one of the prescribed modes under Section 9(5)\n- **Non-Compliance Consequence:** Failure to file within this period results in automatic deemed admission of factual allegations in the plaint (Section 10(1))\n\n### B. Exception: Service by Newspaper Publication\n\n**Section 10(2) – Proviso** provides a discretionary extension mechanism:\n\n> \"Provided that where service has been validly effected only through publication in the newspapers, the Banking Court may extend the time for filing an application for leave to defend if satisfied that the defendant did not have knowledge thereof.\"\n\n**Conditions for Extension:**\n- Service must have been effected **solely** through newspaper publication\n- The Banking Court retains **discretionary authority** (not mandatory)\n- The defendant must establish **lack of knowledge** of the suit\n- This exception does not apply when service is effected through other modes concurrently\n\n### C. Transitional Provision (Legacy Cases)\n\n**Section 10(13)** provides relief for applications filed before the Ordinance's commencement:\n\n> \"Where an application for leave to defend has been filed before the coming into force of this Ordinance, the defendant shall be allowed a period of twenty-one days from the date of coming into force of this Ordinance, or from the date of first hearing thereafter, whichever is later, for filing an amended application for leave to defend in accordance with the provisions of this Ordinance.\"\n\n---\n\n## III. SUBSTANTIVE PROCEDURAL REQUIREMENTS\n\n### A. Form and Content Requirements\n\n**Section 10(3)** mandates:\n\n> \"The application for leave to defend shall be in the form of a **written statement**, and shall contain a **summary of the substantial questions of law as well as fact** in respect of which, in the opinion of the defendant, evidence needs to be recorded.\"\n\n**Essential Ingredients:**\n1. Written statement format (not oral or skeletal)\n2. Articulation of substantial questions of law\n3. Articulation of substantial questions of fact\n4. Identification of issues requiring evidentiary recording\n\n### B. Special Requirements for Financial Institution Recovery Suits\n\n**Section 10(4)** imposes additional mandatory disclosures:\n\n> \"In the case of a suit for recovery instituted by a financial institution the application for leave to defend shall also specifically state the following:\n> \n> (a) the amount of finance availed by the defendant from the financial institution; the amounts paid by the defendant to the financial institution and the dates of payments;\n> \n> (b) the amount of finance and other amounts relating to the finance payable by the defendant to the financial institution upto the date of institution of the suit;\n> \n> (c) the amounts of finance and other amounts relating to the finance payable by the defendant to the financial institution upto the date of institution of the suit;\n> \n> (d) the amount if any which the defendant disputes as payable to the financial institution and facts in support thereof\"\n\n**Critical Disclosure Elements:**\n- Quantum of finance availed\n- Payment history with specific dates and amounts\n- Outstanding liability as of suit institution date\n- Quantified disputes with factual justification\n\n**Payment Appropriation Rule – Section 10(4) Explanation:**\n\n> \"For the purposes of clause (b) any payment made to a financial institution by a customer in respect of a finance shall be appropriated first against other amounts relating to the finance and the balance, if any, against the principal amount of the finance.\"\n\n### C. Documentary Accompaniment\n\n**Section 10(6)** requires:\n\n> \"The application for leave to defend shall be accompanied by **all the documents which, in the opinion of the defendant, support the substantial questions of law or fact raised by him.**\"\n\n---\n\n## IV. PROCEDURAL SAFEGUARDS AND PENALTIES\n\n### A. Materiality Verification and Penalty Provision\n\n**Section 10(5)** imposes an accountability mechanism:\n\n> \"Where application for leave to defend submitted under the preceding sub-section is found to be **materially incorrect at any stage of the proceedings**, the defendant shall **lose the right to defence and shall also be liable to pay penalty of not less than five percent of the amount of the claim**, unless the defendant can establish that incorrect information was submitted as a result of a bona fide mistake.\"\n\n**Critical Safeguard Elements:**\n- Standard: \"Materially incorrect\" (not minor typographical errors)\n- Timing: Verification occurs \"at any stage of proceedings\"\n- Consequence: Dual – forfeiture of right to defend + mandatory penalty minimum 5% of claim\n- Defense Available: Bona fide mistake exception (defendant bears burden of proof)\n\n### B. Compliance and Rejection Standards\n\n**Section 10(7)** establishes rejection criteria:\n\n> \"An application for leave to defend which does not comply with the requirements of sub-sections (3), (4) where applicable and (5) shall be rejected, **unless the defendant discloses therein sufficient cause for his inability to comply with any such requirement.**\"\n\n**Application:**\n- Non-compliance with substantive or formal requirements triggers mandatory rejection\n- Escape clause requires disclosure of \"sufficient cause\" within the application itself\n- Banking Court has limited discretion to overlook non-compliance\n\n---\n\n## V. ADJUDICATION PROCEDURE\n\n### A. Reply and Replication\n\n**Section 10(8):**\n\n> \"The plaintiff shall be given an opportunity of filing a reply to the application for leave to defend, in the form of a replication.\"\n\n### B. Grant of Leave Standard\n\n**Section 10(9):**\n\n> \"Subject to section 11, the Banking Court shall grant the defendant leave to defend the suit if on consideration of the contents of the plaint, the application for leave to defend and the reply thereto it is of the view that **substantial questions of law or fact have been raised in respect of which evidence needs to be recorded.**\"\n\n**Test for Grant:**\n- Subjective satisfaction of Banking Court (\"in the view that...\")\n- Presence of substantial (not frivolous) questions\n- Questions must be justiciable through evidentiary recording\n\n### C. Conditional Grant\n\n**Section 10(10):**\n\n> \"In granting leave under sub-section (8), the Banking Court may impose such conditions as it may deem appropriate in the circumstances of the case, **including conditions as to deposit of cash or furnishing of security.**\"\n\n### D. Consequences of Approval or Rejection\n\n**Section 10(11) – Approval:**\n\n> \"Where the application for leave to defend is accepted, the Banking Court shall treat the application as a written statement, and in its order granting leave shall frame issues relating to the substantial questions of law or fact, and, subject to fulfilment of any conditions attached to grant of leave, fix a date for recording of evidence thereon and disposal of the suit.\"\n\n**Section 10(12) – Rejection or Non-Compliance:**\n\n> \"Where the application for leave to defend is rejected or where a defendant fails to fulfill the conditions attached to the grant of leave to defend, the Banking Court shall forthwith proceed to pass judgment and decree in favour of the plaintiff against the defendant.\"\n\n**Consequence:** Summary judgment in plaintiff's favor without full trial on merits.\n\n---\n\n## VI. CONSEQUENCES OF DEFAULT\n\n**Section 10(1)** establishes the default regime:\n\n> \"In any case in which the summons has been served on the defendant as provided for in sub-section (5) of section 9, the defendant shall not be entitled to defend the suit unless he obtains leave from the Banking Court as hereinafter provided to defend the same; and, **in default of his doing so, the allegations of fact in the plaint shall be deemed to be admitted and the Banking Court may pass a decree in favour of the plaintiff on the basis thereof or such other material as the Banking Court may require in the interests of justice.**\"\n\n**Triple Consequence of Non-Filing:**\n1. Loss of right to defend\n2. Deemed admission of all factual allegations in plaint\n3. Decree in plaintiff's favor (discretionary assessment of"
+}

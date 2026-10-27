@@ -1,0 +1,183 @@
+{
+  "passed": false,
+  "verdict": "BLOCKED",
+  "failures": [
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Status:** In Force"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The accused must have issued a cheque."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "This is the primary actus reus of the offence."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The cheque must have been issued **dishonestly**."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "This ingredient denotes mens rea—a dishonest state of mind at the time of issuance."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The dishonesty must relate to the issuer's intention regarding the cheque's honour."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Towards repayment of a loan**, OR"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Fulfillment of an obligation**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The cheque must have been **dishonoured on presentation**."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "This is a material ingredient—dishonour at the bank constitutes proof of the cheque's failure."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Critical Protection:** Section 489-F incorporates an affirmative defence."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- (a) That he had made arrangements with his bank to ensure the cheque would be honoured; **AND**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- (b) That the bank was at fault in not honouring the cheque."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Imprisonment:** Imprisonment of either description (rigorous or simple) **for a period which may extend to three years**, OR"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Fine:** Imposition of a fine, OR"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Both:** Imprisonment and fine conjointly."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Sentencing Authority:** Trial before a **Magistrate of the first class** (as per Cr.P.C."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Schedule II classification)."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Section 489-F, PPC establishes a **specific offence** targeting fraudulent cheque issuance in debt/obligation contexts."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The prosecution bears the initial burden to prove dishonest intent and actual dishonour."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "However, the statute uniquely shifts the evidential burden to the accused to establish the defensive plea that arrangements existed and bank fault caused dishonour."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "This provision thus balances cheque-fraud deterrence with an accused's opportunity to demonstrate innocent causation."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Prepared:** As per verified statutory database record"
+    }
+  ],
+  "total_failures": 23,
+  "quotes_checked": 1,
+  "quotes_passed": 1,
+  "quotes_failed": 0,
+  "cases_checked": 2,
+  "cases_passed": 2,
+  "cases_failed": 0,
+  "statutes_checked": 0,
+  "statutes_passed": 0,
+  "statutes_failed": 0,
+  "unsourced_sentences_count": 23,
+  "disputed_notices": [],
+  "omitted_ellipses": [],
+  "cited_provisions_metadata": [],
+  "stripped_model_banners": [],
+  "cleaned_memo_text": "# LEGAL RESEARCH MEMORANDUM\n\n## RE: ESSENTIAL STATUTORY INGREDIENTS AND PUNISHMENT UNDER SECTION 489-F, PAKISTAN PENAL CODE, 1860\n\n---\n\n## I. SECTION 489-F STATUTORY FRAMEWORK\n\n**Status:** In Force\n\n### A. VERBATIM STATUTORY TEXT\n\nPer the verified bare-act provision on record, Section 489-F, PPC, 1860 provides:\n\n> \"Whoever dishonestly issues a cheque towards repayment of a loan or fulfillment of an obligation which is dishonoured on presentation, shall be punishable with imprisonment which may extend to three years, or with fine, or with both, unless he can establish, for which the burden of proof shall rest on him, that he had made arrangements with his bank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the cheque.\"\n\n---\n\n## II. ESSENTIAL STATUTORY INGREDIENTS\n\nTo establish an offence under Section 489-F, PPC, the prosecution must prove the following essential ingredients beyond reasonable doubt:\n\n### 1. **Issuance of a Cheque**\nThe accused must have issued a cheque. This is the primary actus reus of the offence.\n\n### 2. **Dishonest Intention**\nThe cheque must have been issued **dishonestly**. This ingredient denotes mens rea—a dishonest state of mind at the time of issuance. The dishonesty must relate to the issuer's intention regarding the cheque's honour.\n\n### 3. **Purpose of the Cheque**\nThe cheque must have been issued for one of two specified purposes:\n   - **Towards repayment of a loan**, OR\n   - **Fulfillment of an obligation**\n\n### 4. **Dishonour on Presentation**\nThe cheque must have been **dishonoured on presentation**. This is a material ingredient—dishonour at the bank constitutes proof of the cheque's failure.\n\n---\n\n## III. STATUTORY DEFENCE AND BURDEN OF PROOF REVERSAL\n\n**Critical Protection:** Section 489-F incorporates an affirmative defence. The accused may escape liability if he can establish:\n\n   - (a) That he had made arrangements with his bank to ensure the cheque would be honoured; **AND**\n   - (b) That the bank was at fault in not honouring the cheque.\n\n**Burden Reversal:** The statutory text explicitly provides: *\"for which the burden of proof shall rest on him\"*—placing the onus of proof on the accused (civil standard: balance of probabilities) to establish this defence.\n\n---\n\n## IV. PRESCRIBED PUNISHMENT\n\n**Punishment:** Under Section 489-F, PPC:\n\n- **Imprisonment:** Imprisonment of either description (rigorous or simple) **for a period which may extend to three years**, OR\n- **Fine:** Imposition of a fine, OR\n- **Both:** Imprisonment and fine conjointly.\n\n**Sentencing Authority:** Trial before a **Magistrate of the first class** (as per Cr.P.C. Schedule II classification).\n\n---\n\n## V. CRIMINAL PROCEDURAL STATUS\n\nPer Cr.P.C. Schedule II Classification:\n\n| Procedural Aspect | Status |\n|---|---|\n| **Cognizable/Non-Cognizable** | Cognizable (police may arrest without warrant) |\n| **Bailable Status** | Non-bailable |\n| **Compoundable** | Yes (Compoundable with court's permission) |\n\n**Note on Bail:** Although classified as \"non-bailable,\" case law (*Hakeem v. State* 2026 SCMR 792; *Tariq Bashir* PLD 1995 SC 34) establishes that bail remains the rule and refusal the exception under Section 497, Cr.P.C.\n\n---\n\n## VI. LEGAL CONCLUSION\n\nSection 489-F, PPC establishes a **specific offence** targeting fraudulent cheque issuance in debt/obligation contexts. The prosecution bears the initial burden to prove dishonest intent and actual dishonour. However, the statute uniquely shifts the evidential burden to the accused to establish the defensive plea that arrangements existed and bank fault caused dishonour. This provision thus balances cheque-fraud deterrence with an accused's opportunity to demonstrate innocent causation.\n\n---\n\n**Prepared:** As per verified statutory database record"
+}

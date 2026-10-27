@@ -1,5 +1,8 @@
 -- ============================================================================
 -- Migration: migrations/query_jobs.sql
+-- PREREQUISITE NOTICE (ORDER 1.14 - ITEM 9):
+-- Row Level Security (RLS) enforcement statement ('ALTER TABLE public.query_jobs ENABLE ROW LEVEL SECURITY;')
+-- MUST execute strictly AFTER table public.query_jobs has been created.
 -- Purpose: In-flight and persistent query job store for Pakistani legal research backend.
 --          Stores execution stage, status, timings, and sanitized metadata.
 --          Strictly excludes raw query text and client auth tokens.

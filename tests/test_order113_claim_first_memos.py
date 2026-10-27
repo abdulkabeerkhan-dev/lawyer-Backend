@@ -123,7 +123,7 @@ def test_fio_s22_claim_memo_resolves_all_44_violations(verifier):
         # Verbatim quote
         {"text": "22. Appeal. (1) Subject to sub-section (2), any person aggrieved by any judgment, decree, sentence, or final order passed by a Banking Court may, within thirty days of such judgment, decree, sentence or final order prefer an appeal to the High Court.", "type": "quote", "support": "FIO_2001_SEC_22(1)"},
         # Strategic analysis
-        {"text": "Counsel for appellant must ensure that security applications are prepared concurrently with the memo of appeal.", "type": "analysis", "support": None}
+        {"text": "Counsel for appellant is advised to ensure that security applications are prepared concurrently with the memo of appeal.", "type": "analysis", "support": None}
     ]
 
     res = verifier.verify_claim_memo(fio_claims)

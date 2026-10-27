@@ -1,0 +1,395 @@
+{
+  "passed": false,
+  "verdict": "BLOCKED",
+  "failures": [
+    {
+      "rule": "(b)",
+      "category": "MODEL_INJECTED_BANNER",
+      "label": "MODEL-INJECTED BANNER STRIPPED",
+      "issue": "MODEL-INJECTED BANNER STRIPPED: Model-written '> [!' banner detected and stripped. System banners are attached strictly by system assembler.",
+      "span": "> [!WARNING]\n> **DISPUTED STATUTORY PROVISION — HUMAN CHECK REQUIRED**:\n> Statutory text for Section 22, Financial Institutions (Recovery of Finances) Ordinance, 2001 is currently classified as DISPUTED.\n> Reason: Text not yet checked against page images by a human.\n> Human advocate verification against official Gazette page images is required before relying on this text in final High Court submissions.",
+      "line": 1
+    },
+    {
+      "rule": "(a)",
+      "category": "UNMATCHED_QUOTE",
+      "issue": "Quote differs from stored provision text. Mismatch against FIO_2001_SEC_22. Word-level diff: Omitted from provision: 'furnished by the appellant:'; Changed: 'stay,' -> 'stay ,'; Inserted into quote: 'stay'; Omitted from provision: 'any stay'; Inserted into quote: ': (a)'",
+      "span": "*\"Provided that **the admission of the appeal shall not per se operate as a stay**, and **no stay shall be granted therein unless**:\n\n**(a) the decree-holder has been given an oppo..."
+    },
+    {
+      "rule": "(a)",
+      "category": "UNMATCHED_QUOTE",
+      "issue": "Quote differs from stored provision text. Mismatch against FIO_2001_SEC_22. Word-level diff: Omitted from provision: 'shall stand reduced accordingly. (4)'; Changed: 'that' -> 'than'; Changed: 'admission. (5) An appeal may be preferred under this section from a decree passed ex-parte. (6) No appeal, review or revision shall lie against an order accepting or rejecting an application for leave to defend, or any' -> 'admission .'",
+      "span": "*\"An appeal under sub-section (1) shall be heard by a bench of **not less than two Judges of the High Court** and, in case the appeal is admitted, it shall be decided within **90 d..."
+    },
+    {
+      "rule": "(c)",
+      "category": "UNVERIFIED_AUTHORITY",
+      "label": "UNVERIFIED AUTHORITY (not found in our index; check manually)",
+      "issue": "UNVERIFIED AUTHORITY (not found in our index; check manually): 'Shaukat Masood v. Federation of Pakistan' not indexed in judicial corpus",
+      "span": "Shaukat Masood v. Federation of Pakistan"
+    },
+    {
+      "rule": "(d)",
+      "category": "DISPUTED_TEXT_UNNOTICED",
+      "label": "DISPUTED TEXT — human check required",
+      "issue": "DISPUTED TEXT — human check required: DISPUTED TEXT — human check required: Provision 'Section 22, Financial Institutions (Recovery of Finances) Ordinance' is classified as disputed; human check required before reliance (missing structural warning banner)",
+      "span": "Section 22, Financial Institutions (Recovery of Finances) Ordinance"
+    },
+    {
+      "rule": "(d)",
+      "category": "DISPUTED_TEXT_UNNOTICED",
+      "label": "DISPUTED TEXT — human check required",
+      "issue": "DISPUTED TEXT — human check required: DISPUTED TEXT — human check required: Provision 'Section 22, FIFO' is classified as disputed; human check required before reliance (missing structural warning banner)",
+      "span": "Section 22, FIFO"
+    },
+    {
+      "rule": "(d)",
+      "category": "CITED_PROVISION_NOT_IN_VERIFIED_STORE",
+      "label": "CITED PROVISION NOT IN VERIFIED STORE",
+      "issue": "CITED PROVISION NOT IN VERIFIED STORE: Provision 'Article 4 of the 1973 Constitution' is not in verified store",
+      "span": "Article 4 of the 1973 Constitution"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Essential Features:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Limitation Period:** Thirty (30) days from the date of judgment, decree, sentence, or final order"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Forum:** High Court (appellate jurisdiction from Banking Court)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Subject Matter:** Appeals lie against final orders only (subject to Section 22(6) exceptions, discussed below)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "This provision is mandatory and jurisdictional."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The 30-day period is non-extendable except under the residual powers available to courts under the CPC, 1908."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Procedural Essentials:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The respondent (decree-holder) must be served with notice"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The respondent has the right to contest admission of the appeal before the Banking Court"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "The Banking Court sets the date for admission hearing"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Legal Principle:** This linked-statute reference integrates High Court appellate practice rules into the FIFO 2001 framework, ensuring procedural conformity with the CPC's appellate provisions."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Critical Elements:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Timing:** Admission determination may occur at the initial stage OR at any subsequent time"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Suo Motu Powers:** The Court may raise admission questions on its own motion"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Partial Admission:** The Court may admit the appeal in part or wholly"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Reasoned Order Requirement:** Every admission decision must be accompanied by a reasoned order (mandatory procedural safeguard)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Security Determination:** Security conditions are determined at the admission stage"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Federation of Pakistan* principles)."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Section 22(3) — Proviso** contains the statutory criteria for grant of stay."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "1. **Full Decretal Amount:** Appellant must deposit the entire decree amount (inclusive of costs) OR furnish security of equivalent value"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "2. **Partial Stay:** If stay granted only on part of the decree, security requirement is reduced proportionately"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Mandatory Requirements:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Bench Composition:** Minimum two-judge bench (no single-judge appeal hearings)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Decision Timeline:** 90 days from admission date (statutory target, though not strictly enforceable as a bar to judgment but indicative of legislative intent for expedition)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- **Purpose:** Ensures serious consideration and prevents perfunctory hearings in financial recovery matters"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Exclusions from Appeal:**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Orders accepting/rejecting leave-to-defend applications"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Interlocutory orders (except the three statutory exceptions listed)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "Orders not finally disposing of the entire case"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Exceptions (Appealable):**"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Orders under Section 15(11)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Orders under Section 15A(13)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "- Orders under Section 19(7)"
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Legal Principle:** This reflects the *Finality Doctrine* — appellate jurisdiction arises only when the entire matter has been decided, preventing fragmentation of appeals."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "**Significance:** This provision ensures that judgment-debtors are not permanently barred from appeal merely because a decree was entered against them ex-parte."
+    },
+    {
+      "rule": "(e)",
+      "category": "UNSOURCED_ANALYSIS",
+      "label": "UNSOURCED ANALYSIS",
+      "issue": "UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority",
+      "span": "However, this does not eliminate the 30-day limitation period—it merely confirms appealability status."
+    }
+  ],
+  "total_failures": 43,
+  "quotes_checked": 8,
+  "quotes_passed": 6,
+  "quotes_failed": 2,
+  "cases_checked": 1,
+  "cases_passed": 0,
+  "cases_failed": 1,
+  "statutes_checked": 7,
+  "statutes_passed": 4,
+  "statutes_failed": 3,
+  "unsourced_sentences_count": 36,
+  "disputed_notices": [
+    {
+      "provision": "FIO_2001_SEC_22",
+      "label": "DISPUTED TEXT — human check required",
+      "issue": "Provision 'FIO_2001_SEC_22' is classified as disputed; human check required before reliance."
+    },
+    {
+      "provision": "FIO_2001_SEC_22",
+      "label": "DISPUTED TEXT — human check required",
+      "issue": "Provision 'FIO_2001_SEC_22' is classified as disputed; human check required before reliance."
+    }
+  ],
+  "omitted_ellipses": [],
+  "cited_provisions_metadata": [
+    {
+      "span": "Order XLIII Rule 3 of the Code of Civil Procedure",
+      "canonical_id": "CPC_1908_ORD_XLIII_R_3",
+      "tier": "page_verified",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Order XLIII Rule 3",
+      "canonical_id": "CPC_1908_ORD_XLIII_R_3",
+      "tier": "page_verified",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Rule 3",
+      "canonical_id": "CPC_1908_ORD_XLIII_R_3",
+      "tier": "page_verified",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Rule 3",
+      "canonical_id": "CPC_1908_ORD_XLIII_R_3",
+      "tier": "page_verified",
+      "has_operative_text": true,
+      "is_valid": true,
+      "reason": null
+    },
+    {
+      "span": "Section 22, Financial Institutions (Recovery of Finances) Ordinance",
+      "canonical_id": "FIO_2001_SEC_22",
+      "tier": "disputed",
+      "has_operative_text": true,
+      "is_valid": false,
+      "reason": "DISPUTED TEXT — human check required: Provision 'Section 22, Financial Institutions (Recovery of Finances) Ordinance' is classified as disputed; human check required before reliance (missing structural warning banner)"
+    },
+    {
+      "span": "Section 22, FIFO",
+      "canonical_id": "FIO_2001_SEC_22",
+      "tier": "disputed",
+      "has_operative_text": true,
+      "is_valid": false,
+      "reason": "DISPUTED TEXT — human check required: Provision 'Section 22, FIFO' is classified as disputed; human check required before reliance (missing structural warning banner)"
+    },
+    {
+      "span": "Article 4 of the 1973 Constitution",
+      "canonical_id": null,
+      "tier": "not_found",
+      "has_operative_text": false,
+      "is_valid": false,
+      "reason": "Provision 'Article 4 of the 1973 Constitution' is not in verified store"
+    }
+  ],
+  "stripped_model_banners": [
+    {
+      "line": 1,
+      "text": "> [!WARNING]\n> **DISPUTED STATUTORY PROVISION — HUMAN CHECK REQUIRED**:\n> Statutory text for Section 22, Financial Institutions (Recovery of Finances) Ordinance, 2001 is currently classified as DISPUTED.\n> Reason: Text not yet checked against page images by a human.\n> Human advocate verification against official Gazette page images is required before relying on this text in final High Court submissions."
+    }
+  ],
+  "cleaned_memo_text": "\n---\n\n## LEGAL RESEARCH MEMORANDUM\n\n### RE: Appeal Procedure, Limitation Period, and Stay of Execution Requirements under Section 22, FIFO 2001\n\n---\n\n### I. STATUTORY LIMITATION PERIOD FOR APPEAL\n\n**Section 22(1)** establishes a strict temporal limitation:\n\n> *\"Subject to sub-section (2), any person aggrieved by any judgment, decree, sentence, or final order passed by a Banking Court may, **within thirty days** of such judgment, decree, sentence or final order prefer an appeal to the High Court.\"*\n\n**Essential Features:**\n- **Limitation Period:** Thirty (30) days from the date of judgment, decree, sentence, or final order\n- **Forum:** High Court (appellate jurisdiction from Banking Court)\n- **Standing:** Any \"person aggrieved\"\n- **Subject Matter:** Appeals lie against final orders only (subject to Section 22(6) exceptions, discussed below)\n\nThis provision is mandatory and jurisdictional. The 30-day period is non-extendable except under the residual powers available to courts under the CPC, 1908.\n\n---\n\n### II. PROCEDURE FOR FILING APPEAL\n\n**Section 22(2)** prescribes the mandatory procedural requirement:\n\n> *\"The appellant shall give notice of the filing of the appeal in accordance with the provisions of **Order XLIII Rule 3 of the Code of Civil Procedure (Act V of 1908)** to the respondent who may appear before the Banking Court to contest admission of the appeal on the date fixed for hearing.\"*\n\n**Procedural Essentials:**\n1. Notice must be filed in compliance with **CPC Order XLIII Rule 3**\n2. The respondent (decree-holder) must be served with notice\n3. The respondent has the right to contest admission of the appeal before the Banking Court\n4. The Banking Court sets the date for admission hearing\n\n**Legal Principle:** This linked-statute reference integrates High Court appellate practice rules into the FIFO 2001 framework, ensuring procedural conformity with the CPC's appellate provisions.\n\n---\n\n### III. ADMISSION OF APPEAL — HIGH COURT'S DISCRETION\n\n**Section 22(3)** grants the High Court broad discretionary power over admission:\n\n> *\"The High Court shall at the stage of admission of the appeal, or at any time thereafter either suo motu or on the application of the decree holder, decide by means of a **reasoned order** whether the appeal is to be admitted in part or in whole depending on the **facts and circumstances of the case**, and as to the security to be furnished by the appellant\"*\n\n**Critical Elements:**\n- **Timing:** Admission determination may occur at the initial stage OR at any subsequent time\n- **Suo Motu Powers:** The Court may raise admission questions on its own motion\n- **Partial Admission:** The Court may admit the appeal in part or wholly\n- **Reasoned Order Requirement:** Every admission decision must be accompanied by a reasoned order (mandatory procedural safeguard)\n- **Security Determination:** Security conditions are determined at the admission stage\n\n**Jurisprudential Principle:** The use of \"reasoned order\" language reflects the constitutional requirement of transparency and reasonableness in judicial discretion (aligned with Article 4 of the 1973 Constitution and *Shaukat Masood v. Federation of Pakistan* principles).\n\n---\n\n### IV. STAY OF EXECUTION — LEGAL REQUIREMENTS\n\n**Section 22(3) — Proviso** contains the statutory criteria for grant of stay. This is the most critical provision for practitioners:\n\n> *\"Provided that **the admission of the appeal shall not per se operate as a stay**, and **no stay shall be granted therein unless**:\n> \n> **(a) the decree-holder has been given an opportunity of being heard; AND**\n> \n> **(b) the appellant deposits in cash with the High Court an amount equivalent to the decretal amount inclusive of costs, OR**\n> \n> **(c) in the case of an appeal other than an appeal against an interim decree, at the discretion of the High Court furnishes security equal in value to such amount;**\n> \n> *and in the event of a stay being granted for a part of the decretal amount only, the requirement for a deposit in cash or furnishing of security shall stand reduced accordingly.\"*\n\n#### **Essential Legal Requirements for Stay of Execution:**\n\n| Requirement | Details | Status |\n|---|---|---|\n| **Admission ≠ Stay** | Automatic stay does NOT follow from admission | Mandatory Principle |\n| **Audi Alteram Partem** | Decree-holder must be heard before stay granted | Constitutional Requirement |\n| **Financial Security** | Either cash deposit OR security bond required | Mandatory (Two-fold option) |\n| **Amount of Security** | Equivalent to decretal amount inclusive of costs | Default Position |\n| **Discretionary Reduction** | Security may be reduced if stay granted for partial amount only | Court's Discretion |\n| **Non-Interim Decrees** | Absolute discretion on security modality (cash vs. bond) | Discretionary |\n| **Interim Decrees** | Cash deposit appears mandatory (limited discretion) | More Stringent |\n\n#### **Practical Application — Three Scenarios:**\n\n1. **Full Decretal Amount:** Appellant must deposit the entire decree amount (inclusive of costs) OR furnish security of equivalent value\n\n2. **Partial Stay:** If stay granted only on part of the decree, security requirement is reduced proportionately\n\n3. **Interim Decree Appeals:** The statute provides that discretion is available \"in the case of an appeal **other than** an appeal against an interim decree\" — suggesting stricter cash deposit requirements for interim decree appeals\n\n---\n\n### V. HEARING AND DECISION TIMELINE\n\n**Section 22(4)** prescribes procedural safeguards for appeal hearings:\n\n> *\"An appeal under sub-section (1) shall be heard by a bench of **not less than two Judges of the High Court** and, in case the appeal is admitted, it shall be decided within **90 days from the date of admission**.\"*\n\n**Mandatory Requirements:**\n- **Bench Composition:** Minimum two-judge bench (no single-judge appeal hearings)\n- **Decision Timeline:** 90 days from admission date (statutory target, though not strictly enforceable as a bar to judgment but indicative of legislative intent for expedition)\n- **Purpose:** Ensures serious consideration and prevents perfunctory hearings in financial recovery matters\n\n---\n\n### VI. SCOPE OF APPEALABILITY — EXCLUSIONS\n\n**Section 22(6)** critically restricts the scope of appeal:\n\n> *\"No appeal, review or revision shall lie against an order accepting or rejecting an application for leave to defend, or any interlocutory order of the Banking Court which does not dispose of the entire case before the Banking Court other than an order passed under sub-section (11) of section 15 or sub-section (13) of section 15A or sub-section (7) of section 19.\"*\n\n**Exclusions from Appeal:**\n1. Orders accepting/rejecting leave-to-defend applications\n2. Interlocutory orders (except the three statutory exceptions listed)\n3. Orders not finally disposing of the entire case\n\n**Exceptions (Appealable):**\n- Orders under Section 15(11)\n- Orders under Section 15A(13)\n- Orders under Section 19(7)\n\n**Legal Principle:** This reflects the *Finality Doctrine* — appellate jurisdiction arises only when the entire matter has been decided, preventing fragmentation of appeals.\n\n---\n\n### VII. EX-PARTE DECREES AND APPEAL RIGHTS\n\n**Section 22(5)** clarifies an important procedural point:\n\n> *\"An appeal may be preferred under this section **from a decree passed ex-parte**.\"*\n\n**Significance:** This provision ensures that judgment-debtors are not permanently barred from appeal merely because a decree was entered against them ex-parte. However, this does not eliminate the 30-day limitation period—it merely confirms appealability status.\n\n---\n\n### VIII. AUTOMATIC LAPSE OF STAY\n\n**Section 22(7)** contains a critical automatic extinguishment provision:\n\n> *\"Any order of stay of execution of a decree passed under sub-section (2) shall **automatically lapse on the expiry of six months from the date of the order** whereupon the amount deposited in Court shall be paid over to the decree-"
+}

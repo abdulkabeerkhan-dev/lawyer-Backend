@@ -154,7 +154,9 @@ $$;
 --
 -- Alternatively, if running during a planned maintenance window where table locks
 -- are acceptable, the standard non-concurrent index can be executed inside a transaction:
---   CREATE INDEX IF NOT EXISTS idx_full_judgments_fts_tokens 
---       ON public.full_judgments 
---       USING gin (fts_tokens);
+-- OPERATIVE PRODUCTION DDL (MUST RUN OUTSIDE TRANSACTION BLOCK):
+-- CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_full_judgments_fts_tokens 
+--     ON public.full_judgments 
+--     USING gin (fts_tokens);
+-- NOTE: PostgreSQL enforces that `CREATE INDEX CONCURRENTLY` CANNOT be executed inside a multi-statement transaction block (`BEGIN ... COMMIT`). It must be executed in an autocommit connection.
 -- ----------------------------------------------------------------------------
