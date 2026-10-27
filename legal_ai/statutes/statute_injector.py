@@ -567,12 +567,8 @@ class StatuteInjector:
                 lines.append("********************************************************************************")
                 lines.append(f"CRITICAL WARNING: {display_name} IS TAGGED AS DISPUTED IN OFFICIAL STORE.")
                 lines.append("Reason: Text not yet checked against page images by a human.")
-                lines.append("You MUST print the following banner at the very top of your memo:")
-                lines.append("> [!WARNING]")
-                lines.append(f"> **DISPUTED STATUTORY PROVISION — HUMAN CHECK REQUIRED**:")
-                lines.append(f"> Statutory text for {display_name} is currently classified as DISPUTED.")
-                lines.append("> Reason: Text not yet checked against page images by a human.")
-                lines.append("> Human advocate verification against official Gazette page images is required before relying on this text.")
+                lines.append("Do NOT print any '> [!' banner yourself. System banners are attached automatically after verification.")
+                lines.append("Human advocate verification against official Gazette page images is required before relying on this text.")
                 lines.append("********************************************************************************")
 
             # Schedule II injection for PPC offences

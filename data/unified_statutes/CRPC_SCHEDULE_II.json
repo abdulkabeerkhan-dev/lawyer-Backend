@@ -21,10 +21,11 @@
     "note": "Verified directly from official Pakistan Code bare act PDF. Section 420 Column 5 is Ditto under Section 419 (Not bailable substituted by Ord. XXXIII of 1981, s. 3).",
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
-    "in_force": "unknown",
+    "in_force": true,
     "quoting_allowed": false,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "page_verified": false
   },
   "406": {
     "section": "406",
@@ -47,10 +48,11 @@
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
-    "in_force": "unknown",
+    "in_force": true,
     "quoting_allowed": false,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "page_verified": false
   },
   "409": {
     "section": "409",
@@ -73,10 +75,11 @@
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
-    "in_force": "unknown",
+    "in_force": true,
     "quoting_allowed": false,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "page_verified": false
   },
   "489-F": {
     "section": "489-F",
@@ -99,10 +102,11 @@
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
-    "in_force": "unknown",
+    "in_force": true,
     "quoting_allowed": false,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "page_verified": false
   },
   "489F": {
     "section": "489-F",
@@ -125,10 +129,11 @@
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
-    "in_force": "unknown",
+    "in_force": true,
     "quoting_allowed": false,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "page_verified": false
   },
   "419": {
     "section": "419",
@@ -151,10 +156,11 @@
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
-    "in_force": "unknown",
+    "in_force": true,
     "quoting_allowed": false,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "page_verified": false
   },
   "468": {
     "section": "468",
@@ -177,10 +183,11 @@
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
-    "in_force": "unknown",
+    "in_force": true,
     "quoting_allowed": false,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "page_verified": false
   },
   "471": {
     "section": "471",
@@ -203,10 +210,11 @@
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Bailable",
     "tier": "unsourced",
-    "in_force": "unknown",
+    "in_force": true,
     "quoting_allowed": false,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "page_verified": false
   },
   "302": {
     "section": "302",
@@ -229,9 +237,10 @@
     "note": "Verified directly from official Pakistan Code bare act PDF.",
     "schedule_ii_column_5": "Not bailable",
     "tier": "unsourced",
-    "in_force": "unknown",
+    "in_force": true,
     "quoting_allowed": false,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "page_verified": false
   }
 }
