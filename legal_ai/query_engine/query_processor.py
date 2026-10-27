@@ -2845,14 +2845,14 @@ async def process_query_job_legal_ai(
                            "FIO_2001_SEC_22" in str(cid))
             banner_prefix = ""
             if is_disputed:
-                banner_prefix = "> [!WARNING] DISPUTED STATUTORY TEXT — HUMAN CHECK REQUIRED\n> Official prints of this provision contain contested variations.\n\n"
+                banner_prefix = "> ⚠️ **Disputed Gazette Note**: Official prints of this provision contain contested text variations. Independent human verification against authenticated gazette prints is recommended prior to formal court reliance.\n\n"
 
             verified_fallback.append({
                 "canonical_id": cid,
                 "display_name": disp_name,
                 "tier": tier,
                 "is_disputed": is_disputed,
-                "text": banner_prefix + f"[{tier.upper()}] {disp_name}:\n{txt}"
+                "text": banner_prefix + f"#### {disp_name}\n\n" + re.sub(r'\b(Provided that)\b', r'\n\n> *\1*', re.sub(r'(?<!sub-section\s)(?<!sub -section\s)(?<!section\s)(?<!order\s)(?<=\s)(\([0-9]+\))\s*', r'\n\n**\1** ', txt))
             })
 
         blocked_payload = {

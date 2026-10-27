@@ -15720,11 +15720,11 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
         for fb in (job.get("verified_statute_fallback") or []):
             if isinstance(fb, dict) and fb.get("text"):
                 fallback_texts.append(fb["text"])
-        response_text = f"> [!WARNING] VERIFICATION NOTICE: OUTPUT WITHHELD\n> {safe_reason}\n\n"
+        response_text = f"> ⚠️ **Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. The authentic, verbatim text of the controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n"
         if fallback_texts:
             response_text += "### Verified Statutory Provisions on Record\n\n" + "\n\n---\n\n".join(fallback_texts)
         if job.get("retry_guidance"):
-            response_text += f"\n\n> [!NOTE] Guidance\n> {job['retry_guidance']}"
+            response_text += f"\n\n> 💡 **Legal Guidance**: {job['retry_guidance']}"
 
         return {
             "status": "done",

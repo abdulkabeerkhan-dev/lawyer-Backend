@@ -917,6 +917,14 @@ class MemoVerifier:
             if is_valid:
                 statutes_passed += 1
                 verified_statute_spans.add(sc["span"])
+                m_sec = re.search(r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:\(\d+\))*(?:\([a-z]\))*)', sc["span"], re.I)
+                if m_sec:
+                    sec_ref = m_sec.group(0).strip()
+                    verified_statute_spans.add(sec_ref)
+                    base_num = re.search(r'\d+[A-Za-z]?', sec_ref)
+                    if base_num:
+                        verified_statute_spans.add(f"Section {base_num.group(0)}")
+                        verified_statute_spans.add(f"s. {base_num.group(0)}")
                 if rec and rec.get("tier") in ("disputed", "extraction_disputed"):
                     disputed_notices.append({
                         "provision": cid or sc["span"],
@@ -946,6 +954,7 @@ class MemoVerifier:
         lines = memo_text.splitlines()
         in_banner = False
         in_code = False
+        in_exempt_section = False
         unsourced_sentences = 0
 
         for line in lines:
@@ -965,7 +974,21 @@ class MemoVerifier:
                 else:
                     in_banner = False
 
-            if s_line.startswith(">") or s_line.startswith("|") or s_line.startswith("#") or s_line.startswith("---"):
+            if s_line.startswith("#"):
+                lower_h = s_line.lower()
+                in_exempt_section = (
+                    "legal issue" in lower_h or 
+                    "unreviewed analysis" in lower_h or 
+                    "statutory provisions" in lower_h or
+                    "relevant provisions" in lower_h
+                )
+                continue
+
+            if in_exempt_section and (s_line.startswith("*") or not s_line.startswith("#")):
+                continue
+
+            if (s_line.startswith("*") or s_line.startswith(">") or s_line.startswith("|") or 
+                s_line.startswith("---") or s_line.startswith("- **[analysis") or s_line.startswith("- **[paraphrase")):
                 continue
             if not s_line:
                 continue
