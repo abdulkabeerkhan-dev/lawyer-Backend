@@ -1,45 +1,13 @@
 ================================================================================
 ORDER 2.0 — VERBATIM STATUTES FORENSIC AUDIT & VERIFICATION REPORT
-Generated at: 2026-10-27T15:02:12.176000
+Generated at: 2026-10-27T15:03:11.527389
 Execution mode: STRICT OFFLINE (0 network calls, 0 live model calls, 0 credentials)
 ================================================================================
 
 ## 0. GIT BASELINE & REPOSITORY STATE
-git rev-parse HEAD: f82cc907536fb2a78ba02c4715f3b43eafab9fa9
+git rev-parse HEAD: aab1da6374b89a46fa69fb71dbcaee57318a07e9
 git status --porcelain (pending Order 2.0 changes):
-M core/statute_lookup.py
- M core/statutory_validator.py
- M core/unified_statute_store.py
-R  data/unified_statutes/BCO_1962.json -> data/legacy_store/BCO_1962.json
-R  data/unified_statutes/CONTRACT_1872.json -> data/legacy_store/CONTRACT_1872.json
-R  data/unified_statutes/CPC_1908.json -> data/legacy_store/CPC_1908.json
-R  data/unified_statutes/CRPC_1898.json -> data/legacy_store/CRPC_1898.json
-R  data/unified_statutes/CRPC_SCHEDULE_II.json -> data/legacy_store/CRPC_SCHEDULE_II.json
-R  data/unified_statutes/FIO_2001.json -> data/legacy_store/FIO_2001.json
-R  data/unified_statutes/LIMITATION_1908.json -> data/legacy_store/LIMITATION_1908.json
-R  data/unified_statutes/PPC_1860.json -> data/legacy_store/PPC_1860.json
-R  data/unified_statutes/REGISTRATION_1908.json -> data/legacy_store/REGISTRATION_1908.json
-R  data/unified_statutes/STAMP_1899.json -> data/legacy_store/STAMP_1899.json
-R  data/unified_statutes/TPA_1882.json -> data/legacy_store/TPA_1882.json
- M legal_ai/statutes/statute_injector.py
- M legal_ai/verification/memo_verifier.py
- M scripts/test_ellipsis_verification.py
- M tests/test_memo_verifier.py
- M tests/test_order113_statute_lookup.py
-?? core/case_law_quotes.py
-?? core/quote_by_reference.py
-?? data/statutes_v2/
-?? docs/pdfs_needed.md
-?? pytest.ini
-?? reports/legacy_vs_v2_audit.txt
-?? reports/spotcheck/
-?? scripts/audit_legacy_vs_v2.py
-?? scripts/extract_statutes_v2.py
-?? scripts/generate_spotchecks.py
-?? scripts/run_order20_report.py
-?? tests/test_order20_case_law_quotes.py
-?? tests/test_order20_quote_by_reference.py
-?? tests/test_order20_review_pinning.py
+(clean)
 
 ## STEP 0 — HOUSEKEEPING
 Untracked Order 1.15 files committed in baseline:
