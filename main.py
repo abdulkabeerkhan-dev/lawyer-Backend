@@ -15720,11 +15720,24 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
         for fb in (job.get("verified_statute_fallback") or []):
             if isinstance(fb, dict) and fb.get("text"):
                 fallback_texts.append(fb["text"])
-        response_text = f"> ⚠️ **Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. The authentic, verbatim text of the controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n"
+        response_text = f"> **Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. The authentic, verbatim text of the controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n"
         if fallback_texts:
             response_text += "### Verified Statutory Provisions on Record\n\n" + "\n\n---\n\n".join(fallback_texts)
+        
+        precedent_cards = job.get("precedent_cards") or job.get("verified_precedents_fallback") or []
+        if precedent_cards:
+            response_text += "\n\n### Verified Judicial Authorities on Record\n\n"
+            for pc in precedent_cards[:5]:
+                cit = pc.get("citation") or pc.get("title") or "Judicial Precedent"
+                case_t = pc.get("case_title") or pc.get("title") or ""
+                court = pc.get("court") or "Superior Court"
+                holding = pc.get("holding") or pc.get("summary") or pc.get("snippet") or ""
+                response_text += f"- **{cit}** — *{case_t}* ({court})\n"
+                if holding:
+                    response_text += f"  > {holding.strip()[:300]}...\n\n"
+
         if job.get("retry_guidance"):
-            response_text += f"\n\n> 💡 **Legal Guidance**: {job['retry_guidance']}"
+            response_text += f"\n\n> **Legal Guidance**: {job['retry_guidance']}"
 
         return {
             "status": "done",
@@ -15734,10 +15747,10 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                 "answer": response_text,
                 "response": response_text,
                 "model_answer": response_text,
-                "precedents": [],
-                "precedent_cards": [],
+                "precedents": precedent_cards,
+                "precedent_cards": precedent_cards,
                 "additional_authorities": [],
-                "citations": [],
+                "citations": [p.get("citation") for p in precedent_cards if p.get("citation")],
                 "query_id": str(job_id),
                 "mode": "verification_blocked",
                 "truncated": False,

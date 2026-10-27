@@ -2863,6 +2863,8 @@ async def process_query_job_legal_ai(
             'safe_reason': safe_reason,
             'retry_guidance': retry_guidance,
             'verified_statute_fallback': verified_fallback,
+            'verified_precedents_fallback': precedent_cards,
+            'precedent_cards': precedent_cards,
             'attempts': attempts_history,
             'early_display': None,
             'result': None,

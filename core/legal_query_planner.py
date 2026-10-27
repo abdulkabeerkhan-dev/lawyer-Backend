@@ -235,6 +235,11 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         domains.append("civil property")
         if "civil" not in matter_type:
             matter_type.append("civil")
+    if any(k in q_low for k in ["sale deed", "agreement to sell", "specific performance", "advance money", "earnest money", "token money", "breach of contract"]) or (any(k in q_low for k in ["seller", "buyer", "vendor", "vendee"]) and any(k in q_low for k in ["sale", "deed", "refused", "money", "property"])):
+        if "specific performance & contract" not in domains:
+            domains.append("specific performance & contract")
+        if "civil" not in matter_type:
+            matter_type.append("civil")
     if any(k in q_low for k in ["family", "khula", "dower", "maintenance", "guardian", "custody of minor"]):
         domains.append("family law")
         if "family" not in matter_type:
@@ -289,6 +294,10 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         statutes.append("Code of Criminal Procedure, 1898")
     if "banking recovery" in domains or any(k in q_low for k in ["banking court", "financial institution", "recovery of finance", "fio", "firo"]):
         statutes.append("Financial Institutions (Recovery of Finances) Ordinance, 2001")
+    if "specific performance & contract" in domains or any(k in q_low for k in ["specific performance", "sale deed", "agreement to sell", "advance money"]):
+        for sp_stat in ["Specific Relief Act, 1877", "Contract Act, 1872", "Transfer of Property Act, 1882", "Code of Civil Procedure, 1908", "Limitation Act, 1908"]:
+            if sp_stat not in statutes:
+                statutes.append(sp_stat)
 
     # 5. Identify standard provisions - FILTER ENACTMENT YEARS (Year-to-PPC bug fix)
     provisions = []
@@ -424,6 +433,19 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         if not any("fio" in p.lower() or "financial institutions" in p.lower() for p in provisions):
             provisions.append("Section 22 Financial Institutions (Recovery of Finances) Ordinance 2001")
 
+    if "specific performance & contract" in domains or any(k in q_low for k in ["specific performance", "sale deed", "agreement to sell", "advance money"]):
+        for sp_p in [
+            "Section 12 Specific Relief Act, 1877",
+            "Section 53A Transfer of Property Act, 1882",
+            "Section 55 Transfer of Property Act, 1882",
+            "Section 73 Contract Act, 1872",
+            "Section 9 Code of Civil Procedure, 1908",
+            "Order XXXIX Rule 1 CPC",
+            "Article 113 Limitation Act, 1908"
+        ]:
+            if not any(sp_p.lower() == p.lower() for p in provisions):
+                provisions.append(sp_p)
+
     # Premise correction routing
     for check in premise_checks:
         if check["status"] == "CONFIRMED_ABSENT":
@@ -537,6 +559,11 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
     if any(k in q_low for k in ["rent", "evict", "tenant"]) and any(k in q_low for k in ["cheque", "bounced", "prosecute", "489"]):
         questions.append("concurrent civil eviction and criminal proceedings: whether simultaneous proceedings are legally maintainable")
         questions.append("limitation period: absence of limitation for criminal complaint under CrPC vs eviction application under PRPA")
+    if "specific performance & contract" in domains or any(k in q_low for k in ["sale deed", "specific performance", "agreement to sell", "advance money"]):
+        questions.append("suit for specific performance of contract to sell immovable property under Section 12 Specific Relief Act 1877")
+        questions.append("recovery of advance or earnest money and damages for breach of contract under Section 73 Contract Act 1872")
+        questions.append("temporary injunction under Order XXXIX Rules 1 & 2 CPC restraining seller from creating third party interest or alienating property")
+        questions.append("limitation period of three years under Article 113 Limitation Act 1908 for specific performance")
 
     if not questions:
         questions = [query[:200]]
@@ -569,7 +596,28 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
             lane_name = "adverse_possession_doctrine"
         elif "injunction" in dq_low or "order xxxix" in dq_low:
             lane_name = "interim_injunction_remedy"
+        elif any(k in dq_low for k in ["specific performance", "sale deed", "agreement to sell", "advance money"]):
+            lane_name = "specific_performance_sale_deed"
+            dq = "Section 12 Specific Relief Act 1877 suit for specific performance sale deed advance money refusal to execute agreement to sell"
         lanes.append({"lane": lane_name, "query": dq})
+
+    # Add dedicated lanes for Specific Performance & Contract queries
+    if "specific performance & contract" in domains or any(k in q_low for k in ["sale deed", "specific performance", "agreement to sell", "advance money"]):
+        if not any(l["lane"] == "specific_performance_immovable_property" for l in lanes):
+            lanes.insert(0, {
+                "lane": "specific_performance_immovable_property",
+                "query": "Section 12 Specific Relief Act 1877 suit for specific performance agreement to sell immovable property advance money"
+            })
+        if not any(l["lane"] == "recovery_advance_money_damages" for l in lanes):
+            lanes.append({
+                "lane": "recovery_advance_money_damages",
+                "query": "Section 73 Contract Act 1872 recovery of earnest advance money damages breach of contract to sell"
+            })
+        if not any(l["lane"] == "temporary_injunction_restraining_alienation" for l in lanes):
+            lanes.append({
+                "lane": "temporary_injunction_restraining_alienation",
+                "query": "Order XXXIX Rules 1 2 CPC temporary injunction restraining seller from alienating property creating third party interest"
+            })
 
     # Add dedicated lanes if premise corrections were triggered
     for check in premise_checks:
@@ -683,6 +731,7 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> LegalQueryPlan:
 
                 fallback = create_deterministic_fallback_plan(query)
                 premise_corrections = fallback.premise_corrections
+                search_lanes = data.get("search_lanes", [])
 
                 # If premise corrections exist, ensure absent provisions are scrubbed and replaced with Pakistani equivalents
                 if premise_corrections:
@@ -698,7 +747,6 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> LegalQueryPlan:
                 if not provisions:
                     provisions = fallback.provisions
 
-                search_lanes = search_lanes or data.get("search_lanes", [])
                 if not search_lanes:
                     search_lanes = fallback.search_lanes
 
@@ -726,9 +774,9 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> LegalQueryPlan:
                     employee_status_branching=fallback.employee_status_branching,
                     premise_corrections=premise_corrections
                 )
-        except Exception:
-            # Fallback cleanly without stopping execution
-            pass
+        except Exception as err:
+            import sys
+            print(f"⚠️ analyze_legal_query exception: {err}", file=sys.stderr, flush=True)
 
     # Deterministic fallback
     return create_deterministic_fallback_plan(query)
