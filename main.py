@@ -13716,6 +13716,16 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                 jobs_store[job_id].update(blocked_payload)
             raise MemorandumVerificationBlockedError(verification_gate)
 
+        # STAGE 5 GATE 2: ANTI-PATTERN GUARDRAIL & GUARDIAN INTERVENTION
+        from legal_ai.verification.anti_pattern_guard import AntiPatternGuard
+        anti_guard = AntiPatternGuard()
+        guard_res = anti_guard.check_text(display_answer)
+        if not guard_res["is_clean"]:
+            display_answer = guard_res["sanitized_text"]
+            guardian_notice = anti_guard.format_guardian_notice(guard_res["guardian_interventions"])
+            if guardian_notice:
+                display_answer = guardian_notice + "\n\n" + display_answer
+
         inserted_row_id = str(uuid.uuid4())
 
         if supabase:

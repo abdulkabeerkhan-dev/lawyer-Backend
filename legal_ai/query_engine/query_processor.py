@@ -906,6 +906,26 @@ async def process_query_job_legal_ai(
 
         formatted_current_law_block = f"{formatted_current_law_block}\n\n{statute_framework_res['statute_block']}".strip()
 
+    # STAGE 1, 2 & 3: DUAL TRACK STATUTE ROUTING & CONSENSUS VOTING
+    from legal_ai.query_engine.consensus_engine import ConsensusVotingEngine
+    consensus_engine = ConsensusVotingEngine(ai_client_fn=_planner_ai_call)
+    try:
+        consensus_data = await consensus_engine.execute_consensus_pipeline(
+            query=effective_user_query,
+            provisions_from_plan=legal_query_plan.provisions
+        )
+        verified_claims = consensus_data.get("verified_provisions", [])
+        if verified_claims:
+            for vc in verified_claims:
+                p_str = vc["provision"]
+                if p_str not in legal_query_plan.provisions:
+                    legal_query_plan.provisions.append(p_str)
+        consensus_grounded_block = consensus_engine.assemble_grounded_synthesis_block(consensus_data.get("consensus", {}))
+        if consensus_grounded_block:
+            formatted_current_law_block = f"{formatted_current_law_block}\n\n{consensus_grounded_block}".strip()
+    except Exception as c_err:
+        print(f"Consensus engine notice: {c_err}", flush=True)
+
 
 
 
@@ -2879,7 +2899,18 @@ async def process_query_job_legal_ai(
 
 
 
-    inserted_row_id = job_id
+    
+    # STAGE 5 GATE 2: ANTI-PATTERN GUARDRAIL & GUARDIAN INTERVENTION
+    from legal_ai.verification.anti_pattern_guard import AntiPatternGuard
+    anti_guard = AntiPatternGuard()
+    guard_res = anti_guard.check_text(clean_answer)
+    if not guard_res["is_clean"]:
+        clean_answer = guard_res["sanitized_text"]
+        guardian_notice = anti_guard.format_guardian_notice(guard_res["guardian_interventions"])
+        if guardian_notice:
+            clean_answer = guardian_notice + "\n\n" + clean_answer
+
+inserted_row_id = job_id
 
 
 
