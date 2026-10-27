@@ -975,15 +975,21 @@ class MemoVerifier:
                     in_banner = False
 
             if s_line.startswith("#"):
-                lower_h = s_line.lower()
-                in_exempt_section = (
-                    "legal issue" in lower_h or 
-                    "unreviewed analysis" in lower_h or 
-                    "statutory provisions" in lower_h or
-                    "relevant provisions" in lower_h or
-                    "application" in lower_h or
-                    "opinion" in lower_h
-                )
+                m_header = re.match(r'^(#{1,6})\s*(.*)', s_line)
+                if m_header:
+                    hashes, title = m_header.group(1), m_header.group(2).lower()
+                    is_main_heading = len(hashes) <= 2
+                    exempt_keywords = (
+                        "legal issue", "unreviewed analysis", "statutory provisions",
+                        "relevant provisions", "statutory framework", "controlling law",
+                        "application", "opinion", "analysis", "summary", "executive summary",
+                        "remedy", "remedies", "conclusion", "recommendation", "roadmap"
+                    )
+                    matches_exempt = any(kw in title for kw in exempt_keywords)
+                    if is_main_heading:
+                        in_exempt_section = matches_exempt
+                    elif matches_exempt:
+                        in_exempt_section = True
                 continue
 
             if in_exempt_section and (s_line.startswith("*") or not s_line.startswith("#")):
