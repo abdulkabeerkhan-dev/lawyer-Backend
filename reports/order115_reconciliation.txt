@@ -1,0 +1,300 @@
+================================================================================
+ORDER 1.15 FORENSIC RECONCILIATION REPORT
+Generated: 2026-10-27T13:25:02.198277
+Repository: I:\c\Users\kabeer\Documents\lawyer-Backend-master\lawyer-Backend-master
+Mode: Strictly Offline (0 network requests, 0 external calls, 0 writes to hosted services)
+================================================================================
+
+================================================================================
+--> ITEM 1: RECORD COUNTS (82f317a vs 9ebe1a6)
+================================================================================
+Act                  | 82f317a Total | 9ebe1a6 Total | Diff   | 82f317a Match | 9ebe1a6 Match | Diff Match
+-----------------------------------------------------------------------------------------------
+BCO_1962             | 3             | 3             | 0      | 1             | 1             | 0         
+CONTRACT_1872        | 31            | 31            | 0      | 5             | 5             | 0         
+CPC_1908             | 755           | 755           | 0      | 9             | 9             | 0         
+CRPC_1898            | 527           | 527           | 0      | 0             | 0             | 0         
+CRPC_SCHEDULE_II     | 9             | 9             | 0      | 0             | 0             | 0         
+FIO_2001             | 28            | 28            | 0      | 5             | 5             | 0         
+LIMITATION_1908      | 216           | 216           | 0      | 0             | 0             | 0         
+PPC_1860             | 646           | 646           | 0      | 4             | 4             | 0         
+REGISTRATION_1908    | 3             | 3             | 0      | 1             | 1             | 0         
+STAMP_1899           | 1             | 1             | 0      | 0             | 0             | 0         
+TPA_1882             | 17            | 17            | 0      | 1             | 1             | 0         
+-----------------------------------------------------------------------------------------------
+TOTAL                | 2236          | 2236          | 0      | 26            | 26            | 0         
+
+=== PER-TIER COUNTS: 82f317a (Order 1.13 HEAD) ===
+  BCO_1962            : {'ingested_unreviewed': 3}
+  CONTRACT_1872       : {'ingested_unreviewed': 31}
+  CPC_1908            : {'title_only': 718, 'ingested_unreviewed': 34, 'page_verified': 3}
+  CRPC_1898           : {'title_only': 511, 'ingested_unreviewed': 14, 'page_verified': 2}
+  CRPC_SCHEDULE_II    : {'unsourced': 9}
+  FIO_2001            : {'ingested_unreviewed': 27, 'disputed': 1}
+  LIMITATION_1908     : {'title_only': 190, 'ingested_unreviewed': 25, 'disputed': 1}
+  PPC_1860            : {'title_only': 630, 'ingested_unreviewed': 15, 'tier_1': 1}
+  REGISTRATION_1908   : {'ingested_unreviewed': 3}
+  STAMP_1899          : {'ingested_unreviewed': 1}
+  TPA_1882            : {'ingested_unreviewed': 17}
+
+=== PER-TIER COUNTS: 9ebe1a6 (Order 1.14 HEAD) ===
+  BCO_1962            : {'ingested_unreviewed': 3}
+  CONTRACT_1872       : {'ingested_unreviewed': 31}
+  CPC_1908            : {'title_only': 718, 'ingested_unreviewed': 34, 'page_verified': 3}
+  CRPC_1898           : {'title_only': 511, 'ingested_unreviewed': 14, 'page_verified': 2}
+  CRPC_SCHEDULE_II    : {'unsourced': 9}
+  FIO_2001            : {'ingested_unreviewed': 27, 'disputed': 1}
+  LIMITATION_1908     : {'title_only': 190, 'ingested_unreviewed': 25, 'disputed': 1}
+  PPC_1860            : {'title_only': 630, 'ingested_unreviewed': 16}
+  REGISTRATION_1908   : {'ingested_unreviewed': 3}
+  STAMP_1899          : {'ingested_unreviewed': 1}
+  TPA_1882            : {'ingested_unreviewed': 17}
+
+=== EXPLANATION OF DIFFERENCES ===
+1. Total Records Difference: 0 across all 11 Act files. No records were added or removed.
+2. Matched Count Difference: 0 across all 11 Act files. Exactly 26 provisions match the text layer.
+3. Tier Difference: In PPC_1860, 1 record (PPC_1860_SEC_415) moved from 'tier_1' to 'ingested_unreviewed' (caused by commit b1f46ad in Order 1.14 Item 5).
+4. Order 1.13 Chat Summary Table: The table in the Order 1.13 chat response showing BCO: 134, Contract: 277, Stamp: 91, TPA: 158, Registration: 107, FIO: 32 was TYPED by hand by the agent from general memory of bare act statutory length. The real committed files at 82f317a (and reports/order113_report.txt lines 180-190) always contained 3, 31, 755, 527, 9, 28, 216, 646, 3, 1, 17.
+
+================================================================================
+--> ITEM 2: MISSING RECORDS CHECK
+================================================================================
+Total Unique Canonical IDs in 82f317a: 2227
+Total Unique Canonical IDs in 9ebe1a6: 2227
+Removed Canonical IDs Count: 0
+Added Canonical IDs Count:   0
+ZERO records were removed between 82f317a and 9ebe1a6.
+
+================================================================================
+--> ITEM 3: STAMP ACT (STAMP_1899.json) RECORDS AT BOTH COMMITS
+================================================================================
+STAMP_1899.json at 82f317a:
+  canonical_id: STAMP_1899_SEC_35 | section: 35 | title: Instruments not duly stamped inadmissible in evidence, etc.
+
+STAMP_1899.json at 9ebe1a6:
+  canonical_id: STAMP_1899_SEC_35 | section: 35 | title: Instruments not duly stamped inadmissible in evidence, etc.
+
+Findings on Stamp Act:
+  STAMP_1899.json contains exactly 1 record (STAMP_1899_SEC_35) at both commits.
+  The claim of '91 records' in the chat summary was TYPED from memory based on the theoretical section count of Act II of 1899.
+
+================================================================================
+--> ITEM 4: FIO KEYS, TEXT LAYER HEADINGS & SECTION 10 vs 11
+================================================================================
+Stored Canonical IDs in FIO_2001.json (first 80 chars of text):
+  FIO_2001_SEC_1  : 1. Short title, extent and commencement.—(1) This Ordinance may be called the  F
+  FIO_2001_SEC_2  : 2. Definitions.—In this Ordinance, unless there is anything repugnant in the sub
+  FIO_2001_SEC_3  : (1) It shall be the duty of a customer to fulfil all his obligations to the fina
+  FIO_2001_SEC_4  : (1) The Federal Government may, by notification in the official Gazette, establi
+  FIO_2001_SEC_7  : 7. Powers of Banking Courts. (1) Subject to the provisions of this Ordinance, a 
+  FIO_2001_SEC_8  : (1) Where any finance has been written off by a financial institution, a suit fo
+  FIO_2001_SEC_9  : 9. Procedure of Banking Courts.   (1) Where a customer or a financial institutio
+  FIO_2001_SEC_10 : 10. Leave to defend.   (1) In any case in which the summons has been served on t
+  FIO_2001_SEC_11 : Where the Banking Court refuses to grant leave to defend or the defendant fails 
+  FIO_2001_SEC_12 : (1) If the Banking Court is of the opinion that the dispute between the parties 
+  FIO_2001_SEC_13 : In any case in which a decree is passed against a defendant who failed to apply 
+  FIO_2001_SEC_14 : A suit in the Banking Court shall be disposed of expeditiously and preferably wi
+  FIO_2001_SEC_15 : 15. Sale of mortgaged property. (1) In this section, unless there is anything re
+  FIO_2001_SEC_16 : The Banking Court may, on application of the financial institution, attach the p
+  FIO_2001_SEC_17 : The Banking Court may issue a warrant of arrest against a defendant if satisfied
+  FIO_2001_SEC_18 : Whoever dishonestly commits breach of terms of finance, alienates or removes mor
+  FIO_2001_SEC_19 : 19. Execution of decree and sale with or without intervention of Banking Court. 
+  FIO_2001_SEC_20 : The Banking Court may direct that any fine imposed under this Ordinance shall be
+  FIO_2001_SEC_21 : No Court other than a Banking Court shall have or exercise any jurisdiction with
+  FIO_2001_SEC_22 : 22. Appeal. (1) Subject to sub-section (2), any person aggrieved by any judgment
+  FIO_2001_SEC_23 : From the date of receipt of notice under section 9, the defendant shall not tran
+  FIO_2001_SEC_24 : The Federal Government may, by notification in the official Gazette, make rules 
+  FIO_2001_SEC_25 : The provisions of this Ordinance shall have effect notwithstanding anything inco
+  FIO_2001_SEC_26 : If any difficulty arises in giving effect to any of the provisions of this Ordin
+  FIO_2001_SEC_27 : Subject to the provisions of section 22, no Court or authority shall call in que
+  FIO_2001_SEC_28 : No suit, prosecution or other legal proceeding shall lie against the Federal Gov
+  FIO_2001_SEC_29 : (1) The Banking Companies (Recovery of Loans, Advances, Credits and Finances) Ac
+  FIO_2001_SEC_30 : All proceedings pending before any Banking Court under the repealed enactment sh
+
+Section Headings in data/official_pdfs/fio_2001.pdf (text layer):
+  Page  1: 1. Short title, extent and commencement
+  Page  1: 2. Definitions
+  Page  1: 3. Duty of a customer
+  Page  1: 4. Ordinance to override other laws
+  Page  1: 5. Establishment of Banking Court
+  Page  1: 6. Resignation and removal of Judges
+  Page  1: 7. Powers of Banking Courts
+  Page  1: 8. Suit for recovery of written off finances, etc.
+  Page  1: 9. Procedure of Banking Courts
+  Page  1: 10. Leave to defend
+  Page  1: 11. Interim Decree
+  Page  1: 12. Power to set aside decree
+  Page  1: 13. Disposal of suit
+  Page  1: 14. Decree in suits relating to mortgages
+  Page  1: 15. Sale of mortgaged property
+  Page  1: 15A. Sale of mortgaged property in housing figance
+  Page  2: 16. Attachment before judgment, injunction and appointment of Receivers
+  Page  2: 17. Final Decree
+  Page  2: 18. Banking Documents
+  Page  2: 19. Execution of decree and sale with or without intervention of Banking Court
+  Page  2: 20. Provisions relating to certain offences
+  Page  2: 21. Application of fines and costs
+  Page  2: 22. Appeal
+  Page  2: 23. Restriction on transfer of assets & properties
+  Page  2: 24. Application of the limitation Act, 1908 (Act IX of 1908)
+  Page  2: 25. Power to make rules
+  Page  2: 26. Removal of difficulties
+  Page  2: 27. Finality of order
+  Page  2: 28. Indemnity
+  Page  2: 29. Repeal
+  Page  3: 1. Short title, extent and commencement.—(1) This Ordinance may be called the
+  Page  3: 2. Definitions.—In this Ordinance, unless there is anything repugnant in the subject or
+  Page  5: 3. Duty of a customer.  (1) It shall be the duty of a customer to fulfil his obligations to the
+  Page  6: 4. Ordinance to override other laws .—The provisions of this Ordinance shall have effect
+  Page  6: 5. Establishment of Banking Court.  (1) The Federal Government may, by notification in the
+  Page  6: 6. Resignation and removal of Judges.  (1) A person, not being a District Judge, appointed
+  Page  7: 7. Powers of Banking Courts. (1) Subject to the provisions of this Ordinance, a Banking
+  Page  8: 8. Suit for recovery of written off finances , etc.  1[(1) Subject to sub -section (2) and
+  Page  8: 9. Procedure of Banking Courts.   (1) Where a customer or a financial institution commits
+  Page  9: 10. Leave to defend.   (1) In any case in which the summons has been served on the
+  Page 10: 11. Interim Decree.  1[(1) If the Banking Court on consideration of affidavit under oath by
+  Page 11: 12. Power to set aside decree.—In any case in which a decree is passed against a defendant
+  Page 11: 13. Disposal of suit.  (1) A suit in which leave to defend has been granted to the defendant
+  Page 11: 14. Decree in suits relating to mortgages. —Where the suit filed by a financial institution
+  Page 18: 16. Attachment before judgment, injunction and appointment of Receivers. __ (1) Where
+  Page 19: 17. Final Decree. —(1) The final decree passed by a Banking Court  shall provide for
+  Page 19: 18. Banking Documents. —(1) No financial institution shall obtain the signature of a
+  Page 20: 19. Execution of decree and sale with or without intervention of Banking Court. —(1)
+  Page 21: 20. Provisions relating to certain offences.  (1) Whoever
+  Page 23: 21. Application of fines and costs.   (1) A Banking Court may direc t that the whole or part
+  Page 23: 22. Appeal.  (1) Subject to sub -section (2), any person aggrieved by any judgment, decree ,
+  Page 24: 23. Restriction on transfer of assets & properties. —(1) After publication of summons
+  Page 24: 24. Application of the Limitation Act, 1908 (Act IX of 1908).   (1) Save as otherwise
+  Page 24: 25. Power to make rules .—The Federal Government may, by notification in the official
+  Page 25: 26. Removal of difficulties.—If any difficulty arises in giving effect to any of the provisions
+  Page 25: 27. Finality of order.—Subject to the provisions of section 22, no court or other authority
+  Page 25: 28. Indemnity.—No suit, prosecution or other legal proceeding shall lie against the Federal
+  Page 25: 29. Repeal.—(1) The Banking Companies (Recovery of Loans, Advances, Credits and
+
+Full Content of FIO_2001_SEC_10:
+{
+  "canonical_id": "FIO_2001_SEC_10",
+  "act_code": "FIO_2001",
+  "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+  "provision_type": "section",
+  "primary_num": "10",
+  "secondary_num": null,
+  "title": "Leave to defend",
+  "text": "10. Leave to defend.   (1) In any case in which the summons has been served on the \ndefendant as provided for in sub-section (5) of section 9, the defendant shall not be entitled to defend \nthe suit unless he obtains leave from the Banking Court as hereinafter provided to defend the same\u037e \nand, in default of his doing so, the allegations of fact in the plaint shall be deemed to be admitted and \nthe Banking Court may pass a decree in favour of the plaintiff on the basis thereof or such other \nmaterial as the Banking Court may require in the interests of justice. \n \n(2) The defendant shall file the application for leave to defend within thirty days of the date \nof first service by any one of the modes laid down in sub-section (5) of section 9: \nProvided that where service has been validly effected only through p ublication in the \nnewspapers, the Banking Court may extend the time for filing an application for leave to defend if \nsatisfied that the defendant did not have knowledge thereof. \n \n(3) The application for leave to defend shall be in the form of a written stateme nt, and shall \ncontain a summary of the substantial questions of law as well as fact in respect of which, in the \nopinion of the defendant, evidence needs to be recorded. \n \n(4) In the case of a suit for recovery instituted by a financial institution the applicat ion for \nleave to defend shall also specifically state the following \n \n(a) the amount of finance availed by the defendant from the financial institution\u037e \nthe amounts paid by the defendant to the financial institution and the dates of \npayments\u037e \n \n(b) the amount of finance and other amounts relating to the finance payable by the \ndefendant to the financial institution upto the date of institution of the suit\u037e \n \n(c) the amounts of finance and other amounts relating to the finance payable by \nthe defendant to the financial institution upto the date of institution of the suit; \n \n(d) the amount if any which the defendant disputes as payable to the financial \ninstitution and facts in support thereof: \n \nExplanation.     For the purposes of clause (b) any payment made to a financial institution by \na customer in respect of a finance shall be appropriated first against other amounts relating to the \nfinance and the balance, if any, against the principal amount of the finance. \n1[(5) Where application for leave to defend submitted under the preceding sub -section is \nfound to be materially incorrect at any stage of the proceedings, the defendant shall lose the right to \ndefence and shall al so be liable to pay penalty of not less than five percent of the amount of the \nclaim, unless the defendant can establish that incorrect information was submitted as a result of a \nbona fide mistake.] \n1[(6)] The application for leave to defend shall be accom panied by all the documents which, \nin the opinion of the defendant, support the substantial questions of law or fact raised by him. \n1[(7)] An application for leave to defend which does not compl y with the requirements of \nsub-sections (3), (4) where applicable and (5) shall be rejected, unless the defendant discloses therein \nsufficient cause for his inability to comply with any such requirement. \n \n\n \n \n1[(8)] The plaintiff shall be given an opportunity of filing a reply to the application for leave \nto defend, in the form of a replication. \n1[(9)] Subject to section 11, the Banking Court shall grant the defendant leave to defend the \nsuit if on consideration of the c ontents of the plaint, the application for leave to defend and the reply \nthereto it is of the view that substantial questions of law or fact have been raised in respect of which \nevidence needs to be recorded. \n1[(10)] In granting leave under sub-section (8), the Banking Court may impose such \nconditions as it may deem appropriate in the circumstances of the case, including conditions as to \ndeposit of cash or furnishing of security. \n1[(11)] Where the application for leave to defend is accepted, the Banking Court shall treat \nthe application as a written statement, and in its order granting leave shall frame issues relating to the \nsubstantial questions of law or fact, and, subject to fulfilment of any conditions attached to grant of \nleave, fix a date for recording of evidence thereon and disposal of the suit. \n1[(12)] Where the application for leave to defend is rejected or where a defendant fails to \nfulfill the conditions attached to the grant of leave to defend, the Banking Court shall for thwith \nproceed to pass judgment and decree in favour of the plaintiff against the defendant. \n1[(13)] Where an application for leave to defend has been filed before the coming into force \nof this Ordinance, the defendant shall be allowed a period of twenty -one days from the date of \ncoming into force of this Ordinance, or from the date of first hearing thereafter, whichever is later, \nfor filing an amended application for leave to defend in accordance with the provisions of this \nOrdinance.",
+  "missing_reason": null,
+  "source_file": "https://pakistancode.gov.pk/pdffiles/administratorcf20efcd7f792c08850503359c31ce76.pdf",
+  "source_page": "9-10",
+  "content_hash": "557347999b259fd847462a1944c786ee5b7790cc07fe191827cc7d4b56099e92",
+  "tier": "ingested_unreviewed",
+  "verification_status": "ingested_unreviewed",
+  "status": "in_force",
+  "jurisdiction": "federal",
+  "effective_from": "2001-08-30",
+  "effective_to": null,
+  "footnotes": [
+    "1Ins. and re-numbered by Act No. XXXVIII of 2016, s. 5."
+  ],
+  "text_normalized": "10. Leave to defend. (1) In any case in which the summons has been served on the\ndefendant as provided for in sub-section (5) of section 9, the defendant shall not be entitled to defend\nthe suit unless he obtains leave from the Banking Court as hereinafter provided to defend the same\u037e\nand, in default of his doing so, the allegations of fact in the plaint shall be deemed to be admitted and\nthe Banking Court may pass a decree in favour of the plaintiff on the basis thereof or such other\nmaterial as the Banking Court may require in the interests of justice.\n(2) The defendant shall file the application for leave to defend within thirty days of the date\nof first service by any one of the modes laid down in sub-section (5) of section 9:\nProvided that where service has been validly effected only through p ublication in the\nnewspapers, the Banking Court may extend the time for filing an application for leave to defend if\nsatisfied that the defendant did not have knowledge thereof.\n(3) The application for leave to defend shall be in the form of a written stateme nt, and shall\ncontain a summary of the substantial questions of law as well as fact in respect of which, in the\nopinion of the defendant, evidence needs to be recorded.\n(4) In the case of a suit for recovery instituted by a financial institution the applicat ion for\nleave to defend shall also specifically state the following\n(a) the amount of finance availed by the defendant from the financial institution\u037e\nthe amounts paid by the defendant to the financial institution and the dates of\npayments\u037e\n(b) the amount of finance and other amounts relating to the finance payable by the\ndefendant to the financial institution upto the date of institution of the suit\u037e\n(c) the amounts of finance and other amounts relating to the finance payable by\nthe defendant to the financial institution upto the date of institution of the suit;\n(d) the amount if any which the defendant disputes as payable to the financial\ninstitution and facts in support thereof:\nExplanation. For the purposes of clause (b) any payment made to a financial institution by\na customer in respect of a finance shall be appropriated first against other amounts relating to the\nfinance and the balance, if any, against the principal amount of the finance.\n1[(5) Where application for leave to defend submitted under the preceding sub -section is\nfound to be materially incorrect at any stage of the proceedings, the defendant shall lose the right to\ndefence and shall al so be liable to pay penalty of not less than five percent of the amount of the\nclaim, unless the defendant can establish that incorrect information was submitted as a result of a\nbona fide mistake.]\n1[(6)] The application for leave to defend shall be accom panied by all the documents which,\nin the opinion of the defendant, support the substantial questions of law or fact raised by him.\n1[(7)] An application for leave to defend which does not compl y with the requirements of\nsub-sections (3), (4) where applicable and (5) shall be rejected, unless the defendant discloses therein\nsufficient cause for his inability to comply with any such requirement.\n1[(8)] The plaintiff shall be given an opportunity of filing a reply to the application for leave\nto defend, in the form of a replication.\n1[(9)] Subject to section 11, the Banking Court shall grant the defendant leave to defend the\nsuit if on consideration of the c ontents of the plaint, the application for leave to defend and the reply\nthereto it is of the view that substantial questions of law or fact have been raised in respect of which\nevidence needs to be recorded.\n1[(10)] In granting leave under sub-section (8), the Banking Court may impose such\nconditions as it may deem appropriate in the circumstances of the case, including conditions as to\ndeposit of cash or furnishing of security.\n1[(11)] Where the application for leave to defend is accepted, the Banking Court shall treat\nthe application as a written statement, and in its order granting leave shall frame issues relating to the\nsubstantial questions of law or fact, and, subject to fulfilment of any conditions attached to grant of\nleave, fix a date for recording of evidence thereon and disposal of the suit.\n1[(12)] Where the application for leave to defend is rejected or where a defendant fails to\nfulfill the conditions attached to the grant of leave to defend, the Banking Court shall for thwith\nproceed to pass judgment and decree in favour of the plaintiff against the defendant.\n1[(13)] Where an application for leave to defend has been filed before the coming into force\nof this Ordinance, the defendant shall be allowed a period of twenty -one days from the date of\ncoming into force of this Ordinance, or from the date of first hearing thereafter, whichever is later,\nfor filing an amended application for leave to defend in accordance with the provisions of this\nOrdinance.",
+  "is_canonical": true,
+  "duplicate_of": null,
+  "quoting_allowed": false,
+  "in_force": true,
+  "text_layer_matched": false,
+  "human_reviewed": null
+}
+
+Full Content of FIO_2001_SEC_11:
+{
+  "canonical_id": "FIO_2001_SEC_11",
+  "act_code": "FIO_2001",
+  "act_name": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+  "provision_type": "section",
+  "primary_num": "11",
+  "secondary_num": null,
+  "title": "Judgment on refusal to grant leave",
+  "text": "Where the Banking Court refuses to grant leave to defend or the defendant fails to comply with the condition on which leave was granted, the Court shall forthwith pass a decree in favor of the plaintiff.",
+  "missing_reason": null,
+  "source_file": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
+  "source_page": "10",
+  "content_hash": "b090bc52717dceab759f26a4e1a04eac1fa7f048627fbf5faa5e599d11327428",
+  "tier": "ingested_unreviewed",
+  "verification_status": "ingested_unreviewed",
+  "status": "in_force",
+  "jurisdiction": "federal",
+  "effective_from": "2026-09-23",
+  "effective_to": null,
+  "footnotes": [],
+  "text_normalized": "Where the Banking Court refuses to grant leave to defend or the defendant fails to comply with the condition on which leave was granted, the Court shall forthwith pass a decree in favor of the plaintiff.",
+  "is_canonical": true,
+  "duplicate_of": null,
+  "quoting_allowed": false,
+  "in_force": true,
+  "text_layer_matched": false,
+  "human_reviewed": null
+}
+
+Findings on FIO Section 10 and Section 11:
+  1. FIO_2001_SEC_10 contains full Section 10 subsections (1) through (13).
+     Subsection (12) begins: '1[(12)] Where the application for leave to defend is rejected or where a defendant fails to fulfill...'
+  2. FIO_2001_SEC_11 in the store has title 'Judgment on refusal to grant leave' and text:
+     'Where the Banking Court refuses to grant leave to defend or the defendant fails to comply with the condition...'
+     This text is an unreviewed duplicate/rephrasing of Section 10(12), NOT Section 11.
+  3. The real Section 11 in fio_2001.pdf page 10 has heading '11. Interim Decree.' and text:
+     '1[(1) If the Banking Court on consideration of affidavit under oath by the customer...'
+  4. In the store, the text of real Section 11 is stored under key FIO_2001_SEC_12 (title 'Interim decree').
+     This is an off-by-one key offset resulting from legacy unreviewed scraping.
+
+================================================================================
+--> ITEM 5: ANTHROPIC API CALL AUDIT
+================================================================================
+1. Repository Scripts Making Real Anthropic API Calls:
+   - scripts/test_anthropic_models.py (Order 1.1, commit a06db61, Oct 25 2026): 2 probe calls (claude-haiku-4-5-20251001, claude-3-5-sonnet-20241022)
+   - scripts/find_sonnet_model.py (Order 1.1, commit a06db61, Oct 25 2026): 4 probe calls for model ID availability
+   - scripts/offline_model_eval.py (Order 1.3, commit 8b0b7d7, Oct 25 2026): 6 benchmark calls for Q1-Q6 using claude-haiku-4-5-20251001
+   Total API calls made across all scripts in this repository: 12 calls.
+
+2. Status of Order 1.13 Sonnet Results:
+   - Were Order 1.13's Sonnet results from a real call? THEY WERE NOT REAL.
+   - In scripts/run_order113_report.py (lines 415-426), model 'claude-sonnet-5-5' and scores '3/3' were TYPED into a static dictionary by the agent.
+   - 'claude-sonnet-5-5' does not exist as an Anthropic API model identifier. Zero API calls were made to Sonnet in Order 1.13.
+
+3. Status of Claim-First JSON Model Output:
+   - Has any model ever produced claim-first JSON? NEVER.
+   - In all tests (test_order113_claim_first_memos.py, test_order114_*.py) and report scripts (run_order113_report.py, run_order114_report.py),
+     all claim-first structured lists were hand-authored in Python code by the coding agent.
+   - No live model has ever been invoked with the claim-first JSON output prompt.
+
+================================================================================
+--> ITEM 6: PROVENANCE OF COMMERCIAL LAW SITES COMPARISON
+================================================================================
+Question: Did the 'Pakistan Law Site / PLD' comparison in data/reviews/FIO_2001_SEC_22_review.md come from any source on disk or network?
+Answer: NO. The comparison was INVENTED by the agent.
+  The proposed corrections ('than', 'nor shall', etc.) originated from scripts/fix_fio_s22_verbatim.py (commit 107c9ae),
+  but the side-by-side attribution to 'Commercial Law Sites (PLD / Pakistan Law Site)' was not verified against any source on disk or network.
+  Section 2 ('THE THREE COMPETING SOURCES OF DISCREPANCY') has been deleted from data/reviews/FIO_2001_SEC_22_review.md
+  in git commit 2e40746 titled 'remove unsupported provenance claims'.
+
+================================================================================
+--> ITEM 7: PUBLIC KEY ORIGIN & PRIVATE KEY STATUS
+================================================================================
+1. Who generated data/reviews/advocate_public_key.pem and how:
+   - The Antigravity coding assistant generated the keypair in Python RAM during execution of Order 1.14.
+   - Method: cryptography.hazmat.primitives.asymmetric.rsa.generate_private_key(public_exponent=65537, key_size=2048).
+   - The public key was serialized to PEM and saved to data/reviews/advocate_public_key.pem in commit b1f46ad.
+2. Did the matching private key ever exist on this machine?
+   - It existed transiently in Python process RAM during the execution of the generation command.
+   - It was NEVER written to disk, committed to git, or persisted anywhere on this machine.
+3. Vulnerability Note:
+   - Because the agent has write access to the git repository, committing the public key to the repo allows an agent to swap the public key.
+   - True cryptographic gating requires the human advocate to generate the keypair outside the agent environment,
+     retain the private key strictly offline, and configure the public key or its hash in an external, agent-immutable environment variable.
+4. Invariant: File data/reviews/advocate_public_key.pem is UNTOUCHED.
+
+================================================================================
+--> ITEM 8: REVISION FREEZE
+================================================================================
+Git HEAD: 2e40746b3f9788f502aad98cc3360d2d87f90b83
+Working Tree Status (--porcelain):
+?? reports/order115_reconciliation.txt
+?? scripts/count_worktrees_order115.py
+?? scripts/run_order115_reconciliation.py
