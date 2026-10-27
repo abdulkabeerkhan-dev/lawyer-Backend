@@ -268,4 +268,9 @@ def resolve_judgment_pdf_url(
 
     target_id = case_id or citation or "judgment"
     clean_base = backend_base_url.rstrip("/")
-    return f"{clean_base}/judgment-pdf/{urllib.parse.quote(str(target_id))}"
+    try:
+        from core.pdf_resolver import create_hmac_pdf_token
+        token = create_hmac_pdf_token(str(target_id))
+        return f"{clean_base}/judgment-pdf/{urllib.parse.quote(str(target_id))}?token={token}"
+    except Exception:
+        return f"{clean_base}/judgment-pdf/{urllib.parse.quote(str(target_id))}"
