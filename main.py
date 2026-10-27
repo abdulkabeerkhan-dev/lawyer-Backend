@@ -15549,7 +15549,9 @@ async def execute_legal_query(
 
     jobs_store[job_id] = {
 
-        "status": "pending",
+        "status": "running",
+
+        "stage": "starting",
 
         "created_at": datetime.now(timezone.utc),
 
@@ -15743,18 +15745,16 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
             "error": None
         }
 
+    status_out = job.get("status", "running")
+    if status_out in ("pending", "processing"):
+        status_out = "running"
+
     return {
-
-        "status": job["status"],
-
-        "stage": job.get("stage"),
-
+        "status": status_out,
+        "stage": job.get("stage", "processing"),
         "early_display": job.get("early_display"),
-
         "result": job.get("result"),
-
         "error": job.get("error")
-
     }
 
 
