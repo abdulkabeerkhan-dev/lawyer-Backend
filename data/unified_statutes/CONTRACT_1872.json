@@ -660,9 +660,9 @@
     "text_normalized": "127. Consideration for guarantee. Anything done, or any promise made, for the benefit of\nthe principal debtor may be a sufficient consideration to the surety for giving the guarantee.\nIllustrations\n(a) B requests A to sell and deliver to him goods on credit. A agrees to do so,\nprovided C will guarantee the payment of the price of the goods. C promises\nto guarantee the payment in consideration of A’s promise to deliver the goods.\nThis is a sufficient consideration for C’s promise.\n(b) A sells and delivers goods to B. C afterwards requests A to forbear to sue B\nfor the debt for a year, and promises that if he does so, C will pay for them in default\nof payment by B. A agrees to forbear as requested. This is a sufficient\nconsideration for C’s promise.\n(c) A sells and delivers goods to B. C afterwards, without consideration, agrees to\npay for them in default of B. The agreement is void.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_129",
@@ -702,9 +702,9 @@
     "text_normalized": "130. Revocation of continuing guarantee. A continuing guarantee may at any time be\nrevoked by the surety, as to future transactions, by notice to the creditor.\nIllustrations.\n(a) A, in consideration of B’s discounting, at A’s request, bills of exchange for C,\nguarantees to B, for twelve months, the due payment of all such bills to the\nextent of 5,000 rupees. B discounts bills for C to the extent of 2,000 rupees.\nAfterwards, at the end of three months, A revokes the guarantee. This re-\nvocation discharges A from all liability to B for any subsequent discount. But\nA is liable to B for the 2,000 rupees, on default of C.\n(b) A guarantees to B, to the extent of 10,000 rupees, that C shall pay all the bills\nthat B shall draw upon him. B draws upon C. C accepts the bill. A gives notice\nof revocation. C dishonours the bill at maturity. A is liable upon his guarantee.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_133",
@@ -725,9 +725,9 @@
     "text_normalized": "133. Discharge of surety by variance in terms of contract. Any variance, made without the\nsurety’s consent, in the terms of the contract between the principal l[debtor] and the creditor,\ndischarges the surety as to transactions subsequent to the variance.\nIllustrations\n(a) A becomes surety to C for B’s conduct as a manager in C’s bank. Afterwards,\nB and C contract, without A’s consent, that B’s salary shall be raised, and that\nhe shall become liable for one-fourth of the losses on overdrafts. B allows a\ncustomer to overdraw, and the bank loses a sum of money. A is discharged\nfrom his suretyship by the variance made without his consent, and is not liable\nto make good this loss.\n(b) A guarantees C against the misconduct of B in an office to which B is\nappointed by C, and of which the duties are defined by an Act of the\nLegislature. By a subsequent Act, the nature of the office is materially altered.\nAfterwards, B misconducts himself. A is discharged by the change from future\nliability under his guarantee, though the misconduct of B is in respect of a\nduty not affected by the later Act.\n(c) C agrees to appoint B as his clerk to sell goods at a yearly salary, upon A’s\nbecoming surety to C for B’s duly accounting for moneys received by him as\nsuch clerk. Afterwards, without A’s knowledge or consent, C and B agree that\nB should be paid by a commission on the goods sold by him and not by a fixed\nsalary. A is not liable for subsequent misconduct of B.\n(d) A gives to C a continuing guarantee to the extent of 3,000 rupees for any oil\nsupplied by C to B on credit. Afterwards B becomes embarrassed, and,\nwithout the knowledge of A, B and C contract that C shall continue to supply\nB with oil for ready money, and that the payments shall be applied to the then\nexisting debts between B and C. A is not liable on his guarantee for any goods\nsupplied after this new arrangement.\n(e) C contracts to lend B 5,000 rupees on the 1st March. A guarantees repayment.\nC pays the 5,000 rupees to B on the 1st January. A is discharged from his\nliability, as the contract has been varied in as much as C might sue B for the\nmoney before the 1st of March.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_134",

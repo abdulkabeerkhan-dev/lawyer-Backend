@@ -2638,9 +2638,9 @@
     "text_normalized": "Description of suit: On a bill of exchange or promissory note payable on demand and not accompanied by any writing restraining or postponing the right to sue.\nPeriod of limitation: Three years\nTime from which period begins to run: The date of the bill or note.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "LIMITATION_1908_ART_74",
@@ -2815,9 +2815,9 @@
     "text_normalized": "Description of suit: Suit on a bill of exchange, promissory note or bond not herein expressly provided for.\nPeriod of limitation: Three years\nTime from which period begins to run: When the bill, note or bond becomes payable.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "LIMITATION_1908_ART_81",
@@ -3688,9 +3688,9 @@
     "text_normalized": "Description of suit: For compensation for the breach of any contract, express or implied, not in writing registered and not herein specially provided for.\nPeriod of limitation: Three years\nTime from which period begins to run: When the contract is broken, or (where there are successive breaches) when the breach in respect of which the suit is instituted occurs, or (where the breach is continuing) when it ceases.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "LIMITATION_1908_ART_116",
@@ -3709,9 +3709,9 @@
     "text_normalized": "Description of suit: For compensation for the breach of a contract in writing registered.\nPeriod of limitation: Six years\nTime from which period begins to run: When the period of limitation would begin to run against a suit brought on a contract not registered.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "LIMITATION_1908_ART_117",
@@ -4105,9 +4105,9 @@
     "text_normalized": "Description of suit: To enforce payment of money charged upon immoveable property.\nExplanation.—For the purposes of this article—\n(a) the allowance and fees respectively called malikana and haqqs, and\n(b) the value of any agricultural produce accrued on a mortgage are deemed to be money charged upon immoveable property.\nPeriod of limitation: Twelve years\nTime from which period begins to run: When the money sued for becomes due.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "LIMITATION_1908_ART_133",
@@ -5332,9 +5332,9 @@
     "text_normalized": "Description of suit: Applications for which no period of limitation is provided elsewhere in this schedule or by section 48 of the Code of Civil Procedure, 1908 (V of 1908).\nPeriod of limitation: Three years\nTime from which period begins to run: When the right to apply accrues.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "LIMITATION_1908_ART_182",
@@ -5355,7 +5355,7 @@
     "is_canonical": true,
     "duplicate_of": null,
     "quoting_allowed": false,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "LIMITATION_1908_ART_183",

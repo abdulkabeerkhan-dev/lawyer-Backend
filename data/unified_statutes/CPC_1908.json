@@ -10557,9 +10557,9 @@
     "text_normalized": "1. Modes of paying money under decree .— (1) All money payable under a decree shall be\npaid as follows, namely:—\n(a) into the Court whose duty it is to execute the decree; or\n(b) out of Court to the decreeholder 1[through a bank or by postal money order or\nevidence by writing signed by the decree holder or his authorized agent] ; or\n(c) otherwise as the Court which made the decree directs.\n(2) Where any payment is made under clause (a) of subrule (1), notice of such payment shall\nbe given to the decreeholder.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_2",
@@ -10795,9 +10795,9 @@
     "text_normalized": "11. Oral application.— (1) Where a decree is for the payment of money the Court may, on he\noral application of the decreeholder at the time of the passing of the decree, order immediate execution\nthereof by the arrest of the judgmentdebtor, prior to the preparation of a warrant if he is within the\nprecincts of the Court.\n(2) Written application. Save as otherwise provided by subrule (1), every application for the\nexecution of a decree shall be in writing, signed and verified by the applicant or by some other person\nproved to the satisfaction of the Court to be acquainted with the facts of the case, and shall contain in\na tabular form the following particulars, namely:—\n(a) the number of the suit ;\n(b) the names of the parties ;\n(c) the date of the decree ;\n(d) whether any appeal has been preferred from the decree ;\n(e) whether any, and (if any), what, payment or other adjustment of the matter in\ncontroversy has been made between the parties subsequently to the decree ;\n(f) whether any, and (if any) what, previous applications have been made for the\nexecution of the decree, the dates of such applications and their results ;\n(g) the amount with interest (if any) due upon the decree, or other relief granted\nthereby, together with particulars of any crossdecree, whether passed before or\nafter the date of the decree sought to be executed ;\n(h) the amount of the costs (if any) awarded ;\n(i) the name of the person against whom execution of the decree is sought ; and\n(j) the mode in which the assistance of the Court is required, whether—\n(i) by the delivery of any property specifically decreed ;\n(ii) by the attachment and sale, or by the sale without attachment, of any\nproperty ;\n(iii) by the arrest and detention in prison of any person ;\n(iv) by the appointment of a receiver ;\n(v) otherwise, as the nature of the relief granted may require.\n(3) The Court to which an application is made under subrule (2) may require the applicant to\nproduce a certified copy of the decree.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_13",
@@ -11043,9 +11043,9 @@
     "text_normalized": "22. Notice to show cause against execution in certain cases. — (1) Where an application for\nexecution is made—\n(a) more than one year after the date of the decree, or\n(b) against the legal representative of a party to the decree,\n1[or where an application is made for execution of a decree filed under the provisions of section 44A,]\nthe Court executing the decree shall issue a notice to the person against whom execution is applied for\nrequiring him to show cause, on a date to be fixed, why the decree should not be executed against him:\nProvided that no such notice shall be necessary in consequence of more than one year having\nelapsed between the date of the decree and the ap plication for execution if the application is made\nwithin one year from the date of the last order against the party against whom execution is applied for,\nmade on any previo us application for execution, or in consequence of the application being made\nagainst the legal representative of the judgmentdebtor, if upon a previous application for execution\nagainst the same person the Court has ordered execution to issue against him.\n(2) Nothing in the foregoing subrule shall be deemed to preclude the Court from issuing any\nprocess in execution of a decree without issuing the notice thereby prescribed, if, for reasons to be\nrecorded, it considers that the issue of such notice would cause unreasonable delay or would defeat the\nends of justice.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_23",
@@ -12514,9 +12514,9 @@
     "text_normalized": "89. Application to set aside sale on deposit.— (1) Where immoveable property has been sold in execution of a decree, any person, either owning such property or holding an interest therein by virtue of a title acquired before such sale, may apply to have the sale set aside on his depositing in Court,--\n(a) for payment to the purchaser, a sum equal to five per cent of the purchase-money, and\n(b) for payment to the decree-holder, the amount specified in the proclamation of sale as that for the recovery of which the sale was ordered, less any amount which may, since the date of such proclamation of sale, have been received by the decree-holder.\n(2) Where a person applies under rule 90 to set aside the sale of his immoveable property, he shall not, unless he withdraws his application, be entitled to make or prosecute an application under this rule.\n(3) Nothing in this rule shall relieve the judgement-debtor from any liability he may be under in respect of costs and interest not covered by the proclamation of sale.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_90",
@@ -12541,9 +12541,9 @@
     "text_normalized": "90. Application to set aside sale on ground of irregularity or fraud.— (1) Where any immoveable property has been sold in execution of a decree, the decree-holder, or any person entitled to share in a rateable distribution of assets, or whose interests are affected by the sale, may apply to the Court to set aside the sale on the ground of a material irregularity or fraud in publishing or conducting it:\nProvided that no sale shall be set aside on the ground of irregularity or fraud unless upon the facts proved the Court is satisfied that the applicant has sustained substantial injury by reason of such irregularity or fraud:\nProvided further that no such application shall be entertained unless the applicant deposits such amount, not exceeding twenty per cent of the sum realised at the sale, or furnishes such security, as the Court may direct.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_92",
@@ -17479,10 +17479,10 @@
     "primary_num": "XLIII",
     "secondary_num": "3",
     "title": "APPEALS FROM ORDERS: Notice before presentation of appeal",
-    "text": "3. Notice before presentation of appeal.— (1) Where an appeal against an order is preferred during the pendency of a suit, the appellant shall, before presenting the appeal, give notice of such appeal to the respondent or his advocate by delivering a copy of the memorandum and grounds of appeal alongwith a copy of the order appealed against 2[either personally or through registered post acknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal for the record of the appellate Court.]\n(2) On receipt of notice referred to in sub-rule (1), the respondent may, with the permission of the Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal in limine.",
+    "text": "3. Notice before presentation of appeal.__ (1) Where an appeal against  an  order  is  preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice  of such  \nappeal to the respondent or his advocate by delivering a copy of the memorandum and  grounds  of \nappeal alongwith a copy of the order appealed against 2[either personally or  through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court.] \n(2) On receipt of notice referred to in sub­rule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine. \n4. Application of Rule  3. The provisions of rule 3  shall, mutatis mutandis , apply to all \napplications filed before an appellate Court during the pendency of a suit.] \n_______ \nORDER XLIV \nPAUPER APPEALS \n1. Who may appeal as pauper.  Any person entitled to prefer an appeal, who is unable to pay \nthe fee required for the memorandum of appeal, may present an application accompanied by a \nmemorandum of appeal, and may be allowed to appeal as a pauper subject, in all matters, including \nthe presentation of such application, to the provisions relating to suits by paupers, in so far as those \nprovisions are applicable: \nProcedure on application for admission of appeal.  Provided that the Court shall reject the \napplication unless, upon a perusal thereof and of the judgment and decree appealed from, it sees reason \nto think that the decree is contrary to law or to some usage having the force of law, or is otherwise \nerroneous or unjust. \n2. Inquiry into pauperism. The inquiry into the pauperism of the applicant may be made either \nby the Appellate Court or under the order of the Appellate Court by the Court from whose decision the \nappeal is preferred: \n \n \n1New sub­rules 3 and 4 added by the Code of Civil Procedure (Amdt.), Ordinance, 1980 (10 of 1980), s.14. \n2Subs. by Act XIV of 1994,s.II.",
     "missing_reason": "title_only_record",
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
-    "source_page": 175,
+    "source_page": "175",
     "content_hash": "05823cc51942eaf621a5ae25dff8a068536b0fcf69b93e3881e6efc7d17eac06",
     "tier": "page_verified",
     "verification_status": "page_verified",
@@ -17495,7 +17495,8 @@
     "quoting_allowed": true,
     "page_verified": true,
     "in_force": true,
-    "has_operative_text": true
+    "has_operative_text": true,
+    "statutory_text": "3. Notice before presentation of appeal.__ (1) Where an appeal against  an  order  is  preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice  of such  \nappeal to the respondent or his advocate by delivering a copy of the memorandum and  grounds  of \nappeal alongwith a copy of the order appealed against 2[either personally or  through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court.] \n(2) On receipt of notice referred to in sub­rule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine. \n4. Application of Rule  3. The provisions of rule 3  shall, mutatis mutandis , apply to all \napplications filed before an appellate Court during the pendency of a suit.] \n_______ \nORDER XLIV \nPAUPER APPEALS \n1. Who may appeal as pauper.  Any person entitled to prefer an appeal, who is unable to pay \nthe fee required for the memorandum of appeal, may present an application accompanied by a \nmemorandum of appeal, and may be allowed to appeal as a pauper subject, in all matters, including \nthe presentation of such application, to the provisions relating to suits by paupers, in so far as those \nprovisions are applicable: \nProcedure on application for admission of appeal.  Provided that the Court shall reject the \napplication unless, upon a perusal thereof and of the judgment and decree appealed from, it sees reason \nto think that the decree is contrary to law or to some usage having the force of law, or is otherwise \nerroneous or unjust. \n2. Inquiry into pauperism. The inquiry into the pauperism of the applicant may be made either \nby the Appellate Court or under the order of the Appellate Court by the Court from whose decision the \nappeal is preferred: \n \n \n1New sub­rules 3 and 4 added by the Code of Civil Procedure (Amdt.), Ordinance, 1980 (10 of 1980), s.14. \n2Subs. by Act XIV of 1994,s.II."
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIII_R_4",
@@ -17518,8 +17519,8 @@
     "effective_to": null,
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
-    "page_verified": true,
+    "quoting_allowed": false,
+    "page_verified": false,
     "in_force": true,
     "has_operative_text": true
   },
@@ -18576,9 +18577,9 @@
     "text_normalized": "1. Cases in which temporary injunction may be granted.— Where in any suit it is proved by affidavit or otherwise—\n(a) that any property in dispute in a suit is in danger of being wasted, damaged or alienated by any party to the suit, or wrongfully sold in execution of a decree, or\n(b) that the defendant threatens, or intends, to remove or dispose of his property with a view to defraud his creditors,\nthe Court may by order grant a temporary injunction to restrain such act, or make such other order for the purpose of staying and preventing the wasting, damaging, alienation, sale, removal or disposition of the property as the Court thinks fit, until the disposal of the suit or until further orders.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_2",
@@ -18592,7 +18593,7 @@
     "text_cleaned": "2. Injunction to restrain repetition or continuance of breach.__ (1) In any suit for restraining the defendant from committing a breach of contract or other injury of any kind, whether compensation is claimed in the suit or not, the plaintiff may, at any time after the commencement of the suit, and either before or after judgment, apply to the Court for a temporary injunction to restrain the defendant from committing the breach of contract or injury complained of, or any breach of contract or injury of a like kind arising out of the same contract or relating to the same property or right.\n(2) The Court may by order grant such injunction, on such terms as to the duration of the injunction, keeping an account, giving security or otherwise, as the Court thinks fit.\n(3) In case of disobedience, or of breach of any such terms, the Court granting an injunction may order the property of the person guilty of such disobedience or breach to be attached, and may also order such person to be detained in prison for a term not exceeding six months, unless in the meantime the Court directs his release.\n(4) No attachment under this rule shall remain in force for more than one year, at the end of which time, if the disobedience or breach continues, the property attached may be sold, and out of the proceeds the Court may award such compensation as it thinks fit, and shall pay the balance, if any, to the party entitled thereto.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
-    "source_page": "162-163",
+    "source_page": "162",
     "content_hash": "231e73ab1c2802d37ef30ff51910ded5f75e33f90896c9ee6e4e990f732e6777",
     "tier": "ingested_unreviewed",
     "verification_status": "ingested_unreviewed",
@@ -18611,9 +18612,9 @@
     "text_normalized": "2. Injunction to restrain repetition or continuance of breach.— (1) In any suit for restraining\nthe defendant from committing a breach of contract or other injury of any kind, whether compensation\nis claimed in the suit or not, the plaintiff may, at any time after the commencement of the suit, and\neither before or after judgment, apply to the Court for a temporary injunction to restrain the defendant\nfrom committing the breach of contract or injury complained of, or any breach of contract or injury\nof a like kind arising out of the same contract or relating to the same property or right.\n(2) The Court may by order grant such injunction, on such terms as to the duration of the\ninjunction, keeping an account, giving security or otherwise, as the Court thinks fit.\n(3) In case of disobedience, or of breach of any such terms, the Court granting an injunction\nmay order the property of the person guilty of such disobedience or breach to be attached, and may\nalso order such person to be detained in 1[* * *] prison for a term not exceeding six months, unless in\nthe meantime the Court directs his release.\n(4) No attachment under this rule shall remain in force for more than one year, at the end of\nwhich time, if the disobedience or breach continues, the property attached may be sold, and out of the\nproceeds the Court may award such compensation as it thinks fit, and shall pay the balance, if any, to\nthe party entitled thereto.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_2A",
@@ -18627,7 +18628,7 @@
     "text_cleaned": "2A. Duration of ex-parte interim injunction.__ An interim injunction passed under rules 1 or 2 in the absence of defendant shall not ordinarily exceed fifteen days:\nProvided that such injunction may be extended for failure of its service on the defendant when such failure is not attributable to the plaintiff or when the defendant seeks time for defence of application for injunction.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
-    "source_page": 163,
+    "source_page": "163",
     "content_hash": "17848118a239d8de902dffffcda6f33442f285da6e1882b51a68792900b4e6f7",
     "tier": "ingested_unreviewed",
     "verification_status": "ingested_unreviewed",
@@ -18646,9 +18647,9 @@
     "text_normalized": "2A. Duration of ex-parte interim injunction.— An interim injunction passed under rules 1 or 2 in the absence of defendant shall not ordinarily exceed fifteen days:\nProvided that such injunction may be extended for failure of its service on the defendant when such failure is not attributable to the plaintiff or when the defendant seeks time for defence of application for injunction.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_2B",
@@ -18681,9 +18682,9 @@
     "text_normalized": "2B. Expiration of injunction after notice after six months.— The order of injunction made under rules 1 or 2 after hearing the parties or after notice to the defendant shall cease to have effect on the expiration of six months unless extended by the Court after hearing the parties again and for reasons to be recorded for such extension:\nProvided that report of such extension shall be submitted to the High Court.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_3",
@@ -18713,9 +18714,9 @@
     "text_normalized": "3. Before granting injunction Court to direct notice to opposite party.— The Court shall in all cases, before granting an injunction direct notice of the application for the same to be given to the opposite-party:\nProvided that, except in the case of sale of goods for default in payment, at the stipulated time, of a debt in respect of which the goods were pledged with any bank, or where the injunction is to be granted against Government or a Government servant as such or any statutory authority, board or corporation set up or established by Government in any case not involving the ejectment of any person from, or the demolition of, any premises, the Court may, where it appears that the object of granting injunction would be defeated by the delay, dispense with such notice:\nProvided further that the period of notice under this rule to Government or a Government servant as such or any statutory authority, board or corporation set up or established by Government shall not be less than two days nor exceed seven days.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_4",
@@ -18778,9 +18779,9 @@
     "text_normalized": "4A. Injunction to cease to be in force after certain period.— An injunction granted by a Court in a suit which seeks to question the validity or legal effect of any order made, proceedings taken or act done by any authority or person, which has been made, taken or done, or purports to have been made, taken or done, under any law which is specified in Part I of the First Schedule to the Constitution or relates to, or is connected with, assessment or collection of public revenues shall cease to have effect on the expiration of a period of six months following the day on which it is made, unless the case is finally decided, or the injunction is discharged or set aside, by the Court earlier.\nExplanation.— In this rule, 'public revenues' includes the dues of any bank owned by the Federal Government or of any corporation or undertaking owned or controlled by the Federal Government or a Provincial Government.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_5",
@@ -18807,9 +18808,9 @@
     "text_normalized": "5. Injunction to corporation binding on its officers.— An injunction directed to a corporation is binding not only on the corporation itself, but also on all members and officers of the corporation whose personal action it seeks to restrain.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_6",
@@ -18836,9 +18837,9 @@
     "text_normalized": "6. Power to order interim sale.— The Court may, on the application of any party to a suit, order the sale, by any person named in such order, and in such manner and on such terms as it thinks fit, of any movable property, being the subject-matter of such suit, or attached before judgment in such suit, which is subject to speedy and natural decay, or which for any other just and sufficient cause it may be desirable to have sold at once.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_7",
@@ -18865,9 +18866,9 @@
     "text_normalized": "7. Detention, preservation, inspection, etc., of subject-matter of suit.— (1) The Court may, on the application of any party to a suit, and on such terms as it thinks fit,—\n(a) make an order for the detention, preservation or inspection of any property which is the subject-matter of such suit, or as to which any question may arise therein;\n(b) for all or any of the purposes aforesaid authorise any person to enter upon or into any land or building in the possession of any other party to such suit; and\n(c) for all or any of the purposes aforesaid authorise any samples to be taken, or any observation to be made or experiment to be tried, which may seem necessary or expedient for the purpose of obtaining full information or evidence.\n(2) The provisions as to execution of process shall apply, mutatis mutandis, to persons authorised to enter under this rule.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_8",
@@ -18923,9 +18924,9 @@
     "text_normalized": "9. When party may be put in immediate possession of land the subject-matter of suit.— Where land paying revenue to Government, or a tenure liable to sale, is the subject matter of a suit, if the party in possession of such land or tenure neglects to pay the Government revenue, or the rent due to the proprietor of the tenure, as the case may be, and such land or tenure is consequently ordered to be sold, any other party to the suit claiming to have an interest in such land or tenure may, upon payment of the revenue or rent due previously to the sale (and with or without security at the discretion of the Court), be put in immediate possession of the land or tenure;\nand the Court in its decree may award against the defaulter the amount so paid, with interest thereon at such rate as the Court thinks fit, or may charge the amount so paid, with interest thereon at such rate as the Court orders, in any adjustment of accounts which may be directed in the decree passed in the suit.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "CPC_1908_ORD_XXXIX_R_10",
@@ -18952,8 +18953,8 @@
     "text_normalized": "10. Deposit of money, etc., in Court.— Where the subject-matter of a suit is money or some other thing capable of delivery, and any party thereto admits that he holds such money or other thing as a trustee for another party, or that it belongs or is due to another party, the Court may order the same to be deposited in Court or delivered to such last-named party, with or without security, subject to the further direction of the Court.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   }
 ]

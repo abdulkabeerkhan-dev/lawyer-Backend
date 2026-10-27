@@ -1,4 +1,10 @@
 -- ============================================================================
+-- ⚠️ STAGING-FIRST ENFORCEMENT NOTICE (ORDER 1.13 - ITEM 9)
+-- DO NOT EXECUTE DIRECTLY ON PRODUCTION DATABASE!
+-- This migration MUST be validated in a dedicated staging database instance
+-- with allocated maintenance_work_mem and execution monitoring prior to production.
+-- ============================================================================
+-- ============================================================================
 -- Migration: 20261025_add_fts_index_full_judgments.sql
 -- Purpose: Add PostgreSQL GIN Full-Text Search (FTS) index on public.full_judgments
 --          (431,298 corpus entries) with safe truncation against the 1MB tsvector limit

@@ -8541,7 +8541,7 @@
     "text": "Whoever commits qatl-i-amd shall, subject to the provisions of this Chapter be:-\n(a) punished with death as qisas;\n(b) punished with death or imprisonment for life as ta'zir having regard to the facts and circumstances of the case, if the proof in either of the forms specified in section 304 is not available; or\n(c) punished with imprisonment of either description for a term which may extend to twenty-five years, where according to the Injunctions of Islam the penalty of qisas is not applicable.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. XLV of 1860; https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
-    "source_page": "unspecified",
+    "source_page": "106",
     "content_hash": "0b939251c7d891948d2c3d99cfe3e74628cf56bcc1f53ef2531f648c0e0ca454",
     "tier": "ingested_unreviewed",
     "verification_status": "ingested_unreviewed",
@@ -12547,7 +12547,7 @@
     "text": "Whoever, being in any manner entrusted with property, or with any dominion over property, dishonestly misappropriates or converts to his own use that property, or dishonestly uses or disposes of that property in violation of any direction of law prescribing the mode in which such trust is to be discharged, or of any legal contract, express or implied, which he has made touching the discharge of such trust, or wilfully suffers any other person so to do, commits 'criminal breach of trust'.",
     "missing_reason": null,
     "source_file": "https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
-    "source_page": 112,
+    "source_page": "143-144",
     "content_hash": "541c15e52c8d5f120ed84d548c3e3530c731195437b51aee0b45e2143d7be5e3",
     "tier": "ingested_unreviewed",
     "verification_status": "ingested_unreviewed",
@@ -12559,9 +12559,9 @@
     "text_normalized": "Whoever, being in any manner entrusted with property, or with any dominion over property, dishonestly misappropriates or converts to his own use that property, or dishonestly uses or disposes of that property in violation of any direction of law prescribing the mode in which such trust is to be discharged, or of any legal contract, express or implied, which he has made touching the discharge of such trust, or wilfully suffers any other person so to do, commits 'criminal breach of trust'.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "PPC_1860_SEC_406",
@@ -12574,7 +12574,7 @@
     "text": "Whoever commits criminal breach of trust shall be punished with imprisonment of either description for a term which may extend to seven years, or with fine, or with both.",
     "missing_reason": null,
     "source_file": "https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
-    "source_page": 113,
+    "source_page": "144",
     "content_hash": "f1c4378fd83a97e10c4b054d49ed26a131ac898ba3ede41be9acb0bd90ee8775",
     "tier": "ingested_unreviewed",
     "verification_status": "ingested_unreviewed",
@@ -12651,7 +12651,7 @@
     "text": "Whoever, being in any manner entrusted with property, or with any dominion over property in his capacity of a public servant or in the way of his business as a banker, merchant, factor, broker, attorney or agent, commits criminal breach of trust in respect of that property, shall be punished with imprisonment for life, or with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.",
     "missing_reason": null,
     "source_file": "https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
-    "source_page": 113,
+    "source_page": "145",
     "content_hash": "bae024287fc2e8c4d89d41c6bad3a4f10cdb68af3cb960dc21afdce690cdc244",
     "tier": "ingested_unreviewed",
     "verification_status": "ingested_unreviewed",
@@ -12663,9 +12663,9 @@
     "text_normalized": "Whoever, being in any manner entrusted with property, or with any dominion over property in his capacity of a public servant or in the way of his business as a banker, merchant, factor, broker, attorney or agent, commits criminal breach of trust in respect of that property, shall be punished with imprisonment for life, or with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "PPC_1860_SEC_410",
@@ -12802,7 +12802,7 @@
     "tier": "tier_1",
     "status": "in_force",
     "verification_status": "page_verified",
-    "source_page": "145-146",
+    "source_page": "145",
     "content_hash": "543928d8ce19e10fcc85e9e54540bda75854dca3f848754c70d8b517e02464e6",
     "missing_reason": null,
     "footnotes": [
@@ -12811,10 +12811,10 @@
     "text_normalized": "415. Cheating. Whoever, by deceiving any person, fraudulently or dishonestly induces the\nperson so deceived to deliver any property to any person, or to consent that any person shall retain any\nIndian Penal Code Amdt. Act, 1882 (8 of 1882).\nCapital of the Federation” which had been subs. by A. O., 1949, Arts. 3(2) and 4, for “British India”.",
     "is_canonical": true,
     "duplicate_of": null,
-    "quoting_allowed": true,
+    "quoting_allowed": false,
     "has_operative_text": true,
     "in_force": true,
-    "page_verified": true
+    "page_verified": false
   },
   {
     "canonical_id": "PPC_1860_SEC_416",
@@ -12923,7 +12923,7 @@
     "text": "Whoever cheats and thereby dishonestly induces the person deceived to deliver any property to any person, or to make, alter or destroy the whole or any part of a valuable security, or anything which is signed or sealed, and which is capable of being converted into a valuable security, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine.",
     "missing_reason": null,
     "source_file": "https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
-    "source_page": 115,
+    "source_page": "147",
     "content_hash": "90f99c7031b0b9e895e06bcdd6be6f6a07319da2a65174eda22b64e996580e57",
     "tier": "ingested_unreviewed",
     "verification_status": "ingested_unreviewed",
@@ -15225,7 +15225,7 @@
     "text": "Whoever dishonestly issues a cheque towards repayment of a loan or fulfillment of an obligation which is dishonoured on presentation, shall be punishable with imprisonment which may extend to three years, or with fine, or with both, unless he can establish, for which the burden of proof shall rest on him, that he had made arrangements with his bank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the cheque.",
     "missing_reason": null,
     "source_file": "https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
-    "source_page": 138,
+    "source_page": "169",
     "content_hash": "1a2f4c4ad675943b4f9aa88ba8cb0a9179aa06fd0a963b94fdfb4a64fc903809",
     "tier": "ingested_unreviewed",
     "verification_status": "ingested_unreviewed",

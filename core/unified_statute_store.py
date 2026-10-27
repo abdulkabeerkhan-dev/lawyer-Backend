@@ -23,6 +23,32 @@ REPO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UNIFIED_DIR = os.path.join(REPO_DIR, "data", "unified_statutes")
 TABLES_DIR = os.path.join(REPO_DIR, "data", "statute_tables")
 VERSIONS_DIR = os.path.join(REPO_DIR, "data", "statute_versions")
+REVIEWS_DIR = os.path.join(REPO_DIR, "data", "reviews")
+
+def verify_reviewed_tier(canonical_id: str, content_hash: str) -> bool:
+    """
+    Validates whether a provision has been legitimately promoted to 'reviewed' tier.
+    A provision can ONLY be 'reviewed' if a signed review file exists in data/reviews/
+    named <canonical_id>.review.json with matching record_content_hash, reviewer_name,
+    and cryptographic_signature. Agents/models cannot set this tier.
+    """
+    review_file = os.path.join(REVIEWS_DIR, f"{canonical_id}.review.json")
+    if not os.path.exists(review_file):
+        return False
+    try:
+        import json
+        with open(review_file, "r", encoding="utf-8") as rf:
+            data = json.load(rf)
+        return (
+            str(data.get("canonical_id")).upper() == str(canonical_id).upper() and
+            bool(data.get("reviewer_name")) and
+            bool(data.get("review_date")) and
+            str(data.get("record_content_hash")) == str(content_hash) and
+            data.get("status") == "approved" and
+            bool(data.get("cryptographic_signature"))
+        )
+    except Exception:
+        return False
 
 class UnifiedStatuteStore:
     _instance = None
@@ -74,11 +100,17 @@ class UnifiedStatuteStore:
                             cid = f"{act}_SEC_{num}"
 
                         if cid:
+                            if r.get("tier") == "reviewed":
+                                if not verify_reviewed_tier(cid.upper(), r.get("content_hash", "")):
+                                    r["tier"] = "disputed" if r.get("is_disputed") else "ingested_unreviewed"
+                                    r["quoting_allowed"] = False
                             self._by_cid[cid.upper()] = r
                         if num:
                             norm_num = re.sub(r'[^A-Z0-9]', '', num.upper())
-                            self._by_act_num[(act, norm_num)] = r
-                            self._by_act_num[(act, num.upper())] = r
+                            expected_root_cid = f"{act}_SEC_{norm_num}"
+                            if (act, norm_num) not in self._by_act_num or cid == expected_root_cid:
+                                self._by_act_num[(act, norm_num)] = r
+                                self._by_act_num[(act, num.upper())] = r
             except Exception as e:
                 pass
 

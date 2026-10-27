@@ -161,6 +161,8 @@ def shared_normalize(text: str) -> str:
     # 3. Line-break hyphenation (e.g. 'ad -\nmissible' -> 'admissible' and 'charge able' -> 'chargeable')
     t = re.sub(r'(\w+)\s*-\s*[\r\n]+\s*(\w+)', r'\1\2', t)
     t = re.sub(r'(\w+)\s+-\s+(\w+)', r'\1\2', t)
+    # 3b. Gazette typo markers: strip [sic], (sic), [sic.], or bare sic
+    t = re.sub(r'\[\s*sic\.?\s*\]|\(\s*sic\.?\s*\)|\bsic\b', ' ', t, flags=re.IGNORECASE)
     # 4. Amendment markers: '1[', '2[', etc. and ']'
     t = re.sub(r'\d+\[', ' ', t).replace(']', ' ')
     # 5. Deletion markers: '* * *', '***', etc. replaced with space
@@ -171,7 +173,7 @@ def shared_normalize(text: str) -> str:
     t = t.replace('—', ' - ').replace('–', ' - ')
     # 7. Strip markdown bold / italics
     t = re.sub(r'[*_]{1,3}', '', t)
-    # 8. All whitespace (including \xa0) collapsed
+    # 9. All whitespace (including \xa0) collapsed
     t = t.replace('\xa0', ' ')
     return " ".join(t.split())
 
@@ -262,7 +264,7 @@ class MemoVerifier:
 
             is_in_force = (
                 str(status).lower() == "in_force" and
-                tier in ["ingested_unreviewed", "page_verified", "ground_truth", "disputed"]
+                tier in ["ingested_unreviewed", "page_verified", "ground_truth", "disputed", "tier_1", "reviewed"]
             )
 
             norm = shared_normalize(txt)
@@ -634,6 +636,12 @@ class MemoVerifier:
         if m_rule and active_order:
             return "CPC_1908", active_order.upper(), m_rule.group(1).upper()
 
+        # Check 'of the Ordinance' in banking / recovery context
+        if re.search(r'\b(?:of\s+(?:the\s+)?ordinance|under\s+(?:the\s+)?ordinance|the\s+ordinance)\b', cit_span, re.I):
+            m_sec = re.search(r'\b(?:section|sec\.?|s\.)\s*(\d+[A-Za-z]?)', cit_span, re.I)
+            if m_sec:
+                return "FIO_2001", m_sec.group(1).upper(), None
+
         # Normalize FIFO -> FIO
         norm = re.sub(r'\bFIFO\b', 'FIO', cit_span, flags=re.IGNORECASE)
         norm = re.sub(r'of\s+the\s+1973\s+Constitution', 'Constitution', norm, flags=re.IGNORECASE)
@@ -700,7 +708,7 @@ class MemoVerifier:
 
         in_force = (
             str(status).lower() == "in_force" and
-            tier in ["ingested_unreviewed", "page_verified", "ground_truth"]
+            tier in ["ingested_unreviewed", "page_verified", "ground_truth", "tier_1", "reviewed"]
         )
 
         if not in_force:
