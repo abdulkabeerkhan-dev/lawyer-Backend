@@ -750,9 +750,9 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
     if not act_code and re.search(r'\b(?:order|ord\.?|o\.?)\s*[ivxlcdm\d]+', lower_text):
         act_code = "CPC_1908"
 
-    # 1. Parse Order/Rule track (Punctuation-tolerant, e.g. "O. 39, r. 1 CPC", "Order XXXIX Rule 1")
+    # 1. Parse Order/Rule track (Punctuation-tolerant, e.g. "O. 39, r. 1 CPC", "Order XXXIX Rule 2A")
     ord_match = re.search(
-        r'\b(?:order|ord\.?|o\.?)\s*([ivxlcdm]+|\d+)\s*[,/\.\s\-]*\s*(?:rule|r\.?)\s*(\d+)(?:\s*\(\s*(\d+)\s*\))?',
+        r'\b(?:order|ord\.?|o\.?)\s*([ivxlcdm]+|\d+)\s*[,/\.\s\-]*\s*(?:rule|r\.?)\s*(\d+[a-zA-Z]?)(?:\s*\(\s*(\d+[a-zA-Z]?)\s*\))?',
         clean_text, re.IGNORECASE
     )
     if ord_match:

@@ -42,7 +42,7 @@ if REPO_DIR not in sys.path:
 from core.unified_statute_store import get_unified_statute_store
 from core.statutory_validator import parse_statutory_citation, ACT_ALIASES
 
-STATUTES_DIR = os.path.join(REPO_DIR, "data", "unified_statutes")
+STATUTES_DIR = os.path.join(REPO_DIR, "data", "statutes_v2")
 BM25_PATH = os.path.join(REPO_DIR, "bm25_index.pkl")
 HISTORICAL_CASES_PATH = os.path.join(REPO_DIR, "data", "curated_historical_cases.json")
 CACHED_AUTHORITIES_PATH = os.path.join(REPO_DIR, "data", "cached_corpus_authorities.json")
@@ -264,7 +264,7 @@ class MemoVerifier:
 
             is_in_force = (
                 str(status).lower() == "in_force" and
-                tier in ["ingested_unreviewed", "page_verified", "ground_truth", "disputed", "tier_1", "reviewed"]
+                tier in ["ingested_unreviewed", "page_verified", "ground_truth", "disputed", "extraction_disputed", "tier_1", "reviewed", "text_layer_extracted"]
             )
 
             norm = shared_normalize(txt)
@@ -395,7 +395,7 @@ class MemoVerifier:
 
         return quotes
 
-    def verify_quote_against_store(self, raw_quote: str) -> Tuple[bool, Optional[str], Optional[str], Optional[List[str]]]:
+    def verify_quote_against_store(self, raw_quote: str, expected_cid: Optional[str] = None) -> Tuple[bool, Optional[str], Optional[str], Optional[List[str]]]:
         """
         Rule (a): Quote must match a stored provision after shared normalization.
         Handles both continuous quotes and ellipsis quotes ('...', '…', '[...]').
@@ -506,16 +506,24 @@ class MemoVerifier:
         best_prov = None
         best_ratio = 0.0
 
-        for prov in self.provisions:
-            p_text = prov["normalized_text"]
-            if not p_text:
-                continue
-            matcher = difflib.SequenceMatcher(None, clean_q.lower(), p_text.lower(), autojunk=False)
-            match_block = matcher.find_longest_match(0, len(clean_q), 0, len(p_text))
-            ratio = (2.0 * match_block.size) / (len(clean_q) + match_block.size)
-            if ratio > best_ratio:
-                best_ratio = ratio
-                best_prov = prov
+        if expected_cid:
+            for prov in self.provisions:
+                if prov.get("canonical_id", "").upper() == expected_cid.upper():
+                    best_prov = prov
+                    best_ratio = 1.0
+                    break
+
+        if not best_prov:
+            for prov in self.provisions:
+                p_text = prov["normalized_text"]
+                if not p_text:
+                    continue
+                matcher = difflib.SequenceMatcher(None, clean_q.lower(), p_text.lower(), autojunk=False)
+                match_block = matcher.find_longest_match(0, len(clean_q), 0, len(p_text))
+                ratio = (2.0 * match_block.size) / (len(clean_q) + match_block.size)
+                if ratio > best_ratio:
+                    best_ratio = ratio
+                    best_prov = prov
 
         if best_prov and best_ratio >= 0.20:
             diff_details = compute_word_diff(clean_q, best_prov["text"])
@@ -699,8 +707,8 @@ class MemoVerifier:
             reason = f"{LABEL_HEADING_ONLY}: Act {act_code} provision {num} has tier='{tier}', but operative statutory text is not in verified store (title/heading only)"
             return CitationMatchResult(False, reason, rec, cid)
 
-        # Disputed tier policy (Order 1.7 - Item 7, Order 1.10 - Item 9)
-        if tier == "disputed":
+        # Disputed tier policy (Order 1.7 - Item 7, Order 1.10 - Item 9, Order 2.0)
+        if tier in ("disputed", "extraction_disputed"):
             if has_disputed:
                 # Allowed with notice
                 return CitationMatchResult(True, None, rec, cid)
@@ -710,7 +718,7 @@ class MemoVerifier:
 
         in_force = (
             str(status).lower() == "in_force" and
-            tier in ["ingested_unreviewed", "page_verified", "ground_truth", "tier_1", "reviewed"]
+            tier in ["ingested_unreviewed", "page_verified", "ground_truth", "tier_1", "reviewed", "text_layer_extracted"]
         )
 
         if not in_force:
@@ -759,7 +767,13 @@ class MemoVerifier:
         quotes_failed = 0
 
         for q in quotes:
-            q_res = self.verify_quote_against_store(q["raw"])
+            lead_in = q.get("lead_in", "")
+            exp_cid = None
+            if lead_in:
+                c_act, c_num, c_r = self.resolve_citation_to_cid(lead_in, active_order)
+                if c_act and c_num:
+                    exp_cid = f"{c_act}_ORD_{c_num}_R_{c_r}" if c_r else f"{c_act}_SEC_{c_num}"
+            q_res = self.verify_quote_against_store(q["raw"], expected_cid=exp_cid)
             matched, match_cid, diff_desc = q_res
             omitted_spans = q_res.omitted
             
@@ -903,7 +917,7 @@ class MemoVerifier:
             if is_valid:
                 statutes_passed += 1
                 verified_statute_spans.add(sc["span"])
-                if rec and rec.get("tier") == "disputed":
+                if rec and rec.get("tier") in ("disputed", "extraction_disputed"):
                     disputed_notices.append({
                         "provision": cid or sc["span"],
                         "label": LABEL_DISPUTED_TEXT_NOTICE,
@@ -911,7 +925,7 @@ class MemoVerifier:
                     })
             else:
                 statutes_failed += 1
-                is_disputed_missing_banner = (rec and rec.get("tier") == "disputed" and not has_disputed)
+                is_disputed_missing_banner = (rec and rec.get("tier") in ("disputed", "extraction_disputed") and not has_disputed)
                 if is_disputed_missing_banner:
                     disputed_notices.append({
                         "provision": cid or sc["span"],

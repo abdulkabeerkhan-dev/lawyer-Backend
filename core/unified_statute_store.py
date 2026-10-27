@@ -20,7 +20,7 @@ import re
 from typing import Dict, List, Any, Optional
 
 REPO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-UNIFIED_DIR = os.path.join(REPO_DIR, "data", "unified_statutes")
+UNIFIED_DIR = os.path.join(REPO_DIR, "data", "statutes_v2")
 TABLES_DIR = os.path.join(REPO_DIR, "data", "statute_tables")
 VERSIONS_DIR = os.path.join(REPO_DIR, "data", "statute_versions")
 REVIEWS_DIR = os.path.join(REPO_DIR, "data", "reviews")
@@ -50,17 +50,28 @@ def review_file_present(canonical_id: str, content_hash: str) -> bool:
 
 def verify_reviewed_tier(canonical_id: str, content_hash: str) -> bool:
     """
-    Order 1.14 - Item 6: Cryptographic public-key signature verification for 'reviewed' tier.
-    The authorized advocate public key is committed in data/reviews/advocate_public_key.pem.
-    The corresponding private key DOES NOT EXIST on this machine and is never generated here.
-    An agent/model cannot sign reviews; any signature made with a throwaway key fails verification.
+    Order 2.0 - Step 8: Cryptographic public-key signature verification for 'reviewed' tier with key pinning.
+    The expected SHA-256 of the advocate public key must be supplied via ADVOCATE_PUBKEY_SHA256 env var.
+    If unset or mismatched against data/reviews/advocate_public_key.pem, fails closed (returns False).
     """
+    expected_pubkey_hash = os.environ.get("ADVOCATE_PUBKEY_SHA256")
+    if not expected_pubkey_hash:
+        return False
+
     review_file = os.path.join(REVIEWS_DIR, f"{canonical_id}.review.json")
     pub_key_file = os.path.join(REVIEWS_DIR, "advocate_public_key.pem")
     
     if not os.path.exists(review_file) or not os.path.exists(pub_key_file):
         return False
     try:
+        with open(pub_key_file, "rb") as pf:
+            pubkey_bytes = pf.read()
+
+        import hashlib
+        actual_pubkey_hash = hashlib.sha256(pubkey_bytes).hexdigest()
+        if actual_pubkey_hash.lower() != expected_pubkey_hash.strip().lower():
+            return False
+
         with open(review_file, "r", encoding="utf-8") as rf:
             data = json.load(rf)
         if str(data.get("canonical_id")).upper() != str(canonical_id).upper():
@@ -78,8 +89,7 @@ def verify_reviewed_tier(canonical_id: str, content_hash: str) -> bool:
         from cryptography.hazmat.primitives import hashes, serialization
         from cryptography.hazmat.primitives.asymmetric import padding
         
-        with open(pub_key_file, "rb") as pf:
-            public_key = serialization.load_pem_public_key(pf.read())
+        public_key = serialization.load_pem_public_key(pubkey_bytes)
         
         # Payload verified is canonical_id + content_hash
         payload = f"{canonical_id}:{content_hash}".encode("utf-8")
@@ -114,8 +124,11 @@ class UnifiedStatuteStore:
         self._by_cid.clear()
         self._by_act_num.clear()
 
-        # Primary load directory: UNIFIED_DIR
-        target_dir = UNIFIED_DIR if os.path.exists(UNIFIED_DIR) and len(os.listdir(UNIFIED_DIR)) > 0 else TABLES_DIR
+        # Order 2.0 Step 1: App must load ONLY data/statutes_v2 from now on.
+        target_dir = UNIFIED_DIR
+        if not os.path.exists(target_dir):
+            self._loaded = True
+            return
 
         for fname in os.listdir(target_dir):
             if not fname.endswith(".json"):
@@ -180,6 +193,13 @@ class UnifiedStatuteStore:
             return None
 
         act_upper = act_code.strip().upper()
+        alias_map = {
+            "STAMP_ACT_1899": "STAMP_1899",
+            "CONTRACT_ACT_1872": "CONTRACT_1872",
+            "REGISTRATION_ACT_1908": "REGISTRATION_1908",
+            "LIMITATION_ACT_1908": "LIMITATION_1908",
+        }
+        act_upper = alias_map.get(act_upper, act_upper)
         clean_num = str(provision_num).strip().upper()
         norm_num = re.sub(r'[^A-Z0-9]', '', clean_num)
 

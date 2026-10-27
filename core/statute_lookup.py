@@ -15,6 +15,7 @@ from typing import Dict, List, Any, Optional
 
 from core.unified_statute_store import get_unified_statute_store
 from core.statutory_validator import parse_statutory_citation
+from core.quote_by_reference import format_system_blockquote
 
 QUARANTINED_ACTS = {
     "PECA_2016", "AMLA_2010", "ARBITRATION_1940", "MFLO_1961",
@@ -123,22 +124,31 @@ def statute_lookup(query_text: str) -> Dict[str, Any]:
         }
 
     # 4. Operative provision found
-    tier = rec.get("tier", "ingested_unreviewed")
+    tier = rec.get("tier", "heading_only")
+    page_num = rec.get("page_start") or rec.get("source_page", "?")
+    quoting_allowed = rec.get("quoting_allowed", False)
+
+    if tier in ("extraction_disputed", "heading_only") or not quoting_allowed:
+        verbatim_text = f"TEXT NOT AVAILABLE IN VERIFIED STORE (PDF page {page_num})"
+    else:
+        verbatim_text = format_system_blockquote(rec)
+
     banners = []
-    if tier == "disputed":
+    if tier in ("extraction_disputed", "disputed"):
         banners.append(DISPUTED_WARNING_BANNER)
 
     return {
         "status": "success",
         "canonical_id": rec.get("canonical_id"),
-        "title": rec.get("title"),
-        "statutory_text": rec.get("text") or rec.get("statutory_text"),
+        "title": rec.get("heading") or rec.get("title"),
+        "statutory_text": verbatim_text,
+        "text": verbatim_text,
         "tier": tier,
-        "source_page": rec.get("source_page"),
-        "content_hash": rec.get("content_hash"),
+        "source_page": page_num,
+        "content_hash": rec.get("text_raw_sha256") or rec.get("content_hash"),
         "in_force": rec.get("in_force", True),
-        "page_verified": rec.get("page_verified", False),
-        "quoting_allowed": rec.get("quoting_allowed", False),
+        "page_verified": (tier == "text_layer_extracted"),
+        "quoting_allowed": quoting_allowed,
         "banners": banners,
         "no_model_call": True
     }
@@ -156,7 +166,7 @@ def get_verified_statute_fallback(query_text: str) -> List[Dict[str, Any]]:
             "tier": lookup_res.get("tier"),
             "source_page": lookup_res.get("source_page"),
             "content_hash": lookup_res.get("content_hash"),
-            "is_disputed": lookup_res.get("tier") == "disputed",
+            "is_disputed": lookup_res.get("tier") in ("disputed", "extraction_disputed"),
             "text": disp_txt
         }]
     return []

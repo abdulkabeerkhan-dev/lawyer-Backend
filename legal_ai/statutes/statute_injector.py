@@ -46,7 +46,7 @@ class StatuteInjector:
         else:
             self.root = Path(__file__).resolve().parent.parent.parent
 
-        self.unified_dir = self.root / "data" / "unified_statutes"
+        self.unified_dir = self.root / "data" / "statutes_v2"
         self.tables_dir = self.root / "data" / "statute_tables"
         self.versions_dir = self.root / "data" / "statute_versions"
         self._unified_cache: Dict[str, Dict[str, Dict[str, Any]]] = {}

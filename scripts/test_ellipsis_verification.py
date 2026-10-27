@@ -9,12 +9,14 @@ from legal_ai.verification.memo_verifier import MemoVerifier
 v = MemoVerifier()
 
 # Test Case 1: Ellipsis omitting non-conditional text: "on the defendant as provided for in sub-section (5) of section 9,"
-memo_clean_ellipsis = """# TEST MEMO
+memo_clean_ellipsis = """> [!WARNING]
+> **DISPUTED STATUTORY PROVISION — HUMAN CHECK REQUIRED**: Section 10 of the Financial Institutions Ordinance, 2001 is classified as DISPUTED.
+
 Section 10 of the Financial Institutions Ordinance, 2001 provides:
 > (1) In any case in which the summons has been served ... the defendant shall not be entitled to defend the suit
 """
 
-res1 = v.verify_memo(memo_clean_ellipsis)
+res1 = v.verify_memo(memo_clean_ellipsis, _is_system_assembled=True)
 print("Res 1 (non-blocking ellipsis):", res1["verdict"], "Failures:", len(res1["failures"]))
 if res1["omitted_ellipses"]:
     print("Omitted slice:", res1["omitted_ellipses"][0]["omitted_text_between_segments"])
