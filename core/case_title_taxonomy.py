@@ -128,15 +128,29 @@ def get_effective_title(record: Dict[str, Any]) -> Optional[str]:
     """
     Returns canonical_case_title if present and non-empty,
     otherwise falls back to case_title, then title.
+    If title is degenerate, fragment, or placeholder, extracts from full_text if available.
     Preserves raw case_title as immutable evidentiary lineage.
     """
     if not record or not isinstance(record, dict):
         return None
-    return (
+    raw = (
         record.get("canonical_case_title")
         or record.get("case_title")
         or record.get("title")
     )
+    if raw and len(str(raw).strip()) >= 5:
+        return str(raw).strip()
+
+    ft = record.get("full_text") or ""
+    if ft:
+        m = re.search(r'(?:Bookmark this Case\s*|Citation Name:[^\n]*)\n+([A-Z0-9\s,\.\(\)\/\-]+?\s+(?:VS|V\.)\s+[A-Z0-9\s,\.\(\)\/\-]+?)(?:\n|Civil|Criminal|Constitution|Appellate|\Z)', ft[:2000], re.IGNORECASE)
+        if m:
+            extracted = m.group(1).strip()
+            extracted = re.sub(r'\s*-\s*[A-Z\-]+(?:COURT|HIGH-COURT)[A-Z\-]*', '', extracted, flags=re.IGNORECASE)
+            extracted = re.sub(r'^(?:Bookmark this Case|Citation Name:[^\n]*)\s*', '', extracted, flags=re.IGNORECASE).strip()
+            if extracted and len(extracted) > len(str(raw or "")):
+                return extracted
+    return raw
 
 def clean_title_noise(raw_title: str) -> str:
     """Strip scraped tab characters, court trailing tags, and trailing punctuation."""

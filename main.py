@@ -3274,6 +3274,10 @@ def clean_or_extract_title(case_title: str, raw_text: str = "") -> str:
 
         not title or
 
+        len(title) < 4 or
+
+        (len(title) < 6 and " v" not in title.lower() and " vs" not in title.lower()) or
+
         title in ("Reported Precedent", "Untitled Case", "Precedent on Record", "Unknown") or
 
         bool(re.match(r'^(?:s\.|section|art\.|article|order|o\.|rule|r\.|dated|form)\s*\d*', title, re.IGNORECASE))
@@ -14584,10 +14588,11 @@ async def get_api_judgment_pdf_endpoint(
                     }
                 )
 
-    title = (get_effective_title(match_record) if match_record else decoded_id) or decoded_id
+    raw_title = (get_effective_title(match_record) if match_record else decoded_id) or decoded_id
     citation = (match_record.get("neutral_citation") if match_record else "") or ""
     court = (get_effective_court(match_record) if match_record else "Supreme Court of Pakistan") or "Supreme Court of Pakistan"
     text = (match_record.get("full_text") if match_record else f"Full judgment record for {decoded_id} is currently undergoing index synchronization.") or ""
+    title = clean_or_extract_title(raw_title, text)
 
     pdf_bytes = build_judgment_pdf_bytes(title, citation, court, text)
     safe_filename = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_id).strip('_') + ".pdf"
