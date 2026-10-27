@@ -271,27 +271,22 @@ def is_standard_judgment_first_title(title: str) -> bool:
     clean = re.sub(r'[\*\_:]+$', '', clean).strip().lower()
 
     patterns = [
-
         r"^legal\s*issues?$",
-
         r"^relevant\s*provisions?",
-
+        r"^(?:controlling\s+)?(?:pakistani\s+)?statut(?:ory|es)\s*(?:framework|provisions|and\s+applicable\s+law)?",
+        r"^(?:controlling\s+)?applicable\s+law",
         r"^statutory\s*framework",
-
         r"^judicial\s*authorities",
-
+        r"^judicial\s*precedents?",
         r"^controlling\s*(?:judicial\s*)?precedents?",
-
         r"^case\s*matrix",
-
+        r"^legal\s*(?:&|and)\s*statutory\s*analysis",
+        r"^analysis\s*(?:&|and)\s*application",
+        r"^application\s*(?:&|and)\s*analysis",
         r"^application\s*to\s*query",
-
         r"^application\s*of\s*law",
-
         r"^statutory\s*verification",
-
         r"^legal\s*verification",
-
     ]
 
     return any(re.search(p, clean, re.IGNORECASE) for p in patterns)
@@ -411,46 +406,32 @@ def is_prohibited_judgment_first_title(title: str) -> bool:
 
 
 def is_verification_or_application_title(title: str) -> bool:
-
     if not title:
-
         return False
-
     clean = re.sub(r'^[#\s\d\.\-\*\_:]+', '', title).strip()
-
     clean = re.sub(r'[\*\_:]+$', '', clean).strip().lower()
-
     patterns = [
-
         r"application\s+to\s+query",
-
         r"application\s+of\s+law\s+to\s+facts?",
-
         r"application\s+to\s+facts?",
-
         r"application\s+of\s+law",
-
         r"factual\s+application",
-
-        r"application\s+to\s+(?:the\s+)?client(?:[\'’]s)?\s+case",
-
+        r"application\s+to\s+(?:the\s+)?client(?:['’]s)?\s+case",
         r"^application$",
-
         r"^(?:statutory|legal|doctrinal)\s+verification(?:\s*\(.*\))?$",
-
         r"^verification\s+of\s+(?:provisions?|statutes?)$",
-
         r"verification\s+of\s+law",
-
-        r"verification\s*(?:&|and|\/|\+)\s*application",
-
-        r"application\s*(?:&|and|\/|\+)\s*verification",
-
+        r"verification\s*(?:&|and|/|\+)\s*application",
+        r"application\s*(?:&|and|/|\+)\s*verification",
         r"^verification$",
-
+        r"^(?:legal\s+)?analysis\s*(?:&|and)\s*application(?:\s+to\s+facts?)?$",
+        r"^application\s*(?:&|and)\s*(?:legal\s+)?analysis(?:\s+to\s+facts?)?$",
+        r"^legal\s+(?:&|and)\s+statutory\s+analysis$",
     ]
-
     return any(re.search(p, clean, re.IGNORECASE) for p in patterns)
+
+
+
 
 
 

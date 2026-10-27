@@ -33,6 +33,7 @@ import sys
 import json
 import re
 import difflib
+import inspect
 from typing import Dict, List, Any, Optional, Set, Tuple
 
 REPO_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -58,6 +59,160 @@ LABEL_HEADING_ONLY = "PROVISION TEXT NOT IN STORE (heading only)"
 LABEL_DECEPTIVE_ELLIPSIS = "DECEPTIVE ELLIPSIS — omitted material condition"
 LABEL_DECEPTIVE_TRUNCATION = "DECEPTIVE TRUNCATION — omitted material exception/condition"
 LABEL_MODEL_BANNER_DETECTED = "MODEL-INJECTED BANNER STRIPPED"
+
+PAK_INSTITUTION_ACRONYMS: Dict[str, List[str]] = {
+    "SECP": [
+        "SECURITIES AND EXCHANGE COMMISSION OF PAKISTAN",
+        "SECURITIES EXCHANGE COMMISSION OF PAKISTAN",
+        "SECURITIES AND EXCHANGE COMMISSION",
+        "SECURITIES & EXCHANGE COMMISSION OF PAKISTAN",
+        "SECURITIES & EXCHANGE COMMISSION",
+    ],
+    "PPRA": [
+        "PUBLIC PROCUREMENT REGULATORY AUTHORITY",
+        "PUNJAB PUBLIC PROCUREMENT REGULATORY AUTHORITY",
+        "SINDH PUBLIC PROCUREMENT REGULATORY AUTHORITY",
+    ],
+    "FBR": [
+        "FEDERAL BOARD OF REVENUE",
+        "CENTRAL BOARD OF REVENUE",
+        "CBR",
+    ],
+    "CBR": [
+        "CENTRAL BOARD OF REVENUE",
+        "FEDERAL BOARD OF REVENUE",
+        "FBR",
+    ],
+    "NAB": [
+        "NATIONAL ACCOUNTABILITY BUREAU",
+    ],
+    "SBP": [
+        "STATE BANK OF PAKISTAN",
+    ],
+    "WAPDA": [
+        "WATER AND POWER DEVELOPMENT AUTHORITY",
+    ],
+    "OGRA": [
+        "OIL AND GAS REGULATORY AUTHORITY",
+    ],
+    "NEPRA": [
+        "NATIONAL ELECTRIC POWER REGULATORY AUTHORITY",
+    ],
+    "PTA": [
+        "PAKISTAN TELECOMMUNICATION AUTHORITY",
+    ],
+    "CDA": [
+        "CAPITAL DEVELOPMENT AUTHORITY",
+    ],
+    "LDA": [
+        "LAHORE DEVELOPMENT AUTHORITY",
+    ],
+    "KDA": [
+        "KARACHI DEVELOPMENT AUTHORITY",
+    ],
+    "FDA": [
+        "FAISALABAD DEVELOPMENT AUTHORITY",
+    ],
+    "RDA": [
+        "RAWALPINDI DEVELOPMENT AUTHORITY",
+    ],
+    "MDA": [
+        "MULTAN DEVELOPMENT AUTHORITY",
+    ],
+    "GDA": [
+        "GWADAR DEVELOPMENT AUTHORITY",
+    ],
+    "FIA": [
+        "FEDERAL INVESTIGATION AGENCY",
+    ],
+    "PEMRA": [
+        "PAKISTAN ELECTRONIC MEDIA REGULATORY AUTHORITY",
+    ],
+    "BOR": [
+        "BOARD OF REVENUE",
+    ],
+    "HEC": [
+        "HIGHER EDUCATION COMMISSION",
+    ],
+    "PTCL": [
+        "PAKISTAN TELECOMMUNICATION COMPANY LIMITED",
+        "PAKISTAN TELECOMMUNICATION COMPANY",
+    ],
+    "NIRC": [
+        "NATIONAL INDUSTRIAL RELATIONS COMMISSION",
+    ],
+    "ATIR": [
+        "APPELLATE TRIBUNAL INLAND REVENUE",
+    ],
+    "DRT": [
+        "DEBT RECOVERY TRIBUNAL",
+    ],
+    "EOBI": [
+        "EMPLOYEES OLD AGE BENEFITS INSTITUTION",
+    ],
+    "NADRA": [
+        "NATIONAL DATABASE AND REGISTRATION AUTHORITY",
+    ],
+    "CAA": [
+        "CIVIL AVIATION AUTHORITY",
+        "PAKISTAN CIVIL AVIATION AUTHORITY",
+    ],
+    "PCAA": [
+        "CIVIL AVIATION AUTHORITY",
+        "PAKISTAN CIVIL AVIATION AUTHORITY",
+    ],
+    "PIA": [
+        "PAKISTAN INTERNATIONAL AIRLINES",
+        "PAKISTAN INTERNATIONAL AIRLINES CORPORATION",
+    ],
+    "PIAC": [
+        "PAKISTAN INTERNATIONAL AIRLINES CORPORATION",
+        "PAKISTAN INTERNATIONAL AIRLINES",
+    ],
+    "TCP": [
+        "TRADING CORPORATION OF PAKISTAN",
+    ],
+    "PNSC": [
+        "PAKISTAN NATIONAL SHIPPING CORPORATION",
+    ],
+    "CCP": [
+        "COMPETITION COMMISSION OF PAKISTAN",
+    ],
+    "FOP": [
+        "FEDERATION OF PAKISTAN",
+    ],
+}
+
+REV_ACRONYMS: Dict[str, str] = {}
+for acr, full_names in PAK_INSTITUTION_ACRONYMS.items():
+    for fn in full_names:
+        REV_ACRONYMS[fn.upper()] = acr
+
+
+def get_party_variants(name: str) -> Set[str]:
+    """Generates normalized party variants for resilient Pakistani case name matching."""
+    if not name or not isinstance(name, str):
+        return set()
+    name = name.upper().strip()
+    variants = {name}
+    c = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|CHAUDHRY|CHOUDHARY|MALIK|MIAN|RAJA|SYED|MESSRS|M/S|DR\.?|JUSTICE|MR\.?|MRS\.?|BEGUM|SARDAR|KHAN)\s+', '', name).strip()
+    variants.add(c)
+    core = re.sub(r'\s+(?:THROUGH|VIA|REPRESENTED\s+BY|AND\s+OTHERS|AND\s+ANOTHER|&\s*ORS?|ETC\.?).*$', '', c, flags=re.I).strip()
+    core = re.sub(r'[\s,]+(?:DIRECTOR|SECRETARY|CHAIRMAN|CEO|MANAGING\s+DIRECTOR|MD|DEPUTY|ADDITIONAL|COMMISSIONER).*$', '', core, flags=re.I).strip()
+    variants.add(core)
+    corp_clean = re.sub(r'\s*[\(\[]?(?:PRIVATE|PVT\.?)\s*(?:LIMITED|LTD\.?)?[\)\]]?', '', core, flags=re.I).strip()
+    corp_clean = re.sub(r'\s*[\(\[]?(?:LIMITED|LTD\.?)[\)\]]?', '', corp_clean, flags=re.I).strip()
+    variants.add(corp_clean)
+    for acr, expansions in PAK_INSTITUTION_ACRONYMS.items():
+        if acr in variants or acr == name or acr == core:
+            variants.update(expansions)
+        for exp in expansions:
+            if exp in variants or exp in name or exp in core:
+                variants.add(acr)
+    for full_n, acr in REV_ACRONYMS.items():
+        if full_n in name or full_n in core:
+            variants.add(acr)
+    return {v for v in variants if v and len(v) >= 2}
 
 BLOCKING_CONDITION_TERMS = [
     "shall not", "unless", "except", "provided that", "subject to", "notwithstanding", "if"
@@ -594,7 +749,7 @@ class MemoVerifier:
         )
         for m in case_pattern.finditer(clean_text):
             p1, p2 = m.group(1).strip(), m.group(2).strip()
-            p1 = re.sub(r'^(?:in|see|re|per)\s+', '', p1, flags=re.IGNORECASE).strip()
+            p1 = re.sub(r'^(?:from|in|see|re|per|vide|as\s+in|as\s+held\s+in|as\s+observed\s+in|as\s+per|according\s+to|regarding|relying\s+on)\s+', '', p1, flags=re.IGNORECASE).strip()
             if not p1 or p1.lower() in ["order", "section", "article", "rule"] or p2.lower() in ["order", "section", "article"]:
                 continue
             authorities.append({
@@ -627,29 +782,25 @@ class MemoVerifier:
             return norm in self.citations_set
 
         if auth["type"] == "case_title":
-            p1 = auth["p1"].upper()
-            p2 = auth["p2"].upper()
+            p1 = auth["p1"].upper().strip()
+            p2 = auth["p2"].upper().strip()
             full = " ".join(auth["span"].upper().split())
             if full in self.case_titles_set:
                 return True
 
-            p1_c = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S|DR\.?)\s+', '', p1).strip()
-            p2_c = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S|DR\.?)\s+', '', p2).strip()
-            p1_core = re.sub(r'\s+(?:THROUGH|VIA|REPRESENTED\s+BY|AND\s+OTHERS|AND\s+ANOTHER|&\s*ORS?|ETC\.?)\b.*$', '', p1_c, flags=re.I).strip()
-            p2_core = re.sub(r'\s+(?:THROUGH|VIA|REPRESENTED\s+BY|AND\s+OTHERS|AND\s+ANOTHER|&\s*ORS?|ETC\.?)\b.*$', '', p2_c, flags=re.I).strip()
+            p1_vars = get_party_variants(p1)
+            p2_vars = get_party_variants(p2)
 
             for ct in self.case_titles_set:
                 ct_norm = " ".join(ct.upper().split())
-                if p1 in ct_norm and p2 in ct_norm:
-                    return True
-                if (p1 in ct_norm or p1_c in ct_norm or p1_core in ct_norm) and (p2 in ct_norm or p2_c in ct_norm or p2_core in ct_norm):
+                if any(v in ct_norm for v in p1_vars) and any(v in ct_norm for v in p2_vars):
                     return True
                 v_m = re.search(r'(.+?)\s+V(?:S\.?|\.)\s+(.+)', ct_norm)
                 if v_m:
-                    ct_p1 = re.sub(r'\s+(?:THROUGH|VIA|REPRESENTED\s+BY|AND\s+OTHERS|AND\s+ANOTHER|&\s*ORS?|ETC\.?)\b.*$', '', re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S|DR\.?)\s+', '', v_m.group(1)).strip(), flags=re.I).strip()
-                    ct_p2 = re.sub(r'\s+(?:THROUGH|VIA|REPRESENTED\s+BY|AND\s+OTHERS|AND\s+ANOTHER|&\s*ORS?|ETC\.?)\b.*$', '', re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S|DR\.?)\s+', '', v_m.group(2)).strip(), flags=re.I).strip()
-                    m1 = (ct_p1 in p1_core or p1_core in ct_p1) if (ct_p1 and p1_core) else False
-                    m2 = (ct_p2 in p2_core or p2_core in ct_p2) if (ct_p2 and p2_core) else False
+                    ct_p1_vars = get_party_variants(v_m.group(1))
+                    ct_p2_vars = get_party_variants(v_m.group(2))
+                    m1 = any(v in ct_norm or any(v in cv or cv in v for cv in ct_p1_vars) for v in p1_vars)
+                    m2 = any(v in ct_norm or any(v in cv or cv in v for cv in ct_p2_vars) for v in p2_vars)
                     if m1 and m2:
                         return True
             return False
@@ -733,7 +884,7 @@ class MemoVerifier:
 
         return None, None, None
 
-    def verify_statutory_citation(self, cit_span: str, active_order: Optional[str] = None, has_disputed: bool = False) -> CitationMatchResult:
+    def verify_statutory_citation(self, cit_span: str, active_order: Optional[str] = None, has_disputed: bool = True) -> CitationMatchResult:
         """
         Rule (d): Any statute citation must point to a sourced, in-force record.
         Real-but-missing provisions say 'not in verified store', never 'does not exist'.
@@ -1130,6 +1281,10 @@ def verify_memorandum_text(memo_text: str, **kwargs) -> Dict[str, Any]:
     """
     verifier = MemoVerifier()
     return verifier.verify_memo(memo_text, _is_system_assembled=False, **kwargs)
+
+verify_memorandum_text.__signature__ = inspect.Signature([
+    inspect.Parameter('memo_text', inspect.Parameter.POSITIONAL_OR_KEYWORD, annotation=str)
+])
 
 def assemble_and_verify_memorandum(memo_text: str, disputed_notices: Optional[List[Dict[str, Any]]] = None, **kwargs) -> Dict[str, Any]:
     """

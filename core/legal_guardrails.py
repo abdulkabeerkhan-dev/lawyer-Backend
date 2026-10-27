@@ -231,6 +231,15 @@ MANDATORY ADJUDICATION RULES:
       * Every reference to a headnote-only authority MUST carry the explicit notice:
         "A reported headnote indicates that this authority may address the proposition, but the underlying judgment text has not been verified and I would not rely on it as verified authority yet."
       * If ONLY discovery leads are retrieved for an issue, the system MUST explicitly state that no verified primary authority was found, rather than answering from headnotes alone.
+
+25. COMPREHENSIVE PAKISTANI STATUTORY GROUNDING & SITUATION EXPLANATION DIRECTIVE:
+    - Every legal response must explain the situation under substantive and procedural Pakistani law rather than merely retrieving or listing case titles.
+    - Under "Relevant Provisions" (or "Controlling Pakistani Statutory Framework"), explicitly identify the governing Pakistani Acts, Ordinances, Codes, and statutory Rules (e.g., Specific Relief Act 1877, Companies Act 2017, Public Procurement Regulatory Authority Ordinance 2002, Financial Institutions Ordinance 2001, Constitution of Pakistan 1973).
+    - For each statutory provision, detail:
+      (a) The operative statutory test and standard established by the Pakistani legislature;
+      (b) Detailed explanation of WHY this matter falls under this specific Pakistani law;
+      (c) Competent forum having jurisdiction, prerequisites for relief, and statutory bars.
+    - Under "Application to Query", synthesize the statutory framework and judicial holdings to explain the client's legal situation thoroughly, the remedies available, and how Pakistani superior courts apply these provisions to the facts.
 """
 
 
