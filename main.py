@@ -13639,17 +13639,17 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         from legal_ai.verification.memo_verifier import (
             verify_memorandum_text,
             MemorandumVerificationBlockedError,
+            assemble_and_verify_memorandum,
             attach_system_disputed_banner
         )
-        verification_gate = verify_memorandum_text(display_answer, is_system_rendered=False)
+        verification_gate = verify_memorandum_text(display_answer)
         if not verification_gate.get('passed', False):
             disputed_notices = verification_gate.get('disputed_notices', [])
             failures = verification_gate.get('failures', [])
             if disputed_notices and all(f.get('category') == 'DISPUTED_TEXT_UNNOTICED' for f in failures):
-                bannered_answer = attach_system_disputed_banner(display_answer, disputed_notices)
-                re_gate = verify_memorandum_text(bannered_answer, is_system_rendered=True)
+                re_gate = assemble_and_verify_memorandum(display_answer, disputed_notices)
                 if re_gate.get('passed', False):
-                    display_answer = bannered_answer
+                    display_answer = re_gate.get('assembled_text', attach_system_disputed_banner(display_answer, disputed_notices))
                     verification_gate = re_gate
 
         # Automatic regeneration loop (max 2 attempts total) with failure fed back as constraints
