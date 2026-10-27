@@ -18,20 +18,7 @@ The official Gazette pages have been forensically extracted from `data/official_
 
 ---
 
-## 2. THE THREE COMPETING SOURCES OF DISCREPANCY
-
-Section 22 is classified as **`disputed`** due to conflicts between three historical sources:
-
-| Discrepancy Point | Official Gazette Print (Aug 30, 2001, pp. 23-24) | Commercial Law Sites (PLD / Pakistan Law Site) | Early Repo Extractions (Phase 1.6 / c17904c) |
-|---|---|---|---|
-| **Sub-rule (4) Bench Threshold** | `"bench of no t less that two Judges of the High Court"` (literal printed typo: **`that`**) | Quietly emended to `"bench of not less than two Judges"` | Emended to `"than"` |
-| **Sub-rule (3) Proviso Stay Bar** | `"and no shall any stay be granted"` (literal printed typo: **`no shall`**) | Quietly emended to `"and nor shall any stay be granted"` | Emended to `"nor shall"` |
-| **Sub-rule (2) Procedural Link** | `"Order XLIII Rule 3 of the Code of Civil Procedure (Act V of 1908)"` | Inserted `", 1908"` between `"Procedure"` and `"(Act V of 1908)"` | Inserted `", 1908"` |
-| **Sub-rule (3) Punctuation** | Contains Greek question mark `;` (`U+037E`) as semicolon | Standard ASCII semicolon `;` | Standard ASCII semicolon `;` |
-
----
-
-## 3. VERBATIM STORED STATUTORY TEXT
+## 2. VERBATIM STORED STATUTORY TEXT
 
 ```text
 22. Appeal. (1) Subject to sub-section (2), any person aggrieved by any judgment, decree, sentence, or final order passed by a Banking Court may, within thirty days of such judgment, decree, sentence or final order prefer an appeal to the High Court.
@@ -46,7 +33,7 @@ Provided that the admission of the appeal shall not per se operate as a stay, an
 
 ---
 
-## 4. RAW PDF TEXT LAYER EXTRACTION (PAGES 23–24)
+## 3. RAW PDF TEXT LAYER EXTRACTION (PAGES 23–24)
 
 ```text
 22. Appeal. (1) Subject to sub -section (2), any person aggrieved by any judgment, decree, 
@@ -82,7 +69,7 @@ judgment -debtor.
 
 ---
 
-## 5. WORD-LEVEL & CHARACTER-LEVEL DIFF
+## 4. WORD-LEVEL & CHARACTER-LEVEL DIFF
 
 - **Character Match Ratio:** `0.9978` (99.78%)
 - **Word-Level Differences:**
@@ -95,7 +82,7 @@ judgment -debtor.
 
 ---
 
-## 6. HUMAN REVIEWER SIGN-OFF TEMPLATE
+## 5. HUMAN REVIEWER SIGN-OFF TEMPLATE
 
 To promote this provision from `disputed` to `reviewed`, an advocate must physically sign and store the following cryptographically anchored JSON file at `data/reviews/FIO_2001_SEC_22.review.json`:
 
