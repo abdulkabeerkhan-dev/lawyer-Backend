@@ -15731,6 +15731,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
             "stage": "done",
             "early_display": None,
             "result": {
+                "answer": response_text,
                 "response": response_text,
                 "model_answer": response_text,
                 "precedents": [],

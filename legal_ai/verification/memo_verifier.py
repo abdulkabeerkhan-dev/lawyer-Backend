@@ -762,7 +762,7 @@ class MemoVerifier:
         # -------------------------------------------------------------
         # RULE (a) & (b): BLOCKQUOTE VERIFICATION, ELLIPSES & MISATTRIBUTION
         # -------------------------------------------------------------
-        quotes = self.extract_blockquotes(memo_cleaned)
+        quotes = self.extract_blockquotes(memo_text)
         quotes_passed = 0
         quotes_failed = 0
 
