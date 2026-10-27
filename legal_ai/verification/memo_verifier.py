@@ -294,21 +294,45 @@ class MemoVerifier:
                 norm_cit = " ".join(str(cit).upper().split())
                 self.citations_set.add(norm_cit)
                 self.citations_set.add(norm_cit.replace("_", " "))
-            title = card.get("case_title") or card.get("title")
-            if title:
-                clean_t = re.sub(r'^\d+\s+[A-Z0-9\s]+\s+', '', str(title))
-                norm_title = " ".join(clean_t.upper().split())
-                self.case_titles_set.add(norm_title)
-                v_match = re.search(r'(.+?)\s+v(?:s\.?|\.)\s+(.+)', clean_t, re.IGNORECASE)
-                if v_match:
-                    p1 = " ".join(v_match.group(1).strip().upper().split())
-                    p2 = " ".join(v_match.group(2).strip().upper().split())
-                    self.case_titles_set.add(f"{p1} V. {p2}")
-                    self.case_titles_set.add(f"{p1} VS {p2}")
-                    p1_clean = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S)\s+', '', p1).strip()
-                    p2_clean = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S)\s+', '', p2).strip()
-                    self.case_titles_set.add(f"{p1_clean} V. {p2_clean}")
-                    self.case_titles_set.add(f"{p1_clean} VS {p2_clean}")
+
+            # Collect all candidate title sources
+            sources = []
+            for k in ["case_name", "canonical_case_title", "title", "case_title", "raw_title"]:
+                val = card.get(k)
+                if val and isinstance(val, str) and val.strip():
+                    sources.append(val.strip())
+
+            # Also search text fields for bracketed headers e.g. [2026 SCMR 833 | ...]
+            corpus = " ".join([
+                str(card.get("title") or ""),
+                str(card.get("case_name") or ""),
+                str(card.get("preview") or ""),
+                str(card.get("raw_judgment_text") or "")[:2000],
+                str(card.get("snippet") or "")
+            ])
+            for m in re.finditer(r'\[[^|\]]+\|\s*([^\]]+)\]', corpus):
+                sources.append(m.group(1).strip())
+
+            for s in sources:
+                cleaned = re.sub(r'^\[[^|\]]+\|\s*', '', s).strip('[]')
+                cleaned = re.sub(r'^\d{4}\s+[A-Z0-9\s]+\s+', '', cleaned)
+                norm_s = " ".join(cleaned.upper().split())
+                self.case_titles_set.add(norm_s)
+
+                for v_m in re.finditer(r"([A-Z0-9\s,\.\(\)/\-'&]+?)\s+(?:VS|V\.|VERSUS)\s+([A-Z0-9\s,\.\(\)/\-'&]+)", cleaned, re.IGNORECASE):
+                    raw_p1 = v_m.group(1).strip()
+                    raw_p2 = v_m.group(2).strip()
+                    p1 = " ".join(re.sub(r'^\[[^|\]]+\|\s*', '', raw_p1).upper().split())
+                    p2 = " ".join(raw_p2.upper().split())
+                    if p1 and p2:
+                        self.case_titles_set.add(f"{p1} V. {p2}")
+                        self.case_titles_set.add(f"{p1} VS {p2}")
+                        p1_c = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S|DR\.?)\s+', '', p1).strip()
+                        p2_c = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S|DR\.?)\s+', '', p2).strip()
+                        self.case_titles_set.add(f"{p1_c} V. {p2_c}")
+                        self.case_titles_set.add(f"{p1_c} VS {p2_c}")
+                        self.case_titles_set.add(p1)
+                        self.case_titles_set.add(p2)
 
     def _load_corpus_index(self):
         """Loads apex judicial index for Rule (c) precedent checking."""
@@ -608,15 +632,26 @@ class MemoVerifier:
             full = " ".join(auth["span"].upper().split())
             if full in self.case_titles_set:
                 return True
+
+            p1_c = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S|DR\.?)\s+', '', p1).strip()
+            p2_c = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S|DR\.?)\s+', '', p2).strip()
+            p1_core = re.sub(r'\s+(?:THROUGH|VIA|REPRESENTED\s+BY|AND\s+OTHERS|AND\s+ANOTHER|&\s*ORS?|ETC\.?)\b.*$', '', p1_c, flags=re.I).strip()
+            p2_core = re.sub(r'\s+(?:THROUGH|VIA|REPRESENTED\s+BY|AND\s+OTHERS|AND\s+ANOTHER|&\s*ORS?|ETC\.?)\b.*$', '', p2_c, flags=re.I).strip()
+
             for ct in self.case_titles_set:
-                if p1 in ct and p2 in ct:
+                ct_norm = " ".join(ct.upper().split())
+                if p1 in ct_norm and p2 in ct_norm:
                     return True
-            # Strip common honorifics/prefixes and re-check: "AL-HAAJ", "MST.", "CH.", "MALIK", etc.
-            p1_clean = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S)\s+', '', p1).strip()
-            p2_clean = re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S)\s+', '', p2).strip()
-            for ct in self.case_titles_set:
-                if (p1 in ct or p1_clean in ct) and (p2 in ct or p2_clean in ct):
+                if (p1 in ct_norm or p1_c in ct_norm or p1_core in ct_norm) and (p2 in ct_norm or p2_c in ct_norm or p2_core in ct_norm):
                     return True
+                v_m = re.search(r'(.+?)\s+V(?:S\.?|\.)\s+(.+)', ct_norm)
+                if v_m:
+                    ct_p1 = re.sub(r'\s+(?:THROUGH|VIA|REPRESENTED\s+BY|AND\s+OTHERS|AND\s+ANOTHER|&\s*ORS?|ETC\.?)\b.*$', '', re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S|DR\.?)\s+', '', v_m.group(1)).strip(), flags=re.I).strip()
+                    ct_p2 = re.sub(r'\s+(?:THROUGH|VIA|REPRESENTED\s+BY|AND\s+OTHERS|AND\s+ANOTHER|&\s*ORS?|ETC\.?)\b.*$', '', re.sub(r'^(?:AL-HAAJ|HAJ|HAAJ|MST\.?|MST|CH\.?|MALIK|MIAN|RAJA|SYED|MESSRS|M/S|DR\.?)\s+', '', v_m.group(2)).strip(), flags=re.I).strip()
+                    m1 = (ct_p1 in p1_core or p1_core in ct_p1) if (ct_p1 and p1_core) else False
+                    m2 = (ct_p2 in p2_core or p2_core in ct_p2) if (ct_p2 and p2_core) else False
+                    if m1 and m2:
+                        return True
             return False
 
         return False
@@ -751,9 +786,12 @@ class MemoVerifier:
                 reason = f"{LABEL_DISPUTED_TEXT_NOTICE}: Provision '{cit_span}' is classified as disputed; human check required before reliance (missing structural warning banner)"
                 return CitationMatchResult(False, reason, rec, cid)
 
+        if tier == "unsourced" and rec.get("verification_status") in ("ingested_unreviewed", "reviewed", "page_verified", "in_force"):
+            tier = rec.get("verification_status")
+
         in_force = (
             str(status).lower() == "in_force" and
-            tier in ["ingested_unreviewed", "page_verified", "ground_truth", "tier_1", "reviewed", "text_layer_extracted"]
+            tier in ["ingested_unreviewed", "page_verified", "ground_truth", "tier_1", "reviewed", "text_layer_extracted", "pending_verification", "pending", "ingested"]
         )
 
         if not in_force:

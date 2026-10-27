@@ -242,7 +242,16 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
             else:
                 story.append(Paragraph(safe_p, body_style))
 
-    doc.build(story)
+    def _add_pdf_watermark(canvas, doc_obj):
+        canvas.saveState()
+        canvas.setFont("Helvetica-Bold", 48)
+        canvas.setFillColorRGB(0.94, 0.94, 0.94)
+        canvas.translate(letter[0] / 2.0, letter[1] / 2.0)
+        canvas.rotate(45)
+        canvas.drawCentredString(0, 0, "SECTION AI")
+        canvas.restoreState()
+
+    doc.build(story, onFirstPage=_add_pdf_watermark, onLaterPages=_add_pdf_watermark)
     return buffer.getvalue()
 
 
