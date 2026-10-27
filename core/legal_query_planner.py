@@ -92,7 +92,7 @@ Identify:
 3. province: The relevant Pakistani province if specified or discernible from facts/cities (e.g. "Punjab", "Sindh", "Khyber Pakhtunkhwa", "Balochistan", "Islamabad", or "Federal" if general/unspecified).
 4. forum: Relevant judicial or statutory forum (e.g. "Civil Court / District Judge", "Special Court", "Rent Tribunal", "High Court", "Supreme Court").
 5. governing_statutes: Primary Acts or Ordinances engaged (e.g. ["Code of Civil Procedure, 1908", "Specific Relief Act, 1877", "Limitation Act, 1908", "Punjab Rented Premises Act, 2009"]).
-6. provisions: Exact canonical statutory provisions mentioned or directly engaged (e.g. "Section 409 PPC", "Order XXXIX Rule 1 CPC", "Section 28 Limitation Act", "Article 144 Limitation Act", "Article 149 Limitation Act").
+6. provisions: Exact canonical statutory provisions mentioned or directly engaged (e.g. "Section 409 PPC", "Order XXXIX Rule 1 CPC", "Section 22 Financial Institutions (Recovery of Finances) Ordinance 2001" for banking appeals/decrees/stay deposit, "Section 10 FIO" for leave to defend, "Section 28 Limitation Act", "Article 144 Limitation Act", "Article 149 Limitation Act").
    NEVER treat enactment years (1860, 1898, 1908, 2017) as section numbers. PPC sections only range from 1 to 511.
 7. legal_questions / issues: Precise substantive legal doctrines and issues to research.
 8. factual_matrix: Key material facts from the prompt.
@@ -243,6 +243,10 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         domains.append("constitutional law")
         if "constitutional" not in matter_type:
             matter_type.append("constitutional")
+    if any(k in q_low for k in ["banking court", "bank", "financial institution", "recovery of finance", "fio"]) and any(k in q_low for k in ["decree", "appeal", "loan", "finance", "stay", "deposit", "leave to defend", "banking"]):
+        domains.append("banking recovery")
+        if "commercial" not in matter_type:
+            matter_type.append("commercial")
     if not domains:
         domains.append("general civil law")
         matter_type.append("civil")
@@ -258,6 +262,8 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         forum = "Family Court"
     elif "corporate" in matter_type:
         forum = "Special Court / High Court Company Bench"
+    elif "banking recovery" in domains:
+        forum = "Banking Court / High Court (Appellate Division)"
     elif "constitutional" in matter_type:
         forum = "High Court / Supreme Court"
     else:
@@ -281,6 +287,8 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
     if "criminal" in matter_type or any(k in q_low for k in ["ppc", "penal code", "409", "420", "489", "cheque", "dishonour", "bounced", "prosecute"]):
         statutes.append("Pakistan Penal Code, 1860")
         statutes.append("Code of Criminal Procedure, 1898")
+    if "banking recovery" in domains or any(k in q_low for k in ["banking court", "financial institution", "recovery of finance", "fio", "firo"]):
+        statutes.append("Financial Institutions (Recovery of Finances) Ordinance, 2001")
 
     # 5. Identify standard provisions - FILTER ENACTMENT YEARS (Year-to-PPC bug fix)
     provisions = []
@@ -352,6 +360,17 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
             already_covered = any(f"section {num} " in p.lower() or p.lower() == f"section {num}" for p in provisions)
             if not already_covered and prov_str not in provisions:
                 provisions.append(prov_str)
+
+    # Doctrinal provision detection when query does not state section explicitly
+    if any(k in q_low for k in ["banking court", "bank", "financial institution", "recovery of finance", "fio"]):
+        if any(k in q_low for k in ["appeal", "stay", "deposit", "execution"]):
+            p_label = "Section 22 Financial Institutions (Recovery of Finances) Ordinance 2001"
+            if p_label not in provisions:
+                provisions.append(p_label)
+        elif any(k in q_low for k in ["leave to defend", "leave to appear"]):
+            p_label = "Section 10 Financial Institutions (Recovery of Finances) Ordinance 2001"
+            if p_label not in provisions:
+                provisions.append(p_label)
 
     # Fallback to extracted anchors
     for a in anchors:
