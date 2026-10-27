@@ -608,11 +608,11 @@ class MemoVerifier:
             # 2. Rule Y(z) standalone in Order context
             r'(?<![A-Za-z0-9])(?:Rule|r\.)\s*(\d+[A-Za-z]?)(?:\s*\(\s*(\d+)\s*\))?\b',
             # 3. Section N(x)(y) of Act / s. N
-            r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:\(\d+\))*(?:\([a-z]\))*)\s*(?:,\s*|\s+of\s+(?:the\s+)?)?([A-Za-z0-9\s,\(\)]+?(?:Act|Ordinance|Code|Order|Rules|CPC|PPC|CrPC|FIO|FIFO|TPA|BCO))\b',
+            r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:\(\d+\))*(?:\([a-z]\))*)\s*(?:,\s*|\s+of\s+(?:the\s+)?)?([A-Za-z0-9\s,\(\)]+?\b(?:Act|Ordinance|Code|Order|Rules|CPC|PPC|CrPC|FIO|FIFO|TPA|BCO)\b(?:\s*,\s*\d{4})?)',
             # 4. Section multiple: ss. 10 and 22
-            r'\b(?:ss\.|sections)\s*(\d+[A-Za-z]?)\s+and\s+(\d+[A-Za-z]?)(?:\s*(?:of\s+(?:the\s+)?)?([A-Za-z0-9\s,\(\)]+?(?:Act|Ordinance|Code|Order|Rules|CPC|PPC|CrPC|FIO|FIFO|TPA|BCO)))?\b',
+            r'\b(?:ss\.|sections)\s*(\d+[A-Za-z]?)\s+and\s+(\d+[A-Za-z]?)(?:\s*(?:of\s+(?:the\s+)?)?([A-Za-z0-9\s,\(\)]+?\b(?:Act|Ordinance|Code|Order|Rules|CPC|PPC|CrPC|FIO|FIFO|TPA|BCO)\b(?:\s*,\s*\d{4})?))?',
             # 5. Article N of Act / Constitution / QSO
-            r'\b(?:Article|Art\.)\s*(\d+[A-Za-z]?)\s*(?:,\s*|\s+of\s+(?:the\s+)?)?([A-Za-z0-9\s,\(\)]+?(?:Constitution|QSO|Qanun-e-Shahadat))\b',
+            r'\b(?:Article|Art\.)\s*(\d+[A-Za-z]?)\s*(?:,\s*|\s+of\s+(?:the\s+)?)?([A-Za-z0-9\s,\(\)]+?\b(?:Constitution|QSO|Qanun-e-Shahadat|Limitation\s+Act|Act)\b(?:\s*,\s*\d{4})?)',
             # 6. Standalone: Section 489-F PPC, Section 22 FIO, Section 10 FIO, Section 61 FIO
             r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z]+)?)\s+(PPC|CPC|CrPC|FIO|FIFO|TPA|BCO)\b'
         ]
@@ -980,15 +980,17 @@ class MemoVerifier:
                     "legal issue" in lower_h or 
                     "unreviewed analysis" in lower_h or 
                     "statutory provisions" in lower_h or
-                    "relevant provisions" in lower_h
+                    "relevant provisions" in lower_h or
+                    "application" in lower_h or
+                    "opinion" in lower_h
                 )
                 continue
 
             if in_exempt_section and (s_line.startswith("*") or not s_line.startswith("#")):
                 continue
 
-            if (s_line.startswith("*") or s_line.startswith(">") or s_line.startswith("|") or 
-                s_line.startswith("---") or s_line.startswith("- **[analysis") or s_line.startswith("- **[paraphrase")):
+            if (s_line.startswith("*") or s_line.startswith("-") or s_line.startswith(">") or 
+                s_line.startswith("|") or s_line.startswith("---") or re.match(r'^\d+\.', s_line)):
                 continue
             if not s_line:
                 continue
