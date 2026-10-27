@@ -12,3 +12,4 @@ scratch
 *.bak
 *.log
 build_log.txt
+reports/spotcheck/pages/
