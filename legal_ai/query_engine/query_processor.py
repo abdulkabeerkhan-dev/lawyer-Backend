@@ -608,7 +608,7 @@ async def process_query_job_legal_ai(
 
 
 
-    raw_input_text = str(getattr(request, "query_text", "") or "").strip()
+    raw_input_text = str(getattr(request, "query_text", "") or getattr(request, "query", "") or "").strip()
 
 
 
@@ -747,6 +747,70 @@ async def process_query_job_legal_ai(
 
 
 
+
+    # Early detection of impossible or synthetic citations (e.g. page > 3000)
+    try:
+        from legal_ai.verification.memo_verifier import MemoVerifier, MemorandumVerificationBlockedError
+        _early_mv = MemoVerifier()
+        _early_auths = _early_mv.extract_case_authorities(effective_user_query)
+        _impossible_cits = []
+        _unverified_cits = []
+        for _qa in _early_auths:
+            _sp = _qa.get("span", "")
+            if _qa.get("type") == "citation":
+                _parts = _sp.split()
+                if _parts and _parts[-1].isdigit():
+                    if int(_parts[-1]) > 3000:
+                        _impossible_cits.append(_sp)
+            if not _early_mv.verify_case_authority(_qa):
+                _unverified_cits.append(_sp)
+        
+        if _impossible_cits:
+            _cit_disp = ", ".join(f"`{c}`" for c in _unverified_cits) if _unverified_cits else ", ".join(f"`{c}`" for c in _impossible_cits)
+            _early_blocked_payload = {
+                'status': 'error',
+                'stage': 'verification_blocked',
+                'error': 'MEMORANDUM_VERIFICATION_FAILED',
+                'error_category': 'FABRICATED_CITATION',
+                'safe_reason': (
+                    f"The requested citation {_cit_disp} contains out-of-range volume pagination (> 3,000 pages) "
+                    f"and does not exist in authentic Pakistani law reports (SCMR, PLD, CLD, CLC, PCrLJ, MLD, PTD, PLC)."
+                ),
+                'retry_guidance': (
+                    f"Please verify the citation journal, publication year, and page number for {_cit_disp}. "
+                    f"In Pakistan, annual volume pagination for law journals rarely exceeds 2,000–2,500 pages."
+                ),
+                'unverified_citations': _unverified_cits or _impossible_cits,
+                'query_text': effective_user_query,
+                'verified_statute_fallback': [],
+                'verified_precedents_fallback': [],
+                'precedent_cards': [],
+                'attempts': [],
+                'early_display': None,
+                'result': None,
+                'verification_report': {
+                    'verdict': 'BLOCKED',
+                    'total_failures': len(_impossible_cits),
+                    'failures': [
+                        {
+                            'rule': '(c)',
+                            'category': 'UNVERIFIED_AUTHORITY',
+                            'label': 'UNVERIFIED AUTHORITY (not found in our index; check manually)',
+                            'issue': f"Citation '{c}' has impossible volume page number exceeding authentic law report publications.",
+                            'span': c
+                        }
+                        for c in _impossible_cits
+                    ]
+                },
+                'completed_at': datetime.now(timezone.utc),
+            }
+            if job_id in jobs_store:
+                jobs_store[job_id].update(_early_blocked_payload)
+            raise MemorandumVerificationBlockedError(_early_blocked_payload['verification_report'], blocked_payload=_early_blocked_payload)
+    except MemorandumVerificationBlockedError:
+        raise
+    except Exception as early_err:
+        print(f"⚠️ [JOB {job_id}] Early citation guard notice: {early_err}", file=sys.stderr, flush=True)
 
     # 1. Initialize Pipeline Metrics
 
@@ -2840,14 +2904,50 @@ async def process_query_job_legal_ai(
         else:
             err_cat = "VERIFICATION_GATE_REJECTION"
 
-        safe_reason = (
-            "The generated memorandum could not be verified against official statutory gazettes and "
-            "the verified judicial precedent index. Output withheld to protect legal accuracy."
-        )
-        retry_guidance = (
-            "Ensure all statutory quotes verbatim match authentic gazettes, cite only in-force provisions from "
-            "verified acts, and omit uncited speculative factual assertions."
-        )
+        # Collect unverified authorities/citations if any
+        unverified_auths = []
+        for f in failures:
+            if f.get("category") == "UNVERIFIED_AUTHORITY" or f.get("rule") == "(c)":
+                span = f.get("span")
+                if span and span not in unverified_auths:
+                    unverified_auths.append(span)
+
+        if not unverified_auths:
+            try:
+                from legal_ai.verification.memo_verifier import MemoVerifier
+                mv = MemoVerifier()
+                for qa in mv.extract_case_authorities(effective_user_query):
+                    if not mv.verify_case_authority(qa):
+                        if qa.get("span") and qa["span"] not in unverified_auths:
+                            unverified_auths.append(qa["span"])
+            except Exception:
+                pass
+
+        if err_cat == "FABRICATED_CITATION":
+            citations_str = ", ".join(f"`{a}`" for a in unverified_auths) if unverified_auths else "the cited judicial authority"
+            safe_reason = (
+                f"The authority {citations_str} could not be verified in authoritative Pakistani law reports "
+                f"(SCMR, PLD, CLD, CLC, PCrLJ, MLD, PTD, PLC) or the verified precedent index. Output withheld to prevent hallucination."
+            )
+            retry_guidance = (
+                f"Please verify the citation journal, publication year, and page number for {citations_str}. "
+                f"In Pakistan, annual volume pagination for law journals rarely exceeds 2,000–2,500 pages."
+            )
+        elif err_cat == "STATUTORY_MISQUOTATION":
+            safe_reason = "The generated draft contained statutory quotations that differed from authentic gazette texts."
+            retry_guidance = "Ensure all statutory quotes verbatim match authentic gazettes and cite only in-force provisions from verified acts."
+        elif err_cat == "UNSOURCED_ANALYSIS":
+            safe_reason = "The generated draft contained analysis claims not directly anchored in verified statutory gazettes or indexed judicial holdings."
+            retry_guidance = "Anchor legal assertions directly to verified gazettes or indexed precedents."
+        else:
+            safe_reason = (
+                "The generated memorandum could not be verified against official statutory gazettes and "
+                "the verified judicial precedent index. Output withheld to protect legal accuracy."
+            )
+            retry_guidance = (
+                "Ensure all statutory quotes verbatim match authentic gazettes, cite only in-force provisions from "
+                "verified acts, and omit uncited speculative factual assertions."
+            )
 
         # Build verified_statute_fallback with tier labels and disputed banner
         verified_fallback = []
@@ -2882,6 +2982,8 @@ async def process_query_job_legal_ai(
             'error_category': err_cat,
             'safe_reason': safe_reason,
             'retry_guidance': retry_guidance,
+            'unverified_citations': unverified_auths,
+            'query_text': effective_user_query,
             'verified_statute_fallback': verified_fallback,
             'verified_precedents_fallback': precedent_cards,
             'precedent_cards': precedent_cards,
@@ -2910,7 +3012,7 @@ async def process_query_job_legal_ai(
         if guardian_notice:
             clean_answer = guardian_notice + "\n\n" + clean_answer
 
-inserted_row_id = job_id
+    inserted_row_id = job_id
 
 
 

@@ -15728,17 +15728,57 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
             }
 
         safe_reason = job.get("safe_reason") or "The generated memorandum could not be verified against official statutory gazettes. Output withheld to protect legal accuracy."
+        err_cat = job.get("error_category") or ""
+        unverified_cits = list(job.get("unverified_citations") or [])
+
+        if not unverified_cits:
+            for f in job.get("verification_report", {}).get("failures", []):
+                if f.get("category") == "UNVERIFIED_AUTHORITY" or f.get("rule") == "(c)":
+                    sp = f.get("span")
+                    if sp and sp not in unverified_cits:
+                        unverified_cits.append(sp)
+
         fallback_texts = []
         for fb in (job.get("verified_statute_fallback") or []):
             if isinstance(fb, dict) and fb.get("text"):
                 fallback_texts.append(fb["text"])
-        response_text = f"> **Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. The authentic, verbatim text of the controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n"
-        if fallback_texts:
-            response_text += "### Verified Statutory Provisions on Record\n\n" + "\n\n---\n\n".join(fallback_texts)
-        
+
         precedent_cards = job.get("precedent_cards") or job.get("verified_precedents_fallback") or []
+
+        # Determine if this failure is specifically precedent/citation related
+        is_precedent_blocked = (err_cat == "FABRICATED_CITATION" or bool(unverified_cits) or (not fallback_texts and not precedent_cards))
+
+        if is_precedent_blocked:
+            cit_list_str = ", ".join(f"**`{c}`**" for c in unverified_cits) if unverified_cits else "the requested judicial citation or authority"
+            response_text = (
+                f"> ⚠️ **Precedent Verification Notice**: The requested authority {cit_list_str} "
+                f"could not be verified in authoritative Pakistani law reports (*SCMR*, *PLD*, *YLR*, *CLC*, *PCrLJ*, *MLD*, *CLD*, *PTD*, *PLC*) "
+                f"or the verified precedent index.\n\n"
+                f"> **Authenticity Notice**: In Pakistani law reporting, annual journal volumes typically contain under 2,000–2,500 pages. "
+                f"Citations with out-of-range pagination or unindexed case names do not correspond to authentic superior court judgments. "
+                f"To protect strict judicial accuracy and prevent synthetic AI hallucinations, Section strictly withholds analysis for unverified authorities.\n\n"
+            )
+        elif err_cat == "STATUTORY_MISQUOTATION":
+            response_text = (
+                f"> ⚠️ **Statutory Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. "
+                f"The generated draft contained statutory quotations that differed from authentic gazette prints. "
+                f"The authentic, verbatim text of controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n"
+            )
+        elif err_cat == "UNSOURCED_ANALYSIS":
+            response_text = (
+                f"> ⚠️ **Analysis Verification Notice**: Direct narrative analysis was withheld because the proposed draft contained "
+                f"propositions that were not directly anchored in authenticated statutory gazettes or indexed judicial holdings. "
+                f"The verified controlling legal authorities on record are set out below.\n\n"
+            )
+        else:
+            notice_lead = "The authentic, verbatim text of the controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n" if fallback_texts else "Analysis was withheld to protect strict legal accuracy.\n\n"
+            response_text = f"> **Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. {notice_lead}"
+
+        if fallback_texts:
+            response_text += "### Verified Statutory Provisions on Record\n\n" + "\n\n---\n\n".join(fallback_texts) + "\n\n"
+
         if precedent_cards:
-            response_text += "\n\n### Verified Judicial Authorities on Record\n\n"
+            response_text += "### Verified Judicial Authorities on Record\n\n"
             for pc in precedent_cards[:5]:
                 cit = pc.get("citation") or pc.get("title") or "Judicial Precedent"
                 case_t = pc.get("case_title") or pc.get("title") or ""
@@ -15749,7 +15789,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                     response_text += f"  > {holding.strip()[:300]}...\n\n"
 
         if job.get("retry_guidance"):
-            response_text += f"\n\n> **Legal Guidance**: {job['retry_guidance']}"
+            response_text += f"\n> **Legal Guidance**: {job['retry_guidance']}"
 
         return {
             "status": "done",

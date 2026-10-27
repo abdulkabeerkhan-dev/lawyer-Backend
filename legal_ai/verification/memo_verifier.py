@@ -538,11 +538,12 @@ class MemoVerifier:
         clean_text = re.sub(r'[*_]{1,3}', '', text)
 
         case_pattern = re.compile(
-            r'\b([A-Z][A-Za-z0-9\.\']*(?:\s+[A-Z][A-Za-z0-9\.\']*)*)\s+v(?:s\.?|\.)\s+([A-Z][A-Za-z0-9\.\']*(?:\s+(?:of|and|the|&)\s+[A-Z][A-Za-z0-9\.\']*|\s+[A-Z][A-Za-z0-9\.\']*)*)\b'
+            r'\b([A-Z][A-Za-z0-9\.\']*(?:\s+[A-Z][A-Za-z0-9\.\']*)*)\s+v(?:s\.?|\.)\s+([A-Z][A-Za-z0-9\.\']*(?:\s+(?:of\s+the|in\s+the|for\s+the|of|and|the|&)\s+[A-Z][A-Za-z0-9\.\']*|\s+[A-Z][A-Za-z0-9\.\']*)*)\b'
         )
         for m in case_pattern.finditer(clean_text):
             p1, p2 = m.group(1).strip(), m.group(2).strip()
-            if p1.lower() in ["order", "section", "article", "rule"] or p2.lower() in ["order", "section", "article"]:
+            p1 = re.sub(r'^(?:in|see|re|per)\s+', '', p1, flags=re.IGNORECASE).strip()
+            if not p1 or p1.lower() in ["order", "section", "article", "rule"] or p2.lower() in ["order", "section", "article"]:
                 continue
             authorities.append({
                 "type": "case_title",
