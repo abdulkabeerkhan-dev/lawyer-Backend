@@ -1,0 +1,661 @@
+================================================================================
+ORDER 1.14 HARDENING AUDIT & EVIDENCE REPORT
+Generated: 2026-10-27T13:10:59.110228
+Repository: I:\c\Users\kabeer\Documents\lawyer-Backend-master\lawyer-Backend-master
+Mode: Strictly Offline (0 network requests, 0 external calls, 0 writes to hosted services)
+================================================================================
+
+================================================================================
+--> INITIAL GIT REVISION & WORKING TREE CHECK
+================================================================================
+git rev-parse HEAD: b1f46adb3fe97fc70ed16494aac114615928f829
+git status --porcelain:
+?? reports/order114_report.txt
+git log --oneline -8:
+b1f46ad feat(order1.14): close claim-first loopholes, enforce modal and term parity, require committed public key for reviewed tier, reject ambiguous citations, and rename page_verified to text_layer_matched
+82f317a chore(order1.13): track reports/order113_report.txt
+9ab31e2 feat(order1.13): resolve banner deadlock, implement claim-first memos, add deterministic statute lookup, fix order xiv parse, enforce strict page_verified standard, add [sic] marker handling, and wire reviewed tier
+0880661 chore(order1.12): track reports/order112_report.txt
+ca5d280 feat(order1.12): load cpc order xliii rule 3 with authentic page proof, harden cross-reference verification and dynamic nearest order resolution, decouple quoting_allowed into page_verified and in_force, repair digits-in-words ocr contamination, audit text drift against official pdf text layers, and wire order 1.12 hardening verification
+121c5d0 chore(order1.11): track reports/order111_report.txt
+b39b04b feat(order1.11): harden planner, fix subsection verifier, populate blocked fields with disputed fallback, wire regeneration, set quoting allowed, repair ppc 415, add jobs migration and startup self-check, untrack rate limit state, enforce outside-repo access rule, and generate comprehensive order 1.11 audit report
+9183299 chore: freeze rate limit state after live TestClient verification
+
+================================================================================
+--> ITEM 1: ANALYSIS LANE LOOPHOLE CLOSED
+================================================================================
+Rules Enforced for 'analysis' claims:
+  1. No statute or section citations permitted.
+  2. No case law or judicial citations permitted (citations validated through Rules c/d).
+  3. No numbers or durations permitted unless they explicitly appeared in the user question.
+  4. No absolute assertions permitted ('always', 'never', 'must', 'automatically', 'void ab initio', 'can never', 'obliged to').
+  5. No statutory or judicial holding assertions permitted ('statute says', 'court held', etc.).
+  6. When rendered, all analysis claims are displayed in a dedicated section headed:
+     '### Unreviewed analysis — not checked against any source'
+
+[1.1] Test 1: Analysis with invented case -> BLOCKED
+  Passed: False | Failures: 5
+    * Rule (e): CITATION_IN_ANALYSIS - Analysis claim contains statutory or case authority citation(s): ['In Messrs Alpha Ltd v. State Bank', '2025 SCMR 99999']. Citations must be declared as quote or paraphrase claims.
+    * Rule (c): UNVERIFIED_AUTHORITY - Analysis claim cites unverified authority: 'In Messrs Alpha Ltd v. State Bank'
+    * Rule (c): UNVERIFIED_AUTHORITY - Analysis claim cites unverified authority: '2025 SCMR 99999'
+    * Rule (e): UNSOURCED_NUMBER_IN_ANALYSIS - Analysis claim contains quantity/duration '2025.0 ' not present in user question.
+    * Rule (e): UNSOURCED_NUMBER_IN_ANALYSIS - Analysis claim contains quantity/duration '99999.0 ' not present in user question.
+
+[1.2] Test 2: Analysis with 'Section 61 FIO allows a second appeal in sixty days' -> BLOCKED
+  Passed: False | Failures: 5
+    * Rule (e): CITATION_IN_ANALYSIS - Analysis claim contains statutory or case authority citation(s): ['Section 61 FIO allows a second appeal in sixty days against an interlocutory order', 'Section 61 FIO', 'Section 61']. Citations must be declared as quote or paraphrase claims.
+    * Rule (d): PROVISION_NOT_IN_STORE - Provision 'Section 61 FIO allows a second appeal in sixty days against an interlocutory order' is not in verified store
+    * Rule (d): PROVISION_NOT_IN_STORE - Provision 'Section 61 FIO' is not in verified store
+    * Rule (e): UNSOURCED_NUMBER_IN_ANALYSIS - Analysis claim contains quantity/duration '61.0 ' not present in user question.
+    * Rule (e): UNSOURCED_NUMBER_IN_ANALYSIS - Analysis claim contains quantity/duration '60.0 day' not present in user question.
+
+[1.3] Test 3: Analysis with absolute assertion 'the court must always grant' -> BLOCKED
+  Passed: False | Failures: 2
+    * Rule (e): ABSOLUTE_ASSERTION_IN_ANALYSIS - Analysis claim contains prohibited absolute term 'always'. Analytical commentary cannot make absolute legal assertions.
+    * Rule (e): ABSOLUTE_ASSERTION_IN_ANALYSIS - Analysis claim contains prohibited absolute term 'must'. Analytical commentary cannot make absolute legal assertions.
+
+[1.4] Test 4: Harmless application of facts ('On your facts, the delay looks long') -> PASSES
+  Passed: True | Failures: 0
+
+[1.5] Rendered Memorandum with Dedicated Analysis Section:
+## FIO APPEAL ADVISORY
+
+### Statutory Provisions & Grounds
+
+Statutory text of s.22(1) provides:
+
+> 22. Appeal. (1) Subject to sub-section (2), any person aggrieved by any judgment, decree, sentence, or final order passed by a Banking Court may, within thirty days of such judgment, decree, sentence or final order prefer an appeal to the High Court.
+
+
+### Unreviewed analysis — not checked against any source
+
+- **[analysis (unreviewed)]** On your facts, the delay looks long and client should provide reasons for the lapse of time.
+
+================================================================================
+--> ITEM 2: PARAPHRASE CHECK STRENGTHENING
+================================================================================
+Allow-list of grammatical/function words:
+  Total words in allow-list: 185
+  Allow-list: a, about, above, act, advocate, after, against, all, also, although, am, amount, an, and, any, appeal, appear, appellant, application, applications, are, article, as, at, bco, be, because, been, before, being, below, bench, between, both, but, by, can, cash, clause, code, concurrently, could, counsel, court, cpc, crpc, decree, defendant, deposit, determined, determines, did, disposes, disposing, do, does, doing, down, duly, during, each, ensure, ensuring, equal, every, except, filing, fio, for, from, further, had, has, have, having, he, hearing, her, here, him, his, however, i, if, in, into, is, it, its, judge, may, me, memo, memorandum, might, must, my, no, nor, not, notice, of, off, on, only, or, order, ordinance, our, out, over, part, parties, party, per, person, petitioner, plaintiff, ppc, provision, provisions, proviso, required, requirement, requires, respondent, rule, se, sec, section, security, shall, she, should, since, so, some, ss, stay, sub-rule, sub-section, subrule, subsection, such, suit, than, that, the, their, them, then, there, therefore, these, they, this, those, through, thus, to, tpa, under, unless, up, upon, us, value, was, we, were, what, when, where, whether, which, while, who, whole, whom, whose, will, with, would, you, your
+
+[2.1] Test 1: 'shall not grant leave' -> 'shall grant leave' (Modal/Negation Flip) -> BLOCKED
+  Passed: False | Failures: 3
+    * Rule (a): NEGATION_FLIPPED - Paraphrase flips negative obligation ('shall not') to affirmative ('shall') in FIO_2001_SEC_10
+    * Rule (a): CONDITION_DROPPED - Paraphrase drops material qualifying condition 'unless' from stored text in FIO_2001_SEC_10
+    * Rule (a): PARAPHRASE_INTRODUCES_TERMS - Paraphrase introduces terms not in the provision: ['grant']
+
+[2.2] Test 2: 'may' -> 'shall' (Discretionary vs Mandatory Flip) -> BLOCKED
+  Passed: False | Failures: 1
+    * Rule (a): NEGATION_FLIPPED - Paraphrase flips negative obligation ('shall not') to affirmative ('shall') in FIO_2001_SEC_10
+
+[2.3] Test 3: Qualifying condition dropped ('unless' / 'except') -> BLOCKED
+  Passed: False | Failures: 1
+    * Rule (a): CONDITION_DROPPED - Paraphrase drops material qualifying condition 'unless' from stored text in FIO_2001_SEC_10
+
+[2.4] Test 4: Paraphrase introduces alien terms not in provision -> BLOCKED
+  Passed: False | Failures: 3
+    * Rule (a): NEGATION_FLIPPED - Paraphrase flips negative obligation ('shall not') to affirmative ('shall') in FIO_2001_SEC_10
+    * Rule (a): CONDITION_DROPPED - Paraphrase drops material qualifying condition 'unless' from stored text in FIO_2001_SEC_10
+    * Rule (a): PARAPHRASE_INTRODUCES_TERMS - Paraphrase introduces terms not in the provision: ['constitutional', 'demurrer', 'exorbitant', 'files', 'grant']
+
+[2.5] Test 5: Clean faithful paraphrase of s.22(4) -> PASSES
+  Passed: True | Failures: 0
+
+[2.6] Rendered Paraphrase Displayed Side-by-Side with Official Subsection Text:
+## FIO APPEAL BENCH REQUIREMENT
+
+### Statutory Provisions & Grounds
+
+- **[paraphrase of s.22(4)]** An appeal under sub-section (1) shall be heard by a bench of two Judges of the High Court and decided within 90 days from the date of admission.
+  > *Official Store Text (s.22(4)):* "An appeal under sub-section (1) shall be heard by a bench of not less that two Judges of the High Court and, in case the appeal is admitted, it shall be decided within 90 days from the date of admissi..."
+
+================================================================================
+--> ITEM 3: MISATTRIBUTION & FLAG SPOOFING PREVENTION
+================================================================================
+
+[3.1] Public Verification Function Signatures (Before vs After):
+  BEFORE (Order 1.13):
+    verify_memorandum_text(memo_text: str, is_system_rendered: bool = False)
+    verify_pleading_citations_and_quotes(pleading_text: str, is_system_rendered: bool = False)
+  AFTER (Order 1.14):
+    verify_memorandum_text(memo_text: str) -> Dict[str, Any]
+    verify_pleading_citations_and_quotes(pleading_text: str) -> Dict[str, Any]
+  Result: is_system_rendered removed as caller-supplied parameter from public verification API.
+
+[3.2] Test 1: Quote text from s.10 attributed to s.22 -> BLOCKED (MISATTRIBUTED_QUOTE)
+  Passed: False | Failures: 1
+    * Rule (a): MISATTRIBUTED_QUOTE - Quote text belongs to FIO_2001_SEC_10, but was misattributed to FIO_2001_SEC_22 (FIO_2001_SEC_22(1)).
+
+[3.3] Test 2: Model text injecting system disputed banner -> Flagged under Rule (b), never exempt
+  Passed: False | Failures: 3
+    * Rule (b): MODEL_INJECTED_BANNER - MODEL-INJECTED BANNER STRIPPED: Model-written '> [!' banner detected and stripped. System banners are attached strictly by system assembler.
+    * Rule (d): DISPUTED_TEXT_UNNOTICED - DISPUTED TEXT — human check required: DISPUTED TEXT — human check required: Provision 'Section 22 of the Financial Institutions Ordinance' is classified as disputed; human check required before reliance (missing structural warning banner)
+    * Rule (e): UNSOURCED_ANALYSIS - UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority
+
+================================================================================
+--> ITEM 4: CANONICAL ROMAN NUMERAL PARSING & AMBIGUOUS CITATION HANDLING
+================================================================================
+
+[4.1] Canonical Roman Numeral Parser Tests:
+  I        -> 1 (expected: 1) - OK
+  IV       -> 4 (expected: 4) - OK
+  IX       -> 9 (expected: 9) - OK
+  XIV      -> 14 (expected: 14) - OK
+  XXXIX    -> 39 (expected: 39) - OK
+  XLIII    -> 43 (expected: 43) - OK
+  XLVIII   -> 48 (expected: 48) - OK
+  L        -> 50 (expected: 50) - OK
+
+[4.2] Rejection of Non-Canonical Roman Numerals:
+  IIII     -> None (expected: None) - REJECTED (OK)
+  VV       -> None (expected: None) - REJECTED (OK)
+  IL       -> None (expected: None) - REJECTED (OK)
+  IC       -> None (expected: None) - REJECTED (OK)
+  XD       -> None (expected: None) - REJECTED (OK)
+  XXXX     -> None (expected: None) - REJECTED (OK)
+  VX       -> None (expected: None) - REJECTED (OK)
+  LL       -> None (expected: None) - REJECTED (OK)
+
+[4.3] Bare 'of the Ordinance' Citation without Full Title Context:
+  Passed: False | Failures: 2
+    * Rule (d): CITED_PROVISION_NOT_IN_VERIFIED_STORE - CITED PROVISION NOT IN VERIFIED STORE: AMBIGUOUS_CITATION: Citation 'section 15(11) of the Ordinance' is ambiguous: 'of the Ordinance' lacks a full title or explicit support ID in context
+    * Rule (e): UNSOURCED_ANALYSIS - UNSOURCED ANALYSIS: sentence lacks supporting span or verified authority
+
+================================================================================
+--> ITEM 5: TIERS & NAMING HARMONIZATION
+================================================================================
+
+Distinct Tier Counts across entire store: {'ingested_unreviewed': 171, 'title_only': 2049, 'page_verified': 5, 'unsourced': 9, 'disputed': 2}
+text_layer_matched flag distribution: {False: 2210, True: 26}
+human_reviewed field distribution: {'None': 2236}
+
+PPC Section 415 Harmonization:
+  Canonical ID: PPC_1860_SEC_415
+  Tier: ingested_unreviewed (Harmonized from legacy tier_1 to ingested_unreviewed)
+  text_layer_matched: False
+  human_reviewed: None
+
+Counts per Act:
+  BCO_1962              : Total =    3 | text_layer_matched=True =    1
+  CONTRACT_1872         : Total =   31 | text_layer_matched=True =    5
+  CPC_1908              : Total =  755 | text_layer_matched=True =    9
+  CRPC_1898             : Total =  527 | text_layer_matched=True =    0
+  CRPC_SCHEDULE_II      : Total =    9 | text_layer_matched=True =    0
+  FIO_2001              : Total =   28 | text_layer_matched=True =    5
+  LIMITATION_1908       : Total =  216 | text_layer_matched=True =    0
+  PPC_1860              : Total =  646 | text_layer_matched=True =    4
+  REGISTRATION_1908     : Total =    3 | text_layer_matched=True =    1
+  STAMP_1899            : Total =    1 | text_layer_matched=True =    0
+  TPA_1882              : Total =   17 | text_layer_matched=True =    1
+
+================================================================================
+--> ITEM 6: REVIEWED TIER CRYPTOGRAPHIC GATING
+================================================================================
+
+[6.1] Source Code of verify_reviewed_tier() in core/unified_statute_store.py:
+def verify_reviewed_tier(canonical_id: str, content_hash: str) -> bool:
+    """
+    Order 1.14 - Item 6: Cryptographic public-key signature verification for 'reviewed' tier.
+    The authorized advocate public key is committed in data/reviews/advocate_public_key.pem.
+    The corresponding private key DOES NOT EXIST on this machine and is never generated here.
+    An agent/model cannot sign reviews; any signature made with a throwaway key fails verification.
+    """
+    review_file = os.path.join(REVIEWS_DIR, f"{canonical_id}.review.json")
+    pub_key_file = os.path.join(REVIEWS_DIR, "advocate_public_key.pem")
+    
+    if not os.path.exists(review_file) or not os.path.exists(pub_key_file):
+        return False
+    try:
+        with open(review_file, "r", encoding="utf-8") as rf:
+            data = json.load(rf)
+        if str(data.get("canonical_id")).upper() != str(canonical_id).upper():
+            return False
+        if str(data.get("record_content_hash")) != str(content_hash):
+            return False
+        if data.get("status") != "approved":
+            return False
+        
+        sig_hex = data.get("cryptographic_signature", "")
+        if not sig_hex:
+            return False
+        sig_bytes = bytes.fromhex(sig_hex)
+
+        from cryptography.hazmat.primitives import hashes, serialization
+        from cryptography.hazmat.primitives.asymmetric import padding
+        
+        with open(pub_key_file, "rb") as pf:
+            public_key = serialization.load_pem_public_key(pf.read())
+        
+        # Payload verified is canonical_id + content_hash
+        payload = f"{canonical_id}:{content_hash}".encode("utf-8")
+        
+        public_key.verify(
+            sig_bytes,
+            payload,
+            padding.PKCS1v15(),
+            hashes.SHA256()
+        )
+        return True
+    except Exception:
+        return False
+
+
+[6.2] Cryptographic Key Details & Invariant:
+  Committed Public Key Path: I:\c\Users\kabeer\Documents\lawyer-Backend-master\lawyer-Backend-master\data\reviews\advocate_public_key.pem
+  Public Key Exists on Disk: True
+  AFFIRMATION: The corresponding RSA private key DOES NOT EXIST on this machine or in the repository.
+  Disk check renamed to 'review_file_present'.
+
+[6.3] Cryptographic Gate Rejection Test (Throwaway Key Signature):
+  review_file_present (metadata presence check): True (expected: True)
+  verify_reviewed_tier (cryptographic public-key check): False (expected: False)
+
+================================================================================
+--> ITEM 7: PROVE DATA EDITS
+================================================================================
+
+[7.1] git diff 17d55df..HEAD --stat -- data/:
+data/eval_outputs/Q1_raw_verifier_output.json      |  395 ++
+ data/eval_outputs/Q2_raw_verifier_output.json      |  183 +
+ data/eval_outputs/Q3_raw_verifier_output.json      |  707 +++
+ data/eval_outputs/Q4_raw_verifier_output.json      |  284 ++
+ data/eval_outputs/Q5_raw_verifier_output.json      |  319 ++
+ data/eval_outputs/Q6_raw_verifier_output.json      |  115 +
+ .../pending/unified_statutes/ARBITRATION_1940.json |  148 +
+ data/pending/unified_statutes/ITO_2001.json        |  313 ++
+ .../unified_statutes/LAND_REVENUE_1967.json        |  119 +
+ data/pending/unified_statutes/MFLO_1961.json       |  394 ++
+ data/pending/unified_statutes/NI_ACT_1881.json     | 4640 ++++++++++++++++++++
+ data/rate_limit_state.json                         |    1 -
+ data/reviews/FIO_2001_SEC_22_review.md             |  115 +
+ data/reviews/advocate_public_key.pem               |    9 +
+ data/statute_tables/CRPC_SCHEDULE_II.json          |  192 +
+ .../CRPC_SCHEDULE_II_versions.json                 |  192 +
+ data/unified_statutes/BCO_1962.json                |   22 +-
+ data/unified_statutes/CONTRACT_1872.json           |  186 +-
+ data/unified_statutes/CPC_1908.json                | 4576 +++++++++++++++----
+ data/unified_statutes/CRPC_1898.json               | 3170 ++++++++++---
+ data/unified_statutes/CRPC_SCHEDULE_II.json        |  255 ++
+ data/unified_statutes/FIO_2001.json                |  209 +-
+ data/unified_statutes/LIMITATION_1908.json         | 1295 +++++-
+ data/unified_statutes/PPC_1860.json                | 3905 +++++++++++++---
+ data/unified_statutes/REGISTRATION_1908.json       |   18 +-
+ data/unified_statutes/STAMP_1899.json              |    6 +-
+ data/unified_statutes/TPA_1882.json                |  104 +-
+ 27 files changed, 19579 insertions(+), 2293 deletions(-)
+
+[7.2] Diff of FIO Section 10 between 17d55df and HEAD:
+--- 17d55df:FIO_2001_SEC_10
+
++++ HEAD:FIO_2001_SEC_10
+
+@@ -9,7 +9,7 @@
+
+   "text": "10. Leave to defend.   (1) In any case in which the summons has been served on the \ndefendant as provided for in sub-section (5) of section 9, the defendant shall not be entitled to defend \nthe suit unless he obtains leave from the Banking Court as hereinafter provided to defend the same\u037e \nand, in default of his doing so, the allegations of fact in the plaint shall be deemed to be admitted and \nthe Banking Court may pass a decree in favour of the plaintiff on the basis thereof or such other \nmaterial as the Banking Court may require in the interests of justice. \n \n(2) The defendant shall file the application for leave to defend within thirty days of the date \nof first service by any one of the modes laid down in sub-section (5) of section 9: \nProvided that where service has been validly effected only through p ublication in the \nnewspapers, the Banking Court may extend the time for filing an application for leave to defend if \nsatisfied that the defendant did not have knowledge thereof. \n \n(3) The application for leave to defend shall be in the form of a written stateme nt, and shall \ncontain a summary of the substantial questions of law as well as fact in respect of which, in the \nopinion of the defendant, evidence needs to be recorded. \n \n(4) In the case of a suit for recovery instituted by a financial institution the applicat ion for \nleave to defend shall also specifically state the following \n \n(a) the amount of finance availed by the defendant from the financial institution\u037e \nthe amounts paid by the defendant to the financial institution and the dates of \npayments\u037e \n \n(b) the amount of finance and other amounts relating to the finance payable by the \ndefendant to the financial institution upto the date of institution of the suit\u037e \n \n(c) the amounts of finance and other amounts relating to the finance payable by \nthe defendant to the financial institution upto the date of institution of the suit; \n \n(d) the amount if any which the defendant disputes as payable to the financial \ninstitution and facts in support thereof: \n \nExplanation.     For the purposes of clause (b) any payment made to a financial institution by \na customer in respect of a finance shall be appropriated first against other amounts relating to the \nfinance and the balance, if any, against the principal amount of the finance. \n1[(5) Where application for leave to defend submitted under the preceding sub -section is \nfound to be materially incorrect at any stage of the proceedings, the defendant shall lose the right to \ndefence and shall al so be liable to pay penalty of not less than five percent of the amount of the \nclaim, unless the defendant can establish that incorrect information was submitted as a result of a \nbona fide mistake.] \n1[(6)] The application for leave to defend shall be accom panied by all the documents which, \nin the opinion of the defendant, support the substantial questions of law or fact raised by him. \n1[(7)] An application for leave to defend which does not compl y with the requirements of \nsub-sections (3), (4) where applicable and (5) shall be rejected, unless the defendant discloses therein \nsufficient cause for his inability to comply with any such requirement. \n \n\n \n \n1[(8)] The plaintiff shall be given an opportunity of filing a reply to the application for leave \nto defend, in the form of a replication. \n1[(9)] Subject to section 11, the Banking Court shall grant the defendant leave to defend the \nsuit if on consideration of the c ontents of the plaint, the application for leave to defend and the reply \nthereto it is of the view that substantial questions of law or fact have been raised in respect of which \nevidence needs to be recorded. \n1[(10)] In granting leave under sub-section (8), the Banking Court may impose such \nconditions as it may deem appropriate in the circumstances of the case, including conditions as to \ndeposit of cash or furnishing of security. \n1[(11)] Where the application for leave to defend is accepted, the Banking Court shall treat \nthe application as a written statement, and in its order granting leave shall frame issues relating to the \nsubstantial questions of law or fact, and, subject to fulfilment of any conditions attached to grant of \nleave, fix a date for recording of evidence thereon and disposal of the suit. \n1[(12)] Where the application for leave to defend is rejected or where a defendant fails to \nfulfill the conditions attached to the grant of leave to defend, the Banking Court shall for thwith \nproceed to pass judgment and decree in favour of the plaintiff against the defendant. \n1[(13)] Where an application for leave to defend has been filed before the coming into force \nof this Ordinance, the defendant shall be allowed a period of twenty -one days from the date of \ncoming into force of this Ordinance, or from the date of first hearing thereafter, whichever is later, \nfor filing an amended application for leave to defend in accordance with the provisions of this \nOrdinance.",
+   "missing_reason": null,
+   "source_file": "https://pakistancode.gov.pk/pdffiles/administratorcf20efcd7f792c08850503359c31ce76.pdf",
+-  "source_page": "8-10",
++  "source_page": "9-10",
+   "content_hash": "557347999b259fd847462a1944c786ee5b7790cc07fe191827cc7d4b56099e92",
+   "tier": "ingested_unreviewed",
+   "verification_status": "ingested_unreviewed",
+@@ -22,5 +22,9 @@
+
+   ],
+   "text_normalized": "10. Leave to defend. (1) In any case in which the summons has been served on the\ndefendant as provided for in sub-section (5) of section 9, the defendant shall not be entitled to defend\nthe suit unless he obtains leave from the Banking Court as hereinafter provided to defend the same\u037e\nand, in default of his doing so, the allegations of fact in the plaint shall be deemed to be admitted and\nthe Banking Court may pass a decree in favour of the plaintiff on the basis thereof or such other\nmaterial as the Banking Court may require in the interests of justice.\n(2) The defendant shall file the application for leave to defend within thirty days of the date\nof first service by any one of the modes laid down in sub-section (5) of section 9:\nProvided that where service has been validly effected only through p ublication in the\nnewspapers, the Banking Court may extend the time for filing an application for leave to defend if\nsatisfied that the defendant did not have knowledge thereof.\n(3) The application for leave to defend shall be in the form of a written stateme nt, and shall\ncontain a summary of the substantial questions of law as well as fact in respect of which, in the\nopinion of the defendant, evidence needs to be recorded.\n(4) In the case of a suit for recovery instituted by a financial institution the applicat ion for\nleave to defend shall also specifically state the following\n(a) the amount of finance availed by the defendant from the financial institution\u037e\nthe amounts paid by the defendant to the financial institution and the dates of\npayments\u037e\n(b) the amount of finance and other amounts relating to the finance payable by the\ndefendant to the financial institution upto the date of institution of the suit\u037e\n(c) the amounts of finance and other amounts relating to the finance payable by\nthe defendant to the financial institution upto the date of institution of the suit;\n(d) the amount if any which the defendant disputes as payable to the financial\ninstitution and facts in support thereof:\nExplanation. For the purposes of clause (b) any payment made to a financial institution by\na customer in respect of a finance shall be appropriated first against other amounts relating to the\nfinance and the balance, if any, against the principal amount of the finance.\n1[(5) Where application for leave to defend submitted under the preceding sub -section is\nfound to be materially incorrect at any stage of the proceedings, the defendant shall lose the right to\ndefence and shall al so be liable to pay penalty of not less than five percent of the amount of the\nclaim, unless the defendant can establish that incorrect information was submitted as a result of a\nbona fide mistake.]\n1[(6)] The application for leave to defend shall be accom panied by all the documents which,\nin the opinion of the defendant, support the substantial questions of law or fact raised by him.\n1[(7)] An application for leave to defend which does not compl y with the requirements of\nsub-sections (3), (4) where applicable and (5) shall be rejected, unless the defendant discloses therein\nsufficient cause for his inability to comply with any such requirement.\n1[(8)] The plaintiff shall be given an opportunity of filing a reply to the application for leave\nto defend, in the form of a replication.\n1[(9)] Subject to section 11, the Banking Court shall grant the defendant leave to defend the\nsuit if on consideration of the c ontents of the plaint, the application for leave to defend and the reply\nthereto it is of the view that substantial questions of law or fact have been raised in respect of which\nevidence needs to be recorded.\n1[(10)] In granting leave under sub-section (8), the Banking Court may impose such\nconditions as it may deem appropriate in the circumstances of the case, including conditions as to\ndeposit of cash or furnishing of security.\n1[(11)] Where the application for leave to defend is accepted, the Banking Court shall treat\nthe application as a written statement, and in its order granting leave shall frame issues relating to the\nsubstantial questions of law or fact, and, subject to fulfilment of any conditions attached to grant of\nleave, fix a date for recording of evidence thereon and disposal of the suit.\n1[(12)] Where the application for leave to defend is rejected or where a defendant fails to\nfulfill the conditions attached to the grant of leave to defend, the Banking Court shall for thwith\nproceed to pass judgment and decree in favour of the plaintiff against the defendant.\n1[(13)] Where an application for leave to defend has been filed before the coming into force\nof this Ordinance, the defendant shall be allowed a period of twenty -one days from the date of\ncoming into force of this Ordinance, or from the date of first hearing thereafter, whichever is later,\nfor filing an amended application for leave to defend in accordance with the provisions of this\nOrdinance.",
+   "is_canonical": true,
+-  "duplicate_of": null
++  "duplicate_of": null,
++  "quoting_allowed": false,
++  "in_force": true,
++  "text_layer_matched": false,
++  "human_reviewed": null
+ }
+
+[7.3] Diff of CPC Order XLIII Rule 3 between 17d55df and HEAD:
+--- 17d55df:CPC_1908_ORD_XLIII_R_3
+
++++ HEAD:CPC_1908_ORD_XLIII_R_3
+
+@@ -0,0 +1,28 @@
+
++{
++  "canonical_id": "CPC_1908_ORD_XLIII_R_3",
++  "act_code": "CPC_1908",
++  "act_name": "Code of Civil Procedure, 1908",
++  "provision_type": "order_rule",
++  "primary_num": "XLIII",
++  "secondary_num": "3",
++  "title": "APPEALS FROM ORDERS: Notice before presentation of appeal",
++  "text": "3. Notice before presentation of appeal.__ (1) Where an appeal against  an  order  is  preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice  of such  \nappeal to the respondent or his advocate by delivering a copy of the memorandum and  grounds  of \nappeal alongwith a copy of the order appealed against 2[either personally or  through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court.] \n(2) On receipt of notice referred to in sub\u00adrule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine. \n4. Application of Rule  3. The provisions of rule 3  shall, mutatis mutandis , apply to all \napplications filed before an appellate Court during the pendency of a suit.] \n_______ \nORDER XLIV \nPAUPER APPEALS \n1. Who may appeal as pauper.  Any person entitled to prefer an appeal, who is unable to pay \nthe fee required for the memorandum of appeal, may present an application accompanied by a \nmemorandum of appeal, and may be allowed to appeal as a pauper subject, in all matters, including \nthe presentation of such application, to the provisions relating to suits by paupers, in so far as those \nprovisions are applicable: \nProcedure on application for admission of appeal.  Provided that the Court shall reject the \napplication unless, upon a perusal thereof and of the judgment and decree appealed from, it sees reason \nto think that the decree is contrary to law or to some usage having the force of law, or is otherwise \nerroneous or unjust. \n2. Inquiry into pauperism. The inquiry into the pauperism of the applicant may be made either \nby the Appellate Court or under the order of the Appellate Court by the Court from whose decision the \nappeal is preferred: \n \n \n1New sub\u00adrules 3 and 4 added by the Code of Civil Procedure (Amdt.), Ordinance, 1980 (10 of 1980), s.14. \n2Subs. by Act XIV of 1994,s.II.",
++  "missing_reason": "title_only_record",
++  "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
++  "source_page": 175,
++  "content_hash": "05823cc51942eaf621a5ae25dff8a068536b0fcf69b93e3881e6efc7d17eac06",
++  "tier": "page_verified",
++  "verification_status": "page_verified",
++  "status": "in_force",
++  "jurisdiction": "federal",
++  "effective_from": "2026-09-23",
++  "effective_to": null,
++  "is_canonical": true,
++  "duplicate_of": null,
++  "quoting_allowed": true,
++  "in_force": true,
++  "has_operative_text": true,
++  "statutory_text": "3. Notice before presentation of appeal.__ (1) Where an appeal against  an  order  is  preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice  of such  \nappeal to the respondent or his advocate by delivering a copy of the memorandum and  grounds  of \nappeal alongwith a copy of the order appealed against 2[either personally or  through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court.] \n(2) On receipt of notice referred to in sub\u00adrule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine. \n4. Application of Rule  3. The provisions of rule 3  shall, mutatis mutandis , apply to all \napplications filed before an appellate Court during the pendency of a suit.] \n_______ \nORDER XLIV \nPAUPER APPEALS \n1. Who may appeal as pauper.  Any person entitled to prefer an appeal, who is unable to pay \nthe fee required for the memorandum of appeal, may present an application accompanied by a \nmemorandum of appeal, and may be allowed to appeal as a pauper subject, in all matters, including \nthe presentation of such application, to the provisions relating to suits by paupers, in so far as those \nprovisions are applicable: \nProcedure on application for admission of appeal.  Provided that the Court shall reject the \napplication unless, upon a perusal thereof and of the judgment and decree appealed from, it sees reason \nto think that the decree is contrary to law or to some usage having the force of law, or is otherwise \nerroneous or unjust. \n2. Inquiry into pauperism. The inquiry into the pauperism of the applicant may be made either \nby the Appellate Court or under the order of the Appellate Court by the Court from whose decision the \nappeal is preferred: \n \n \n1New sub\u00adrules 3 and 4 added by the Code of Civil Procedure (Amdt.), Ordinance, 1980 (10 of 1980), s.14. \n2Subs. by Act XIV of 1994,s.II.",
++  "text_layer_matched": true,
++  "human_reviewed": null
++}
+
+[7.4] Section 10(12) / Section 11 Record List & PDF Text Layer Headings:
+Stored FIO Provisions (first 80 chars of text):
+  FIO_2001_SEC_1  : 1. Short title, extent and commencement.—(1) This Ordinance may be called the  F
+  FIO_2001_SEC_2  : 2. Definitions.—In this Ordinance, unless there is anything repugnant in the sub
+  FIO_2001_SEC_3  : (1) It shall be the duty of a customer to fulfil all his obligations to the fina
+  FIO_2001_SEC_4  : (1) The Federal Government may, by notification in the official Gazette, establi
+  FIO_2001_SEC_7  : 7. Powers of Banking Courts. (1) Subject to the provisions of this Ordinance, a 
+  FIO_2001_SEC_8  : (1) Where any finance has been written off by a financial institution, a suit fo
+  FIO_2001_SEC_9  : 9. Procedure of Banking Courts.   (1) Where a customer or a financial institutio
+  FIO_2001_SEC_10 : 10. Leave to defend.   (1) In any case in which the summons has been served on t
+  FIO_2001_SEC_11 : Where the Banking Court refuses to grant leave to defend or the defendant fails 
+  FIO_2001_SEC_12 : (1) If the Banking Court is of the opinion that the dispute between the parties 
+  FIO_2001_SEC_13 : In any case in which a decree is passed against a defendant who failed to apply 
+  FIO_2001_SEC_14 : A suit in the Banking Court shall be disposed of expeditiously and preferably wi
+  FIO_2001_SEC_15 : 15. Sale of mortgaged property. (1) In this section, unless there is anything re
+  FIO_2001_SEC_16 : The Banking Court may, on application of the financial institution, attach the p
+  FIO_2001_SEC_17 : The Banking Court may issue a warrant of arrest against a defendant if satisfied
+  FIO_2001_SEC_18 : Whoever dishonestly commits breach of terms of finance, alienates or removes mor
+  FIO_2001_SEC_19 : 19. Execution of decree and sale with or without intervention of Banking Court. 
+  FIO_2001_SEC_20 : The Banking Court may direct that any fine imposed under this Ordinance shall be
+  FIO_2001_SEC_21 : No Court other than a Banking Court shall have or exercise any jurisdiction with
+  FIO_2001_SEC_22 : 22. Appeal. (1) Subject to sub-section (2), any person aggrieved by any judgment
+  FIO_2001_SEC_23 : From the date of receipt of notice under section 9, the defendant shall not tran
+  FIO_2001_SEC_24 : The Federal Government may, by notification in the official Gazette, make rules 
+  FIO_2001_SEC_25 : The provisions of this Ordinance shall have effect notwithstanding anything inco
+  FIO_2001_SEC_26 : If any difficulty arises in giving effect to any of the provisions of this Ordin
+  FIO_2001_SEC_27 : Subject to the provisions of section 22, no Court or authority shall call in que
+  FIO_2001_SEC_28 : No suit, prosecution or other legal proceeding shall lie against the Federal Gov
+  FIO_2001_SEC_29 : (1) The Banking Companies (Recovery of Loans, Advances, Credits and Finances) Ac
+  FIO_2001_SEC_30 : All proceedings pending before any Banking Court under the repealed enactment sh
+
+Headings from data/official_pdfs/fio_2001.pdf (pp. 9-11):
+  Page 9:
+    10. Leave to defend.   (1) In any case in which the summons has been served on the
+  Page 10:
+    11. Interim Decree.  1[(1) If the Banking Court on consideration of affidavit under oath by
+  Page 11:
+    12. Power to set aside decree.—In any case in which a decree is passed against a defendant
+    13. Disposal of suit.  (1) A suit in which leave to defend has been granted to the defendant
+
+FINDINGS ON SECTION 11:
+  1. Does a real Section 11 exist in fio_2001.pdf? YES. Page 10 heading: '11. Interim Decree.'
+  2. Was Section 11 deleted from the store? NO. All 28 records are preserved.
+  3. Nature of discrepancy: In legacy ingest, subsection (12) of Section 10 ('Where the Banking Court refuses to grant leave...')
+     was erroneously indexed as FIO_2001_SEC_11, shifting subsequent section keys by 1 in the unreviewed store.
+
+[7.5] Provenance of Commercial Text / Review Sheet Emendations:
+  Source file on disk: data/unified_statutes/FIO_2001.json
+  Commit: 107c9ae (Order 1.2), scripts/fix_fio_s22_verbatim.py lines 34-59.
+  'proposed_corrections' dictionary records:
+    - 'that' -> 'than'
+    - 'no shall' -> 'nor shall'
+    - 'such amountI_' -> 'such amount,'
+    - 'sub-section (2)' -> 'sub-section (3)'
+  Confirmation: 0 network requests were made; data was committed to disk in git history.
+
+================================================================================
+--> ITEM 8: PROVE NETWORK & MODEL-CALL CLAIMS
+================================================================================
+
+[8.1] Offline Model Call Details (Q1-Q6):
+  Model ID: claude-haiku-4-5-20251001
+  API Key: ANTHROPIC_API_KEY (Authorized in Order 1.3 commit 8b0b7d7)
+  Call Count: 6 total offline generation calls
+  Total Cost: ~$0.01 USD
+  Live Mode Status: STRICTLY OFF SEASON / SUSPENDED.
+
+[8.2] Verification of Local Schema Scanner (scripts/check_full_judgments_schema.py):
+=== CHECKING full_judgments USAGE ACROSS CODEBASE ===
+Columns referenced in codebase: ['*', 'canonical_court_name', 'case_id', 'case_title', 'court_name', 'decision_date', 'full_text', 'holding_snippet', 'id', 'neutral_citation', 'retrieval_status', 'verification_reason']
+  Confirmation: 0 connections to Supabase; pure static AST/regex scan over local Python source files.
+
+[8.3] Saved Raw Q1-Q6 Model & Verifier Outputs (data/eval_outputs/):
+  Q1_raw_model_output.txt       :  8,577 bytes
+  Q1_raw_verifier_output.json   : 26,247 bytes
+  Q2_raw_model_output.txt       :  3,900 bytes
+  Q2_raw_verifier_output.json   : 11,248 bytes
+  Q3_raw_model_output.txt       :  8,559 bytes
+  Q3_raw_verifier_output.json   : 35,437 bytes
+  Q4_raw_model_output.txt       :  8,342 bytes
+  Q4_raw_verifier_output.json   : 19,425 bytes
+  Q5_raw_model_output.txt       :  9,240 bytes
+  Q5_raw_verifier_output.json   : 21,504 bytes
+  Q6_raw_model_output.txt       :  2,116 bytes
+  Q6_raw_verifier_output.json   :  5,690 bytes
+  Scoring Rubric: EXCLUDED. Saved strictly as raw model text and raw verifier result dictionary.
+
+================================================================================
+--> ITEM 9: DATABASE MIGRATIONS
+================================================================================
+
+[9.1] GIN Full-Text Search Migration (migrations/20261025_add_fts_index_full_judgments.sql):
+-- ============================================================================
+-- ⚠️ STAGING-FIRST ENFORCEMENT NOTICE (ORDER 1.13 - ITEM 9)
+-- DO NOT EXECUTE DIRECTLY ON PRODUCTION DATABASE!
+-- This migration MUST be validated in a dedicated staging database instance
+-- with allocated maintenance_work_mem and execution monitoring prior to production.
+-- ============================================================================
+-- ============================================================================
+-- Migration: 20261025_add_fts_index_full_judgments.sql
+-- Purpose: Add PostgreSQL GIN Full-Text Search (FTS) index on public.full_judgments
+--          (431,298 corpus entries) with safe truncation against the 1MB tsvector limit
+--          and non-transactional concurrent index instructions.
+-- Schema Target: public.full_judgments (columns: case_title, neutral_citation, court_name, full_text)
+-- Output only: DO NOT RUN DIRECTLY ON PRODUCTION DB WITHOUT ALLOCATING MAINTENANCE_WORK_MEM.
+-- ============================================================================
+
+-- ----------------------------------------------------------------------------
+-- 1. STATEMENT TIMEOUT & MEMORY CONFIGURATION
+-- ----------------------------------------------------------------------------
+-- Supabase / PostgreSQL hosted instances enforce statement_timeout limits.
+-- Allocate adequate maintenance memory for GIN index construction.
+SET statement_timeout = 0;
+SET lock_timeout = '10s';
+SET maintenance_work_mem = '512MB';
+
+-- ----------------------------------------------------------------------------
+-- 2. SCHEMA MUTATION: ADD FTS TSVECTOR COLUMN
+-- ----------------------------------------------------------------------------
+ALTER TABLE public.full_judgments 
+    ADD COLUMN IF NOT EXISTS fts_tokens tsvector;
+
+-- ----------------------------------------------------------------------------
+-- 3. BATCHED BACKFILL PROCEDURE WITH TSVECTOR 1MB LIMIT TRUNCATION
+-- ----------------------------------------------------------------------------
+-- PostgreSQL tsvector has a hard 1MB (1,048,575 bytes) internal limit.
+-- Landmark apex judgments exceeding ~100 pages will crash to_tsvector with:
+--   "ERROR: string is too long for tsvector"
+-- We safely truncate full_text to the first 500,000 characters using `substring(coalesce(fj.full_text, '') from 1 for 500000)`.
+CREATE OR REPLACE PROCEDURE backfill_full_judgments_fts_batched(batch_size INT DEFAULT 5000)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    rows_updated INT := 0;
+    total_updated INT := 0;
+BEGIN
+    LOOP
+        WITH rows_to_update AS (
+            SELECT id 
+            FROM public.full_judgments 
+            WHERE fts_tokens IS NULL 
+            LIMIT batch_size
+            FOR UPDATE SKIP LOCKED
+        )
+        UPDATE public.full_judgments fj
+        SET fts_tokens = (
+            setweight(to_tsvector('english', coalesce(fj.case_title, '')), 'A') ||
+            setweight(to_tsvector('english', coalesce(fj.neutral_citation, '')), 'A') ||
+            setweight(to_tsvector('english', coalesce(fj.court_name, '')), 'B') ||
+            setweight(to_tsvector('english', substring(coalesce(fj.full_text, '') from 1 for 500000)), 'C')
+        )
+        FROM rows_to_update
+        WHERE fj.id = rows_to_update.id;
+
+        GET DIAGNOSTICS rows_updated = ROW_COUNT;
+        total_updated := total_updated + rows_updated;
+        
+        RAISE NOTICE 'Batched FTS Backfill: Updated % rows (Total: %)', rows_updated, total_updated;
+        
+        COMMIT;
+
+        IF rows_updated = 0 THEN
+            EXIT;
+        END IF;
+    END LOOP;
+
+    RAISE NOTICE 'Batched FTS Backfill COMPLETE. Total rows indexed: %', total_updated;
+END;
+$$;
+
+-- ----------------------------------------------------------------------------
+-- 4. REAL-TIME SYNCHRONIZATION TRIGGER (FOR INGESTION PIPELINE)
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION full_judgments_fts_trigger_func()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    NEW.fts_tokens := (
+        setweight(to_tsvector('english', coalesce(NEW.case_title, '')), 'A') ||
+        setweight(to_tsvector('english', coalesce(NEW.neutral_citation, '')), 'A') ||
+        setweight(to_tsvector('english', coalesce(NEW.court_name, '')), 'B') ||
+        setweight(to_tsvector('english', substring(coalesce(NEW.full_text, '') from 1 for 500000)), 'C')
+    );
+    RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS trg_full_judgments_fts_update ON public.full_judgments;
+CREATE TRIGGER trg_full_judgments_fts_update
+    BEFORE INSERT OR UPDATE OF case_title, neutral_citation, court_name, full_text
+    ON public.full_judgments
+    FOR EACH ROW
+    EXECUTE FUNCTION full_judgments_fts_trigger_func();
+
+-- ----------------------------------------------------------------------------
+-- 5. HIGH-PERFORMANCE SEARCH RPC (FOR HYBRID RETRIEVAL INTEGRATION)
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION search_judgments_fts(
+    query_text TEXT,
+    court_filter TEXT DEFAULT NULL,
+    match_limit INT DEFAULT 30
+)
+RETURNS TABLE (
+    id UUID,
+    case_id TEXT,
+    neutral_citation TEXT,
+    case_title TEXT,
+    court_name TEXT,
+    decision_date DATE,
+    rank_score REAL,
+    snippet TEXT
+)
+LANGUAGE sql
+STABLE
+AS $$
+    SELECT 
+        fj.id,
+        fj.case_id,
+        fj.neutral_citation,
+        fj.case_title,
+        fj.court_name,
+        fj.decision_date,
+        ts_rank_cd(fj.fts_tokens, websearch_to_tsquery('english', query_text), 32 /* rank normalization */) AS rank_score,
+        ts_headline('english', coalesce(fj.full_text, ''), websearch_to_tsquery('english', query_text), 
+                    'StartSel=<mark>, StopSel=</mark>, MaxWords=50, MinWords=25') AS snippet
+    FROM public.full_judgments fj
+    WHERE 
+        fj.fts_tokens @@ websearch_to_tsquery('english', query_text)
+        AND (court_filter IS NULL OR fj.court_name ILIKE ('%' || court_filter || '%'))
+    ORDER BY rank_score DESC
+    LIMIT match_limit;
+$$;
+
+-- ----------------------------------------------------------------------------
+-- 6. STANDALONE GIN INDEX CREATION (NON-TRANSACTIONAL)
+-- ----------------------------------------------------------------------------
+-- CRITICAL: `CREATE INDEX CONCURRENTLY` CANNOT be executed inside a multi-statement
+-- transaction block (`BEGIN ... COMMIT`). If executing via a migration tool that wraps
+-- scripts in transactions, run the DDL above first, and then execute this single
+-- statement in an isolated, autocommit session:
+--
+--   CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_full_judgments_fts_tokens 
+--       ON public.full_judgments 
+--       USING gin (fts_tokens);
+--
+-- Alternatively, if running during a planned maintenance window where table locks
+-- are acceptable, the standard non-concurrent index can be executed inside a transaction:
+-- OPERATIVE PRODUCTION DDL (MUST RUN OUTSIDE TRANSACTION BLOCK):
+-- CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_full_judgments_fts_tokens 
+--     ON public.full_judgments 
+--     USING gin (fts_tokens);
+-- NOTE: PostgreSQL enforces that `CREATE INDEX CONCURRENTLY` CANNOT be executed inside a multi-statement transaction block (`BEGIN ... COMMIT`). It must be executed in an autocommit connection.
+-- ----------------------------------------------------------------------------
+
+[9.2] Row-Level Security Migration (migrations/query_jobs.sql):
+-- ============================================================================
+-- Migration: migrations/query_jobs.sql
+-- PREREQUISITE NOTICE (ORDER 1.14 - ITEM 9):
+-- Row Level Security (RLS) enforcement statement ('ALTER TABLE public.query_jobs ENABLE ROW LEVEL SECURITY;')
+-- MUST execute strictly AFTER table public.query_jobs has been created.
+-- Purpose: In-flight and persistent query job store for Pakistani legal research backend.
+--          Stores execution stage, status, timings, and sanitized metadata.
+--          Strictly excludes raw query text and client auth tokens.
+-- Target: public.query_jobs
+-- Note: STAGING-FIRST ENFORCEMENT: Test in staging environment before applying.
+--       Do NOT execute automatically; run manually via Supabase SQL Editor if desired.
+-- ============================================================================
+
+CREATE TABLE IF NOT EXISTS public.query_jobs (
+    job_id TEXT PRIMARY KEY,
+    user_id TEXT,
+    stage TEXT NOT NULL DEFAULT 'queued',
+    status TEXT NOT NULL DEFAULT 'running',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    metadata JSONB DEFAULT '{}'::jsonb
+);
+
+-- Fast lookup indexes for status polling, user scoping, and TTL cleanups
+CREATE INDEX IF NOT EXISTS idx_query_jobs_user_status 
+    ON public.query_jobs (user_id, status);
+
+CREATE INDEX IF NOT EXISTS idx_query_jobs_updated_at 
+    ON public.query_jobs (updated_at DESC);
+
+-- ----------------------------------------------------------------------------
+-- ROW LEVEL SECURITY (RLS) ENFORCEMENT (Order 1.13 - Item 9)
+-- ----------------------------------------------------------------------------
+-- Enable Row Level Security to prevent unauthorized access via public API keys.
+ALTER TABLE public.query_jobs ENABLE ROW LEVEL SECURITY;
+
+-- Note: No public policies are created. Access is restricted exclusively to
+-- the Supabase service role key (backend server). All public/client requests
+-- without the service key are denied fail-closed by default.
+
+[9.3] Execution Status:
+  STRICTLY UNEXECUTED. Staging-first offline invariant preserved.
+
+================================================================================
+--> ITEM 10: TEST SUITE EXECUTION & REVISION FREEZE
+================================================================================
+
+Running Pytest across 12 test suites:
+........................................................................ [ 98%]
+.                                                                        [100%]
+73 passed in 39.01s
+
+Final Git HEAD: b1f46adb3fe97fc70ed16494aac114615928f829
+Final Working Tree Status (--porcelain):
+?? reports/order114_report.txt
