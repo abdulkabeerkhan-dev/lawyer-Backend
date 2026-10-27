@@ -553,6 +553,15 @@ class StatuteInjector:
                 lines.append("********************************************************************************")
                 raw_text = "[REPEALED / OMITTED - NOT IN FORCE: The engine refuses to quote this provision as operative law]"
 
+            # Check disputed tier warning gating (Item 8 & Item 10)
+            elif tier in ("disputed", "extraction_disputed"):
+                lines.append("********************************************************************************")
+                lines.append(f"CRITICAL WARNING: {display_name} IS TAGGED AS DISPUTED IN OFFICIAL STORE.")
+                lines.append("Reason: Text not yet checked against page images by a human.")
+                lines.append("Do NOT print any '> [!' banner yourself. System banners are attached automatically after verification.")
+                lines.append("Human advocate verification against official Gazette page images is required before relying on this text.")
+                lines.append("********************************************************************************")
+
             # Check unsourced tier / quoting blocked gating (Order 1.4 Item 1)
             elif tier == "unsourced" or in_force == "unknown" or (rec and rec.get("quoting_allowed") is False):
                 lines.append("********************************************************************************")
@@ -560,16 +569,7 @@ class StatuteInjector:
                 lines.append("The engine strictly blocks quoting or applying unverified/unsourced statutory text.")
                 lines.append("You MUST output '[Statutory text unverified / unsourced: quoting strictly blocked]' under Section 2 instead.")
                 lines.append("********************************************************************************")
-                raw_text = ""
-
-            # Check disputed tier warning gating (Item 8 & Item 10)
-            elif tier == "disputed":
-                lines.append("********************************************************************************")
-                lines.append(f"CRITICAL WARNING: {display_name} IS TAGGED AS DISPUTED IN OFFICIAL STORE.")
-                lines.append("Reason: Text not yet checked against page images by a human.")
-                lines.append("Do NOT print any '> [!' banner yourself. System banners are attached automatically after verification.")
-                lines.append("Human advocate verification against official Gazette page images is required before relying on this text.")
-                lines.append("********************************************************************************")
+                raw_text = "" 
 
             # Schedule II injection for PPC offences
             if act_code == "PPC_1860":

@@ -71,6 +71,14 @@ PAKISTAN_STATUTE_ALIASES: Dict[str, str] = {
     "sra": "SRA_1877",
     "specific relief act": "SRA_1877",
     "contract act": "CONTRACT_1872",
+    "tpa": "TPA_1882",
+    "transfer of property": "TPA_1882",
+    "transfer of property act": "TPA_1882",
+    "stamp act": "STAMP_ACT_1899",
+    "registration act": "REGISTRATION_1908",
+    "banking companies": "BANKING_COMPANIES_1962",
+    "banking companies ordinance": "BANKING_COMPANIES_1962",
+    "bco": "BANKING_COMPANIES_1962",
 }
 
 # Known foreign/un-enacted statute names in Pakistan
@@ -337,6 +345,8 @@ class StatuteStore:
             # Standard Section match
             if not matched_rec:
                 m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?(?:-[a-z])?)\b', prov_clean, re.I)
+                if not m_sec:
+                    m_sec = re.match(r'^\s*(\d+[a-z]?(?:-[a-z])?)\s*$', prov_clean, re.I)
                 if m_sec:
                     sec_clean = m_sec.group(1).upper().replace("-", "")
                     cand_cids = [
