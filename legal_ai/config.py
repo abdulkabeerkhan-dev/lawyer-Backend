@@ -75,7 +75,7 @@ def get_backend_base_url() -> str:
         if not domain.startswith("http://") and not domain.startswith("https://"):
             return f"https://{domain}"
         return domain
-    return "https://lawyer-backend-production-26c7.up.railway.app"
+    return "https://lawyer-backend-production-3b52.up.railway.app"
 
 
 def get_authorized_testers() -> Set[str]:

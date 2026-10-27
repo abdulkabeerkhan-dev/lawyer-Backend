@@ -883,7 +883,7 @@ def get_backend_base_url() -> str:
 
         return domain
 
-    return "https://lawyer-backend-production-26c7.up.railway.app"
+    return "https://lawyer-backend-production-3b52.up.railway.app"
 
 
 

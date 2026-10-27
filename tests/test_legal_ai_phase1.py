@@ -149,8 +149,8 @@ class TestLegalAIPhase1(unittest.TestCase):
         from legal_ai.config import get_backend_base_url
         from fastapi.testclient import TestClient
 
-        self.assertEqual(get_backend_base_url(), "https://lawyer-backend-production-26c7.up.railway.app")
-        self.assertEqual(main.get_backend_base_url(), "https://lawyer-backend-production-26c7.up.railway.app")
+        self.assertEqual(get_backend_base_url(), "https://lawyer-backend-production-3b52.up.railway.app")
+        self.assertEqual(main.get_backend_base_url(), "https://lawyer-backend-production-3b52.up.railway.app")
 
         client = TestClient(main.app)
         # Request with NO Authorization bearer token

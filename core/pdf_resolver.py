@@ -183,7 +183,7 @@ def fetch_storage_pdf_bytes(
 def resolve_judgment_pdf_url(
     candidate: Dict[str, Any],
     supabase_client: Any = None,
-    backend_base_url: str = "https://lawyer-backend-production-26c7.up.railway.app",
+    backend_base_url: str = "https://lawyer-backend-production-3b52.up.railway.app",
     user_id: str = "user"
 ) -> str:
     """
