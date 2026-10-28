@@ -1536,6 +1536,38 @@ class MemoVerifier:
 
                 continue
 
+
+
+            # Exclude non-party doctrinal concept comparisons (e.g. Permissible Interim Measures v. Prohibited Sweeping Intervention)
+
+            NON_PARTY_CONCEPT_WORDS = {
+
+                "permissible", "prohibited", "sweeping", "interim", "measures", "intervention",
+
+                "remedy", "remedies", "relief", "status", "quo", "discretion", "power", "powers",
+
+                "jurisdiction", "oppression", "mismanagement", "doctrine", "principles", "principle",
+
+                "threshold", "adjudication", "convenience", "irreparable", "mandatory", "directory",
+
+                "void", "voidable", "valid", "invalid", "arbitration", "specific", "performance",
+
+                "limitation", "estoppel", "natural", "justice", "substantive", "procedural"
+
+            }
+
+            p1_words = set(re.findall(r'[a-zA-Z]+', p1.lower()))
+
+            p2_words = set(re.findall(r'[a-zA-Z]+', p2.lower()))
+
+            if p1_words and p1_words.issubset(NON_PARTY_CONCEPT_WORDS | LATIN_DOCTRINES):
+
+                continue
+
+            if p2_words and p2_words.issubset(NON_PARTY_CONCEPT_WORDS | LATIN_DOCTRINES):
+
+                continue
+
             # Order 2.1: Must be followed immediately by a citation or the word "case"
 
             following = clean_text[m.end():m.end() + 80]

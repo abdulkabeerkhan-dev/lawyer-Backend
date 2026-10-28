@@ -25,6 +25,11 @@ def test_order21_item2_void_ab_initio_rejected():
     auths_title = mv.extract_case_authorities("Void Ab Initio v. Voidable")
     assert len(auths_title) == 0
 
+    # Non-party doctrinal concept comparison must not be extracted
+    auths_interim = mv.extract_case_authorities("Permissible Interim Measures v. Prohibited Sweeping Intervention (2017 CLD 847)")
+    case_spans = [a["span"] for a in auths_interim if a["type"] == "case_title"]
+    assert "Permissible Interim Measures v. Prohibited Sweeping Intervention" not in case_spans
+
 
 def test_order21_item2_messrs_extracted():
     mv = MemoVerifier()
