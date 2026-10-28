@@ -640,6 +640,37 @@ async def process_query_job_legal_ai(
 
 
 
+        # Multi-turn conversation context resolution
+    messages_list = getattr(request, "messages", None) or []
+    if isinstance(messages_list, list) and len(messages_list) > 0:
+        prior_context_parts = []
+        for m in messages_list:
+            m_role = (m.get("role") if isinstance(m, dict) else getattr(m, "role", "user")) or "user"
+            m_content = (m.get("content") if isinstance(m, dict) else getattr(m, "content", "")) or ""
+            m_content = m_content.strip()
+            if not m_content:
+                continue
+            if m_role == "user" and m_content != raw_input_text:
+                prior_context_parts.append(f"Prior User Query: {m_content}")
+            elif m_role == "assistant":
+                m_match = re.search(r'## Primary Legal Finding\s*\n+([^\n]+(?:\n[^\n]+)?)', m_content)
+                if m_match:
+                    prior_context_parts.append(f"Prior Finding: {m_match.group(1).strip()[:300]}")
+                else:
+                    first_p = m_content.split("\n\n")[0].strip()
+                    if first_p and not first_p.startswith(">") and len(first_p) < 400:
+                        prior_context_parts.append(f"Prior Context: {first_p}")
+
+        lower_q = effective_user_query.lower()
+        is_follow_up = False
+        follow_up_cues = ["this", "that", "it", "these", "those", "how to present", "how to argue", "court", "pleading", "application", "what next", "explain further", "how should"]
+        if prior_context_parts:
+            if len(effective_user_query.split()) < 25 or any(cue in lower_q for cue in follow_up_cues):
+                is_follow_up = True
+
+        if is_follow_up and prior_context_parts:
+            effective_user_query = f"{' | '.join(prior_context_parts[-2:])}\n\nFollow-up Request: {effective_user_query}"
+
     # Fast path: Chitchat
 
 

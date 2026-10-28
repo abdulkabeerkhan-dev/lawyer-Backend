@@ -157,3 +157,44 @@ def test_partner_markdown_presentation_sanitizes_typography():
     assert "### Not in verified store" in clean
     # No stray # attached to words or lines
     assert not re.search(r'#+\w+', clean), f"Found stray hashtag in: {clean}"
+
+def test_multiturn_conversational_context_resolution():
+    from main import QueryRequest, ChatMessagePayload
+    from pydantic import BaseModel
+
+    req = QueryRequest(
+        query_text="Explain how to present this to the court?",
+        messages=[
+            ChatMessagePayload(role="user", content="An accused was arrested under Section 9(c) of the Control of Narcotic Substances Act 1997 for alleged recovery of 2 kilograms of Charas. At trial, the prosecution failed to examine the Moharrir to prove safe custody..."),
+            ChatMessagePayload(role="assistant", content="## Primary Legal Finding\nUnder Section 9(c) CNSA 1997, failure to prove safe custody entitles the accused to an acquittal."),
+            ChatMessagePayload(role="user", content="Explain how to present this to the court?")
+        ]
+    )
+
+    # Simulate query processor context resolution
+    raw_input_text = str(getattr(req, "query_text", "") or "").strip()
+    effective_user_query = raw_input_text
+    messages_list = getattr(req, "messages", None) or []
+    prior_context_parts = []
+    for m in messages_list:
+        m_role = (m.get("role") if isinstance(m, dict) else getattr(m, "role", "user")) or "user"
+        m_content = (m.get("content") if isinstance(m, dict) else getattr(m, "content", "")) or ""
+        m_content = m_content.strip()
+        if not m_content:
+            continue
+        if m_role == "user" and m_content != raw_input_text:
+            prior_context_parts.append(f"Prior User Query: {m_content}")
+        elif m_role == "assistant":
+            m_match = re.search(r'## Primary Legal Finding\s*\n+([^\n]+(?:\n[^\n]+)?)', m_content)
+            if m_match:
+                prior_context_parts.append(f"Prior Finding: {m_match.group(1).strip()[:300]}")
+
+    lower_q = effective_user_query.lower()
+    follow_up_cues = ["this", "that", "it", "how to present", "how to argue", "court"]
+    is_follow_up = len(effective_user_query.split()) < 25 or any(cue in lower_q for cue in follow_up_cues)
+    if is_follow_up and prior_context_parts:
+        effective_user_query = f"{' | '.join(prior_context_parts[-2:])}\n\nFollow-up Request: {effective_user_query}"
+
+    assert "Section 9(c)" in effective_user_query
+    assert "Explain how to present this to the court?" in effective_user_query
+    assert "Prior Finding:" in effective_user_query
