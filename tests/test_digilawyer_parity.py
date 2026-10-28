@@ -132,12 +132,28 @@ def test_graceful_quote_omission_parity():
 def test_partner_markdown_presentation_sanitizes_typography():
     ugly = (
         "> **Precedent Verification Notice**: Direct narrative analysis was withheld.\n\n"
+        "# Verified Statutory Provisions on Record\n"
+        "# Section 205, Companies Act, 2017\n"
+        "#### Section 60, Companies Act, 2017\n"
         "### 1. ### Executive Summary\n"
-        "The court held under Section 114 CPC that #decree cannot be reviewed.\n"
+        "The court held under Section 114 #CPC that #decree cannot be reviewed.\n"
+        "# Verified Judicial Authorities on Record\n"
+        "### Not in verified store\n"
+        "- **Section 999**: no text available\n"
     )
     clean = sanitize_partner_markdown_presentation(ugly)
     # Zero top warning banners
     assert not clean.startswith("> **Precedent Verification Notice**")
     # Zero stray hashes on words
     assert "#decree" not in clean
+    assert "#CPC" not in clean
     assert "### 1. ###" not in clean
+    # Section headings converted to clean bold
+    assert "**Section 205, Companies Act, 2017**" in clean
+    assert "**Section 60, Companies Act, 2017**" in clean
+    assert "**Verified Statutory Provisions on Record**" in clean
+    assert "**Verified Judicial Authorities on Record**" in clean
+    # Markdown H3 section preserved
+    assert "### Not in verified store" in clean
+    # No stray # attached to words or lines
+    assert not re.search(r'#+\w+', clean), f"Found stray hashtag in: {clean}"

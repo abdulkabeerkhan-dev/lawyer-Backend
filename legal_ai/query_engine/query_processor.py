@@ -3021,6 +3021,9 @@ async def process_query_job_legal_ai(
         if guardian_notice:
             clean_answer = clean_answer + "\n\n---\n\n" + guardian_notice
 
+    from legal_ai.synthesis.memorandum_generator import sanitize_partner_markdown_presentation
+    clean_answer = sanitize_partner_markdown_presentation(clean_answer)
+
     inserted_row_id = job_id
 
 

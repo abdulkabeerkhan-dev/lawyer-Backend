@@ -81,12 +81,16 @@ def sanitize_partner_markdown_presentation(text: str) -> str:
     clean = re.sub(r'^(#{1,6})\s*(\d+[\.\)])\s*#{1,6}\s*', r'## \2 ', clean, flags=re.MULTILINE)
     # Fix '### Title ###' -> '## Title'
     clean = re.sub(r'^(#{1,6})\s*([^#\n]+?)\s*#{1,6}\s*$', r'\1 \2', clean, flags=re.MULTILINE)
-    # Fix standalone '# Section ...' -> '**Section ...**'
-    clean = re.sub(r'^#\s+((?:Section|Order|Rule|Article|Ss?\.)\s+[^\n]+)', r'**\1**', clean, flags=re.MULTILINE)
+    # Fix standalone '# Section ...' or '#### Section ...' -> '**Section ...**'
+    clean = re.sub(r'^#{1,6}\s+((?:Section|Order|Rule|Article|Ss?\.)\s+[^\n]+)', r'**\1**', clean, flags=re.MULTILINE)
+    # Fix '# Verified Statutory Provisions on Record' and '# Verified Judicial Authorities on Record'
+    clean = re.sub(r'^#{1,6}\s+(Verified (?:Statutory Provisions|Judicial Authorities)[^\n]*)', r'**\1**', clean, flags=re.MULTILINE)
 
-    # 3. Remove stray inline # attached to words like 'word#', 'word # ', or '#word'
+    # 3. Remove stray inline # attached to words like '#CPC', '#decree', 'word#', 'word # '
+    clean = re.sub(r'#+(?=[A-Za-z0-9])', '', clean)
     clean = re.sub(r'(?<=[A-Za-z0-9])#+', '', clean)
-    clean = re.sub(r'(?<!^)(?<!\n)#+(?=[A-Za-z0-9])', '', clean)
+    clean = re.sub(r'^\s*#+\s*$', '', clean, flags=re.MULTILINE)
+    clean = re.sub(r'\s+#+\s*$', '', clean, flags=re.MULTILINE)
 
     # 4. Clean up multiple newlines
     clean = re.sub(r'\n{3,}', '\n\n', clean).strip()
