@@ -1440,7 +1440,7 @@ async def process_query_job_legal_ai(
 
 
 
-        sec6_heading = "   - ### 6. ### PRE-ARREST BAIL STRATEGY (OR PROCEDURAL REMEDY)\n"
+        sec6_heading = "   - ## 6. Pre-Arrest Bail Strategy (or Procedural Remedy)\n"
 
 
 
@@ -1452,11 +1452,11 @@ async def process_query_job_legal_ai(
 
 
 
-        sec6_heading = "   - ### 6. ### PROCEDURAL REMEDY & APPELLATE STRATEGY\n"
+        sec6_heading = "   - ## 6. Procedural Remedy & Appellate Strategy\n"
 
 
 
-        sec6_directive = "Section 6 MUST be titled '### 6. ### PROCEDURAL REMEDY & APPELLATE STRATEGY' and analyze civil/statutory interim remedies and appeals (Order XXXIX Rules 1 & 2 CPC, Order XLIII Rule 1(r) CPC appeal, s.115 CPC revision, or PRPA Rent Tribunal proceedings). NEVER discuss bail, FIR, or criminal procedure in civil/property/rent disputes."
+        sec6_directive = "Section 6 MUST be titled '## 6. Procedural Remedy & Appellate Strategy' and analyze civil/statutory interim remedies and appeals (Order XXXIX Rules 1 & 2 CPC, Order XLIII Rule 1(r) CPC appeal, s.115 CPC revision, or PRPA Rent Tribunal proceedings). NEVER discuss bail, FIR, or criminal procedure in civil/property/rent disputes."
 
 
 
@@ -1488,7 +1488,7 @@ async def process_query_job_legal_ai(
 
 
 
-    synthesis_mode = os.environ.get("SYNTHESIS_MODE", "judgment_first").lower()
+    synthesis_mode = os.environ.get("SYNTHESIS_MODE", "senior_counsel").lower()
 
 
 
@@ -1588,23 +1588,23 @@ async def process_query_job_legal_ai(
 
 
 
-            "   - ### 1. ### EXECUTIVE SUMMARY & LEGAL OPINION\n"
+            "   - ## 1. Executive Summary & Legal Opinion\n"
 
 
 
-            "   - ### 2. ### STATUTORY & PROCEDURAL FRAMEWORK\n"
+            "   - ## 2. Statutory & Procedural Framework\n"
 
 
 
-            "   - ### 3. ### CONTROLLING JUDICIAL PRECEDENTS & CASE MATRIX\n"
+            "   - ## 3. Controlling Judicial Precedents & Case Matrix\n"
 
 
 
-            "   - ### 4. ### SUBSTANTIVE LEGAL ANALYSIS & DOCTRINE\n"
+            "   - ## 4. Substantive Legal Analysis & Doctrine\n"
 
 
 
-            "   - ### 5. ### APPLICATION OF LAW TO FACTS\n"
+            "   - ## 5. Application of Law to Facts\n"
 
 
 
@@ -1612,11 +1612,11 @@ async def process_query_job_legal_ai(
 
 
 
-            "   - ### 7. ### RECOMMENDATIONS & LITIGATION ROADMAP\n"
+            "   - ## 7. Recommendations & Litigation Roadmap\n"
 
 
 
-            "   - ### 8. ### APPENDIX: RESEARCH SCOPE & UNLOCATED AUTHORITIES\n"
+            "   - ## 8. Appendix: Research Scope & Unlocated Authorities\n"
 
 
 
@@ -3010,7 +3010,7 @@ async def process_query_job_legal_ai(
         clean_answer = guard_res["sanitized_text"]
         guardian_notice = anti_guard.format_guardian_notice(guard_res["guardian_interventions"])
         if guardian_notice:
-            clean_answer = guardian_notice + "\n\n" + clean_answer
+            clean_answer = clean_answer + "\n\n---\n\n" + guardian_notice
 
     inserted_row_id = job_id
 

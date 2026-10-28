@@ -61,6 +61,38 @@ REQUIRED_12_FIELDS: List[str] = [
 
 
 
+def sanitize_partner_markdown_presentation(text: str) -> str:
+    """
+    Cleans up markdown presentation for senior partner level legal memoranda:
+    1. Removes all warning banners from the top of the output.
+    2. Cleans up heading hash patterns (e.g. '### 1. ### Title' -> '## 1. Title', '### Title ###' -> '## Title').
+    3. Normalizes lines like '# Section 205' to '**Section 205**'.
+    4. Eliminates stray or orphan '#' symbols attached to words.
+    """
+    if not text:
+        return ""
+    clean = text.strip()
+    # 1. Remove warning banners from the very top of the text
+    clean = re.sub(r'^(?:>[^\n]*(?:Notice|Warning|Alert|Disputed)[^\n]*\n(?:>[^\n]*\n)*\s*)+', '', clean, flags=re.IGNORECASE)
+    clean = re.sub(r'^(?:>\s*\[!(?:WARNING|NOTE|ALERT)\][^\n]*\n(?:>[^\n]*\n)*\s*)+', '', clean, flags=re.IGNORECASE)
+    clean = re.sub(r'^(?:⚠️\s*[^\n]*Notice[^\n]*\n+)+', '', clean, flags=re.IGNORECASE)
+
+    # 2. Fix '### 1. ### Title' or '## 1. ## Title' -> '## 1. Title'
+    clean = re.sub(r'^(#{1,6})\s*(\d+[\.\)])\s*#{1,6}\s*', r'## \2 ', clean, flags=re.MULTILINE)
+    # Fix '### Title ###' -> '## Title'
+    clean = re.sub(r'^(#{1,6})\s*([^#\n]+?)\s*#{1,6}\s*$', r'\1 \2', clean, flags=re.MULTILINE)
+    # Fix standalone '# Section ...' -> '**Section ...**'
+    clean = re.sub(r'^#\s+((?:Section|Order|Rule|Article|Ss?\.)\s+[^\n]+)', r'**\1**', clean, flags=re.MULTILINE)
+
+    # 3. Remove stray inline # attached to words like 'word#', 'word # ', or '#word'
+    clean = re.sub(r'(?<=[A-Za-z0-9])#+', '', clean)
+    clean = re.sub(r'(?<!^)(?<!\n)#+(?=[A-Za-z0-9])', '', clean)
+
+    # 4. Clean up multiple newlines
+    clean = re.sub(r'\n{3,}', '\n\n', clean).strip()
+    return clean
+
+
 def purge_debug_warnings(text: str) -> str:
 
     """
@@ -164,7 +196,7 @@ def purge_debug_warnings(text: str) -> str:
 
 
 
-    return clean
+    return sanitize_partner_markdown_presentation(clean)
 
 
 
