@@ -702,6 +702,10 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
         return hybrid_check
 
     clean_text = text.strip()
+    # ORDER 2.1 - ITEM 4: Never extract section numbers from percentages (e.g. 60%)
+    if re.search(r'\b\d+\s*%', clean_text) or clean_text.endswith('%'):
+        return {"is_valid": False, "status": "percentage_not_statute", "raw_citation": text}
+
     lower_text = clean_text.lower()
     search_context = f"{lower_text} {str(context or '').lower()}"
 
@@ -728,9 +732,18 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
             break
 
     # Check search_context if act not found in immediate token
+    # ORDER 2.1 - ITEM 4: A section number binds to the Act named in the same sentence.
     if not act_code:
+        sentence_to_search = lower_text
+        if context:
+            ctx_str = str(context).lower()
+            sentences = re.split(r'(?<=[.!?\n])\s+', ctx_str)
+            for s in sentences:
+                if lower_text in s:
+                    sentence_to_search = s
+                    break
         for alias, code in sorted(ACT_ALIASES.items(), key=lambda x: len(x[0]), reverse=True):
-            if re.search(rf'\b{re.escape(alias)}\b', search_context):
+            if re.search(rf'\b{re.escape(alias)}\b', sentence_to_search):
                 act_code = code
                 break
 
@@ -879,8 +892,9 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
     )
     if not sec_match:
         # Bare section or clause e.g. "302(b)", "12(2)", "489-F", "561-A", "22-A"
+        # ORDER 2.1 - ITEM 4: Do not match digits preceding %
         sec_match = re.search(
-            r'\b(\d+(?:-[A-Za-z]+|[A-Za-z])?)(?:\s*\(\s*(\d+)\s*\))?(?:\s*\(\s*([a-zA-Z])\s*\))?',
+            r'\b(\d+(?:-[A-Za-z]+|[A-Za-z])?)(?!\s*%)(?:\s*\(\s*(\d+)\s*\))?(?:\s*\(\s*([a-zA-Z])\s*\))?',
             clean_text, re.IGNORECASE
         )
         if sec_match:

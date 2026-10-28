@@ -14894,9 +14894,30 @@ async def export_court_pleading(
 
     check_burst_rate_limit(authenticated_user_id, action="pleading export")
 
-    # ORDER 1.9 - ITEM 7: FAIL-CLOSED VERIFICATION ON PLEADING EXPORT (CITATIONS AND QUOTES ONLY)
-    # Allows client facts in user-supplied pleadings while strictly gating all cited statutes and authorities.
+    # ORDER 1.9 & ORDER 2.1 - ITEM 9: FAIL-CLOSED VERIFICATION ON PLEADING EXPORT
+    # Withheld output must not be exportable. Reject immediately with 422 if memo text is withheld notice.
     if payload.memorandum_text:
+        is_withheld_notice = any(k in payload.memorandum_text for k in [
+            "Precedent Verification Notice",
+            "Statutory Verification Notice",
+            "Verification Notice: Direct narrative analysis was withheld",
+            "Analysis was withheld to protect",
+            "Output withheld to protect",
+            "Strict Anti-Hallucination Policy",
+            "withheld to protect strict"
+        ])
+        if is_withheld_notice:
+            raise HTTPException(
+                status_code=422,
+                detail={
+                    "error": "EXPORT_WITHHELD_BLOCKED",
+                    "verdict": "BLOCKED",
+                    "message": "Pleading export rejected: memorandum analysis was withheld due to verification failure.",
+                    "export_allowed": False,
+                    "copy_allowed": False
+                }
+            )
+
         from legal_ai.verification.memo_verifier import verify_pleading_citations_and_quotes
         v_res = verify_pleading_citations_and_quotes(payload.memorandum_text)
         if not v_res.get("passed", False):
@@ -15765,15 +15786,38 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                     if sp and sp not in unverified_cits:
                         unverified_cits.append(sp)
 
-        fallback_texts = []
+        # ORDER 2.1 - ITEM 3: Authenticity Notice and Legal Guidance show only when a real extracted citation fails pagination check (>2,500 pages)
+        pagination_check_failed = (err_cat == "FABRICATED_CITATION")
+        if not pagination_check_failed and unverified_cits:
+            for c in unverified_cits:
+                parts = str(c).strip().split()
+                if parts and parts[-1].isdigit() and int(parts[-1]) > 2500:
+                    pagination_check_failed = True
+                    break
+
+        # ORDER 2.1 - ITEM 5: Separate provisions with stored text from heading-only / missing provisions
+        verified_texts = []
+        missing_provisions = []
         for fb in (job.get("verified_statute_fallback") or []):
-            if isinstance(fb, dict) and fb.get("text"):
-                fallback_texts.append(fb["text"])
+            if isinstance(fb, dict):
+                txt = fb.get("text") or ""
+                tier = fb.get("tier", "")
+                disp = fb.get("display_name") or fb.get("canonical_id") or "Provision"
+                disp_clean = re.sub(r'^[#\s]+', '', disp).strip()
+                has_text = fb.get("has_text", bool(txt and tier != "heading_only" and "no text available" not in txt.lower()))
+                if has_text and txt and "no text available" not in txt.lower():
+                    verified_texts.append(txt)
+                else:
+                    missing_provisions.append(disp_clean)
 
         precedent_cards = job.get("precedent_cards") or job.get("verified_precedents_fallback") or []
 
         # Determine if this failure is specifically precedent/citation related
-        is_precedent_blocked = (err_cat == "FABRICATED_CITATION" or bool(unverified_cits) or (not fallback_texts and not precedent_cards))
+        is_precedent_blocked = (
+            err_cat == "FABRICATED_CITATION" or 
+            (bool(unverified_cits) and err_cat not in ("STATUTORY_MISQUOTATION", "UNSOURCED_ANALYSIS")) or 
+            (err_cat not in ("STATUTORY_MISQUOTATION", "UNSOURCED_ANALYSIS") and not verified_texts and not precedent_cards and not missing_provisions)
+        )
 
         if is_precedent_blocked:
             cit_list_str = ", ".join(f"**`{c}`**" for c in unverified_cits) if unverified_cits else "the requested judicial citation or authority"
@@ -15781,10 +15825,14 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                 f"> ⚠️ **Precedent Verification Notice**: The requested authority {cit_list_str} "
                 f"could not be verified in authoritative Pakistani law reports (*SCMR*, *PLD*, *YLR*, *CLC*, *PCrLJ*, *MLD*, *CLD*, *PTD*, *PLC*) "
                 f"or the verified precedent index.\n\n"
-                f"> **Authenticity Notice**: In Pakistani law reporting, annual journal volumes typically contain under 2,000–2,500 pages. "
-                f"Citations with out-of-range pagination or unindexed case names do not correspond to authentic superior court judgments. "
-                f"To protect strict judicial accuracy and prevent synthetic AI hallucinations, Section strictly withholds analysis for unverified authorities.\n\n"
             )
+            # ORDER 2.1 - ITEM 3: Authenticity Notice only when pagination check failed
+            if pagination_check_failed:
+                response_text += (
+                    f"> **Authenticity Notice**: In Pakistani law reporting, annual journal volumes typically contain under 2,000–2,500 pages. "
+                    f"Citations with out-of-range pagination or unindexed case names do not correspond to authentic superior court judgments. "
+                    f"To protect strict judicial accuracy and prevent synthetic AI hallucinations, Section strictly withholds analysis for unverified authorities.\n\n"
+                )
         elif err_cat == "STATUTORY_MISQUOTATION":
             response_text = (
                 f"> ⚠️ **Statutory Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. "
@@ -15798,24 +15846,40 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                 f"The verified controlling legal authorities on record are set out below.\n\n"
             )
         else:
-            notice_lead = "The authentic, verbatim text of the controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n" if fallback_texts else "Analysis was withheld to protect strict legal accuracy.\n\n"
+            notice_lead = "The authentic, verbatim text of the controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n" if verified_texts else "Analysis was withheld to protect strict legal accuracy.\n\n"
             response_text = f"> **Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. {notice_lead}"
 
-        if fallback_texts:
-            response_text += "### Verified Statutory Provisions on Record\n\n" + "\n\n---\n\n".join(fallback_texts) + "\n\n"
+        # ORDER 2.1 - ITEM 5: Verified provisions go under Verified Statutory Provisions on Record
+        if verified_texts:
+            response_text += "### Verified Statutory Provisions on Record\n\n" + "\n\n---\n\n".join(verified_texts) + "\n\n"
 
+        # ORDER 2.1 - ITEM 5: Missing Acts or provisions with no stored text go under "Not in verified store"
+        if missing_provisions:
+            response_text += "### Not in verified store\n\n"
+            for mp in missing_provisions:
+                response_text += f"- **{mp}**: no text available\n"
+            response_text += "\n"
+
+        # ORDER 2.1 - ITEM 7: Label "Retrieved by keyword match, relevance not assessed" (never "Verified Judicial Authorities")
         if precedent_cards:
-            response_text += "### Verified Judicial Authorities on Record\n\n"
+            response_text += "### Retrieved by keyword match, relevance not assessed\n\n"
             for pc in precedent_cards[:5]:
                 cit = pc.get("citation") or pc.get("title") or "Judicial Precedent"
                 case_t = pc.get("case_title") or pc.get("title") or ""
                 court = pc.get("court") or "Superior Court"
                 holding = pc.get("holding") or pc.get("summary") or pc.get("snippet") or ""
-                response_text += f"- **{cit}** — *{case_t}* ({court})\n"
-                if holding:
-                    response_text += f"  > {holding.strip()[:300]}...\n\n"
 
-        if job.get("retry_guidance"):
+                # ORDER 2.1 - ITEM 10: Strip CITATION:... TITLE:... blobs and truncate at word boundary
+                holding_clean = re.sub(r'^(?:\[[^\]]*\]\s*)?(?:CITATION:\s*[^\n]+\s*)?(?:TITLE:\s*[^\n]+\s*)?(?:COURT:\s*[^\n]+\s*)?(?:BENCH:\s*[^\n]+\s*)?', '', holding.strip(), flags=re.IGNORECASE).strip()
+                if len(holding_clean) > 250:
+                    holding_clean = holding_clean[:250].rsplit(' ', 1)[0] + '...'
+
+                response_text += f"- **{cit}** — *{case_t}* ({court})\n"
+                if holding_clean:
+                    response_text += f"  > {holding_clean}\n\n"
+
+        # ORDER 2.1 - ITEM 3: Legal Guidance only when pagination check failed
+        if pagination_check_failed and job.get("retry_guidance"):
             response_text += f"\n> **Legal Guidance**: {job['retry_guidance']}"
 
         return {
@@ -15833,7 +15897,10 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                 "query_id": str(job_id),
                 "mode": "verification_blocked",
                 "truncated": False,
-                "verification_blocked": True
+                "verification_blocked": True,
+                # ORDER 2.1 - ITEM 9: Withheld output must not be exportable or copyable
+                "export_allowed": False,
+                "copy_allowed": False
             },
             "error": None
         }

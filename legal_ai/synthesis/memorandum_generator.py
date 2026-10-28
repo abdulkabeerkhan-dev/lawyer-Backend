@@ -755,29 +755,41 @@ def filter_and_cap_authorities(
 
 
 
-    # Filter out peripheral cross-provincial cases if specific to a province
-
+    # ORDER 2.1 - ITEM 7: Filter out peripheral cross-provincial cases AND enforce subject-matter relevance
+    # List only cases whose subject tags (statute or topic) match the planner's Acts.
+    # Show nothing rather than an irrelevant case (never force min_k on irrelevant cases).
     retained: List[Dict[str, Any]] = []
 
+    # Identify planner acts/domains
+    p_acts = [str(a).lower() for a in (getattr(query_plan, "governing_statutes", []) or [])]
+    p_provs = [str(p).lower() for p in (getattr(query_plan, "provisions", []) or [])]
+    all_plan_terms = " ".join(p_acts + p_provs + [q_comb])
+
+    is_corporate_query = any(k in all_plan_terms for k in ["companies act", "company law", "director", "shareholder", "board resolution"])
+
     for c in classified:
-
         court = str(c.get("court") or c.get("court_name") or "").lower()
+        preview = str(c.get("preview") or c.get("ratio_decidendi") or c.get("holding") or "").lower()
+        title = str(c.get("case_title") or c.get("title") or "").lower()
+        cit = str(c.get("citation") or "").lower()
+        c_comb = f"{court} {title} {cit} {preview}"
 
-        preview = str(c.get("preview") or c.get("ratio_decidendi") or "").lower()
-
+        # Cross-provincial filter
         if is_punjab_specific:
-
-            # If dispute is under Punjab Rented Premises Act, filter out Sindh High Court cases on SRPO
-
             if ("sindh" in court or "karachi" in court or "srpo" in preview) and not ("supreme court" in court):
+                continue
 
+        # ORDER 2.1 - ITEM 7: Corporate queries must NOT list election tribunal or service appeals
+        if is_corporate_query:
+            if any(k in c_comb for k in ["election tribunal", "elections act", "reserved seats", "election petition", "service tribunal", "service appeal", "civil servants", "plc(cs)", "labour appellate"]):
+                continue
+            # Must match corporate / commercial / contract / Companies Act
+            if not any(k in c_comb for k in ["company", "companies", "director", "shareholder", "contract", "commercial", "resolution", "corporate", "secp"]):
                 continue
 
         retained.append(c)
 
-
-
-    pool = retained if len(retained) >= min_k else classified
+    pool = retained
 
 
 
@@ -1531,11 +1543,13 @@ def sanitize_precedent_card(card: Dict[str, Any], backend_base_url: str = "") ->
 
 
     # 7. ratio_decidendi
-
-    c["ratio_decidendi"] = str(c.get("ratio_decidendi") or c.get("holding") or c.get("preview") or "Holding on record.").strip()
-
+    raw_ratio = str(c.get("ratio_decidendi") or c.get("holding") or c.get("preview") or "Holding on record.").strip()
+    # ORDER 2.1 - ITEM 10: Strip CITATION:... TITLE:... blobs and cut at word boundaries
+    clean_ratio = re.sub(r'^(?:\[[^\]]*\]\s*)?(?:CITATION:\s*[^\n]+\s*)?(?:TITLE:\s*[^\n]+\s*)?(?:COURT:\s*[^\n]+\s*)?(?:BENCH:\s*[^\n]+\s*)?', '', raw_ratio, flags=re.IGNORECASE).strip()
+    if len(clean_ratio) > 300:
+        clean_ratio = clean_ratio[:300].rsplit(' ', 1)[0] + '...'
+    c["ratio_decidendi"] = clean_ratio or "Holding on record."
     c["holding"] = c["ratio_decidendi"]
-
     c["preview"] = c["ratio_decidendi"]
 
 

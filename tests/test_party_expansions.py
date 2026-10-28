@@ -15,9 +15,9 @@ from legal_ai.verification.memo_verifier import MemoVerifier, verify_memorandum_
 def test_preposition_stripping_in_case_extraction():
     mv = MemoVerifier()
     text = (
-        "From Dr. SAQUIB YUSUF v. PPRA, the court held that service regulations apply.\n"
-        "From GRENLIT STUDIO v. SECP, the commission exercised regulatory powers.\n"
-        "As held in Al-Haaj Malik Muhammad Ashraf v. Javed Akhtar, co-owners have distinct rights."
+        "From Dr. SAQUIB YUSUF v. PPRA case, the court held that service regulations apply.\n"
+        "From GRENLIT STUDIO v. SECP case, the commission exercised regulatory powers.\n"
+        "As held in Al-Haaj Malik Muhammad Ashraf v. Javed Akhtar case, co-owners have distinct rights."
     )
     auths = mv.extract_case_authorities(text)
     case_titles = [a for a in auths if a["type"] == "case_title"]

@@ -887,10 +887,11 @@ def detect_statutory_provisions_in_query(query: str) -> List[Tuple[str, str]]:
                 seen.add(cid)
                 provisions.append((cid, act_code))
 
-    # 2. General clause scanning with full query context
-    # Mask 7/11 and law report citations so years do not falsely trigger section numbers
+    # 2. General clause scanning with sentence-bound Act context
+    # ORDER 2.1 - ITEM 4: Mask 7/11, law report citations, and percentages (e.g. 60%)
     clean_query_for_clauses = re.sub(r'\b7\s*[/\\-]\s*11\b', ' ', query)
     clean_query_for_clauses = re.sub(r'\b(19\d\d|20\d\d)\s+[A-Za-z]+(?:\s+[A-Za-z]+)?\s+\d+\b', ' LAW_REPORT_CITATION_MASKED ', clean_query_for_clauses)
+    clean_query_for_clauses = re.sub(r'\b\d+\s*%', ' PERCENTAGE_MASKED ', clean_query_for_clauses)
     clauses = re.split(r'[,;.\n]|\b(?:and|or|vs|versus|read with)\b', clean_query_for_clauses)
     clauses = [query] + clauses
 

@@ -749,19 +749,19 @@ async def process_query_job_legal_ai(
 
 
     # Early detection of impossible or synthetic citations (e.g. page > 3000)
+    # ORDER 2.1 - ITEM 2: Never extract case titles from user query; only inspect real report citations
     try:
         from legal_ai.verification.memo_verifier import MemoVerifier, MemorandumVerificationBlockedError
         _early_mv = MemoVerifier()
-        _early_auths = _early_mv.extract_case_authorities(effective_user_query)
+        _early_auths = [a for a in _early_mv.extract_case_authorities(effective_user_query) if a.get("type") == "citation"]
         _impossible_cits = []
         _unverified_cits = []
         for _qa in _early_auths:
             _sp = _qa.get("span", "")
-            if _qa.get("type") == "citation":
-                _parts = _sp.split()
-                if _parts and _parts[-1].isdigit():
-                    if int(_parts[-1]) > 3000:
-                        _impossible_cits.append(_sp)
+            _parts = _sp.split()
+            if _parts and _parts[-1].isdigit():
+                if int(_parts[-1]) > 3000:
+                    _impossible_cits.append(_sp)
             if not _early_mv.verify_case_authority(_qa):
                 _unverified_cits.append(_sp)
         
@@ -2912,16 +2912,8 @@ async def process_query_job_legal_ai(
                 if span and span not in unverified_auths:
                     unverified_auths.append(span)
 
-        if not unverified_auths:
-            try:
-                from legal_ai.verification.memo_verifier import MemoVerifier
-                mv = MemoVerifier()
-                for qa in mv.extract_case_authorities(effective_user_query):
-                    if not mv.verify_case_authority(qa):
-                        if qa.get("span") and qa["span"] not in unverified_auths:
-                            unverified_auths.append(qa["span"])
-            except Exception:
-                pass
+        # ORDER 2.1 - ITEM 2: Never extract case names or authorities from the user query.
+        # Authorities are verified exclusively from the generated memorandum draft.
 
         if err_cat == "FABRICATED_CITATION":
             citations_str = ", ".join(f"`{a}`" for a in unverified_auths) if unverified_auths else "the cited judicial authority"
@@ -2967,12 +2959,20 @@ async def process_query_job_legal_ai(
             if is_disputed:
                 banner_prefix = "> ⚠️ **Disputed Gazette Note**: Official prints of this provision contain contested text variations. Independent human verification against authenticated gazette prints is recommended prior to formal court reliance.\n\n"
 
+            # ORDER 2.1 - ITEM 5: Check if provision has stored text
+            has_text = bool(txt and str(txt).strip() and tier != "heading_only")
+            if not has_text:
+                rendered_text = "no text available"
+            else:
+                rendered_text = banner_prefix + f"#### {disp_name}\n\n" + re.sub(r'\b(Provided that)\b', r'\n\n> *\1*', re.sub(r'(?<!sub-section\s)(?<!sub -section\s)(?<!section\s)(?<!order\s)(?<=\s)(\([0-9]+\))\s*', r'\n\n**\1** ', txt))
+
             verified_fallback.append({
                 "canonical_id": cid,
                 "display_name": disp_name,
-                "tier": tier,
+                "tier": "heading_only" if not has_text else tier,
                 "is_disputed": is_disputed,
-                "text": banner_prefix + f"#### {disp_name}\n\n" + re.sub(r'\b(Provided that)\b', r'\n\n> *\1*', re.sub(r'(?<!sub-section\s)(?<!sub -section\s)(?<!section\s)(?<!order\s)(?<=\s)(\([0-9]+\))\s*', r'\n\n**\1** ', txt))
+                "has_text": has_text,
+                "text": rendered_text
             })
 
         blocked_payload = {

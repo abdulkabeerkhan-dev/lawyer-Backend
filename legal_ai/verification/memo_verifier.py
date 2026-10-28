@@ -744,6 +744,16 @@ class MemoVerifier:
         authorities = []
         clean_text = re.sub(r'[*_]{1,3}', '', text)
 
+        # ORDER 2.1 - ITEM 2: Authority extraction requires capitalised party names
+        # AND must be immediately followed by a citation or the word "case".
+        # Excludes Latin doctrine terms (e.g. void ab initio v. voidable).
+        LATIN_DOCTRINES = {
+            "void ab initio", "voidable", "suo motu", "res judicata", "prima facie",
+            "mens rea", "actus reus", "sub judice", "locus standi", "ultra vires",
+            "intra vires", "inter alia", "ex parte", "stare decisis", "ratio decidendi",
+            "obiter dicta", "audi alteram partem"
+        }
+
         case_pattern = re.compile(
             r'\b([A-Z][A-Za-z0-9\.\'\-]*(?:[ \t]+(?:of\s+the|in\s+the|for\s+the|of|and|the|&)[ \t]+[A-Z][A-Za-z0-9\.\'\-]*|[ \t]+[A-Z][A-Za-z0-9\.\'\-]*)*)[ \t]+v(?:s\.?|\.)[ \t]+([A-Z][A-Za-z0-9\.\'\-]*(?:[ \t]+(?:of\s+the|in\s+the|for\s+the|of|and|the|&)[ \t]+[A-Z][A-Za-z0-9\.\'\-]*|[ \t]+[A-Z][A-Za-z0-9\.\'\-]*)*)\b'
         )
@@ -752,6 +762,14 @@ class MemoVerifier:
             p1 = re.sub(r'^(?:from|in|see|re|per|vide|as\s+in|as\s+held\s+in|as\s+observed\s+in|as\s+per|according\s+to|regarding|relying\s+on)\s+', '', p1, flags=re.IGNORECASE).strip()
             if not p1 or p1.lower() in ["order", "section", "article", "rule"] or p2.lower() in ["order", "section", "article"]:
                 continue
+            # Order 2.1: Exclude Latin doctrines and procedural terms
+            if p1.lower() in LATIN_DOCTRINES or p2.lower() in LATIN_DOCTRINES or any(d in p1.lower() or d in p2.lower() for d in LATIN_DOCTRINES):
+                continue
+            # Order 2.1: Must be followed immediately by a citation or the word "case"
+            following = clean_text[m.end():m.end() + 80]
+            if not re.match(r'^\s*[,;\(\[]?\s*(?:(?:19\d\d|20\d\d)\s+[A-Za-z]+(?:\s+[A-Za-z]+)?\s+\d+|\bcases?\b)', following, re.IGNORECASE):
+                continue
+
             authorities.append({
                 "type": "case_title",
                 "span": f"{p1} v. {p2}",

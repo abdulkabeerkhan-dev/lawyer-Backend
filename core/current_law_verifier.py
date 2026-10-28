@@ -92,9 +92,12 @@ def verify_current_law_for_provisions(
             continue
         sec_num = m_num.group(1).upper()
 
-        # Resolve act_code accurately
-        act_code = "CPC_1908"
-        if any(k in p_low for k in ["fio", "financial institution", "recovery of finance", "banking court", "banking judge"]):
+        # ORDER 2.1 - ITEM 4: Act binding. Section numbers bind to the Act named in the same sentence/token.
+        # A number with no Act named is ignored, never guessed. Drop default CPC_1908.
+        act_code = None
+        if any(k in p_low for k in ["companies act", "company law", "companies"]):
+            act_code = "COMPANIES_2017"
+        elif any(k in p_low for k in ["fio", "financial institution", "recovery of finance", "banking court", "banking judge"]):
             act_code = "FIO_2001"
         elif any(k in p_low for k in ["ni act", "negotiable", "nia"]):
             act_code = "NI_ACT_1881"
@@ -114,8 +117,15 @@ def verify_current_law_for_provisions(
             act_code = "CPC_1908"
         elif any(k in p_low for k in ["const", "article"]):
             act_code = "CONST_1973"
-        elif query_text and any(k in query_text.lower() for k in ["financial institution", "recovery of finance", "banking court", "fio"]):
-            act_code = "FIO_2001"
+        elif query_text:
+            q_low = query_text.lower()
+            if any(k in q_low for k in ["companies act", "company law"]):
+                act_code = "COMPANIES_2017"
+            elif any(k in q_low for k in ["financial institution", "recovery of finance", "banking court", "fio"]):
+                act_code = "FIO_2001"
+
+        if not act_code:
+            continue
 
         canonical_id = f"{act_code}_SEC_{sec_num.replace('-', '')}"
         if canonical_id in seen_cids:
