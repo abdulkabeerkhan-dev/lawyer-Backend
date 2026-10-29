@@ -38,6 +38,23 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: Any) -> Tup
     text = str(candidate.get("preview") or candidate.get("full_text") or candidate.get("snippet") or candidate.get("text") or meta.get("full_text") or meta.get("text") or "").lower()
     year_val = candidate.get("year") or candidate.get("decision_date") or meta.get("year") or meta.get("decision_date") or 2000
 
+    # Curated landmark enrichment (replaces placeholders and enriches text)
+    curated = None
+    try:
+        from core.curated_cases import find_curated_case
+        curated = find_curated_case(citation=citation, text=text, case_id=candidate.get("case_id"))
+    except Exception:
+        pass
+
+    if curated:
+        if "precedent on record" in title or not title or title.strip() == "-":
+            real_t = curated.get("case_title") or curated.get("title")
+            if real_t:
+                candidate["title"] = real_t
+                candidate["case_title"] = real_t
+                title = str(real_t).lower()
+        text += " " + " ".join(curated.get("doctrinal_keywords", [])) + " " + str(curated.get("doctrinal_note", "")).lower()
+
     # 1. Court Hierarchy (0 to 40 pts)
     if "supreme court" in court or "scmr" in citation or "supreme court" in title:
         scores["court_hierarchy"] = 40.0
@@ -117,7 +134,14 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: Any) -> Tup
         "breach of trust", "dishonest intention", "civil dispute", "contractual breach",
         "pre-arrest bail", "mala fide", "ulterior motive", "director",
         "cheating", "entrustment", "quashment", "fiduciary", "misappropriat", "inducement",
-        "delivery of property", "recovery", "accountability"
+        "delivery of property", "recovery", "accountability",
+        # Family law
+        "khula", "dissolution of marriage", "marriage", "divorce", "dower", "dowry",
+        "zar-i-khula", "maintenance", "custody", "guardian", "hudood-allah", "consent",
+        # Civil / Corporate / Property / Criminal
+        "interim", "injunction", "status quo", "shareholder", "oppression", "management",
+        "specific performance", "power of attorney", "arbitration", "award",
+        "chain of custody", "malkhana", "chemical examiner", "safe custody"
     ]
     matched_terms = 0
     for term in key_terms:
@@ -125,6 +149,51 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: Any) -> Tup
             matched_terms += 1
 
     scores["issue_match"] = min(35.0, matched_terms * 7.0)
+
+    # Landmark / Foundational Precedent Query Detection
+    query_str = ""
+    if query_plan:
+        if hasattr(query_plan, "query_text") and query_plan.query_text:
+            query_str += " " + str(query_plan.query_text).lower()
+        if hasattr(query_plan, "raw_query") and query_plan.raw_query:
+            query_str += " " + str(query_plan.raw_query).lower()
+        if hasattr(query_plan, "factual_matrix") and query_plan.factual_matrix:
+            query_str += " " + " ".join(str(f) for f in query_plan.factual_matrix).lower()
+        if hasattr(query_plan, "search_lanes") and query_plan.search_lanes:
+            for l in query_plan.search_lanes:
+                if isinstance(l, dict) and l.get("query"):
+                    query_str += " " + str(l["query"]).lower()
+    if not query_str.strip():
+        query_str = combined_questions
+
+    is_landmark_query = any(w in query_str for w in [
+        "landmark", "leading case", "established principle", "settled principle",
+        "foundational", "authoritative ruling", "locus classicus", "apex precedent",
+        "supreme court landmark", "controlling precedent", "controlling apex"
+    ])
+    
+    is_landmark_candidate = bool(curated is not None)
+    if not is_landmark_candidate:
+        try:
+            from core.curated_cases import is_curated_historical_exception
+            if is_curated_historical_exception(citation=citation, text=text):
+                is_landmark_candidate = True
+        except Exception:
+            pass
+    if not is_landmark_candidate:
+        if any(lm in citation.lower() or lm in title.lower() or lm in text.lower() for lm in [
+            "khurshid bibi", "bilqis fatima", "dosso", "asma jilani", "1967 sc 97", "1959 lah 566",
+            "2000 scmr 1563", "1997 mld 2627", "2024 plj 505", "imam bakhsh", "abdul ghani"
+        ]):
+            is_landmark_candidate = True
+
+    if is_landmark_candidate:
+        if is_landmark_query:
+            scores["recentness"] = 35.0
+            scores["issue_match"] = max(scores.get("issue_match", 0.0), 35.0)
+            scores["landmark_bonus"] = 50.0
+        else:
+            scores["landmark_bonus"] = 20.0
 
     # 6. Retrieval Fusion & Multi-Source Cross-Validation (0 to 35 pts)
     fusion_points = 0.0

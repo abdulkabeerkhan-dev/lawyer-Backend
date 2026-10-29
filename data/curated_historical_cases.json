@@ -82,5 +82,251 @@
     ],
     "is_historical_exception": true,
     "precedent_status": "in_force"
+  },
+  {
+    "case_id": "1967_PLD_SC_97",
+    "stored_case_id": "1967_PLD_97",
+    "neutral_citation": "PLD 1967 SC 97",
+    "citation": "PLD 1967 SC 97",
+    "case_title": "Mst. Khurshid Bibi v. Baboo Muhammad Amin",
+    "court_name": "Supreme Court of Pakistan",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "1967-01-01",
+    "year": 1967,
+    "page": 97,
+    "journal": "PLD",
+    "court_code": "SC",
+    "tier": 4,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "match_keys": [
+      "1967_PLD_97",
+      "1967_PLD_SC_97",
+      "PLD 1967 SC 97",
+      "1967 PLD 97",
+      "1967 PLD SC 97",
+      "PLD 1967 97"
+    ],
+    "aliases": [
+      "khurshid bibi",
+      "mst. khurshid bibi",
+      "khurshid bibi v. baboo muhammad amin",
+      "mst. khurshid bibi v. baboo muhammad amin"
+    ],
+    "doctrinal_keywords": [
+      "khula",
+      "dissolution of marriage",
+      "consent of husband",
+      "hudood-allah",
+      "zar-i-khula",
+      "civil contract"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "in_force",
+    "doctrinal_note": "Landmark Full Bench Supreme Court ruling establishing that a Muslim wife has an independent right to seek judicial dissolution of marriage on ground of Khula without the husband's consent."
+  },
+  {
+    "case_id": "1959_PLD_Lah_566",
+    "stored_case_id": "1959_PLD_566",
+    "neutral_citation": "PLD 1959 Lah 566",
+    "citation": "PLD 1959 Lah 566",
+    "case_title": "Mst. Bilqis Fatima v. Najmul Ikram Qureshi",
+    "court_name": "Lahore High Court",
+    "court": "Lahore High Court",
+    "decision_date": "1959-01-01",
+    "year": 1959,
+    "page": 566,
+    "journal": "PLD",
+    "court_code": "Lah",
+    "tier": 3,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "match_keys": [
+      "1959_PLD_566",
+      "1959_PLD_Lah_566",
+      "PLD 1959 Lah 566",
+      "1959 PLD 566",
+      "1959 PLD Lah 566",
+      "PLD 1959 Lahore 566"
+    ],
+    "aliases": [
+      "bilqis fatima",
+      "mst. bilqis fatima",
+      "bilqis fatima v. najm-ul-ikram qureshi",
+      "bilqis fatima v. najmul ikram qureshi"
+    ],
+    "doctrinal_keywords": [
+      "khula",
+      "dissolution of marriage",
+      "hudood-allah",
+      "qazi",
+      "limits of allah"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "in_force",
+    "doctrinal_note": "Full Bench West Pakistan High Court ruling holding that Khula is a judicial remedy obtainable by wife without husband's consent."
+  },
+  {
+    "case_id": "2000_SCMR_1563",
+    "stored_case_id": "2000_SCMR_1563",
+    "neutral_citation": "2000 SCMR 1563",
+    "citation": "2000 SCMR 1563",
+    "case_title": "Muhammad Rafiq v. Kaneez Fatima",
+    "court_name": "Supreme Court of Pakistan",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "2000-01-01",
+    "year": 2000,
+    "page": 1563,
+    "journal": "SCMR",
+    "court_code": "SC",
+    "tier": 4,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "match_keys": [
+      "2000_SCMR_1563",
+      "2000 SCMR 1563",
+      "2000 SLD 1018",
+      "2000 SLD 1431"
+    ],
+    "aliases": [
+      "muhammad rafiq v. kaneez fatima",
+      "muhammad rafiq vs kaneez fatima"
+    ],
+    "doctrinal_keywords": [
+      "khula",
+      "khurshid bibi",
+      "civil contract",
+      "not an indissoluble sacrament"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "in_force",
+    "doctrinal_note": "Reaffirmed Khurshid Bibi doctrine that marriage in Islam is a civil contract and wife can seek Khula without husband's agreement."
+  },
+  {
+    "case_id": "1997_MLD_2627",
+    "stored_case_id": "1997_MLD_2627",
+    "neutral_citation": "1997 MLD 2627",
+    "citation": "1997 MLD 2627",
+    "case_title": "Nasira Parveen v. District Judge",
+    "court_name": "Lahore High Court",
+    "court": "Lahore High Court",
+    "decision_date": "1995-01-01",
+    "year": 1997,
+    "page": 2627,
+    "journal": "MLD",
+    "court_code": "Lah",
+    "tier": 3,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "match_keys": [
+      "1997_MLD_2627",
+      "1997 MLD 2627"
+    ],
+    "aliases": [
+      "nasira parveen v. district judge",
+      "nasira parveen vs district judge"
+    ],
+    "doctrinal_keywords": [
+      "khula",
+      "bilqis fatima",
+      "khurshid bibi",
+      "bound to decree"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "in_force"
+  },
+  {
+    "case_id": "2024_PLJ_505",
+    "stored_case_id": "2024_PLJ_505",
+    "neutral_citation": "2024 PLJ 505",
+    "citation": "2024 PLJ 505",
+    "case_title": "Ibrahim Khan v. Mst. Saima Khan",
+    "court_name": "Supreme Court of Pakistan",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "2024-01-01",
+    "year": 2024,
+    "page": 505,
+    "journal": "PLJ",
+    "court_code": "SC",
+    "tier": 4,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "match_keys": [
+      "2024_PLJ_505",
+      "2024 PLJ 505",
+      "2024 SLD 4679"
+    ],
+    "aliases": [
+      "ibrahim khan v. mst. saima khan",
+      "ibrahim khan vs mst. saima khan"
+    ],
+    "doctrinal_keywords": [
+      "khula",
+      "khurshid bibi",
+      "bilqis fatima"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "in_force"
+  },
+  {
+    "case_id": "1972_PLD_SC_139",
+    "stored_case_id": "1972_PLD_139",
+    "neutral_citation": "PLD 1972 SC 139",
+    "citation": "PLD 1972 SC 139",
+    "case_title": "Asma Jilani v. Government of Punjab",
+    "court_name": "Supreme Court of Pakistan",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "1972-04-20",
+    "year": 1972,
+    "page": 139,
+    "journal": "PLD",
+    "court_code": "SC",
+    "tier": 4,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "match_keys": [
+      "1972_PLD_139",
+      "1972_PLD_SC_139",
+      "PLD 1972 SC 139",
+      "1972 PLD 139",
+      "1972 PLD SC 139"
+    ],
+    "aliases": [
+      "asma jilani",
+      "asma jilani v. government of punjab",
+      "asma jilani v. govt of punjab"
+    ],
+    "doctrinal_keywords": [
+      "usurper",
+      "doctrine of necessity",
+      "overruled dosso"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "in_force",
+    "doctrinal_note": "Overruled Dosso and declared martial law administrator a usurper."
   }
 ]

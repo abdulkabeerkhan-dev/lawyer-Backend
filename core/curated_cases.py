@@ -36,6 +36,7 @@ def find_curated_case(
     case_id_norm = re.sub(r'[^A-Za-z0-9]+', '', str(case_id or "").upper())
     text_upper = str(text or "").upper()
 
+    # Pass 1: Strict citation and match_keys matching
     for c in cases:
         if year is not None and page is not None and journal:
             c_yr = c.get("year")
@@ -51,15 +52,26 @@ def find_curated_case(
             if mk_norm and (mk_norm == cit_norm or mk_norm == case_id_norm):
                 return c
 
+    # Pass 2: Citation contains alias (e.g. user cited "Khurshid Bibi")
+    for c in cases:
         for alias in c.get("aliases", []):
-            alias_u = alias.upper()
-            if alias_u and (alias_u in cit_norm or alias_u in text_upper):
+            alias_u = re.sub(r'[^A-Za-z0-9]+', '', alias.upper())
+            if alias_u and cit_norm and alias_u in cit_norm:
                 return c
 
-        for kw in c.get("doctrinal_keywords", []):
-            kw_u = kw.upper()
-            if kw_u and kw_u in text_upper:
-                return c
+    # Pass 3: Text contains alias or doctrinal keywords
+    if text_upper:
+        for c in cases:
+            for alias in c.get("aliases", []):
+                alias_u = alias.upper()
+                if alias_u and alias_u in text_upper:
+                    return c
+
+        for c in cases:
+            for kw in c.get("doctrinal_keywords", []):
+                kw_u = kw.upper()
+                if kw_u and kw_u in text_upper:
+                    return c
 
     return None
 

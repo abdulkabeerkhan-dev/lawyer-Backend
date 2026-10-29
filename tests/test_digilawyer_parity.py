@@ -198,3 +198,67 @@ def test_multiturn_conversational_context_resolution():
     assert "Section 9(c)" in effective_user_query
     assert "Explain how to present this to the court?" in effective_user_query
     assert "Prior Finding:" in effective_user_query
+
+
+def test_khula_landmark_retrieval_ranking_and_verification():
+    import asyncio
+    async def _run():
+        from legal_ai.query_engine.query_processor import analyze_legal_query, retrieve_candidates_parallel
+        from legal_ai.ranking.authority_ranker import rank_and_filter_authorities
+        from legal_ai.verification.memo_verifier import MemoVerifier
+    
+        query = (
+            "My client is a wife who wants to file for khula. Her husband refuses to consent to the divorce "
+            "and insists the marriage cannot be dissolved without his agreement, arguing that under Muslim law "
+            "only the husband holds the unilateral right to end a marriage. Is the husband's consent legally "
+            "required for a wife to obtain khula in Pakistan, or does she have an independent right to seek "
+            "dissolution on the ground of incompatibility even over his objection? Get me the landmark judgment "
+            "establishing this principle"
+        )
+        plan = await analyze_legal_query(query)
+        candidates, _ = await retrieve_candidates_parallel(query, plan)
+        ranked = rank_and_filter_authorities(candidates, plan, top_k=10)
+    
+        # 1. Landmark precedents must be ranked in top authorities with authentic titles
+        citations_in_ranked = [r.get("citation") for r in ranked]
+        assert any("1967" in c or "1563" in c for c in citations_in_ranked), f"Expected 1967 or 2000 landmark in top 10, got {citations_in_ranked}"
+    
+        # 2. Test that DigiLawyer 4-tier style memorandum passes verification with 0 failures
+        digilawyer_memo = """**Primary Legal Finding**
+    
+    Under Pakistani law, the husband's consent is not legally required for a wife to obtain dissolution of marriage on the ground of Khula. A Muslim wife has an independent right to approach the Family Court and seek judicial dissolution of marriage on the ground of Khula or irreconcilable incompatibility, even over her husband's objection and refusal to consent.
+    
+    The court has full jurisdiction to decree Khula if it is satisfied that the parties cannot live together within the limits prescribed by Allah (hudood-Allah), subject to the court's determination of the return or relinquishment of marital benefits/dower (zar-i-khula).
+    
+    **Relevant Judgments**
+    
+    - **2000 SCMR 1563** — Muhammad Rafiq v. Kaneez Fatima (Supreme Court of Pakistan · 2000)
+      > The controversy raised herein stands concluded by the judgment of this Court rendered in the case of Mst. Khurshid Bibi v. Baboo Muhammad Amin (PLD 1967 SC 97), wherein a five-member Bench of this Court explained the well-settled doctrine that marriage among Muslims was not an indissoluble sacrament, but a civil contract.
+    
+    - **1997 MLD 2627** — Nasira Parveen v. District Judge (Lahore High Court · 1995)
+      > Where a wife establishes that she cannot live with her husband within the limits ordained by Allah, the Family Court is bound to decree the suit for dissolution of marriage on the ground of Khula, following the settled law of Bilqis Fatima (PLD 1959 Lah 566) and Khurshid Bibi (PLD 1967 SC 97).
+    
+    **Analysis and Advisory**
+    
+    1. The Landmark Authority (PLD 1967 SC 97):
+    The landmark judgment establishing that a Muslim wife is entitled to demand dissolution of marriage on the ground of Khula as an independent legal right—even where the husband refuses his consent—is the Full Bench decision of the Supreme Court of Pakistan in Mst. Khurshid Bibi v. Baboo Muhammad Amin (PLD 1967 SC 97). Khurshid Bibi affirmed the earlier Full Bench decision of the West Pakistan High Court in Mst. Bilqis Fatima v. Najmul Ikram Qureshi (PLD 1959 Lah 566).
+    
+    2. Refuting the Husband's Legal Stance:
+    The husband's argument that only he holds the unilateral right to dissolve the marital contract is legally erroneous under Pakistani family law. While the husband may pronounce Talaq unilaterally, Islamic and statutory law gives the wife a reciprocal judicial right to dissolve the marriage by filing a suit for dissolution of marriage on the ground of Khula.
+    
+    3. Reconciliation and Decree of Khula:
+    In practice, upon the wife's suit for dissolution of marriage before the Family Court, the court will attempt pre-trial reconciliation. If the wife remains firm in her refusal to live with the husband and reconciliation fails, the Family Court will pass a decree dissolving the marriage on the ground of Khula, irrespective of the husband's opposition.
+    
+    **Limitations**
+    
+    - This is not an exhaustive list; other judgments on this point may exist.
+    - The original 1967 text of Mst. Khurshid Bibi v. Baboo Muhammad Amin (PLD 1967 SC 97) was referenced through affirming Supreme Court and High Court precedents rather than an independent direct record of the 1967 volume.
+    """
+    
+        verifier = MemoVerifier()
+        res = verifier.verify_memo(digilawyer_memo)
+        assert res["passed"] is True, f"Verifier failed with violations: {res['failures']}"
+        assert res["verdict"] == "ACCEPTED"
+        assert res["total_failures"] == 0
+
+    asyncio.run(_run())

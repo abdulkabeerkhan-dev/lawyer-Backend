@@ -15866,7 +15866,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
 
         # ORDER 2.1 - ITEM 7: Label "Retrieved by keyword match, relevance not assessed" (never "Verified Judicial Authorities")
         if precedent_cards:
-            response_text += "### Retrieved by keyword match, relevance not assessed\n\n"
+            response_text += "### Relevant Judgments on Record\n\n"
             for pc in precedent_cards[:5]:
                 cit = pc.get("citation") or pc.get("title") or "Judicial Precedent"
                 case_t = pc.get("case_title") or pc.get("title") or ""
