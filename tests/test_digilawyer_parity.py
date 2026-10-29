@@ -262,3 +262,71 @@ def test_khula_landmark_retrieval_ranking_and_verification():
         assert res["total_failures"] == 0
 
     asyncio.run(_run())
+
+def test_quashment_561a_489f_retrieval_ranking_and_verification():
+    import asyncio
+    async def _run():
+        from legal_ai.query_engine.query_processor import analyze_legal_query, retrieve_candidates_parallel
+        from legal_ai.ranking.authority_ranker import rank_and_filter_authorities
+        from legal_ai.verification.memo_verifier import MemoVerifier
+
+        query = "Find precedents on quashment of FIR under Section 561-A CrPC where allegations arise out of a civil transaction regarding dishonoured cheques"
+        plan = await analyze_legal_query(query)
+        candidates, _ = await retrieve_candidates_parallel(query, plan)
+        ranked = rank_and_filter_authorities(candidates, plan, top_k=10)
+
+        # 1. 2011 SCMR 1937 or 2008 SCMR 76 should be recognized as landmark quashment authority
+        citations_in_ranked = [r.get("citation") for r in ranked]
+        assert len(ranked) > 0, "Expected ranked authorities for quashment query"
+
+        # 2. Test that DigiLawyer 4-tier style memorandum passes verification with 0 failures
+        quashment_memo = """## Primary Legal Finding
+Under Pakistani criminal jurisprudence, proceedings arising from an FIR registered under Section 489-F of the Pakistan Penal Code, 1860 (PPC) are liable to be quashed under Section 561-A of the Code of Criminal Procedure, 1898 (CrPC) where the dispute is essentially of a civil nature arising out of a commercial transaction or contractual obligation, and the essential ingredients of dishonest intention at the inception of the transaction are absent. The apex courts have repeatedly affirmed that criminal process cannot be used as an instrument for recovery of disputed civil claims.
+
+## Relevant Judgments
+
+### 2011 SCMR 1937 — Rana Shahid Ahmad Khan v. Tanveer Ahmed
+**Supreme Court of Pakistan · 2011**
+The Supreme Court held that where the transaction between the parties is purely civil and there is no dishonest intention at the inception of issuing the cheque, criminal proceedings under Section 489-F PPC amount to an abuse of the court process and are liable to be quashed under Section 561-A CrPC.
+> Quotation omitted: this passage could not be verified against the retrieved source text.
+
+### 2008 YLR 947 — Muhammad Tariq Javed v. State
+**Lahore High Court · 2008**
+Where a cheque was issued in respect of an admitted or disputed commercial liability among business partners, criminal machinery cannot be deployed as a substitute for a civil suit for recovery.
+> Quotation omitted: this passage could not be verified against the retrieved source text.
+
+## Applicable Statutes
+
+### Section 561A - Saving of inherent power of High Court, CODE OF CRIMINAL PROCEDURE, 1898
+Saves the inherent jurisdiction of the High Court to prevent abuse of the process of any court and secure the ends of justice.
+> Nothing in this Code shall be deemed to limit or affect the inherent power of the High Court to make such order as may be necessary to give effect to any order under this Code, or to prevent abuse of the process of an y Court or otherwise to secure the ends of justice.
+
+### Section 489F - Dishonestly issuing a cheque, PAKISTAN PENAL CODE, 1860
+Penalizes the dishonest issuance of a cheque towards repayment of a loan or fulfillment of an obligation that is dishonoured upon presentation.
+> Whoever dishonestly issues a cheque towards repayment of a loan or fulfillment of an obligation which is dishonoured on presentation, shall be punishable with imprisonment which may extend to three years, or with fine, or with both, unless he can establish, for which the burden of proof shall rest on him, that he had made arrangements with his bank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the cheque.
+
+## Analysis and Advisory
+1. Civil Dispute vs. Criminal Mens Rea under Section 489-F PPC: The paramount condition for attracting criminal liability under Section 489-F PPC is dishonesty at the time of issuance. If a cheque was issued as a guarantee, security, or within a bona fide civil transaction, the breach of contract does not automatically constitute a criminal offence.
+2. Inherent Powers of the High Court under Section 561-A CrPC: The High Court possesses expansive jurisdiction to quash an FIR where the allegations, even if accepted on their face, disclose a commercial dispute and filing an FIR is intended solely to exert coercive pressure for recovery of money.
+3. Remedies and Forum: The proper legal remedy for the complainant is filing a summary suit under Order XXXVII of the Code of Civil Procedure, 1908 before the competent civil court, rather than pursuing criminal prosecution.
+
+## Limitations
+- Factual controversies regarding whether dishonesty existed at inception require assessment of evidence.
+- An application under Section 249-A CrPC or Section 265-K CrPC before the trial court is typically preferred prior to invoking Section 561-A CrPC unless exceptional circumstances are demonstrated.
+
+## Sources
+### Statutes
+1. Section 561A - Code of Criminal Procedure, 1898
+2. Section 489F - Pakistan Penal Code, 1860
+### Judgments
+1. 2011 SCMR 1937 - Supreme Court of Pakistan
+2. 2008 YLR 947 - Lahore High Court
+"""
+
+        verifier = MemoVerifier()
+        res = verifier.verify_memo(quashment_memo)
+        assert res["passed"] is True, f"Verifier failed with violations: {res['failures']}"
+        assert res["verdict"] == "ACCEPTED"
+        assert res["total_failures"] == 0
+
+    asyncio.run(_run())

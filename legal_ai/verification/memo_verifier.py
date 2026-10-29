@@ -3448,7 +3448,7 @@ class MemoVerifier:
 
 
 
-            r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:\(\d+\))*(?:\([a-z]\))*)(?:(?:\s*,\s*|\s+of\s+(?:the\s+)?)(?:(?:the\s+)?(?:[A-Z][a-zA-Z0-9\(\)]*\s*){1,6}\b(?:Act|Ordinance|Code|Order|Rules|CPC|PPC|CrPC|FIO|FIFO|TPA|BCO)\b(?:\s*,\s*\d{4})?))?',
+            r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z0-9]+)?(?:\(\d+\))*(?:\([a-z]\))*)(?:(?:\s*,\s*|\s+of\s+(?:the\s+)?)(?:(?:the\s+)?(?:[A-Z][a-zA-Z0-9\(\)]*\s*){1,6}\b(?:Act|Ordinance|Code|Order|Rules|CPC|PPC|CrPC|FIO|FIFO|TPA|BCO)\b(?:\s*,\s*\d{4})?))?',
 
 
 
@@ -4710,7 +4710,7 @@ class MemoVerifier:
 
 
 
-                m_sec = re.search(r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:\(\d+\))*(?:\([a-z]\))*)', sc["span"], re.I)
+                m_sec = re.search(r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z0-9]+)?(?:\(\d+\))*(?:\([a-z]\))*)', sc["span"], re.I)
 
 
 
@@ -4955,7 +4955,7 @@ class MemoVerifier:
                     m_header = re.match(r'^(#{1,6})\s*(.*)', s_line)
                     if m_header:
                         hashes, clean_hdr = m_header.group(1), m_header.group(2).lower()
-                is_main_heading = len(hashes) <= 2 or is_bold_header
+                is_level_1_or_2 = (0 < len(hashes) <= 2)
                 exempt_keywords = (
                     "legal issue", "unreviewed analysis", "statutory provisions",
                     "relevant provisions", "statutory framework", "controlling law",
@@ -4965,8 +4965,10 @@ class MemoVerifier:
                     "advisory", "applicable statutes", "limitations", "sources", "relevant judgments"
                 )
                 matches_exempt = any(kw in clean_hdr for kw in exempt_keywords)
-                if is_main_heading:
+                if is_level_1_or_2:
                     in_exempt_section = matches_exempt
+                elif is_bold_header and matches_exempt:
+                    in_exempt_section = True
                 elif matches_exempt:
                     in_exempt_section = True
                 continue

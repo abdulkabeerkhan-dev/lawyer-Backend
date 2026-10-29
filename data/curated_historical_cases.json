@@ -328,5 +328,172 @@
     "is_historical_exception": true,
     "precedent_status": "in_force",
     "doctrinal_note": "Overruled Dosso and declared martial law administrator a usurper."
+  },
+  {
+    "case_id": "2011_SCMR_1937",
+    "stored_case_id": "2011_SCMR_1937",
+    "neutral_citation": "2011 SCMR 1937",
+    "case_title": "Rana Shahid Ahmad Khan v. Tanveer Ahmed",
+    "court_name": "Supreme Court of Pakistan",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "2011-05-18",
+    "year": 2011,
+    "page": 1937,
+    "journal": "SCMR",
+    "court_code": "SC",
+    "tier": 4,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "content_hash": null,
+    "match_keys": [
+      "2011_SCMR_1937",
+      "2011 SCMR 1937",
+      "2011SCMR1937"
+    ],
+    "aliases": [
+      "rana shahid",
+      "shahid ahmad khan",
+      "rana shahid ahmad khan",
+      "tanveer ahmed"
+    ],
+    "doctrinal_keywords": [
+      "dishonestly issuing a cheque",
+      "quashing of proceedings",
+      "section 489-f",
+      "section 561-a",
+      "civil liability",
+      "commercial transaction",
+      "abuse of process"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "retained",
+    "doctrinal_note": "Where transaction between parties is of a civil nature and ingredient of dishonest intention at inception is absent, proceedings under Section 489-F PPC amount to abuse of process and are liable to be quashed under Section 561-A CrPC."
+  },
+  {
+    "case_id": "2008_SCMR_76",
+    "stored_case_id": "2008_SCMR_76",
+    "neutral_citation": "2008 SCMR 76",
+    "case_title": "Mian Allah Ditta v. State",
+    "court_name": "Supreme Court of Pakistan",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "2007-10-15",
+    "year": 2008,
+    "page": 76,
+    "journal": "SCMR",
+    "court_code": "SC",
+    "tier": 4,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "content_hash": null,
+    "match_keys": [
+      "2008_SCMR_76",
+      "2008 SCMR 76",
+      "2008SCMR76"
+    ],
+    "aliases": [
+      "allah ditta",
+      "mian allah ditta",
+      "mian allah ditta v state"
+    ],
+    "doctrinal_keywords": [
+      "dishonestly issuing a cheque",
+      "cheque bounce",
+      "section 489-f",
+      "guarantee cheque",
+      "security cheque",
+      "commercial transaction"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "retained",
+    "doctrinal_note": "Issuance of cheque as guarantee or security in a commercial dispute does not prima facie attract dishonest intention under Section 489-F PPC."
+  },
+  {
+    "case_id": "2008_YLR_947",
+    "stored_case_id": "2008_YLR_947",
+    "neutral_citation": "2008 YLR 947",
+    "case_title": "Muhammad Tariq Javed v. State",
+    "court_name": "Lahore High Court",
+    "court": "Lahore High Court",
+    "decision_date": "2008-02-14",
+    "year": 2008,
+    "page": 947,
+    "journal": "YLR",
+    "court_code": "LHC",
+    "tier": 4,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "content_hash": null,
+    "match_keys": [
+      "2008_YLR_947",
+      "2008 YLR 947",
+      "2008YLR947"
+    ],
+    "aliases": [
+      "tariq javed",
+      "muhammad tariq javed"
+    ],
+    "doctrinal_keywords": [
+      "dishonoured cheque",
+      "admission of liability",
+      "civil transaction",
+      "quashment",
+      "section 561-a",
+      "section 489-f"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "retained",
+    "doctrinal_note": "Where third party admits liability and issues cheque in respect of a commercial transaction, criminal machinery cannot be deployed as a recovery instrument; proceedings quashed under Section 561-A CrPC."
+  },
+  {
+    "case_id": "2013_YLR_2428",
+    "stored_case_id": "2013_YLR_2428",
+    "neutral_citation": "2013 YLR 2428",
+    "case_title": "Amin Iqbal v. State",
+    "court_name": "High Court of Sindh",
+    "court": "High Court of Sindh",
+    "decision_date": "2013-08-20",
+    "year": 2013,
+    "page": 2428,
+    "journal": "YLR",
+    "court_code": "SHC",
+    "tier": 4,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "content_hash": null,
+    "match_keys": [
+      "2013_YLR_2428",
+      "2013 YLR 2428",
+      "2013YLR2428"
+    ],
+    "aliases": [
+      "amin iqbal",
+      "amin iqbal v state"
+    ],
+    "doctrinal_keywords": [
+      "dishonestly issuing a cheque",
+      "quashing of fir",
+      "civil dispute",
+      "489-f",
+      "561-a"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "retained",
+    "doctrinal_note": "Dispute regarding accounts between business associates constitutes a civil controversy; invocation of Section 489-F PPC for recovery without dishonest mens rea at inception constitutes an abuse of judicial process."
   }
 ]

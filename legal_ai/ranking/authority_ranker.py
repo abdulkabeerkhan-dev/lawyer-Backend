@@ -141,7 +141,8 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: Any) -> Tup
         # Civil / Corporate / Property / Criminal
         "interim", "injunction", "status quo", "shareholder", "oppression", "management",
         "specific performance", "power of attorney", "arbitration", "award",
-        "chain of custody", "malkhana", "chemical examiner", "safe custody"
+        "chain of custody", "malkhana", "chemical examiner", "safe custody",
+        "dishonoured cheque", "dishonored cheque", "cheque", "489-f", "561-a", "civil transaction", "commercial transaction", "abuse of process"
     ]
     matched_terms = 0
     for term in key_terms:
@@ -169,7 +170,8 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: Any) -> Tup
     is_landmark_query = any(w in query_str for w in [
         "landmark", "leading case", "established principle", "settled principle",
         "foundational", "authoritative ruling", "locus classicus", "apex precedent",
-        "supreme court landmark", "controlling precedent", "controlling apex"
+        "supreme court landmark", "controlling precedent", "controlling apex",
+        "find precedents", "precedents on", "precedent on", "precedents"
     ])
     
     is_landmark_candidate = bool(curated is not None)

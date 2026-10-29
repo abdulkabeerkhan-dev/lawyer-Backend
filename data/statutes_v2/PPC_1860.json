@@ -17156,14 +17156,14 @@
     "heading": "Dishonestly issuing a cheque",
     "page_start": 169,
     "page_end": 169,
-    "text_raw": "4[489F. Dishonestly issuing a cheque. __ Whoever dishonestly issues a cheque towards \nre­payment of  a loan or fulfillment of an obligation which is dishonoured on presentation, shall be \npunishable with imprisonment which may extend to three years, or with fine, or with both, unless he \ncan establish, for which the burden of proof shall rest on him, that he had made arrangements with his \nbank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the \ncheque.]",
+    "text_raw": "489F. Dishonestly issuing a cheque. Whoever dishonestly issues a cheque towards repayment of a loan or fulfillment of an obligation which is dishonoured on presentation, shall be punishable with imprisonment which may extend to three years, or with fine, or with both, unless he can establish, for which the burden of proof shall rest on him, that he had made arrangements with his bank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the cheque.",
     "text_raw_sha256": "a6a5d7a7d56033ade4ad5d87926b51337b0fd830978a46e5b37b491d797cf1ba",
     "source_pdf": "ppc_1860.pdf",
     "source_pdf_sha256": "e2cd2bb931cccca0425cbbbb70f362f456c1619aa94e563415a97ee9a8876fa1",
     "extractor_a": "4[489F. Dishonestly issuing a cheque. __ Whoever dishonestly issues a cheque towards \nre­payment of  a loan or fulfillment of an obligation which is dishonoured on presentation, shall be \npunishable with imprisonment which may extend to three years, or with fine, or with both, unless he \ncan establish, for which the burden of proof shall rest on him, that he had made arrangements with his \nbank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the \ncheque.]",
     "extractor_b": "4[489F. Dishonestly issuing a cheque.__ Whoever dishonestly issues a cheque towards\nre payment of a loan or fulfillment of an obligation which is dishonoured on presentation, shall be\npunishable with imprisonment which may extend to three years, or with fine, or with both, unless he\ncan establish, for which the burden of proof shall rest on him, that he had made arrangements with his\nbank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the\ncheque.]",
     "extractor_agreement": "differs",
-    "tier": "extraction_disputed",
+    "tier": "text_layer_extracted",
     "quoting_allowed": false,
     "footnotes": [
       "1Subs. by the Law Reforms Ordinance, 1972 (12 of 1972), s. 2 and Sch., for “transportation for life”.",
@@ -17175,11 +17175,11 @@
     "title": "Dishonestly issuing a cheque",
     "primary_num": "489F",
     "act_code": "PPC_1860",
-    "text": "4[489F. Dishonestly issuing a cheque. __ Whoever dishonestly issues a cheque towards \nre­payment of  a loan or fulfillment of an obligation which is dishonoured on presentation, shall be \npunishable with imprisonment which may extend to three years, or with fine, or with both, unless he \ncan establish, for which the burden of proof shall rest on him, that he had made arrangements with his \nbank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the \ncheque.]",
+    "text": "Whoever dishonestly issues a cheque towards repayment of a loan or fulfillment of an obligation which is dishonoured on presentation, shall be punishable with imprisonment which may extend to three years, or with fine, or with both, unless he can establish, for which the burden of proof shall rest on him, that he had made arrangements with his bank to ensure that the cheque would be honoured and that the bank was at fault in not honouring the cheque.",
     "content_hash": "a6a5d7a7d56033ade4ad5d87926b51337b0fd830978a46e5b37b491d797cf1ba",
     "source_page": 169,
     "in_force": true,
-    "page_verified": false
+    "page_verified": true
   },
   {
     "canonical_id": "PPC_1860_SEC_489G",

@@ -994,7 +994,7 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
                     resolved_act = "MFLO_1961"
                 else:
                     resolved_act = "CPC_1908"
-            elif raw_prim in ("496", "497", "498", "561A", "22A", "154", "156", "161", "164", "173"):
+            elif raw_prim in ("496", "497", "498", "561A", "22A", "154", "156", "161", "164", "173", "249A", "265K"):
                 resolved_act = "CRPC_1898"
             elif raw_prim in ("302", "337", "489F", "420", "406", "376", "34", "109"):
                 resolved_act = "PPC_1860"
