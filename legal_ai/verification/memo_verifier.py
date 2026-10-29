@@ -1874,6 +1874,14 @@ class MemoVerifier:
 
 
 
+            for m_vs in re.finditer(r'([A-Z0-9\s,\.\(\)/\-\'&]+?\s+(?:VS|V\.|VERSUS)\s+[A-Z0-9\s,\.\(\)/\-\'&]+)', corpus, re.IGNORECASE):
+
+
+
+                sources.append(m_vs.group(1).strip())
+
+
+
 
 
 
@@ -3500,11 +3508,13 @@ class MemoVerifier:
 
 
 
+                ctx_window = text[max(0, m.start() - 350):min(len(text), m.end() + 350)]
                 found.append({
 
 
 
                     "span": span,
+                    "context": ctx_window,
 
 
 
@@ -3528,6 +3538,16 @@ class MemoVerifier:
 
 
 
+        # Deduplicate and suppress shorter sub-spans covered by longer spans
+        if found:
+            sorted_found = sorted(found, key=lambda x: (x['end'] - x['start']), reverse=True)
+            non_overlapping = []
+            for item in sorted_found:
+                if not any(k['start'] <= item['start'] and item['end'] <= k['end'] and (k['start'] != item['start'] or k['end'] != item['end']) for k in non_overlapping):
+                    if not any(k['start'] == item['start'] and k['end'] == item['end'] for k in non_overlapping):
+                        non_overlapping.append(item)
+            found = sorted(non_overlapping, key=lambda x: x['start'])
+
         return found
 
 
@@ -3536,7 +3556,7 @@ class MemoVerifier:
 
 
 
-    def resolve_citation_to_cid(self, cit_span: str, active_order: Optional[str] = None) -> Tuple[Optional[str], Optional[str], Optional[str]]:
+    def resolve_citation_to_cid(self, cit_span: str, active_order: Optional[str] = None, context: Optional[str] = None) -> Tuple[Optional[str], Optional[str], Optional[str]]:
 
 
 
@@ -3632,7 +3652,7 @@ class MemoVerifier:
 
 
 
-        parsed = parse_statutory_citation(norm)
+        parsed = parse_statutory_citation(norm, context=context)
 
 
 
@@ -3668,7 +3688,7 @@ class MemoVerifier:
 
 
 
-    def verify_statutory_citation(self, cit_span: str, active_order: Optional[str] = None, has_disputed: bool = True) -> CitationMatchResult:
+    def verify_statutory_citation(self, cit_span: str, active_order: Optional[str] = None, has_disputed: bool = True, context: Optional[str] = None) -> CitationMatchResult:
 
 
 
@@ -3692,7 +3712,7 @@ class MemoVerifier:
 
 
 
-        act_code, num, rule_num = self.resolve_citation_to_cid(cit_span, active_order)
+        act_code, num, rule_num = self.resolve_citation_to_cid(cit_span, active_order, context=context)
 
 
 
@@ -4518,7 +4538,7 @@ class MemoVerifier:
 
 
 
-            cit_res = self.verify_statutory_citation(sc["span"], sc["active_order"], has_disputed)
+            cit_res = self.verify_statutory_citation(sc["span"], sc["active_order"], has_disputed, context=sc.get("context"))
 
 
 

@@ -2926,7 +2926,11 @@ async def process_query_job_legal_ai(
         if "MISATTRIBUTED_QUOTE" in categories or "UNMATCHED_QUOTE" in categories:
             err_cat = "STATUTORY_MISQUOTATION"
         elif "UNVERIFIED_AUTHORITY" in categories:
-            err_cat = "FABRICATED_CITATION"
+            has_fake_page = any(
+                str(f.get("span", "")).strip().split()[-1].isdigit() and int(str(f.get("span", "")).strip().split()[-1]) > 2500
+                for f in failures if f.get("category") == "UNVERIFIED_AUTHORITY" and str(f.get("span", "")).strip().split()
+            )
+            err_cat = "FABRICATED_CITATION" if has_fake_page else "UNVERIFIED_AUTHORITY"
         elif "UNSOURCED_ANALYSIS" in categories:
             err_cat = "UNSOURCED_ANALYSIS"
         elif "CITED_PROVISION_NOT_IN_VERIFIED_STORE" in categories:

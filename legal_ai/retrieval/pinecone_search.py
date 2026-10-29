@@ -53,11 +53,18 @@ async def search_pinecone_dense(
 
         meta = m_dict.get("metadata", {})
         cid = str(meta.get("case_id") or meta.get("id") or m_dict.get("id", "")).strip()
-        title = str(meta.get("title") or meta.get("case_title") or "Precedent on Record").strip()
+        text = str(meta.get("text") or meta.get("full_text") or meta.get("text_preview") or "").strip()
+        title = str(meta.get("title") or meta.get("case_title") or "").strip()
+        if not title or title.lower() in ("precedent on record", "reported precedent", "none", "unknown"):
+            m_br = re.search(r'\[[^|\]]+\|\s*([^\]]+)\]', text)
+            if m_br:
+                title = m_br.group(1).strip()
+            else:
+                m_vs = re.search(r'([A-Z0-9\s,\.\(\)/\-\'&]+?\s+(?:VS|V\.|VERSUS)\s+[A-Z0-9\s,\.\(\)/\-\'&]+)', text)
+                title = m_vs.group(1).strip() if m_vs else "Precedent on Record"
         cit = str(meta.get("citation") or meta.get("neutral_citation") or cid).strip()
         raw_court = str(meta.get("court") or meta.get("court_name") or "Supreme Court of Pakistan").strip()
         court = normalize_court_name(raw_court)
-        text = str(meta.get("text") or meta.get("full_text") or meta.get("text_preview") or "").strip()
         content_type = str(meta.get("content_type") or "full_text").lower()
 
         # Extract year

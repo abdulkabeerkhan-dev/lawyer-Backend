@@ -495,5 +495,182 @@
     "is_historical_exception": true,
     "precedent_status": "retained",
     "doctrinal_note": "Dispute regarding accounts between business associates constitutes a civil controversy; invocation of Section 489-F PPC for recovery without dishonest mens rea at inception constitutes an abuse of judicial process."
+  },
+  {
+    "case_id": "2012_SCMR_91",
+    "stored_case_id": "2012_SCMR_91",
+    "neutral_citation": "2012 SCMR 91",
+    "citation": "2012 SCMR 91",
+    "case_title": "Malik Abdul Aziz Awan v. Rana Maqbool Ahmad Khan",
+    "court_name": "Supreme Court of Pakistan",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "2012-01-01",
+    "year": 2012,
+    "page": 91,
+    "journal": "SCMR",
+    "court_code": "SC",
+    "tier": 4,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "content_hash": null,
+    "match_keys": [
+      "2012_SCMR_91",
+      "2012 SCMR 91",
+      "2012SCMR91"
+    ],
+    "aliases": [
+      "malik abdul aziz awan",
+      "rana maqbool ahmad khan",
+      "malik abdul aziz awan v. rana maqbool ahmad khan"
+    ],
+    "doctrinal_keywords": [
+      "punjab rented premises act 2009",
+      "section 15",
+      "section 19",
+      "section 21",
+      "commercial tenancy",
+      "ejectment petition",
+      "default in rent",
+      "expiry of tenancy period"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "in_force",
+    "doctrinal_note": "Under Section 15 of Punjab Rented Premises Act 2009, expiry of tenancy and non-payment of rent are independent statutory grounds for eviction from commercial premises, adjudicated through summary procedure."
+  },
+  {
+    "case_id": "2013_SCMR_1520",
+    "stored_case_id": "2013_SCMR_1520",
+    "neutral_citation": "2013 SCMR 1520",
+    "citation": "2013 SCMR 1520",
+    "case_title": "Mirza Book Agency v. Additional District Judge, Lahore",
+    "court_name": "Supreme Court of Pakistan",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "2013-01-01",
+    "year": 2013,
+    "page": 1520,
+    "journal": "SCMR",
+    "court_code": "SC",
+    "tier": 4,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "content_hash": null,
+    "match_keys": [
+      "2013_SCMR_1520",
+      "2013 SCMR 1520",
+      "2013SCMR1520"
+    ],
+    "aliases": [
+      "mirza book agency",
+      "additional district judge lahore",
+      "mirza book agency v. additional district judge"
+    ],
+    "doctrinal_keywords": [
+      "punjab rented premises act 2009",
+      "section 15",
+      "section 19",
+      "section 8",
+      "section 9",
+      "eviction petition",
+      "commercial premises",
+      "tenancy agreement"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "in_force",
+    "doctrinal_note": "Tenancy agreement registration requirements under Punjab Rented Premises Act 2009; landlord entitled to seek eviction under Section 15 and 19 upon expiry of tenancy term."
+  },
+  {
+    "case_id": "2023_PLD_LAH_225",
+    "stored_case_id": "2023_PLD_LAH_225",
+    "neutral_citation": "PLD 2023 Lah. 225",
+    "citation": "PLD 2023 Lah. 225",
+    "case_title": "Abdul Malik alias Badshah Khan v. Additional District Judge",
+    "court_name": "Lahore High Court",
+    "court": "Lahore High Court",
+    "decision_date": "2023-01-01",
+    "year": 2023,
+    "page": 225,
+    "journal": "PLD",
+    "court_code": "Lah",
+    "tier": 4,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "content_hash": null,
+    "match_keys": [
+      "2023_PLD_225",
+      "PLD 2023 Lah 225",
+      "PLD 2023 Lah. 225",
+      "2023 PLD Lah 225"
+    ],
+    "aliases": [
+      "abdul malik",
+      "abdul malik alias badshah khan",
+      "badshah khan"
+    ],
+    "doctrinal_keywords": [
+      "punjab rented premises act 2009",
+      "section 19",
+      "section 22",
+      "leave to contest",
+      "eviction application",
+      "commercial tenancy",
+      "summary procedure"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "in_force",
+    "doctrinal_note": "Sections 19 and 22 of Punjab Rented Premises Act 2009 prescribe a summary mechanism; failure of tenant to disclose a substantial defense in leave application mandates immediate eviction order by Rent Tribunal."
+  },
+  {
+    "case_id": "2001_SCMR_981",
+    "stored_case_id": "2001_SCMR_981",
+    "neutral_citation": "2001 SCMR 981",
+    "citation": "2001 SCMR 981",
+    "case_title": "Habib Bank Limited v. Anis Ahmad",
+    "court_name": "Supreme Court of Pakistan",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "2001-01-01",
+    "year": 2001,
+    "page": 981,
+    "journal": "SCMR",
+    "court_code": "SC",
+    "tier": 4,
+    "status": "metadata_only",
+    "text_available": false,
+    "full_text": null,
+    "source_url": "https://pakistancode.gov.pk",
+    "source_type": "official",
+    "fetch_date": "2026-10-29",
+    "content_hash": null,
+    "match_keys": [
+      "2001_SCMR_981",
+      "2001 SCMR 981",
+      "2001SCMR981"
+    ],
+    "aliases": [
+      "habib bank limited",
+      "habib bank",
+      "anis ahmad"
+    ],
+    "doctrinal_keywords": [
+      "commercial premises",
+      "eviction",
+      "bona fide personal need",
+      "landlord tenant relationship",
+      "default in rent"
+    ],
+    "is_historical_exception": true,
+    "precedent_status": "in_force",
+    "doctrinal_note": "Eviction from commercial premises; concurrent findings of fact establishing landlord's requirement and tenant's default are not disturbed in appellate jurisdiction without patent legal infirmity."
   }
 ]

@@ -970,6 +970,8 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
                     resolved_act = "BANKING_RECOVERY_1997"
                 elif any(w in search_context for w in ["banking", "bank", "financial institution", "financial institutions", "fio", "loan", "finance", "recovery of finances", "decretal", "banking court", "banking judge"]):
                     resolved_act = "FIO_2001"
+                elif any(w in search_context for w in ["rented premises", "prpa", "rent tribunal", "special judge rent", "tenancy", "rent controller", "leave to contest"]):
+                    resolved_act = "PRPA_2009"
                 elif any(w in search_context for w in ["justice of peace", "peace", "crpc", "fir", "police", "ex-officio"]):
                     resolved_act = "CRPC_1898"
                 elif any(w in search_context for w in ["transfer of suit", "power to transfer", "subordinate court", "cpc"]):
@@ -1000,6 +1002,8 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
                 resolved_act = "PPC_1860"
             elif raw_prim in ("199", "184", "185", "204", "10A", "25", "9"):
                 resolved_act = "CONST_1973"
+            elif any(w in search_context for w in ["punjab rented premises act", "rented premises act", "prpa 2009", "prpa", "rent tribunal", "special judge rent", "tenancy agreement", "leave to contest"]) and raw_prim.isdigit() and 1 <= int(raw_prim) <= 35:
+                resolved_act = "PRPA_2009"
             else:
                 resolved_act = "CPC_1908"
 

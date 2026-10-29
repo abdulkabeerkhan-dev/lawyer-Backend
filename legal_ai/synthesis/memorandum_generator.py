@@ -1475,14 +1475,29 @@ def sanitize_precedent_card(card: Dict[str, Any], backend_base_url: str = "") ->
 
 
 
+    # Save raw preview before ratio truncation
+    c["raw_preview"] = str(c.get("preview") or c.get("raw_preview") or "")
+
     # 1. case_name
+    title = str(c.get("case_name") or c.get("title") or c.get("case_title") or "").strip()
+    corpus_preview = f"{c.get('preview', '')} {c.get('raw_judgment_text', '')} {c.get('snippet', '')}"
+    if not title or title.lower() in ("precedent on record", "reported precedent", "neutral citation", "none", "unknown"):
+        m_br = re.search(r'\[[^|\]]+\|\s*([^\]]+)\]', corpus_preview)
+        if m_br:
+            title = m_br.group(1).strip()
+        else:
+            m_vs = re.search(r'([A-Z0-9\s,\.\(\)/\-\'&]+?\s+(?:VS|V\.|VERSUS)\s+[A-Z0-9\s,\.\(\)/\-\'&]+)', corpus_preview)
+            if m_vs:
+                title = m_vs.group(1).strip()
+            else:
+                title = "Reported Precedent"
 
-    title = str(c.get("case_name") or c.get("title") or c.get("case_title") or "Reported Precedent").strip()
-
+    # Clean reporter index tab prefixes e.g. "301\t2000 MLD 1345\tMUHAMMAD HANIF VS SAMI ULLAH - \tLAHORE-HIGH-COURT-LAHORE"
+    title = re.sub(r'^\d+\s+\d{4}\s+[A-Za-z]+\s+\d+\s+', '', title)
+    title = re.sub(r'[\t]+', ' ', title)
+    title = re.sub(r'\s*-\s*[A-Z\-]+-COURT-[A-Z\-]+.*$', '', title)
     title = re.sub(r'\s+', ' ', title).strip()
-
     c["case_name"] = title
-
     c["title"] = title
 
 

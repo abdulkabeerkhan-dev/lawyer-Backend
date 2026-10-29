@@ -14,11 +14,18 @@ from legal_ai.ranking.court_weighting import normalize_court_name
 
 def _format_supabase_record(rec: Dict[str, Any], score: float = 0.60) -> Dict[str, Any]:
     cid = str(rec.get("case_id") or rec.get("id") or "").strip()
-    title = str(rec.get("case_title") or rec.get("title") or "Precedent on Record").strip()
+    full_text = str(rec.get("full_text") or "").strip()
+    title = str(rec.get("case_title") or rec.get("title") or "").strip()
+    if not title or title.lower() in ("precedent on record", "reported precedent", "none", "unknown"):
+        m_br = re.search(r'\[[^|\]]+\|\s*([^\]]+)\]', full_text)
+        if m_br:
+            title = m_br.group(1).strip()
+        else:
+            m_vs = re.search(r'([A-Z0-9\s,\.\(\)/\-\'&]+?\s+(?:VS|V\.|VERSUS)\s+[A-Z0-9\s,\.\(\)/\-\'&]+)', full_text)
+            title = m_vs.group(1).strip() if m_vs else "Precedent on Record"
     cit = str(rec.get("neutral_citation") or rec.get("citation") or cid).strip()
     raw_court = str(rec.get("court_name") or rec.get("court") or "Supreme Court of Pakistan").strip()
     court = normalize_court_name(raw_court)
-    full_text = str(rec.get("full_text") or "").strip()
     date_val = str(rec.get("decision_date") or rec.get("year") or "").strip()
 
     # Extract year

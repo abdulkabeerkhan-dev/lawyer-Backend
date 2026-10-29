@@ -330,3 +330,113 @@ Penalizes the dishonest issuance of a cheque towards repayment of a loan or fulf
         assert res["total_failures"] == 0
 
     asyncio.run(_run())
+
+
+def test_prpa_tenancy_retrieval_ranking_and_verification():
+    from core.unified_statute_store import get_unified_statute_store
+    from core.curated_cases import find_curated_case
+    from legal_ai.verification.memo_verifier import MemoVerifier
+    from legal_ai.synthesis.memorandum_generator import sanitize_precedent_card
+
+    store = get_unified_statute_store()
+    store._loaded = False
+    store._by_cid = {}
+    store._by_act_num = {}
+    store.load()
+
+    # 1. Statutory store hygiene for PRPA 2009
+    sec19 = store.get_by_canonical_id("PRPA_2009_SEC_19")
+    assert sec19 is not None, "PRPA_2009_SEC_19 not in store"
+    assert sec19["tier"] == "text_layer_extracted"
+    assert sec19["quoting_allowed"] is True
+    assert "Rent Tribunal" in sec19["text"]
+
+    sec15 = store.get_by_canonical_id("PRPA_2009_SEC_15")
+    assert sec15 is not None, "PRPA_2009_SEC_15 not in store"
+    assert sec15["tier"] == "text_layer_extracted"
+    assert sec15["quoting_allowed"] is True
+    assert "Grounds for eviction" in sec15["title"]
+
+    # 2. Curated landmark authorities check
+    c1 = find_curated_case(citation="2012 SCMR 91")
+    assert c1 is not None, "2012 SCMR 91 not found in curated cases"
+    assert "Malik Abdul Aziz Awan" in c1["case_title"]
+
+    c2 = find_curated_case(citation="2013 SCMR 1520")
+    assert c2 is not None, "2013 SCMR 1520 not found in curated cases"
+    assert "Mirza Book Agency" in c2["case_title"]
+
+    c3 = find_curated_case(citation="PLD 2023 Lah. 225")
+    assert c3 is not None, "PLD 2023 Lah. 225 not found in curated cases"
+    assert "Abdul Malik" in c3["case_title"]
+
+    # 3. Card title extraction from preview
+    card_raw = {
+        "citation": "2012 SCMR 91",
+        "title": "Precedent on Record",
+        "case_name": "Precedent on Record",
+        "preview": "[2012 SCMR 91 | Malik Abdul Aziz Awan v. Rana Maqbool Ahmad Khan]\n\nMalik ABDUL AZIZ AWAN VS Rana MAQBOOL AHMAD KHAN\n\nEjectment petition--term",
+        "court": "Supreme Court of Pakistan",
+        "year": "2012"
+    }
+    card_clean = sanitize_precedent_card(card_raw)
+    assert card_clean["case_name"] == "Malik Abdul Aziz Awan v. Rana Maqbool Ahmad Khan"
+    assert card_clean["title"] == "Malik Abdul Aziz Awan v. Rana Maqbool Ahmad Khan"
+
+    # 4. Senior Partner Memorandum Verification Pass
+    prpa_memo = """## Primary Legal Finding
+Under Section 15 and Section 19 of the Punjab Rented Premises Act 2009, an application for eviction from commercial rented premises is filed before the Rent Tribunal. Expiry of the tenancy term and default in payment of rent constitute independent statutory grounds for eviction. The tenant is barred from defending the application unless leave to contest is granted under Section 22 upon demonstrating plausible grounds.
+
+## Relevant Judgments
+
+### 2012 SCMR 91 - Malik Abdul Aziz Awan v. Rana Maqbool Ahmad Khan
+**Supreme Court of Pakistan · 2012**
+Under Section 15 of the Punjab Rented Premises Act 2009, expiration of the agreed lease term and non-payment of rent provide distinct and enforceable grounds for eviction from commercial premises under the summary procedure.
+> Quotation omitted: this passage could not be verified against the retrieved source text.
+
+### PLD 2023 Lah. 225 - Abdul Malik alias Badshah Khan v. Additional District Judge
+**Lahore High Court · 2023**
+Sections 19 and 22 of the Punjab Rented Premises Act 2009 prescribe a summary adjudication mechanism wherein the failure of a commercial tenant to disclose plausible grounds in the leave application mandates an immediate eviction order.
+> Quotation omitted: this passage could not be verified against the retrieved source text.
+
+## Applicable Statutes
+
+### Section 19 - Filing of application for eviction or other relief, PUNJAB RENTED PREMISES ACT, 2009
+Prescribes the statutory procedure for instituting an application in respect of rented premises before the Rent Tribunal.
+> (1) An application in respect of a rented premises shall be filed in the Rent Tribunal of the area or the district.
+> (2) If an application is filed under sub-section (1), the Administrative Special Judge (Rent) of the area or the district may take cognizance of the case or entrust the same to any other Special Judge (Rent).
+> (3) An application under sub-section (1) shall contain a concise statement of facts, the relief claimed and shall be accompanied by copies of all relevant documents in possession of the applicant.
+
+### Section 15 - Grounds for eviction, PUNJAB RENTED PREMISES ACT, 2009
+Enumerates the substantive statutory grounds entitling a landlord to apply for eviction of a tenant.
+> (1) A landlord may seek eviction of one or more tenants from the rented premises by filing an application before the Rent Tribunal on any of the following grounds:
+> (a) the period of tenancy has expired;
+> (b) the tenant has failed to pay or tender the rent within thirty days after the expiry of the period specified in section 7;
+> (c) the tenant has committed breach of a term or condition of the tenancy agreement;
+> (d) the tenant has committed violation of an obligation specified in section 13;
+> (e) the tenant has used the premises for a purpose other than the purpose for which it was let out; or
+> (f) the tenant has sub-let the rented premises without the prior written consent of the landlord.
+
+## Analysis and Advisory
+1. Statutory Grounds for Commercial Eviction under Section 15 PRPA 2009: A landlord is entitled to seek eviction upon either the expiration of the tenancy agreement or willful default in rent payment. Each ground stands independently.
+2. Mandatory Leave to Contest Requirement under Section 22 PRPA 2009: The respondent tenant has no inherent right to defend the eviction petition without obtaining leave to contest within ten days of appearance, accompanied by an affidavit disclosing substantial grounds.
+3. Procedural Advisory and Forum: The eviction application must be filed before the Special Judge Rent of the relevant district under Section 19, and the proceedings are summary, requiring decision within four months under Section 27.
+
+## Limitations
+- Tenancy agreements must be registered with the Rent Registrar under Section 5 to avoid procedural fines under Section 9.
+- Civil court jurisdiction is barred under Section 34 of the Act.
+
+## Sources
+### Statutes
+1. Section 19 - Punjab Rented Premises Act, 2009
+2. Section 15 - Punjab Rented Premises Act, 2009
+### Judgments
+1. 2012 SCMR 91 - Supreme Court of Pakistan
+2. PLD 2023 Lah. 225 - Lahore High Court
+"""
+
+    verifier = MemoVerifier()
+    res = verifier.verify_memo(prpa_memo)
+    assert res["passed"] is True, f"Verifier failed with violations: {res['failures']}"
+    assert res["verdict"] == "ACCEPTED"
+    assert res["total_failures"] == 0
