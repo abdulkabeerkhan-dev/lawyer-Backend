@@ -18,7 +18,7 @@ import urllib.parse
 
 from datetime import datetime, timezone, timedelta
 
-from typing import List, Dict, Any, Optional, cast, Set, Tuple
+from typing import List, Dict, Any, Optional, cast, Set, Tuple, Union
 
 from collections import defaultdict, deque
 
@@ -6943,6 +6943,12 @@ class QueryRequest(BaseModel):
     category: str = "general"
 
     messages: Optional[List[ChatMessagePayload]] = None
+
+    assistant: Optional[str] = "ark"  # "ark" (Research Assistant) | "mike" (Drafting Assistant)
+
+    agent: Optional[str] = None
+
+    mode: Optional[str] = None
 
 
 
@@ -14880,6 +14886,155 @@ async def get_full_judgment(
 
 
 
+# ============================================================================
+# STATUTE & JUDGMENT SEARCH APIS (DIGILAWYER PARITY)
+# ============================================================================
+
+class StatuteSearchRequest(BaseModel):
+    query: str
+    act_code: Optional[str] = None
+    limit: Optional[int] = 25
+
+class JudgmentCitationSearchRequest(BaseModel):
+    year: Optional[Union[int, str]] = None
+    journal: Optional[str] = None
+    page: Optional[Union[int, str]] = None
+    court: Optional[str] = None
+    jurisdiction: Optional[str] = "Pakistan"
+    raw_citation: Optional[str] = None
+
+class JudgmentKeywordSearchRequest(BaseModel):
+    query: str
+    court: Optional[str] = None
+    date_range: Optional[str] = None
+    year_from: Optional[int] = None
+    year_to: Optional[int] = None
+    journal: Optional[str] = None
+    limit: Optional[int] = 15
+
+class UnifiedJudgmentSearchRequest(BaseModel):
+    query: Optional[str] = ""
+    mode: Optional[str] = "keyword"
+    year: Optional[Union[int, str]] = None
+    journal: Optional[str] = None
+    page: Optional[Union[int, str]] = None
+    court: Optional[str] = None
+    date_range: Optional[str] = None
+    year_from: Optional[int] = None
+    year_to: Optional[int] = None
+    jurisdiction: Optional[str] = "Pakistan"
+    limit: Optional[int] = 15
+
+@app.get("/api/statutes")
+async def get_statute_acts_endpoint():
+    """Lists all available legal codes, acts, and ordinances in the database."""
+    from legal_ai.search.statute_search_service import get_all_statute_acts
+    return get_all_statute_acts()
+
+@app.get("/api/search/statutes")
+async def search_statutes_get_endpoint(
+    q: str = Query("", alias="query"),
+    act_code: Optional[str] = Query(None),
+    limit: int = Query(25)
+):
+    """Searches Pakistani statutory provisions by keyword, section, or act name (GET)."""
+    from legal_ai.search.statute_search_service import search_statute_provisions
+    return search_statute_provisions(query=q, act_code=act_code, limit=limit)
+
+@app.post("/api/search/statutes")
+async def search_statutes_post_endpoint(payload: StatuteSearchRequest):
+    """Searches Pakistani statutory provisions by keyword, section, or act name (POST)."""
+    from legal_ai.search.statute_search_service import search_statute_provisions
+    return search_statute_provisions(query=payload.query, act_code=payload.act_code, limit=payload.limit or 25)
+
+@app.get("/api/statutes/{canonical_id:path}")
+async def get_statute_provision_endpoint(canonical_id: str):
+    """Retrieves authentic verbatim text and details of a single statutory provision."""
+    from legal_ai.search.statute_search_service import get_provision_full_text
+    prov = get_provision_full_text(canonical_id)
+    if not prov:
+        raise HTTPException(status_code=404, detail=f"Provision '{canonical_id}' not found.")
+    return prov
+
+@app.post("/api/search/judgments/citation")
+async def search_judgments_citation_endpoint(payload: JudgmentCitationSearchRequest):
+    """Pinpoint lookup of a superior court judgment by exact citation (Year, Journal, Page)."""
+    from legal_ai.search.judgment_search_service import search_judgments_by_citation
+    return await search_judgments_by_citation(
+        year=payload.year,
+        journal=payload.journal,
+        page=payload.page,
+        court=payload.court,
+        jurisdiction=payload.jurisdiction,
+        raw_citation=payload.raw_citation
+    )
+
+@app.post("/api/search/judgments/keyword")
+async def search_judgments_keyword_endpoint(payload: JudgmentKeywordSearchRequest):
+    """Keyword search across Pakistani case law reports (1947 to 2026) with filters."""
+    from legal_ai.search.judgment_search_service import search_judgments_by_keyword
+    return await search_judgments_by_keyword(
+        query=payload.query,
+        court=payload.court,
+        year_from=payload.year_from,
+        year_to=payload.year_to,
+        date_range=payload.date_range,
+        journal=payload.journal,
+        limit=payload.limit or 15
+    )
+
+@app.post("/api/search/judgments/intelligent")
+async def search_judgments_intelligent_endpoint(payload: JudgmentKeywordSearchRequest):
+    """Intelligent semantic search using dense vector embeddings + BM25 RRF fusion."""
+    from legal_ai.search.judgment_search_service import search_judgments_intelligent
+    return await search_judgments_intelligent(
+        query=payload.query,
+        court=payload.court,
+        year_from=payload.year_from,
+        year_to=payload.year_to,
+        date_range=payload.date_range,
+        journal=payload.journal,
+        limit=payload.limit or 15
+    )
+
+@app.post("/api/search/judgments")
+async def unified_judgments_search_endpoint(payload: UnifiedJudgmentSearchRequest):
+    """Unified judgment search route supporting citation, keyword, and intelligent modes."""
+    mode = (payload.mode or "keyword").lower().strip()
+    if mode == "citation" or (payload.year and payload.journal and payload.page):
+        from legal_ai.search.judgment_search_service import search_judgments_by_citation
+        return await search_judgments_by_citation(
+            year=payload.year,
+            journal=payload.journal,
+            page=payload.page,
+            court=payload.court,
+            jurisdiction=payload.jurisdiction,
+            raw_citation=payload.query
+        )
+    elif mode == "intelligent":
+        from legal_ai.search.judgment_search_service import search_judgments_intelligent
+        return await search_judgments_intelligent(
+            query=payload.query or "",
+            court=payload.court,
+            year_from=payload.year_from,
+            year_to=payload.year_to,
+            date_range=payload.date_range,
+            journal=payload.journal,
+            limit=payload.limit or 15
+        )
+    else:
+        from legal_ai.search.judgment_search_service import search_judgments_by_keyword
+        return await search_judgments_by_keyword(
+            query=payload.query or "",
+            court=payload.court,
+            year_from=payload.year_from,
+            year_to=payload.year_to,
+            date_range=payload.date_range,
+            journal=payload.journal,
+            limit=payload.limit or 15
+        )
+
+
 # COURT-READY LEGAL PLEADINGS EXPORTER (.DOCX)
 
 @app.post("/export/court-pleading")
@@ -15614,6 +15769,49 @@ async def execute_legal_query(
     background_tasks.add_task(process_query_job, job_id, request, authenticated_user_id)
 
     return {"job_id": job_id}
+
+
+@app.post("/api/assistants/ark")
+async def ark_ai_research_endpoint(
+    request: QueryRequest,
+    background_tasks: BackgroundTasks,
+    authenticated_user_id: str = Depends(verify_clerk_session)
+):
+    """
+    Ark AI - Legal Research Assistant.
+    Specializes in case law research, statutory interpretation, and legal opinions.
+    """
+    request.assistant = "ark"
+    request.agent = "ark"
+    res = await execute_legal_query(request, background_tasks, authenticated_user_id)
+    return {
+        "job_id": res.get("job_id"),
+        "assistant": "ark",
+        "role": "Legal Research Assistant",
+        "description": "Case law research, statutory interpretation, ratio decidendi extraction, and legal opinions."
+    }
+
+
+@app.post("/api/assistants/mike")
+async def mike_ai_drafting_endpoint(
+    request: QueryRequest,
+    background_tasks: BackgroundTasks,
+    authenticated_user_id: str = Depends(verify_clerk_session)
+):
+    """
+    Mike AI - Legal Drafting Assistant.
+    Specializes in court pleadings, petitions, plaints, written statements, and notices.
+    """
+    request.assistant = "mike"
+    request.agent = "mike"
+    request.category = "drafting"
+    res = await execute_legal_query(request, background_tasks, authenticated_user_id)
+    return {
+        "job_id": res.get("job_id"),
+        "assistant": "mike",
+        "role": "Legal Drafting Assistant",
+        "description": "Drafting court-ready pleadings, plaints, written statements, bail petitions, and notices."
+    }
 
 
 
