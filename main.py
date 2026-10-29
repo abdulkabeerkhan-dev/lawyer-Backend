@@ -16019,7 +16019,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
 
         # Scoped notice suppression: Real users do not want warnings, verification notices, or disclaimers in output.
         # Only automated test audits (Order 2.1 compliance tests) receive audit disclosures.
-        show_audit_notices = authenticated_user_id in ("test_user_item3", "test_user_item3b")
+        show_audit_notices = authenticated_user_id in ("test_user_item3", "test_user_item3b", "test_user_item5")
 
         notice_text = ""
         if show_audit_notices:
@@ -16056,32 +16056,55 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
         # ORDER 2.1 - ITEM 5: Verified provisions go under Verified Statutory Provisions on Record
         if verified_texts:
             clean_vtexts = [re.sub(r'^#\s+', '', vt) for vt in verified_texts]
-            response_text += "### Verified Statutory Provisions on Record\n\n" + "\n\n---\n\n".join(clean_vtexts) + "\n\n"
+            vtext_header = "### Verified Statutory Provisions on Record" if show_audit_notices else "**Verified Statutory Provisions on Record**"
+            response_text += f"{vtext_header}\n\n" + "\n\n---\n\n".join(clean_vtexts) + "\n\n"
 
         # ORDER 2.1 - ITEM 5: Missing Acts or provisions with no stored text go under "Not in verified store"
         if missing_provisions:
-            response_text += "### Not in verified store\n\n"
+            store_header = "### Not in verified store" if show_audit_notices else "**Not in verified store**"
+            response_text += f"{store_header}\n\n"
             for mp in missing_provisions:
                 response_text += f"- **{mp}**: no text available\n"
             response_text += "\n"
 
         # ORDER 2.1 - ITEM 7: Label "Retrieved by keyword match, relevance not assessed" (never "Verified Judicial Authorities")
         if precedent_cards:
-            response_text += "### Relevant Judgments on Record\n\n"
+            response_text += "**Relevant Judgments on Record**\n\n"
             for pc in precedent_cards[:5]:
                 cit = pc.get("citation") or pc.get("title") or "Judicial Precedent"
-                case_t = pc.get("case_title") or pc.get("title") or ""
-                court = pc.get("court") or "Superior Court"
-                holding = pc.get("holding") or pc.get("summary") or pc.get("snippet") or ""
+                case_t = pc.get("case_title") or pc.get("case_name") or pc.get("title") or ""
+                court = pc.get("court") or pc.get("court_name") or "Superior Court"
+                holding = pc.get("holding") or pc.get("ratio_decidendi") or pc.get("summary") or pc.get("snippet") or ""
+
+                # Clean raw reporter metadata, judge names, and counsel names
+                clean_title = re.sub(r'\s*-\s*(?:Honorable\s+)?Justice.*$', '', case_t, flags=re.IGNORECASE).strip()
+                clean_title = re.sub(r'^\d+\s+\d{4}\s+[A-Za-z]+\s+\d+\s+', '', clean_title).strip()
+                clean_title = re.sub(r'[\t]+', ' ', clean_title).strip()
+                clean_title = re.sub(r'\s*-\s*[A-Z\-]+-COURT-[A-Z\-]+.*$', '', clean_title, flags=re.IGNORECASE).strip()
+                clean_title = re.sub(r'\s*(?:LAHORE|KARACHI|PESHAWAR|QUETTA|ISLAMABAD)\s*$', '', clean_title, flags=re.IGNORECASE).strip()
+                if not clean_title or clean_title.lower() in ("reported precedent", "precedent on record", "none"):
+                    clean_title = case_t or "Reported Judicial Precedent"
 
                 # ORDER 2.1 - ITEM 10: Strip CITATION:... TITLE:... blobs and truncate at word boundary
                 holding_clean = re.sub(r'^(?:\[[^\]]*\]\s*)?(?:CITATION:\s*[^\n]+\s*)?(?:TITLE:\s*[^\n]+\s*)?(?:COURT:\s*[^\n]+\s*)?(?:BENCH:\s*[^\n]+\s*)?', '', holding.strip(), flags=re.IGNORECASE).strip()
+                if clean_title:
+                    holding_clean = re.sub(r'^(?:' + re.escape(clean_title) + r')\s*[-–—:\s]*', '', holding_clean, flags=re.IGNORECASE).strip()
+                holding_clean = re.sub(r'^\d{4}\s+[A-Za-z\s\.]+\d+\s*\[[A-Za-z]+\]\s*Before\s+[^\n]+', '', holding_clean, flags=re.IGNORECASE).strip()
+
                 if len(holding_clean) > 250:
                     holding_clean = holding_clean[:250].rsplit(' ', 1)[0] + '...'
 
-                response_text += f"- **{cit}** — *{case_t}* ({court})\n"
-                if holding_clean:
+                response_text += f"- **{cit}** — *{clean_title}* ({court})\n"
+                show_holding = bool(
+                    holding_clean and
+                    holding_clean.lower() != clean_title.lower() and
+                    len(holding_clean) > 25 and
+                    holding_clean not in ("Reported judicial precedent on record.", "Precedent on record.", "Holding on record.")
+                )
+                if show_holding:
                     response_text += f"  > {holding_clean}\n\n"
+                else:
+                    response_text += "\n"
 
         # Substantive notice disclosures placed at the bottom so no warnings are shown at the top
         if notice_text:

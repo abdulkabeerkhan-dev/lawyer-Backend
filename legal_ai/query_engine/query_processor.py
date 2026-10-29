@@ -6000,6 +6000,28 @@ async def process_query_job_legal_ai(
 
 
 
+        # ORDER 2.1 / DIGILAWYER: Ensure fallback provides 3-5 relevant precedent cards
+
+        fallback_precedents = list(precedent_cards or [])
+
+        if len(fallback_precedents) < 3 and ranked_authorities:
+
+            seen_cits = {str(c.get("citation")).strip().lower() for c in fallback_precedents if c.get("citation")}
+
+            for ra in ranked_authorities:
+
+                c_cit = str(ra.get("citation")).strip().lower()
+
+                if c_cit and c_cit not in seen_cits:
+
+                    fallback_precedents.append(sanitize_precedent_card(ra, backend_base_url=backend_base_url))
+
+                    seen_cits.add(c_cit)
+
+                if len(fallback_precedents) >= 5:
+
+                    break
+
         blocked_payload = {
 
             'status': 'error',
@@ -6020,9 +6042,9 @@ async def process_query_job_legal_ai(
 
             'verified_statute_fallback': verified_fallback,
 
-            'verified_precedents_fallback': precedent_cards,
+            'verified_precedents_fallback': fallback_precedents,
 
-            'precedent_cards': precedent_cards,
+            'precedent_cards': fallback_precedents,
 
             'attempts': attempts_history,
 

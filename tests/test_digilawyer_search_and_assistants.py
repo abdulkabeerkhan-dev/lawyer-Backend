@@ -125,8 +125,11 @@ def test_unified_judgment_search_modes(client):
     assert res_kw.json()["total_matches"] > 0
 
 
-def test_assistants_endpoints(client):
+def test_assistants_endpoints(client, monkeypatch):
     """Verifies Ark AI and Mike AI assistant endpoints tag query requests appropriately."""
+    async def fake_process_query_job(*args, **kwargs):
+        pass
+    monkeypatch.setattr("main.process_query_job", fake_process_query_job)
     headers = {"Authorization": "Bearer mock_clerk_user_id_dev_run"}
     
     # 1. Ark AI (Research)

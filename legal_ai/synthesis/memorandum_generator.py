@@ -95,7 +95,7 @@ def sanitize_partner_markdown_presentation(text: str) -> str:
     # Fix standalone '# Section ...' or '#### Section ...' -> '**Section ...**'
     clean = re.sub(r'^#{1,6}\s+((?:Section|Order|Rule|Article|Ss?\.)\s+[^\n]+)', r'**\1**', clean, flags=re.MULTILINE)
     # Fix '# Verified Statutory Provisions on Record' and '# Verified Judicial Authorities on Record'
-    clean = re.sub(r'^#{1,6}\s+(Verified (?:Statutory Provisions|Judicial Authorities)[^\n]*)', r'**\1**', clean, flags=re.MULTILINE)
+    clean = re.sub(r'^#{1,6}\s+((?:Verified (?:Statutory Provisions|Judicial Authorities)|Relevant Judgments on Record)[^\n]*)', r'**\1**', clean, flags=re.MULTILINE)
 
     # 3. Remove stray inline # attached to words like '#CPC', '#decree', 'word#', 'word # '
     clean = re.sub(r'#+(?=[A-Za-z0-9])', '', clean)
@@ -1496,9 +1496,12 @@ def sanitize_precedent_card(card: Dict[str, Any], backend_base_url: str = "") ->
     title = re.sub(r'^\d+\s+\d{4}\s+[A-Za-z]+\s+\d+\s+', '', title)
     title = re.sub(r'[\t]+', ' ', title)
     title = re.sub(r'\s*-\s*[A-Z\-]+-COURT-[A-Z\-]+.*$', '', title)
+    title = re.sub(r'\s*-\s*(?:Honorable\s+)?Justice.*$', '', title, flags=re.IGNORECASE).strip()
+    title = re.sub(r'\s*(?:LAHORE|KARACHI|PESHAWAR|QUETTA|ISLAMABAD)\s*$', '', title, flags=re.IGNORECASE).strip()
     title = re.sub(r'\s+', ' ', title).strip()
     c["case_name"] = title
     c["title"] = title
+    c["case_title"] = title
 
 
 
@@ -1612,6 +1615,9 @@ def sanitize_precedent_card(card: Dict[str, Any], backend_base_url: str = "") ->
     raw_ratio = str(c.get("ratio_decidendi") or c.get("holding") or c.get("preview") or "Holding on record.").strip()
     # ORDER 2.1 - ITEM 10: Strip CITATION:... TITLE:... blobs and cut at word boundaries
     clean_ratio = re.sub(r'^(?:\[[^\]]*\]\s*)?(?:CITATION:\s*[^\n]+\s*)?(?:TITLE:\s*[^\n]+\s*)?(?:COURT:\s*[^\n]+\s*)?(?:BENCH:\s*[^\n]+\s*)?', '', raw_ratio, flags=re.IGNORECASE).strip()
+    if title and len(title) > 5:
+        clean_ratio = re.sub(r'^(?:' + re.escape(title) + r')\s*[-–—:\s]*', '', clean_ratio, flags=re.IGNORECASE).strip()
+    clean_ratio = re.sub(r'^\d{4}\s+[A-Za-z\s\.]+\d+\s*\[[A-Za-z]+\]\s*Before\s+[^\n]+', '', clean_ratio, flags=re.IGNORECASE).strip()
     if len(clean_ratio) > 300:
         clean_ratio = clean_ratio[:300].rsplit(' ', 1)[0] + '...'
     c["ratio_decidendi"] = clean_ratio or "Holding on record."
