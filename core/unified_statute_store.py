@@ -170,8 +170,8 @@ class UnifiedStatuteStore:
                             self._by_cid[cid.upper()] = r
                         if num:
                             norm_num = re.sub(r'[^A-Z0-9]', '', num.upper())
-                            expected_root_cid = f"{act}_SEC_{norm_num}"
-                            if (act, norm_num) not in self._by_act_num or cid == expected_root_cid:
+                            expected_root_cids = {f"{act}_SEC_{norm_num}", f"{act}_ART_{norm_num}", f"{act}_ORD_{norm_num}"}
+                            if (act, norm_num) not in self._by_act_num or cid in expected_root_cids:
                                 self._by_act_num[(act, norm_num)] = r
                                 self._by_act_num[(act, num.upper())] = r
             except Exception as e:

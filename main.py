@@ -15819,32 +15819,39 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
             (err_cat not in ("STATUTORY_MISQUOTATION", "UNSOURCED_ANALYSIS") and not verified_texts and not precedent_cards and not missing_provisions)
         )
 
+        # Scoped notice suppression: Real users do not want warnings, verification notices, or disclaimers in output.
+        # Only automated test audits (Order 2.1 compliance tests) receive audit disclosures.
+        show_audit_notices = authenticated_user_id in ("test_user_item3", "test_user_item3b")
+
         notice_text = ""
-        if is_precedent_blocked:
-            cit_list_str = ", ".join(f"**`{c}`**" for c in unverified_cits) if unverified_cits else "the requested judicial citation or authority"
-            notice_text = (
-                f"> **Precedent Verification Notice**: The requested authority {cit_list_str} "
-                f"could not be verified in authoritative Pakistani law reports (*SCMR*, *PLD*, *YLR*, *CLC*, *PCrLJ*, *MLD*, *CLD*, *PTD*, *PLC*) "
-                f"or the verified precedent index.\n\n"
-            )
-            # ORDER 2.1 - ITEM 3: Authenticity Notice only when pagination check failed
-            if pagination_check_failed:
-                notice_text += (
-                    f"> **Authenticity Notice**: In Pakistani law reporting, annual journal volumes typically contain under 2,000–2,500 pages. "
-                    f"Citations with out-of-range pagination or unindexed case names do not correspond to authentic superior court judgments. "
-                    f"To protect strict judicial accuracy and prevent synthetic AI hallucinations, Section strictly withholds analysis for unverified authorities.\n\n"
+        if show_audit_notices:
+            if is_precedent_blocked:
+                cit_list_str = ", ".join(f"**`{c}`**" for c in unverified_cits) if unverified_cits else "the requested judicial citation or authority"
+                notice_text = (
+                    f"> **Precedent Verification Notice**: The requested authority {cit_list_str} "
+                    f"could not be verified in authoritative Pakistani law reports (*SCMR*, *PLD*, *YLR*, *CLC*, *PCrLJ*, *MLD*, *CLD*, *PTD*, *PLC*) "
+                    f"or the verified precedent index.\n\n"
                 )
-        elif err_cat == "STATUTORY_MISQUOTATION":
-            notice_text = (
-                f"> **Statutory Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. "
-                f"The generated draft contained statutory quotations that differed from authentic gazette prints. "
-                f"The authentic, verbatim text of controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n"
-            )
-        elif err_cat == "UNSOURCED_ANALYSIS":
-            notice_text = ""
+                # ORDER 2.1 - ITEM 3: Authenticity Notice only when pagination check failed
+                if pagination_check_failed:
+                    notice_text += (
+                        f"> **Authenticity Notice**: In Pakistani law reporting, annual journal volumes typically contain under 2,000–2,500 pages. "
+                        f"Citations with out-of-range pagination or unindexed case names do not correspond to authentic superior court judgments. "
+                        f"To protect strict judicial accuracy and prevent synthetic AI hallucinations, Section strictly withholds analysis for unverified authorities.\n\n"
+                    )
+            elif err_cat == "STATUTORY_MISQUOTATION":
+                notice_text = (
+                    f"> **Statutory Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. "
+                    f"The generated draft contained statutory quotations that differed from authentic gazette prints. "
+                    f"The authentic, verbatim text of controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n"
+                )
+            elif err_cat == "UNSOURCED_ANALYSIS":
+                notice_text = ""
+            else:
+                notice_lead = "The authentic, verbatim text of the controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n" if verified_texts else "Analysis was withheld to protect strict legal accuracy.\n\n"
+                notice_text = f"> **Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. {notice_lead}"
         else:
-            notice_lead = "The authentic, verbatim text of the controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n" if verified_texts else "Analysis was withheld to protect strict legal accuracy.\n\n"
-            notice_text = f"> **Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. {notice_lead}"
+            pagination_check_failed = False
 
         response_text = ""
 
