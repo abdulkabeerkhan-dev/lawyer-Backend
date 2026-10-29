@@ -827,6 +827,16 @@ def filter_and_cap_authorities(
             if not any(k in c_comb for k in ["company", "companies", "director", "shareholder", "contract", "commercial", "resolution", "corporate", "secp"]):
                 continue
 
+        # Partition and benami civil queries must NOT list banking recovery, corporate pledge, or service tribunal cases
+        is_partition_benami = any(k in all_plan_terms for k in ["partition", "benami", "co-sharer", "co-owner", "hotchpot", "joint property"])
+        if is_partition_benami:
+            if any(k in c_comb for k in ["financial institutions", "recovery of finances", "fio 2001", "pawnor", "pledge of shares", "cld 292", "cld", "banking court", "loan default", "letter of credit"]):
+                continue
+            if any(k in c_comb for k in ["service tribunal", "service appeal", "plc(cs)", "civil servants", "labour appellate"]):
+                continue
+            if any(k in c_comb for k in ["pcrlj", "bail petition", "489-f", "criminal revision", "post-arrest"]):
+                continue
+
         # CPC Review queries must NOT list Board of Revenue, Service Tribunal, or purely constitutional Art 188 cases
         is_cpc_review = ("cpc" in all_plan_terms or "civil procedure" in all_plan_terms or "114" in all_plan_terms or "xlvii" in all_plan_terms) and "review" in all_plan_terms
         if is_cpc_review:

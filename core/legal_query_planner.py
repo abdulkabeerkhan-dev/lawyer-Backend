@@ -252,6 +252,10 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         domains.append("banking recovery")
         if "commercial" not in matter_type:
             matter_type.append("commercial")
+    if any(k in q_low for k in ["partition", "benami", "co-sharer", "co-owner", "hotchpot", "joint property"]):
+        domains.append("partition & property")
+        if "civil" not in matter_type:
+            matter_type.append("civil")
     if not domains:
         domains.append("general civil law")
         matter_type.append("civil")
@@ -301,6 +305,10 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         statutes.append("Code of Criminal Procedure, 1898")
     if "banking recovery" in domains or any(k in q_low for k in ["banking court", "financial institution", "recovery of finance", "fio", "firo"]):
         statutes.append("Financial Institutions (Recovery of Finances) Ordinance, 2001")
+    if "partition & property" in domains or any(k in q_low for k in ["partition", "benami"]):
+        for part_s in ["Partition Act, 1893", "Code of Civil Procedure, 1908", "Specific Relief Act, 1877", "Benami Transactions (Prohibition) Act, 2017"]:
+            if part_s not in statutes:
+                statutes.append(part_s)
     if "specific performance & contract" in domains or any(k in q_low for k in ["specific performance", "sale deed", "agreement to sell", "advance money"]):
         for sp_stat in ["Specific Relief Act, 1877", "Contract Act, 1872", "Transfer of Property Act, 1882", "Code of Civil Procedure, 1908", "Limitation Act, 1908"]:
             if sp_stat not in statutes:
@@ -532,6 +540,30 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                     matter_type.append("civil")
                 forum = "Civil Court / Court granting injunction"
                 questions.append("duration of ex-parte interim injunction under Order XXXIX Rule 2A CPC (15 days) and remedy for disobedience or breach under Order XXXIX Rule 2(3) CPC (attachment of property and detention in civil prison; 2006 YLR 2758)")
+
+    if any(k in q_low for k in ["partition", "benami"]):
+        if any(k in q_low for k in ["set off", "set-off", "claim"]):
+            premise_corrections.append({
+                "queried_statute": "Code of Civil Procedure, 1908",
+                "queried_provision": "Order VIII, Rule 6",
+                "status": "LEGALLY_INAPPLICABLE_PREMISE",
+                "explanation": "Under Order VIII, Rule 6 CPC, a set-off claim is legally restricted to suits for recovery of an ascertained sum of money. In a suit for partition of immovable property, a claim of title or independent property cannot be pleaded as a set-off; the recognized procedural remedies are raising a plea of partial partition, filing a counter-claim with requisite court fee, or instituting an independent declaratory cross-suit under Section 42 Specific Relief Act 1877."
+            })
+            if not any("order viii rule 6" in p.lower() for p in provisions):
+                provisions.append("Order VIII Rule 6 CPC")
+            if not any("order xx rule 18" in p.lower() for p in provisions):
+                provisions.append("Order XX Rule 18 CPC")
+            questions.append("inapplicability of Order VIII Rule 6 CPC set-off in partition suits and requirement for counter-claim or independent cross-suit for declaration of title")
+        if any(k in q_low for k in ["benami"]):
+            premise_corrections.append({
+                "queried_statute": "Benami Transactions (Prohibition) Act, 2017",
+                "queried_provision": "Section 4",
+                "status": "STATUTORILY_BARRED_DEFENCE",
+                "explanation": "Under Section 4(2) of the Benami Transactions (Prohibition) Act, 2017, no defence based on any right in respect of property held benami shall be allowed in any suit, claim or action by or on behalf of a person claiming to be real owner. Under pre-2017 law, benami required strict proof of 4 ingredients (consideration, possession, custody of title deeds, and motive) via an independent declaratory action, not a set-off."
+            })
+            if not any("section 4" in p.lower() and "benami" in p.lower() for p in provisions):
+                provisions.append("Section 4 Benami Transactions (Prohibition) Act, 2017")
+            questions.append("statutory bar on benami defence under Section 4(2) Benami Transactions (Prohibition) Act 2017 and 4-factor test under pre-2017 law")
 
     forum_hierarchy = ["Civil Court", "District Judge", "High Court", "Supreme Court of Pakistan"]
     employee_status_branching = None
