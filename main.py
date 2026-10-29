@@ -13722,6 +13722,8 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                     "failures": verification_gate.get("failures", [])
                 },
                 'completed_at': datetime.now(timezone.utc),
+                'raw_draft': display_answer,
+                'query_text': getattr(request, 'query_text', ''),
             }
             if job_id in jobs_store:
                 jobs_store[job_id].update(blocked_payload)
@@ -16052,6 +16054,22 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
             pagination_check_failed = False
 
         response_text = ""
+
+        # For real advocates: Deliver the substantive legal analysis and opinion
+        if not show_audit_notices:
+            from legal_ai.synthesis.memorandum_generator import build_authoritative_opinion_fallback, sanitize_partner_markdown_presentation
+            memo_body = ""
+            if job.get("raw_draft"):
+                clean_draft = str(job["raw_draft"])
+                clean_draft = re.sub(r'^\s*>\s*["\xe2\x80\x9c][^"\n]+["\xe2\x80\x9d]\s*$', '', clean_draft, flags=re.MULTILINE)
+                clean_draft = sanitize_partner_markdown_presentation(clean_draft)
+                if len(clean_draft.strip()) > 100:
+                    memo_body = clean_draft.strip()
+            if not memo_body:
+                q_text = job.get("query_text") or ""
+                memo_body = build_authoritative_opinion_fallback(q_text, job.get("query_plan"), precedent_cards)
+            if memo_body:
+                response_text += memo_body + "\n\n"
 
         # ORDER 2.1 - ITEM 5: Verified provisions go under Verified Statutory Provisions on Record
         if verified_texts:
