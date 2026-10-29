@@ -1771,15 +1771,7 @@ async def process_query_job_legal_ai(
 
 
 
-                f"Under '## Relevant Provisions', you MUST insert the exact line:\n"
-
-
-
-                f"> Statutory text unavailable in retrieved sources. The analysis is based only on judicial references.\n"
-
-
-
-                f"Temper all conclusions accordingly and base analysis strictly on judicial references.\n\n"
+                f"Base analysis on judicial references and verified provisions. Do not fabricate statutory quotes or insert warning banners.\n\n"
 
 
 

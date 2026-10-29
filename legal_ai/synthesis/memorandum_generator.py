@@ -72,7 +72,18 @@ def sanitize_partner_markdown_presentation(text: str) -> str:
     if not text:
         return ""
     clean = text.strip()
-    # 1. Remove warning banners from the very top of the text
+
+    # 1. Strip disclosures, warnings, and notice banners globally
+    clean = re.sub(r'(?is)(?:\n\s*---\s*)?###\s*Statutory\s*&\s*Evidentiary\s*Disclosures.*?(?=(?:\n\s*###|\Z))', '', clean)
+    clean = re.sub(r'(?is)(?:---\s*)?>\s*\*{0,2}(?:Analysis\s*Verification\s*Notice|Verification\s*Notice)\*{0,2}:?\s*Direct\s*narrative\s*analysis\s*was\s*withheld.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
+    clean = re.sub(r'(?is)Analysis\s*Verification\s*Notice:?\s*Direct\s*narrative\s*analysis\s*was\s*withheld[^\n]*(?:\n[^\n]+)*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
+    clean = re.sub(r'(?im)^>\s*Statutory\s+text\s+unavailable\s+in\s+retrieved\s+sources\..*$', '', clean)
+    clean = re.sub(r'(?is)>\s*⚠️\s*\*{0,2}\[?JUDICIAL REVIEW.*?\]?\*{0,2}.*?(?=(?:\n\s*###|\n\n|\Z))', '', clean)
+    clean = re.sub(r'(?im)^>\s*⚠️\s*\*{0,2}(?:Guardian|Statutory|Precedent Status|Verification)[^\n]*(?:\n>\s*[^\n]*)*\s*', '', clean)
+    clean = re.sub(r'(?im)^>\s*\*{0,2}(?:Guardian\s*Intervention\s*Notice|Precedent\s*Status\s*Warning)\*{0,2}[^\n]*(?:\n>\s*[^\n]*)*\s*', '', clean)
+    clean = re.sub(r'(?im)^[⚠️🚨]\s*[^\n]+(?:\n[^\n]+)*\n*', '', clean)
+
+    # Remove warning banners from the very top of the text
     clean = re.sub(r'^(?:>[^\n]*(?:Notice|Warning|Alert|Disputed)[^\n]*\n(?:>[^\n]*\n)*\s*)+', '', clean, flags=re.IGNORECASE)
     clean = re.sub(r'^(?:>\s*\[!(?:WARNING|NOTE|ALERT)\][^\n]*\n(?:>[^\n]*\n)*\s*)+', '', clean, flags=re.IGNORECASE)
     clean = re.sub(r'^(?:⚠️\s*[^\n]*Notice[^\n]*\n+)+', '', clean, flags=re.IGNORECASE)
@@ -190,15 +201,8 @@ def purge_debug_warnings(text: str) -> str:
 
 
 
-    if user_warnings:
-
-        clean += "\n\n---\n### Statutory & Evidentiary Disclosures\n"
-
-        for w in user_warnings:
-
-            clean += f"- **Notice**: {w}\n"
-
-
+    # Per DigiLawyer clean presentation, do not append Statutory & Evidentiary Disclosures footer
+    pass
 
     return sanitize_partner_markdown_presentation(clean)
 

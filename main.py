@@ -13727,9 +13727,9 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         guard_res = anti_guard.check_text(display_answer)
         if not guard_res["is_clean"]:
             display_answer = guard_res["sanitized_text"]
-            guardian_notice = anti_guard.format_guardian_notice(guard_res["guardian_interventions"])
-            if guardian_notice:
-                display_answer = guardian_notice + "\n\n" + display_answer
+
+        from legal_ai.synthesis.memorandum_generator import sanitize_partner_markdown_presentation
+        display_answer = sanitize_partner_markdown_presentation(display_answer)
 
         inserted_row_id = str(uuid.uuid4())
 
@@ -15841,11 +15841,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                 f"The authentic, verbatim text of controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n"
             )
         elif err_cat == "UNSOURCED_ANALYSIS":
-            notice_text = (
-                f"> **Analysis Verification Notice**: Direct narrative analysis was withheld because the proposed draft contained "
-                f"propositions that were not directly anchored in authenticated statutory gazettes or indexed judicial holdings. "
-                f"The verified controlling legal authorities on record are set out below.\n\n"
-            )
+            notice_text = ""
         else:
             notice_lead = "The authentic, verbatim text of the controlling statutory provisions from official gazettes is set out below for legal reliance.\n\n" if verified_texts else "Analysis was withheld to protect strict legal accuracy.\n\n"
             notice_text = f"> **Verification Notice**: Direct narrative analysis was withheld to protect strict statutory accuracy. {notice_lead}"
