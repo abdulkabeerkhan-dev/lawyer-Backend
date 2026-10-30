@@ -483,7 +483,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         subdomains = ["oppression_and_mismanagement", "minority_shareholders", "section_286"]
         legacy_domains.append("oppression & mismanagement")
         legacy_matter_type.append("corporate")
-        if any(k in q_low for k in ["409", "director", "misappropriat", "funds", "ppc", "crime", "shares"]):
+        if any(k in q_low for k in ["409", "misappropriat", "funds", "ppc", "crime", "siphon", "breach of trust", "embezzle", "forgery"]):
             secondary_domains = ["criminal", "civil"]
             is_cross_domain_relevant = True
             cross_domain_reason = "Oppression under Companies Act involving misappropriation of corporate funds/shares and criminal breach of trust under Section 409 PPC."

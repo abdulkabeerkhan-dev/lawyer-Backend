@@ -3,16 +3,98 @@ legal_ai/retrieval/supabase_search.py
 
 Proactive Postgres Full-Text Search (FTS) and exact citation retrieval driver
 for Pakistani Court Judgments from Supabase 'full_judgments' table.
+
+Phase 4, Step 2 Optimizations:
+- Stop-word sanitization stripping conversational and query filler words.
+- Dual-format Pakistani neutral citation parser (Year-first & Reporter-first).
+- High-efficiency targeted case_title keyword search avoiding unindexed table scans.
+- Statement timeout resilience and graceful degradation.
 """
 
 import sys
 import re
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Set, Tuple
 from legal_ai.config import get_supabase_client, safe_supabase_query
 from legal_ai.ranking.court_weighting import normalize_court_name
 
 
+LEGAL_CONVERSATIONAL_STOP_WORDS: Set[str] = {
+    # Standard English stop words
+    'the', 'of', 'and', 'a', 'in', 'to', 'is', 'for', 'on', 'with', 'by', 'at', 'from',
+    'an', 'as', 'be', 'under', 'versus', 'vs', 'v', 'per', 'via', 'into', 'upon', 'about',
+    'than', 'then', 'there', 'their', 'they', 'them', 'these', 'those', 'this', 'that',
+    'it', 'its', 'or', 'nor', 'not', 'no', 'so', 'if', 'all', 'any', 'both', 'each',
+    # Conversational, interrogative, and imperative filler
+    'whether', 'which', 'what', 'where', 'when', 'how', 'who', 'whom', 'whose', 'why',
+    'find', 'give', 'more', 'tell', 'show', 'list', 'explain', 'describe', 'provide', 'search',
+    'does', 'did', 'do', 'can', 'could', 'would', 'should', 'might', 'must', 'may', 'shall',
+    'regarding', 'between', 'against', 'among', 'concerning', 'respecting', 'without', 'within',
+    'across', 'through', 'scenario', 'matter', 'issue', 'question', 'problem', 'situation',
+    'including', 'involving', 'included', 'involved', 'include', 'involve',
+    # High-frequency generic legal terms that dilute FTS search
+    'court', 'courts', 'pakistan', 'pakistani', 'judgment', 'judgments', 'case', 'cases', 'holding',
+    'precedent', 'precedents', 'law', 'laws', 'statute', 'statutes', 'act', 'acts',
+    'code', 'codes', 'section', 'sec', 'sections', 'order', 'orders', 'rule', 'rules',
+    'petition', 'petitions', 'appeal', 'appeals', 'suit', 'suits', 'application', 'applications',
+    'appellant', 'respondent', 'petitioner', 'plaintiff', 'defendant', 'accused', 'state'
+}
+
+
+def extract_substantive_tokens(query_text: str) -> List[str]:
+    """
+    Extracts high-salience substantive legal keywords stripped of conversational filler.
+    """
+    raw_tokens = re.sub(r'[^\w\s]', ' ', query_text).split()
+    substantive = []
+    for tok in raw_tokens:
+        tok_clean = tok.strip()
+        tok_low = tok_clean.lower()
+        if (
+            len(tok_clean) >= 4
+            and not tok_clean.isdigit()
+            and tok_low not in LEGAL_CONVERSATIONAL_STOP_WORDS
+        ):
+            substantive.append(tok_clean)
+    return substantive
+
+
+def extract_pakistani_citations(text: str) -> List[Tuple[str, str]]:
+    """
+    Extracts neutral citations from text and returns (canonical_cid, display_citation).
+    Supports:
+    - Year-first: 2026 SCMR 941 -> ('2026_SCMR_941', '2026 SCMR 941')
+    - Reporter-first: PLD 1967 SC 97 -> ('1967_PLD_SC_97', '1967 PLD 97')
+    """
+    found: List[Tuple[str, str]] = []
+    seen = set()
+
+    # 1. Year-first format (e.g. 2026 SCMR 941, 2021 SCMR 554, 2006 YLR 2059)
+    m_yr = re.finditer(r'\b((?:19|20)\d{2})\s+([A-Za-z]+(?:\s*\([A-Za-z]+\))?)\s+(\d+)\b', text)
+    for m in m_yr:
+        yr, rep, pg = m.group(1), m.group(2).replace(" ", "_").upper(), m.group(3)
+        cid = f"{yr}_{rep}_{pg}"
+        disp = f"{yr} {m.group(2).upper()} {pg}"
+        if cid not in seen:
+            seen.add(cid)
+            found.append((cid, disp))
+
+    # 2. Reporter-first format (e.g. PLD 1967 SC 97, PLD 1995 SC 34, PCRLJ 2024 100)
+    m_rep = re.finditer(r'\b(PLD|SCMR|PCrLJ|CLC|MLD|YLR|CLD|PTD|PLC)\s+((?:19|20)\d{2})\s+(?:SC|Lah|Kar|Pesh|Quetta|High\s+Court)?\s*(\d+)\b', text, re.IGNORECASE)
+    for m in m_rep:
+        rep, yr, pg = m.group(1).upper(), m.group(2), m.group(3)
+        cid = f"{yr}_{rep}_{pg}"
+        disp = f"{yr} {rep} {pg}"
+        if cid not in seen:
+            seen.add(cid)
+            found.append((cid, disp))
+
+    return found
+
+
 def _format_supabase_record(rec: Dict[str, Any], score: float = 0.60) -> Dict[str, Any]:
+    """
+    Standardizes raw Supabase row into common Candidate Record payload.
+    """
     cid = str(rec.get("case_id") or rec.get("id") or "").strip()
     full_text = str(rec.get("full_text") or "").strip()
     title = str(rec.get("case_title") or rec.get("title") or "").strip()
@@ -78,6 +160,10 @@ async def search_supabase_judgments(
 ) -> List[Dict[str, Any]]:
     """
     Executes proactive multi-term FTS and keyword search against Postgres full_judgments.
+    Optimized for sub-second retrieval:
+    1. Fast exact citation and case_id lookup.
+    2. Substantive keyword search against case_title with conversational stop-words stripped.
+    3. Safe guarded full_text search with statement timeout protection.
     """
     sb = get_supabase_client()
     if not sb:
@@ -91,22 +177,22 @@ async def search_supabase_judgments(
         if not q_clean or len(q_clean) < 3:
             continue
 
-        # 1. Exact Citation Check (e.g. "2021 SCMR 554")
-        m_cit = re.search(r'\b(?:19|20)\d{2}\s+(?:SCMR|PLD|PCrLJ|CLC|MLD|YLR|CLD|PTD)\s+\d+\b', q_clean, re.IGNORECASE)
-        if m_cit:
-            target_cit = m_cit.group(0).strip()
-            norm_cid = target_cit.replace(' ', '_')
+        # 1. Exact Citation Check (Supports both Year-first and Reporter-first)
+        citations_to_check = extract_pakistani_citations(q_clean)
+        for norm_cid, disp_cit in citations_to_check:
             try:
                 def _query_exact():
                     res = sb.table("full_judgments").select(
                         "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
-                    ).eq(
-                        "case_id", norm_cid
-                    ).limit(5).execute()
+                    ).eq("case_id", norm_cid).limit(5).execute()
+                    if not (res and res.data):
+                        res = sb.table("full_judgments").select(
+                            "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
+                        ).eq("neutral_citation", disp_cit).limit(5).execute()
                     return res.data or []
 
                 exact_records = safe_supabase_query(_query_exact, retries=1)
-                for r in exact_records:
+                for r in (exact_records or []):
                     cid = str(r.get("case_id") or r.get("id"))
                     if cid not in seen_ids:
                         seen_ids.add(cid)
@@ -120,13 +206,11 @@ async def search_supabase_judgments(
                 def _query_cid():
                     res = sb.table("full_judgments").select(
                         "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
-                    ).eq(
-                        "case_id", q_clean
-                    ).limit(2).execute()
+                    ).eq("case_id", q_clean).limit(2).execute()
                     return res.data or []
 
                 cid_records = safe_supabase_query(_query_cid, retries=1)
-                for r in cid_records:
+                for r in (cid_records or []):
                     cid = str(r.get("case_id") or r.get("id"))
                     if cid not in seen_ids:
                         seen_ids.add(cid)
@@ -134,34 +218,33 @@ async def search_supabase_judgments(
             except Exception:
                 pass
 
-        # 3. Case Title Keyword Search
-        STOP_WORDS = {
-            'the', 'of', 'and', 'a', 'in', 'to', 'is', 'for', 'on', 'with', 'by', 'at', 'from',
-            'an', 'as', 'be', 'under', 'versus', 'vs', 'v', 'state', 'act', 'code', 'law',
-            'order', 'section', 'sec', 'petition', 'appeal', 'criminal', 'civil'
-        }
-        words = [w for w in re.sub(r'[^\w\s]', ' ', q_clean).split() if len(w) > 3 and w.lower() not in STOP_WORDS]
-        if words and len(words) >= 2:
-            try:
-                def _query_title():
-                    res = sb.table("full_judgments").select(
-                        "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
-                    ).ilike("case_title", f"%{words[0]}%{words[1]}%").limit(5).execute()
-                    return res.data or []
+        # 3. Substantive Title Keyword Search (Sanitized of conversational filler)
+        substantive = extract_substantive_tokens(q_clean)
+        if substantive:
+            tokens_to_search = substantive[:2]
+            for tok in tokens_to_search:
+                if len(candidates) >= limit_per_term:
+                    break
+                try:
+                    def _query_title():
+                        res = sb.table("full_judgments").select(
+                            "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
+                        ).ilike("case_title", f"%{tok}%").limit(5).execute()
+                        return res.data or []
 
-                title_records = safe_supabase_query(_query_title, retries=1)
-                for r in (title_records or []):
-                    cid = str(r.get("case_id") or r.get("id"))
-                    if cid not in seen_ids:
-                        seen_ids.add(cid)
-                        candidates.append(_format_supabase_record(r, score=0.75))
-            except Exception:
-                pass
+                    title_records = safe_supabase_query(_query_title, retries=1)
+                    for r in (title_records or []):
+                        cid = str(r.get("case_id") or r.get("id"))
+                        if cid not in seen_ids:
+                            seen_ids.add(cid)
+                            candidates.append(_format_supabase_record(r, score=0.75))
+                except Exception:
+                    pass
 
-        # 4. Doctrinal Full-Text Search (Targeted and Guarded)
-        # Only fire full_text if we have 2-3 distinctive doctrinal keywords (e.g. dishonest & intention)
-        distinctive = [w for w in words if not w.isdigit() and len(w) >= 5]
-        if len(distinctive) >= 2:
+        # 4. Doctrinal Full-Text Search (Safe & Timeout-Guarded)
+        # Only execute if title search yielded few candidates and distinctive high-specificity keywords exist
+        distinctive = [w for w in substantive if len(w) >= 6]
+        if len(candidates) < 4 and len(distinctive) >= 2:
             ft_ts = " & ".join(distinctive[:2])
             try:
                 def _query_fulltext():
@@ -176,8 +259,10 @@ async def search_supabase_judgments(
                     if cid not in seen_ids:
                         seen_ids.add(cid)
                         candidates.append(_format_supabase_record(r, score=0.70))
-            except Exception:
-                pass
+            except Exception as err:
+                # Catch statement timeout (57014) or connection errors gracefully without blocking pipeline
+                err_str = str(err)
+                if "57014" not in err_str:
+                    print(f"⚠️ [supabase_search] Doctrinal FTS skipped: {err_str}", file=sys.stderr, flush=True)
 
     return candidates
-
