@@ -1,0 +1,998 @@
+{
+  "total_queries": 30,
+  "baseline": {
+    "Recall@5": 90.0,
+    "Recall@10": 96.7,
+    "Precision@5": 0.593,
+    "Precision@10": 0.51,
+    "MRR": 0.762,
+    "Domain_Contamination_Rate": 16.7,
+    "Avg_Latency_s": 2.04,
+    "Category_Breakdown": {
+      "Civil property / partition": {
+        "total": 6,
+        "rel5": 6,
+        "rel10": 0,
+        "dom_err": 1
+      },
+      "Benami transactions": {
+        "total": 5,
+        "rel5": 5,
+        "rel10": 0,
+        "dom_err": 0
+      },
+      "Criminal fraud / forgery": {
+        "total": 5,
+        "rel5": 4,
+        "rel10": 0,
+        "dom_err": 1
+      },
+      "Constitutional law": {
+        "total": 4,
+        "rel5": 3,
+        "rel10": 0,
+        "dom_err": 2
+      },
+      "Family law / inheritance": {
+        "total": 5,
+        "rel5": 4,
+        "rel10": 0,
+        "dom_err": 0
+      },
+      "Mixed-domain statutory issues": {
+        "total": 5,
+        "rel5": 5,
+        "rel10": 0,
+        "dom_err": 1
+      }
+    }
+  },
+  "dual_mode": {
+    "Recall@5": 90.0,
+    "Recall@10": 96.7,
+    "Precision@5": 0.547,
+    "Precision@10": 0.483,
+    "MRR": 0.784,
+    "Domain_Contamination_Rate": 3.3,
+    "Avg_Latency_s": 2.389,
+    "Category_Breakdown": {
+      "Civil property / partition": {
+        "total": 6,
+        "rel5": 6,
+        "rel10": 0,
+        "dom_err": 0
+      },
+      "Benami transactions": {
+        "total": 5,
+        "rel5": 5,
+        "rel10": 0,
+        "dom_err": 0
+      },
+      "Criminal fraud / forgery": {
+        "total": 5,
+        "rel5": 4,
+        "rel10": 0,
+        "dom_err": 0
+      },
+      "Constitutional law": {
+        "total": 4,
+        "rel5": 4,
+        "rel10": 0,
+        "dom_err": 1
+      },
+      "Family law / inheritance": {
+        "total": 5,
+        "rel5": 4,
+        "rel10": 0,
+        "dom_err": 0
+      },
+      "Mixed-domain statutory issues": {
+        "total": 5,
+        "rel5": 4,
+        "rel10": 0,
+        "dom_err": 0
+      }
+    }
+  },
+  "cross_encoder_rerank": {
+    "Recall@5": 90.0,
+    "Recall@10": 100.0,
+    "Precision@5": 0.613,
+    "Precision@10": 0.597,
+    "MRR": 0.871,
+    "Domain_Contamination_Rate": 10.0,
+    "Avg_Latency_s": 2.952,
+    "Category_Breakdown": {
+      "Civil property / partition": {
+        "total": 6,
+        "rel5": 5,
+        "rel10": 0,
+        "dom_err": 0
+      },
+      "Benami transactions": {
+        "total": 5,
+        "rel5": 5,
+        "rel10": 0,
+        "dom_err": 0
+      },
+      "Criminal fraud / forgery": {
+        "total": 5,
+        "rel5": 5,
+        "rel10": 0,
+        "dom_err": 1
+      },
+      "Constitutional law": {
+        "total": 4,
+        "rel5": 3,
+        "rel10": 0,
+        "dom_err": 1
+      },
+      "Family law / inheritance": {
+        "total": 5,
+        "rel5": 5,
+        "rel10": 0,
+        "dom_err": 1
+      },
+      "Mixed-domain statutory issues": {
+        "total": 5,
+        "rel5": 4,
+        "rel10": 0,
+        "dom_err": 0
+      }
+    }
+  },
+  "regressions_detected": [
+    {
+      "query_id": "CIV-PART-006",
+      "query": "Claim of mesne profits and accounts against a co-sharer in exclusive possession of joint commercial shop pending final decree of partition",
+      "issue": "Reranker pushed relevant candidate out of top-5"
+    },
+    {
+      "query_id": "CONST-LAW-004",
+      "query": "Binding effect of Supreme Court judgments on all courts in Pakistan under Article 189 and High Court under Article 201",
+      "issue": "Reranker pushed relevant candidate out of top-5"
+    }
+  ],
+  "query_details": [
+    {
+      "id": "CIV-PART-001",
+      "category": "Civil property / partition",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 5.281,
+        "dual": 2.85,
+        "rerank": 4.213
+      }
+    },
+    {
+      "id": "CIV-PART-002",
+      "category": "Civil property / partition",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.311,
+        "dual": 2.46,
+        "rerank": 3.039
+      }
+    },
+    {
+      "id": "CIV-PART-003",
+      "category": "Civil property / partition",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.5,
+        "dom_err": true
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.199,
+        "dual": 2.568,
+        "rerank": 3.37
+      }
+    },
+    {
+      "id": "CIV-PART-004",
+      "category": "Civil property / partition",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 1.585,
+        "dual": 2.119,
+        "rerank": 2.502
+      }
+    },
+    {
+      "id": "CIV-PART-005",
+      "category": "Civil property / partition",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.164,
+        "dual": 2.107,
+        "rerank": 2.562
+      }
+    },
+    {
+      "id": "CIV-PART-006",
+      "category": "Civil property / partition",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.25,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.25,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": false,
+        "rel10": true,
+        "mrr": 0.167,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.039,
+        "dual": 2.422,
+        "rerank": 2.771
+      }
+    },
+    {
+      "id": "BEN-TRANS-001",
+      "category": "Benami transactions",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.2,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.2,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 1.551,
+        "dual": 2.496,
+        "rerank": 2.884
+      }
+    },
+    {
+      "id": "BEN-TRANS-002",
+      "category": "Benami transactions",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.25,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.25,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.079,
+        "dual": 2.77,
+        "rerank": 4.467
+      }
+    },
+    {
+      "id": "BEN-TRANS-003",
+      "category": "Benami transactions",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 1.742,
+        "dual": 2.635,
+        "rerank": 3.607
+      }
+    },
+    {
+      "id": "BEN-TRANS-004",
+      "category": "Benami transactions",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 1.497,
+        "dual": 2.539,
+        "rerank": 2.982
+      }
+    },
+    {
+      "id": "BEN-TRANS-005",
+      "category": "Benami transactions",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.5,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.5,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.102,
+        "dual": 2.03,
+        "rerank": 2.414
+      }
+    },
+    {
+      "id": "CRIM-FRAUD-001",
+      "category": "Criminal fraud / forgery",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 1.866,
+        "dual": 2.115,
+        "rerank": 2.981
+      }
+    },
+    {
+      "id": "CRIM-FRAUD-002",
+      "category": "Criminal fraud / forgery",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.315,
+        "dual": 2.674,
+        "rerank": 3.064
+      }
+    },
+    {
+      "id": "CRIM-FRAUD-003",
+      "category": "Criminal fraud / forgery",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.333,
+        "dom_err": true,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.125,
+        "dual": 2.08,
+        "rerank": 2.459
+      }
+    },
+    {
+      "id": "CRIM-FRAUD-004",
+      "category": "Criminal fraud / forgery",
+      "base": {
+        "rel5": false,
+        "rel10": false,
+        "mrr": 0.071,
+        "dom_err": true
+      },
+      "dual": {
+        "rel5": false,
+        "rel10": true,
+        "mrr": 0.111,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.25,
+        "dual": 2.584,
+        "rerank": 2.974
+      }
+    },
+    {
+      "id": "CRIM-FRAUD-005",
+      "category": "Criminal fraud / forgery",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.059,
+        "dual": 2.666,
+        "rerank": 3.133
+      }
+    },
+    {
+      "id": "CONST-LAW-001",
+      "category": "Constitutional law",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.138,
+        "dual": 3.018,
+        "rerank": 3.469
+      }
+    },
+    {
+      "id": "CONST-LAW-002",
+      "category": "Constitutional law",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": true
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": true
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": true,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 1.741,
+        "dual": 2.782,
+        "rerank": 3.606
+      }
+    },
+    {
+      "id": "CONST-LAW-003",
+      "category": "Constitutional law",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.216,
+        "dual": 2.273,
+        "rerank": 3.096
+      }
+    },
+    {
+      "id": "CONST-LAW-004",
+      "category": "Constitutional law",
+      "base": {
+        "rel5": false,
+        "rel10": true,
+        "mrr": 0.1,
+        "dom_err": true
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.5,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": false,
+        "rel10": true,
+        "mrr": 0.167,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.095,
+        "dual": 2.126,
+        "rerank": 2.509
+      }
+    },
+    {
+      "id": "FAM-INHER-001",
+      "category": "Family law / inheritance",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 1.658,
+        "dual": 2.802,
+        "rerank": 3.206
+      }
+    },
+    {
+      "id": "FAM-INHER-002",
+      "category": "Family law / inheritance",
+      "base": {
+        "rel5": false,
+        "rel10": true,
+        "mrr": 0.167,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": false,
+        "rel10": true,
+        "mrr": 0.111,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 1.54,
+        "dual": 2.038,
+        "rerank": 2.428
+      }
+    },
+    {
+      "id": "FAM-INHER-003",
+      "category": "Family law / inheritance",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.063,
+        "dual": 2.207,
+        "rerank": 2.696
+      }
+    },
+    {
+      "id": "FAM-INHER-004",
+      "category": "Family law / inheritance",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.5,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.5,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.333,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 1.584,
+        "dual": 2.122,
+        "rerank": 2.529
+      }
+    },
+    {
+      "id": "FAM-INHER-005",
+      "category": "Family law / inheritance",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": true,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 1.536,
+        "dual": 2.115,
+        "rerank": 2.51
+      }
+    },
+    {
+      "id": "MIX-STAT-001",
+      "category": "Mixed-domain statutory issues",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.152,
+        "dual": 1.925,
+        "rerank": 2.371
+      }
+    },
+    {
+      "id": "MIX-STAT-002",
+      "category": "Mixed-domain statutory issues",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.065,
+        "dual": 2.447,
+        "rerank": 2.807
+      }
+    },
+    {
+      "id": "MIX-STAT-003",
+      "category": "Mixed-domain statutory issues",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 1.53,
+        "dual": 1.878,
+        "rerank": 2.216
+      }
+    },
+    {
+      "id": "MIX-STAT-004",
+      "category": "Mixed-domain statutory issues",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 0.333,
+        "dom_err": true
+      },
+      "dual": {
+        "rel5": false,
+        "rel10": false,
+        "mrr": 0.091,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": false,
+        "rel10": true,
+        "mrr": 0.125,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 1.587,
+        "dual": 2.679,
+        "rerank": 3.079
+      }
+    },
+    {
+      "id": "MIX-STAT-005",
+      "category": "Mixed-domain statutory issues",
+      "base": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "dual": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false
+      },
+      "rerank": {
+        "rel5": true,
+        "rel10": true,
+        "mrr": 1.0,
+        "dom_err": false,
+        "model": "voyage-rerank-2"
+      },
+      "latencies_s": {
+        "base": 2.135,
+        "dual": 2.153,
+        "rerank": 2.623
+      }
+    }
+  ]
+}
