@@ -47,6 +47,8 @@ class LegalQueryPlan(BaseModel):
     employee_status_branching: Optional[Dict[str, Any]] = None
     # Fix B: Query-premise checks
     premise_corrections: List[Dict[str, Any]] = Field(default_factory=list)
+    raw_query: Optional[str] = None
+    query_text: Optional[str] = None
 
 
 def resolve_jurisdiction_hierarchy(province: str) -> Tuple[List[str], List[str]]:
@@ -240,7 +242,11 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
             domains.append("specific performance & contract")
         if "civil" not in matter_type:
             matter_type.append("civil")
-    if any(k in q_low for k in ["family", "khula", "dower", "maintenance", "guardian", "custody of minor"]):
+    is_family_matrimonial = (
+        any(k in q_low for k in ["khula", "dower", "maintenance", "guardian", "custody of minor", "talaq", "mflo", "zar-i-khula", "family court"])
+        or ("family" in q_low and not any(k in q_low for k in ["land", "property", "partition", "estate", "ancestral", "share", "heir"]))
+    )
+    if is_family_matrimonial:
         domains.append("family law")
         if "family" not in matter_type:
             matter_type.append("family")
@@ -483,6 +489,34 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
         ]:
             if not any(sp_p.lower() == p.lower() for p in provisions):
                 provisions.append(sp_p)
+
+    if "partition & property" in domains or any(k in q_low for k in ["partition", "co-sharer", "co-owner", "hotchpot", "joint property"]):
+        for part_p in [
+            "Order XX Rule 18 CPC",
+            "Section 4 Partition Act, 1893",
+            "Section 42 Specific Relief Act, 1877",
+            "Order XXVI Rule 13 CPC"
+        ]:
+            if not any(part_p.lower() == p.lower() for p in provisions):
+                provisions.append(part_p)
+
+    if "family law" in domains:
+        for fam_p in [
+            "Section 5 Family Courts Act, 1964",
+            "Section 10 Family Courts Act, 1964",
+            "Section 9 Muslim Family Laws Ordinance, 1961"
+        ]:
+            if not any(fam_p.lower() == p.lower() for p in provisions):
+                provisions.append(fam_p)
+
+    if "banking recovery" in domains or any(k in q_low for k in ["banking court", "bank", "financial institution", "recovery of finance", "fio"]):
+        for bank_p in [
+            "Section 9 Financial Institutions (Recovery of Finances) Ordinance 2001",
+            "Section 10 Financial Institutions (Recovery of Finances) Ordinance 2001",
+            "Section 22 Financial Institutions (Recovery of Finances) Ordinance 2001"
+        ]:
+            if not any(bank_p.lower() == p.lower() for p in provisions):
+                provisions.append(bank_p)
 
     # Premise correction routing
     for check in premise_checks:
@@ -792,11 +826,72 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                     "query": "Section 4 Benami Transactions Prohibition Act 2017 bar on defence real owner burden of proof"
                 })
 
+    # Dedicated lanes for Family Law (Khula, Dower, Maintenance, Custody)
+    if "family law" in domains:
+        if any(k in q_low for k in ["khula", "consent", "dissolution of marriage", "zar-i-khula"]):
+            if not any(l["lane"] == "khula_without_consent" for l in lanes):
+                lanes.insert(0, {
+                    "lane": "khula_without_consent",
+                    "query": "Khurshid Bibi PLD 1967 SC 97 Section 10 Family Courts Act 1964 Khula wife right without husband consent"
+                })
+            if not any(l["lane"] == "khula_dower_zar_i_khula" for l in lanes):
+                lanes.append({
+                    "lane": "khula_dower_zar_i_khula",
+                    "query": "return of dower zar-i-khula civil liability does not invalidate dissolution of marriage Section 10(4)"
+                })
+        if any(k in q_low for k in ["maintenance", "minor", "child", "children"]):
+            if not any(l["lane"] == "maintenance_family_s9" for l in lanes):
+                lanes.append({
+                    "lane": "maintenance_family_s9",
+                    "query": "Section 9 Muslim Family Laws Ordinance 1961 Section 5 Family Courts Act 1964 maintenance of minor children father statutory duty"
+                })
+        if any(k in q_low for k in ["custody", "guardian", "hizanat"]):
+            if not any(l["lane"] == "custody_welfare_of_minor" for l in lanes):
+                lanes.append({
+                    "lane": "custody_welfare_of_minor",
+                    "query": "welfare of minor paramount consideration Section 17 Section 25 Guardians and Wards Act 1890 hizanat mother preferential right"
+                })
+
+    # Dedicated lanes for Rent Restriction & Eviction (PRPA 2009 / SRPO)
+    if "rent restriction" in domains or any(k in q_low for k in ["rent", "tenant", "landlord", "eviction", "prpa"]):
+        if not any(l["lane"] == "rent_tribunal_exclusive_jurisdiction" for l in lanes):
+            lanes.insert(0, {
+                "lane": "rent_tribunal_exclusive_jurisdiction",
+                "query": "Section 19 Section 34 PRPA 2009 exclusive jurisdiction Rent Tribunal civil court jurisdiction barred"
+            })
+        if not any(l["lane"] == "rent_default_eviction_s15" for l in lanes):
+            lanes.append({
+                "lane": "rent_default_eviction_s15",
+                "query": "Section 15 PRPA 2009 grounds for eviction default in payment of rent tenancy agreement expiry"
+            })
+        if not any(l["lane"] == "rent_leave_to_defend_s22" for l in lanes):
+            lanes.append({
+                "lane": "rent_leave_to_defend_s22",
+                "query": "Section 22 PRPA 2009 leave to defend mandatory requirement substantial questions of law fact"
+            })
+
+    # Dedicated lanes for Banking Court / FIO 2001
+    if "banking recovery" in domains or any(k in q_low for k in ["banking court", "bank", "financial institution", "recovery of finance", "fio"]):
+        if any(k in q_low for k in ["leave to defend", "leave to appear", "condonation", "delay", "time barred"]):
+            if not any(l["lane"] == "fio_leave_to_defend_s10" for l in lanes):
+                lanes.insert(0, {
+                    "lane": "fio_leave_to_defend_s10",
+                    "query": "Section 10 Financial Institutions Recovery of Finances Ordinance 2001 leave to defend 30 days mandatory limitation"
+                })
+        if any(k in q_low for k in ["appeal", "stay", "deposit", "execution"]):
+            if not any(l["lane"] == "fio_appeal_deposit_s22" for l in lanes):
+                lanes.append({
+                    "lane": "fio_appeal_deposit_s22",
+                    "query": "Section 22 Financial Institutions Recovery of Finances Ordinance 2001 appeal mandatory statutory deposit 50 percent"
+                })
+
     return LegalQueryPlan(
         legal_domain=domains,
         provisions=provisions,
         legal_questions=questions,
-        factual_matrix=[query[:250]],
+        factual_matrix=[query],
+        raw_query=query,
+        query_text=query,
         jurisdiction="Pakistan",
         required_authorities=["Supreme Court of Pakistan", "High Courts"],
         search_lanes=lanes,
@@ -878,7 +973,9 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> LegalQueryPlan:
                     legal_domain=data.get("legal_domain") or fallback.legal_domain,
                     provisions=provisions,
                     legal_questions=data.get("legal_questions") or fallback.legal_questions,
-                    factual_matrix=data.get("factual_matrix") or [query[:250]],
+                    factual_matrix=data.get("factual_matrix") or [query],
+                    raw_query=query,
+                    query_text=query,
                     jurisdiction="Pakistan",
                     required_authorities=data.get("required_authorities", ["Supreme Court of Pakistan", "High Courts"]),
                     search_lanes=search_lanes,

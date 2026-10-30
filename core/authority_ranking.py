@@ -78,6 +78,47 @@ def is_irrelevant_subject(candidate: Dict[str, Any], query_plan: LegalQueryPlan)
             if not any(k in haystack for k in ["partition", "co-sharer", "benami"]):
                 return True
 
+    is_family = any(k in domains or k in questions_str for k in ["family", "khula", "dower", "maintenance", "custody", "guardian", "mflo", "talaq", "zar-i-khula"])
+    if is_family:
+        if any(k in haystack for k in ["financial institutions", "recovery of finances", "fio 2001", "pawnor", "pledge of shares", "cld", "banking court", "loan default"]):
+            return True
+        if any(k in haystack for k in ["companies act", "shareholder", "board of directors", "oppression and mismanagement", "secp"]):
+            return True
+        if any(k in haystack for k in ["section 302 ppc", "cnsa", "charas", "heroin", "narcotics"]):
+            return True
+        if any(k in haystack for k in ["customs act", "sales tax", "income tax ordinance"]):
+            return True
+
+    is_rent = any(k in domains or k in questions_str for k in ["rent", "tenant", "landlord", "eviction", "prpa", "srpo", "rent tribunal"])
+    if is_rent:
+        if any(k in haystack for k in ["pcrlj", "bail petition", "489-f", "criminal revision", "post-arrest", "section 302 ppc", "cnsa"]):
+            if not any(k in haystack for k in ["rent", "tenant", "landlord"]):
+                return True
+        if any(k in haystack for k in ["financial institutions", "recovery of finances", "fio 2001", "pawnor", "pledge of shares", "cld", "banking court", "loan default"]):
+            if not any(k in haystack for k in ["rent", "tenant", "landlord"]):
+                return True
+        if any(k in haystack for k in ["khula", "dower", "talaq", "guardians and wards", "custody of minor"]):
+            return True
+
+    is_banking = any(k in domains or k in questions_str for k in ["banking", "fio 2001", "recovery of finances", "financial institution", "loan default"])
+    if is_banking:
+        if any(k in haystack for k in ["khula", "dower", "talaq", "guardians and wards", "custody of minor"]):
+            return True
+        if any(k in haystack for k in ["rent tribunal", "prpa 2009", "srpo", "ejectment of tenant"]):
+            if not any(k in haystack for k in ["bank", "mortgage", "finance"]):
+                return True
+        if any(k in haystack for k in ["section 302 ppc", "cnsa", "murder trial"]):
+            return True
+
+    is_corporate = any(k in domains or k in questions_str for k in ["companies act", "oppression", "mismanagement", "company bench", "provisional manager"])
+    if is_corporate:
+        if any(k in haystack for k in ["election tribunal", "elections act", "reserved seats", "election petition", "service tribunal", "service appeal", "plc(cs)", "civil servants"]):
+            return True
+        if any(k in haystack for k in ["section 302 ppc", "cnsa", "murder trial"]):
+            return True
+        if any(k in haystack for k in ["khula", "dower", "family court"]):
+            return True
+
     return False
 
 
@@ -101,6 +142,7 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: LegalQueryP
     citation = str(candidate.get("citation") or candidate.get("neutral_citation") or meta.get("citation") or meta.get("neutral_citation") or "").upper()
     court = str(candidate.get("court") or candidate.get("court_name") or candidate.get("canonical_court_name") or meta.get("court") or meta.get("court_name") or "").lower()
     text = str(candidate.get("preview") or candidate.get("full_text") or candidate.get("snippet") or candidate.get("text") or meta.get("full_text") or meta.get("text") or "").lower()
+    haystack = f"{title} {citation} {court} {text}"
     year_val = candidate.get("year") or candidate.get("decision_date") or meta.get("year") or meta.get("decision_date") or 2000
 
     # 1. Court Hierarchy (0 to 40 pts)
@@ -170,11 +212,17 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: LegalQueryP
         "pre-arrest bail", "mala fide", "ulterior motive", "director",
         "cheating", "entrustment", "quashment", "fiduciary",
         "partition", "co-sharer", "benami", "set-off", "set off", "counter-claim", "counter claim",
-        "hotchpot", "preliminary decree", "order xx rule 18", "order viii rule 6", "ancestral estate"
+        "hotchpot", "preliminary decree", "order xx rule 18", "order viii rule 6", "ancestral estate",
+        "khula", "dower", "maintenance", "dissolution of marriage", "zar-i-khula", "custody", "guardian",
+        "eviction", "tenant", "landlord", "rent tribunal", "default in rent", "prpa", "leave to defend",
+        "leave to appear", "recovery of finance", "fio 2001",
+        "oppression", "mismanagement", "provisional manager", "operational bank accounts", "solvent company",
+        "review of judgment", "error apparent", "rehearing", "order xlvii rule 1", "section 114"
     ]
+    combined_query_context = f"{combined_questions} {' '.join(query_plan.legal_domain or []).lower()}"
     matched_terms = 0
     for term in key_terms:
-        if term in combined_questions and (term in text or term in title):
+        if term in combined_query_context and (term in text or term in title):
             matched_terms += 1
 
     scores["issue_match"] = min(30.0, matched_terms * 6.0)
@@ -189,7 +237,38 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: LegalQueryP
     else:
         scores["citation_strength"] = 3.0
 
-    total_score = sum(scores.values())
+    raw_authority_score = sum(scores.values())
+
+    # CRITICAL INVARIANT: Relevance Gates Authority!
+    # Compute broad term overlap between candidate and query plan
+    plan_terms = set()
+    for prov in (query_plan.provisions or []):
+        for w in prov.lower().split():
+            if len(w) > 3 and w not in ("section", "order", "rule", "article", "code", "act"):
+                plan_terms.add(w)
+    for q in (query_plan.legal_questions or []):
+        for w in q.lower().split():
+            if len(w) > 3 and w not in ("whether", "which", "court", "under", "pakistan", "provisions"):
+                plan_terms.add(w)
+    for dom in (query_plan.legal_domain or []):
+        for w in dom.lower().split():
+            if len(w) > 3 and w not in ("law", "general"):
+                plan_terms.add(w)
+
+    text_overlap_count = sum(1 for term in plan_terms if term in haystack)
+    relevance_points = scores["provision_match"] + scores["issue_match"]
+
+    if relevance_points == 0.0 and text_overlap_count < 2:
+        # Candidate has zero statutory relevance and zero legal issue match: total score is 0.
+        # An irrelevant Supreme Court case must NEVER score 85+ points.
+        return 0.0, scores
+    elif relevance_points == 0.0:
+        # Marginal text overlap without explicit provision or issue match
+        total_score = min(raw_authority_score * 0.25, 25.0)
+    else:
+        # Relevant cases receive relevance multiplier boost
+        total_score = raw_authority_score + (relevance_points * 1.5)
+
     return total_score, scores
 
 

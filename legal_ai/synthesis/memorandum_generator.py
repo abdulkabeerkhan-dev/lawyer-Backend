@@ -848,6 +848,39 @@ def filter_and_cap_authorities(
             if "article 188" in c_comb and not any(k in c_comb for k in ["114", "xlvii", "order 47", "cpc", "civil procedure"]):
                 continue
 
+        # Family law queries must NOT list banking recovery, corporate, criminal murder, or tax cases
+        is_family = any(k in all_plan_terms for k in ["family law", "khula", "dower", "maintenance", "custody", "guardian", "mflo", "talaq", "zar-i-khula"])
+        if is_family:
+            if any(k in c_comb for k in ["financial institutions", "recovery of finances", "fio 2001", "pawnor", "pledge of shares", "cld", "banking court", "loan default"]):
+                continue
+            if any(k in c_comb for k in ["companies act", "shareholder", "board of directors", "oppression and mismanagement"]):
+                continue
+            if any(k in c_comb for k in ["section 302 ppc", "cnsa", "charas", "heroin", "narcotics"]):
+                continue
+
+        # Rent queries must NOT list criminal bail, banking recovery, corporate, or family custody
+        is_rent = any(k in all_plan_terms for k in ["rent restriction", "tenant", "landlord", "eviction", "prpa", "srpo", "rent tribunal"])
+        if is_rent:
+            if any(k in c_comb for k in ["pcrlj", "bail petition", "489-f", "criminal revision", "post-arrest", "section 302 ppc", "cnsa"]):
+                if not any(k in c_comb for k in ["rent", "tenant", "landlord"]):
+                    continue
+            if any(k in c_comb for k in ["financial institutions", "recovery of finances", "fio 2001", "pawnor", "pledge of shares", "cld", "banking court"]):
+                if not any(k in c_comb for k in ["rent", "tenant", "landlord"]):
+                    continue
+            if any(k in c_comb for k in ["khula", "dower", "guardians and wards", "custody of minor"]):
+                continue
+
+        # Banking queries must NOT list family, rent eviction, or murder trials
+        is_banking = any(k in all_plan_terms for k in ["banking recovery", "fio 2001", "recovery of finances", "financial institution", "loan default"])
+        if is_banking:
+            if any(k in c_comb for k in ["khula", "dower", "talaq", "guardians and wards", "custody of minor"]):
+                continue
+            if any(k in c_comb for k in ["rent tribunal", "prpa 2009", "srpo", "ejectment of tenant"]):
+                if not any(k in c_comb for k in ["bank", "mortgage", "finance"]):
+                    continue
+            if any(k in c_comb for k in ["section 302 ppc", "cnsa", "murder trial"]):
+                continue
+
         retained.append(c)
 
     pool = retained
@@ -1954,6 +1987,25 @@ def build_authoritative_opinion_fallback(query_text: str, query_plan: Any = None
             "Under Pakistani law, the dishonour of a cheque engages both criminal prosecution under Section 489-F PPC and civil summary recovery under Order XXXVII CPC.\n\n"
             "1. **Section 489-F PPC Ingredients**: To sustain a conviction, the prosecution must strictly prove: (a) issuance of cheque with dishonest intention; (b) towards repayment of a loan or fulfillment of an obligation; and (c) dishonour upon presentation.\n\n"
             "2. **Civil Summary Remedy**: The payee may simultaneously institute a summary suit under Order XXXVII Rule 2 CPC before the District Judge within 3 years under Article 64A of the Limitation Act, 1908."
+        )
+    elif any(k in q_low for k in ["khula", "dower", "maintenance", "dissolution of marriage", "zar-i-khula"]):
+        sections.append(
+            "Under Pakistani Muslim family jurisprudence and the landmark Supreme Court authority in *Khurshid Bibi v. Muhammad Amin* (PLD 1967 SC 97), a Muslim wife possesses an absolute legal right to obtain dissolution of marriage through Khula.\n\n"
+            "1. **Consent of Husband Not Required**: The Family Court is fully empowered to dissolve the marriage by Khula even if the husband adamantly refuses consent. Under Section 10(4) of the Family Courts Act, 1964, upon failure of pre-trial reconciliation, the Court is mandated to immediately pass a decree for dissolution of marriage.\n\n"
+            "2. **Dower / Zar-i-Khula Status**: The wife is directed to surrender unpaid dower or return received dower. However, non-return of dower is an independent civil liability and does not invalidate, suspend, or delay the dissolution decree.\n\n"
+            "3. **Maintenance Rights**: Under Section 9 of the Muslim Family Laws Ordinance, 1961, the father remains under a continuous statutory obligation to maintain his minor children regardless of custody disputes."
+        )
+    elif any(k in q_low for k in ["companies act", "oppression", "mismanagement", "company bench"]) and any(k in q_low for k in ["286", "288", "freeze", "provisional manager"]):
+        sections.append(
+            "Under the Companies Act, 2017, remedies against oppression and mismanagement are adjudicated exclusively by the Company Bench of the High Court.\n\n"
+            "1. **Section 286 Jurisdiction**: A petition under Section 286 may be instituted by members holding not less than 10% voting power who establish that company affairs are being conducted in an oppressive or prejudicial manner.\n\n"
+            "2. **Interim Relief Restrictions under Section 288**: While Section 288 confers interlocutory powers to regulate company affairs, superior court jurisprudence strictly prohibits granting sweeping interim orders that freeze operational bank accounts or paralyze the management of an active, solvent, profit-making commercial enterprise at the threshold of a petition."
+        )
+    elif any(k in q_low for k in ["banking court", "recovery of finance", "fio 2001", "financial institutions"]) and any(k in q_low for k in ["leave to defend", "leave to appear", "condonation"]):
+        sections.append(
+            "Under the Financial Institutions (Recovery of Finances) Ordinance, 2001 (FIO 2001), recovery proceedings before the Banking Court are subject to a strict summary procedure.\n\n"
+            "1. **Section 10 Leave to Defend**: The defendant must file an application for leave to defend within 30 days from the date of first service. The provisions of Section 5 of the Limitation Act, 1908 do not apply to condone delay in filing leave applications before the Banking Court.\n\n"
+            "2. **Mandatory Appeal Deposit under Section 22**: Under Section 22(5) FIO 2001, no appeal against a final decree shall be entertained by the High Court unless the appellant deposits 50% of the decreetal amount with the Court or furnishes acceptable security."
         )
     else:
         sections.append(
