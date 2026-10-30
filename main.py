@@ -13786,6 +13786,17 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
         # Final sanitization pass to guarantee zero scraper artifacts in precedent cards
 
         precedent_cards = [sanitize_precedent_card(c) for c in precedent_cards]
+        try:
+            from legal_ai.synthesis.memorandum_generator import filter_and_cap_authorities
+            precedent_cards = filter_and_cap_authorities(
+                precedent_cards,
+                query_plan=legal_query_plan,
+                query_text=effective_user_query,
+                min_k=min(2, len(precedent_cards)),
+                max_k=5
+            )
+        except Exception:
+            pass
 
 
 
@@ -16011,6 +16022,17 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                     missing_provisions.append(disp_clean)
 
         precedent_cards = job.get("precedent_cards") or job.get("verified_precedents_fallback") or []
+        try:
+            from legal_ai.synthesis.memorandum_generator import filter_and_cap_authorities
+            precedent_cards = filter_and_cap_authorities(
+                precedent_cards,
+                query_plan=job.get("query_plan"),
+                query_text=job.get("query_text") or "",
+                min_k=min(2, len(precedent_cards)),
+                max_k=5
+            )
+        except Exception:
+            pass
 
         # Determine if this failure is specifically precedent/citation related
         is_precedent_blocked = (

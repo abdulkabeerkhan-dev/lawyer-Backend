@@ -766,6 +766,32 @@ def create_deterministic_fallback_plan(query: str) -> LegalQueryPlan:
                 "query": "Section 498 CrPC concurrent jurisdiction Court of Session High Court bail application"
             })
 
+    # Dedicated lanes for Partition & Benami claims / set-off maintainability
+    if any(k in q_low for k in ["partition", "benami", "co-sharer", "co-owner", "hotchpot", "joint property"]):
+        if any(k in q_low for k in ["set off", "set-off", "claim", "defence", "defense"]):
+            if not any(l["lane"] == "partition_set_off_inapplicability" for l in lanes):
+                lanes.insert(0, {
+                    "lane": "partition_set_off_inapplicability",
+                    "query": "Order VIII Rule 6 CPC set off maintainable only in money suit partition suit immovable property not maintainable"
+                })
+            if not any(l["lane"] == "partition_counter_claim_cross_suit" for l in lanes):
+                lanes.append({
+                    "lane": "partition_counter_claim_cross_suit",
+                    "query": "suit for partition co-sharers properties in name of other persons proper remedy independent suit counter claim Khawaja Nayyar Qayyum 2006 YLR 2059"
+                })
+        if any(k in q_low for k in ["partition", "co-sharer", "joint property"]):
+            if not any(l["lane"] == "partition_order20_rule18_partial_partition" for l in lanes):
+                lanes.append({
+                    "lane": "partition_order20_rule18_partial_partition",
+                    "query": "suit for partition preliminary decree co-sharer Order XX Rule 18 CPC partial partition ancestral estate Shahbaz Khan 2026 SCMR 941"
+                })
+        if any(k in q_low for k in ["benami"]):
+            if not any(l["lane"] == "benami_statutory_bar_section4" for l in lanes):
+                lanes.append({
+                    "lane": "benami_statutory_bar_section4",
+                    "query": "Section 4 Benami Transactions Prohibition Act 2017 bar on defence real owner burden of proof"
+                })
+
     return LegalQueryPlan(
         legal_domain=domains,
         provisions=provisions,
@@ -829,7 +855,7 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> LegalQueryPlan:
                 # If premise corrections exist, ensure absent provisions are scrubbed and replaced with Pakistani equivalents
                 if premise_corrections:
                     for pc in premise_corrections:
-                        if pc.get("status") == "CONFIRMED_ABSENT":
+                        if pc.get("status") in ("CONFIRMED_ABSENT", "LEGALLY_INAPPLICABLE_PREMISE", "STATUTORILY_BARRED_DEFENCE"):
                             absent_p = str(pc.get("queried_provision") or "").lower()
                             provisions = [p for p in provisions if absent_p not in p.lower()]
                             for fp in fallback.provisions:

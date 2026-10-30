@@ -832,6 +832,9 @@ def filter_and_cap_authorities(
         if is_partition_benami:
             if any(k in c_comb for k in ["financial institutions", "recovery of finances", "fio 2001", "pawnor", "pledge of shares", "cld 292", "cld", "banking court", "loan default", "letter of credit"]):
                 continue
+            if any(k in c_comb for k in ["cooperative housing society", "co-operative housing", "society membership", "allotment of share in society", "ismailia cooperative", "amir ali hussain shalwani", "2001 ylr 2537"]):
+                if not any(k in c_comb for k in ["order xx rule 18", "partition act", "co-sharer", "ancestral estate"]):
+                    continue
             if any(k in c_comb for k in ["service tribunal", "service appeal", "plc(cs)", "civil servants", "labour appellate"]):
                 continue
             if any(k in c_comb for k in ["pcrlj", "bail petition", "489-f", "criminal revision", "post-arrest"]):

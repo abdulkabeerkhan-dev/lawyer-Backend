@@ -58,6 +58,26 @@ def is_irrelevant_subject(candidate: Dict[str, Any], query_plan: LegalQueryPlan)
             if not any(k in haystack for k in ["409", "420", "406", "breach of trust", "director", "cheque"]):
                 return True
 
+    is_partition_or_property = any(k in domains or k in questions_str or k in provisions_str for k in [
+        "partition", "benami", "co-sharer", "co-owner", "hotchpot", "joint property"
+    ])
+    if is_partition_or_property:
+        # Exclude banking recovery / FIO / loans / pledge of shares
+        if any(k in haystack for k in ["financial institutions", "recovery of finances", "fio 2001", "pawnor", "pledge of shares", "cld 292", "cld", "banking court", "loan default", "letter of credit"]):
+            if not any(k in haystack for k in ["partition", "co-sharer", "joint property"]):
+                return True
+        # Exclude cooperative housing society internal membership disputes
+        if any(k in haystack for k in ["cooperative housing society", "co-operative housing", "society membership", "allotment of share in society", "ismailia cooperative", "amir ali hussain shalwani", "2001 ylr 2537"]):
+            if not any(k in haystack for k in ["order xx rule 18", "partition act", "co-sharer", "ancestral estate"]):
+                return True
+        # Exclude service tribunal and labour appeals
+        if any(k in haystack for k in ["service tribunal", "service appeal", "plc(cs)", "civil servants act", "labour appellate"]):
+            return True
+        # Exclude purely criminal / bail / narcotics / murder
+        if any(k in haystack for k in ["pcrlj", "bail petition", "489-f", "criminal revision", "post-arrest", "section 302 ppc", "cnsa"]):
+            if not any(k in haystack for k in ["partition", "co-sharer", "benami"]):
+                return True
+
     return False
 
 
@@ -148,7 +168,9 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: LegalQueryP
     key_terms = [
         "breach of trust", "dishonest intention", "civil dispute", "contractual breach",
         "pre-arrest bail", "mala fide", "ulterior motive", "director",
-        "cheating", "entrustment", "quashment", "fiduciary"
+        "cheating", "entrustment", "quashment", "fiduciary",
+        "partition", "co-sharer", "benami", "set-off", "set off", "counter-claim", "counter claim",
+        "hotchpot", "preliminary decree", "order xx rule 18", "order viii rule 6", "ancestral estate"
     ]
     matched_terms = 0
     for term in key_terms:
