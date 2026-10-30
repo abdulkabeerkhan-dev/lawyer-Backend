@@ -36,7 +36,23 @@ from core.metadata_enrichment import (
     enforce_pinecone_size_limit,
     is_enriched_vector,
     normalize_legacy_vector_metadata,
+    canonicalize_domain_name,
 )
+
+
+def test_taxonomy_domain_alias_normalization():
+    """Verify bidirectional normalization of domain variants (tax/taxation, labor/labour, etc.)."""
+    assert canonicalize_domain_name("tax") == "taxation"
+    assert canonicalize_domain_name("taxation") == "taxation"
+    assert canonicalize_domain_name("revenue") == "taxation"
+    assert canonicalize_domain_name("labor") == "labour"
+    assert canonicalize_domain_name("labour") == "labour"
+    assert canonicalize_domain_name("employment") == "labour"
+    assert canonicalize_domain_name("ip") == "intellectual_property"
+    assert canonicalize_domain_name("cyber") == "cybercrime"
+    assert canonicalize_domain_name("env") == "environmental"
+    assert canonicalize_domain_name("unknown_xyz") == "general_legal"
+    assert canonicalize_domain_name("") == "general_legal"
 
 
 # ==============================================================================

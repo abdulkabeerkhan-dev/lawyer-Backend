@@ -57,6 +57,35 @@ ALL_LEGAL_DOMAINS: Set[str] = {
     "general_legal"
 }
 
+# Domain Alias Normalization Map (reconciles 'tax'/'taxation', 'labor'/'labour', etc.)
+DOMAIN_ALIAS_MAP: Dict[str, str] = {
+    "tax": "taxation",
+    "taxes": "taxation",
+    "revenue": "taxation",
+    "customs": "taxation",
+    "labor": "labour",
+    "employment": "labour",
+    "ip": "intellectual_property",
+    "intellectual property": "intellectual_property",
+    "cyber": "cybercrime",
+    "cyber crime": "cybercrime",
+    "electronic crime": "cybercrime",
+    "electronic_crime": "cybercrime",
+    "env": "environmental",
+    "environment": "environmental",
+    "general": "general_legal",
+    "unclassified": "general_legal"
+}
+
+
+def canonicalize_domain_name(domain: str) -> str:
+    """
+    Canonicalizes arbitrary domain strings, abbreviations, and dialect variations
+    into the strict Pakistani legal taxonomy.
+    """
+    d_norm = (domain or "").strip().lower().replace("-", "_")
+    return DOMAIN_ALIAS_MAP.get(d_norm, d_norm if d_norm in ALL_LEGAL_DOMAINS else "general_legal")
+
 
 # ==============================================================================
 # 1. Statutory Provisions & Pattern Catalog
