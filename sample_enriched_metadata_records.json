@@ -1,0 +1,215 @@
+[
+  {
+    "case_id": "2024_SCMR_500",
+    "citation": "2024 SCMR 500",
+    "case_title": "Mst. Aisha Bibi v. Muhammad Aslam",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "2024-02-14",
+    "year": 2024,
+    "pdf_url": "https://legal-corpus-pk.org/2024_SCMR_500.pdf",
+    "metadata_schema_version": "1.0",
+    "legal_domain": "civil",
+    "subdomain": "partition",
+    "statutory_provisions": [
+      "transfer_of_property_act_1882_section_44"
+    ],
+    "bench_level": "supreme_court",
+    "classification_confidence": 0.874,
+    "classification_source": "statutory_explicit",
+    "source_document_id": "2024_SCMR_500",
+    "text": "Suit for partition of joint ancestral land. Under Section 44 of the Transfer of Property Act 1882, a transferee from one of several co-owners of an undivided immovable property acquires only the rights of transferor and is entitled to joint possession only subject to the conditions and liabilities affecting the share. He cannot claim possession of a specific khasra number prior to final decree in partition.",
+    "text_preview": "Suit for partition of joint ancestral land. Under Section 44 of the Transfer of Property Act 1882, a transferee from one of several co-owners of an undivided immovable property acquires only the right"
+  },
+  {
+    "case_id": "2023_SCMR_984",
+    "citation": "2023 SCMR 984",
+    "case_title": "Tariq Mahmood v. The State",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "2023-09-18",
+    "year": 2023,
+    "pdf_url": "https://legal-corpus-pk.org/2023_SCMR_984.pdf",
+    "metadata_schema_version": "1.0",
+    "legal_domain": "criminal",
+    "subdomain": "pre_arrest_bail",
+    "statutory_provisions": [
+      "crpc_1898_section_498",
+      "ppc_1860_section_302"
+    ],
+    "bench_level": "supreme_court",
+    "classification_confidence": 0.898,
+    "classification_source": "statutory_explicit",
+    "source_document_id": "2023_SCMR_984",
+    "text": "Criminal Petition under Section 498 Cr.P.C. for grant of pre-arrest bail in FIR No. 120 registered under Section 302/34 PPC at Police Station Civil Lines. Held: For pre-arrest bail, petitioner must show ulterior motives and malafide on the part of police or complainant.",
+    "text_preview": "Criminal Petition under Section 498 Cr.P.C. for grant of pre-arrest bail in FIR No. 120 registered under Section 302/34 PPC at Police Station Civil Lines. Held: For pre-arrest bail, petitioner must sh"
+  },
+  {
+    "case_id": "PLD_2022_SC_340",
+    "citation": "PLD 2022 SC 340",
+    "case_title": "Federation of Pakistan v. Tariq Aziz",
+    "court": "Supreme Court of Pakistan",
+    "decision_date": "2022-05-11",
+    "year": 2022,
+    "pdf_url": "https://legal-corpus-pk.org/PLD_2022_SC_340.pdf",
+    "metadata_schema_version": "1.0",
+    "legal_domain": "constitutional",
+    "subdomain": "high_court_writ",
+    "statutory_provisions": [
+      "constitution_1973_article_199"
+    ],
+    "bench_level": "supreme_court",
+    "classification_confidence": 0.87,
+    "classification_source": "statutory_explicit",
+    "source_document_id": "PLD_2022_SC_340",
+    "text": "Constitutional Petition under Article 184(3) of Constitution of the Islamic Republic of Pakistan 1973 involving enforcement of fundamental rights under Articles 9 and 25. Public interest litigation challenging statutory appointments.",
+    "text_preview": "Constitutional Petition under Article 184(3) of Constitution of the Islamic Republic of Pakistan 1973 involving enforcement of fundamental rights under Articles 9 and 25. Public interest litigation ch"
+  },
+  {
+    "case_id": "2022_CLC_890",
+    "citation": "2022 CLC 890",
+    "case_title": "Zubaida Begum v. Imran Khan",
+    "court": "Lahore High Court, Lahore",
+    "decision_date": "2022-11-04",
+    "year": 2022,
+    "pdf_url": "https://legal-corpus-pk.org/2022_CLC_890.pdf",
+    "metadata_schema_version": "1.0",
+    "legal_domain": "family",
+    "subdomain": "khula",
+    "statutory_provisions": [
+      "family_courts_act_1964_section_5",
+      "mflo_1961_section_9"
+    ],
+    "bench_level": "high_court",
+    "classification_confidence": 0.894,
+    "classification_source": "statutory_explicit",
+    "source_document_id": "2022_CLC_890",
+    "text": "Suit for dissolution of marriage on the ground of Khula and recovery of dower under Section 5 of the Family Courts Act 1964. The wife expressed unequivocal hatred against husband and returned dower.",
+    "text_preview": "Suit for dissolution of marriage on the ground of Khula and recovery of dower under Section 5 of the Family Courts Act 1964. The wife expressed unequivocal hatred against husband and returned dower."
+  },
+  {
+    "case_id": "2023_CLD_1150",
+    "citation": "2023 CLD 1150",
+    "case_title": "Habib Bank Limited v. Premier Textile Mills",
+    "court": "Banking Court-I, Karachi",
+    "decision_date": "2023-04-20",
+    "year": 2023,
+    "pdf_url": "https://legal-corpus-pk.org/2023_CLD_1150.pdf",
+    "metadata_schema_version": "1.0",
+    "legal_domain": "banking",
+    "subdomain": "leave_to_defend",
+    "statutory_provisions": [
+      "fio_2001_section_10",
+      "fio_2001_section_9"
+    ],
+    "bench_level": "special_court_or_tribunal",
+    "classification_confidence": 0.898,
+    "classification_source": "statutory_explicit",
+    "source_document_id": "2023_CLD_1150",
+    "text": "Suit for recovery of finance under Section 9 of the Financial Institutions (Recovery of Finances) Ordinance 2001 (FIO 2001). Defendant's application for leave to defend under Section 10 dismissed for failure to raise substantial question of law or fact.",
+    "text_preview": "Suit for recovery of finance under Section 9 of the Financial Institutions (Recovery of Finances) Ordinance 2001 (FIO 2001). Defendant's application for leave to defend under Section 10 dismissed for "
+  },
+  {
+    "case_id": "2021_CLD_450",
+    "citation": "2021 CLD 450",
+    "case_title": "Muhammad Ali v. Crescent Spinning Mills Ltd.",
+    "court": "High Court of Sindh, Karachi",
+    "decision_date": "2021-08-30",
+    "year": 2021,
+    "pdf_url": "https://legal-corpus-pk.org/2021_CLD_450.pdf",
+    "metadata_schema_version": "1.0",
+    "legal_domain": "corporate",
+    "subdomain": "oppression_and_mismanagement",
+    "statutory_provisions": [
+      "companies_act_2017_section_286"
+    ],
+    "bench_level": "high_court",
+    "classification_confidence": 0.882,
+    "classification_source": "statutory_explicit",
+    "source_document_id": "2021_CLD_450",
+    "text": "Company Petition under Section 286 of the Companies Act 2017 alleging oppression of minority shareholders by the board of directors and siphoning of corporate funds.",
+    "text_preview": "Company Petition under Section 286 of the Companies Act 2017 alleging oppression of minority shareholders by the board of directors and siphoning of corporate funds."
+  },
+  {
+    "case_id": "2020_MLD_650",
+    "citation": "2020 MLD 650",
+    "case_title": "Chaudhry Riaz v. Abdul Ghafoor",
+    "court": "Lahore High Court, Rawalpindi Bench",
+    "decision_date": "2020-06-15",
+    "year": 2020,
+    "pdf_url": "https://legal-corpus-pk.org/2020_MLD_650.pdf",
+    "metadata_schema_version": "1.0",
+    "legal_domain": "rent",
+    "subdomain": "eviction_personal_need",
+    "statutory_provisions": [
+      "punjab_rented_premises_act_2009_section_15"
+    ],
+    "bench_level": "high_court",
+    "classification_confidence": 0.882,
+    "classification_source": "statutory_explicit",
+    "source_document_id": "2020_MLD_650",
+    "text": "Ejectment petition under Section 15 of the Punjab Rented Premises Act 2009 (PRPA 2009) on the ground of bona fide personal need of the landlord and default in payment of rent.",
+    "text_preview": "Ejectment petition under Section 15 of the Punjab Rented Premises Act 2009 (PRPA 2009) on the ground of bona fide personal need of the landlord and default in payment of rent."
+  },
+  {
+    "case_id": "2021_PTD_920",
+    "citation": "2021 PTD 920",
+    "case_title": "Commissioner Inland Revenue v. ABC Pharmaceuticals",
+    "court": "Islamabad High Court",
+    "decision_date": "2021-12-08",
+    "year": 2021,
+    "pdf_url": "https://legal-corpus-pk.org/2021_PTD_920.pdf",
+    "metadata_schema_version": "1.0",
+    "legal_domain": "taxation",
+    "subdomain": "sales_tax",
+    "statutory_provisions": [
+      "sales_tax_act_1990_section_8"
+    ],
+    "bench_level": "high_court",
+    "classification_confidence": 0.878,
+    "classification_source": "statutory_explicit",
+    "source_document_id": "2021_PTD_920",
+    "text": "Sales Tax Reference under Sales Tax Act 1990 against disallowance of input tax adjustment under Section 8. Taxpayer claimed registered invoices from active suppliers.",
+    "text_preview": "Sales Tax Reference under Sales Tax Act 1990 against disallowance of input tax adjustment under Section 8. Taxpayer claimed registered invoices from active suppliers."
+  },
+  {
+    "case_id": "2019_PLC_CS_320",
+    "citation": "2019 PLC (CS) 320",
+    "case_title": "Saeed Ahmad v. Federal Service Tribunal",
+    "court": "Federal Service Tribunal, Islamabad",
+    "decision_date": "2019-10-12",
+    "year": 2019,
+    "pdf_url": "https://legal-corpus-pk.org/2019_PLC_(CS)_320.pdf",
+    "metadata_schema_version": "1.0",
+    "legal_domain": "service",
+    "subdomain": "service_tribunal_appeal",
+    "statutory_provisions": [
+      "service_tribunals_act_1973_section_4"
+    ],
+    "bench_level": "special_court_or_tribunal",
+    "classification_confidence": 0.882,
+    "classification_source": "statutory_explicit",
+    "source_document_id": "2019_PLC_CS_320",
+    "text": "Service Appeal under Section 4 of the Service Tribunals Act 1973 regarding seniority and promotion under the Civil Servants Act 1973. Appellant aggrieved by supersession in promotion board.",
+    "text_preview": "Service Appeal under Section 4 of the Service Tribunals Act 1973 regarding seniority and promotion under the Civil Servants Act 1973. Appellant aggrieved by supersession in promotion board."
+  },
+  {
+    "case_id": "2023_PCrLJ_102",
+    "citation": "2023 PCrLJ 102",
+    "case_title": "Waqas v. The State",
+    "court": "Peshawar High Court",
+    "decision_date": "2023-01-25",
+    "year": 2023,
+    "pdf_url": "https://legal-corpus-pk.org/2023_PCrLJ_102.pdf",
+    "metadata_schema_version": "1.0",
+    "legal_domain": "cybercrime",
+    "subdomain": "peca_offence",
+    "statutory_provisions": [
+      "peca_2016_section_20"
+    ],
+    "bench_level": "high_court",
+    "classification_confidence": 0.878,
+    "classification_source": "statutory_explicit",
+    "source_document_id": "2023_PCrLJ_102",
+    "text": "Criminal revision against framing of charge under Section 20 of Prevention of Electronic Crimes Act 2016 (PECA 2016) regarding offences against dignity of natural person through digital communications.",
+    "text_preview": "Criminal revision against framing of charge under Section 20 of Prevention of Electronic Crimes Act 2016 (PECA 2016) regarding offences against dignity of natural person through digital communications"
+  }
+]
