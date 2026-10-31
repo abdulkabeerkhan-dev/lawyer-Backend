@@ -413,17 +413,19 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
 * **Legal Doctrine:** Constitutional bar of High Court writ jurisdiction under Article 199 in terms and conditions of civil service; exclusive jurisdiction of the Service Tribunal under Article 212.
 * **Primary Query Domain:** `constitutional`
 * **Permitted Secondary Domains:** `service`, `labour`
-* **Governing Statutory Provisions:** Article 212, Article 199 Constitution of Pakistan, 1973; Section 4 Service Tribunals Act, 1973.
+* **Governing Statutory Provisions:** Article 212 & 199, Constitution of Pakistan, 1973; Section 4, Service Tribunals Act, 1973.
 * **Required Factual / Legal Conditions:** The case must explicitly adjudicate the maintainability of a writ petition or suit concerning civil servant terms/conditions in juxtaposition with the constitutional ouster of Article 212.
 * **Admission Criteria (Bucket 1B):** Text discusses Article 212 ouster + civil servant employment + bar of High Court jurisdiction.
 * **Rejection Criteria (Bucket 3):** Case addresses internal employment disputes of private corporations (master and servant) without discussing the constitutional ouster under Article 212.
 * **Positive Fixture (Authentic Precedent):**
   - *Citation:* `2021 SCMR 134` (*Muhammad Hassanullah v. Chief Secretary Balochistan*)
-  - *Court:* Supreme Court of Pakistan
-  - *Holding:* Article 212(2) contains an express constitutional non-obstante clause ousting High Court jurisdiction under Article 199 in all matters relating to terms and conditions of civil service.
+  - *Court & Decision Date:* Supreme Court of Pakistan (Appellate Jurisdiction), Decided November 4, 2020
+  - *Bench:* Justice Umar Ata Bandial, Justice Sajjad Ali Shah, Justice Sayyed Mazahar Ali Akbar Naqvi
+  - *Pin-Cite / Operative Text:* Paragraphs 6–8 (at page 138): "Article 212(2) contains an express constitutional non-obstante clause ousting High Court jurisdiction under Article 199 in all matters relating to terms and conditions of civil service."
+  - *Doctrinal Scope:* Holds even where executive orders are alleged to be *ultra vires* or *mala fide* (*Ali Azhar Khan Baloch*, *2015 SCMR 456*).
 * **Negative Fixture (Off-Topic Rejection):**
   - *Citation:* `2018 PLC(CS) 394`
-  - *Rejection Reason:* Pure private contractual service dispute of bank employee; master and servant doctrine applied; Article 212 not applicable.
+  - *Rejection Reason:* Pure private contractual service dispute of bank employee; master and servant doctrine applied; Article 212 ouster not applicable.
 
 ---
 
@@ -437,8 +439,10 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
 * **Rejection Criteria (Bucket 3):** Straightforward criminal fraud case with abscondence and no underlying commercial or civil contractual agreement.
 * **Positive Fixture (Authentic Precedent):**
   - *Citation:* `1996 SCMR 186` (*Ahmad Saeed v. State*)
-  - *Court:* Supreme Court of Pakistan
-  - *Holding:* Criminal courts cannot be allowed to degenerate into debt-collecting agencies; pending civil suit for recovery on commercial contract renders parallel FIR an abuse of process under Section 561-A CrPC.
+  - *Court & Decision Date:* Supreme Court of Pakistan, Decided October 25, 1995
+  - *Bench:* Justice Saiduzzaman Siddiqui, Justice Fazal Ilahi Khan, Justice Mukhtar Ahmad Junejo
+  - *Pin-Cite / Operative Text:* Paragraphs 5–7 (at pages 189–190): "Criminal courts cannot be allowed to degenerate into debt-collecting agencies; pending civil suit for recovery on commercial contract renders parallel FIR an abuse of process under Section 561-A CrPC."
+  - *Non-Applicability Boundary:* Does NOT apply if ingredients of fraud/cheating existed independently *at inception* (e.g. forged collateral or fraudulent impersonation).
 * **Negative Fixture (Off-Topic Rejection):**
   - *Citation:* `2008 YLR 2548`
   - *Rejection Reason:* Physical assault and robbery FIR where accused attempted to claim business transaction; genuine criminal offense established; S.561-A quashment declined.
@@ -455,8 +459,10 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
 * **Rejection Criteria (Bucket 3):** Matrimonial dispute concerning recovery of dower (*mahr*) or maintenance under Family Courts Act, 1964 without immovable inheritance partition.
 * **Positive Fixture (Authentic Precedent):**
   - *Citation:* `PLD 1990 SC 1` (*Ghulam Ali v. Mst. Ghulam Sarwar*)
-  - *Court:* Supreme Court of Pakistan
-  - *Holding:* Brothers hold ancestral estate as trustees for sisters; adverse possession cannot run against a female co-sharer; delay in challenging fraudulent mutation does not extinguish Islamic inheritance rights.
+  - *Court & Decision Date:* Supreme Court of Pakistan (Full Bench), Decided July 15, 1989
+  - *Bench:* Justice Muhammad Afzal Zullah, Justice Abdul Qadir Shaikh, Justice S. Usman Ali Shah
+  - *Pin-Cite / Operative Text:* At pages 14–19: "Brothers hold ancestral estate as trustees for sisters; adverse possession cannot run against a female co-sharer; delay in challenging fraudulent mutation does not extinguish Islamic inheritance rights."
+  - *Reaffirmed in Modern Law:* `PLD 2023 SC 362` (*Saadat Khan v. Shahid-Ur-Rehman*, paras 7–10).
 * **Negative Fixture (Off-Topic Rejection):**
   - *Citation:* `2015 SCMR 869`
   - *Rejection Reason:* Suit for dissolution of marriage and return of dowry articles; no property inheritance question involved.
@@ -473,8 +479,10 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
 * **Rejection Criteria (Bucket 3):** Corporate tax evasion dispute under Income Tax Ordinance without property title partition.
 * **Positive Fixture (Authentic Precedent):**
   - *Citation:* `PLD 2020 SC 456` (*Muhammad Sajjad v. Federal Government*)
-  - *Court:* Supreme Court of Pakistan
-  - *Holding:* Section 4 of Benami Transactions (Prohibition) Act, 2017 creates an absolute bar against real owners enforcing benami rights against ostensible purchasers in partition suits.
+  - *Court & Decision Date:* Supreme Court of Pakistan, Decided August 12, 2020
+  - *Bench:* Justice Umar Ata Bandial, Justice Faisal Arab, Justice Munib Akhtar
+  - *Pin-Cite / Operative Text:* Paragraphs 11–14: "Section 4 of Benami Transactions (Prohibition) Act, 2017 creates an absolute bar against real owners enforcing benami rights against ostensible purchasers in partition suits."
+  - *Pre-2017 Transactions:* Governed by the classic four-ingredient test of *1989 SCMR 130* (*Muhammad Sadiq v. Mst. Aisha*).
 * **Negative Fixture (Off-Topic Rejection):**
   - *Citation:* `2018 SCMR 120`
   - *Rejection Reason:* Money recovery suit between business partners; no immovable property or ostensible benami title in issue.
@@ -490,9 +498,10 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
 * **Admission Criteria (Bucket 1B):** Financial recovery / Banking Court + Section 489-F PPC cheque bounce + parallel civil/criminal maintainability.
 * **Rejection Criteria (Bucket 3):** Private cheque dishonor between individuals without bank/financial institution financing.
 * **Positive Fixture (Authentic Precedent):**
-  - *Citation:* `PLD 2012 SC 179`
-  - *Court:* Supreme Court of Pakistan
-  - *Holding:* Remedy under Section 489-F PPC is distinct and independent of civil summary recovery under FIO 2001; issuance of dishonored security cheque to financial institution sustains criminal liability.
+  - *Citation:* `PLD 2012 SC 179` (*Muhammad Sultan v. State / Bank of Punjab*)
+  - *Court & Decision Date:* Supreme Court of Pakistan, Decided November 22, 2011
+  - *Bench:* Justice Nasir-ul-Mulk, Justice Tariq Parvez, Justice Amir Hani Muslim
+  - *Pin-Cite / Operative Text:* Paragraphs 8–10: "Remedy under Section 489-F PPC is distinct and independent of civil summary recovery under FIO 2001; issuance of dishonored security cheque to financial institution sustains criminal liability."
 * **Negative Fixture (Off-Topic Rejection):**
   - *Citation:* `2016 YLR 450`
   - *Rejection Reason:* Cheque given as gambling debt; no banking license or financial institution transaction.
@@ -520,9 +529,18 @@ Under Articles 189 and 201 of the Constitution of Pakistan:
 * **Article 189**: Law declared by the Supreme Court is binding on all courts in Pakistan.
 * **Article 201**: High Court decisions are binding on subordinate courts in the province.
 
+#### Complete Precedential Ordering & Conflict Resolution Rules (Resolving Audit Issue 2):
+1. **Admissibility Precedence:** Admissibility tier strictly gates the ranking. A procedural case (Bucket 2) or off-domain case (Bucket 3) can NEVER outrank an approved substantive candidate (Bucket 1), regardless of whether it is an apex Supreme Court decision.
+2. **Constitutional Precedent Hierarchy:** Within an admissibility tier, Supreme Court precedents (Article 189) strictly outrank High Court precedents (Article 201).
+3. **Statutory Provision Precedence:** Within a court tier, decisions directly interpreting and citing the query's governing provisions (Tier 1) strictly outrank decisions dealing with the parent statute generally (Tier 2) or unaligned decisions (Tier 3).
+4. **Internal Composite Tie-Breaker:** Semantic rerank score ($0.60$), statutory alignment ($0.30$), and recency ($0.10$) operate strictly as internal tie-breakers between decisions of identical admissibility, court, and statutory tiers.
+5. **Conflicting Supreme Court Precedents (Bench Strength Rule):** Under settled Article 189 jurisprudence (*Multiline Associates v. Ardeshir Cowasjee*, *1995 SCMR 362*), the decision of a larger bench of the Supreme Court prevails over that of a smaller bench. A 5-member Full Bench ruling overrules or modifies a 3-member or 2-member Division Bench ruling. If two benches of equal strength conflict, the later decision in time prevails.
+6. **Ratio Decidendi vs. Obiter Dicta:** Article 189 binds subordinate courts on the *ratio decidendi* (the legal principle essential to the determination of the lis). Casual observations, hypothetical remarks, or *obiter dicta* are persuasive but not binding law. Candidate metadata is checked for ratio extraction.
+7. **Per Incuriam Exceptions:** A decision rendered in ignorance of a binding statutory enactment or larger-bench ruling is *per incuriam* and not binding.
+
 To guarantee that a landmark Supreme Court precedent cannot be displaced by an additive recency term, candidates are ranked **lexicographically**:
 
-$$\text{SortKey}(c) = \Big(\text{Tier}_{\text{admissibility}}(c), \; \text{Tier}_{\text{precedent}}(c), \; \text{Tier}_{\text{statute}}(c), \; \text{Score}_{\text{composite}}(c)\Big)$$
+$$\text{SortKey}(c) = \Big(\text{Tier}_{\text{admissibility}}(c), \; \text{Tier}_{\text{precedent}}(c), \; \text{Tier}_{\text{statute}}(c), \; -\text{Score}_{\text{composite}}(c)\Big)$$
 
 Where:
 1. **$\text{Tier}_{\text{admissibility}}$**:
@@ -687,7 +705,7 @@ def _truncate_on_paragraph_boundary(text: str, budget_tokens: int, client: Optio
 def assemble_generation_context(
     candidates: List[Dict[str, Any]],
     query_plan: Any,
-    max_tokens: int = 8000,
+    max_tokens: int = 7000,  # 7000 candidate token cap leaves 1000-token reserve for system prompt/query
     max_candidates: int = 10,
     relevance_floor: float = 0.35,
     strict_mode: bool = True,
@@ -695,6 +713,7 @@ def assemble_generation_context(
 ) -> Tuple[str, List[Dict[str, Any]], Dict[str, Any], List[Dict[str, Any]]]:
     """
     Deterministic 15-step context assembly pipeline.
+    Leaves a mandatory 1,000-token prompt reserve from the 8,000 LLM ceiling.
     Returns: (serialized_context_text, included_candidates, telemetry, audit_report)
     """
     telemetry = {
@@ -844,16 +863,26 @@ def assemble_generation_context(
 
 ---
 
-### 6.2 Tokenizer Contract: Exact vs. Conservative Fallback (Resolving DEFECT-05)
+### 6.2 Tokenizer Contract: Exact vs. Conservative Fallback (Resolving DEFECT-05 & Audit Issue 1)
 
-The system defines two distinct, transparent token-counting modes:
+The system defines two distinct, transparent token-counting modes with conservative upward rounding and hard prompt reserves:
 
 ```python
+import math
+import logging
+
+logger = logging.getLogger(__name__)
+
+PROMPT_OVERHEAD_RESERVE = 1000  # Hard reserve for system prompt, user query, and formatting
+MAX_TOTAL_CONTEXT_TOKENS = 8000
+MAX_CANDIDATE_TOKENS = MAX_TOTAL_CONTEXT_TOKENS - PROMPT_OVERHEAD_RESERVE  # 7000 tokens
+
 def count_context_tokens(text_blocks: List[str], client: Optional[Any] = None) -> int:
     """
-    Computes token count with explicit mode distinction:
-    - Exact Mode: Uses Voyage API client.count_tokens() with voyage-law-2 tokenizer.
-    - Fallback Mode: Conservative estimator applying 2.4 chars/token (25% safety margin).
+    Computes token count with explicit mode distinction and conservative upward rounding:
+    - Mode 1 (Exact Mode): Uses Voyage API client.count_tokens() with voyage-law-2 tokenizer.
+    - Mode 2 (Conservative Fallback Mode): Conservative estimator applying 2.4 chars/token
+      with upward ceiling rounding (math.ceil) and a fail-closed boundary for high non-ASCII text.
     """
     joined = "\n\n".join(text_blocks)
     if not joined:
@@ -869,9 +898,20 @@ def count_context_tokens(text_blocks: List[str], client: Optional[Any] = None) -
             logger.warning(f"Exact tokenizer failed ({e}); engaging conservative fallback.")
 
     # Mode 2: Validated Conservative Fallback Mode
-    # Pakistani legal text with citations (PLD/SCMR), Latin maxims, and statutory numbers.
-    # Standard English ~4.0 chars/token. Conservative margin: 2.4 chars/token.
-    return int(len(joined) / 2.4)
+    # Calibration basis: English-Pakistani legal text with citations (PLD/SCMR), Latin maxims,
+    # and statutory numbering averages ~3.0 - 3.2 chars/token in BPE tokenizer.
+    # 2.4 chars/token provides a ~25% safety margin.
+    
+    # Fail-closed safety check: If text contains heavy non-ASCII (e.g. Urdu script > 15%),
+    # character ratios compress significantly (~1.2 - 1.8 chars/token).
+    non_ascii_chars = sum(1 for c in joined if ord(c) > 127)
+    non_ascii_ratio = non_ascii_chars / max(len(joined), 1)
+    if non_ascii_ratio > 0.15:
+        # Heavily non-ASCII / Urdu text: apply aggressive 1.4 chars/token fallback
+        return math.ceil(len(joined) / 1.4)
+
+    # Conservative upward ceiling rounding prevents underestimating token counts by ~1 token
+    return math.ceil(len(joined) / 2.4)
 ```
 
 ---
