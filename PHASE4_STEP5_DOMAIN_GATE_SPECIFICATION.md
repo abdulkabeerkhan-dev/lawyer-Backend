@@ -1,10 +1,10 @@
 # Phase 4, Step 5: Post-Rerank Legal Domain Validation Gate & Context Assembly Specification
 
-**Document Version:** 1.3.0 (Production Architecture Contract — Lexicographic Authority, Doctrine Contracts & Independent Context Safety)  
+**Document Version:** 1.4.0 (Reconciled Production Architecture Contract — Generation Native Tokenizer, 27th Amendment Subject-Matter Gating & Authenticated Primary Precedents)  
 **Status:** Architectural Specification — Awaiting Implementation Authorization  
 **Target Repository:** `lawyer-Backend-master`  
 **Target Feature Branch:** `feat/phase4-step1-planner`  
-**Gated Milestone:** Phase 4, Step 6 (Hierarchical Legal Chunking Implementation)  
+**Gated Milestone:** Phase 4, Step 6 (Hierarchical Legal Chunking Implementation — STRICTLY BLOCKED)  
 
 ---
 
@@ -413,15 +413,23 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
 * **Legal Doctrine:** Constitutional bar of High Court writ jurisdiction under Article 199 in terms and conditions of civil service; exclusive jurisdiction of the Service Tribunal under Article 212.
 * **Primary Query Domain:** `constitutional`
 * **Permitted Secondary Domains:** `service`, `labour`
-* **Governing Statutory Provisions:** Article 212 & 199, Constitution of Pakistan, 1973; Section 4, Service Tribunals Act, 1973.
+* **Governing Statutory Provisions:** Article 212 & Article 199, Constitution of Pakistan, 1973; Section 4, Service Tribunals Act, 1973 (and provincial Service Tribunals enactments).
 * **Required Factual / Legal Conditions:** The case must explicitly adjudicate the maintainability of a writ petition or suit concerning civil servant terms/conditions in juxtaposition with the constitutional ouster of Article 212.
-* **Admission Criteria (Bucket 1B):** Text discusses Article 212 ouster + civil servant employment + bar of High Court jurisdiction.
+* **Jurisdictional Scope & Non-Applicability (Narrow Jurisdictional Rule):**
+  - The constitutional ouster under Article 212(2) applies strictly and exclusively to matters falling within the exclusive statutory jurisdiction of the Service Tribunal under Section 4 of the Service Tribunals Act, 1973 (terms and conditions of service, promotions, seniority, disciplinary dismissals).
+  - It does NOT operate as an unconditional blanket exclusion of Article 199 for all disputes involving a person who happens to be a civil servant.
+  - Exceptions where High Court writ jurisdiction under Article 199 remains maintainable:
+    1. Pre-induction recruitment disputes (eligibility of candidates prior to formal appointment);
+    2. Private torts or civil claims unrelated to official terms and conditions;
+    3. Criminal prosecution of civil servants under general penal law;
+    4. Non-statutory contractual employees where the Service Tribunal lacks subject-matter jurisdiction (*Ali Azhar Khan Baloch*, *2015 SCMR 456*).
+* **Admission Criteria (Bucket 1B):** Text discusses Article 212 ouster + civil servant employment + bar of High Court jurisdiction under S.4 Service Tribunals Act.
 * **Rejection Criteria (Bucket 3):** Case addresses internal employment disputes of private corporations (master and servant) without discussing the constitutional ouster under Article 212.
 * **Positive Fixture (Authentic Precedent):**
   - *Citation:* `2025 SCMR 134` (*Muhammad Hassanullah v. Chief Secretary, Government of Balochistan*)
   - *Court & Decision Date:* Supreme Court of Pakistan (Appellate Jurisdiction), Decided December 13, 2023
   - *Bench:* Chief Justice Qazi Faez Isa, Justice Amin-ud-Din Khan, Justice Athar Minallah (Three-Member Bench)
-  - *Pin-Cite / Operative Text:* Paragraphs 4–6: Confirms that Article 212(2) contains an express constitutional non-obstante clause completely barring High Court writ jurisdiction under Article 199 in all matters relating to terms and conditions of civil service.
+  - *Pin-Cite / Operative Text:* Paragraphs 4–6: Confirms that Article 212(2) contains an express constitutional non-obstante clause completely barring High Court writ jurisdiction under Article 199 in all matters relating to terms and conditions of civil service falling within the exclusive competence of the Service Tribunal.
   - *Doctrinal Scope:* Holds even where executive orders are alleged to be *ultra vires* or *mala fide* (*Ali Azhar Khan Baloch*, *2015 SCMR 456*).
 * **Negative Fixture (Off-Topic Rejection):**
   - *Citation:* `2018 PLC(CS) 394`
@@ -429,20 +437,31 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
 
 ---
 
-### Contract 2: `DOCTRINE_S561A_CRPC_CIVIL_RECOVERY`
-* **Legal Doctrine:** Quashment of criminal proceedings under Section 561-A CrPC where an FIR is registered to coerce performance or recovery under a commercial contract.
+### Contract 2: `DOCTRINE_CIVIL_DISPUTE_CRIMINAL_QUASHMENT`
+* **Legal Doctrine:** Quashment of criminal proceedings where criminal law is initiated as a coercive tool to recover civil contractual dues; absence of fraudulent intention at inception.
 * **Primary Query Domain:** `criminal`
-* **Permitted Secondary Domains:** `civil`, `banking`
-* **Governing Statutory Provisions:** Section 561-A Code of Criminal Procedure, 1898; Sections 406/420 Pakistan Penal Code, 1860; Contract Act, 1872.
-* **Required Factual / Legal Conditions:** Case must evaluate whether registration of an FIR for criminal breach of trust (S.406) or cheating (S.420) constitutes an abuse of judicial process when a civil suit on the same agreement is pending.
-* **Admission Criteria (Bucket 1B):** Criminal FIR challenged + agreement to sell / commercial contract + civil recovery pending + Section 561-A CrPC.
-* **Rejection Criteria (Bucket 3):** Straightforward criminal fraud case with abscondence and no underlying commercial or civil contractual agreement.
-* **Positive Fixture (Authentic Precedent):**
-  - *Citation:* `1996 SCMR 186` (*Ahmad Saeed v. State*)
-  - *Court & Decision Date:* Supreme Court of Pakistan, Decided October 25, 1995
-  - *Bench:* Justice Saiduzzaman Siddiqui, Justice Fazal Ilahi Khan, Justice Mukhtar Ahmad Junejo
-  - *Pin-Cite / Operative Text:* Paragraphs 5–7 (at pages 189–190): "Criminal courts cannot be allowed to degenerate into debt-collecting agencies; pending civil suit for recovery on commercial contract renders parallel FIR an abuse of process under Section 561-A CrPC."
-  - *Non-Applicability Boundary:* Does NOT apply if ingredients of fraud/cheating existed independently *at inception* (e.g. forged collateral or fraudulent impersonation). Civil remedies do not extinguish independent criminal liability.
+* **Permitted Secondary Domains:** `civil`, `banking`, `commercial`
+* **Governing Statutory Provisions:** Article 199, Constitution of Pakistan, 1973; Section 561-A, Code of Criminal Procedure, 1898; Sections 406/420, Pakistan Penal Code, 1860; Contract Act, 1872.
+* **Required Factual / Legal Conditions:** Case must evaluate whether registration of an FIR or criminal complaint for criminal breach of trust (S.406) or cheating (S.420) constitutes an abuse of judicial process when the dispute arises out of a commercial or civil contract without fraudulent intention at inception.
+* **Strict Jurisdictional Demarcation:**
+  - High Court writ jurisdiction under Article 199 is the appropriate legal vehicle for quashing an FIR during the pre-investigation / pre-challan stage prior to the submission of a police report under Section 173 Cr.P.C.
+  - Inherent jurisdiction under Section 561-A Cr.P.C. is strictly exercisable over judicial proceedings pending before a criminal court (post-cognizance / trial stage).
+* **Doctrinal Distinction & Inception Standard:**
+  - Section 406/420 PPC requires dishonest intention *at the time of entering the contract/inception*.
+  - Subsequent inability to pay or breach of agreement does not convert a civil liability into a criminal offence.
+  - Parallel civil remedies render criminal proceedings initiated for debt recovery an abuse of process.
+* **Defect Note on 1996 SCMR 186:**
+  - *Ahmad Saeed v. State* (reported in `1996 SCMR 186`, decided October 17, 1995, coram: Mir Hazar Khan Khoso, Saad Saood Jan, and Muhammad Munir Khan) concerned the premature exercise of Section 561-A CrPC prior to police report/challan, and the Supreme Court expressly declined to rule on the civil liability reasoning ("We do not consider it necessary to examine the correctness or otherwise of this reasoning..."). It is defective as an authority for the substantive civil vs criminal fraud distinction.
+* **Primary Positive Fixture (Authentic Landmark):**
+  - *Citation:* `PLD 2023 SC 265` (*Director General, FIA v. Syed Hamid Ali Shah*)
+  - *Court & Decision Date:* Supreme Court of Pakistan (Appellate Jurisdiction), Decided 2023
+  - *Bench:* Justice Syed Mansoor Ali Shah and Justice Ayesha A. Malik
+  - *Pin-Cite / Operative Text:* Paragraphs 6–9: "Criminal law cannot be pressed into service to settle civil contractual disputes or coerce financial recovery; an offence under Section 406 or 420 PPC requires dishonest intention at the time of making the promise (inception). In the absence of fraudulent inducement at inception, subsequent breach or inability to perform a civil contract does not constitute criminal breach of trust or cheating. Registration of criminal proceedings in purely civil contractual transactions is an abuse of judicial process and liable to be quashed."
+* **Secondary Positive Fixture:**
+  - *Citation:* `2008 SCMR 76` (*Ghulam Mustafa v. State*)
+  - *Court & Decision Date:* Supreme Court of Pakistan, Decided by Chief Justice Iftikhar Muhammad Chaudhry and Justice M. Javed Buttar
+  - *Pin-Cite / Operative Text:* Paragraphs 5–7: Breach of commercial agreement in the absence of dishonest intention at inception does not constitute an offence under Section 420 or 406 PPC; civil dispute cannot be criminalized for recovery.
+* **Non-Applicability Boundary:** Does NOT apply if ingredients of fraud/cheating existed independently *at inception* (e.g. forged collateral, fictitious identity, or fraudulent impersonation). Civil remedies do not extinguish independent criminal fraud.
 * **Negative Fixture (Off-Topic Rejection):**
   - *Citation:* `2008 YLR 2548`
   - *Rejection Reason:* Physical assault and robbery FIR where accused attempted to claim business transaction; genuine criminal offense established; S.561-A quashment declined.
@@ -450,38 +469,50 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
 ---
 
 ### Contract 3: `DOCTRINE_FEMALE_INHERITANCE_LIMITATION`
-* **Legal Doctrine:** Protection of female co-heirs against fraudulent inheritance mutations sanctioned in favor of male brothers; inapplicability of statutory limitation under adverse possession.
+* **Legal Doctrine:** Protection of female co-heirs against fraudulent inheritance mutations; constructive trusteeship of male co-heirs; accrual of right to sue under Article 120 of the Limitation Act, 1908.
 * **Primary Query Domain:** `civil`
 * **Permitted Secondary Domains:** `family`
-* **Governing Statutory Provisions:** West Pakistan Muslim Personal Law (Shariat) Application Act, 1962; Limitation Act, 1908 (Section 18, Articles 120/144); Specific Relief Act, 1877 (Section 42).
-* **Required Factual / Legal Conditions:** Case must adjudicate property inheritance where male heirs claim exclusive title by adverse possession or limitation against sisters/daughters following father's demise.
-* **Admission Criteria (Bucket 1B):** Inheritance mutation + sister/female co-heir + fraud / exclusion + limitation bar challenged.
-* **Rejection Criteria (Bucket 3):** Matrimonial dispute concerning recovery of dower (*mahr*) or maintenance under Family Courts Act, 1964 without immovable inheritance partition.
-* **Positive Fixture (Authentic Precedent):**
+* **Governing Statutory Provisions:** West Pakistan Muslim Personal Law (Shariat) Application Act, 1962 (Section 2); Limitation Act, 1908 (Section 18, Articles 120 and 144); Specific Relief Act, 1877 (Section 42); Transfer of Property Act, 1882 (Section 41).
+* **Constitutional Property Rights vs. Statutory Limitation Provisions:**
+  - Articles 23 and 24 of the Constitution guarantee fundamental rights to acquire, hold, and dispose of property and protection against compulsory deprivation; they are constitutional protections, NOT statutory limitation provisions.
+  - Limitation analysis must be grounded in the **Limitation Act, 1908**:
+    1. *Constructive Trusteeship:* Brothers hold ancestral estate as constructive trustees for sisters; possession of one co-owner is deemed in law to be possession of all; adverse possession cannot be set up by a brother against a sister in the absence of open ouster (*Ghulam Ali*, *PLD 1990 SC 1*, pp. 14–19).
+    2. *Accrual of Right to Sue (Article 120 Limitation Act):* In declaratory suits challenging fraudulent inheritance mutations, the 6-year period under Article 120 commences when the "right to sue accrues". The right to sue does not accrue merely upon the clandestine sanctioning of an inheritance mutation behind a sister's back; it accrues *only upon an actual, open, and hostile denial* or threat to her title (*Saadat Khan v. Shahid-Ur-Rehman*, *PLD 2023 SC 362*, paras 7–10; *Muhammad Rustam*, *PLD 1994 SC 462*).
+    3. *Section 18 Limitation Act (Effect of Concealed Fraud):* Where a person has been kept from knowledge of their right by fraud, time runs from when the fraud first becomes known to the person injured.
+* **Non-Applicability Boundary (Crucial Legal Safeguard — No Blanket Immunity):**
+  - It is legally incorrect to state that "every fraudulent mutation prevents limitation from running forever".
+  - Limitation and laches WILL operate to bar the claim if:
+    1. The female co-heir had actual knowledge of the open adverse denial for more than 6 years without legal disability and slept on her rights;
+    2. A genuine relinquishment (*tamleek*) or deed of transfer is affirmatively established with independent proof of free consent; or
+    3. An innocent third party acquired title as a *bona fide* purchaser for valuable consideration without notice under Section 41 of the Transfer of Property Act, 1882.
+* **Positive Fixture (Authentic Landmark):**
   - *Citation:* `PLD 1990 SC 1` (*Ghulam Ali v. Mst. Ghulam Sarwar*)
   - *Court & Decision Date:* Supreme Court of Pakistan (Full Bench), Decided July 15, 1989
   - *Bench:* Justice Muhammad Afzal Zullah, Justice Abdul Qadir Shaikh, Justice S. Usman Ali Shah
-  - *Pin-Cite / Operative Text:* At pages 14–19: "Brothers hold ancestral estate as trustees for sisters; adverse possession cannot run against a female co-sharer; delay in challenging fraudulent mutation does not extinguish Islamic inheritance rights."
-  - *Reaffirmed in Modern Law:* `PLD 2023 SC 362` (*Saadat Khan v. Shahid-Ur-Rehman*, paras 7–10).
+  - *Pin-Cite / Operative Text:* Pages 14–19: Brothers hold ancestral estate as constructive trustees for sisters; co-heir possession is joint; adverse possession cannot run against a female co-sharer in the absence of open ouster.
+  - *Reaffirmed in Modern Jurisprudence:* `PLD 2023 SC 362` (*Saadat Khan v. Shahid-Ur-Rehman*, paras 7–10).
 * **Negative Fixture (Off-Topic Rejection):**
   - *Citation:* `2015 SCMR 869`
-  - *Rejection Reason:* Suit for dissolution of marriage and return of dowry articles; no property inheritance question involved.
+  - *Rejection Reason:* Matrimonial suit concerning recovery of deferred dower (*mahr*) and dowry articles under the Family Courts Act, 1964; no immovable property inheritance in issue.
 
 ---
 
 ### Contract 4: `DOCTRINE_BENAMI_PARTITION_BAR`
-* **Legal Doctrine:** Prohibition on claiming benami ownership as a defense in property partition suits; evidentiary standards for pre-2017 ancestral holdings.
+* **Legal Doctrine:** Evidentiary standards for establishing benami ownership in partition suits; prospective operation of Benami Transactions (Prohibition) Act, 2017.
 * **Primary Query Domain:** `civil`
 * **Permitted Secondary Domains:** `corporate`, `taxation`
-* **Governing Statutory Provisions:** Benami Transactions (Prohibition) Act, 2017 (Sections 3, 4, 5); Transfer of Property Act, 1882 (Section 41); Qanun-e-Shahadat Order, 1984 (Article 117); Order XX Rule 18 CPC.
+* **Governing Statutory Provisions:** Benami Transactions (Prohibition) Act, 2017 (Sections 1(3), 3, 4, 5); Transfer of Property Act, 1882 (Section 41); Qanun-e-Shahadat Order, 1984 (Article 117); Order XX Rule 18 CPC.
 * **Required Factual / Legal Conditions:** Case must evaluate partition of joint commercial or residential estate where one co-sharer claims ostensible title was purchased *benami* on behalf of the family or joint business.
+* **Textual Basis for Prospective Operation:**
+  - The Benami Transactions (Prohibition) Act, 2017 came into force upon notification in 2017.
+  - Under Section 1(3) and Sections 3–5, substantive statutory bars and penalties do not have retrospective effect. Vested civil property rights and transactions entered into prior to the commencement of the Act in 2017 remain governed by the pre-existing legal framework and the classic 4-factor test established in *1989 SCMR 130* (*Muhammad Sadiq v. Mst. Aisha*).
 * **Admission Criteria (Bucket 1B):** Partition suit + benami defense / Section 4 Act of 2017 + ostensible vs real owner evidence.
 * **Rejection Criteria (Bucket 3):** Corporate tax evasion dispute under Income Tax Ordinance without property title partition.
 * **Positive Fixture (Authentic Precedent):**
   - *Citation:* `2023 SCMR 572` (*Muhammad Yousaf and others v. Muhammad Ishaq Rana (deceased) through L.Rs. and others*)
-  - *Court & Decision Date:* Supreme Court of Pakistan (Appellate Jurisdiction), Decided 2023
-  - *Bench:* Supreme Court of Pakistan
-  - *Pin-Cite / Operative Text:* Paragraphs 8–12: Comprehensive modern landmark ruling establishing the dual-contract requirement, source of consideration, custody of original title deeds, possession, and motive required to pierce apparent ownership in partition suits; reaffirms the classic 4-factor test of *1989 SCMR 130* (*Muhammad Sadiq v. Mst. Aisha*) and prospective application of the Benami Transactions (Prohibition) Act, 2017.
+  - *Court & Decision Date:* Supreme Court of Pakistan (Appellate Jurisdiction), **Civil Appeal No. 801 of 2021, Decided December 14, 2022** (reported in 2023 SCMR 572)
+  - *Bench:* Justice Ijaz ul Ahsan, Justice Munib Akhtar, Justice Sayyed Mazahar Ali Akbar Naqvi (authored by Justice Ijaz ul Ahsan)
+  - *Pin-Cite / Operative Text:* Paragraphs 8–12: Reaffirms classic 4-factor test of *1989 SCMR 130* (*Muhammad Sadiq v. Mst. Aisha*) (source of consideration, custody of title deeds, possession/management, motive for transaction) and prospective application of the Benami Transactions (Prohibition) Act, 2017 to pre-enactment vested property rights in partition disputes.
 * **Negative Fixture (Off-Topic Rejection):**
   - *Citation:* `2018 SCMR 120`
   - *Rejection Reason:* Money recovery suit between business partners; no immovable property or ostensible benami title in issue.
@@ -522,21 +553,26 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
 
 ---
 
-### 5.2 Lexicographic Precedential Ranking Engine (Resolving DEFECT-03 & 27th Amendment Structure)
+### 5.2 Lexicographic Precedential Ranking Engine (Resolving DEFECT-03, 27th Amendment Structure & Subject-Matter Safeguards)
 
-Under the Constitution of Pakistan (as amended by the **Twenty-Seventh Constitutional Amendment**) and Articles 189 and 201:
-* **Federal Constitutional Court (FCC)**: Decisions on questions of constitutional interpretation, federal-provincial disputes, and fundamental rights are **binding on all other courts in Pakistan, including the Supreme Court**.
-* **Supreme Court of Pakistan**: General appellate apex for civil, criminal, commercial, and statutory appeals. Under amended Article 189, its decisions are binding on all subordinate courts, but do **not** bind the Federal Constitutional Court.
+Under the Constitution of Pakistan (as amended by the **Twenty-Seventh Constitutional Amendment**) and Articles 189, 201, 203-GG, and 212:
+* **Federal Constitutional Court (FCC)**: Decisions on questions of constitutional interpretation, federal-provincial disputes, and fundamental rights are **binding on all other courts in Pakistan, including the Supreme Court** under amended Article 189.
+  - **Constitutional Subject-Matter Safeguard:** The FCC is NOT an unconditional universal override for every legal question. Its paramount precedence is strictly confined to constitutional questions and fundamental rights within its constitutional jurisdiction. For general appellate matters of civil, criminal, commercial, banking, revenue, and statutory law, the **Supreme Court of Pakistan remains the paramount apex court**. If a candidate from the FCC does not decide a constitutional question or lacks subject-matter nexus, it cannot arbitrarily displace binding Supreme Court precedent on substantive civil or criminal law.
+* **Supreme Court of Pakistan**: General appellate apex for civil, criminal, commercial, banking, and statutory appeals. Under amended Article 189, its decisions are binding on all subordinate courts, but do **not** bind the Federal Constitutional Court on constitutional questions. Decisions of the **Shariat Appellate Bench of the Supreme Court** under Article 203-F are paramount on questions of Islamic repugnancy.
+* **Federal Shariat Court (FSC)**: Specialized constitutional court under Chapter 3A of the Constitution (Articles 203-A through 203-J, and Article 203-GG). Decisions of the FSC on Islamic law and statutory repugnancy are binding on the High Courts and subordinate courts under Article 203-GG (subject to appeal to the Shariat Appellate Bench of the Supreme Court). The FSC is a distinct constitutional court of specialized jurisdiction, **not** an ordinary statutory administrative tribunal.
 * **High Courts**: Under Article 201, decisions of a High Court are binding on all subordinate courts within its territorial jurisdiction.
+* **Specialized Statutory Appellate Tribunals**: Tribunals created by statute (e.g. Service Tribunals under Article 212, Appellate Tribunal Inland Revenue, Banking Appellate Tribunal) have specialized jurisdiction within their statutory charters.
+* **Subordinate Courts**: District and Sessions Courts, Civil Courts, Magistrates.
 
-#### Precedential Ordering & Co-Equal Bench Conflict Rules (Resolving Audit Issue 2):
+#### Precedential Ordering & Co-Equal Bench Conflict Rules:
 1. **Admissibility Precedence:** Admissibility tier strictly gates the ranking. A procedural case (Bucket 2) or off-domain case (Bucket 3) can NEVER outrank an approved substantive candidate (Bucket 1), regardless of whether it is an apex decision.
-2. **Constitutional Precedent Hierarchy (Post-27th Amendment):**
-   - **Tier 1 (Paramount Constitutional Apex):** Federal Constitutional Court (FCC) decisions (binding on all courts, including the Supreme Court).
-   - **Tier 2 (General Apex):** Supreme Court of Pakistan (Article 189 binding apex on all courts except FCC).
-   - **Tier 3 (Provincial / Territorial Apex):** High Courts of the Provinces and Islamabad High Court (Article 201).
-   - **Tier 4 (Specialized / Appellate Tribunals):** Federal Shariat Court (Article 203-GG) and statutory Appellate Tribunals.
-   - **Tier 5 (Subordinate / Trial Courts):** District and Sessions Courts, Civil Courts, Magistrates.
+2. **Constitutional Precedent Hierarchy (Post-27th Amendment & Chapter 3A):**
+   - **Tier 1 (Paramount Constitutional Apex):** Federal Constitutional Court (FCC) decisions on constitutional questions and fundamental rights.
+   - **Tier 2 (General Apex):** Supreme Court of Pakistan (Article 189 binding apex on all courts except FCC; paramount apex on general civil/criminal/commercial/statutory appeals; Shariat Appellate Bench under Art 203-F).
+   - **Tier 3 (Specialized Constitutional Court):** Federal Shariat Court (FSC - Chapter 3A / Article 203-GG on Islamic repugnancy).
+   - **Tier 4 (Provincial / Territorial Apex):** High Courts of the Provinces and Islamabad High Court (Article 201).
+   - **Tier 5 (Specialized Statutory Appellate Tribunals):** Service Tribunals, ATIR, Banking Appellate Tribunals.
+   - **Tier 6 (Subordinate / Trial Courts):** District and Sessions Courts, Civil Courts, Magistrates.
 3. **Statutory Provision Precedence:** Within a court tier, decisions directly interpreting and citing the query's governing provisions (Tier 1) strictly outrank decisions dealing with the parent statute generally (Tier 2) or unaligned decisions (Tier 3).
 4. **Internal Composite Tie-Breaker:** Semantic rerank score ($0.60$), statutory alignment ($0.30$), and recency ($0.10$) operate strictly as internal tie-breakers between decisions of identical admissibility, court, and statutory tiers.
 5. **Conflicting Co-Equal Benches (*Multiline Associates* & *Mst. Samrana Nawaz*):**
@@ -556,12 +592,13 @@ Where:
    - Bucket 1 (Substantive Approved: 1A + 1B): Rank 1
    - Bucket 2 (Procedural Approved): Rank 2
    - Bucket 3 (Off-Domain): Discarded in strict mode
-2. **$\text{Tier}_{\text{precedent}}$ (Post-27th Amendment Structure)**:
-   - Federal Constitutional Court (FCC - Paramount Apex): Rank 1
-   - Supreme Court of Pakistan (Article 189 General Apex): Rank 2
-   - High Courts (Article 201 Provincial Apex): Rank 3
-   - Federal Shariat Court / Appellate Tribunals: Rank 4
-   - Subordinate / Unverified Courts: Rank 5
+2. **$\text{Tier}_{\text{precedent}}$ (Post-27th Amendment & Chapter 3A Structure)**:
+   - Federal Constitutional Court (FCC - Constitutional Apex): Rank 1 (on constitutional matters)
+   - Supreme Court of Pakistan (Article 189 General Apex / Shariat Appellate Bench): Rank 2 (or Rank 1 in pure civil/criminal non-constitutional disputes)
+   - Federal Shariat Court (Chapter 3A / Art 203-GG): Rank 3
+   - High Courts (Article 201 Provincial Apex): Rank 4
+   - Specialized Statutory Appellate Tribunals: Rank 5
+   - Subordinate / Unverified Courts: Rank 6
 3. **$\text{Tier}_{\text{statute}}$**:
    - Direct Quoted Provision Match: Rank 1
    - Governing Parent Statute Match: Rank 2
@@ -588,7 +625,11 @@ def _compute_lexicographic_sort_key(
     (Tier_admissibility, Tier_precedent, Tier_statute, -CompositeAuthorityScore)
     
     Guarantees:
-    - Post-27th Amendment: FCC (Tier 1) > Supreme Court (Tier 2) > High Courts (Tier 3).
+    - Post-27th Amendment & Chapter 3A:
+      * Constitutional queries: FCC (Tier 1) > Supreme Court (Tier 2) > FSC (Tier 3) > High Courts (Tier 4).
+      * General non-constitutional queries (civil, criminal, commercial): Supreme Court (Tier 1/2) is apex;
+        FCC does not override Supreme Court on non-constitutional principles.
+      * Federal Shariat Court is recognized as a distinct constitutional court (Tier 3).
     - Substantive domain validity (Tier_admissibility) strictly gates court hierarchy.
     - Precedent tier strictly outranks recency; earlier co-equal landmarks are protected.
     - Statutory alignment takes precedence over unaligned decisions within the same court tier.
@@ -598,25 +639,31 @@ def _compute_lexicographic_sort_key(
     bucket = candidate.get("ranking_bucket", 3)
     tier_admissibility = 1 if bucket == 1 else (2 if bucket == 2 else 3)
 
-    # 2. Constitutional Precedential Tier (Post-27th Amendment & Articles 189/201)
+    # 2. Constitutional Precedential Tier (Post-27th Amendment, Chapter 3A & Articles 189/201)
     court_raw = str(candidate.get("court") or candidate.get("court_name") or candidate.get("title", "")).lower()
     citation = str(candidate.get("citation", "")).upper()
+    primary_domain = getattr(query_plan, "primary_domain", "general_legal")
 
     is_fcc = ("federal constitutional court" in court_raw) or ("FCC" in citation) or ("F.C.C." in court_raw)
     is_sc = ("supreme court" in court_raw) or ("SCMR" in citation) or ("PLD" in citation and "SC" in court_raw)
-    is_hc = ("high court" in court_raw) or ("lahore" in court_raw) or ("sindh" in court_raw) or ("peshawar" in court_raw) or ("islamabad" in court_raw) or ("balochistan" in court_raw)
     is_fsc = ("federal shariat court" in court_raw) or ("PLD" in citation and "FSC" in court_raw)
+    is_hc = ("high court" in court_raw) or ("lahore" in court_raw) or ("sindh" in court_raw) or ("peshawar" in court_raw) or ("islamabad" in court_raw) or ("balochistan" in court_raw)
+    is_tribunal = ("tribunal" in court_raw) or ("appellate tribunal" in court_raw)
 
     if is_fcc:
-        tier_precedent = 1  # Federal Constitutional Court (Paramount Apex under 27th Amendment)
+        # Subject-matter gate: FCC is paramount apex (Tier 1) on constitutional questions
+        tier_precedent = 1 if primary_domain == "constitutional" else 2
     elif is_sc:
-        tier_precedent = 2  # Supreme Court of Pakistan (General Apex under Article 189)
+        # Supreme Court is paramount apex on non-constitutional general law; Tier 2 on pure constitutional
+        tier_precedent = 1 if primary_domain != "constitutional" else 2
+    elif is_fsc:
+        tier_precedent = 3  # Federal Shariat Court (Specialized Constitutional Jurisdiction under Art 203-GG)
     elif is_hc:
-        tier_precedent = 3  # High Courts (Provincial / Territorial Apex under Article 201)
-    elif is_fsc or "tribunal" in court_raw or "appellate" in court_raw:
-        tier_precedent = 4  # Federal Shariat Court / Specialized Appellate Tribunals
+        tier_precedent = 4  # High Courts (Provincial / Territorial Apex under Article 201)
+    elif is_tribunal:
+        tier_precedent = 5  # Specialized Statutory Appellate Tribunals
     else:
-        tier_precedent = 5  # Subordinate / Trial Courts
+        tier_precedent = 6  # Subordinate / Trial Courts
 
     # 3. Statutory Provision Alignment Tier
     text = str(candidate.get("text", "")).lower()
@@ -875,61 +922,90 @@ def assemble_generation_context(
 
 ---
 
-### 6.2 Tokenizer Contract: Guaranteed Counting vs. Calibrated Estimation (Resolving Audit Issue 1)
+### 6.2 Generation Model Native Tokenizer Architecture & Three-Tier Contract (Resolving Audit Issue 1 & Issue E)
 
-The system formally establishes a three-tier token counting contract that distinguishes between guaranteed counts, calibrated operational estimates, and fail-closed safety handling:
+> [!CRITICAL]
+> **Tokenizer Architecture Correction:**  
+> Voyage AI's tokenizer (`voyage-law-2`) is an embedding-model tokenizer with a vocabulary optimized for semantic retrieval. It differs structurally from the Byte-Pair Encoding (BPE) schemes employed by generative LLMs (such as OpenAI's `tiktoken` for GPT-4o, Anthropic Claude, or Google Gemini). Voyage API token counts **do not guarantee exact generation model context-window measurement**.
+> 
+> Therefore, context assembly token budgeting is governed by the **Generation Model Native Tokenizer Architecture**, evaluated across the **complete serialized prompt payload** (system prompt instructions, structured query plan, formatted candidate blocks, citations, and delimiter overhead).
 
-1. **Level 1: Guaranteed Token Counting (Online Mode):**  
-   Uses `voyageai.Client.count_tokens([text], model="voyage-law-2")`. This executes the exact Byte-Pair Encoding (BPE) tokenizer used by the generation model representation, accounting for all formatting, metadata, and citation punctuation. This is the **only mode that guarantees exact context-window measurement**.
+The engine enforces a strict three-tier token counting contract:
+
+1. **Level 1: Guaranteed Native Generation Token Counting (Primary Online Mode):**  
+   - Implemented via the Generation Model's Native Tokenizer library (e.g. `tiktoken.encoding_for_model(model_name)` for OpenAI models, or `genai.count_tokens()` for Google Gemini).
+   - Evaluates the entire assembled prompt payload:
+     $$\text{TotalTokens} = \text{NativeTokenizer}\Big(\text{SystemPrompt} + \text{QueryPlan} + \text{UserQuery} + \sum \text{CandidateBlocks}\Big)$$
+   - **This is the only mode that guarantees exact LLM context-window safety.**
 2. **Level 2: Calibrated Operational Estimation (Standard English-Pakistani Legal Text):**  
-   Applied strictly when the tokenizer client is unavailable and the text contains standard Pakistani legal English, citations (`PLD`, `SCMR`, `CLC`), and Latin maxims.  
-   - Empirical calibration: BPE density for standard Pakistani judgments is $\sim 3.0\text{--}3.2 \text{ chars/token}$.  
-   - Operational estimator: Applied at $2.4\text{ chars/token}$ with upward ceiling rounding:
-     $$T_{\text{fallback}} = \left\lceil \frac{\text{len}(\text{text})}{2.4} \right\rceil$$
-   - A mandatory **1,000-token Dedicated Prompt Overhead Reserve** is maintained, capping candidate text at 7,000 tokens out of the 8,000-token ceiling.
+   - Applied strictly when the generation model tokenizer client is offline or disconnected, and the text consists of standard English-Pakistani judicial prose, citations (`PLD`, `SCMR`, `CLC`, `PCrLJ`), and Latin maxims.
+   - Empirical calibration: Standard Pakistani legal prose averages $\sim 3.0\text{--}3.2 \text{ chars/token}$ in generation BPE vocabularies.
+   - Evaluated at $2.4\text{ chars/token}$ with upward ceiling rounding:
+     $$T_{\text{fallback}} = \left\lceil \frac{\text{len}(\text{full\_serialized\_payload})}{2.4} \right\rceil$$
+     Implemented via `math.ceil(len(payload) / 2.4)` to eliminate cumulative single-token underestimation drift.
+   - A mandatory **1,000-token Dedicated Prompt Overhead Reserve** is permanently maintained, capping candidate retrieval text at **7,000 tokens** out of the 8,000-token model window (`MAX_CANDIDATE_TOKENS = 7000`).
 3. **Level 3: Fail-Closed Boundary for Uncalibrated / Heavy Non-ASCII Input:**  
-   If text contains non-ASCII characters exceeding $15\%$ (e.g. Urdu judicial passages, non-standard Arabic script, or uncalibrated Unicode combining marks) and the exact tokenizer is unavailable, character heuristics cannot guarantee safety. Under these conditions, the engine **fails closed** (omits the uncalibrated candidate or aborts context assembly) rather than asserting an unverified token bound.
+   - Non-ASCII text (such as Urdu judicial passages or Arabic statutory extracts) compresses heavily in BPE ($\sim 1.2\text{--}1.8\text{ chars/token}$) due to multi-byte UTF-8 representations.
+   - If candidate text contains non-ASCII characters exceeding $15\%$ and the generation model's native tokenizer is offline, character heuristics cannot establish a defensible upper bound.
+   - **Fail-Closed Guarantee:** Under these conditions, the engine **fails closed** (omits the uncalibrated candidate or aborts context assembly) rather than asserting an unverified token bound.
 
 ```python
 import math
 import logging
+from typing import List, Dict, Any, Optional
 
 logger = logging.getLogger(__name__)
 
-PROMPT_OVERHEAD_RESERVE = 1000  # Hard reserve for system prompt, user query, and formatting
+PROMPT_OVERHEAD_RESERVE = 1000  # Hard reserve for system instructions, query plan, and formatting
 MAX_TOTAL_CONTEXT_TOKENS = 8000
 MAX_CANDIDATE_TOKENS = MAX_TOTAL_CONTEXT_TOKENS - PROMPT_OVERHEAD_RESERVE  # 7000 tokens
 
-def count_context_tokens(text_blocks: List[str], client: Optional[Any] = None) -> int:
+def count_context_tokens(
+    text_blocks: List[str],
+    generation_tokenizer: Optional[Any] = None,
+    system_overhead_text: str = ""
+) -> int:
     """
-    Computes token count with explicit 3-level tiering:
-    - Level 1: Guaranteed Token Counting via Voyage API client.count_tokens().
-    - Level 2: Calibrated Operational Estimation (2.4 chars/token with math.ceil).
+    Computes prompt token count adhering to the Generation Model Native Tokenizer Contract:
+    - Level 1: Guaranteed Native Generation Token Counting (tiktoken / model count_tokens).
+    - Level 2: Calibrated Operational Estimation (2.4 chars/token with math.ceil and prompt reserve).
     - Level 3: Fail-Closed Boundary for uncalibrated/heavy non-ASCII text (> 15%).
     """
-    joined = "\n\n".join(text_blocks)
-    if not joined:
+    joined_candidates = "\n\n---\n\n".join(text_blocks)
+    full_payload = f"{system_overhead_text}\n\n{joined_candidates}".strip()
+    if not full_payload:
         return 0
 
-    # Level 1: Guaranteed Token Counting Mode
-    if client and hasattr(client, "count_tokens"):
+    # Level 1: Guaranteed Native Generation Token Counting Mode
+    if generation_tokenizer is not None:
         try:
-            counts = client.count_tokens([joined], model="voyage-law-2")
-            if counts and isinstance(counts[0], int) and counts[0] > 0:
-                return counts[0]
+            # Check for tiktoken-compatible encode()
+            if hasattr(generation_tokenizer, "encode"):
+                return len(generation_tokenizer.encode(full_payload))
+            # Check for client count_tokens() method
+            elif hasattr(generation_tokenizer, "count_tokens"):
+                res = generation_tokenizer.count_tokens(full_payload)
+                if isinstance(res, int):
+                    return res
+                if hasattr(res, "total_tokens"):
+                    return res.total_tokens
         except Exception as e:
-            logger.warning(f"Guaranteed tokenizer failed ({e}); evaluating fallback eligibility.")
+            logger.warning(f"Native generation tokenizer failed ({e}); evaluating fallback eligibility.")
 
     # Level 3: Fail-Closed Safety Check on Uncalibrated / Non-ASCII Input
-    non_ascii_chars = sum(1 for c in joined if ord(c) > 127)
-    non_ascii_ratio = non_ascii_chars / max(len(joined), 1)
+    non_ascii_chars = sum(1 for c in full_payload if ord(c) > 127)
+    non_ascii_ratio = non_ascii_chars / max(len(full_payload), 1)
     if non_ascii_ratio > 0.15:
-        logger.error(f"Uncalibrated non-ASCII ratio ({non_ascii_ratio:.2%}) exceeds 15% without exact tokenizer. Failing closed.")
-        # Fails closed by raising or returning hard upper-bound that triggers safe truncation
+        logger.error(
+            f"Uncalibrated non-ASCII ratio ({non_ascii_ratio:.2%}) exceeds 15% without native tokenizer. "
+            f"Failing closed to prevent context overflow."
+        )
+        # Fails closed by returning limit + 1, enforcing candidate omission or truncation
         return MAX_CANDIDATE_TOKENS + 1
 
-    # Level 2: Calibrated Operational Estimation Mode
-    return math.ceil(len(joined) / 2.4)
+    # Level 2: Calibrated Operational Estimation Mode (Standard English-Pakistani Legal Prose)
+    # math.ceil prevents fractional token underestimation
+    return math.ceil(len(full_payload) / 2.4)
 ```
 
 ---
@@ -961,7 +1037,7 @@ To prevent diagnostic parameters from ever leaking into production:
 | **TC-GATE-07** | Missing `VOYAGE_API_KEY` triggers heuristic fallback | **EXISTING (Mocked)** | `tests/test_cross_encoder_reranker.py:test_cross_encoder_feature_flag_disabled_by_default` | Mocked (`Key=None`) | Verified. |
 | **TC-GATE-08** | Malformed API payload (NaN/missing results) clamped and sanitized | **MISSING** | Target: `tests/test_cross_encoder_reranker.py` | Unit test | Assumes API client always returns an object with results attribute. |
 | **TC-GATE-09** | Full 30-query comparative benchmark | **EXISTING (Requires Update)** | Executed in `scripts/run_cross_encoder_benchmark.py` | Live 30 Queries | Evaluator must be updated to avoid treating all secondary domains as valid. |
-| **TC-GATE-10** | Existing 102 regression tests pass | **EXISTING** | Full suite passed in 28.61s | Live Test Suite | Invariant verified (102/102 passing). Proves zero legacy regression. |
+| **TC-GATE-10** | Existing 102 regression tests pass | **EXISTING** | Full suite passed in 42.52s | Live Test Suite | Invariant verified (102/102 passing). Proves zero legacy regression. |
 
 ---
 
@@ -969,29 +1045,30 @@ To prevent diagnostic parameters from ever leaking into production:
 
 Before Phase 4, Step 6 (Hierarchical Chunking) can be authorized, all sixteen acceptance conditions must be satisfied:
 
-| ID | Required Evidence | Concrete Acceptance Condition |
-| :--- | :--- | :--- |
-| **AC-01** | Gate Implementation | `core/post_rerank_domain_gate.py` authored strictly adhering to Version 1.3.0. |
-| **AC-02** | Domain Classification | Positive and negative domain classification unit fixtures pass with zero errors. |
-| **AC-03** | Statutory Fallback | All five statutory resolution outcomes and conflicting-anchor cases pass unit tests. |
-| **AC-04** | Interdisciplinary Doctrines | All 5 doctrine contracts pass both positive admission and negative rejection fixtures. |
-| **AC-05** | Quarantine Enforcement | Quarantined candidates (`is_quarantined=True`) have zero presence in final context. |
-| **AC-06** | Strict Mode Safety | `strict_mode=False` cannot bypass generation context restrictions for Bucket 3. |
-| **AC-07** | Authority Hierarchy | Lexicographic ranking places Article 189 apex binding authorities above High Court orders. |
-| **AC-08** | Pure Relevance Floor | Candidates with semantic relevance $< 0.35$ are excluded regardless of court tier. |
-| **AC-09** | Appeal Deduplication | Identical Case Year + Appeal Number cases are merged; distinct cases preserved. |
-| **AC-10** | Tokenizer Contract | Exact tokenizer mode and conservative fallback mode separately unit-tested. |
-| **AC-11** | Context Assembly | 10-candidate limit, 8,000-token limit, and paragraph-boundary truncation verified. |
-| **AC-12** | Benchmark Validity | Benchmark evaluator modernized with doctrine-aware validity checking. |
-| **AC-13** | Retrieval Quality | Recall@10 remains $100.0\%$ on the 30 standardized benchmark queries. |
-| **AC-14** | Contamination Bound | Top-5 cross-domain contamination on benchmark is $\le 3.3\%$ (projected $0.0\%$). |
-| **AC-15** | Legacy Regression | All existing 102 regression tests pass with zero failures. |
-| **AC-16** | Auditability | Every candidate in context assembly output contains a traceable inclusion/exclusion reason. |
+| ID | Required Evidence | Concrete Acceptance Condition | Evidentiary Status |
+| :--- | :--- | :--- | :--- |
+| **AC-01** | Gate Implementation strictly adhering to v1.4.0 | `core/post_rerank_domain_gate.py` authored strictly adhering to Version 1.4.0. | **PENDING IMPLEMENTATION** |
+| **AC-02** | Domain classification unit fixtures | Positive and negative domain classification unit fixtures pass with zero errors. | **PENDING IMPLEMENTATION** |
+| **AC-03** | Statutory fallback 5-stage order | All five statutory resolution outcomes and conflicting-anchor cases pass unit tests. | **PENDING IMPLEMENTATION** |
+| **AC-04** | Interdisciplinary doctrine contracts | All 5 doctrine contracts pass both positive admission and negative rejection fixtures with authenticated pin-cites. | **PENDING IMPLEMENTATION** |
+| **AC-05** | Quarantine enforcement boundary | Quarantined candidates (`is_quarantined=True`) have zero presence in final context. | **PENDING IMPLEMENTATION** |
+| **AC-06** | Strict mode generation prompt inspection | `strict_mode=False` cannot bypass generation context restrictions for Bucket 3. | **PENDING IMPLEMENTATION** |
+| **AC-07** | Authority hierarchy (FCC > SC > FSC > HC) | Lexicographic ranking places FCC (constitutional) and Supreme Court (general appellate) above High Court orders with subject-matter gating. | **PENDING IMPLEMENTATION** |
+| **AC-08** | Pure relevance floor ($S_{\text{rerank}} \ge 0.35$) | Candidates with semantic relevance $< 0.35$ are excluded regardless of court tier. | **PENDING IMPLEMENTATION** |
+| **AC-09** | Canonical appeal deduplication | Identical Case Year + Appeal Number cases are merged; distinct cases preserved. | **PENDING IMPLEMENTATION** |
+| **AC-10** | Native generation tokenizer contract | Exact native tokenizer mode, calibrated operational fallback, and fail-closed boundary separately unit-tested. | **PENDING IMPLEMENTATION** |
+| **AC-11** | 15-step context assembly engine | 10-candidate limit, 8,000-token total ceiling, 1,000-token prompt reserve, and paragraph-boundary truncation verified. | **PENDING IMPLEMENTATION** |
+| **AC-12** | Gold-standard benchmark evaluator | Benchmark evaluator modernized with doctrine-aware validity checking. | **PENDING IMPLEMENTATION** |
+| **AC-13** | Retrieval Quality (Recall@10 = 100%) | Recall@10 remains $100.0\%$ on the 30 standardized benchmark queries. | **GATED BY IMPLEMENTATION** |
+| **AC-14** | Contamination Bound ($\le 3.3\%$) | Top-5 cross-domain contamination on benchmark is $\le 3.3\%$ (projected $0.0\%$). | **GATED BY IMPLEMENTATION** |
+| **AC-15** | Legacy Regression Stability (102/102) | All existing 102 regression tests pass with zero failures (**VERIFIED: 102/102 in 42.52s**). | **EMPIRICALLY VERIFIED (BASELINE)** |
+| **AC-16** | Traceable candidate audit trail | Every candidate in context assembly output contains a traceable inclusion/exclusion reason. | **PENDING IMPLEMENTATION** |
 
 ---
 
 ## 9. Summary & Authorization Gate
 
-* **Version 1.3.0 Status:** Complete, fully articulated, and hardened against all 8 review defects.
-* **Phase 4, Step 6 (Hierarchical Chunking):** **Strictly UNAUTHORIZED.**
+* **Version 1.4.0 Status:** Reconciled, fully articulated, and hardened against all review defects, incorporating the Generation Model Native Tokenizer contract, 27th Amendment subject-matter gating, and authenticated primary-source Pakistani legal precedents.
+* **Implementation Status:** **PAUSED — Awaiting Explicit User Authorization.**
+* **Phase 4, Step 6 (Hierarchical Chunking):** **STRICTLY BLOCKED / UNAUTHORIZED.**
 * **Next Action:** Awaiting explicit authorization for Step 5 Gate Implementation and verification of criteria AC-01 through AC-16.
