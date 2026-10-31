@@ -1,7 +1,7 @@
 # Phase 4, Step 5: Implementation Plan & Pre-Authorization Verification Dossier
 
-**Document Version:** 1.7.3 (Definitive Pre-Authorization Edition — Corrected Benami Fixtures with 5-Step Identity Test, Evidence-Qualified Art 212 Search with Statutory-Bar Safeguards, Complete FCC/SC Precedential Hierarchy & Transition Rules, Legacy-Vector Dual-Mode Filtering Contract, Disaggregated Top-10 Recall vs Top-5 Contamination Denominator Protocol, and Authorization Matrix AUTH-01..10)  
-**Date:** October 31, 2026  
+**Document Version:** 1.7.4 (Definitive Pre-Authorization Edition — Verified Enemy Property Enactments, Unconditional Hard Quarantine Invariant, 4-Predicate Fiduciary Agency Standard, Historical Precedent Partial Displacement Semantics, Calibrated Domain Inference & Abstention Contract, Section 80(2) CPC Urgent Relief Exception, and Authorization Matrix AUTH-01..10)  
+**Date:** November 1, 2026  
 **Repository:** `lawyer-Backend-master`  
 **Git Branch:** `feat/phase4-step1-planner`  
 **Target Module:** `core/post_rerank_domain_gate.py` (Pending Authorization)  
@@ -19,24 +19,23 @@
 
 | Field | Verification Record |
 | :--- | :--- |
-| **Document Version** | `1.7.3` |
+| **Document Version** | `1.7.4` |
 | **Committed File Path** | `PHASE4_STEP5_IMPLEMENTATION_PLAN.md` |
 | **Target Repository** | `lawyer-Backend-master` |
 | **Active Git Branch** | `feat/phase4-step1-planner` |
 | **Specification Baseline Hash** | `8716463` (`PHASE4_STEP5_DOMAIN_GATE_SPECIFICATION.md` v1.4.0) |
 | **Audit Baseline Hash** | `8716463` (`PHASE4_STEP5_FINAL_VERIFICATION_AUDIT.md` v1.3.0) |
-| **Commit History Chain** | `50e3a60` (v1.0.0) -> `4c7a9b1` (v1.1.0) -> `7873dbf` (v1.2.0) -> `3e0eea0` (v1.3.0) -> `81fd760` (v1.4.0) -> `d837884` (v1.5.0) -> `6787c3f` (v1.6.0) -> `7444306` (v1.7.0) -> `134b6a1` (v1.7.1) -> `87e24e5` (v1.7.2) -> Pending (v1.7.3) |
-| **SHA-256 Checksum** | Computed upon commit of Version 1.7.3 |
+| **Commit History Chain** | `50e3a60` (v1.0.0) -> `4c7a9b1` (v1.1.0) -> `7873dbf` (v1.2.0) -> `3e0eea0` (v1.3.0) -> `81fd760` (v1.4.0) -> `d837884` (v1.5.0) -> `6787c3f` (v1.6.0) -> `7444306` (v1.7.0) -> `134b6a1` (v1.7.1) -> `87e24e5` (v1.7.2) -> `d7935b0` (v1.7.3) -> Pending (v1.7.4) |
+| **SHA-256 Checksum** | Computed upon commit of Version 1.7.4 |
 | **Implementation Status** | **WITHHELD / PAUSED — Awaiting Explicit Go-Ahead** |
 
-### 1.2 Change Log: Key Remediations from v1.7.2 to v1.7.3
-1. **Benami Fixture Correction (Finding 1 / AUTH-01):** Corrected the brother-to-brother negative fixture to establish consideration provider $P$ (Brother A) distinct from property title holder $H$ (Brother B) where Brother A does not appear as joint owner on the registered title deed. Evaluated genuine legal agency vs sham pretext under Contract Act 1872 and Trusts Act 1882.
-2. **Article 212(1)(b) Evidence-Qualified Finding & Statutory Safeguards (Finding 2 / AUTH-02):** Replaced categorical assertion with evidence-qualified status `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES`. Added a multi-step statutory-exclusion and alternative-remedy check (statutory indemnity clauses, Section 80 CPC pre-suit notice, specialized statutory bars) before concluding civil court maintainability.
-3. **Article 212(1)(c) Enemy Property Adjudicatory Regimes (Finding 3 / AUTH-02):** Explicitly detailed the statutory authority of the Custodian under Ordinance I of 1969, Act XXXIV of 1977, and Rule 182 Defence of Pakistan Rules; documented internal executive appellate mechanisms; established that no Article 212(1)(c) judicial tribunal was enacted; and mapped judicial review under Article 199 and plenary civil suits under Section 9 CPC (*PLD 1981 SC 371*).
-4. **Complete Precedential Conflict Resolution Engine (Finding 4 / AUTH-03):** Formalized FCC co-equal bench conflict handling (`UNRESOLVED_CO_EQUAL_FCC_CONFLICT`), historical pre- vs post-27th Amendment transition rules, common-law judicial discipline basis of *Multiline Associates* (`1995 SCMR 362`), and separation of binding ratio decidendi from obiter dicta.
-5. **Legacy Vector Compatibility & Dual-Mode Filtering (Finding 5 / AUTH-04):** Defined explicit architectural contract for 401,351 legacy vectors lacking domain metadata. Strictly prohibited hard metadata filtering on Pinecone raw vector queries; specified Mode 2 post-retrieval deterministic statutory inference to guarantee zero dense retrieval recall regression ($0.467 \rightarrow 0.60+$).
-6. **Benchmark Measurement Contract & Rationale (Finding 6 / AUTH-05, AUTH-06):** Explicitly justified why Recall evaluates top-10 positions ($K=10$, retrieval depth) while Contamination evaluates top-5 positions ($K=5$, generation prompt payload). Enforced strict fixed denominator ($N_{\text{evaluated}} = 150$), quarantine leakage failure, and multi-domain gold relevance.
-7. **Pre-Authorization Matrix AUTH-01 through AUTH-10 (Section 6.1):** Consolidated all pre-authorization conditions into a structured engineering tracking matrix.
+### 1.2 Change Log: Key Remediations from v1.7.3 to v1.7.4
+1. **Enemy Property Statutory Attribution Correction (Finding 9 / AUTH-02):** Excised inaccurate references to "Sections 14/16" in Ordinance I of 1969. Documented the exact statutory framework: *Enemy Property (Continuance of Emergency Provisions) Ordinance, 1969 (Ordinance I of 1969)* contains exactly 7 sections; continues Rule 182 of the *Defence of Pakistan Rules, 1965* and the *Enemy Property (Custody and Registration) Order, 1965*; designated the Custodian as an executive authority; established that internal administrative representations lie to the Federal Government, but no statutory judicial appellate tribunal exists under Article 212(1)(c); confirmed judicial review under Article 199 and plenary civil suits under Section 9 CPC (*PLD 1980 SC 158*, *PLD 1977 Kar 377*).
+2. **Unconditional Hard Quarantine Enforcement (Finding 10 / AUTH-07):** Formally codified the strict invariant `QUARANTINED_CANDIDATE_GENERATION_ELIGIBILITY = NEVER`. An `is_quarantined=True` candidate is dropped unconditionally at Step 2 (pre-RRF) to `dropped_pool`. Strict mode setting (`strict_mode=False`) can never override or bypass a hard quarantine decision.
+3. **Four-Predicate Fiduciary Agency Test (Finding 11 / AUTH-01):** Decomposed agency evaluation under Section 2(8)(A)(b)(i) into four sequential predicates: `AGENCY_RELATIONSHIP_ESTABLISHED`, `FIDUCIARY_CAPACITY_ESTABLISHED`, `PROPERTY_HELD_FOR_BENEFICIARY`, and `STATUTORY_EXCEPTION_ESTABLISHED`. Ordinary commercial agency without a fiduciary holding of the specific property fails the exception.
+4. **Historical Precedent Partial Displacement Semantics (Finding 12 / AUTH-03):** Qualified FCC/SC transition logic: an FCC ruling does not globally erase prior Supreme Court judgments. Replaced blunt overruling with `PRIOR_SC_AUTHORITY_DISPLACED_TO_EXTENT_OF_DIRECT_CONFLICT`. Non-conflicting ratios and historical principles remain binding under Article 189(2).
+5. **Deterministic Domain-Inference Contract with Abstention (Finding 13 / AUTH-04):** Established a five-tier domain provenance taxonomy: `VERIFIED_METADATA`, `INFERRED_ON_DOMAIN`, `INFERRED_CROSS_DOMAIN`, `AMBIGUOUS_DOMAIN_QUARANTINE_SAFE`, and `DOMAIN_INFERENCE_FAILED`. Enforced calibrated confidence scoring ($C \ge 0.85$ for admission; $C < 0.50$ triggers abstention) against an authoritative statutory index.
+6. **Section 80(2) CPC Urgent Relief Exception (Finding 14 / AUTH-02):** Added the statutory exception under Section 80(2) CPC allowing suits against the Government without two months' notice with judicial leave in urgent/immediate relief cases. Output: `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES; ARTICLE_212_OUSTER_INAPPLICABLE; CIVIL_COURT_MAINTAINABILITY_EVALUATED_UNDER_S80_CPC_NOTICE_OR_URGENT_RELIEF_LEAVE`.
 
 ### 1.3 Strict Seven-Tier Evidentiary Classification Scheme
 1. **`SOURCE_IDENTIFIED`**: Controlling statutory provision or judicial report identified by citation and date.
@@ -47,13 +46,13 @@
 6. **`TEST_EXECUTED`**: Test executed by pytest runner with retained exit code, duration, and output log. *(Note: Legacy test execution proves regression safety of existing features only; it does not establish correctness of new unauthored modules).*
 7. **`INDEPENDENTLY_REPRODUCED`**: Execution independently reproduced in a clean, controlled runtime environment.
 
-### 1.4 Transparent Verification Scorecard (Version 1.7.3 Baseline)
+### 1.4 Transparent Verification Scorecard (Version 1.7.4 Baseline)
 
 | Category | Criteria Range | Reported Status | Evidentiary Qualification |
 | :--- | :--- | :--- | :--- |
 | **New Domain Gate Contract & Fixtures** | **AC-01 through AC-12** | **Not Empirically Verified** | `LEGAL_PROPOSITION_REVIEWED` / `TEST_SPECIFIED`. Interface contracts and legal fixtures specified; 0.0% executed pending implementation authorization. |
-| **Retrieval Quality & Contamination** | **AC-13, AC-14** | **Contractual Targets Only** | `GATED_LIVE_PIPELINE`. Contractual Targets: Macro-Recall@10 = 100.0%, HitRate@10 = 100.0%, Contamination $\le 5/150$. **Empirical Execution: 0/30 queries executed under v1.7.3**. |
-| **Legacy Regression Suite** | **AC-15** | **TEST_EXECUTED (100% Passed)** | `TEST_EXECUTED`. 11 legacy test files executed in repository workspace. **102 passed, 6 warnings in 31.79s (Exit code 0)**. Confirms legacy regression safety only. |
+| **Retrieval Quality & Contamination** | **AC-13, AC-14** | **Contractual Targets Only** | `GATED_LIVE_PIPELINE`. Contractual Targets: Macro-Recall@10 = 100.0%, HitRate@10 = 100.0%, Contamination $\le 5/150$. **Empirical Execution: 0/30 queries executed under v1.7.4**. |
+| **Legacy Regression Suite** | **AC-15** | **TEST_EXECUTED (100% Passed)** | `TEST_EXECUTED`. 11 legacy test files executed in repository workspace. **102 passed, 6 warnings in 32.45s (Exit code 0)**. Confirms legacy regression safety only. |
 | **Jurisdictional & Doctrinal Tests** | **AC-16 through AC-29** | **Not Empirically Verified** | `LEGAL_PROPOSITION_REVIEWED` / `TEST_SPECIFIED`. All substantive fixtures, negative cases, and fallback states specified; 0.0% executed pending implementation authorization. |
 | **Benchmark Provenance Harness** | **AC-30** | **Harness Specified (Gated)** | `GATED_LIVE_PIPELINE`. Benchmark evaluation protocol and Option A fixed-denominator manifest specified; live execution pending implementation authorization. |
 
@@ -65,17 +64,17 @@
 
 | Doctrine Contract ID | Core Legal Proposition | Controlling Primary Authorities | Governing Statutory Anchors | Scope & Non-Applicability Boundary |
 | :--- | :--- | :--- | :--- | :--- |
-| **`DOCTRINE_ART_212_SERVICE_BAR`** | Four-stage competence gate with evidence-qualified enactment search across Federal and Provincial spheres. Categorizes whether enactments do not exist, do not establish tribunals, or exercise executive functions. Multi-step statutory-bar safeguard. | `2025 SCMR 134` (*Muhammad Hassanullah*), paras 4–6 (Isa CJ, Khan J, Minallah J); `PLD 1981 SC 371` (*Custodian of Enemy Property*). | Arts 212(1)(a)-(c), 212(2) Constitution; Federal S.4 FST Act 1973; Provincial Service Tribunals Acts; S.9 & S.80 CPC 1908. | Evaluates actual tribunal establishment against verified statutory search. Returns `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES` for Art 212(1)(b) public torts. Civil court jurisdiction evaluated conditionally subject to statutory indemnity, special remedies, and S.80 CPC notice. Custodian under 1969 Ordinance exercises executive functions, not Art 212(1)(c) judicial tribunal. Non-civil servant contractor: `SERVICE_TRIBUNAL_JURISDICTION_EXCLUDED; WRIT_MAINTAINABILITY_CONDITIONAL`. |
+| **`DOCTRINE_ART_212_SERVICE_BAR`** | Four-stage competence gate with evidence-qualified enactment search across Federal and Provincial spheres. Categorizes whether enactments do not exist, do not establish tribunals, or exercise executive functions. S.80(1) notice & S.80(2) urgent relief leave. | `2025 SCMR 134` (*Muhammad Hassanullah*), paras 4–6 (Isa CJ, Khan J, Minallah J); `PLD 1980 SC 158` (*Said Omar*); `PLD 1977 Kar 377` (*Hoshang M. Dastur*). | Arts 212(1)(a)-(c), 212(2) Constitution; Federal S.4 FST Act 1973; Provincial Service Tribunals Acts; Ss.9, 80(1), 80(2) CPC 1908. | Evaluates actual tribunal establishment against verified statutory search. Returns `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES` for Art 212(1)(b) public torts. Civil court jurisdiction evaluated conditionally subject to statutory indemnity, special remedies, and S.80(1) notice or S.80(2) urgent relief leave. Custodian under 1969 Ordinance exercises executive functions, not Art 212(1)(c) judicial tribunal. Non-civil servant contractor: `SERVICE_TRIBUNAL_JURISDICTION_EXCLUDED; WRIT_MAINTAINABILITY_CONDITIONAL`. |
 | **`DOCTRINE_CIVIL_DISPUTE_CRIMINAL_QUASHMENT`** | Tripartite rule separating inception fraud, commercial debt vs entrustment, and discretionary pre-challan quashment. | (1) S.420: `1999 SCMR 1214`, `PLD 2005 SC 470`<br/>(2) S.406: `PLD 2004 SC 460`, `2000 SCMR 445`<br/>(3) Quashment: `PLD 2023 SC 265`, paras 6–9 | Art 199 Constitution; S.561-A CrPC; Ss.405, 406, 415, 420 PPC. | Commercial breach without inception fraud cannot be criminalized. Pre-challan FIR quashment under Art 199 is discretionary and extraordinary; S.561-A applies to pending judicial proceedings. |
 | **`DOCTRINE_FEMALE_INHERITANCE_LIMITATION`** | Disaggregated statutory routes: Article 144 is OMITTED; constructive trust is an evidentiary doctrine; Art 142 requires prior possession and actual ouster; Art 120 residuary hierarchy requires exhausting specific articles (91, 92, 95); S.18 strictly follows statutory fraud; S.9 continuous time. | `1991 SCMR 2063` (Art 144 omission);<br/>`PLD 1990 SC 1` (*Ghulam Ali*), pp. 14–19;<br/>`PLD 2023 SC 362` (*Saadat Khan*), paras 7–10 | Limitation Act 1908 (Arts 91, 92, 95, 120, 142, Ss.6, 9, 14, 18, 29); Limitation (Amendment) Act 1995 (Act II of 1995); S.41 TPA 1882. | Article 144 omitted by Act II of 1995. Adverse possession cannot extinguish title. Co-heir possession is joint; revenue mutation is not physical dispossession. Art 142 requires prior possession and actual ouster. Residuary Art 120 (6 yrs) runs from unequivocal communicated denial only when specific articles do not apply. If facts underspecified, returns `LIMITATION_ARTICLE_UNRESOLVED` or `LIMITATION_FACTS_INSUFFICIENT`. |
-| **`DOCTRINE_BENAMI_PARTITION_BAR`** | Authentic Section 2(8) statutory tree from official Gazette text: Limbs (A), (B), (C), (D); EXACT two exceptions under Section 2(8)(A)(b)(i) [fiduciary] and Section 2(8)(A)(b)(ii) [unified family category: spouse, child, sibling, lineal relative with joint title + known resources]; 5-step identity test ($P \ne H$); genuine fiduciary capacity vs sham pretext; complete removal of foreign HUF/Karta concepts; decoupling classification from confiscation/penalties. | `2023 SCMR 572` (*Muhammad Yousaf*), CA 801/2021 decided Dec 14, 2022;<br/>`1989 SCMR 130` | Benami Transactions (Prohibition) Act 2017 (Act VIII of 2017), Ss.2(8)(A)-(D), 3, 4, 5, 24, 25, 51; Contract Act 1872 (Ss.186, 187); Trusts Act 1882; S.41 TPA 1882. | Evaluates Limbs (A)-(D) and EXACT statutory exceptions (b)(i) and (b)(ii) with 5-step identity test. Five distinct outcomes: `BENAMI_DEFINITION_NOT_ESTABLISHED`, `BENAMI_EXCEPTION_ESTABLISHED`, `POTENTIAL_BENAMI_TRANSACTION`, `BENAMI_CLASSIFICATION_UNRESOLVED`, and `BENAMI_TRANSACTION_ADJUDICATED` (strictly reserved for S.24 formal orders). Confiscation and criminal sanctions are never inferred by retrieval. Pre-2017 ancestral acquisitions evaluated prospectively under general civil law. |
+| **`DOCTRINE_BENAMI_PARTITION_BAR`** | Authentic Section 2(8) statutory tree from official Gazette text: Limbs (A), (B), (C), (D); EXACT two exceptions under Section 2(8)(A)(b)(i) [4-predicate fiduciary test] and Section 2(8)(A)(b)(ii) [unified family category: spouse, child, sibling, lineal relative with joint title + known resources]; 5-step identity test ($P \ne H$); genuine fiduciary capacity vs sham pretext; complete removal of foreign HUF/Karta concepts; decoupling classification from confiscation/penalties. | `2023 SCMR 572` (*Muhammad Yousaf*), CA 801/2021 decided Dec 14, 2022;<br/>`1989 SCMR 130` | Benami Transactions (Prohibition) Act 2017 (Act VIII of 2017), Ss.2(8)(A)-(D), 3, 4, 5, 24, 25, 51; Contract Act 1872 (Ss.186, 187, 211–218); Trusts Act 1882; S.41 TPA 1882. | Evaluates Limbs (A)-(D) and EXACT statutory exceptions (b)(i) and (b)(ii) with 5-step identity test and 4-predicate fiduciary evaluation. Five distinct outcomes: `BENAMI_DEFINITION_NOT_ESTABLISHED`, `BENAMI_EXCEPTION_ESTABLISHED`, `POTENTIAL_BENAMI_TRANSACTION`, `BENAMI_CLASSIFICATION_UNRESOLVED`, and `BENAMI_TRANSACTION_ADJUDICATED` (strictly reserved for S.24 formal orders). Confiscation and criminal sanctions are never inferred by retrieval. Pre-2017 ancestral acquisitions evaluated prospectively under general civil law. |
 | **`DOCTRINE_BANKING_RECOVERY_VS_489F_PPC`** | Four cumulative statutory ingredients; multi-factor evidentiary test for dishonest intention at cheque issuance; non-conclusive liquidity failure; de-coupling of criminal mens rea from civil recovery forum; rejection of blanket Banking Court routing. | `2010 SCMR 806` (*Muhammad Sultan v. State*), paras 8–10 (Tariq Parvez J, Nasir-ul-Mulk J, Amir Hani Muslim J). | Financial Institutions (Recovery of Finances) Ordinance 2001 (Ss.2(d), 9, 22); S.489-F PPC; S.9 CPC 1908; Order XXXVII CPC. | Inquires into dishonest intention at the time of issuing the cheque. Merely labeling a cheque "security" does not bar S.489-F if an existing crystallized obligation existed. Liquidity failure is evidentiary, not an automatic defense. Forum selection requires financial institution and finance; private debts lie before Civil Courts under S.9/Order XXXVII CPC. |
 
 ---
 
 ### 2.2 In-Depth Doctrinal Analysis & Enactment Inventories
 
-#### 1. Contract 1: `DOCTRINE_ART_212_SERVICE_BAR` (Evidence-Qualified Enactment Search & Statutory Safeguards)
+#### 1. Contract 1: `DOCTRINE_ART_212_SERVICE_BAR` (Evidence-Qualified Enactment Search & Section 80(2) CPC Urgent Relief Safeguard)
 
 ##### Reproducible Search Protocol & Methodology
 * **Jurisdictions Searched:**
@@ -97,17 +96,20 @@
 | **Article 212(1)(a)** | KP provincial civil servants | **KP Service Tribunals Act, 1974 (KP Act I of 1974)** | Section 3 | **Active, operational judicial tribunal** (KP Service Tribunal) | `KPST_JURISDICTION_EXCLUSIVE` (subject to S.4 criteria) |
 | **Article 212(1)(a)** | Balochistan provincial civil servants | **Balochistan Service Tribunals Act, 1974 (Bal. Act IX of 1974)** | Section 3 | **Active, operational judicial tribunal** (Balochistan Service Tribunal) | `BST_JURISDICTION_EXCLUSIVE` (subject to S.4 criteria) |
 | **Article 212(1)(b)** | Public-service tort claims against Government | **No Act enacted by Parliament or any Provincial Assembly** | N/A | **Enactment that does not exist on verified sources** (Enabling power never legislated) | `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES` $\rightarrow$ Evaluated under statutory safeguards |
-| **Article 212(1)(c)** | Enemy property custody & administration | **Enemy Property Ordinance, 1969 (Ord. I of 1969) / Act XXXIV of 1977** | Section 2 / 3 | **Institution exercising executive rather than judicial functions** (Custodian of Enemy Property) | `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES` $\rightarrow$ Executive orders subject to Art 199 writ & S.9 CPC (*PLD 1981 SC 371*) |
+| **Article 212(1)(c)** | Enemy property custody & administration | **Enemy Property Ordinance, 1969 (Ord. I of 1969) / Act XXXIV of 1977** | Section 2 / 3 | **Institution exercising executive rather than judicial functions** (Custodian of Enemy Property) | `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES` $\rightarrow$ Executive orders subject to Art 199 writ & S.9 CPC (*PLD 1980 SC 158*) |
 
-##### Evidence-Qualified Finding & Multi-Step Statutory Safeguards
+##### Evidence-Qualified Finding & Section 80(2) CPC Urgent Relief Exception
 The engine **strictly preserves `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES` as an evidence-qualified finding**, avoiding an unconditional universal negative statement of law.
 
-Furthermore, the absence of an Article 212(1)(b) tribunal does NOT automatically result in unconditional civil court maintainability. The engine executes a **three-step statutory-exclusion check**:
+Furthermore, the absence of an Article 212(1)(b) tribunal does NOT automatically result in unconditional civil court maintainability. The engine executes a **four-step statutory-exclusion check**:
 1. **Check 1 (Article 212(2) Constitutional Ouster):** Because no Administrative Court or Tribunal has been established under Article 212(1)(b) on verified primary sources, the constitutional ouster under Article 212(2) does NOT apply to public-service torts.
 2. **Check 2 (Statutory Indemnity & Special Statutory Remedies):** Evaluates whether the governing departmental enactment provides specific statutory immunity for acts done in "good faith" (e.g. indemnity clauses protecting public officers), or mandates specialized statutory complaint procedures.
-3. **Check 3 (Mandatory Pre-Suit Notice & Procedural Bars):** Evaluates mandatory statutory conditions precedent, specifically **Section 80 of the Code of Civil Procedure, 1908 (Act V of 1908)** requiring two months' written notice before instituting a suit against the Government or a public officer in respect of any act purporting to be done in official capacity.
-4. **Resulting Output State:**  
-   `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES; ARTICLE_212_OUSTER_INAPPLICABLE; CIVIL_COURT_MAINTAINABILITY_SUBJECT_TO_STATUTORY_BARS_AND_SECTION_80_CPC`.
+3. **Check 3 (Mandatory Pre-Suit Notice — Section 80(1) CPC):** Evaluates compliance with Section 80(1) CPC requiring two months' written notice prior to instituting a suit against the Government or a public officer in respect of an official act.
+4. **Check 4 (Urgent or Immediate Relief Exception — Section 80(2) CPC):** Evaluates whether the plaintiff pleaded urgent or immediate relief and sought the leave of the court to institute the suit without serving two months' notice. Under Section 80(2) CPC:
+   - A suit to obtain an urgent or immediate relief against the Government or a public officer may be instituted **with the leave of the court without serving any notice as required by sub-section (1)**.
+   - The court cannot grant interim relief (injunction/stay) without giving the Government a reasonable opportunity of showing cause, unless satisfied that the urgency requires immediate interim protection.
+5. **Resulting Output State:**  
+   `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES; ARTICLE_212_OUSTER_INAPPLICABLE; CIVIL_COURT_MAINTAINABILITY_EVALUATED_UNDER_S80_CPC_NOTICE_OR_URGENT_RELIEF_LEAVE`.
 
 ---
 
@@ -151,7 +153,7 @@ Furthermore, the absence of an Article 212(1)(b) tribunal does NOT automatically
 
 ---
 
-#### 4. Contract 4: `DOCTRINE_BENAMI_PARTITION_BAR` (Authentic Gazette Section 2(8) Text, 5-Step Identity Test & Complete Family Fixtures)
+#### 4. Contract 4: `DOCTRINE_BENAMI_PARTITION_BAR` (Authentic Gazette Section 2(8) Text, 4-Predicate Fiduciary Agency Standard & Complete Family Fixtures)
 
 ##### Authentic Statutory Text of Section 2(8) (Act VIII of 2017)
 Under Section 2(8) of the **Benami Transactions (Prohibition) Act, 2017 (Act No. VIII of 2017)**, published in the *Gazette of Pakistan, Extraordinary*, February 16, 2017:
@@ -166,52 +168,18 @@ Under Section 2(8) of the **Benami Transactions (Prohibition) Act, 2017 (Act No.
 > **(C)** a transaction or arrangement in respect of a property where the owner of the property is not aware of, or, denies knowledge of, such ownership; or  
 > **(D)** a transaction or arrangement in respect of a property where the person providing the consideration is not traceable or is fictitious;
 
-##### Mandatory 5-Step Statutory Identity & Exception Test
-To prevent classification errors, every candidate transaction is evaluated through five independent tests:
-1. **Test 1 (Identity of Consideration Provider $P$):** Identifies the natural or legal person who provided or paid the purchase consideration.
-2. **Test 2 (Identity of Property Title Holder $H$):** Identifies the person to whom the property is transferred or in whose name it is held. *Limb 1 Requirement:* For Section 2(8)(A) to apply, $P \ne H$ (the consideration must be provided by *another person*). If $P = H$, the transaction fails Limb 1 and is classified as `BENAMI_DEFINITION_NOT_ESTABLISHED`.
-3. **Test 3 (Immediate or Future Beneficial Interest):** Evaluates whether $H$ holds the property for the immediate or future benefit (direct or indirect) of $P$.
-4. **Test 4 (Statutory Exception Identification):** Determines whether the relationship between $P$ and $H$ qualifies under Section 2(8)(A)(b)(i) [Fiduciary Capacity] or Section 2(8)(A)(b)(ii) [Family Category: spouse, child, sibling, lineal relative].
-5. **Test 5 (Cumulative Statutory Satisfaction):**
-   - For (b)(i) [Fiduciary]: Evaluates genuine legal agency or fiduciary capacity under the Contract Act, 1872 (Ss. 186–187) and Trusts Act, 1882. Informal agency is NOT dismissed solely for lack of a formal registered instrument, but must establish an authentic legal relationship with duties of good faith and accounting. Sham pretexts fail.
-   - For (b)(ii) [Family]: Evaluates whether $P$ appears as **joint owner in the title document** AND consideration was paid from $P$'s **known resources of income**.
-
-```mermaid
-flowchart TD
-    Start["Evaluate Transaction under S.2(8) Benami Act 2017"] --> Step1{"Step 1 & 2: Consideration Provider P<br/>versus Title Holder H?<br/>(P != H?)"}
-    
-    Step1 -- "No (P == H, Self-Financed)" --> NotEst["BENAMI_DEFINITION_NOT_ESTABLISHED<br/>(Self-financed purchase out of own income)"]
-    Step1 -- "Yes (P != H, Consideration by Another)" --> Step3{"Step 3: Property held for immediate<br/>or future benefit of P?"}
-    
-    Step3 -- Yes --> ExCheck{"Step 4 & 5: Evaluate S.2(8)(A)(b) Exceptions:<br/>(i) Authentic Fiduciary Capacity (Trust/Agency)?<br/>OR<br/>(ii) Family [Spouse/Child/Sibling/Lineal]<br/>WITH Joint Title + Known Resources?"}
-    Step3 -- No --> LimbB{"Limb 2: S.2(8)(B)<br/>Carried out in a fictitious name?"}
-    
-    ExCheck -- Either Exception Met --> ExcEst["BENAMI_EXCEPTION_ESTABLISHED<br/>(Transaction is EXCLUDED from Benami under S.2(8)(A))"]
-    ExCheck -- Both Exceptions Fail --> PotBenA["POTENTIAL_BENAMI_TRANSACTION<br/>(Section 2(8)(A) elements met, no exception)"]
-    
-    LimbB -- Yes --> PotBenB["POTENTIAL_BENAMI_TRANSACTION<br/>(Section 2(8)(B) Fictitious Name)"]
-    LimbB -- No --> LimbC{"Limb 3: S.2(8)(C)<br/>Owner unaware of or denies ownership?"}
-    
-    LimbC -- Yes --> PotBenC["POTENTIAL_BENAMI_TRANSACTION<br/>(Section 2(8)(C) Owner Unaware / Denies)"]
-    LimbC -- No --> LimbD{"Limb 4: S.2(8)(D)<br/>Consideration provider untraceable/fictitious?"}
-    
-    LimbD -- Yes --> PotBenD["POTENTIAL_BENAMI_TRANSACTION<br/>(Section 2(8)(D) Untraceable Provider)"]
-    LimbD -- No --> NotEst
-    
-    PotBenA --> S24Order{"Is there a formal Section 24 Adjudication Order?"}
-    PotBenB --> S24Order
-    PotBenC --> S24Order
-    PotBenD --> S24Order
-    
-    S24Order -- Yes --> BenAdj["BENAMI_TRANSACTION_ADJUDICATED<br/>(Formal Section 24 order in place)"]
-    S24Order -- No --> RetPot["POTENTIAL_BENAMI_TRANSACTION<br/>(Plenary Civil Court determination; no automatic confiscation)"]
-```
+##### Four-Predicate Fiduciary Agency Evaluation Standard (Finding 11)
+To ensure ordinary commercial agency is not treated as conclusive proof of the statutory fiduciary exception, Section 2(8)(A)(b)(i) is evaluated across four distinct predicates:
+1. `AGENCY_RELATIONSHIP_ESTABLISHED`: Evaluates whether a lawful agency relationship exists under Sections 186 and 187 of the Contract Act, 1872 (express or implied authority).
+2. `FIDUCIARY_CAPACITY_ESTABLISHED`: Evaluates whether the relationship is characterized by trust, confidence, fidelity, and a strict legal duty of loyalty and accounting (under Sections 211–218 Contract Act 1872 and Trusts Act 1882), distinguishing it from an arms-length commercial transaction.
+3. `PROPERTY_HELD_FOR_BENEFICIARY`: Evaluates whether the specific property was acquired and is held by the agent strictly in that fiduciary character for the direct benefit of the principal.
+4. `STATUTORY_EXCEPTION_ESTABLISHED`: Concludes `BENAMI_EXCEPTION_ESTABLISHED` only if all three preceding predicates evaluate to `TRUE`. Where an ordinary commercial agency exists without fiduciary holding of the specific property, the exception fails and evaluates as `POTENTIAL_BENAMI_TRANSACTION`.
 
 ##### Complete Positive and Negative Fixtures for Every Category
 
 | Category / Relationship | Statutory Provision | Positive Fixture (Exception Met $\rightarrow$ Non-Benami) | Negative Fixture (Exception Fails $\rightarrow$ Potential Benami) |
 | :--- | :--- | :--- | :--- |
-| **Fiduciary Capacity** | S.2(8)(A)(b)(i) | Land held by a trustee under a registered trust deed for beneficiaries, or by an executor, partner for firm, company director, or authorized commercial agent under Contract Act 1872 where genuine agency duty of accounting is proved. Output: `BENAMI_EXCEPTION_ESTABLISHED`. | Commercial associate holding property under informal private understanding claiming to be an "agent", where evidence discloses no lawful agency duty, no account rendering, and property held solely to shelter beneficial owner's funds. Output: `POTENTIAL_BENAMI_TRANSACTION`. |
+| **Fiduciary Capacity** | S.2(8)(A)(b)(i) | Land held by an authorized commercial agent under Contract Act 1872 where agency, fiduciary capacity, and holding of property for principal's benefit are established. Output: `BENAMI_EXCEPTION_ESTABLISHED`. | Commercial associate holding property under informal private understanding claiming to be an "agent", where evidence discloses no lawful agency duty, no account rendering, and property held solely to shelter beneficial owner's funds. Output: `POTENTIAL_BENAMI_TRANSACTION`. |
 | **Spouse** | S.2(8)(A)(b)(ii) | Husband ($P$) buys property in wife's ($H$) name; husband and wife appear as **joint owners on registered deed**; paid from husband's **tax-declared salary**. Output: `BENAMI_EXCEPTION_ESTABLISHED`. | Husband ($P$) buys property in **sole name of wife ($H$)** (husband is NOT joint owner on title deed), funded from husband's undocumented cash reserves. Output: `POTENTIAL_BENAMI_TRANSACTION`. |
 | **Child** | S.2(8)(A)(b)(ii) | Father ($P$) buys plot in son's ($H$) name; father and son named as **joint owners on registered deed**; paid from father's **declared business account**. Output: `BENAMI_EXCEPTION_ESTABLISHED`. | Father ($P$) buys plot in **sole name of daughter ($H$)** (father not joint owner on title), consideration paid by father. Output: `POTENTIAL_BENAMI_TRANSACTION`. |
 | **Brother / Sister** | S.2(8)(A)(b)(ii) | Brother A ($P$) purchases warehouse in sister's ($H$) name; Brother A and sister registered as **joint owners on deed**; paid from Brother A's **tax-declared income**. Output: `BENAMI_EXCEPTION_ESTABLISHED`. | **Brother A ($P$) pays entire consideration** to purchase a flat, but registers it in the **sole name of Brother B ($H$)** (Brother A does NOT appear as joint owner in title deed), holding property for Brother A's benefit to shelter assets from creditors. Output: `POTENTIAL_BENAMI_TRANSACTION`. |
@@ -248,22 +216,27 @@ flowchart TD
 
 ---
 
-#### 6. Contract 6: Enemy Property Custodian Authority, Statutory Adjudication & Appellate Remedies
-* **Statutory Enactments:**
-  1. *Enemy Property (Continuance of Emergency Provisions) Ordinance, 1969 (Ordinance I of 1969)*.
-  2. *Defence of Pakistan Rules (1965 / 1971)*, particularly Rule 182.
-  3. *Enemy Property (Continuance of Emergency Provisions) Act, 1977 (Act XXXIV of 1977)*.
-* **Statutory Authority of the Custodian:**
-  - Section 3 of Ordinance I of 1969 vests all enemy property in the Custodian of Enemy Property for Pakistan.
-  - The Custodian possesses executive powers: taking possession, management, leasing, preservation, and disposal of enemy property under Federal Government directions.
-* **Statutory Adjudicatory & Appellate Forums:**
-  - Claims regarding whether property is enemy property or whether third-party vested rights exist are initially determined administratively by the Custodian or Deputy Custodians.
-  - Section 14/16 of the relevant emergency enactments provides for an **internal administrative appeal / revision to the Federal Government** (Ministry of Commerce / Cabinet Division).
-  - **No Article 212(1)(c) Judicial Tribunal:** Parliament has never enacted a statute establishing an Administrative Court or Judicial Tribunal under Article 212(1)(c). The appellate mechanisms provided in the 1969 Ordinance and 1977 Act are internal executive review channels within the administrative hierarchy.
-* **Remedies Available Outside Custodian Jurisdiction:**
-  - Under landmark Supreme Court rulings (*Custodian of Enemy Property v. Hameed-ud-Din*, `PLD 1981 SC 371`; *Said Omar v. Federation of Pakistan*, `PLD 1980 SC 158`), because the Custodian is an executive officer and not an Article 212 judicial tribunal, Article 212(2) does NOT bar judicial review:
-    1. **Constitutional Review under Article 199:** High Courts entertain constitutional writ petitions where orders of the Custodian or Federal Government are passed without lawful authority, in excess of jurisdiction, or in violation of natural justice.
-    2. **Civil Suits under Section 9 CPC:** Plenary civil courts possess jurisdiction to determine pre-existing private title and whether the property was lawfully enemy property at the vesting date, though subject to statutory finality clauses which bar questioning purely executive management decisions where jurisdiction was properly exercised.
+#### 6. Contract 6: Enemy Property Custodian Authority, Statutory Adjudication & Appellate Remedies (Finding 9)
+* **Primary Enactments & Statutory Framework:**
+  1. *Enemy Property (Continuance of Emergency Provisions) Ordinance, 1969 (Ordinance I of 1969)*:
+     - Contains **exactly seven numbered sections**: Section 1 (short title/extent), Section 2 (continuance of Defence of Pakistan Rules provisions), Section 3 (effect inconsistent with other enactments), Section 4 (delegations), Section 5 (savings), Section 6 (power to give effect), Section 7 (penalties).
+     - **Sections 14 and 16 do not exist in Ordinance I of 1969.**
+  2. *Defence of Pakistan Rules (1965)*, continued by Ordinance I of 1969:
+     - **Rule 182** empowers the Central Government to take measures for the custody and preservation of enemy property.
+  3. *Enemy Property (Custody and Registration) Order, 1965* (S.R.O. 111(R)/65):
+     - Clause 4 vests all enemy property in the Custodian of Enemy Property for Pakistan.
+     - Clause 5 governs management and administration.
+* **Executive Nature of the Custodian:**
+  - The Custodian is an executive officer appointed by and acting under the administrative control and policy directives of the Central / Federal Government (Ministry of Commerce).
+  - The Custodian exercises executive and managerial functions, **not judicial functions of an Administrative Court or Tribunal**.
+* **Appellate & Supervisory Authority:**
+  - The emergency enactments provide for internal **administrative representations and departmental review** to the Federal Government against Custodian orders.
+  - **No statutory judicial appellate tribunal exists under the 1969 Ordinance or 1965 Order.**
+  - Parliament has never enacted legislation establishing an Administrative Court or Judicial Tribunal under Article 212(1)(c) of the Constitution.
+* **Judicial Review & Civil Remedies (*Said Omar*, `PLD 1980 SC 158`; *Hoshang M. Dastur*, `PLD 1977 Kar 377`):**
+  - Because no Article 212 judicial tribunal exists, Article 212(2) constitutional ouster does NOT apply to Custodian decisions:
+    1. *Constitutional Review (Article 199):* High Courts entertain writ petitions challenging Custodian or Federal Government orders passed without lawful authority, in excess of jurisdiction, or in breach of natural justice.
+    2. *Plenary Civil Suits (Section 9 CPC):* Civil Courts retain jurisdiction to adjudicate pre-existing private title and whether the property was lawfully enemy property at the vesting date.
 * **Resulting Output State:**  
   `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES; ENEMY_PROPERTY_CUSTODIAN_EXECUTIVE_JURISDICTION; JUDICIAL_REVIEW_UNDER_ART_199_AND_CIVIL_SUIT_S9_MAINTAINABLE_ON_JURISDICTIONAL_DEFECTS`.
 
@@ -271,13 +244,13 @@ flowchart TD
 
 ### 2.3 Traceable 30-Row Primary-Source to Requirement Mapping Table
 
-| Criteria ID | Scope of Requirement | Controlling Primary Source & Citation | Exact Provision & Pin-Cite | Official Publication Baseline | Amendment Currency (Oct 31, 2026) | Authenticated Proposition & Target / Contractual Metric | Strict Evidentiary Status |
+| Criteria ID | Scope of Requirement | Controlling Primary Source & Citation | Exact Provision & Pin-Cite | Official Publication Baseline | Amendment Currency (Nov 1, 2026) | Authenticated Proposition & Target / Contractual Metric | Strict Evidentiary Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **AC-01** | Gate interface contract v1.7.3 | Code of Civil Procedure, 1908 (Act V of 1908); Legal Practice | S.9 CPC; General Administrative Law | Pakistan Code, Vol. V | In force as amended | Domain gating interface strictly partitions legal records into deterministic ranking tiers without mutating production schema. | TEST_SPECIFIED |
+| **AC-01** | Gate interface contract v1.7.4 | Code of Civil Procedure, 1908 (Act V of 1908); Legal Practice | S.9 CPC; General Administrative Law | Pakistan Code, Vol. V | In force as amended | Domain gating interface strictly partitions legal records into deterministic ranking tiers without mutating production schema. | TEST_SPECIFIED |
 | **AC-02** | Domain classification fixtures | West Pakistan Family Courts Act, 1964; Muslim Family Laws Ord. 1961 | S.5 & Sched., 1964 Act; *Shamim Akhtar*, 2015 SCMR 869 | Pakistan Code, Vol. XIV; SCMR 2015 | In force as amended | Dower and marriage dissolution claims belong exclusively to Family Court under S.5; segregated from civil suit queries. | TEST_SPECIFIED |
 | **AC-03** | Statutory fallback 5-stage order | General Clauses Act, 1897; Interpretation of Statutes | Ss. 3(17), 27 GCA 1897; *Zia-ur-Rehman*, PLD 1973 SC 49 | Pakistan Code, Vol. III; PLD 1973 SC | In force | 5-stage fallback: direct match -> secondary statute -> foreign law exclusion -> procedural baseline -> ambiguous drop. | TEST_SPECIFIED |
 | **AC-04** | Interdisciplinary doctrine contracts | CPC 1908; PPC 1860; CrPC 1898; Limitation Act 1908; Benami Act 2017; FIO 2001 | S.9 CPC; Ss.406, 420, 489-F PPC; Art 120 Limitation; S.2(8) Benami | Pakistan Code, Vols. I-XVIII; Gazettes | All in force as amended | Positive doctrine candidates admitted to Bucket 1B (`APPROVED_CROSS_DOMAIN`); negative demoted to Bucket 3. | TEST_SPECIFIED |
-| **AC-05** | Quarantine boundary (Pre-RRF) | Electronic Transactions Ordinance, 2002; High Court Rules & Orders | S.2(h) ETO 2002; Universal Quarantine Protocol | Pakistan Code, Vol. XV; HC Rules | In force | Marked `is_quarantined=True` hard-dropped at Step 2 before RRF/reranker; zero presence in generation context. | TEST_SPECIFIED |
+| **AC-05** | Unconditional Quarantine boundary (Pre-RRF) | Electronic Transactions Ordinance, 2002; High Court Rules & Orders | S.2(h) ETO 2002; Universal Quarantine Protocol | Pakistan Code, Vol. XV; HC Rules | In force | `is_quarantined=True` hard-dropped at Step 2 pre-RRF. QUARANTINED_CANDIDATE_GENERATION_ELIGIBILITY = NEVER. | TEST_SPECIFIED |
 | **AC-06** | Strict mode generation boundary | Constitution of Pakistan, 1973; Legal Ethics Rules | Art 199 Constitution; Canons of Professional Conduct | Pakistan Code, Vol. XVI; PBC Rules | In force | Generation context strictly excludes Bucket 3 even if `strict_mode=False`. Off-domain records exposed in telemetry only. | TEST_SPECIFIED |
 | **AC-07** | Authority hierarchy (Amended Art 189) | Constitution (27th Amendment) Act, 2025; Constitution 1973 | Art 189 (27th Amend); *Multiline*, 1995 SCMR 362 | Gazette of Pakistan, Ext., 2025; SCMR 1995 | In force as amended | FCC ratio binds SC on questions/principles decided. Missing nexus $\rightarrow$ non-controlling. Co-equal conflicts resolved via typed unresolved states. | TEST_SPECIFIED |
 | **AC-08** | Pure relevance floor ($S_{\text{rerank}} \ge 0.35$) | Information Retrieval & Reranking Standards | Step 3 Context Assembly Contract; Calibration | System Technical Specifications | Current | Candidate below calibrated floor ($S_{\text{rerank}} < 0.35$) excluded from context assembly as `BELOW_RELEVANCE_FLOOR`. | TEST_SPECIFIED |
@@ -287,20 +260,20 @@ flowchart TD
 | **AC-12** | Gold-standard benchmark evaluator | Pakistani Legal Information Retrieval Standard | Evaluation Ground Truth Protocol; Benchmark Spec | Evaluation Harness Specs | Current | Benchmark evaluator scores Bucket 1B approved cross-domain precedents as relevant without false contamination penalty. | TEST_SPECIFIED |
 | **AC-13** | Retrieval Quality (Macro-Recall@10) | Benchmark Evaluation Metric Standards | Macro-Averaged Recall@10 Formula; Non-Empty Gold Sets ($|\text{Gold}_q| \ge 1$) | Legal Information Retrieval Benchmark Protocol | Current | **Contractual Acceptance Target: Macro-Recall@10 = 100.0%, HitRate@10 = 100.0%**. Empirical Verification: 0/30 executed. | GATED_LIVE_PIPELINE |
 | **AC-14** | Contamination Bound (Option A) | Benchmark Evaluation Metric Standards | Option A Fixed Denominator Protocol ($N_{\text{evaluated}}=150$); Threshold $\le 5/150$ | Benchmark Contamination Protocol | Current | **Contractual Acceptance Target: Contamination $\le 5/150 \approx 3.333\%$**. Empirical Verification: 0/30 executed. | GATED_LIVE_PIPELINE |
-| **AC-15** | Legacy regression suite preservation | Repository Engineering Test Contract | 11 Pytest Regression Test Modules (`test_cross_encoder_reranker.py`, etc.) | Git Commit `feat/phase4-step1-planner` | **102 passed, 6 warnings in 31.79s (Exit code 0)** | Zero regression against existing retrieval and planner test suite. Confirmed passing. | **TEST_EXECUTED (100% Passed)** |
+| **AC-15** | Legacy regression suite preservation | Repository Engineering Test Contract | 11 Pytest Regression Test Modules (`test_cross_encoder_reranker.py`, etc.) | Git Commit `feat/phase4-step1-planner` | **102 passed, 6 warnings in 32.45s (Exit code 0)** | Zero regression against existing retrieval and planner test suite. Confirmed passing. | **TEST_EXECUTED (100% Passed)** |
 | **AC-16** | Traceable candidate audit trail | Administrative Law; Algorithmic Transparency | Step 15 Telemetry Contract; Candidate Provenance | Technical System Specification | Current | Every evaluated candidate emitted in diagnostic telemetry with explicit, traceable inclusion/exclusion reason. | TEST_SPECIFIED |
 | **AC-17** | Article 212(1)(a) service conditions | Constitution of Pakistan, 1973; Service Tribunals Act, 1973 | Art 212(1)(a) Constitution; S.4 FST Act 1973; `2025 SCMR 134` | Pakistan Code, Vols. XVI & XVII; SCMR 2025 | In force as amended | Civil servant challenging terms/conditions barred under Art 212(2); FST exclusive. Contractor: `SERVICE_TRIBUNAL_JURISDICTION_EXCLUDED; WRIT_MAINTAINABILITY_CONDITIONAL`. | TEST_SPECIFIED |
-| **AC-18** | Article 212(1)(b) public torts competence | Constitution of Pakistan, 1973; Code of Civil Procedure, 1908 | Art 212(1)(b) Constitution; S.9 CPC 1908; Enactment Search | Pakistan Code, Vols. V & XVI | In force | No Administrative Tribunal enacted under Art 212(1)(b). Engine returns `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES`; claims lie in Civil Court subject to S.80 CPC and statutory indemnity. | TEST_SPECIFIED |
-| **AC-19** | Article 212(1)(c) enemy property | Constitution of Pakistan, 1973; Enemy Property Ordinance, 1969 | Art 212(1)(c) Constitution; Ss.2-4 Ordinance I of 1969 | Pakistan Code, Vol. XVI; Ordinance I of 1969 | In force | 1969 Ordinance establishes an executive Custodian, not an Art 212(1)(c) judicial tribunal. Returns `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES; JUDICIAL_REVIEW_MAINTAINABLE`. | TEST_SPECIFIED |
+| **AC-18** | Article 212(1)(b) public torts competence | Constitution of Pakistan, 1973; Code of Civil Procedure, 1908 | Art 212(1)(b) Constitution; Ss.9, 80(1), 80(2) CPC 1908; Enactment Search | Pakistan Code, Vols. V & XVI | In force | No Administrative Tribunal enacted under Art 212(1)(b). Engine returns `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES`; evaluated under S.80 notice or S.80(2) urgent leave. | TEST_SPECIFIED |
+| **AC-19** | Article 212(1)(c) enemy property | Constitution of Pakistan, 1973; Enemy Property Ordinance, 1969 | Art 212(1)(c) Constitution; Ordinance I of 1969; Rule 182 DPR 1965 | Pakistan Code, Vol. XVI; Ordinance I of 1969 | In force | 1969 Ordinance establishes an executive Custodian, not an Art 212(1)(c) judicial tribunal. Returns `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES; JUDICIAL_REVIEW_MAINTAINABLE`. | TEST_SPECIFIED |
 | **AC-20** | Article 212(2) provincial proviso | Constitution of Pakistan, 1973; Provincial Service Tribunals Acts | Art 212(2) Proviso; Punjab PST 1974; Sindh SST 1973 | Pakistan Code, Vol. XVI; Provincial Codes | In force | Art 212(2) ouster extends to PSTs only where Provincial Assembly resolution and parliamentary extension Act are enacted; otherwise provincial law. | TEST_SPECIFIED |
 | **AC-21** | Residuary Article 120 inheritance | Limitation Act, 1908 (Act IX of 1908) | Arts 91, 92, 95, 120 Limitation Act 1908; *Saadat Khan*, PLD 2023 SC 362 | Pakistan Code, Vol. V; PLD 2023 SC 362 | In force as amended | Specific articles (91, 92, 95, 142) must be exhausted first. Residuary Art 120 (6 yrs) runs from unequivocal denial (Date $D$). Facts underspecified -> `LIMITATION_ARTICLE_UNRESOLVED`. | TEST_SPECIFIED |
 | **AC-22** | Article 142 dispossession & ouster | Limitation Act, 1908; Limitation (Amendment) Act, 1995 | Art 142 Limitation Act 1908; *Ghulam Ali*, PLD 1990 SC 1 | Pakistan Code, Vol. V; Gazette 1995; PLD 1990 SC | In force as amended | Art 142 requires prior physical possession and actual ouster. Co-heir possession is joint; mutation is not dispossession. Art 144 omitted by Act II of 1995. | TEST_SPECIFIED |
 | **AC-23** | Section 18 statutory fraud | Limitation Act, 1908 (Act IX of 1908) | Section 18 Limitation Act 1908 | Pakistan Code, Vol. V | In force as amended | Time runs from discovery upon affirmative proof of fraudulent concealment of right/document. Bare non-communication of mutation fails S.18. | TEST_SPECIFIED |
-| **AC-24** | Authentic Section 2(8) Benami tree | Benami Transactions (Prohibition) Act, 2017 (Act VIII of 2017) | Section 2(8)(A)-(D), Ss. 3, 4, 5, 24, 25, 51; `2023 SCMR 572` | Gazette of Pakistan, Ext., 2017; SCMR 2023 | In force as amended | Independent limbs (A)-(D); exact exceptions (b)(i) and (b)(ii); full family fixtures with 5-step test ($P \ne H$). 5-state outputs; S.24 formal findings yield `BENAMI_TRANSACTION_ADJUDICATED`. | TEST_SPECIFIED |
+| **AC-24** | Authentic Section 2(8) Benami tree | Benami Transactions (Prohibition) Act, 2017 (Act VIII of 2017) | Section 2(8)(A)-(D), Ss. 3, 4, 5, 24, 25, 51; `2023 SCMR 572` | Gazette of Pakistan, Ext., 2017; SCMR 2023 | In force as amended | Independent limbs (A)-(D); exact exceptions (b)(i) [4-predicate fiduciary] and (b)(ii) [family]; full fixtures with 5-step test ($P \ne H$). S.24 order $\rightarrow$ `BENAMI_TRANSACTION_ADJUDICATED`. | TEST_SPECIFIED |
 | **AC-25** | Section 489-F mens rea at issuance & forum | Pakistan Penal Code; FIO 2001; Code of Civil Procedure, 1908 | S.489-F PPC; Ss.2(d), 9 FIO 2001; S.9/Order XXXVII CPC; `2010 SCMR 806` | Pakistan Code, Vols. I, V & XVII; SCMR 2010 | In force as amended | Mens rea evaluated at cheque issuance. Security label does not prevent S.489-F if debt existed. Liquidity failure is evidentiary. Banking Court requires FI and finance; private recovery in Civil Court. | TEST_SPECIFIED |
 | **AC-26** | Section 420 inception-intention test | Pakistan Penal Code (Act XLV of 1860) | Ss. 415, 420 PPC; `1999 SCMR 1214`; `PLD 2005 SC 470` | Pakistan Code, Vol. I; SCMR 1999; PLD 2005 SC | In force as amended | S.420 requires dishonest intention at the time of representation/inducement. Commercial breach without inception fraud cannot be criminalized. FIR quashment in Bucket 1B. | TEST_SPECIFIED |
 | **AC-27** | Section 406 entrustment vs debt | Pakistan Penal Code (Act XLV of 1860) | Ss. 405, 406 PPC; `PLD 2004 SC 460`; `2000 SCMR 445` | Pakistan Code, Vol. I; PLD 2004 SC; SCMR 2000 | In force as amended | S.406 requires entrustment in fiduciary capacity. Sale on credit creates debtor-creditor relationship; failure to pay is civil debt, not criminal breach of trust. | TEST_SPECIFIED |
-| **AC-28** | Amended Art 189 precedent binding ratio | Constitution (27th Amendment) Act, 2025; Constitution 1973 | Article 189 Constitution; *Multiline Associates*, 1995 SCMR 362 | Gazette of Pakistan, Ext., 2025; SCMR 1995 | In force as amended | FCC ratio binds SC on questions/principles decided. Missing nexus $\rightarrow$ non-controlling. Co-equal FCC $\rightarrow$ `UNRESOLVED_CO_EQUAL_FCC_CONFLICT`; Co-equal SC $\rightarrow$ `UNRESOLVED_CO_EQUAL_APEX_CONFLICT`. | TEST_SPECIFIED |
+| **AC-28** | Amended Art 189 precedent binding ratio | Constitution (27th Amendment) Act, 2025; Constitution 1973 | Article 189 Constitution; *Multiline Associates*, 1995 SCMR 362 | Gazette of Pakistan, Ext., 2025; SCMR 1995 | In force as amended | FCC ratio binds SC on questions/principles decided. Missing nexus $\rightarrow$ non-controlling. Historical SC ruling displaced only to extent of direct conflict (`PRIOR_SC_AUTHORITY_DISPLACED_TO_EXTENT_OF_DIRECT_CONFLICT`). | TEST_SPECIFIED |
 | **AC-29** | Deployed request recount & atomic truncation | Production Deployment Specs; OpenAI & Google API Specs | Application Envelope $W_{\text{operational}}=8,000$; `gpt-4o-2024-11-20` / `gemini-2.5-pro` | Official API Documentation | Current supported models | Complete serialized request counted; native tokenizer enforced; atomic passage assembly prevents partial citations; non-ASCII Urdu verified. | TEST_SPECIFIED |
 | **AC-30** | Benchmark dual-denominator & ground-truth | Legal Information Retrieval Benchmark Standards | Option A Fixed Denominator ($N_{\text{evaluated}}=150$); Ground Truth Mapping | Evaluation Benchmark Suite | Current | **Contractual Acceptance Protocol: 30 queries, top-10 Recall@10 = 100%, top-5 Contamination $\le 5/150$**. Empirical Verification: 0/30 executed. | GATED_LIVE_PIPELINE |
 
@@ -337,11 +310,13 @@ Under Pakistan's **Constitution (Twenty-Seventh Amendment) Act, 2025**, Article 
    - *Co-Equal Supreme Court Conflict:* When two co-equal SC benches (e.g. 3-judge vs 3-judge) express conflicting ratios on the same statutory question, the engine emits both competing authorities in the ranking list with diagnostic tags and returns `UNRESOLVED_CO_EQUAL_APEX_CONFLICT`.
    - *Co-Equal FCC Conflict:* When two co-equal FCC benches express conflicting ratios on the same constitutional or legal question, the engine emits both authorities and returns `UNRESOLVED_CO_EQUAL_FCC_CONFLICT`.
    - Telemetry records that authoritative resolution requires constitution of a larger bench by the respective Chief Justice.
-6. **Rule 6 (Historical Decisions & Pre- vs Post-27th Amendment Transition Rules):**
-   - Under general constitutional continuity principles (Articles 264 and 268 of the Constitution):
-     * If an FCC decision post-amendment decides a question/principle of law, it binds all courts including the SC under amended Article 189(1), superseding any contrary pre-amendment SC decision on that point of law.
-     * If the FCC has *not* addressed or decided that question of law, existing Supreme Court jurisprudence (pre- or post-amendment) continues to bind all lower courts under Article 189(2).
-     * Where an FCC decision cites or approves a historical SC ratio, the ratio acquires binding FCC authority.
+6. **Rule 6 (Historical Decisions & Partial Displacement Semantics — Finding 12):**
+   - A post-amendment FCC decision **does not globally erase or delete** earlier Supreme Court judgments from repository history.
+   - The engine evaluates:
+     * (a) Identity of Legal Question: Did the FCC directly adjudicate the identical question of law?
+     * (b) Binding Ratio: Is the FCC holding an operative ratio decidendi?
+     * (c) Scope of Displacement: The earlier Supreme Court authority is displaced **strictly to the extent of direct, irreconcilable conflict** on that legal point. Output: `PRIOR_SC_AUTHORITY_DISPLACED_TO_EXTENT_OF_DIRECT_CONFLICT`.
+     * (d) Residual Precedential Authority: Any distinct legal propositions, procedural principles, or statutory constructions in the historical SC decision not directly addressed by the FCC remain binding law under Article 189(2) and constitutional continuity principles (Articles 264 and 268). Both authorities are emitted with explicit relationship metadata.
 7. **Rule 7 (Apex Scope Conflict Escalation):**
    - When the substantive scope, ratio, or applicability of competing apex authorities cannot be reliably reconciled through statutory distinction, the engine returns `UNRESOLVED_APEX_RATIO_SCOPE`.
 
@@ -349,7 +324,7 @@ Under Pakistan's **Constitution (Twenty-Seventh Amendment) Act, 2025**, Article 
 
 ## 4. Tokenizer Architecture & Legacy-Vector Dual-Mode Filtering Contract
 
-### 4.1 Supported Production Deployments & Lifecycle Records (October 2026 Baseline)
+### 4.1 Supported Production Deployments & Lifecycle Records (November 2026 Baseline)
 The engine pins supported production runtime envelopes and model-specific invocation parameters:
 
 | Component | Primary Production Deployment | Secondary / Failover Deployment |
@@ -383,18 +358,32 @@ $$\therefore T_{\text{prompt}} + T_{\text{completion}} \le 7,000 + 1,000 = 8,000
 * **Budget Overflow Action:** If an entire atomic legal block cannot fit within the remaining candidate margin ($\Delta = 7,000 - (T_{\text{fixed}} + T_{\text{cands}})$), the engine **drops the entire atomic unit** and logs `ATOMIC_BLOCK_BUDGET_OVERFLOW`. It never emits a half-severed citation or partial proviso.
 * **Safe Abort:** Execution of the Native Tokenizer is a mandatory hard precondition. If offline/unavailable, returns typed `TOKENIZER_UNAVAILABLE_ABORT` and halts context assembly safely. Non-ASCII ratio $> 15\%$ without native tokenizer returns `FAIL_CLOSED_NON_ASCII_OVERFLOW`.
 
-### 4.4 Legacy Vector Compatibility & Dual-Mode Filtering Contract (AUTH-04)
+### 4.4 Unconditional Hard Quarantine Invariant (Finding 10 / AUTH-07)
+* **Invariant:** `QUARANTINED_CANDIDATE_GENERATION_ELIGIBILITY = NEVER`.
+* **Hard Pre-RRF Boundary:**
+  ```python
+  # Step 2: Unconditional Hard Quarantine Boundary (Pre-RRF)
+  if candidate.is_quarantined:
+      candidate.exclusion_reason = "IS_QUARANTINED"
+      dropped_pool.append(candidate)
+      continue  # NEVER enters ranking, scoring, reciprocal rank fusion, or context assembly
+  ```
+* **Strict Mode Insulation:** The `strict_mode` parameter (True/False) controls admission of secondary or ambiguous candidates into diagnostic telemetry, but **can NEVER revive, un-drop, or make eligible a quarantined candidate**. If a candidate has `is_quarantined=True`, it is discarded unconditionally.
+
+### 4.5 Legacy Vector Compatibility & Deterministic Domain Inference Contract (Finding 13 / AUTH-04)
 To eliminate the severe recall regression risk identified in the repository audit (where ~401,351 existing Pinecone vectors lack legal-domain metadata):
-* **Strict Prohibition on Upstream Dense Metadata Filtering:** Hard metadata filters (e.g. `filter={"domain": {"$in": ...}}`) are **strictly prohibited on raw Pinecone vector queries**. Passing a hard metadata filter against an index where legacy vectors lack domain metadata would cause dense retrieval recall to collapse from $0.467$ to $0.000$.
-* **Dual-Mode Filtering Architecture:**
-  - **Mode 1 (Metadata-Enriched Vectors):** For vectors possessing verified `domain` metadata, the domain gate partitions candidates during post-reranking: Bucket 1A (on-domain direct match), Bucket 1B (approved interdisciplinary doctrine), or Bucket 3 (unapproved off-domain).
-  - **Mode 2 (Legacy / Missing-Metadata Vectors):**
-    * When vector metadata `domain` is missing, `None`, or empty (`MISSING_DOMAIN_METADATA`), the engine **NEVER silently discards the vector**.
-    * The engine executes **deterministic post-retrieval statutory domain inference** by analyzing the candidate's statutory citations, title, and legal keywords against the authoritative Pakistani statutory index.
-    * If the statutory citation maps deterministically to the target domain $\rightarrow$ classified as `INFERRED_ON_DOMAIN` (Bucket 1A).
-    * If the citation maps to a recognized cross-domain doctrine $\rightarrow$ classified as `INFERRED_CROSS_DOMAIN` (Bucket 1B).
-    * If statutory inference is ambiguous but cross-encoder score $S_{\text{rerank}} \ge 0.35$ $\rightarrow$ routed to Bucket 2 (`AMBIGUOUS_DOMAIN_QUARANTINE_SAFE`) for diagnostic telemetry; strictly kept out of generation context if `strict_mode=True`.
-    * If unresolvable and $S_{\text{rerank}} < 0.35$ $\rightarrow$ dropped as `BELOW_RELEVANCE_FLOOR`.
+* **Strict Prohibition on Upstream Dense Metadata Filtering:** Hard metadata filters (e.g. `filter={"domain": {"$in": ...}}`) are **strictly prohibited on raw Pinecone vector queries**. Passing a hard metadata filter against an index where legacy vectors lack domain metadata causes dense retrieval recall to collapse from $0.467$ to $0.000$.
+* **Five-Tier Domain Provenance Taxonomy:**
+  1. `VERIFIED_METADATA`: Explicit, validated domain tag attached to candidate from verified database source.
+  2. `INFERRED_ON_DOMAIN`: Domain inferred via deterministic statutory index matching primary subject matter to target query domain with calibrated confidence score $C \ge 0.85$.
+  3. `INFERRED_CROSS_DOMAIN`: Domain inferred to belong to an authenticated cross-domain doctrine (e.g. S.489-F PPC civil debt, S.420 inception fraud) with $C \ge 0.85$. Admitted to Bucket 1B.
+  4. `AMBIGUOUS_DOMAIN_QUARANTINE_SAFE`: Candidate has ambiguous or conflicting statutory citations ($0.50 \le C < 0.85$); routed to Bucket 2 (SECONDARY_AUTHORITY) for diagnostic review; strictly excluded from LLM generation context in all modes.
+  5. `DOMAIN_INFERENCE_FAILED`: Candidate lacks statutory citations, has uncalibrated confidence ($C < 0.50$), or contains unrecognizable text; fails closed and is abstained from inference; dropped from generation context as `INFERENCE_ABSTAIN_EXCLUDED`.
+* **Authoritative Statutory Index & Normalized Parsing:**
+  - Uses versioned statutory index (`pakistan_statute_index_v1.json`).
+  - Parses normalized citations (`S. 420 PPC`, `Order XXXVII CPC`, `S. 5 Family Courts Act 1964`).
+  - Distinguishes primary statutory subject matter from incidental citations (e.g. general references to S.151 CPC or General Clauses Act).
+* **Auditability Invariant:** Inferred domain is never written to source database or represented as verified metadata; emitted in diagnostic telemetry with raw confidence score and statutory matched tokens.
 * **Zero Production Index Modifications:** Legacy vectors are preserved untouched in Pinecone without unverified backfilling or vector deletions.
 
 ---
@@ -413,7 +402,7 @@ The benchmark harness enforces exact, independent definitions and adopts **Optio
   $$\text{Macro-Recall@10} = \frac{1}{30} \sum_{q=1}^{30} \text{Recall@10}_q = 100.0\% \quad \text{(Target Standard)}$$
 * **Distinct Hit Rate@10 Metric (Contractual Acceptance Target = 100.0%):**
   $$\text{HitRate@10} = \frac{1}{30} \sum_{q=1}^{30} \mathbb{I}(|\text{Gold}_q \cap \text{Top10}_q| \ge 1) = 100.0\% \quad \text{(Target Standard)}$$
-* **Current Empirical Verification Status:** **`GATED_LIVE_PIPELINE` — 0 / 30 queries executed under v1.7.3** (Pending Implementation Authorization).
+* **Current Empirical Verification Status:** **`GATED_LIVE_PIPELINE` — 0 / 30 queries executed under v1.7.4** (Pending Implementation Authorization).
 
 ### 5.2 Option A (Fixed Denominator) Contamination Protocol (AC-14, AUTH-05, AUTH-06)
 * **Rationale for Top-5 Measurement ($K=5$):**
@@ -421,7 +410,7 @@ The benchmark harness enforces exact, independent definitions and adopts **Optio
   - Contamination is therefore evaluated strictly across the top-5 candidate positions that could actually populate the LLM generation context window.
 * **Evaluated Candidate Positions:** Candidates occupying positions $k \in \{1 \dots 5\}$ **after domain gating admission** (Bucket 1A + Bucket 1B).
 * **Quarantine Enforcement:** Candidates marked `is_quarantined=True` are dropped at Step 2 (pre-RRF). If a quarantined candidate leaks into the evaluated top-5 positions, the benchmark fails immediately with fatal violation `QUARANTINE_LEAKAGE_FAILURE`.
-* **Interdisciplinary Relevance Standard (AUTH-06):** Relevance is judged against manually reviewed multi-domain gold labels (`legal_retrieval_test_cases.json`). Precedents from intersecting legal domains recognized under approved cross-domain doctrines (e.g. S.489-F PPC civil debt recovery, S.420 inception fraud, female inheritance joint possession) are recognized as relevant primary authorities and **never penalized as contamination**.
+* **Interdisciplinary Relevance Standard (AUTH-06):** Relevance is judged against manually reviewed multi-domain gold labels (`legal_retrieval_test_cases.json`). Precedents from intersecting legal domains recognized under approved cross-domain doctrines (e.g. S.489-F PPC civil debt, S.420 inception fraud, female inheritance joint possession) are recognized as relevant primary authorities and **never penalized as contamination**.
 * **Fixed Population Requirement:** Every query $q \in \{1 \dots 30\}$ is strictly required to return at least 5 candidates in its evaluated set. If any query returns fewer than 5 candidates, the benchmark halts immediately with failure code `BENCHMARK_INSUFFICIENT_CANDIDATES`.
 * **Exact Evaluated Denominator ($N_{\text{evaluated}}$):**
   $$N_{\text{evaluated}} = 30 \text{ queries} \times 5 \text{ positions} = 150 \text{ positions strictly}$$
@@ -429,7 +418,7 @@ The benchmark harness enforces exact, independent definitions and adopts **Optio
   $$\text{Contamination Rate} = \frac{\sum_{q=1}^{30} \sum_{k=1}^{5} \mathbb{I}(c_{q,k} \in \text{OffDomainPool})}{150} \le \frac{5}{150} = \frac{1}{30} \approx 3.333\% \quad \text{(Target Standard)}$$
   - Maximum permitted off-domain candidates across the entire benchmark is **strictly 5 positions out of 150**.
   - Any run with 6 or more off-domain candidates fails the benchmark.
-* **Current Empirical Verification Status:** **`GATED_LIVE_PIPELINE` — 0 / 30 queries executed under v1.7.3** (Pending Implementation Authorization).
+* **Current Empirical Verification Status:** **`GATED_LIVE_PIPELINE` — 0 / 30 queries executed under v1.7.4** (Pending Implementation Authorization).
 * **Benchmark Provenance Manifest (AC-30):** The harness retains: (1) exact 30 queries; (2) query-level gold-standard citation mappings; (3) raw top-10 and top-5 retrieved IDs; (4) model and evaluator versions; (5) per-query recall; and (6) per-query contamination counts.
 
 ---
@@ -438,18 +427,18 @@ The benchmark harness enforces exact, independent definitions and adopts **Optio
 
 ### 6.1 Pre-Authorization Tracking Matrix (AUTH-01 through AUTH-10)
 
-| ID | Required Pre-Authorization Condition | Architectural Specification & Contract Rule | Evidentiary Status in v1.7.3 |
+| ID | Required Pre-Authorization Condition | Architectural Specification & Contract Rule | Evidentiary Status in v1.7.4 |
 | :--- | :--- | :--- | :--- |
-| **AUTH-01** | Correct Benami fixtures | Complete 5-step statutory identity test ($P \ne H$); genuine agency vs sham under Contract Act 1872; corrected brother-to-brother negative fixture where Brother A pays consideration and registers in sole name of Brother B without joint title. | **TEST_SPECIFIED** |
-| **AUTH-02** | Article 212 completeness | Evidence-qualified search across Federal and 4 Provinces; Custodian executive jurisdiction vs judicial review under Art 199 and S.9 CPC (*PLD 1981 SC 371*); three-step statutory-exclusion check (S.80 CPC notice, indemnity clauses). | **TEST_SPECIFIED** |
-| **AUTH-03** | Apex precedent hierarchy | Nuanced 7-rule engine: FCC co-equal conflict (`UNRESOLVED_CO_EQUAL_FCC_CONFLICT`), SC co-equal conflict (`UNRESOLVED_CO_EQUAL_APEX_CONFLICT`), *Multiline Associates* common-law discipline, pre- vs post-27th Amendment transition rules, ratio vs obiter distinction. | **TEST_SPECIFIED** |
-| **AUTH-04** | Legacy vector compatibility | Prohibition on upstream Pinecone metadata filters; post-retrieval deterministic statutory domain inference for ~401,351 legacy vectors; zero legacy vectors dropped for missing metadata; dense recall preserved. | **TEST_SPECIFIED** |
+| **AUTH-01** | Correct Benami fixtures | 5-step statutory identity test ($P \ne H$); 4-predicate fiduciary evaluation (`AGENCY_RELATIONSHIP_ESTABLISHED`, `FIDUCIARY_CAPACITY_ESTABLISHED`, `PROPERTY_HELD_FOR_BENEFICIARY`, `STATUTORY_EXCEPTION_ESTABLISHED`); corrected Brother A to Brother B negative fixture. | **TEST_SPECIFIED** |
+| **AUTH-02** | Article 212 completeness | Evidence-qualified search across Federal and 4 Provinces; Custodian executive jurisdiction vs judicial review under Art 199 and S.9 CPC (*PLD 1980 SC 158*); four-step statutory-exclusion check (S.80(1) notice, S.80(2) urgent relief leave exception, indemnity clauses). | **TEST_SPECIFIED** |
+| **AUTH-03** | Apex precedent hierarchy | Nuanced 7-rule engine: FCC co-equal conflict (`UNRESOLVED_CO_EQUAL_FCC_CONFLICT`), SC co-equal conflict (`UNRESOLVED_CO_EQUAL_APEX_CONFLICT`), *Multiline Associates* common-law discipline, historical ruling partial displacement (`PRIOR_SC_AUTHORITY_DISPLACED_TO_EXTENT_OF_DIRECT_CONFLICT`), ratio vs obiter distinction. | **TEST_SPECIFIED** |
+| **AUTH-04** | Legacy vector compatibility | Prohibition on upstream Pinecone metadata filters; post-retrieval deterministic statutory domain inference for ~401,351 legacy vectors; 5-tier provenance taxonomy; calibrated confidence and abstention ($C < 0.50$); dense recall preserved. | **TEST_SPECIFIED** |
 | **AUTH-05** | Benchmark contract | Exact Recall@10 ($K=10$, retrieval depth) and Contamination ($K=5$, generation payload) definitions; Option A fixed denominator ($N_{\text{evaluated}}=150$ strictly); `BENCHMARK_INSUFFICIENT_CANDIDATES` fail-closed halt. | **TEST_SPECIFIED** |
 | **AUTH-06** | Mixed-domain relevance | Manually reviewed multi-domain gold labels (`legal_retrieval_test_cases.json`); recognized cross-domain doctrines (S.489-F, S.420, S.406, female inheritance) scored as relevant primary law without contamination penalty. | **TEST_SPECIFIED** |
-| **AUTH-07** | Quarantine integrity | Step 2 pre-RRF hard drop; candidates with `is_quarantined=True` routed to `dropped_pool` before fusion; zero presence in ranking list or generation context. Leakage fails benchmark. | **TEST_SPECIFIED** |
+| **AUTH-07** | Quarantine integrity | Step 2 pre-RRF hard drop; `QUARANTINED_CANDIDATE_GENERATION_ELIGIBILITY = NEVER`. Unconditional drop; strict mode setting cannot bypass quarantine. Leakage fails benchmark. | **TEST_SPECIFIED** |
 | **AUTH-08** | Tokenizer & payload safety | Conservative envelope ($W_{\text{operational}}=8,000 \ll 128\text{k}/1\text{M}$); API output cap `max_tokens=1000`; pre-dispatch serialized recount; atomic legal passage indivisibility; non-ASCII Urdu boundary checks. | **TEST_SPECIFIED** |
 | **AUTH-09** | Provider resilience | Simulated missing API credentials (`CREDENTIALS_MISSING_ABORT`), network timeouts (`GATEWAY_TIMEOUT_ABORT`), and Voyage embedding failure failover to lexical/BM25 search (`EMBEDDING_PROVIDER_FALLBACK`). | **TEST_SPECIFIED** |
-| **AUTH-10** | Regression preservation | 11 Pytest legacy test modules executed in repository workspace with `$env:PYTHONPATH="."`. Baseline: **102 passed, 6 warnings in 31.79s (Exit code 0)**. Zero legacy regressions. | **TEST_EXECUTED (100% Passed)** |
+| **AUTH-10** | Regression preservation | 11 Pytest legacy test modules executed in repository workspace with `$env:PYTHONPATH="."`. Baseline: **102 passed, 6 warnings in 32.45s (Exit code 0)**. Zero legacy regressions. | **TEST_EXECUTED (100% Passed)** |
 
 ---
 
@@ -474,11 +463,11 @@ The benchmark harness enforces exact, independent definitions and adopts **Optio
 
 | Criteria ID | Scope of Requirement | Target Test Identifier | Test Tier | Fixtures, Negative Conditions & Forum Logic | Expected Assertion & Result | Strict Evidentiary Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **AC-01** | Gate interface contract v1.7.3 | `test_domain_gate_interface_contract` | Pure Unit | Valid candidate list + query plan passed to `partition_candidates_into_ranking_buckets()`. | Returns partitioned buckets; zero schema deviations; telemetry populated. | **TEST_SPECIFIED** |
+| **AC-01** | Gate interface contract v1.7.4 | `test_domain_gate_interface_contract` | Pure Unit | Valid candidate list + query plan passed to `partition_candidates_into_ranking_buckets()`. | Returns partitioned buckets; zero schema deviations; telemetry populated. | **TEST_SPECIFIED** |
 | **AC-02** | Domain classification fixtures | `test_domain_classification_positive_negative` | Pure Unit | Synthetic on-domain civil case vs off-domain family dower case (`2015 SCMR 869`). | On-domain placed in Bucket 1A; off-domain placed in Bucket 3. | **TEST_SPECIFIED** |
 | **AC-03** | Statutory fallback 5-stage order | `test_statutory_fallback_five_stage_order` | Pure Unit | Direct statute match, secondary safe statute, foreign statute, unannotated procedural, ambiguous. | Direct $\rightarrow$ 1A; Foreign $\rightarrow$ 3; Procedural $\rightarrow$ 2; Ambiguous $\rightarrow$ Dropped. | **TEST_SPECIFIED** |
 | **AC-04** | Interdisciplinary doctrine contracts | `test_doctrine_contracts_positive_negative` | Pure Unit | 5 Positive fixtures (`2025 SCMR 134`, `1999 SCMR 1214`, `PLD 1990 SC 1`, `2023 SCMR 572`, `2010 SCMR 806`) + 5 Negative fixtures. | Positive admitted to Bucket 1B (`APPROVED_CROSS_DOMAIN`); Negative demoted to Bucket 3. | **TEST_SPECIFIED** |
-| **AC-05** | Quarantine boundary (Pre-RRF) | `test_quarantine_hard_drop_top_scoring` | Pure Unit | Candidate marked `is_quarantined=True` with highest cross-encoder score ($0.95$). | Candidate hard-dropped to `dropped_pool` before RRF; zero presence in context assembly output. | **TEST_SPECIFIED** |
+| **AC-05** | Unconditional Quarantine boundary (Pre-RRF) | `test_quarantine_hard_drop_top_scoring` | Pure Unit | Candidate marked `is_quarantined=True` with highest cross-encoder score ($0.95$). Caller sets `strict_mode=False`. | Hard-dropped to `dropped_pool` before RRF; zero presence in context assembly output. Invariant: `QUARANTINED_CANDIDATE_GENERATION_ELIGIBILITY = NEVER`. | **TEST_SPECIFIED** |
 | **AC-06** | Strict mode generation boundary | `test_strict_mode_generation_boundary` | Pure Unit | Diagnostic caller sets `strict_mode=False`. | Bucket 3 candidates returned in telemetry only; strictly excluded from `assembled_context`. | **TEST_SPECIFIED** |
 | **AC-07** | Authority hierarchy (Amended Art 189) | `test_constitutional_hierarchy_subject_matter` | Pure Unit | (a) FCC ruling on legal ratio vs SC ruling on same point; (b) FCC ruling lacking nexus; (c) Co-equal SC conflict; (d) Co-equal FCC conflict. | In (a), FCC ratio binds SC; in (b), SC controls only if on point; in (c), returns `UNRESOLVED_CO_EQUAL_APEX_CONFLICT`; in (d), returns `UNRESOLVED_CO_EQUAL_FCC_CONFLICT`. | **TEST_SPECIFIED** |
 | **AC-08** | Pure relevance floor ($S_{\text{rerank}} \ge 0.35$) | `test_pure_relevance_floor_cutoff` | Pure Unit | Apex Supreme Court candidate with $S_{\text{rerank}} = 0.31 < 0.35$. | Excluded at Step 3 of context assembly; status `BELOW_RELEVANCE_FLOOR`. No unconditional slicing. | **TEST_SPECIFIED** |
@@ -488,20 +477,20 @@ The benchmark harness enforces exact, independent definitions and adopts **Optio
 | **AC-12** | Gold-standard benchmark evaluator | `test_benchmark_evaluator_doctrine_awareness` | Controlled Integration | Benchmark script runs over test fixtures with cross-domain doctrine candidates. | Evaluator correctly scores Bucket 1B candidates as relevant without false contamination. | **TEST_SPECIFIED** |
 | **AC-13** | Retrieval Quality (Macro-Recall@10) | `test_live_benchmark_recall` | Live Pipeline | 30 queries evaluated at top-10 positions against authenticated non-empty gold sets ($|\text{Gold}_q| \ge 1$). | Contractual Target: Macro-Recall@10 = 100.0%, HitRate@10 = 100.0%. Empirical Status: 0/30 executed. | **Gated / Pending Authorization** |
 | **AC-14** | Contamination Bound (Option A: $\le 5/150$) | `test_live_benchmark_contamination_option_a` | Live Pipeline | 30 queries evaluated at top-5 positions ($N_{\text{evaluated}}=150$). | Contractual Target: Contamination $\le 5/150 \approx 3.333\%$. Run halts if any query returns $< 5$ candidates. Empirical Status: 0/30 executed. | **Gated / Pending Authorization** |
-| **AC-15** | Legacy regression suite preservation | Pytest 11 test modules | Pure Unit & Integration | 11 legacy test files executed in repository workspace with `$env:PYTHONPATH="."`. | **102 passed, 6 warnings in 31.79s (100.0%)**. Confirms 0 legacy regressions. | **TEST_EXECUTED (100% Passed)** |
+| **AC-15** | Legacy regression suite preservation | Pytest 11 test modules | Pure Unit & Integration | 11 legacy test files executed in repository workspace with `$env:PYTHONPATH="."`. | **102 passed, 6 warnings in 32.45s (100.0%)**. Confirms 0 legacy regressions. | **TEST_EXECUTED (100% Passed)** |
 | **AC-16** | Traceable candidate audit trail | `test_candidate_audit_trail_telemetry` | Pure Unit | Candidate list processed through `assemble_generation_context()`. | Audit report contains traceable inclusion/exclusion reason for every evaluated candidate. | **TEST_SPECIFIED** |
 | **AC-17** | Article 212(1)(a) service-condition jurisdiction | `test_art212_service_conditions` | Pure Unit | (a) Civil servant challenging departmental promotion order (`2025 SCMR 134`); (b) Non-civil servant contractor. | In (a), Article 199 barred $\rightarrow$ Bucket 1B FST; in (b), returns `SERVICE_TRIBUNAL_JURISDICTION_EXCLUDED; WRIT_MAINTAINABILITY_CONDITIONAL`. | **TEST_SPECIFIED** |
-| **AC-18** | Article 212(1)(b) public-service tort competence gate | `test_art212_tort_jurisdiction` | Pure Unit | (a) Tort claim against Government where enactment search shows NO Art 212(1)(b) tribunal; (b) Disguised service claim. | In (a), returns `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES`, routes to civil court subject to S.80 CPC and indemnity clauses; in (b), verifies all S.4 FST conditions. | **TEST_SPECIFIED** |
+| **AC-18** | Article 212(1)(b) public-service tort competence gate | `test_art212_tort_jurisdiction` | Pure Unit | (a) Tort claim against Government where enactment search shows NO Art 212(1)(b) tribunal; (b) Suit filed with S.80(2) urgent relief leave; (c) Disguised service claim. | In (a), returns `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES`; in (b), maintainable under S.80(2) leave exception; in (c), verifies S.4 FST conditions. | **TEST_SPECIFIED** |
 | **AC-19** | Article 212(1)(c) enemy-property jurisdiction | `test_art212_enemy_property` | Pure Unit | Dispute concerning enemy property custody under 1969 Ordinance. | Returns `TRIBUNAL_NOT_ESTABLISHED_ON_VERIFIED_SOURCES; ENEMY_PROPERTY_CUSTODIAN_EXECUTIVE_JURISDICTION; JUDICIAL_REVIEW_MAINTAINABLE`. | **TEST_SPECIFIED** |
 | **AC-20** | Article 212(2) provincial extension proviso | `test_art212_provincial_proviso` | Pure Unit | Provincial service tribunal candidate where parliamentary extension Act is enacted vs absent. | Art 212(2) bar applies only where extension Act enacted; otherwise evaluated under provincial law. | **TEST_SPECIFIED** |
 | **AC-21** | Residuary Article 120 inheritance limitation & accrual | `test_inheritance_art120_denial` | Pure Unit | (a) Instrument cancellation pleaded; (b) Underspecified relief; (c) Clear declaration with unequivocal denial on Date $D$. | In (a), Art 91 evaluated; in (b), `LIMITATION_ARTICLE_UNRESOLVED`; in (c), residuary Art 120 applied strictly from Date $D$. | **TEST_SPECIFIED** |
 | **AC-22** | Article 142 dispossession & ouster vs mutation | `test_inheritance_art142_dispossession` | Pure Unit | (a) Female co-heir never in sole possession challenging mutation; (b) Co-heir in possession subjected to ouster. | In (a), Art 142 rejected (no dispossession); In (b), Art 142 applied from date of actual ouster. | **TEST_SPECIFIED** |
 | **AC-23** | Section 18 statutory fraud requirements | `test_inheritance_section18_fraud` | Pure Unit | Knowledge kept away by fraud or document fraudulently concealed vs bare non-communication of mutation. | Time runs from discovery upon proof of statutory fraud/concealment; bare non-communication fails. | **TEST_SPECIFIED** |
-| **AC-24** | Authentic Section 2(8) Benami classification tree | `test_benami_sections_and_fiduciary` | Controlled Integration | (a) Fiduciary capacity under 2(8)(A)(b)(i); (b) Spouse/child/sibling/lineal with joint title + known resources under 2(8)(A)(b)(ii); (c) Brother A funds in sole name of Brother B without joint title; (d) Fictitious name under 2(8)(B); (e) Section 24 formal order. | (a) & (b) `BENAMI_EXCEPTION_ESTABLISHED`; (c) & (d) `POTENTIAL_BENAMI_TRANSACTION`; (e) `BENAMI_TRANSACTION_ADJUDICATED`. | **TEST_SPECIFIED** |
+| **AC-24** | Authentic Section 2(8) Benami classification tree | `test_benami_sections_and_fiduciary` | Controlled Integration | (a) Fiduciary capacity under 2(8)(A)(b)(i) with 4-predicate satisfaction; (b) Spouse/child/sibling/lineal with joint title + known resources under 2(8)(A)(b)(ii); (c) Brother A funds in sole name of Brother B without joint title; (d) Fictitious name under 2(8)(B); (e) Section 24 formal order. | (a) & (b) `BENAMI_EXCEPTION_ESTABLISHED`; (c) & (d) `POTENTIAL_BENAMI_TRANSACTION`; (e) `BENAMI_TRANSACTION_ADJUDICATED`. | **TEST_SPECIFIED** |
 | **AC-25** | Section 489-F mens rea at cheque issuance & forum selection | `test_s489f_cumulative_ingredients` | Pure Unit | (a) Existing debt labeled "security"; (b) Pure advance contingent guarantee; (c) Liquidity failure evidence; (d) Private commercial recovery. | In (a), S.489-F admitted; in (b), S.489-F rejected; in (c), weighed as evidence; in (d), routed to Civil Court S.9/Order XXXVII CPC. | **TEST_SPECIFIED** |
 | **AC-26** | Section 420 inception-intention test | `test_s420_inception_intention` | Pure Unit | Commercial contract breach without fraudulent inducement at inception (`1999 SCMR 1214`). | FIR quashment admitted to Bucket 1B; criminal cheating rejected. | **TEST_SPECIFIED** |
 | **AC-27** | Section 406 entrustment versus debtor-creditor | `test_s406_debtor_creditor_entrustment` | Pure Unit | Purchase of goods on credit with default in repayment (`PLD 2004 SC 460`). | Criminal breach of trust rejected; debtor-creditor relationship verified. | **TEST_SPECIFIED** |
-| **AC-28** | Amended Art 189 FCC/SC precedent binding ratio | `test_amended_art189_precedent_binding` | Pure Unit | (a) FCC ruling on legal ratio vs SC ruling; (b) FCC ruling lacking nexus; (c) Conflicting co-equal SC benches; (d) Conflicting co-equal FCC benches. | In (a), FCC ratio binds SC; in (b), SC controls only if on point; in (c), returns `UNRESOLVED_CO_EQUAL_APEX_CONFLICT`; in (d), returns `UNRESOLVED_CO_EQUAL_FCC_CONFLICT`. | **TEST_SPECIFIED** |
+| **AC-28** | Amended Art 189 FCC/SC precedent binding ratio | `test_amended_art189_precedent_binding` | Pure Unit | (a) FCC ruling on legal ratio vs SC ruling; (b) FCC ruling lacking nexus; (c) Direct conflict with historical SC ruling; (d) Conflicting co-equal SC benches; (e) Conflicting co-equal FCC benches. | In (a), FCC ratio binds SC; in (b), SC controls only if on point; in (c), returns `PRIOR_SC_AUTHORITY_DISPLACED_TO_EXTENT_OF_DIRECT_CONFLICT`; in (d), `UNRESOLVED_CO_EQUAL_APEX_CONFLICT`; in (e), `UNRESOLVED_CO_EQUAL_FCC_CONFLICT`. | **TEST_SPECIFIED** |
 | **AC-29** | Deployed request recount & non-ASCII boundaries | `test_native_tokenizer_full_payload_boundary` | Controlled Integration | Serialized request with message framing, Urdu legal text, XML tags; native tokenizer execution; recount. | Context window ceiling $\le 7,000$ strictly enforced; concatenation boundary verified; non-ASCII handled. | **TEST_SPECIFIED** |
 | **AC-30** | Benchmark dual-denominator & ground-truth protocol | `test_benchmark_reproducibility_denominator` | Live Pipeline | 30 queries evaluated across: (a) top-10 positions ($N_{\text{queries}}=30$); (b) top-5 positions (Option A: $N_{\text{evaluated}}=150$). | Evaluates Macro-Recall@10 = 100%, HitRate@10 = 100%, and Contamination $\le 5/150$ with independent reporting. Empirical Status: 0/30 executed. | **Gated / Pending Authorization** |
 
