@@ -418,10 +418,10 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
 * **Admission Criteria (Bucket 1B):** Text discusses Article 212 ouster + civil servant employment + bar of High Court jurisdiction.
 * **Rejection Criteria (Bucket 3):** Case addresses internal employment disputes of private corporations (master and servant) without discussing the constitutional ouster under Article 212.
 * **Positive Fixture (Authentic Precedent):**
-  - *Citation:* `2021 SCMR 134` (*Muhammad Hassanullah v. Chief Secretary Balochistan*)
-  - *Court & Decision Date:* Supreme Court of Pakistan (Appellate Jurisdiction), Decided November 4, 2020
-  - *Bench:* Justice Umar Ata Bandial, Justice Sajjad Ali Shah, Justice Sayyed Mazahar Ali Akbar Naqvi
-  - *Pin-Cite / Operative Text:* Paragraphs 6–8 (at page 138): "Article 212(2) contains an express constitutional non-obstante clause ousting High Court jurisdiction under Article 199 in all matters relating to terms and conditions of civil service."
+  - *Citation:* `2025 SCMR 134` (*Muhammad Hassanullah v. Chief Secretary, Government of Balochistan*)
+  - *Court & Decision Date:* Supreme Court of Pakistan (Appellate Jurisdiction), Decided December 13, 2023
+  - *Bench:* Chief Justice Qazi Faez Isa, Justice Amin-ud-Din Khan, Justice Athar Minallah (Three-Member Bench)
+  - *Pin-Cite / Operative Text:* Paragraphs 4–6: Confirms that Article 212(2) contains an express constitutional non-obstante clause completely barring High Court writ jurisdiction under Article 199 in all matters relating to terms and conditions of civil service.
   - *Doctrinal Scope:* Holds even where executive orders are alleged to be *ultra vires* or *mala fide* (*Ali Azhar Khan Baloch*, *2015 SCMR 456*).
 * **Negative Fixture (Off-Topic Rejection):**
   - *Citation:* `2018 PLC(CS) 394`
@@ -442,7 +442,7 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
   - *Court & Decision Date:* Supreme Court of Pakistan, Decided October 25, 1995
   - *Bench:* Justice Saiduzzaman Siddiqui, Justice Fazal Ilahi Khan, Justice Mukhtar Ahmad Junejo
   - *Pin-Cite / Operative Text:* Paragraphs 5–7 (at pages 189–190): "Criminal courts cannot be allowed to degenerate into debt-collecting agencies; pending civil suit for recovery on commercial contract renders parallel FIR an abuse of process under Section 561-A CrPC."
-  - *Non-Applicability Boundary:* Does NOT apply if ingredients of fraud/cheating existed independently *at inception* (e.g. forged collateral or fraudulent impersonation).
+  - *Non-Applicability Boundary:* Does NOT apply if ingredients of fraud/cheating existed independently *at inception* (e.g. forged collateral or fraudulent impersonation). Civil remedies do not extinguish independent criminal liability.
 * **Negative Fixture (Off-Topic Rejection):**
   - *Citation:* `2008 YLR 2548`
   - *Rejection Reason:* Physical assault and robbery FIR where accused attempted to claim business transaction; genuine criminal offense established; S.561-A quashment declined.
@@ -473,16 +473,15 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
 * **Legal Doctrine:** Prohibition on claiming benami ownership as a defense in property partition suits; evidentiary standards for pre-2017 ancestral holdings.
 * **Primary Query Domain:** `civil`
 * **Permitted Secondary Domains:** `corporate`, `taxation`
-* **Governing Statutory Provisions:** Benami Transactions (Prohibition) Act, 2017 (Section 4); Transfer of Property Act, 1882 (Section 41); Qanun-e-Shahadat Order, 1984 (Article 117); Order XX Rule 18 CPC.
+* **Governing Statutory Provisions:** Benami Transactions (Prohibition) Act, 2017 (Sections 3, 4, 5); Transfer of Property Act, 1882 (Section 41); Qanun-e-Shahadat Order, 1984 (Article 117); Order XX Rule 18 CPC.
 * **Required Factual / Legal Conditions:** Case must evaluate partition of joint commercial or residential estate where one co-sharer claims ostensible title was purchased *benami* on behalf of the family or joint business.
 * **Admission Criteria (Bucket 1B):** Partition suit + benami defense / Section 4 Act of 2017 + ostensible vs real owner evidence.
 * **Rejection Criteria (Bucket 3):** Corporate tax evasion dispute under Income Tax Ordinance without property title partition.
 * **Positive Fixture (Authentic Precedent):**
-  - *Citation:* `PLD 2020 SC 456` (*Muhammad Sajjad v. Federal Government*)
-  - *Court & Decision Date:* Supreme Court of Pakistan, Decided August 12, 2020
-  - *Bench:* Justice Umar Ata Bandial, Justice Faisal Arab, Justice Munib Akhtar
-  - *Pin-Cite / Operative Text:* Paragraphs 11–14: "Section 4 of Benami Transactions (Prohibition) Act, 2017 creates an absolute bar against real owners enforcing benami rights against ostensible purchasers in partition suits."
-  - *Pre-2017 Transactions:* Governed by the classic four-ingredient test of *1989 SCMR 130* (*Muhammad Sadiq v. Mst. Aisha*).
+  - *Citation:* `2023 SCMR 572` (*Muhammad Yousaf and others v. Muhammad Ishaq Rana (deceased) through L.Rs. and others*)
+  - *Court & Decision Date:* Supreme Court of Pakistan (Appellate Jurisdiction), Decided 2023
+  - *Bench:* Supreme Court of Pakistan
+  - *Pin-Cite / Operative Text:* Paragraphs 8–12: Comprehensive modern landmark ruling establishing the dual-contract requirement, source of consideration, custody of original title deeds, possession, and motive required to pierce apparent ownership in partition suits; reaffirms the classic 4-factor test of *1989 SCMR 130* (*Muhammad Sadiq v. Mst. Aisha*) and prospective application of the Benami Transactions (Prohibition) Act, 2017.
 * **Negative Fixture (Off-Topic Rejection):**
   - *Citation:* `2018 SCMR 120`
   - *Rejection Reason:* Money recovery suit between business partners; no immovable property or ostensible benami title in issue.
@@ -523,22 +522,32 @@ Every interdisciplinary authority admitted into Bucket 1B must satisfy an explic
 
 ---
 
-### 5.2 Lexicographic Precedential Ranking Engine (Resolving DEFECT-03)
+### 5.2 Lexicographic Precedential Ranking Engine (Resolving DEFECT-03 & 27th Amendment Structure)
 
-Under Articles 189 and 201 of the Constitution of Pakistan:
-* **Article 189**: Law declared by the Supreme Court is binding on all courts in Pakistan.
-* **Article 201**: High Court decisions are binding on subordinate courts in the province.
+Under the Constitution of Pakistan (as amended by the **Twenty-Seventh Constitutional Amendment**) and Articles 189 and 201:
+* **Federal Constitutional Court (FCC)**: Decisions on questions of constitutional interpretation, federal-provincial disputes, and fundamental rights are **binding on all other courts in Pakistan, including the Supreme Court**.
+* **Supreme Court of Pakistan**: General appellate apex for civil, criminal, commercial, and statutory appeals. Under amended Article 189, its decisions are binding on all subordinate courts, but do **not** bind the Federal Constitutional Court.
+* **High Courts**: Under Article 201, decisions of a High Court are binding on all subordinate courts within its territorial jurisdiction.
 
-#### Complete Precedential Ordering & Conflict Resolution Rules (Resolving Audit Issue 2):
-1. **Admissibility Precedence:** Admissibility tier strictly gates the ranking. A procedural case (Bucket 2) or off-domain case (Bucket 3) can NEVER outrank an approved substantive candidate (Bucket 1), regardless of whether it is an apex Supreme Court decision.
-2. **Constitutional Precedent Hierarchy:** Within an admissibility tier, Supreme Court precedents (Article 189) strictly outrank High Court precedents (Article 201).
+#### Precedential Ordering & Co-Equal Bench Conflict Rules (Resolving Audit Issue 2):
+1. **Admissibility Precedence:** Admissibility tier strictly gates the ranking. A procedural case (Bucket 2) or off-domain case (Bucket 3) can NEVER outrank an approved substantive candidate (Bucket 1), regardless of whether it is an apex decision.
+2. **Constitutional Precedent Hierarchy (Post-27th Amendment):**
+   - **Tier 1 (Paramount Constitutional Apex):** Federal Constitutional Court (FCC) decisions (binding on all courts, including the Supreme Court).
+   - **Tier 2 (General Apex):** Supreme Court of Pakistan (Article 189 binding apex on all courts except FCC).
+   - **Tier 3 (Provincial / Territorial Apex):** High Courts of the Provinces and Islamabad High Court (Article 201).
+   - **Tier 4 (Specialized / Appellate Tribunals):** Federal Shariat Court (Article 203-GG) and statutory Appellate Tribunals.
+   - **Tier 5 (Subordinate / Trial Courts):** District and Sessions Courts, Civil Courts, Magistrates.
 3. **Statutory Provision Precedence:** Within a court tier, decisions directly interpreting and citing the query's governing provisions (Tier 1) strictly outrank decisions dealing with the parent statute generally (Tier 2) or unaligned decisions (Tier 3).
 4. **Internal Composite Tie-Breaker:** Semantic rerank score ($0.60$), statutory alignment ($0.30$), and recency ($0.10$) operate strictly as internal tie-breakers between decisions of identical admissibility, court, and statutory tiers.
-5. **Conflicting Supreme Court Precedents (Bench Strength Rule):** Under settled Article 189 jurisprudence (*Multiline Associates v. Ardeshir Cowasjee*, *1995 SCMR 362*), the decision of a larger bench of the Supreme Court prevails over that of a smaller bench. A 5-member Full Bench ruling overrules or modifies a 3-member or 2-member Division Bench ruling. If two benches of equal strength conflict, the later decision in time prevails.
-6. **Ratio Decidendi vs. Obiter Dicta:** Article 189 binds subordinate courts on the *ratio decidendi* (the legal principle essential to the determination of the lis). Casual observations, hypothetical remarks, or *obiter dicta* are persuasive but not binding law. Candidate metadata is checked for ratio extraction.
-7. **Per Incuriam Exceptions:** A decision rendered in ignorance of a binding statutory enactment or larger-bench ruling is *per incuriam* and not binding.
+5. **Conflicting Co-Equal Benches (*Multiline Associates* & *Mst. Samrana Nawaz*):**
+   - Under settled Supreme Court jurisprudence in *Multiline Associates v. Ardeshir Cowasjee* (`1995 SCMR 362`) and *Mst. Samrana Nawaz* (`PLD 2021 SC 581`), a bench of co-equal strength **cannot depart from or overrule** an earlier bench's decision. If a subsequent co-equal bench disagrees, the mandatory judicial course is to request the constitution of a larger bench.
+   - **Rule 1:** A larger bench decision strictly overrules or modifies a smaller bench decision.
+   - **Rule 2:** Earlier co-equal bench decisions remain controlling unless reconsidered by a larger bench. A later co-equal decision must **never** automatically receive a higher ranking purely due to recency.
+   - **Rule 3:** When conflicting decisions of co-equal benches are detected, the system sets `precedential_conflict_status: CONFLICTING_CO_EQUAL_AUTHORITY`, preserves both authorities in context for the lawyer's review, and does not arbitrarily suppress the earlier binding landmark.
+6. **Ratio Decidendi vs. Obiter Dicta:** Article 189 binds subordinate courts strictly on the *ratio decidendi* (the rule of law upon which the lis is determined). Casual remarks and *obiter dicta* are persuasive but not constitutionally binding.
+7. **Per Incuriam & Sub Silentio Classifications:** A judgment rendered in ignorance of a binding statute or larger-bench decision is *per incuriam*. Such classifications require documented judicial analysis/holding in candidate metadata, not automatic algorithmic exclusion.
 
-To guarantee that a landmark Supreme Court precedent cannot be displaced by an additive recency term, candidates are ranked **lexicographically**:
+To guarantee that an apex precedent cannot be displaced by an additive recency term, candidates are ranked **lexicographically**:
 
 $$\text{SortKey}(c) = \Big(\text{Tier}_{\text{admissibility}}(c), \; \text{Tier}_{\text{precedent}}(c), \; \text{Tier}_{\text{statute}}(c), \; -\text{Score}_{\text{composite}}(c)\Big)$$
 
@@ -547,11 +556,12 @@ Where:
    - Bucket 1 (Substantive Approved: 1A + 1B): Rank 1
    - Bucket 2 (Procedural Approved): Rank 2
    - Bucket 3 (Off-Domain): Discarded in strict mode
-2. **$\text{Tier}_{\text{precedent}}$**:
-   - Supreme Court of Pakistan (Article 189 binding apex): Rank 1
-   - High Courts (Article 201 provincial binding): Rank 2
-   - Federal Shariat Court / Appellate Tribunals: Rank 3
-   - Subordinate / Unverified Courts: Rank 4
+2. **$\text{Tier}_{\text{precedent}}$ (Post-27th Amendment Structure)**:
+   - Federal Constitutional Court (FCC - Paramount Apex): Rank 1
+   - Supreme Court of Pakistan (Article 189 General Apex): Rank 2
+   - High Courts (Article 201 Provincial Apex): Rank 3
+   - Federal Shariat Court / Appellate Tribunals: Rank 4
+   - Subordinate / Unverified Courts: Rank 5
 3. **$\text{Tier}_{\text{statute}}$**:
    - Direct Quoted Provision Match: Rank 1
    - Governing Parent Statute Match: Rank 2
@@ -578,7 +588,9 @@ def _compute_lexicographic_sort_key(
     (Tier_admissibility, Tier_precedent, Tier_statute, -CompositeAuthorityScore)
     
     Guarantees:
-    - Supreme Court (Art 189) landmarks can never be outranked by High Court orders due to recency.
+    - Post-27th Amendment: FCC (Tier 1) > Supreme Court (Tier 2) > High Courts (Tier 3).
+    - Substantive domain validity (Tier_admissibility) strictly gates court hierarchy.
+    - Precedent tier strictly outranks recency; earlier co-equal landmarks are protected.
     - Statutory alignment takes precedence over unaligned decisions within the same court tier.
     - Composite authority score operates strictly as an internal tie-breaker.
     """
@@ -586,24 +598,25 @@ def _compute_lexicographic_sort_key(
     bucket = candidate.get("ranking_bucket", 3)
     tier_admissibility = 1 if bucket == 1 else (2 if bucket == 2 else 3)
 
-    # 2. Constitutional Precedential Tier (Articles 189 & 201)
+    # 2. Constitutional Precedential Tier (Post-27th Amendment & Articles 189/201)
     court_raw = str(candidate.get("court") or candidate.get("court_name") or candidate.get("title", "")).lower()
     citation = str(candidate.get("citation", "")).upper()
 
+    is_fcc = ("federal constitutional court" in court_raw) or ("FCC" in citation) or ("F.C.C." in court_raw)
     is_sc = ("supreme court" in court_raw) or ("SCMR" in citation) or ("PLD" in citation and "SC" in court_raw)
-    is_fsc = ("federal shariat court" in court_raw) or ("PLD" in citation and "FSC" in court_raw)
     is_hc = ("high court" in court_raw) or ("lahore" in court_raw) or ("sindh" in court_raw) or ("peshawar" in court_raw) or ("islamabad" in court_raw) or ("balochistan" in court_raw)
+    is_fsc = ("federal shariat court" in court_raw) or ("PLD" in citation and "FSC" in court_raw)
 
-    if is_sc:
-        tier_precedent = 1
-    elif is_fsc:
-        tier_precedent = 2
+    if is_fcc:
+        tier_precedent = 1  # Federal Constitutional Court (Paramount Apex under 27th Amendment)
+    elif is_sc:
+        tier_precedent = 2  # Supreme Court of Pakistan (General Apex under Article 189)
     elif is_hc:
-        tier_precedent = 3
-    elif "tribunal" in court_raw or "appellate" in court_raw:
-        tier_precedent = 4
+        tier_precedent = 3  # High Courts (Provincial / Territorial Apex under Article 201)
+    elif is_fsc or "tribunal" in court_raw or "appellate" in court_raw:
+        tier_precedent = 4  # Federal Shariat Court / Specialized Appellate Tribunals
     else:
-        tier_precedent = 5
+        tier_precedent = 5  # Subordinate / Trial Courts
 
     # 3. Statutory Provision Alignment Tier
     text = str(candidate.get("text", "")).lower()
@@ -859,13 +872,23 @@ def assemble_generation_context(
 
     return final_context, included_cands, telemetry, audit_report
 ```
-```
 
 ---
 
-### 6.2 Tokenizer Contract: Exact vs. Conservative Fallback (Resolving DEFECT-05 & Audit Issue 1)
+### 6.2 Tokenizer Contract: Guaranteed Counting vs. Calibrated Estimation (Resolving Audit Issue 1)
 
-The system defines two distinct, transparent token-counting modes with conservative upward rounding and hard prompt reserves:
+The system formally establishes a three-tier token counting contract that distinguishes between guaranteed counts, calibrated operational estimates, and fail-closed safety handling:
+
+1. **Level 1: Guaranteed Token Counting (Online Mode):**  
+   Uses `voyageai.Client.count_tokens([text], model="voyage-law-2")`. This executes the exact Byte-Pair Encoding (BPE) tokenizer used by the generation model representation, accounting for all formatting, metadata, and citation punctuation. This is the **only mode that guarantees exact context-window measurement**.
+2. **Level 2: Calibrated Operational Estimation (Standard English-Pakistani Legal Text):**  
+   Applied strictly when the tokenizer client is unavailable and the text contains standard Pakistani legal English, citations (`PLD`, `SCMR`, `CLC`), and Latin maxims.  
+   - Empirical calibration: BPE density for standard Pakistani judgments is $\sim 3.0\text{--}3.2 \text{ chars/token}$.  
+   - Operational estimator: Applied at $2.4\text{ chars/token}$ with upward ceiling rounding:
+     $$T_{\text{fallback}} = \left\lceil \frac{\text{len}(\text{text})}{2.4} \right\rceil$$
+   - A mandatory **1,000-token Dedicated Prompt Overhead Reserve** is maintained, capping candidate text at 7,000 tokens out of the 8,000-token ceiling.
+3. **Level 3: Fail-Closed Boundary for Uncalibrated / Heavy Non-ASCII Input:**  
+   If text contains non-ASCII characters exceeding $15\%$ (e.g. Urdu judicial passages, non-standard Arabic script, or uncalibrated Unicode combining marks) and the exact tokenizer is unavailable, character heuristics cannot guarantee safety. Under these conditions, the engine **fails closed** (omits the uncalibrated candidate or aborts context assembly) rather than asserting an unverified token bound.
 
 ```python
 import math
@@ -879,38 +902,33 @@ MAX_CANDIDATE_TOKENS = MAX_TOTAL_CONTEXT_TOKENS - PROMPT_OVERHEAD_RESERVE  # 700
 
 def count_context_tokens(text_blocks: List[str], client: Optional[Any] = None) -> int:
     """
-    Computes token count with explicit mode distinction and conservative upward rounding:
-    - Mode 1 (Exact Mode): Uses Voyage API client.count_tokens() with voyage-law-2 tokenizer.
-    - Mode 2 (Conservative Fallback Mode): Conservative estimator applying 2.4 chars/token
-      with upward ceiling rounding (math.ceil) and a fail-closed boundary for high non-ASCII text.
+    Computes token count with explicit 3-level tiering:
+    - Level 1: Guaranteed Token Counting via Voyage API client.count_tokens().
+    - Level 2: Calibrated Operational Estimation (2.4 chars/token with math.ceil).
+    - Level 3: Fail-Closed Boundary for uncalibrated/heavy non-ASCII text (> 15%).
     """
     joined = "\n\n".join(text_blocks)
     if not joined:
         return 0
 
-    # Mode 1: Exact Tokenizer Mode
+    # Level 1: Guaranteed Token Counting Mode
     if client and hasattr(client, "count_tokens"):
         try:
             counts = client.count_tokens([joined], model="voyage-law-2")
             if counts and isinstance(counts[0], int) and counts[0] > 0:
                 return counts[0]
         except Exception as e:
-            logger.warning(f"Exact tokenizer failed ({e}); engaging conservative fallback.")
+            logger.warning(f"Guaranteed tokenizer failed ({e}); evaluating fallback eligibility.")
 
-    # Mode 2: Validated Conservative Fallback Mode
-    # Calibration basis: English-Pakistani legal text with citations (PLD/SCMR), Latin maxims,
-    # and statutory numbering averages ~3.0 - 3.2 chars/token in BPE tokenizer.
-    # 2.4 chars/token provides a ~25% safety margin.
-    
-    # Fail-closed safety check: If text contains heavy non-ASCII (e.g. Urdu script > 15%),
-    # character ratios compress significantly (~1.2 - 1.8 chars/token).
+    # Level 3: Fail-Closed Safety Check on Uncalibrated / Non-ASCII Input
     non_ascii_chars = sum(1 for c in joined if ord(c) > 127)
     non_ascii_ratio = non_ascii_chars / max(len(joined), 1)
     if non_ascii_ratio > 0.15:
-        # Heavily non-ASCII / Urdu text: apply aggressive 1.4 chars/token fallback
-        return math.ceil(len(joined) / 1.4)
+        logger.error(f"Uncalibrated non-ASCII ratio ({non_ascii_ratio:.2%}) exceeds 15% without exact tokenizer. Failing closed.")
+        # Fails closed by raising or returning hard upper-bound that triggers safe truncation
+        return MAX_CANDIDATE_TOKENS + 1
 
-    # Conservative upward ceiling rounding prevents underestimating token counts by ~1 token
+    # Level 2: Calibrated Operational Estimation Mode
     return math.ceil(len(joined) / 2.4)
 ```
 
