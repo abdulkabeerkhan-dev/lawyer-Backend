@@ -1,0 +1,66 @@
+{
+  "summary_metrics": {
+    "BM25": {
+      "Recall@5": 73.3,
+      "Recall@10": 83.3,
+      "MRR": 0.552,
+      "Domain_Error_Rate": 33.3
+    },
+    "Pinecone": {
+      "Recall@5": 70.0,
+      "Recall@10": 76.7,
+      "MRR": 0.528,
+      "Domain_Error_Rate": 30.0
+    },
+    "Supabase": {
+      "Recall@5": 3.3,
+      "Recall@10": 3.3,
+      "MRR": 0.017,
+      "Domain_Error_Rate": 100.0
+    },
+    "RRF_Merged": {
+      "Recall@5": 73.3,
+      "Recall@10": 80.0,
+      "MRR": 0.486,
+      "Domain_Error_Rate": 33.3
+    },
+    "Final_Reranked": {
+      "Recall@5": 73.3,
+      "Recall@10": 83.3,
+      "MRR": 0.546,
+      "Domain_Error_Rate": 33.3
+    }
+  },
+  "category_stats": {
+    "Civil property / partition": {
+      "queries": 6,
+      "final_rel@5": 5,
+      "final_dom_err": 1
+    },
+    "Benami transactions": {
+      "queries": 5,
+      "final_rel@5": 4,
+      "final_dom_err": 0
+    },
+    "Criminal fraud / forgery": {
+      "queries": 5,
+      "final_rel@5": 3,
+      "final_dom_err": 5
+    },
+    "Constitutional law": {
+      "queries": 4,
+      "final_rel@5": 2,
+      "final_dom_err": 2
+    },
+    "Family law / inheritance": {
+      "queries": 5,
+      "final_rel@5": 4,
+      "final_dom_err": 1
+    },
+    "Mixed-domain statutory issues": {
+      "queries": 5,
+      "final_rel@5": 4,
+      "final_dom_err": 1
+    }
+  }
+}

@@ -1,0 +1,302 @@
+[
+  {
+    "query_id": "CIV-PART-001",
+    "category": "Civil property / partition",
+    "query": "Whether a co-sharer in joint ancestral land can seek preliminary decree for partition under Order XX Rule 18 CPC without including the entire joint estate?",
+    "expected_domain": "civil",
+    "expected_subdomain": "property",
+    "expected_topics": ["partition", "co-sharer", "partial partition", "ancestral estate", "preliminary decree"],
+    "expected_statutes": ["Code of Civil Procedure, 1908", "Partition Act, 1893"],
+    "expected_provisions": ["Order XX Rule 18 CPC", "Section 4 Partition Act, 1893"]
+  },
+  {
+    "query_id": "CIV-PART-002",
+    "category": "Civil property / partition",
+    "query": "In a suit for partition of joint family property, can a defendant co-owner plead a money claim as a set-off under Order VIII Rule 6 CPC?",
+    "expected_domain": "civil",
+    "expected_subdomain": "property",
+    "expected_topics": ["partition", "set-off", "counter-claim", "co-owner"],
+    "expected_statutes": ["Code of Civil Procedure, 1908"],
+    "expected_provisions": ["Order VIII Rule 6 CPC", "Order XX Rule 18 CPC"]
+  },
+  {
+    "query_id": "CIV-PART-003",
+    "category": "Civil property / partition",
+    "query": "Procedure for appointment of local commission for partition of immovable commercial property by metes and bounds under Order XXVI Rule 13 CPC",
+    "expected_domain": "civil",
+    "expected_subdomain": "property",
+    "expected_topics": ["local commission", "metes and bounds", "partition", "commercial property"],
+    "expected_statutes": ["Code of Civil Procedure, 1908", "Partition Act, 1893"],
+    "expected_provisions": ["Order XXVI Rule 13 CPC", "Section 2 Partition Act, 1893"]
+  },
+  {
+    "query_id": "CIV-PART-004",
+    "category": "Civil property / partition",
+    "query": "Right of pre-emption and buy-out valuation by co-sharer under Section 4 Partition Act 1893 when a stranger purchases a share in family dwelling house",
+    "expected_domain": "civil",
+    "expected_subdomain": "property",
+    "expected_topics": ["partition", "dwelling house", "stranger purchaser", "valuation", "buy-out"],
+    "expected_statutes": ["Partition Act, 1893"],
+    "expected_provisions": ["Section 4 Partition Act, 1893"]
+  },
+  {
+    "query_id": "CIV-PART-005",
+    "category": "Civil property / partition",
+    "query": "Maintainability of civil court partition suit regarding agricultural land versus revenue officer jurisdiction under Section 172 Land Revenue Act 1967",
+    "expected_domain": "civil",
+    "expected_subdomain": "land revenue",
+    "expected_topics": ["ouster of jurisdiction", "agricultural land", "partition", "revenue officer"],
+    "expected_statutes": ["Land Revenue Act, 1967", "Code of Civil Procedure, 1908"],
+    "expected_provisions": ["Section 172 Land Revenue Act, 1967", "Section 9 CPC"]
+  },
+  {
+    "query_id": "CIV-PART-006",
+    "category": "Civil property / partition",
+    "query": "Claim of mesne profits and accounts against a co-sharer in exclusive possession of joint commercial shop pending final decree of partition",
+    "expected_domain": "civil",
+    "expected_subdomain": "property",
+    "expected_topics": ["mesne profits", "co-sharer", "exclusive possession", "accounts", "final decree"],
+    "expected_statutes": ["Code of Civil Procedure, 1908"],
+    "expected_provisions": ["Order XX Rule 12 CPC", "Order XX Rule 18 CPC"]
+  },
+  {
+    "query_id": "BEN-TRANS-001",
+    "category": "Benami transactions",
+    "query": "Find Pakistani judgments regarding partition of jointly owned property involving Benami transactions.",
+    "expected_domain": "civil",
+    "expected_subdomain": "property",
+    "expected_topics": ["partition", "benami", "joint ownership", "ostensible owner"],
+    "expected_statutes": ["Benami Transactions (Prohibition) Act, 2017", "Code of Civil Procedure, 1908"],
+    "expected_provisions": ["Section 4 Benami Transactions (Prohibition) Act, 2017", "Order XX Rule 18 CPC"]
+  },
+  {
+    "query_id": "BEN-TRANS-002",
+    "category": "Benami transactions",
+    "query": "Statutory bar on claiming benami ownership as a defence or suit under Section 4 of Benami Transactions (Prohibition) Act 2017",
+    "expected_domain": "civil",
+    "expected_subdomain": "benami",
+    "expected_topics": ["statutory bar", "benami defence", "real owner", "ostensible owner"],
+    "expected_statutes": ["Benami Transactions (Prohibition) Act, 2017"],
+    "expected_provisions": ["Section 4 Benami Transactions (Prohibition) Act, 2017"]
+  },
+  {
+    "query_id": "BEN-TRANS-003",
+    "category": "Benami transactions",
+    "query": "Four essential ingredients to prove benami transaction under pre-2017 law consideration possession custody of title deeds and motive",
+    "expected_domain": "civil",
+    "expected_subdomain": "benami",
+    "expected_topics": ["benami ingredients", "source of consideration", "custody of title deeds", "motive", "possession"],
+    "expected_statutes": ["Qanun-e-Shahadat Order, 1984", "Specific Relief Act, 1877"],
+    "expected_provisions": ["Section 42 Specific Relief Act, 1877", "Article 117 QSO, 1984"]
+  },
+  {
+    "query_id": "BEN-TRANS-004",
+    "category": "Benami transactions",
+    "query": "Whether property purchased by husband in name of wife is presumed to be benami or an advancement gift under Pakistani law",
+    "expected_domain": "civil",
+    "expected_subdomain": "property",
+    "expected_topics": ["husband wife purchase", "advancement", "benami presumption", "gift"],
+    "expected_statutes": ["Qanun-e-Shahadat Order, 1984", "Transfer of Property Act, 1882"],
+    "expected_provisions": ["Article 117 QSO, 1984", "Section 122 Transfer of Property Act, 1882"]
+  },
+  {
+    "query_id": "BEN-TRANS-005",
+    "category": "Benami transactions",
+    "query": "Protection of bona fide purchaser for value without notice from ostensible benami owner under Section 41 Transfer of Property Act 1882",
+    "expected_domain": "civil",
+    "expected_subdomain": "property",
+    "expected_topics": ["ostensible owner", "bona fide purchaser", "notice", "section 41"],
+    "expected_statutes": ["Transfer of Property Act, 1882"],
+    "expected_provisions": ["Section 41 Transfer of Property Act, 1882"]
+  },
+  {
+    "query_id": "CRIM-FRAUD-001",
+    "category": "Criminal fraud / forgery",
+    "query": "Pre-arrest bail under Section 498 CrPC in FIR registered under Sections 406 and 420 PPC arising out of commercial contract dispute",
+    "expected_domain": "criminal",
+    "expected_subdomain": "bail",
+    "expected_topics": ["pre-arrest bail", "commercial dispute", "breach of contract", "mala fide"],
+    "expected_statutes": ["Code of Criminal Procedure, 1898", "Pakistan Penal Code, 1860"],
+    "expected_provisions": ["Section 498 CrPC", "Section 406 PPC", "Section 420 PPC"]
+  },
+  {
+    "query_id": "CRIM-FRAUD-002",
+    "category": "Criminal fraud / forgery",
+    "query": "Essential ingredients of criminal breach of trust under Section 405 PPC entrustment of property and dishonest misappropriation",
+    "expected_domain": "criminal",
+    "expected_subdomain": "substantive offences",
+    "expected_topics": ["entrustment", "dishonest misappropriation", "fiduciary duty"],
+    "expected_statutes": ["Pakistan Penal Code, 1860"],
+    "expected_provisions": ["Section 405 PPC", "Section 406 PPC", "Section 409 PPC"]
+  },
+  {
+    "query_id": "CRIM-FRAUD-003",
+    "category": "Criminal fraud / forgery",
+    "query": "Quashment of FIR under Section 561-A CrPC where civil suit for recovery on same agreement is already pending before civil court",
+    "expected_domain": "criminal",
+    "expected_subdomain": "inherent jurisdiction",
+    "expected_topics": ["quashment of FIR", "civil dispute criminalized", "abuse of process", "561-A"],
+    "expected_statutes": ["Code of Criminal Procedure, 1898"],
+    "expected_provisions": ["Section 561-A CrPC"]
+  },
+  {
+    "query_id": "CRIM-FRAUD-004",
+    "category": "Criminal fraud / forgery",
+    "query": "Dishonour of cheque issued as guarantee or security deposit whether offence under Section 489-F PPC is made out",
+    "expected_domain": "criminal",
+    "expected_subdomain": "cheque dishonour",
+    "expected_topics": ["cheque dishonour", "security cheque", "dishonest intention", "repayment of loan"],
+    "expected_statutes": ["Pakistan Penal Code, 1860"],
+    "expected_provisions": ["Section 489-F PPC"]
+  },
+  {
+    "query_id": "CRIM-FRAUD-005",
+    "category": "Criminal fraud / forgery",
+    "query": "Forgery and fabrication of registered power of attorney under Sections 468 and 471 PPC and evidentiary proof through forensic expert",
+    "expected_domain": "criminal",
+    "expected_subdomain": "forgery",
+    "expected_topics": ["forgery", "power of attorney", "fabricated document", "handwriting expert"],
+    "expected_statutes": ["Pakistan Penal Code, 1860", "Qanun-e-Shahadat Order, 1984"],
+    "expected_provisions": ["Section 468 PPC", "Section 471 PPC", "Article 59 QSO, 1984"]
+  },
+  {
+    "query_id": "CONST-LAW-001",
+    "category": "Constitutional law",
+    "query": "Maintainability of constitutional writ petition under Article 199 against termination of non-statutory contractual employees",
+    "expected_domain": "constitutional",
+    "expected_subdomain": "service / writ",
+    "expected_topics": ["writ petition", "master and servant", "statutory rules", "contractual employment"],
+    "expected_statutes": ["Constitution of the Islamic Republic of Pakistan, 1973"],
+    "expected_provisions": ["Article 199 Constitution"]
+  },
+  {
+    "query_id": "CONST-LAW-002",
+    "category": "Constitutional law",
+    "query": "Ouster of High Court jurisdiction under Article 212 of Constitution in terms and conditions of civil servants Service Tribunal exclusive forum",
+    "expected_domain": "constitutional",
+    "expected_subdomain": "service tribunal",
+    "expected_topics": ["bar of jurisdiction", "civil servant", "service tribunal", "Article 212"],
+    "expected_statutes": ["Constitution of the Islamic Republic of Pakistan, 1973", "Service Tribunals Act, 1973"],
+    "expected_provisions": ["Article 212 Constitution", "Section 4 Service Tribunals Act, 1973"]
+  },
+  {
+    "query_id": "CONST-LAW-003",
+    "category": "Constitutional law",
+    "query": "Scope of public interest litigation and enforcement of fundamental rights under Article 184(3) of Constitution of Pakistan",
+    "expected_domain": "constitutional",
+    "expected_subdomain": "original jurisdiction",
+    "expected_topics": ["Article 184(3)", "public interest litigation", "fundamental rights", "public importance"],
+    "expected_statutes": ["Constitution of the Islamic Republic of Pakistan, 1973"],
+    "expected_provisions": ["Article 184(3) Constitution"]
+  },
+  {
+    "query_id": "CONST-LAW-004",
+    "category": "Constitutional law",
+    "query": "Binding effect of Supreme Court judgments on all courts in Pakistan under Article 189 and High Court under Article 201",
+    "expected_domain": "constitutional",
+    "expected_subdomain": "judicial precedent",
+    "expected_topics": ["stare decisis", "binding precedent", "Article 189", "Article 201"],
+    "expected_statutes": ["Constitution of the Islamic Republic of Pakistan, 1973"],
+    "expected_provisions": ["Article 189 Constitution", "Article 201 Constitution"]
+  },
+  {
+    "query_id": "FAM-INHER-001",
+    "category": "Family law / inheritance",
+    "query": "Right of Muslim wife to obtain dissolution of marriage on ground of Khula without husband's consent and surrender of dower",
+    "expected_domain": "family",
+    "expected_subdomain": "dissolution of marriage",
+    "expected_topics": ["khula", "husband consent not required", "zar-i-khula", "dower return"],
+    "expected_statutes": ["Dissolution of Muslim Marriages Act, 1939", "Family Courts Act, 1964"],
+    "expected_provisions": ["Section 2 Dissolution of Muslim Marriages Act, 1939", "Section 10 Family Courts Act, 1964"]
+  },
+  {
+    "query_id": "FAM-INHER-002",
+    "category": "Family law / inheritance",
+    "query": "Statutory obligation of father to maintain minor children under Section 9 Muslim Family Laws Ordinance 1961 independent of mother's financial status",
+    "expected_domain": "family",
+    "expected_subdomain": "maintenance",
+    "expected_topics": ["child maintenance", "father obligation", "Section 9 MFLO", "family court"],
+    "expected_statutes": ["Muslim Family Laws Ordinance, 1961", "Family Courts Act, 1964"],
+    "expected_provisions": ["Section 9 MFLO, 1961", "Section 5 Family Courts Act, 1964"]
+  },
+  {
+    "query_id": "FAM-INHER-003",
+    "category": "Family law / inheritance",
+    "query": "Custody of minor children and paramount consideration of welfare of minor under Section 17 and 25 Guardians and Wards Act 1890",
+    "expected_domain": "family",
+    "expected_subdomain": "custody",
+    "expected_topics": ["welfare of minor", "hizanat", "custody", "visitation schedule"],
+    "expected_statutes": ["Guardians and Wards Act, 1890"],
+    "expected_provisions": ["Section 17 Guardians and Wards Act, 1890", "Section 25 Guardians and Wards Act, 1890"]
+  },
+  {
+    "query_id": "FAM-INHER-004",
+    "category": "Family law / inheritance",
+    "query": "Challenge by female legal heir to fraudulent relinquishment deed or Tamleek depriving her of legal shari share in inheritance",
+    "expected_domain": "civil",
+    "expected_subdomain": "inheritance / fraud",
+    "expected_topics": ["female inheritance", "fraudulent relinquishment", "tamleek", "shari share"],
+    "expected_statutes": ["Specific Relief Act, 1877", "Qanun-e-Shahadat Order, 1984"],
+    "expected_provisions": ["Section 42 Specific Relief Act, 1877", "Article 117 QSO, 1984"]
+  },
+  {
+    "query_id": "FAM-INHER-005",
+    "category": "Family law / inheritance",
+    "query": "Limitation period for female co-heir to challenge inheritance mutation sanctioned in favour of male brothers only",
+    "expected_domain": "civil",
+    "expected_subdomain": "inheritance / limitation",
+    "expected_topics": ["limitation", "female co-heir", "fraudulent mutation", "co-sharer possession"],
+    "expected_statutes": ["Limitation Act, 1908", "Specific Relief Act, 1877"],
+    "expected_provisions": ["Article 120 Limitation Act, 1908", "Article 144 Limitation Act, 1908"]
+  },
+  {
+    "query_id": "MIX-STAT-001",
+    "category": "Mixed-domain statutory issues",
+    "query": "Eviction of tenant on ground of default in rent under Punjab Rented Premises Act 2009 and mandatory leave to defend under Section 22",
+    "expected_domain": "rent",
+    "expected_subdomain": "eviction",
+    "expected_topics": ["rent default", "eviction", "leave to defend", "Rent Tribunal"],
+    "expected_statutes": ["Punjab Rented Premises Act, 2009"],
+    "expected_provisions": ["Section 15 PRPA, 2009", "Section 22 PRPA, 2009"]
+  },
+  {
+    "query_id": "MIX-STAT-002",
+    "category": "Mixed-domain statutory issues",
+    "query": "Requirement of 30-day limitation and mandatory 50 percent cash deposit for appeal under Section 22 Financial Institutions Recovery of Finances Ordinance 2001",
+    "expected_domain": "banking",
+    "expected_subdomain": "recovery appeal",
+    "expected_topics": ["banking court appeal", "50 percent deposit", "Section 22 FIO", "statutory condition"],
+    "expected_statutes": ["Financial Institutions (Recovery of Finances) Ordinance, 2001"],
+    "expected_provisions": ["Section 10 FIO, 2001", "Section 22 FIO, 2001"]
+  },
+  {
+    "query_id": "MIX-STAT-003",
+    "category": "Mixed-domain statutory issues",
+    "query": "Petition by minority shareholders for prevention of oppression and mismanagement under Section 286 Companies Act 2017 against solvent operational business",
+    "expected_domain": "corporate",
+    "expected_subdomain": "oppression",
+    "expected_topics": ["minority shareholders", "oppression and mismanagement", "Section 286", "provisional manager"],
+    "expected_statutes": ["Companies Act, 2017"],
+    "expected_provisions": ["Section 286 Companies Act, 2017", "Section 288 Companies Act, 2017"]
+  },
+  {
+    "query_id": "MIX-STAT-004",
+    "category": "Mixed-domain statutory issues",
+    "query": "Application under Section 12(2) CPC challenging decree obtained through fraud misrepresentation or lack of jurisdiction by a stranger",
+    "expected_domain": "civil",
+    "expected_subdomain": "procedure",
+    "expected_topics": ["Section 12(2) CPC", "fraudulent decree", "stranger locus standi", "exclusive remedy"],
+    "expected_statutes": ["Code of Civil Procedure, 1908"],
+    "expected_provisions": ["Section 12(2) CPC"]
+  },
+  {
+    "query_id": "MIX-STAT-005",
+    "category": "Mixed-domain statutory issues",
+    "query": "Objection petition under Order XXI Rules 97 to 103 CPC by third party stranger claiming independent right in execution of civil decree",
+    "expected_domain": "civil",
+    "expected_subdomain": "execution",
+    "expected_topics": ["execution of decree", "objection petition", "Order XXI Rule 97", "deemed decree"],
+    "expected_statutes": ["Code of Civil Procedure, 1908"],
+    "expected_provisions": ["Order XXI Rule 97 CPC", "Order XXI Rule 103 CPC"]
+  }
+]
