@@ -78,3 +78,8 @@ scratch_*
 # Runtime rate limit state
 data/rate_limit_state.json
 !reports/*.txt
+
+# Scaled ingestion data files
+data/*.jsonl
+data/batch_cursor.json
+data/*.log
