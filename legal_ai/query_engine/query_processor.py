@@ -6038,6 +6038,8 @@ async def process_query_job_legal_ai(
 
             'unverified_citations': unverified_auths,
 
+            'unverified_memo': clean_answer,
+
             'query_text': effective_user_query,
 
             'verified_statute_fallback': verified_fallback,
