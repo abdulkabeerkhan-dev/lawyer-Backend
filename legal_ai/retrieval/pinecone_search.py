@@ -92,6 +92,11 @@ def _format_pinecone_match(
         except (ValueError, TypeError):
             year = 2020
 
+    domain = str(meta.get("domain") or meta.get("legal_domain") or "civil")
+    subdomain = str(meta.get("subdomain") or "general")
+    segment_type = str(meta.get("segment_type") or content_type)
+    statutes = meta.get("statutes") or meta.get("statutory_provisions") or []
+
     return {
         "id": cid,
         "score": score,
@@ -105,6 +110,11 @@ def _format_pinecone_match(
         "court": court,
         "year": year,
         "content_type": content_type,
+        "segment_type": segment_type,
+        "domain": domain,
+        "legal_domain": domain,
+        "subdomain": subdomain,
+        "statutes_cited": statutes,
         "preview": text[:400],
         "text": text,
         "metadata": meta
@@ -225,18 +235,27 @@ async def search_pinecone_dual_mode(
     # 3. Lane A: Enriched Vector Retrieval (Server-side Filter)
     # --------------------------------------------------------------------------
     if enable_lane_a:
+        segmented_ns = os.getenv("PINECONE_SEGMENTED_NAMESPACE", "segmented-v1")
         lane_a_filter = {
-            "metadata_schema_version": {"$eq": "1.0"},
             "legal_domain": {"$in": canonical_allowed}
         }
         raw_matches_a = await execute_pinecone_query_safe(
             index=index,
             query_vector=query_vector,
-            namespace=PINECONE_NAMESPACE,
+            namespace=segmented_ns,
             top_k=top_k,
             filter_dict=lane_a_filter,
             timeout_seconds=timeout_seconds
         )
+        if not raw_matches_a and segmented_ns != PINECONE_NAMESPACE:
+            raw_matches_a = await execute_pinecone_query_safe(
+                index=index,
+                query_vector=query_vector,
+                namespace=PINECONE_NAMESPACE,
+                top_k=top_k,
+                filter_dict=lane_a_filter,
+                timeout_seconds=timeout_seconds
+            )
         telemetry["lane_a_raw_count"] = len(raw_matches_a)
 
         for m in raw_matches_a:
@@ -364,7 +383,7 @@ async def search_pinecone_dense(
     Otherwise (Default Production Path):
         Executes unfiltered legacy semantic vector search to ensure zero regression.
     """
-    if ENABLE_DUAL_MODE_PINECONE_SEARCH:
+    if ENABLE_DUAL_MODE_PINECONE_SEARCH or (query_plan is not None and getattr(query_plan, "primary_domain", None) is not None):
         candidates, _ = await search_pinecone_dual_mode(
             query_text=query_text,
             query_plan=query_plan,

@@ -494,10 +494,13 @@ class StructuralJudgmentSegmenter:
                     "court": court,
                     "year": int(year) if str(year).isdigit() else 2024,
                     "domain": domain,
+                    "legal_domain": domain,
                     "subdomain": subdomain,
                     "statutes": statutes[:8],
                     "provisions": provisions[:10],
+                    "statutory_provisions": provisions[:10],
                     "segment_type": "headnote",
+                    "metadata_schema_version": "1.0",
                     "detected_type": detected_type
                 }
             })
@@ -515,10 +518,13 @@ class StructuralJudgmentSegmenter:
                     "court": court,
                     "year": int(year) if str(year).isdigit() else 2024,
                     "domain": domain,
+                    "legal_domain": domain,
                     "subdomain": subdomain,
                     "statutes": statutes[:8],
                     "provisions": provisions[:10],
+                    "statutory_provisions": provisions[:10],
                     "segment_type": "ratio_decidendi",
+                    "metadata_schema_version": "1.0",
                     "detected_type": detected_type
                 }
             })
@@ -536,10 +542,13 @@ class StructuralJudgmentSegmenter:
                     "court": court,
                     "year": int(year) if str(year).isdigit() else 2024,
                     "domain": domain,
+                    "legal_domain": domain,
                     "subdomain": subdomain,
                     "statutes": statutes[:8],
                     "provisions": provisions[:10],
+                    "statutory_provisions": provisions[:10],
                     "segment_type": "facts_and_order",
+                    "metadata_schema_version": "1.0",
                     "detected_type": detected_type
                 }
             })

@@ -279,7 +279,7 @@ async def retrieve_candidates_parallel(
 
     async def _execute_multi_pinecone():
         pc_tasks = [
-            search_pinecone_dense(dq, top_k=top_k_per_engine, min_similarity=0.30)
+            search_pinecone_dense(dq, top_k=top_k_per_engine, min_similarity=0.30, query_plan=query_plan)
             for dq in dense_queries
         ]
         pc_lists = await asyncio.gather(*pc_tasks)
