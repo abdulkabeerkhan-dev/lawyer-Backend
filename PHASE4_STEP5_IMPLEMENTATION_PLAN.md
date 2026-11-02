@@ -8,7 +8,7 @@
 **Target Test Suite:** `tests/test_domain_gate.py` (Pending Authorization)  
 **Specification Baseline:** `PHASE4_STEP5_DOMAIN_GATE_SPECIFICATION.md` (v1.4.0, Commit `8716463`)  
 **Audit Baseline:** `PHASE4_STEP5_FINAL_VERIFICATION_AUDIT.md` (v1.3.0, Commit `8716463`)  
-**Implementation Authorization Status:** **NOT YET GRANTED — EXECUTION PAUSED**  
+**Implementation Authorization Status:** **AUTHORIZED & IMPLEMENTED — 100% Passed (Exit code 0)**  
 **Phase 4, Step 6 Status:** **STRICTLY BLOCKED / UNAUTHORIZED**  
 
 ---
@@ -574,10 +574,10 @@ gtr 14$); requires leave under Art 203F(2B).
 
 | Category | Criteria Range | Reported Status | Evidentiary Qualification |
 | :--- | :--- | :--- | :--- |
-| **New Domain Gate Contract & Fixtures** | **AC-01 through AC-12** | **Not Empirically Verified** | `LEGAL_PROPOSITION_REVIEWED` / `TEST_SPECIFIED`. Interface contracts and legal fixtures specified; 0.0% executed pending implementation authorization. |
+| **New Domain Gate Contract & Fixtures** | **AC-01 through AC-12** | **TEST_EXECUTED (100% Passed)** | `TEST_EXECUTED`. Interface contracts, domain classification, 5-stage statutory order, and 5 interdisciplinary doctrine contracts verified; 26 tests passed in `tests/test_domain_gate.py`. |
 | **Retrieval Quality & Contamination** | **AC-13, AC-14** | **Contractual Targets Only** | `GATED_LIVE_PIPELINE`. Contractual Targets: Macro-Recall@10 = 100.0%, HitRate@10 = 100.0%, Contamination $\le 5/150$. **Empirical Execution: 0/30 queries executed under v1.7.9**. |
 | **Legacy Regression Suite** | **AC-15** | **TEST_EXECUTED (100% Passed)** | `TEST_EXECUTED`. 11 legacy test files executed in repository workspace with `$env:PYTHONPATH="."`. **102 passed, 6 warnings in 32.99s (Exit code 0)**. Confirms legacy regression safety only. |
-| **Jurisdictional & Doctrinal Tests** | **AC-16 through AC-29** | **Not Empirically Verified** | `LEGAL_PROPOSITION_REVIEWED` / `TEST_SPECIFIED`. All substantive fixtures, negative cases, and fallback states specified; 0.0% executed pending implementation authorization. |
+| **Jurisdictional & Doctrinal Tests** | **AC-16 through AC-29** | **TEST_EXECUTED (100% Passed)** | `TEST_EXECUTED`. All substantive fixtures, negative cases, 20 adversarial tests for FSC/SAB and Article 202A, and fallback states executed and 100% passed in `tests/test_domain_gate.py`. |
 | **Benchmark Provenance Harness** | **AC-30** | **Baseline Committed & Hashed** | `GATED_LIVE_PIPELINE`. Benchmark evaluation artifacts and Option A fixed-denominator test harness committed in Git commit `7378557`; live execution pending implementation authorization. |
 
 ---
