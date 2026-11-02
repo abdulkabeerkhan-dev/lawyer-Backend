@@ -13,15 +13,24 @@ import random
 import argparse
 from typing import List, Dict, Any, Set, Tuple
 import requests
-import tiktoken
+import math
 from dotenv import load_dotenv
 
-WORKSPACE_DIR = r"c:\Users\kabeer\Documents\lawyer-Backend-master\lawyer-Backend-master"
+try:
+    import tiktoken
+    tokenizer = tiktoken.get_encoding("cl100k_base")
+except Exception:
+    tokenizer = None
+
+WORKSPACE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if WORKSPACE_DIR not in sys.path:
+    sys.path.insert(0, WORKSPACE_DIR)
 ENV_PATH = os.path.join(WORKSPACE_DIR, ".env")
 load_dotenv(dotenv_path=ENV_PATH)
 
 from supabase import create_client
 from pinecone import Pinecone
+from core.hierarchical_legal_chunker import HierarchicalLegalChunker
 
 # Configurations
 VOYAGE_API_KEY = os.getenv("VOYAGE_API_KEY")
@@ -49,7 +58,6 @@ REINDEX_QUEUE_PATH = os.path.join(WORKSPACE_DIR, "reindex_queue.json")
 SKIPPED_STUBS_PATH = os.path.join(WORKSPACE_DIR, "skipped_stubs.csv")
 
 # Tokenizer
-tokenizer = tiktoken.get_encoding("cl100k_base")
 MIN_CLEAN_TOKENS = 15
 
 
@@ -353,23 +361,54 @@ def chunk_judgment_text(
     text: str,
     citation: str,
     title: str,
+    court: str = "",
+    year: str = "",
+    case_id: str = "",
     target_tokens: int = 512,
-    overlap_tokens: int = 64
-) -> List[Tuple[str, int]]:
+    overlap_tokens: int = 64,
+    use_hierarchical: bool = True
+) -> List[Any]:
     """
-    Split text into 512-token segments with 64-token overlap.
-    Prepends context header '[citation | title]' to each chunk.
-    Returns list of (chunk_text, token_count).
+    Structure-aware hierarchical chunking for Pakistani superior court judgments.
+    Decomposes judgments into canonical legal sections (headnote, ratio_decidendi,
+    counsel_arguments, facts, operative_order) and tags chunks with section_type and is_holding.
+    Falls back to token sliding-window if use_hierarchical=False or if parsing yields no chunks.
     """
     if not text:
         return []
 
-    tokens = tokenizer.encode(text)
+    if use_hierarchical:
+        try:
+            meta = {
+                "case_id": case_id,
+                "citation": citation,
+                "title": title,
+                "court": court,
+                "year": year
+            }
+            chunks = HierarchicalLegalChunker.chunk_judgment(
+                text=text,
+                metadata=meta,
+                target_tokens=target_tokens,
+                overlap_tokens=overlap_tokens
+            )
+            if chunks:
+                return chunks
+        except Exception as e:
+            print(f"  [Hierarchical Chunker Fallback] {e}. Using sliding-window chunking.")
+
+    # Sliding-window fallback
+    header_text = f"[{citation} | {title}]\n\n"
+    if tokenizer is not None:
+        tokens = tokenizer.encode(text)
+        header_tokens = tokenizer.encode(header_text)
+    else:
+        # Fallback pseudo-tokens
+        tokens = list(range(max(1, math.ceil(len(text) / 2.4))))
+        header_tokens = list(range(max(1, math.ceil(len(header_text) / 2.4))))
+
     if not tokens:
         return []
-
-    header_text = f"[{citation} | {title}]\n\n"
-    header_tokens = tokenizer.encode(header_text)
     max_body_tokens = max(100, target_tokens - len(header_tokens))
 
     chunks: List[Tuple[str, int]] = []
@@ -381,7 +420,12 @@ def chunk_judgment_text(
         body_slice = tokens[start_idx : start_idx + max_body_tokens]
         if not body_slice:
             break
-        body_text = tokenizer.decode(body_slice)
+        if tokenizer is not None:
+            body_text = tokenizer.decode(body_slice)
+        else:
+            char_start = int(start_idx * 2.4)
+            char_end = int((start_idx + max_body_tokens) * 2.4)
+            body_text = text[char_start:char_end]
         chunk_full_text = header_text + body_text
         chunk_token_count = len(header_tokens) + len(body_slice)
         chunks.append((chunk_full_text, chunk_token_count))
@@ -453,7 +497,7 @@ def upsert_pinecone_with_retry(
     raise RuntimeError(f"Failed to upsert to Pinecone after {max_retries} attempts.")
 
 
-def run_pipeline(limit: int = 100, is_dry_run: bool = True, stratified_200: bool = False, pause_at: int = 0):
+def run_pipeline(limit: int = 100, is_dry_run: bool = True, stratified_200: bool = False, pause_at: int = 0, use_hierarchical: bool = True):
     check_prod_safety_guard()
     print("=" * 70)
     if pause_at > 0:
@@ -643,16 +687,40 @@ def run_pipeline(limit: int = 100, is_dry_run: bool = True, stratified_200: bool
                     c_type = "headnote_only" if tok_count < 300 else "full_text"
                     content_type_counts[c_type] = content_type_counts.get(c_type, 0) + 1
 
-                    judgment_chunks = chunk_judgment_text(cleaned_text, raw_cit, case_title)
+                    judgment_chunks = chunk_judgment_text(
+                        cleaned_text,
+                        raw_cit,
+                        case_title,
+                        court=court,
+                        year=str(item.get("decision_date") or "")[:4],
+                        case_id=cid,
+                        use_hierarchical=use_hierarchical
+                    )
                     num_chunks = len(judgment_chunks)
 
-                    for chunk_idx, (chk_text, chk_tok_count) in enumerate(judgment_chunks):
-                        chk_id = f"{cid}#c{chunk_idx+1}"
-                        batch_chunks.append({
-                            "id": chk_id,
-                            "text": chk_text,
-                            "tokens": chk_tok_count,
-                            "metadata": {
+                    for chunk_idx, chk in enumerate(judgment_chunks):
+                        if isinstance(chk, dict):
+                            chk_id = chk["chunk_id"]
+                            chk_text = chk["text"]
+                            chk_tok_count = chk["token_count"]
+                            meta = dict(chk.get("metadata") or {})
+                            meta.update({
+                                "case_id": cid,
+                                "canonical_id": cid,
+                                "supabase_id": supabase_id,
+                                "citation": raw_cit,
+                                "title": case_title,
+                                "court": court,
+                                "court_name": court,
+                                "court_normalized": court,
+                                "date": str(item.get("decision_date") or "")[:4],
+                                "year": str(item.get("decision_date") or "")[:4],
+                                "content_type": c_type,
+                            })
+                        else:
+                            chk_text, chk_tok_count = chk
+                            chk_id = f"{cid}#c{chunk_idx+1}"
+                            meta = {
                                 "case_id": cid,
                                 "canonical_id": cid,
                                 "supabase_id": supabase_id,
@@ -666,8 +734,16 @@ def run_pipeline(limit: int = 100, is_dry_run: bool = True, stratified_200: bool
                                 "chunk_index": chunk_idx,
                                 "total_chunks": num_chunks,
                                 "content_type": c_type,
-                                "token_count": chk_tok_count
+                                "token_count": chk_tok_count,
+                                "section_type": "body",
+                                "is_holding": False,
+                                "is_argument": False
                             }
+                        batch_chunks.append({
+                            "id": chk_id,
+                            "text": chk_text,
+                            "tokens": chk_tok_count,
+                            "metadata": meta
                         })
 
                     successful_case_ids.append(cid)
@@ -782,7 +858,8 @@ if __name__ == "__main__":
     parser.add_argument("--stratified-200", action="store_true", help="Run stratified dry run with 25 cases from each of 8 decades")
     parser.add_argument("--pause-at", type=int, default=0, help="Pause after processing this number of judgments for spot check")
     parser.add_argument("--production", action="store_true", help="Set flag for continuous production run")
+    parser.add_argument("--no-hierarchical", action="store_true", help="Disable structure-aware hierarchical chunking")
     args = parser.parse_args()
 
-    run_pipeline(limit=args.limit, is_dry_run=(not args.production and args.pause_at == 0), stratified_200=args.stratified_200, pause_at=args.pause_at)
+    run_pipeline(limit=args.limit, is_dry_run=(not args.production and args.pause_at == 0), stratified_200=args.stratified_200, pause_at=args.pause_at, use_hierarchical=(not args.no_hierarchical))
 
