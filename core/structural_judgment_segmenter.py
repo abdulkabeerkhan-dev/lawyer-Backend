@@ -12,6 +12,7 @@ and Pinecone/Supabase multi-field payload generation.
 """
 
 import re
+import hashlib
 from typing import Dict, List, Any, Optional, Set, Tuple
 
 
@@ -472,7 +473,9 @@ class StructuralJudgmentSegmenter:
         """
         Builds the 3 segment vectors with structured metadata for Pinecone ingestion.
         """
-        cid = meta.get("case_id") or "UNKNOWN"
+        cid = str(meta.get("case_id") or "UNKNOWN")
+        # Pinecone ID max length is 512 chars; safeguard against long or aberrant case identifiers
+        safe_cid = cid if len(cid) <= 120 else f"{cid[:100]}_{hashlib.md5(cid.encode('utf-8')).hexdigest()[:12]}"
         cit = meta.get("neutral_citation") or meta.get("citation") or cid
         title = meta.get("case_title") or meta.get("title") or "Precedent on Record"
         court = meta.get("court_name") or meta.get("court") or "Supreme Court of Pakistan"
@@ -484,14 +487,14 @@ class StructuralJudgmentSegmenter:
         # Segment A: Headnote (The Legal Doctrine)
         if headnote and len(headnote.split()) >= 20:
             segments.append({
-                "segment_id": f"{cid}_seg_headnote",
+                "segment_id": f"{safe_cid}_seg_headnote",
                 "segment_type": "headnote",
                 "text": f"{header}\n\nHEADNOTE & STATUTORY ANCHORS:\n{headnote}",
                 "metadata": {
-                    "case_id": cid,
-                    "citation": cit,
-                    "case_title": title,
-                    "court": court,
+                    "case_id": cid[:256],
+                    "citation": cit[:256],
+                    "case_title": title[:256],
+                    "court": court[:128],
                     "year": int(year) if str(year).isdigit() else 2024,
                     "domain": domain,
                     "legal_domain": domain,
@@ -508,14 +511,14 @@ class StructuralJudgmentSegmenter:
         # Segment B: Ratio Decidendi (The Judicial Holding)
         if ratio and len(ratio.split()) >= 20:
             segments.append({
-                "segment_id": f"{cid}_seg_ratio",
+                "segment_id": f"{safe_cid}_seg_ratio",
                 "segment_type": "ratio_decidendi",
                 "text": f"{header}\n\nRATIO DECIDENDI & JUDICIAL HOLDING:\n{ratio}",
                 "metadata": {
-                    "case_id": cid,
-                    "citation": cit,
-                    "case_title": title,
-                    "court": court,
+                    "case_id": cid[:256],
+                    "citation": cit[:256],
+                    "case_title": title[:256],
+                    "court": court[:128],
                     "year": int(year) if str(year).isdigit() else 2024,
                     "domain": domain,
                     "legal_domain": domain,
@@ -532,14 +535,14 @@ class StructuralJudgmentSegmenter:
         # Segment C: Facts & Outcome (Procedural Context)
         if facts and len(facts.split()) >= 20:
             segments.append({
-                "segment_id": f"{cid}_seg_facts",
+                "segment_id": f"{safe_cid}_seg_facts",
                 "segment_type": "facts_and_order",
                 "text": f"{header}\n\nFACTS & PROCEDURAL OUTCOME:\n{facts}",
                 "metadata": {
-                    "case_id": cid,
-                    "citation": cit,
-                    "case_title": title,
-                    "court": court,
+                    "case_id": cid[:256],
+                    "citation": cit[:256],
+                    "case_title": title[:256],
+                    "court": court[:128],
                     "year": int(year) if str(year).isdigit() else 2024,
                     "domain": domain,
                     "legal_domain": domain,

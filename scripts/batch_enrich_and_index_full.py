@@ -318,19 +318,38 @@ def run_batch_enrichment(
             # 2. Embed & Upsert to Pinecone
             upserted_this_batch = 0
             if not dry_run and batch_vectors:
-                embed_texts = [v["text_to_embed"] for v in batch_vectors]
+                # Sanitize IDs to never exceed Pinecone's 512-character limit
+                import hashlib
+                sanitized_vectors = []
+                for v in batch_vectors:
+                    v_id = str(v["id"])
+                    if len(v_id) > 400:
+                        v_id = f"{v_id[:200]}_{hashlib.sha256(v_id.encode('utf-8')).hexdigest()[:16]}"
+                    v["id"] = v_id
+                    sanitized_vectors.append(v)
+
+                embed_texts = [v["text_to_embed"] for v in sanitized_vectors]
                 embeddings = embed_batch_voyage(embed_texts)
 
                 upsert_payloads = []
-                for v, emb in zip(batch_vectors, embeddings):
+                for v, emb in zip(sanitized_vectors, embeddings):
                     upsert_payloads.append({
                         "id": v["id"],
                         "values": emb,
                         "metadata": v["metadata"]
                     })
 
-                pc_index.upsert(vectors=upsert_payloads, namespace=TARGET_NAMESPACE)
-                upserted_this_batch = len(upsert_payloads)
+                try:
+                    pc_index.upsert(vectors=upsert_payloads, namespace=TARGET_NAMESPACE)
+                    upserted_this_batch = len(upsert_payloads)
+                except Exception as e:
+                    print(f"  [Pinecone Upsert Warning] Batch failed: {e}. Attempting item-by-item upsert...", flush=True)
+                    for item in upsert_payloads:
+                        try:
+                            pc_index.upsert(vectors=[item], namespace=TARGET_NAMESPACE)
+                            upserted_this_batch += 1
+                        except Exception as item_err:
+                            print(f"    [Pinecone Skip Vector] {item.get('id')[:60]}: {item_err}", flush=True)
 
             # 3. Synchronize Supabase full_judgments structured columns
             supabase_synced = 0
