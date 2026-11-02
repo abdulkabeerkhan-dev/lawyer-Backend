@@ -84,12 +84,12 @@ CREATE OR REPLACE FUNCTION search_judgments_structured(
     p_limit INT DEFAULT 20
 )
 RETURNS TABLE (
-    id BIGINT,
-    case_id VARCHAR,
+    id UUID,
+    case_id TEXT,
     case_title TEXT,
-    neutral_citation VARCHAR,
+    neutral_citation TEXT,
     court_name TEXT,
-    decision_date VARCHAR,
+    decision_date TEXT,
     domain VARCHAR,
     subdomain VARCHAR,
     headnote TEXT,

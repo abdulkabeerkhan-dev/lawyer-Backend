@@ -275,7 +275,7 @@ async def retrieve_candidates_parallel(
         return bm_results
 
     # 4. Fire concurrent search tasks
-    supabase_task = asyncio.create_task(search_supabase_judgments(search_terms, limit_per_term=15))
+    supabase_task = asyncio.create_task(search_supabase_judgments(search_terms, limit_per_term=15, query_plan=query_plan))
 
     async def _execute_multi_pinecone():
         pc_tasks = [

@@ -97,6 +97,12 @@ def _format_supabase_record(rec: Dict[str, Any], score: float = 0.60) -> Dict[st
     """
     cid = str(rec.get("case_id") or rec.get("id") or "").strip()
     full_text = str(rec.get("full_text") or "").strip()
+    headnote = str(rec.get("headnote") or "").strip()
+    ratio = str(rec.get("ratio_decidendi") or "").strip()
+    domain = str(rec.get("domain") or "").strip()
+    subdomain = str(rec.get("subdomain") or "").strip()
+    statutes = rec.get("statutes_cited") or []
+
     title = str(rec.get("case_title") or rec.get("title") or "").strip()
     if not title or title.lower() in ("precedent on record", "reported precedent", "none", "unknown"):
         m_br = re.search(r'\[[^|\]]+\|\s*([^\]]+)\]', full_text)
@@ -114,7 +120,9 @@ def _format_supabase_record(rec: Dict[str, Any], score: float = 0.60) -> Dict[st
     m_year = re.search(r'\b(19\d{2}|20\d{2})\b', f"{cit} {date_val}")
     year = int(m_year.group(1)) if m_year else 2020
 
-    content_type = "full_text" if len(full_text.split()) >= 150 else "headnote_only"
+    content_type = "full_text" if len(full_text.split()) >= 150 else ("ratio_decidendi" if ratio else ("headnote_only" if headnote else "citation_only"))
+    display_preview = (headnote[:400] if headnote else "") or (ratio[:400] if ratio else "") or full_text[:400]
+    display_text = (full_text[:3500] if full_text else "") or (headnote[:3500] if headnote else "") or (ratio[:3500] if ratio else "")
 
     return {
         "id": cid,
@@ -130,8 +138,15 @@ def _format_supabase_record(rec: Dict[str, Any], score: float = 0.60) -> Dict[st
         "case_name": title,
         "court": court,
         "year": year,
+        "domain": domain,
+        "legal_domain": domain,
+        "subdomain": subdomain,
+        "statutes": statutes,
+        "statutory_provisions": statutes,
+        "headnote": headnote,
+        "ratio_decidendi": ratio,
         "content_type": content_type,
-        "preview": full_text[:400],
+        "preview": display_preview,
         "metadata": {
             "id": str(rec.get("id")),
             "supabase_id": str(rec.get("id")),
@@ -145,8 +160,15 @@ def _format_supabase_record(rec: Dict[str, Any], score: float = 0.60) -> Dict[st
             "court_name": court,
             "year": year,
             "date": date_val,
-            "text": full_text[:3500],
-            "full_text": full_text,
+            "domain": domain,
+            "legal_domain": domain,
+            "subdomain": subdomain,
+            "statutes": statutes,
+            "statutory_provisions": statutes,
+            "headnote": headnote,
+            "ratio_decidendi": ratio,
+            "text": display_text,
+            "full_text": full_text or display_text,
             "content_type": content_type,
             "is_supabase_fts": True,
             "source_type": "Supabase"
@@ -156,14 +178,16 @@ def _format_supabase_record(rec: Dict[str, Any], score: float = 0.60) -> Dict[st
 
 async def search_supabase_judgments(
     search_terms: List[str],
-    limit_per_term: int = 15
+    limit_per_term: int = 15,
+    query_plan: Optional[Any] = None
 ) -> List[Dict[str, Any]]:
     """
     Executes proactive multi-term FTS and keyword search against Postgres full_judgments.
     Optimized for sub-second retrieval:
     1. Fast exact citation and case_id lookup.
-    2. Substantive keyword search against case_title with conversational stop-words stripped.
-    3. Safe guarded full_text search with statement timeout protection.
+    2. Domain-aware structured headnote & GIN FTS stored procedure (search_judgments_structured).
+    3. Substantive keyword search against case_title with conversational stop-words stripped.
+    4. Safe guarded full_text search with statement timeout protection.
     """
     sb = get_supabase_client()
     if not sb:
@@ -171,6 +195,16 @@ async def search_supabase_judgments(
 
     candidates: List[Dict[str, Any]] = []
     seen_ids = set()
+
+    # Extract target domain from query_plan if available
+    target_domain = None
+    if query_plan:
+        if hasattr(query_plan, "legal_domain") and query_plan.legal_domain:
+            target_domain = str(query_plan.legal_domain).strip().lower()
+        elif hasattr(query_plan, "domain") and query_plan.domain:
+            target_domain = str(query_plan.domain).strip().lower()
+        if target_domain in ("unknown", "general", "none"):
+            target_domain = None
 
     for term in search_terms:
         q_clean = term.strip()
@@ -183,11 +217,11 @@ async def search_supabase_judgments(
             try:
                 def _query_exact():
                     res = sb.table("full_judgments").select(
-                        "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
+                        "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text, domain, subdomain, headnote, ratio_decidendi, statutes_cited"
                     ).eq("case_id", norm_cid).limit(5).execute()
                     if not (res and res.data):
                         res = sb.table("full_judgments").select(
-                            "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
+                            "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text, domain, subdomain, headnote, ratio_decidendi, statutes_cited"
                         ).eq("neutral_citation", disp_cit).limit(5).execute()
                     return res.data or []
 
@@ -205,7 +239,7 @@ async def search_supabase_judgments(
             try:
                 def _query_cid():
                     res = sb.table("full_judgments").select(
-                        "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
+                        "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text, domain, subdomain, headnote, ratio_decidendi, statutes_cited"
                     ).eq("case_id", q_clean).limit(2).execute()
                     return res.data or []
 
@@ -215,6 +249,31 @@ async def search_supabase_judgments(
                     if cid not in seen_ids:
                         seen_ids.add(cid)
                         candidates.append(_format_supabase_record(r, score=0.95))
+            except Exception:
+                pass
+
+        # 3. Domain-Aware Structured Headnote & GIN FTS Procedure
+        substantive = extract_substantive_tokens(q_clean)
+        structured_terms = " ".join(substantive[:4]) if substantive else q_clean
+        if len(structured_terms) >= 3:
+            try:
+                def _query_structured():
+                    rpc_params = {
+                        "p_query_terms": structured_terms,
+                        "p_domain": target_domain,
+                        "p_limit": limit_per_term
+                    }
+                    res = sb.rpc("search_judgments_structured", rpc_params).execute()
+                    return res.data or []
+
+                struct_records = safe_supabase_query(_query_structured, retries=1)
+                for r in (struct_records or []):
+                    cid = str(r.get("case_id") or r.get("id"))
+                    if cid not in seen_ids:
+                        seen_ids.add(cid)
+                        rank_score = float(r.get("rank") or 0.5)
+                        norm_score = min(0.92, 0.70 + (rank_score * 0.05))
+                        candidates.append(_format_supabase_record(r, score=norm_score))
             except Exception:
                 pass
 
