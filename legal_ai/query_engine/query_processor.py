@@ -3148,6 +3148,8 @@ async def process_query_job_legal_ai(
 
 
             "   - NO BARE STRING-CITATIONS: Never cite a precedent as part of an ungrounded string-citation without substantive doctrinal engagement in the narrative.\n"
+            "   - CLOSED-WORLD STATUTORY CITATIONS: You may ONLY cite statutory provisions (Sections, Orders, Rules, Articles) explicitly listed in the STATUTORY & CURRENT LAW FRAMEWORK section above. Do NOT introduce outside statutory sections, Limitation articles, or unverified enactments not in the statutory framework, especially in Section 8 (Appendix).\n"
+            "   - NO BARE STATUTE NUMBERS WITHOUT ACT NAME: Always refer to a statute by its full name and year on first mention (e.g. 'Section 42 of the Specific Relief Act, 1877' rather than a bare 'Section 42'). In Section 8, discuss research boundaries without citing unprovided statutory sections.\n"
 
 
 

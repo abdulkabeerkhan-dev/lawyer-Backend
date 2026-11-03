@@ -742,10 +742,17 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
                 if lower_text in s:
                     sentence_to_search = s
                     break
-        for alias, code in sorted(ACT_ALIASES.items(), key=lambda x: len(x[0]), reverse=True):
-            if re.search(rf'\b{re.escape(alias)}\b', sentence_to_search):
-                act_code = code
-                break
+        target_idx = sentence_to_search.find(lower_text)
+        best_code = None
+        min_dist = float('inf')
+        for alias, code in ACT_ALIASES.items():
+            for m in re.finditer(rf'\b{re.escape(alias)}\b', sentence_to_search):
+                dist = min(abs(m.start() - target_idx), abs(m.end() - target_idx))
+                if dist < min_dist:
+                    min_dist = dist
+                    best_code = code
+        if best_code:
+            act_code = best_code
 
     # If no act identified, check cues
     if not act_code:
@@ -866,8 +873,10 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
         cl = art_match.group(3)
         if act_code in ("CONST_1973", "QSO_1984", "LIMITATION_1908", "SC_RULES_1980"):
             resolved_act = act_code
+            if resolved_act == "QSO_1984" and int(re.sub(r'[^0-9]', '', primary_num) or 0) > 166:
+                resolved_act = "CONST_1973"
         elif "qso" in lower_text or "shahadat" in lower_text:
-            resolved_act = "QSO_1984"
+            resolved_act = "QSO_1984" if int(re.sub(r'[^0-9]', '', primary_num) or 0) <= 166 else "CONST_1973"
         elif "limitation" in lower_text or ("limitation" in search_context and int(re.sub(r'[^0-9]', '', primary_num) or 0) <= 183):
             resolved_act = "LIMITATION_1908"
         else:

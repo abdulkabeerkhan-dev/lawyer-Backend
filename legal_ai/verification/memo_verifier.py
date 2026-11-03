@@ -3456,7 +3456,7 @@ class MemoVerifier:
 
 
 
-            r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z0-9]+)?(?:\(\d+\))*(?:\([a-z]\))*)(?:(?:\s*,\s*|\s+of\s+(?:the\s+)?)(?:(?:the\s+)?(?:[A-Z][a-zA-Z0-9\(\)]*\s*){1,6}\b(?:Act|Ordinance|Code|Order|Rules|CPC|PPC|CrPC|FIO|FIFO|TPA|BCO)\b(?:\s*,\s*\d{4})?))?',
+            r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z0-9]+)?(?:\(\d+\))*(?:\([a-z]\))*)(?:(?:\s*,\s*(?!and\b|or\b|the\b)|\s+of\s+(?:the\s+)?)(?:(?:the\s+)?(?:[A-Z][a-zA-Z0-9\(\)]*\s*){1,6}\b(?:Act|Ordinance|Code|Order|Rules|CPC|PPC|CrPC|FIO|FIFO|TPA|BCO)\b(?:\s*,\s*\d{4})?))?',
 
 
 
@@ -3472,7 +3472,7 @@ class MemoVerifier:
 
 
 
-            r'\b(?:Article|Art\.)\s*(\d+[A-Za-z]?)\s*(?:,\s*|\s+of\s+(?:the\s+)?)?([A-Za-z0-9\s,\(\)]+?\b(?:Constitution|QSO|Qanun-e-Shahadat|Limitation\s+Act|Act)\b(?:\s*,\s*\d{4})?)',
+            r'\b(?:Article|Art\.)\s*(\d+[A-Za-z]?)(?:\s*(?:,\s*|\s+of\s+(?:the\s+)?)(?:(?:the\s+)?(?:[A-Z][a-zA-Z0-9\(\)]*\s*){0,4}\b(?:Constitution|QSO|Qanun-e-Shahadat|Limitation\s+Act|Limitation)\b(?:\s*,\s*\d{4})?))?',
 
 
 
@@ -3480,7 +3480,10 @@ class MemoVerifier:
 
 
 
-            r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z]+)?)\s+(PPC|CPC|CrPC|FIO|FIFO|TPA|BCO)\b'
+            r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z]+)?)\s+(PPC|CPC|CrPC|FIO|FIFO|TPA|BCO)\b',
+
+            # 7. Act-First pattern: Partition Act 1893 Section 4, Civil Courts Ordinance 1962 Section 18
+            r'\b((?:West\s+Pakistan\s+)?(?:Civil\s+Courts|Partition|Specific\s+Relief|Limitation|Contract|Arbitration|Court\s+Fees|Suits\s+Valuation|Registration|Stamp|Muslim\s+Family\s+Laws|Family\s+Courts|Defamation|Financial\s+Institutions)\s+(?:Act|Ordinance)(?:\s*,\s*\d{4}|\s+\d{4})?)\s+(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z0-9]+)?(?:\(\d+\))*(?:\([a-z]\))*)'
 
 
 
@@ -4982,7 +4985,10 @@ class MemoVerifier:
                     "application", "opinion", "analysis", "summary", "executive summary",
                     "remedy", "remedies", "conclusion", "recommendation", "roadmap",
                     "primary legal finding", "finding", "findings", "analysis and advisory",
-                    "advisory", "applicable statutes", "limitations", "sources", "relevant judgments"
+                    "advisory", "applicable statutes", "limitations", "sources", "relevant judgments",
+                    "appendix", "research scope", "unlocated", "scope", "statutory", "framework",
+                    "precedents", "judicial precedents", "case matrix", "substantive", "doctrine",
+                    "procedural", "appellate", "strategy", "litigation", "facts", "legal memorandum"
                 )
                 matches_exempt = any(kw in clean_hdr for kw in exempt_keywords)
                 if is_level_1_or_2:

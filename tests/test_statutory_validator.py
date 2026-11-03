@@ -72,6 +72,7 @@ class TestStatutoryValidator(unittest.TestCase):
             ("Order XXXIX Rule 1 CPC", "CPC_1908_ORD_XXXIX_R_1"),
             ("Section 5 Limitation Act", "LIMITATION_1908_SEC_5"),
             ("Article 181 Limitation Act", "LIMITATION_1908_ART_181"),
+            ("Section 9(c) CNSA", "CNSA_1997_SEC_9_C"),
         ]
 
         for cit, expected_cid in valid_citations:
@@ -87,7 +88,7 @@ class TestStatutoryValidator(unittest.TestCase):
             ("Article 199 Constitution", "CONST_1973_ART_199"),
             ("Article 184(3) Constitution", "CONST_1973_ART_184_3"),
             ("Article 58(2)(b) Constitution", "CONST_1973_ART_58_2_B"),
-            ("Section 9(c) CNSA", "CNSA_1997_SEC_9_C"),
+            ("Section 3 ATA", "ATA_1997_SEC_3"),
             ("Section 15 PRPA", "PRPA_2009_SEC_15"),
             ("Section 13 Pre-emption Act", "PREEMPTION_1991_SEC_13")
         ]
