@@ -272,40 +272,179 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: LegalQueryP
     return total_score, scores
 
 
+def compute_constitutional_multiplier(
+    candidate: Dict[str, Any],
+    query_plan: Optional[Any] = None
+) -> float:
+    """
+    Computes the composite constitutional authority multiplier according to Pakistani judicial hierarchy:
+    Formula:
+        Constitutional Multiplier = M_court + M_recency + M_citation + M_section
+
+    Hierarchy Rules (Post-27th Amendment & Chapter 3A):
+    - Federal Constitutional Court (FCC) on constitutional questions: +0.90 to +1.00
+    - Supreme Court of Pakistan (Article 189 binding precedent): +0.80
+    - High Courts Division / Larger Bench or general High Court (Article 201): +0.30 to +0.40
+    - Federal Shariat Court (Article 203-GG): +0.35
+    - Subordinate Courts / Tribunals: +0.05
+
+    Recency Weights:
+    - 2024-2026: +0.15
+    - 2020-2023: +0.10
+    - 2010-2019: +0.05
+
+    Citation Prestige:
+    - SCMR: +0.10
+    - PLD: +0.08
+    - CLC / PCrLJ / MLD / YLR / CLD / PTD: +0.04
+
+    Structural Section Modifier (Phase 4 Step 6):
+    - is_holding=True or section_type in ('ratio_decidendi', 'headnote'): +0.20
+    - is_argument=True or section_type == 'counsel_arguments': -0.40
+    """
+    meta = candidate.get("metadata") if isinstance(candidate.get("metadata"), dict) else candidate
+    court = str(candidate.get("court") or candidate.get("court_name") or meta.get("court") or meta.get("court_name") or "").lower()
+    citation = str(candidate.get("citation") or candidate.get("neutral_citation") or meta.get("citation") or meta.get("neutral_citation") or "").upper()
+    title = str(candidate.get("title") or candidate.get("case_name") or candidate.get("case_title") or meta.get("title") or meta.get("case_title") or "").lower()
+    year_val = candidate.get("year") or candidate.get("decision_date") or meta.get("year") or meta.get("decision_date") or 2000
+
+    # 1. Court Hierarchy Base Multiplier
+    is_constitutional_query = False
+    if query_plan is not None:
+        q_domains = [str(d).lower() for d in (getattr(query_plan, "legal_domain", []) or [])]
+        q_questions = " ".join(getattr(query_plan, "legal_questions", []) or []).lower()
+        is_constitutional_query = any(k in q_domains or k in q_questions for k in [
+            "constitutional", "article 199", "article 184", "amendment", "vires", "fundamental rights"
+        ])
+
+    m_court = 0.10
+    if "federal constitutional court" in court or "fcc" in court or "fccr" in citation:
+        m_court = 1.00 if is_constitutional_query else 0.85
+    elif "supreme court" in court or "scmr" in citation or "supreme court" in title:
+        m_court = 0.80
+    elif "federal shariat court" in court or "fsc" in court:
+        m_court = 0.35
+    elif any(hc in court for hc in ["high court", "lahore", "sindh", "peshawar", "balochistan", "islamabad"]) or any(j in citation for j in ["PLD", "CLC", "PCrLJ", "MLD", "YLR", "CLD"]):
+        m_court = 0.30
+
+    # 2. Recency Multiplier
+    y = 2000
+    if isinstance(year_val, int):
+        y = year_val
+    elif isinstance(year_val, str):
+        m_y = re.search(r'\b(19\d{2}|20\d{2})\b', year_val)
+        if m_y:
+            y = int(m_y.group(1))
+    if y == 2000:
+        m_cit_y = re.search(r'\b(19\d{2}|20\d{2})\b', citation)
+        if m_cit_y:
+            y = int(m_cit_y.group(1))
+
+    m_recency = 0.0
+    if y >= 2024:
+        m_recency = 0.15
+    elif y >= 2020:
+        m_recency = 0.10
+    elif y >= 2010:
+        m_recency = 0.05
+
+    # 3. Citation Prestige Multiplier
+    m_citation = 0.0
+    if "SCMR" in citation:
+        m_citation = 0.10
+    elif "PLD" in citation:
+        m_citation = 0.08
+    elif any(j in citation for j in ["CLC", "PCrLJ", "MLD", "YLR", "CLD", "PTD"]):
+        m_citation = 0.04
+
+    # 4. Step 6 Structural Section Multiplier
+    m_section = 0.0
+    is_holding = candidate.get("is_holding") or meta.get("is_holding")
+    is_argument = candidate.get("is_argument") or meta.get("is_argument")
+    sec_type = str(candidate.get("section_type") or meta.get("section_type") or "").lower()
+
+    if is_holding or sec_type in ("ratio_decidendi", "headnote"):
+        m_section = 0.20
+    elif is_argument or sec_type == "counsel_arguments":
+        m_section = -0.40
+
+    total_multiplier = round(m_court + m_recency + m_citation + m_section, 4)
+    return total_multiplier
+
+
+def compute_fused_authority_score(
+    cross_encoder_score: float,
+    constitutional_multiplier: float,
+    relevance_floor: float = 0.35
+) -> float:
+    """
+    Computes fused authority score (Phase 4, Step 7):
+        Final Score = S_cross_encoder * (1.0 + Constitutional Multiplier)
+    Clamped strictly to 0.0 if S_cross_encoder < relevance_floor (0.35).
+    """
+    if cross_encoder_score < relevance_floor:
+        return 0.0
+    fused = cross_encoder_score * (1.0 + constitutional_multiplier)
+    return round(fused, 4)
+
+
 def rank_and_filter_authorities(
     candidates: List[Dict[str, Any]],
     query_plan: LegalQueryPlan,
-    top_k: int = 15
+    top_k: int = 15,
+    relevance_floor: float = 0.35
 ) -> List[Dict[str, Any]]:
     """
     Filters out spurious / caption-only / irrelevant candidates and ranks remaining
-    superior court authorities strictly by multi-factor Authority Score.
+    superior court authorities by fused score (when cross_encoder_score/rerank_score is present)
+    or multi-factor Authority Score (in legacy mode).
     """
     filtered: List[Dict[str, Any]] = []
 
     for c in candidates:
         meta = c.get("metadata") if isinstance(c.get("metadata"), dict) else c
-        # Filter 1: Check caption-only / metadata-only
+        # Filter 1: Check caption-only / metadata-only / quarantined
         c_type = str(c.get("content_type") or meta.get("content_type") or "").lower()
         if c_type in ("caption_only", "metadata_only", "quarantined", "rejected"):
             continue
+        if c.get("is_quarantined") or meta.get("is_quarantined"):
+            continue
 
-        raw_txt = str(c.get("preview") or c.get("full_text") or c.get("text") or meta.get("full_text") or meta.get("text") or "").strip()
-        if len(raw_txt) < 80:
+        text_len = max(
+            len(str(c.get("full_text") or meta.get("full_text") or "").strip()),
+            len(str(c.get("text") or meta.get("text") or "").strip()),
+            len(str(c.get("preview") or meta.get("preview") or "").strip()),
+            len(str(c.get("snippet") or meta.get("snippet") or "").strip())
+        )
+        if text_len < 80:
             continue
 
         # Filter 2: Irrelevant subject matter filter
         if is_irrelevant_subject(c, query_plan):
             continue
 
-        # Score candidate
-        total_score, score_breakdown = calculate_authority_score(c, query_plan)
-        c["authority_score"] = round(total_score, 2)
-        c["authority_score_breakdown"] = score_breakdown
-        filtered.append(c)
+        # Check if cross_encoder / rerank score is present on candidate
+        has_rerank_score = "rerank_score" in c or "cross_encoder_score" in c
+        if has_rerank_score:
+            r_score = float(c.get("rerank_score") if "rerank_score" in c else c.get("cross_encoder_score", 0.0))
+            const_mult = compute_constitutional_multiplier(c, query_plan=query_plan)
+            fused_score = compute_fused_authority_score(r_score, const_mult, relevance_floor=relevance_floor)
+            if fused_score == 0.0:
+                # Clamped by relevance floor: excluded from generation
+                continue
+            c["authority_score"] = fused_score
+            c["fused_score"] = fused_score
+            c["constitutional_multiplier"] = const_mult
+            filtered.append(c)
+        else:
+            # Legacy multi-factor scoring
+            total_score, score_breakdown = calculate_authority_score(c, query_plan)
+            if total_score == 0.0:
+                continue
+            c["authority_score"] = round(total_score, 2)
+            c["authority_score_breakdown"] = score_breakdown
+            filtered.append(c)
 
     # Sort descending: Highest Authority Score first
     filtered.sort(key=lambda x: x.get("authority_score", 0.0), reverse=True)
-
-    # Prioritize Supreme Court recent with full reasoning at the very top
     return filtered[:top_k]
