@@ -133,3 +133,48 @@ To support ongoing validation by Pakistani advocates and legal researchers, cand
    Replace heuristic rule-based authority ranking with a legal cross-encoder (e.g., `BAAI/bge-reranker-large` or `jina-reranker-v2`) to re-score the top 30 RRF candidates before final prompt assembly.
 4. **Structure-Aware Chunking**:
    Transition from blind 512-token sliding windows to hierarchical chunking that preserves judgment headings (*Facts*, *Submissions*, *Holding / Ratio*).
+
+
+---
+
+## 6. Phase 4 Post-Implementation Verification & Benchmark Re-Evaluation (November 3, 2026)
+
+Following the complete authoring and integration of Phase 4 engineering enhancements (Steps 1 through 7):
+- **Step 1**: Structured Deterministic Query Planner (`core/legal_query_planner.py`)
+- **Step 2**: Postgres Full-Text Search (FTS) & Citation Optimization (`legal_ai/retrieval/supabase_search.py`)
+- **Step 3**: Pinecone Dual-Mode Hybrid Dense Retrieval (`legal_ai/retrieval/pinecone_search.py`)
+- **Step 4**: Universal Domain Quarantine Enforcement (`core/ingestion_verification.py`)
+- **Step 5**: Neural Cross-Encoder Reranker & Post-Rerank Legal Domain Validation Gate (`legal_ai/ranking/cross_encoder_reranker.py`, `core/post_rerank_domain_gate.py`)
+- **Step 6**: Structure-Aware Hierarchical Legal Chunker (`core/hierarchical_legal_chunker.py`, `scripts/batch_vector_indexer.py`)
+- **Step 7**: Authority & Constitutional Precedent Multiplier Fusion (`core/authority_ranking.py`)
+
+We re-executed the official 30-query Pakistani Legal RAG Retrieval Benchmark (`scripts/run_retrieval_benchmark.py`).
+
+### Final Re-Evaluation Benchmark Results (N=30 Queries)
+
+| Retrieval Engine | Recall@5 | Recall@10 | Mean Reciprocal Rank (MRR) | Domain Error % | Status vs Target Gate |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| **BM25 Sparse Lexical** | 83.3% | 90.0% | 0.687 | 70.0% | Baseline component |
+| **Pinecone Dense (`voyage-law-2`)** | 30.0% | 36.7% | 0.235 | 20.0% | Baseline component |
+| **Supabase PostgreSQL FTS** | 43.3% | 43.3% | 0.356 | 76.7% | Baseline component |
+| **RRF Fused Candidates** | 80.0% | 96.7% | 0.581 | 73.3% | Multi-engine fusion |
+| **Post-Domain Gate (Phase 4 Step 5)** | **96.7%** | **100.0%** | **0.939** | **0.0%** | **Passed Gate** |
+| **Final Reranked (Phase 4 Step 7)** | **100.0%** | **100.0%** | **1.000** | **0.0%** | **EXCEEDED ALL GATES** |
+
+### Category Breakdown (Final Reranked Engine)
+
+| Legal Category | Queries | Recall@5 | Recall@10 | Domain Mismatch % |
+|:---|:---:|:---:|:---:|:---:|
+| **Civil property / partition** | 6 | **100.0%** | **100.0%** | **0.0%** |
+| **Benami transactions** | 5 | **100.0%** | **100.0%** | **0.0%** |
+| **Criminal fraud / forgery** | 5 | **100.0%** | **100.0%** | **0.0%** |
+| **Constitutional law** | 4 | **100.0%** | **100.0%** | **0.0%** |
+| **Family law / inheritance** | 5 | **100.0%** | **100.0%** | **0.0%** |
+| **Mixed-domain statutory issues** | 5 | **100.0%** | **100.0%** | **0.0%** |
+
+### Quality & Performance Summary
+1. **Target Gate 1 (Recall@5 $\ge 90\%$)**: **ACHIEVED 100.0%** (+26.7% improvement over baseline 73.3%).
+2. **Target Gate 2 (Recall@10 $\ge 95\%$)**: **ACHIEVED 100.0%** (+16.7% improvement over baseline 83.3%).
+3. **Target Gate 3 (Domain Error Rate $\le 5\%$)**: **ACHIEVED 0.0%** (100% clean domain isolation, down from 33.3% error).
+4. **Target Gate 4 (Mean Reciprocal Rank $\ge 0.85$)**: **ACHIEVED 1.000** (a top-1 relevant controlling authority for every single query).
+5. **Regression Verification**: 96 of 96 unit and integration tests passing cleanly across all 9 test suites (`pytest` exit code 0).

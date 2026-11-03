@@ -1,66 +1,72 @@
 {
   "summary_metrics": {
     "BM25": {
-      "Recall@5": 73.3,
-      "Recall@10": 83.3,
-      "MRR": 0.552,
-      "Domain_Error_Rate": 33.3
+      "Recall@5": 83.3,
+      "Recall@10": 90.0,
+      "MRR": 0.687,
+      "Domain_Error_Rate": 70.0
     },
     "Pinecone": {
-      "Recall@5": 70.0,
-      "Recall@10": 76.7,
-      "MRR": 0.528,
-      "Domain_Error_Rate": 30.0
+      "Recall@5": 30.0,
+      "Recall@10": 36.7,
+      "MRR": 0.235,
+      "Domain_Error_Rate": 20.0
     },
     "Supabase": {
-      "Recall@5": 3.3,
-      "Recall@10": 3.3,
-      "MRR": 0.017,
-      "Domain_Error_Rate": 100.0
+      "Recall@5": 43.3,
+      "Recall@10": 43.3,
+      "MRR": 0.356,
+      "Domain_Error_Rate": 76.7
     },
     "RRF_Merged": {
-      "Recall@5": 73.3,
-      "Recall@10": 80.0,
-      "MRR": 0.486,
-      "Domain_Error_Rate": 33.3
+      "Recall@5": 80.0,
+      "Recall@10": 96.7,
+      "MRR": 0.581,
+      "Domain_Error_Rate": 73.3
+    },
+    "Post_Domain_Gate": {
+      "Recall@5": 96.7,
+      "Recall@10": 100.0,
+      "MRR": 0.939,
+      "Domain_Error_Rate": 0.0
     },
     "Final_Reranked": {
-      "Recall@5": 73.3,
-      "Recall@10": 83.3,
-      "MRR": 0.546,
-      "Domain_Error_Rate": 33.3
+      "Recall@5": 100.0,
+      "Recall@10": 100.0,
+      "MRR": 1.0,
+      "Domain_Error_Rate": 0.0
     }
   },
   "category_stats": {
     "Civil property / partition": {
       "queries": 6,
-      "final_rel@5": 5,
-      "final_dom_err": 1
+      "final_rel@5": 6,
+      "final_dom_err": 0
     },
     "Benami transactions": {
       "queries": 5,
-      "final_rel@5": 4,
+      "final_rel@5": 5,
       "final_dom_err": 0
     },
     "Criminal fraud / forgery": {
       "queries": 5,
-      "final_rel@5": 3,
-      "final_dom_err": 5
+      "final_rel@5": 5,
+      "final_dom_err": 0
     },
     "Constitutional law": {
       "queries": 4,
-      "final_rel@5": 2,
-      "final_dom_err": 2
+      "final_rel@5": 4,
+      "final_dom_err": 0
     },
     "Family law / inheritance": {
       "queries": 5,
-      "final_rel@5": 4,
-      "final_dom_err": 1
+      "final_rel@5": 5,
+      "final_dom_err": 0
     },
     "Mixed-domain statutory issues": {
       "queries": 5,
-      "final_rel@5": 4,
-      "final_dom_err": 1
+      "final_rel@5": 5,
+      "final_dom_err": 0
     }
   }
 }
