@@ -254,7 +254,13 @@ from legal_ai.ranking.relevance_filter import (
 
 
 
-from legal_ai.ranking.authority_ranker import rank_and_filter_authorities
+from legal_ai.ranking.cross_encoder_reranker import rerank_candidates_cross_encoder
+from core.post_rerank_domain_gate import validate_and_partition_post_rerank, assemble_generation_context
+from core.authority_ranking import (
+    rank_and_filter_authorities,
+    compute_fused_authority_score,
+    compute_constitutional_multiplier,
+)
 
 
 
@@ -2355,237 +2361,50 @@ async def process_query_job_legal_ai(
 
 
 
-    # Phase 3 Stage 2 Candidate Relevance Gating and Reranking Engine (SHADOW MODE)
-
-
-
-
-
-
-
+    # Phase 4 Neural Cross-Encoder Reranker & Post-Rerank Domain Validation Gate
     try:
-
-
-
-
-
-
-
-        from legal_ai.ranking.shadow_reranker import evaluate_candidate_relevance_shadow
-
-
-
-
-
-
-
-        shadow_candidates, shadow_rerank_stats = evaluate_candidate_relevance_shadow(
-
-
-
-
-
-
-
+        scored_candidates, xenc_telemetry = await rerank_candidates_cross_encoder(
+            query_text=effective_user_query,
             candidates=clean_candidates,
-
-
-
-
-
-
-
             query_plan=legal_query_plan,
-
-
-
-
-
-
-
-            query_text=effective_user_query
-
-
-
-
-
-
-
+            top_k=30
         )
+    except Exception as xenc_err:
+        logger.warning(f"Cross-encoder reranking fallback: {xenc_err}")
+        scored_candidates, xenc_telemetry = clean_candidates, {}
 
+    # Post-Rerank Legal Domain Validation Gate (Hard Quarantine & 5 Interdisciplinary Doctrines)
+    try:
+        post_gate_candidates, gate_telemetry = validate_and_partition_post_rerank(
+            candidates=scored_candidates,
+            query_plan=legal_query_plan,
+            strict_mode=True
+        )
+    except Exception as gate_err:
+        logger.warning(f"Post-rerank domain gate fallback: {gate_err}")
+        post_gate_candidates, gate_telemetry = scored_candidates, {}
 
-
-
-
-
-
-    except (ImportError, ModuleNotFoundError):
-
-
-
-
-
-
-
-        shadow_candidates, shadow_rerank_stats = clean_candidates, {}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    shadow_rerank_stats = xenc_telemetry or {}
     detected_topics = detect_topics(effective_user_query)
-
-
-
-
-
-
-
     admitted_candidates, rejected_by_topic, abstain_topics = filter_topic_relevance(
-
-
-
-
-
-
-
         candidates=clean_candidates,
-
-
-
-
-
-
-
         topics=detected_topics
-
-
-
-
-
-
-
     )
-
-
-
-
-
-
-
-    ranking_pool = admitted_candidates if (detected_topics and admitted_candidates) else clean_candidates
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    ranking_pool = post_gate_candidates if post_gate_candidates else clean_candidates
 
     pipeline_metrics.record_candidate_filtering(
-
-
-
-
-
-
-
         raw_count=len(merged_candidates),
-
-
-
-
-
-
-
         rejected_counts=rejection_counts,
-
-
-
-
-
-
-
         admitted_count=len(ranking_pool)
-
-
-
-
-
-
-
     )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # Phase 4 Step 7: Authority Ranking with Constitutional Precedent Multiplier Fusion
     ranked_authorities = rank_and_filter_authorities(
-
-
-
-
-
-
-
         candidates=ranking_pool,
-
-
-
-
-
-
-
         query_plan=legal_query_plan,
-
-
-
-
-
-
-
-        top_k=6
-
-
-
-
-
-
-
+        top_k=6,
+        relevance_floor=0.35
     )
-
-
-
-
-
-
 
     pipeline_metrics.record_ranked_authorities(ranked_authorities)
 
@@ -5225,6 +5044,8 @@ async def process_query_job_legal_ai(
 
 
     verification_report_payload["issue_abstention_flags"] = shadow_rerank_stats.get("issue_abstention_flags", {})
+    verification_report_payload["cross_encoder_telemetry"] = locals().get("xenc_telemetry", {})
+    verification_report_payload["post_domain_gate_telemetry"] = locals().get("gate_telemetry", {})
 
 
 
