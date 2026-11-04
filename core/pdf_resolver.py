@@ -14,17 +14,57 @@ Resolves and delivers working PDFs for 100% of judgment cards:
 import os
 import re
 import time
+import json
 import hmac
 import hashlib
 import urllib.parse
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Tuple
 
 # In-memory path cache to avoid repeated bucket listings
 _BUCKET_FILE_CACHE: Dict[str, list] = {}
+_SUPABASE_KNOWN_PATHS: Dict[Tuple[str, str, str], str] = {}
+_SUPABASE_STATE_LOADED: bool = False
+_STORAGE_CIRCUIT_OPEN_UNTIL: float = 0.0
+
+
+def is_storage_circuit_open() -> bool:
+    global _STORAGE_CIRCUIT_OPEN_UNTIL
+    return time.time() < _STORAGE_CIRCUIT_OPEN_UNTIL
+
+
+def trip_storage_circuit(duration_sec: float = 30.0):
+    global _STORAGE_CIRCUIT_OPEN_UNTIL
+    _STORAGE_CIRCUIT_OPEN_UNTIL = time.time() + duration_sec
+
+
+def _ensure_supabase_state_loaded():
+    global _SUPABASE_KNOWN_PATHS, _SUPABASE_STATE_LOADED
+    if _SUPABASE_STATE_LOADED:
+        return
+    _SUPABASE_STATE_LOADED = True
+    state_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ingestion_state_supabase.json")
+    if not os.path.exists(state_file):
+        state_file = "ingestion_state_supabase.json"
+    if os.path.exists(state_file):
+        try:
+            with open(state_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            uploaded = data.get("uploaded_pdfs", {})
+            for rel_path in uploaded.keys():
+                parts = rel_path.split("/")
+                if len(parts) >= 3:
+                    jn, yr, fname = parts[0].upper(), parts[1], parts[2]
+                    m_pg = re.search(r'(?:SCMR|PLD|CLC|PCrLJ|MLD|PTD|PLC\(CS\)|PLC|YLR|CLD|GBLR)[_\s]+(\d+)', fname, re.IGNORECASE)
+                    if m_pg:
+                        pg = m_pg.group(1)
+                        _SUPABASE_KNOWN_PATHS[(jn, yr, pg)] = rel_path
+        except Exception:
+            pass
 
 
 def extract_journal_and_year(citation: str, case_id: str = "") -> tuple:
-    raw = f"{citation} {case_id}".upper()
+    # Normalize underscores and hyphens to whitespace for clean token matching
+    raw = re.sub(r'[_\-]+', ' ', f"{citation} {case_id}").strip().upper()
     
     # Identify journal
     journal = None
@@ -38,8 +78,17 @@ def extract_journal_and_year(citation: str, case_id: str = "") -> tuple:
     year = m_year.group(1) if m_year else None
 
     # Identify page / index
-    m_page = re.search(r'\b(?:SCMR|PLD|CLC|PCrLJ|MLD|PTD|PLC|YLR)\s+([0-9]+)\b', raw)
+    m_page = re.search(r'\b(?:SCMR|PLD|CLC|PCrLJ|MLD|PTD|PLC\(CS\)|PLC|YLR|CLD|GBLR)\s+([0-9]+)\b', raw, re.IGNORECASE)
     page = m_page.group(1) if m_page else None
+
+    # If page matched the publication year (e.g. 'PLD 2020 SC 1'), look for remaining digits
+    if page == year or not page:
+        m_num = re.findall(r'\b\d+\b', raw)
+        page = None
+        for num in m_num:
+            if num != year and len(num) <= 5:
+                page = num
+                break
 
     return journal, year, page
 
@@ -89,8 +138,20 @@ def resolve_supabase_storage_path(
 ) -> Optional[str]:
     """
     Checks if an authentic PDF exists in the 'judgments-pdf' bucket under /{journal}/{year}/.
+    1. First checks pre-indexed in-memory map of verified Supabase storage assets (O(1)).
+    2. Falls back to dynamic bucket listing if supabase_client is available.
     """
-    if not supabase_client or not journal or not year:
+    if not journal or not year:
+        return None
+
+    # 1. Fast in-memory lookup from verified ingestion state
+    _ensure_supabase_state_loaded()
+    if page:
+        fast_path = _SUPABASE_KNOWN_PATHS.get((journal.upper(), str(year), str(page)))
+        if fast_path:
+            return fast_path
+
+    if not supabase_client:
         return None
 
     folder_path = f"{journal}/{year}"
@@ -162,20 +223,50 @@ def fetch_storage_pdf_bytes(
     """
     Attempts to download verified authentic PDF bytes directly from Supabase Storage
     on the backend side, ensuring the frontend never calls Supabase Storage directly.
+    Falls back to authentic local formatted PDF store if Supabase Storage is offline or unreadable.
     """
-    if not supabase_client or not journal or not year:
+    if not journal or not year:
         return None
 
-    storage_path = resolve_supabase_storage_path(supabase_client, journal, year, page, case_id)
-    if not storage_path:
-        return None
+    # 1. Primary: Download authentic PDF bytes from Supabase Storage bucket 'judgments-pdf'
+    if supabase_client and not is_storage_circuit_open():
+        try:
+            storage_path = resolve_supabase_storage_path(supabase_client, journal, year, page, case_id)
+            if storage_path:
+                data = supabase_client.storage.from_("judgments-pdf").download(storage_path)
+                if isinstance(data, bytes) and data.startswith(b"%PDF"):
+                    return data
+        except Exception as e:
+            err_str = str(e).lower()
+            if "timeout" in err_str or "timed out" in err_str or "connection" in err_str or "544" in err_str or "429" in err_str or "database" in err_str:
+                trip_storage_circuit(30.0)
 
-    try:
-        data = supabase_client.storage.from_("judgments-pdf").download(storage_path)
-        if isinstance(data, bytes) and data.startswith(b"%PDF"):
-            return data
-    except Exception:
-        pass
+    # 2. High-speed local fallback: Check formatted PDF master store on disk
+    local_roots = [
+        r"I:\rerun\04_Formatted_PDFs",
+        r"I:\Legal_Master_Corpus\04_Formatted_PDFs"
+    ]
+    for l_root in local_roots:
+        tdir = os.path.join(l_root, journal, str(year))
+        if os.path.isdir(tdir):
+            try:
+                tokens = []
+                if page:
+                    tokens.extend([f"_{page}_", f"_{page}."])
+                if case_id:
+                    clean_cid = re.sub(r'[^a-zA-Z0-9]', '_', case_id).lower()
+                    tokens.append(clean_cid)
+
+                for fname in os.listdir(tdir):
+                    fl = fname.lower()
+                    if any(tok.lower() in fl for tok in tokens):
+                        fpath = os.path.join(tdir, fname)
+                        with open(fpath, "rb") as fp:
+                            pdf_bytes = fp.read()
+                            if pdf_bytes.startswith(b"%PDF"):
+                                return pdf_bytes
+            except Exception:
+                pass
 
     return None
 

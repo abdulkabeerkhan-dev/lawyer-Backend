@@ -2022,62 +2022,74 @@ global_search_pipeline = LegalSearchPipeline(vector_client=pinecone_index, confi
 
 
 
+from supabase.client import ClientOptions
+
 supabase: Any = None
+_SUPABASE_CIRCUIT_OPEN_UNTIL: float = 0.0
+
+def is_supabase_circuit_open() -> bool:
+    global _SUPABASE_CIRCUIT_OPEN_UNTIL
+    return time.time() < _SUPABASE_CIRCUIT_OPEN_UNTIL
+
+def trip_supabase_circuit(duration_sec: float = 30.0, reason: str = ""):
+    global _SUPABASE_CIRCUIT_OPEN_UNTIL
+    _SUPABASE_CIRCUIT_OPEN_UNTIL = time.time() + duration_sec
+    if reason:
+        print(f"⚠️ [SUPABASE CIRCUIT BREAKER TRIPPED for {duration_sec}s]: {reason}", file=sys.stderr, flush=True)
+
+def reset_supabase_circuit():
+    global _SUPABASE_CIRCUIT_OPEN_UNTIL
+    _SUPABASE_CIRCUIT_OPEN_UNTIL = 0.0
 
 def init_supabase_client():
-
     global supabase
-
     if SUPABASE_URL and SUPABASE_SERVICE_KEY:
-
         try:
-
-            supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
-
+            opts = ClientOptions(postgrest_client_timeout=3.0, storage_client_timeout=3.0)
+            supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY, options=opts)
         except Exception as launch_err:
-
             print(f"⚠️ Supabase init warning: {launch_err}", file=sys.stderr, flush=True)
-
     return supabase
-
-
 
 init_supabase_client()
 
-
-
-def safe_supabase_query(query_fn, retries=4):
-
+def safe_supabase_query(query_fn, retries=2):
     """
-
-    Executes a Supabase query with automatic client re-initialization and retry
-
-    if a stale connection (ConnectionTerminated, connection reset, etc.) is encountered.
-
+    Executes a Supabase query with automatic circuit breaker check,
+    client re-initialization and retry on stale connections.
     """
+    if is_supabase_circuit_open():
+        raise RuntimeError("Supabase circuit breaker is OPEN (service temporarily unavailable).")
 
     for attempt in range(retries):
-
         try:
-
-            return query_fn()
-
+            res = query_fn()
+            reset_supabase_circuit()
+            return res
         except Exception as e:
-
             err_str = str(e)
             if "PGRST205" in err_str or "schema cache" in err_str or "could not find" in err_str.lower():
                 raise e
 
-            if "ConnectionTerminated" in err_str or "connection" in err_str.lower() or attempt < retries - 1:
+            is_timeout_or_conn = (
+                "timeout" in err_str.lower()
+                or "timed out" in err_str.lower()
+                or "connection" in err_str.lower()
+                or "slowdown" in err_str.lower()
+                or "429" in err_str
+                or "544" in err_str
+                or "database" in err_str.lower()
+            )
 
+            if is_timeout_or_conn and attempt == retries - 1:
+                trip_supabase_circuit(30.0, err_str)
+                raise e
+
+            if is_timeout_or_conn or attempt < retries - 1:
                 print(f"⚠️ Supabase query retry (attempt {attempt+1}/{retries}): {err_str}", file=sys.stderr, flush=True)
-
-                time.sleep(0.5 * (attempt + 1))
-
+                time.sleep(0.3 * (attempt + 1))
                 init_supabase_client()
-
                 continue
-
             raise e
 
 
@@ -14325,121 +14337,78 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
 
 
 
-    if supabase:
+    if supabase and not is_supabase_circuit_open():
+        def _trip_if_needed(err_exc):
+            err_str = str(err_exc).lower()
+            if "timeout" in err_str or "timed out" in err_str or "connection" in err_str or "429" in err_str or "544" in err_str or "database" in err_str or "slowdown" in err_str:
+                trip_supabase_circuit(30.0, str(err_exc))
 
         # 1. Try UUID / primary id column (handles direct UUID or {uuid}_chk_{n})
-
         lookup_uuid = clean_uuid if is_valid_uuid(clean_uuid) else (decoded_id if is_valid_uuid(decoded_id) else None)
-
         if lookup_uuid:
-
             try:
-
                 res = supabase.table("full_judgments").select("*").eq("id", lookup_uuid).execute()
-
                 if res.data and len(res.data) > 0:
-
                     rec = res.data[0]
-
                     if not rec.get("full_text"):
-
                         rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
-
                     return _sanitize_record(rec)
-
             except Exception as e:
-
                 print(f"Supabase UUID lookup notice: {e}")
+                _trip_if_needed(e)
 
+        if not is_supabase_circuit_open():
+            # 2. Try case_id column (e.g. "2021_SCMR_2092")
+            try:
+                res = supabase.table("full_judgments").select("*").eq("case_id", norm_id).execute()
+                if res.data and len(res.data) > 0:
+                    rec = res.data[0]
+                    if not rec.get("full_text"):
+                        rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
+                    return _sanitize_record(rec)
+            except Exception as e:
+                print(f"Supabase case_id lookup notice: {e}")
+                _trip_if_needed(e)
 
+        if not is_supabase_circuit_open():
+            # 3. Try neutral_citation column (e.g. "2021 SCMR 2092")
+            try:
+                res = supabase.table("full_judgments").select("*").eq("neutral_citation", space_id).execute()
+                if res.data and len(res.data) > 0:
+                    rec = res.data[0]
+                    if not rec.get("full_text"):
+                        rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
+                    return _sanitize_record(rec)
+            except Exception as e:
+                print(f"Supabase neutral_citation lookup notice: {e}")
+                _trip_if_needed(e)
 
-        # 2. Try case_id column (e.g. "2021_SCMR_2092")
+        if not is_supabase_circuit_open():
+            # 4. Try case_title column (e.g. "%2021 SCMR 2092%" or "%Muhammad Nasir Shafique%")
+            try:
+                res = supabase.table("full_judgments").select("*").ilike("case_title", f"%{space_id}%").limit(1).execute()
+                if res.data and len(res.data) > 0:
+                    rec = res.data[0]
+                    if not rec.get("full_text"):
+                        rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
+                    return _sanitize_record(rec)
+            except Exception as e:
+                print(f"Supabase case_title lookup notice: {e}")
+                _trip_if_needed(e)
 
-        try:
-
-            res = supabase.table("full_judgments").select("*").eq("case_id", norm_id).execute()
-
-            if res.data and len(res.data) > 0:
-
-                rec = res.data[0]
-
-                if not rec.get("full_text"):
-
-                    rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
-
-                return _sanitize_record(rec)
-
-        except Exception as e:
-
-            print(f"Supabase case_id lookup notice: {e}")
-
-
-
-        # 3. Try neutral_citation column (e.g. "2021 SCMR 2092")
-
-        try:
-
-            res = supabase.table("full_judgments").select("*").eq("neutral_citation", space_id).execute()
-
-            if res.data and len(res.data) > 0:
-
-                rec = res.data[0]
-
-                if not rec.get("full_text"):
-
-                    rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
-
-                return _sanitize_record(rec)
-
-        except Exception as e:
-
-            print(f"Supabase neutral_citation lookup notice: {e}")
-
-
-
-        # 4. Try case_title column (e.g. "%2021 SCMR 2092%" or "%Muhammad Nasir Shafique%")
-
-        try:
-
-            res = supabase.table("full_judgments").select("*").ilike("case_title", f"%{space_id}%").limit(1).execute()
-
-            if res.data and len(res.data) > 0:
-
-                rec = res.data[0]
-
-                if not rec.get("full_text"):
-
-                    rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
-
-                return _sanitize_record(rec)
-
-        except Exception as e:
-
-            print(f"Supabase case_title lookup notice: {e}")
-
-
-
-        # 5. Try citation_crosswalk table
-
-        try:
-
-            res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{space_id}%").limit(1).execute()
-
-            if res_cw.data and len(res_cw.data) > 0:
-
-                fj = res_cw.data[0].get("full_judgments")
-
-                if fj:
-
-                    if not fj.get("full_text"):
-
-                        fj["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
-
-                    return _sanitize_record(fj)
-
-        except Exception as e:
-
-            print(f"Supabase crosswalk lookup notice: {e}")
+        if not is_supabase_circuit_open():
+            # 5. Try citation_crosswalk table
+            try:
+                res_cw = supabase.table("citation_crosswalk").select("*, full_judgments(*)").ilike("citation", f"%{space_id}%").limit(1).execute()
+                if res_cw.data and len(res_cw.data) > 0:
+                    fj = res_cw.data[0].get("full_judgments")
+                    if fj:
+                        if not fj.get("full_text"):
+                            fj["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
+                        return _sanitize_record(fj)
+            except Exception as e:
+                print(f"Supabase crosswalk lookup notice: {e}")
+                _trip_if_needed(e)
 
 
 
@@ -14609,14 +14578,29 @@ async def get_api_judgment_pdf_endpoint(
     await _authorize_pdf_access(judgment_id, request, token=token, credentials=credentials)
 
     decoded_id = urllib.parse.unquote(judgment_id).strip()
-    match_record = find_judgment_by_id_or_canonical(decoded_id)
 
-    # 1. Download authentic PDF bytes from Supabase Storage on backend side (zero direct frontend storage calls)
-    if match_record and supabase:
+    # 1. High-speed resolution: extract journal, year, page directly from judgment_id
+    journal, year, page = extract_journal_and_year(decoded_id, decoded_id)
+    if journal and year:
+        storage_pdf_bytes = fetch_storage_pdf_bytes(supabase, journal, year, page, decoded_id)
+        if storage_pdf_bytes:
+            safe_filename = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_id).strip('_') + ".pdf"
+            return Response(
+                content=storage_pdf_bytes,
+                media_type="application/pdf",
+                headers={
+                    "Content-Disposition": f'inline; filename="{safe_filename}"',
+                    "Content-Type": "application/pdf"
+                }
+            )
+
+    # 2. Database lookup for metadata and secondary citation resolution
+    match_record = find_judgment_by_id_or_canonical(decoded_id)
+    if match_record:
         cit_lookup = match_record.get("neutral_citation") or match_record.get("citation") or ""
-        journal, year, page = extract_journal_and_year(cit_lookup, decoded_id)
-        if journal and year:
-            storage_pdf_bytes = fetch_storage_pdf_bytes(supabase, journal, year, page, decoded_id)
+        alt_jn, alt_yr, alt_pg = extract_journal_and_year(cit_lookup, decoded_id)
+        if (alt_jn != journal or alt_yr != year or alt_pg != page) and alt_jn and alt_yr:
+            storage_pdf_bytes = fetch_storage_pdf_bytes(supabase, alt_jn, alt_yr, alt_pg, decoded_id)
             if storage_pdf_bytes:
                 safe_filename = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_id).strip('_') + ".pdf"
                 return Response(
@@ -14665,7 +14649,6 @@ async def get_judgment_pdf_endpoint(
     credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_agent)
 ):
     return await get_api_judgment_pdf_endpoint(case_id, request=request, token=token, credentials=credentials)
-    return await get_api_judgment_pdf_endpoint(case_id)
 
 
 
