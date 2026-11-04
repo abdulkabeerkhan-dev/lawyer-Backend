@@ -88,36 +88,55 @@ def get_authorized_testers() -> Set[str]:
     return {"*"}
 
 
-# --- Supabase Client Management ---
+# --- Supabase Client Management & Circuit Breaker ---
+_SUPABASE_CIRCUIT_OPEN_UNTIL: float = 0.0
+
+def is_supabase_circuit_open() -> bool:
+    global _SUPABASE_CIRCUIT_OPEN_UNTIL
+    return time.time() < _SUPABASE_CIRCUIT_OPEN_UNTIL
+
+def trip_supabase_circuit(duration_sec: float = 60.0, reason: str = ""):
+    global _SUPABASE_CIRCUIT_OPEN_UNTIL
+    _SUPABASE_CIRCUIT_OPEN_UNTIL = time.time() + duration_sec
+    if reason:
+        print(f"⚠️ [legal_ai.config] SUPABASE CIRCUIT BREAKER TRIPPED for {duration_sec}s: {reason}", file=sys.stderr, flush=True)
+
+def reset_supabase_circuit():
+    global _SUPABASE_CIRCUIT_OPEN_UNTIL
+    _SUPABASE_CIRCUIT_OPEN_UNTIL = 0.0
+
 def get_supabase_client():
-    """Returns singleton Supabase client with lazy initialization."""
+    """Returns singleton Supabase client with lazy initialization and strict 2.5s timeouts."""
     global _supabase_client
     if _supabase_client is None and SUPABASE_URL and SUPABASE_SERVICE_KEY:
         try:
             from supabase import create_client
-            _supabase_client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+            from supabase.client import ClientOptions
+            opts = ClientOptions(postgrest_client_timeout=2.5, storage_client_timeout=2.5)
+            _supabase_client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY, options=opts)
         except Exception as launch_err:
             print(f"⚠️ [legal_ai.config] Supabase init warning: {launch_err}", file=sys.stderr, flush=True)
     return _supabase_client
 
 
-def safe_supabase_query(query_fn, retries: int = 4):
+def safe_supabase_query(query_fn, retries: int = 1):
     """
-    Executes a Supabase query with automatic client re-initialization and retry
-    if a stale connection (ConnectionTerminated, connection reset, etc.) is encountered.
+    Executes a Supabase query with automatic circuit breaker check,
+    fast-fail on schema cache or statement timeouts, and circuit trip.
     """
     global _supabase_client
+    if is_supabase_circuit_open():
+        raise RuntimeError("Supabase circuit breaker is OPEN (service temporarily unavailable).")
+
     for attempt in range(retries):
         try:
-            return query_fn()
+            res = query_fn()
+            reset_supabase_circuit()
+            return res
         except Exception as e:
             err_str = str(e)
-            if "PGRST002" in err_str or "57014" in err_str:
-                print(
-                    f"⚠️ [legal_ai.config] Supabase statement/schema timeout (PGRST002/57014). Fast-failing without retries: {err_str}",
-                    file=sys.stderr,
-                    flush=True
-                )
+            if "PGRST002" in err_str or "57014" in err_str or "schema cache" in err_str.lower() or "timeout" in err_str.lower():
+                trip_supabase_circuit(60.0, f"Schema cache/statement timeout: {err_str}")
                 raise e
             if "ConnectionTerminated" in err_str or "connection" in err_str.lower() or attempt < retries - 1:
                 print(
@@ -125,14 +144,17 @@ def safe_supabase_query(query_fn, retries: int = 4):
                     file=sys.stderr,
                     flush=True
                 )
-                time.sleep(0.5 * (attempt + 1))
+                time.sleep(0.2)
                 try:
                     from supabase import create_client
+                    from supabase.client import ClientOptions
+                    opts = ClientOptions(postgrest_client_timeout=2.5, storage_client_timeout=2.5)
                     if SUPABASE_URL and SUPABASE_SERVICE_KEY:
-                        _supabase_client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+                        _supabase_client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY, options=opts)
                 except Exception:
                     pass
                 continue
+            trip_supabase_circuit(30.0, err_str)
             raise e
 
 

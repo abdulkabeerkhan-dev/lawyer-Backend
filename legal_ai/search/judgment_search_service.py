@@ -148,8 +148,9 @@ async def search_judgments_by_citation(
         except Exception:
             pass
 
-    # 2. Check Supabase full_judgments
-    sb = get_supabase_client()
+    # 2. Check Supabase full_judgments (Circuit-breaker guarded)
+    from legal_ai.config import is_supabase_circuit_open
+    sb = None if is_supabase_circuit_open() else get_supabase_client()
     if sb and expected_citation:
         try:
             # Query exact neutral_citation or case_id

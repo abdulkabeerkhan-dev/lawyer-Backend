@@ -189,6 +189,10 @@ async def search_supabase_judgments(
     3. Substantive keyword search against case_title with conversational stop-words stripped.
     4. Safe guarded full_text search with statement timeout protection.
     """
+    from legal_ai.config import is_supabase_circuit_open, trip_supabase_circuit
+    if is_supabase_circuit_open():
+        return []
+
     sb = get_supabase_client()
     if not sb:
         return []
@@ -206,7 +210,9 @@ async def search_supabase_judgments(
         if target_domain in ("unknown", "general", "none"):
             target_domain = None
 
-    for term in search_terms:
+    for term in search_terms[:2]:
+        if is_supabase_circuit_open():
+            break
         q_clean = term.strip()
         if not q_clean or len(q_clean) < 3:
             continue
@@ -231,8 +237,14 @@ async def search_supabase_judgments(
                     if cid not in seen_ids:
                         seen_ids.add(cid)
                         candidates.append(_format_supabase_record(r, score=0.95))
-            except Exception:
-                pass
+            except Exception as err:
+                err_str = str(err)
+                if "PGRST002" in err_str or "57014" in err_str or "circuit" in err_str.lower() or "timeout" in err_str.lower():
+                    trip_supabase_circuit(60.0, f"Exact citation query error: {err_str}")
+                    break
+
+        if is_supabase_circuit_open():
+            break
 
         # 2. Case ID Check (e.g. "2021_SCMR_554")
         if re.match(r'^(?:19|20)\d{2}_[a-zA-Z]+_\d+', q_clean):
@@ -249,8 +261,14 @@ async def search_supabase_judgments(
                     if cid not in seen_ids:
                         seen_ids.add(cid)
                         candidates.append(_format_supabase_record(r, score=0.95))
-            except Exception:
-                pass
+            except Exception as err:
+                err_str = str(err)
+                if "PGRST002" in err_str or "57014" in err_str or "circuit" in err_str.lower() or "timeout" in err_str.lower():
+                    trip_supabase_circuit(60.0, f"CID query error: {err_str}")
+                    break
+
+        if is_supabase_circuit_open():
+            break
 
         # 3. Domain-Aware Structured Headnote & GIN FTS Procedure
         substantive = extract_substantive_tokens(q_clean)
@@ -274,8 +292,14 @@ async def search_supabase_judgments(
                         rank_score = float(r.get("rank") or 0.5)
                         norm_score = min(0.92, 0.70 + (rank_score * 0.05))
                         candidates.append(_format_supabase_record(r, score=norm_score))
-            except Exception:
-                pass
+            except Exception as err:
+                err_str = str(err)
+                if "PGRST002" in err_str or "57014" in err_str or "circuit" in err_str.lower() or "timeout" in err_str.lower():
+                    trip_supabase_circuit(60.0, f"Structured query error: {err_str}")
+                    break
+
+        if is_supabase_circuit_open():
+            break
 
         # 3. Substantive Title Keyword Search (Sanitized of conversational filler)
         substantive = extract_substantive_tokens(q_clean)

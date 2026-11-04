@@ -274,8 +274,21 @@ async def retrieve_candidates_parallel(
                     bm_results.append(c)
         return bm_results
 
-    # 4. Fire concurrent search tasks
-    supabase_task = asyncio.create_task(search_supabase_judgments(search_terms, limit_per_term=15, query_plan=query_plan))
+    # 4. Fire concurrent search tasks with strict 2.5s timeout & circuit breaker guard
+    async def _guarded_supabase_search():
+        from legal_ai.config import is_supabase_circuit_open, trip_supabase_circuit
+        if is_supabase_circuit_open():
+            return []
+        try:
+            return await asyncio.wait_for(
+                search_supabase_judgments(search_terms[:2], limit_per_term=5, query_plan=query_plan),
+                timeout=2.5
+            )
+        except Exception as sb_err:
+            trip_supabase_circuit(60.0, f"Supabase search timeout in orchestrator: {sb_err}")
+            return []
+
+    supabase_task = asyncio.create_task(_guarded_supabase_search())
 
     async def _execute_multi_pinecone():
         pc_tasks = [
