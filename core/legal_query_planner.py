@@ -1389,7 +1389,6 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
                 ai_client_fn(
                     system=PLANNER_SYSTEM_PROMPT,
                     messages=[{"role": "user", "content": user_msg}],
-                    temperature=0.0,
                     max_tokens=1500
                 ),
                 timeout=12.0
