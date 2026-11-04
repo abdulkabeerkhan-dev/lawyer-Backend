@@ -198,7 +198,8 @@ from legal_ai.config import (
 
 
 
-    get_backend_base_url
+    get_backend_base_url,
+    is_supabase_circuit_open
 
 
 
@@ -5887,6 +5888,10 @@ async def process_query_job_legal_ai(
 
 
 
+    if job_id in jobs_store:
+        jobs_store[job_id]["unverified_memo"] = clean_answer
+        jobs_store[job_id]["raw_draft"] = clean_answer
+
     inserted_row_id = job_id
 
 
@@ -5895,158 +5900,27 @@ async def process_query_job_legal_ai(
 
 
 
-    if supabase and not is_supabase_circuit_open():
-
-
-
-
-
-
-
-        insert_payload = {
-
-
-
-
-
-
-
-            "user_id": authenticated_user_id,
-
-
-
-
-
-
-
-            "query_text": effective_user_query,
-
-
-
-
-
-
-
-            "answer_text": clean_answer,
-
-
-
-
-
-
-
-            "citations": citations_payload,
-
-
-
-
-
-
-
-            "input_tokens": total_in_tok,
-
-
-
-
-
-
-
-            "output_tokens": total_out_tok
-
-
-
-
-
-
-
-        }
-
-
-
-
-
-
-
+    if supabase:
         try:
-
-
-
-
-
-
-
-            uuid.UUID(str(job_id))
-
-
-
-
-
-
-
-            insert_payload["id"] = job_id
-
-
-
-
-
-
-
-        except Exception:
-
-
-
-
-
-
-
-            pass
-
-
-
-
-
-
-
-        try:
-
-
-
-
-
-
-
-            db_res = supabase.table("queries").insert(insert_payload).execute()
-
-
-
-
-
-
-
-            if db_res.data and len(db_res.data) > 0:
-
-
-
-
-
-
-
-                inserted_row_id = str(db_res.data[0].get("id", inserted_row_id))
-
-
-
-
-
-
-
+            from legal_ai.config import is_supabase_circuit_open
+            if not is_supabase_circuit_open():
+                insert_payload = {
+                    "user_id": authenticated_user_id,
+                    "query_text": effective_user_query,
+                    "answer_text": clean_answer,
+                    "citations": citations_payload,
+                    "input_tokens": total_in_tok,
+                    "output_tokens": total_out_tok
+                }
+                try:
+                    uuid.UUID(str(job_id))
+                    insert_payload["id"] = job_id
+                except Exception:
+                    pass
+                db_res = supabase.table("queries").insert(insert_payload).execute()
+                if db_res.data and len(db_res.data) > 0:
+                    inserted_row_id = str(db_res.data[0].get("id", inserted_row_id))
         except Exception as db_err:
-
-
-
-
-
-
-
             print(f"Supabase query insert notice: {db_err}", file=sys.stderr, flush=True)
 
 

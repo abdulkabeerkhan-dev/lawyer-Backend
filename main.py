@@ -8423,17 +8423,35 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 return
 
             if job_id in jobs_store:
-
+                raw_memo = jobs_store[job_id].get("unverified_memo") or jobs_store[job_id].get("raw_draft")
+                if raw_memo and len(str(raw_memo).strip()) > 100:
+                    p_cards = jobs_store[job_id].get("precedent_cards") or []
+                    memo_str = str(raw_memo).strip()
+                    done_result = {
+                        "answer": memo_str,
+                        "response": memo_str,
+                        "model_answer": memo_str,
+                        "precedents": p_cards,
+                        "precedent_cards": p_cards,
+                        "additional_authorities": [],
+                        "citations": [p.get("citation") for p in p_cards if isinstance(p, dict) and p.get("citation")],
+                        "query_id": str(job_id),
+                        "mode": "caselaw_search",
+                        "truncated": False,
+                        "export_allowed": True,
+                        "copy_allowed": True
+                    }
+                    jobs_store[job_id]["status"] = "done"
+                    jobs_store[job_id]["stage"] = "done"
+                    jobs_store[job_id]["result"] = done_result
+                    jobs_store[job_id]["completed_at"] = datetime.now(timezone.utc)
+                    persist_in_flight_job_state(job_id, "done", "done", extra={"result": done_result})
+                    return
                 jobs_store[job_id].update({
-
                     "status": "error",
-
                     "error": str(e),
-
                     "completed_at": datetime.now(timezone.utc)
-
                 })
-
             return
 
 

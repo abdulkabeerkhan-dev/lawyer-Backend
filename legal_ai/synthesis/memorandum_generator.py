@@ -1962,7 +1962,13 @@ def build_authoritative_opinion_fallback(query_text: str, query_plan: Any = None
     Builds a detailed, high-integrity legal opinion when LLM synthesis is blocked or unavailable,
     ensuring real advocates always receive substantive, detailed legal analysis rather than an empty stub.
     """
-    q_low = str(query_text or "").lower()
+    plan_provisions = []
+    plan_issues = []
+    if query_plan:
+        plan_provisions = getattr(query_plan, "statutory_provisions", []) or (query_plan.get("statutory_provisions") if isinstance(query_plan, dict) else [])
+        plan_issues = getattr(query_plan, "core_legal_issues", []) or (query_plan.get("core_legal_issues") if isinstance(query_plan, dict) else [])
+    plan_context = " ".join([str(p) for p in (plan_provisions or [])] + [str(i) for i in (plan_issues or [])]).lower()
+    q_low = f"{str(query_text or '').lower()} {plan_context}"
     sections = []
 
     # 1. Executive Summary & Legal Opinion
@@ -2092,7 +2098,7 @@ def build_authoritative_opinion_fallback(query_text: str, query_plan: Any = None
     else:
         sections.append(
             "1. **Jurisdictional Examination**: Ascertain the competent forum and verify statutory limitation before initiating pleadings.\n"
-            "2. **Evidentiary Grounding**: Collect certified copies of primary documents and title records to support the initial claim or defence."
+            "2. **Evidentiary Grounding**: Collect certified copies of primary documents and relevant records to support the initial claim or defence."
         )
 
     return "\n\n".join(sections)
