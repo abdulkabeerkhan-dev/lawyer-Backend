@@ -694,6 +694,37 @@ def get_effective_court(record: Optional[Dict[str, Any]]) -> Optional[str]:
     if re.search(r'\b(?:FSC)\b', cit_haystack) or re.search(r'\bPLD\s+\d{4}\s+(?:FSC|F\.S\.C\.|FEDERAL\s+SHARIAT\s+COURT)\b', cit_haystack):
         return "Federal Shariat Court"
 
+    # 2b. High Court Reporter Invariant: YLR, CLC, PCrLJ, MLD are strictly High Courts, NEVER Supreme Court of Pakistan
+    if re.search(r'\b(?:YLR|CLC|PCRLJ|MLD)\b', cit_haystack):
+        hc_text = " ".join([
+            cit_haystack,
+            str(record.get("bench") or ""),
+            str(record.get("court_name") or ""),
+            str(record.get("court") or ""),
+            str(record.get("extracted_court_name") or ""),
+            str(record.get("canonical_court_name") or ""),
+            str(record.get("summary") or ""),
+            str(record.get("preview") or ""),
+            str(record.get("text") or "")[:500]
+        ]).upper()
+        if any(k in hc_text for k in ["SINDH", "KARACHI", "SHC", "SUKKUR", "HYDERABAD"]):
+            return "High Court of Sindh"
+        elif any(k in hc_text for k in ["PESHAWAR", "PHC", "ABBOTTABAD", "DERA ISMAIL KHAN", "BANNU", "MINGORA", "SWAT"]):
+            return "Peshawar High Court"
+        elif any(k in hc_text for k in ["BALOCHISTAN", "QUETTA", "BHC", "SIBI", "TURBAT"]):
+            return "High Court of Balochistan"
+        elif any(k in hc_text for k in ["ISLAMABAD", "IHC"]):
+            return "Islamabad High Court"
+        elif any(k in hc_text for k in ["LAHORE", "LHC", "RAWALPINDI", "MULTAN", "BAHAWALPUR"]):
+            return "Lahore High Court"
+        canon = record.get("canonical_court_name")
+        if canon and canon in CANONICAL_COURTS and "Supreme" not in canon:
+            return canon
+        raw_c = resolve_canonical_court(str(record.get("court_name") or record.get("court") or ""))
+        if raw_c and "Supreme" not in raw_c:
+            return raw_c
+        return "Lahore High Court"
+
     # 3. Canonical field check
     canon = record.get("canonical_court_name")
     if canon and canon in CANONICAL_COURTS:

@@ -706,6 +706,11 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
     if re.search(r'\b\d+\s*%', clean_text) or clean_text.endswith('%'):
         return {"is_valid": False, "status": "percentage_not_statute", "raw_citation": text}
 
+    # Currency and quantity amount guard: numbers expressing money, quantity, or duration are never section numbers
+    if re.search(r'(?i)\b(?:pkr|rs\.?|rupees|usd|\$)\s*\d+', clean_text) or re.search(r'(?i)\b\d+\s*(?:million|m|lakh|crore|thousand|k|billion|rupees|rs|pkr|days|months|years|weeks|hours|mins|minutes)\b', clean_text):
+        if not re.search(r'(?i)\b(?:sections?|secs?\.?|ss\.?|s\.|articles?|arts?\.?|orders?|ord\.?|o\.|rules?|r\.)\b', clean_text):
+            return {"is_valid": False, "status": "currency_or_quantity_not_statute", "raw_citation": text}
+
     lower_text = clean_text.lower()
     search_context = f"{lower_text} {str(context or '').lower()}"
 
@@ -988,12 +993,12 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
                 else:
                     resolved_act = "CPC_1908"
             elif raw_prim == "138":
-                if any(w in search_context for w in ["cheque", "dishonour", "bounced", "negotiable", "ni act"]):
-                    resolved_act = "NI_ACT_1881"
-                elif any(w in search_context for w in ["railway", "railways"]):
+                if any(w in search_context for w in ["railway", "railways"]):
                     resolved_act = "RAILWAYS_1890"
-                else:
+                elif any(w in search_context for w in ["notary", "notaries", "notarial"]):
                     resolved_act = "NI_ACT_1881"
+                else:
+                    resolved_act = "CPC_1908"
             elif raw_prim == "7":
                 if any(w in search_context for w in ["ata", "terror", "anti-terrorism", "terrorist"]):
                     resolved_act = "ATA_1997"

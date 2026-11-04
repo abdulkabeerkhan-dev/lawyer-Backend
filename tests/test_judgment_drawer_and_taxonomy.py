@@ -73,3 +73,79 @@ def test_public_api_judgment_endpoint_no_401():
     assert resp.status_code == 200
     data = resp.json()
     assert data["case_id"] == "2016_YLR_2355"
+
+
+def test_strict_high_court_reporter_taxonomy():
+    # YLR, CLC, PCrLJ, MLD must NEVER resolve to Supreme Court of Pakistan even if metadata says Supreme Court
+    rec_ylr_bad_meta = {
+        "case_id": "2007_YLR_1542",
+        "citation": "2007 YLR 1542",
+        "court": "Supreme Court of Pakistan",
+        "canonical_court_name": "Supreme Court of Pakistan"
+    }
+    assert get_effective_court(rec_ylr_bad_meta) == "Lahore High Court"
+
+    rec_clc_sindh = {
+        "case_id": "2010_CLC_1578",
+        "citation": "2010 CLC 1578",
+        "court": "Supreme Court of Pakistan",
+        "canonical_court_name": "Supreme Court of Pakistan",
+        "bench": "Karachi"
+    }
+    assert get_effective_court(rec_clc_sindh) == "High Court of Sindh"
+
+    rec_pcrlj = {
+        "case_id": "2005_PCrLJ_100",
+        "citation": "2005 PCrLJ 100",
+        "court": "Supreme Court of Pakistan"
+    }
+    assert get_effective_court(rec_pcrlj) == "Lahore High Court"
+
+    # Supreme Court citations must remain Supreme Court
+    rec_scmr = {"case_id": "2026_SCMR_987", "citation": "2026 SCMR 987", "court": "High Court"}
+    assert get_effective_court(rec_scmr) == "Supreme Court of Pakistan"
+
+
+def test_clean_and_infer_court_high_court_guard():
+    # clean_court_name must guard against corrupt metadata inflating YLR to Supreme Court
+    assert clean_court_name("Supreme Court of Pakistan", case_id="2007_YLR_1542") == "Lahore High Court"
+    assert clean_court_name("Supreme Court of Pakistan", title="Mrs. AZRA SHABBIR VS Mrs. REHANA KHATOON", case_id="2010_CLC_1578", text="KARACHI BENCH") == "High Court of Sindh"
+
+    # infer_court_from_citation must guard against corrupt court_hint
+    assert infer_court_from_citation("2007 YLR 1542", court_hint="Supreme Court of Pakistan") == "Lahore High Court"
+    assert infer_court_from_citation("2026 SCMR 987", court_hint="High Court") == "Supreme Court of Pakistan"
+
+
+def test_cheque_bail_statutory_detection_no_currency_no_ni138():
+    q = "My client issued a cheque for PKR 5 million that was dishonoured due to insufficient funds. The FIR was registered under Section 489-F PPC. What are the grounds for bail before arrest, which courts have jurisdiction, and what are the leading Supreme Court principles on whether 489-F requires proof of dishonest intent?"
+    provs = detect_statutory_provisions_in_query(q)
+    cids = [cid for cid, act in provs]
+
+    # Required criminal provisions
+    assert "PPC_1860_SEC_489F" in cids
+    assert "CRPC_1898_SEC_498" in cids
+    assert "CRPC_1898_SEC_497" in cids
+
+    # Forbid false positive Section 5 CPC from 'PKR 5 million'
+    assert "CPC_1908_SEC_5" not in cids
+
+    # Forbid Indian law Section 138 NI Act
+    assert "NI_ACT_1881_SEC_138" not in cids
+
+
+def test_build_authoritative_opinion_fallback_cheque_bail():
+    from legal_ai.synthesis.memorandum_generator import build_authoritative_opinion_fallback
+    q = "My client issued a cheque for PKR 5 million that was dishonoured due to insufficient funds. The FIR was registered under Section 489-F PPC. What are the grounds for bail before arrest, which courts have jurisdiction, and what are the leading Supreme Court principles on whether 489-F requires proof of dishonest intent?"
+    memo = build_authoritative_opinion_fallback(q)
+
+    # Forbid civil title/property boilerplate
+    assert "title records" not in memo.lower()
+    assert "order viii rule 6" not in memo.lower()
+
+    # Mandate criminal bail and 489-F substantive analysis
+    assert "Section 489-F" in memo
+    assert "Section 498 CrPC" in memo or "Section 498" in memo
+    assert "prohibitory clause" in memo.lower()
+    assert "dishonest intent" in memo.lower()
+    assert "Court of Session" in memo
+

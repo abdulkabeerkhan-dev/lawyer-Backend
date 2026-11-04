@@ -2488,6 +2488,21 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
     if re.search(r'\b(?:SCMR|PSC)\b', search_haystack) or re.search(r'\bPLD\s+\d{4}\s+(?:SC|S\.C\.|SUPREME\s+COURT)\b', search_haystack):
         return "Supreme Court of Pakistan"
 
+    # High Court Reporter Invariant: YLR, CLC, PCrLJ, MLD are exclusively Provincial High Courts, NEVER Supreme Court
+    if re.search(r'\b(?:YLR|CLC|PCRLJ|MLD)\b', search_haystack):
+        hc_text = " ".join([search_haystack, str(text or "")[:500]]).upper()
+        if any(k in hc_text for k in ["SINDH", "KARACHI", "SHC", "SUKKUR", "HYDERABAD"]):
+            return "High Court of Sindh"
+        elif any(k in hc_text for k in ["PESHAWAR", "PHC", "ABBOTTABAD", "DERA ISMAIL KHAN", "BANNU", "MINGORA", "SWAT"]):
+            return "Peshawar High Court"
+        elif any(k in hc_text for k in ["BALOCHISTAN", "QUETTA", "BHC", "SIBI", "TURBAT"]):
+            return "High Court of Balochistan"
+        elif any(k in hc_text for k in ["ISLAMABAD", "IHC"]):
+            return "Islamabad High Court"
+        elif any(k in hc_text for k in ["LAHORE", "LHC", "RAWALPINDI", "MULTAN", "BAHAWALPUR"]):
+            return "Lahore High Court"
+        return "Lahore High Court"
+
     # 1. Inspect explicit court_name input first (court determination comes from actual metadata / document content)
 
     if c_lower and c_lower not in ("unresolved", "court not identified", "unknown", "unknown court", "court of record", "not specified", "none", "high court", "court"):
@@ -2951,6 +2966,25 @@ def infer_court_from_citation(citation: str, raw_text: str = "", court_hint: str
 
     if re.search(r'\bFSC\b', cit_upper) or re.search(r'\bPLD\s+\d{4}\s+(?:FSC|F\.S\.C\.|FEDERAL\s+SHARIAT\s+COURT)\b', cit_upper):
         return "Federal Shariat Court"
+
+    # High Court Reporter Invariant: YLR, CLC, PCrLJ, MLD are exclusively Provincial High Courts, NEVER Supreme Court
+    if re.search(r'\b(?:YLR|CLC|PCRLJ|MLD)\b', cit_upper):
+        hc_text = " ".join([cit_upper, str(raw_text or "")[:500]]).upper()
+        if any(k in hc_text for k in ["SINDH", "KARACHI", "SHC", "SUKKUR", "HYDERABAD"]):
+            return "High Court of Sindh"
+        elif any(k in hc_text for k in ["PESHAWAR", "PHC", "ABBOTTABAD", "DERA ISMAIL KHAN", "BANNU", "MINGORA", "SWAT"]):
+            return "Peshawar High Court"
+        elif any(k in hc_text for k in ["BALOCHISTAN", "QUETTA", "BHC", "SIBI", "TURBAT"]):
+            return "High Court of Balochistan"
+        elif any(k in hc_text for k in ["ISLAMABAD", "IHC"]):
+            return "Islamabad High Court"
+        elif any(k in hc_text for k in ["LAHORE", "LHC", "RAWALPINDI", "MULTAN", "BAHAWALPUR"]):
+            return "Lahore High Court"
+        if court_hint and "supreme" not in str(court_hint).lower():
+            res = clean_court_name(str(court_hint), title="", case_id=citation, text=raw_text)
+            if res and res != "Court not identified" and "supreme" not in res.lower():
+                return res
+        return "Lahore High Court"
 
     if court_hint and str(court_hint).strip().lower() not in ("unresolved", "court not identified", "unknown", "unknown court", "court of record", "not specified", "none", "", "null", "undefined"):
         res = clean_court_name(str(court_hint), title="", case_id=citation, text=raw_text)
@@ -8325,7 +8359,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
         except MemorandumVerificationBlockedError as ve:
             print(f"[JOB {job_id}] MEMORANDUM BLOCKED BY VERIFIER: {ve}", file=sys.stderr, flush=True)
             if job_id in jobs_store:
-                blocked_data = getattr(ve, "blocked_payload", None) or {}
+                blocked_data = getattr(ve, "blocked_payload", None) or jobs_store.get(job_id) or {}
                 jobs_store[job_id].update(blocked_data)
                 if authenticated_user_id == "mock_test_user":
                     jobs_store[job_id]["status"] = "error"
@@ -13755,11 +13789,14 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
                 },
                 'completed_at': datetime.now(timezone.utc),
                 'raw_draft': display_answer,
+                'unverified_memo': display_answer,
                 'query_text': getattr(request, 'query_text', ''),
+                'precedent_cards': precedent_cards,
+                'verified_precedents_fallback': precedent_cards,
             }
             if job_id in jobs_store:
                 jobs_store[job_id].update(blocked_payload)
-            raise MemorandumVerificationBlockedError(verification_gate)
+            raise MemorandumVerificationBlockedError(verification_gate, blocked_payload=blocked_payload)
 
         # STAGE 5 GATE 2: ANTI-PATTERN GUARDRAIL & GUARDIAN INTERVENTION
         from legal_ai.verification.anti_pattern_guard import AntiPatternGuard
@@ -14677,7 +14714,7 @@ async def get_api_judgment_pdf_endpoint(
 
     raw_title = (get_effective_title(match_record) if match_record else decoded_id) or decoded_id
     citation = (match_record.get("neutral_citation") if match_record else "") or ""
-    court = (get_effective_court(match_record) if match_record else "Supreme Court of Pakistan") or "Supreme Court of Pakistan"
+    court = (get_effective_court(match_record) if match_record else clean_court_name("", case_id=decoded_id)) or "High Court / Supreme Court"
     text = (match_record.get("full_text") if match_record else f"Full judgment record for {decoded_id} is currently undergoing index synchronization.") or ""
     title = clean_or_extract_title(raw_title, text)
 
@@ -15970,7 +16007,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
             for pc in precedent_cards[:5]:
                 cit = pc.get("citation") or pc.get("title") or "Judicial Precedent"
                 case_t = pc.get("case_title") or pc.get("case_name") or pc.get("title") or ""
-                court = pc.get("court") or pc.get("court_name") or "Superior Court"
+                court = get_effective_court(pc) or clean_court_name(pc.get("court") or pc.get("court_name") or "", case_id=cit) or "High Court"
                 holding = pc.get("holding") or pc.get("ratio_decidendi") or pc.get("summary") or pc.get("snippet") or ""
 
                 # Clean raw reporter metadata, judge names, and counsel names
