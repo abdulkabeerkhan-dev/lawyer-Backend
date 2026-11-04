@@ -267,6 +267,11 @@ def resolve_jurisdiction_hierarchy(province: str) -> Tuple[List[str], List[str]]
 PLANNER_SYSTEM_PROMPT = """You are a senior Pakistani legal research director and legal query planner.
 Analyze the user's legal scenario and produce an actionable, structured legal research plan.
 
+CRITICAL PAKISTANI JURISDICTIONAL INVARIANTS:
+- CHEQUE DISHONOUR: In Pakistan, dishonour of a cheque is governed SOLELY by Section 489-F PPC (Pakistan Penal Code, 1860) and Order XXXVII CPC for summary civil recovery.
+  Sections 138, 139, 140, 141, 142 of the Negotiable Instruments Act are INDIAN provisions (inserted in India by Act 66 of 1988) and DO NOT EXIST in Pakistani law. Pakistan's Negotiable Instruments Act 1881 stops at Section 137. NEVER cite Section 138 or Section 139 NIA 1881 for Pakistan.
+- BAIL: Pre-arrest bail is Section 498 CrPC (apprehension of arrest + mala fide / ulterior motive). Post-arrest bail is Section 497 CrPC. Section 496 CrPC governs bailable offences.
+
 Identify:
 1. primary_domain: Primary legal domain from ["civil", "criminal", "constitutional", "family", "corporate", "rent", "banking", "taxation", "service", "labour"].
 2. secondary_domains: Any legitimately engaged secondary domains (e.g. ["civil"] for criminal commercial fraud, or ["service"] for civil service constitutional petitions).
@@ -1440,6 +1445,8 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
                     m_fake = re.search(r'section\s*(18\d\d|19\d\d|20\d\d)', p_str, re.IGNORECASE)
                     if m_fake:
                         continue
+                    if any(k in p_str.lower() for k in ["138", "139"]) and any(k in p_str.lower() for k in ["ni", "negotiable", "nia"]):
+                        continue
                     provisions.append(p_str)
 
                 premise_corrections = fallback.premise_corrections
@@ -1462,6 +1469,15 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
                 province = data.get("target_province") or data.get("province") or fallback.target_province
                 binding_courts, persuasive_courts = resolve_jurisdiction_hierarchy(province)
                 issues = data.get("core_legal_issues") or data.get("issues") or data.get("legal_questions") or fallback.core_legal_issues
+                if isinstance(issues, list):
+                    clean_issues = []
+                    for iss in issues:
+                        iss_str = str(iss).strip()
+                        if ("139" in iss_str or "138" in iss_str) and any(k in iss_str.lower() for k in ["ni", "negotiable", "nia"]):
+                            clean_issues.append("Burden and standard of proof of dishonest issuance and lack of funds under Section 489-F PPC")
+                        else:
+                            clean_issues.append(iss_str)
+                    issues = clean_issues
 
                 primary_domain = data.get("primary_domain") or fallback.primary_domain
                 secondary_domains = data.get("secondary_domains") or fallback.secondary_domains

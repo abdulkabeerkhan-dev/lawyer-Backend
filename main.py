@@ -777,7 +777,14 @@ async def dynamic_cors_middleware(request, call_next):
 
 
 
-    response = await call_next(request)
+    try:
+        response = await call_next(request)
+    except Exception as exc:
+        print(f"⚠️ [dynamic_cors_middleware] Unhandled exception processing {request.method} {request.url.path}: {exc}", file=sys.stderr, flush=True)
+        response = JSONResponse(
+            status_code=500,
+            content={"detail": "Internal server error occurred.", "error": str(exc)}
+        )
 
     if origin and _origin_is_allowed(origin):
 
@@ -7529,7 +7536,7 @@ SYSTEM_PROMPTS = {
 
 def check_user_quota(user_id: str, num_images_requested: int):
 
-    if user_id == "mock_clerk_user_id_dev_run" or not supabase:
+    if user_id == "mock_clerk_user_id_dev_run" or not supabase or is_supabase_circuit_open():
 
         return
 
@@ -7828,7 +7835,7 @@ def persist_in_flight_job_state(job_id: str, stage: str, status: str = "running"
         if extra:
             jobs_store[job_id].update(extra)
 
-    if supabase and check_query_jobs_table_exists():
+    if supabase and not is_supabase_circuit_open() and check_query_jobs_table_exists():
         try:
             payload = {
                 "job_id": job_id,
@@ -7839,7 +7846,7 @@ def persist_in_flight_job_state(job_id: str, stage: str, status: str = "running"
             }
             if user_id:
                 payload["user_id"] = user_id
-            safe_supabase_query(lambda: supabase.table("query_jobs").upsert(payload).execute())
+            safe_supabase_query(lambda: supabase.table("query_jobs").upsert(payload).execute(), retries=1)
         except Exception as e:
             logger.debug(f"Failed to upsert job {job_id} to query_jobs table: {e}")
 
