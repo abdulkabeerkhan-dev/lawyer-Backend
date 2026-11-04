@@ -15829,6 +15829,7 @@ async def mike_ai_drafting_endpoint(
 
 
 @app.get("/query/{job_id}")
+@app.get("/query/status/{job_id}")
 
 async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends(verify_clerk_session)):
 
@@ -16195,6 +16196,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
 
 
 @app.get("/query/{job_id}/stream")
+@app.get("/query/stream/{job_id}")
 
 async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depends(verify_clerk_session)):
 
