@@ -824,6 +824,21 @@ def detect_statutory_provisions_in_query(query: str) -> List[Tuple[str, str]]:
                 seen.add(cid)
                 provisions.append((cid, "CPC_1908"))
 
+    # Doctrinal Concept-to-Section: Decree obtained by fraud / Section 12(2) CPC & Article 181 Limitation Act
+    if ("decree" in q_low_check and any(k in q_low_check for k in ["fraud", "misrepresentation", "mis-representation", "setting aside", "set aside", "without jurisdiction", "want of jurisdiction", "nullity"])) or any(k in q_low_check for k in ["12(2)", "12 (2)", "section 12(2)", "fraudulent decree"]):
+        for cid, act_c in [
+            ("CPC_1908_SEC_12", "CPC_1908"),
+            ("LIMITATION_1908_ART_181", "LIMITATION_1908")
+        ]:
+            if cid not in seen:
+                seen.add(cid)
+                provisions.append((cid, act_c))
+        if "appeal" in q_low_check:
+            cid = "CPC_1908_SEC_96"
+            if cid not in seen:
+                seen.add(cid)
+                provisions.append((cid, "CPC_1908"))
+
     # Doctrinal Concept-to-Section: Companies Act Oppression / Interim relief
     if any(k in q_low_check for k in ["companies act", "companies ordinance", "company bench"]) and any(k in q_low_check for k in ["286", "287", "288", "290", "292", "oppression", "mismanagement", "provisional manager", "freeze operational", "bank accounts"]):
         for cid, act_c in [

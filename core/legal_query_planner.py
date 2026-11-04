@@ -448,7 +448,13 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         or ("family" in q_low and not any(k in q_low for k in ["land", "property", "partition", "estate", "ancestral", "share", "heir"]))
     )
     is_female_inheritance = any(k in q_low for k in ["female heir", "female legal heir", "female co-heir", "sister", "daughter", "mother"]) and any(k in q_low for k in ["inheritance", "tamleek", "relinquishment", "mutation", "shari share", "depriv"])
-    is_sec12_2 = any(k in q_low for k in ["12(2)", "section 12(2)", "12 (2)", "decree obtained through fraud", "fraudulent decree"])
+    is_sec12_2 = (
+        any(k in q_low for k in ["12(2)", "section 12(2)", "12 (2)", "decree obtained through fraud", "fraudulent decree", "setting aside decree", "set aside decree", "decree by fraud", "decree through fraud"])
+        or (
+            "decree" in q_low
+            and any(k in q_low for k in ["fraud", "misrepresentation", "mis-representation", "collusion", "want of jurisdiction", "without jurisdiction", "void decree", "nullity"])
+        )
+    )
     is_execution = any(k in q_low for k in ["order xxi", "execution of decree", "objection petition", "rule 97", "rule 103"])
     is_specific_perf = any(k in q_low for k in ["sale deed", "agreement to sell", "specific performance", "advance money", "earnest money", "token money"]) or (any(k in q_low for k in ["seller", "buyer", "vendor", "vendee"]) and any(k in q_low for k in ["sale", "deed", "refused", "money", "property"]))
     is_adverse_possession = any(k in q_low for k in ["adverse possession", "limitation act", "section 28", "article 144", "article 149", "state land"])
@@ -990,6 +996,10 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     if is_sec12_2:
         if not any("12(2)" in p for p in provisions):
             provisions.append("Section 12(2) CPC")
+        if not any("181" in p for p in provisions):
+            provisions.append("Article 181 Limitation Act, 1908")
+        if "appeal" in q_low and not any("96" in p for p in provisions):
+            provisions.append("Section 96 CPC")
 
     if is_execution:
         for ex_p in ["Order XXI Rule 97 CPC", "Order XXI Rule 103 CPC"]:
@@ -1106,6 +1116,12 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     if is_adverse_possession:
         questions.append("whether adverse possession can mature against Provincial Government under Section 28 Limitation Act")
         questions.append("statutory limitation period for Government recovery of land under Article 149 (60 years) vs Article 144")
+    if is_sec12_2:
+        questions.append("remedy under Section 12(2) CPC for setting aside decree obtained by fraud, misrepresentation, or want of jurisdiction")
+        questions.append("limitation period under Article 181 Limitation Act 1908 (three years from discovery of fraud / accrual of right to apply)")
+        if "appeal" in q_low:
+            questions.append("distinction between Section 12(2) CPC application to decree-passing court vs regular appeal under Section 96 CPC")
+
     if "review" in q_low and any(k in q_low for k in ["cpc", "civil procedure", "court review its own", "review its own decision", "order xlvii", "own decision"]):
         questions.append("substantive power of civil court to review its own decree or order under Section 114 CPC")
         questions.append("statutory grounds for review under Order XLVII Rule 1 CPC (discovery of new and important matter or evidence, error apparent on face of record)")
@@ -1153,6 +1169,23 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             lane_name = "specific_performance_sale_deed"
             dq = "Section 12 Specific Relief Act 1877 suit for specific performance sale deed advance money refusal to execute agreement to sell"
         raw_lanes.append({"lane": lane_name, "query": dq})
+
+    if is_sec12_2:
+        if not any(l["lane"] == "sec12_2_decree_fraud" for l in raw_lanes):
+            raw_lanes.insert(0, {
+                "lane": "sec12_2_decree_fraud",
+                "query": "Section 12(2) CPC application to set aside decree obtained by fraud misrepresentation want of jurisdiction"
+            })
+        if not any(l["lane"] == "sec12_2_limitation_art181" for l in raw_lanes):
+            raw_lanes.append({
+                "lane": "sec12_2_limitation_art181",
+                "query": "Section 12(2) CPC Article 181 Limitation Act three years from accrual of right to apply discovery of fraud"
+            })
+        if "appeal" in q_low and not any(l["lane"] == "sec12_2_vs_appeal_s96" for l in raw_lanes):
+            raw_lanes.append({
+                "lane": "sec12_2_vs_appeal_s96",
+                "query": "Section 12(2) CPC application distinguished from appeal Section 96 CPC separate suit barred"
+            })
 
     if is_specific_perf:
         if not any(l["lane"] == "specific_performance_immovable_property" for l in raw_lanes):

@@ -145,7 +145,7 @@ from core.legal_proposition_extractor import extract_legal_propositions, format_
 
 from core.current_law_verifier import verify_current_law_for_provisions, format_current_law_context
 
-from core.pdf_resolver import resolve_judgment_pdf_url, fetch_storage_pdf_bytes, extract_journal_and_year, verify_hmac_pdf_token
+from core.pdf_resolver import resolve_judgment_pdf_url, fetch_storage_pdf_bytes, extract_journal_and_year, verify_hmac_pdf_token, create_hmac_pdf_token
 
 from analytics.legal_ai_metrics import PipelineMetricsTracker
 
@@ -2480,14 +2480,13 @@ def clean_court_name(court_name: str = "", title: str = "", case_id: str = "", t
 
 
     # Explicit Whitelist: 2006 YLR 1206 is always Lahore High Court
-
-    search_haystack = " ".join([str(court_name or ""), str(title or ""), str(case_id or "")]).upper()
-
-    if "2006_YLR_1206" in search_haystack or "2006 YLR 1206" in search_haystack:
-
+    search_haystack = " ".join([str(court_name or ""), str(title or ""), str(case_id or "")]).upper().replace("_", " ").replace("-", " ")
+    if "2006 YLR 1206" in search_haystack:
         return "Lahore High Court"
 
-
+    # Apex Citation Invariant: SCMR, PSC, and PLD ... SC are exclusively Supreme Court of Pakistan
+    if re.search(r'\b(?:SCMR|PSC)\b', search_haystack) or re.search(r'\bPLD\s+\d{4}\s+(?:SC|S\.C\.|SUPREME\s+COURT)\b', search_haystack):
+        return "Supreme Court of Pakistan"
 
     # 1. Inspect explicit court_name input first (court determination comes from actual metadata / document content)
 
@@ -2944,16 +2943,19 @@ def repair_ocr_words(text: str) -> str:
 
 
 def infer_court_from_citation(citation: str, raw_text: str = "", court_hint: str = "") -> str:
+    cit_upper = str(citation or "").upper().replace("_", " ").replace("-", " ")
+
+    # Apex Citation Invariant: SCMR, PSC, and PLD ... SC are exclusively Supreme Court of Pakistan
+    if re.search(r'\b(?:SCMR|PSC)\b', cit_upper) or re.search(r'\bPLD\s+\d{4}\s+(?:SC|S\.C\.|SUPREME\s+COURT)\b', cit_upper):
+        return "Supreme Court of Pakistan"
+
+    if re.search(r'\bFSC\b', cit_upper) or re.search(r'\bPLD\s+\d{4}\s+(?:FSC|F\.S\.C\.|FEDERAL\s+SHARIAT\s+COURT)\b', cit_upper):
+        return "Federal Shariat Court"
 
     if court_hint and str(court_hint).strip().lower() not in ("unresolved", "court not identified", "unknown", "unknown court", "court of record", "not specified", "none", "", "null", "undefined"):
-
         res = clean_court_name(str(court_hint), title="", case_id=citation, text=raw_text)
-
         if res and res != "Court not identified":
-
             return res
-
-
 
     cit_upper = str(citation or "").upper()
 
@@ -14359,7 +14361,7 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
         def _trip_if_needed(err_exc):
             err_str = str(err_exc).lower()
             if "timeout" in err_str or "timed out" in err_str or "connection" in err_str or "429" in err_str or "544" in err_str or "database" in err_str or "slowdown" in err_str:
-                trip_supabase_circuit(30.0, str(err_exc))
+                trip_supabase_circuit(120.0, str(err_exc))
 
         # 1. Try UUID / primary id column (handles direct UUID or {uuid}_chk_{n})
         lookup_uuid = clean_uuid if is_valid_uuid(clean_uuid) else (decoded_id if is_valid_uuid(decoded_id) else None)
@@ -14430,85 +14432,128 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
 
 
 
-    # Pinecone fallback lookup by exact metadata field match
-
+    # Pinecone multi-namespace lookup (checks segmented-v1 and judgments)
     if pinecone_index:
-
         try:
-
             dummy_vector = [0.0] * 1024
+            search_namespaces = ["segmented-v1", PINECONE_NAMESPACE]
+            id_variants = list({decoded_id, norm_id, space_id, clean_uuid})
 
-            for field in ["judgment_id", "canonical_id", "case_id", "citation"]:
+            for ns in search_namespaces:
+                matches = []
+                for field in ["case_id", "citation", "judgment_id", "canonical_id"]:
+                    try:
+                        res = pinecone_index.query(
+                            namespace=ns,
+                            vector=dummy_vector,
+                            filter={field: {"$in": id_variants}},
+                            top_k=25,
+                            include_metadata=True
+                        )
+                        if res and res.get("matches"):
+                            matches = res["matches"]
+                            break
+                    except Exception:
+                        for cand in id_variants:
+                            try:
+                                res = pinecone_index.query(
+                                    namespace=ns,
+                                    vector=dummy_vector,
+                                    filter={field: {"$eq": cand}},
+                                    top_k=25,
+                                    include_metadata=True
+                                )
+                                if res and res.get("matches"):
+                                    matches = res["matches"]
+                                    break
+                            except Exception:
+                                pass
+                        if matches:
+                            break
 
-                res = pinecone_index.query(
+                if matches:
+                    def _chunk_sort_key(m):
+                        meta = m.get("metadata", {}) or {}
+                        st = meta.get("segment_type", "")
+                        st_order = {"headnote": 0, "ratio_decidendi": 1, "facts_and_order": 2}
+                        if st in st_order:
+                            return st_order[st]
+                        return meta.get("chunk_index", 0)
 
-                    namespace=PINECONE_NAMESPACE,
+                    sorted_chunks = sorted(matches, key=_chunk_sort_key)
+                    seen_texts = set()
+                    full_reconstructed_parts = []
+                    order_parts = []
+                    ratio_parts = []
 
-                    vector=dummy_vector,
+                    for c in sorted_chunks:
+                        c_meta = c.get("metadata", {}) or {}
+                        c_text = str(c_meta.get("text") or c_meta.get("text_preview") or "").strip()
+                        st = c_meta.get("segment_type", "")
+                        if c_text and c_text not in seen_texts:
+                            seen_texts.add(c_text)
+                            full_reconstructed_parts.append(c_text)
+                        if st == "facts_and_order" or "order" in st:
+                            order_parts.append(c_text)
+                        elif st == "ratio_decidendi" or "ratio" in st:
+                            ratio_parts.append(c_text)
 
-                    filter={field: {"$eq": decoded_id}},
+                    first_meta = sorted_chunks[0].get("metadata", {}) or {}
+                    raw_title = first_meta.get("title") or first_meta.get("case_title") or decoded_id
+                    assembled_raw = "\n\n".join(full_reconstructed_parts)
+                    order_text = "\n\n".join(order_parts) if order_parts else assembled_raw
+                    ratio_text = "\n\n".join(ratio_parts) if ratio_parts else ""
 
-                    top_k=10,
+                    cleaned_title = clean_or_extract_title(raw_title, assembled_raw)
+                    resolved_court = get_effective_court(first_meta) or clean_court_name(
+                        str(first_meta.get("court") or first_meta.get("court_name") or ""),
+                        title=cleaned_title,
+                        case_id=first_meta.get("case_id") or decoded_id,
+                        text=assembled_raw
+                    )
 
-                    include_metadata=True
-
-                )
-
-                if res and res.get("matches"):
-
-                    matches = sorted(res["matches"], key=lambda m: m.get("metadata", {}).get("chunk_index", 0))
-
-                    full_text = "\n\n".join([m.get("metadata", {}).get("text", "") for m in matches if m.get("metadata", {}).get("text")])
-
-                    meta0 = matches[0].get("metadata", {})
+                    pdf_tok = create_hmac_pdf_token(norm_id)
+                    backend_pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(norm_id)}?token={pdf_tok}"
 
                     return _sanitize_record({
-
-                        "id": meta0.get("judgment_id") or decoded_id,
-
-                        "canonical_id": meta0.get("canonical_id") or decoded_id,
-
-                        "case_id": meta0.get("case_id") or decoded_id,
-
-                        "case_title": meta0.get("title") or meta0.get("case_title") or decoded_id,
-
-                        "neutral_citation": meta0.get("citation") or "",
-
-                        "court_name": get_effective_court(meta0) or "Supreme Court of Pakistan",
-
-                        "full_text": full_text or f"Full judgment record for {decoded_id} is currently undergoing index synchronization.",
-
-                        "pdf_url": meta0.get("pdf_url") or ""
-
+                        "id": first_meta.get("judgment_id") or decoded_id,
+                        "canonical_id": first_meta.get("canonical_id") or decoded_id,
+                        "case_id": first_meta.get("case_id") or norm_id,
+                        "case_title": cleaned_title,
+                        "neutral_citation": first_meta.get("citation") or space_id,
+                        "court_name": resolved_court,
+                        "court": resolved_court,
+                        "decision_date": str(first_meta.get("date") or first_meta.get("year") or ""),
+                        "full_text": assembled_raw or f"Full judgment record for {decoded_id} is currently undergoing index synchronization.",
+                        "order_text": order_text or assembled_raw,
+                        "ratio_decidendi": ratio_text,
+                        "legal_issue": first_meta.get("subdomain") or first_meta.get("domain") or "",
+                        "statutes_invoked": first_meta.get("statutes") or first_meta.get("statutory_provisions") or first_meta.get("provisions") or [],
+                        "pdf_url": backend_pdf_url,
+                        "reassembled_from_chunks": len(sorted_chunks) > 1
                     })
-
         except Exception as e:
+            print(f"Pinecone multi-namespace lookup notice: {e}")
 
-            print(f"Pinecone fallback lookup notice: {e}")
+    pdf_tok = create_hmac_pdf_token(norm_id)
+    backend_pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(norm_id)}?token={pdf_tok}"
 
-
+    fallback_court = clean_court_name("", title=space_id, case_id=norm_id)
+    if not fallback_court or fallback_court == "Court not identified":
+        fallback_court = "Supreme Court of Pakistan" if any(k in space_id for k in ["SCMR", "PSC", "SC"]) else "Superior Courts of Pakistan"
 
     return _sanitize_record({
-
         "id": decoded_id,
-
         "canonical_id": decoded_id,
-
         "case_id": norm_id,
-
         "case_title": space_id if not is_valid_uuid(decoded_id) else "Case Record",
-
         "neutral_citation": space_id if not is_valid_uuid(decoded_id) else "",
-
-        "court_name": "Supreme Court of Pakistan",
-
+        "court_name": fallback_court,
+        "court": fallback_court,
         "full_text": f"Full judgment record for {decoded_id} is currently undergoing index synchronization.",
-
-        "pdf_url": ""
-
+        "order_text": f"Full judgment record for {decoded_id} is currently undergoing index synchronization.",
+        "pdf_url": backend_pdf_url
     })
-
-
 
 
 async def _authorize_pdf_access(
@@ -14651,13 +14696,22 @@ async def get_api_judgment_pdf_endpoint(
 @app.get("/api/judgments/{judgment_id:path}")
 async def get_api_judgment_endpoint(
     judgment_id: str,
-    authenticated_user_id: str = Depends(verify_clerk_session)
+    request: Request,
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_agent)
 ):
+    caller_identifier = None
+    if credentials and credentials.credentials:
+        try:
+            caller_identifier = await verify_clerk_session(credentials)
+        except Exception:
+            pass
+
     match_record = find_judgment_by_id_or_canonical(judgment_id)
     if not match_record:
         raise HTTPException(status_code=404, detail=f"Judgment '{judgment_id}' not found.")
     match_record["full_text"] = format_clean_judgment_paragraphs(match_record.get("full_text", ""))
     return match_record
+
 
 @app.get("/judgment-pdf/{case_id:path}")
 async def get_judgment_pdf_endpoint(
@@ -14669,235 +14723,27 @@ async def get_judgment_pdf_endpoint(
     return await get_api_judgment_pdf_endpoint(case_id, request=request, token=token, credentials=credentials)
 
 
-
 @app.get("/judgment/{case_id:path}")
-
 async def get_full_judgment(
-
-    case_id: str, 
-
-    authenticated_user_id: str = Depends(verify_clerk_session)
-
+    case_id: str,
+    request: Request,
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_agent)
 ):
-
+    """Retrieves and reassembles full judgment text by exact UUID or canonical identifier.
+    Permits public access to reported judicial judgments (eliminates 401 drawer stall).
     """
-
-    Retrieves and reassembles full judgment text by exact UUID or canonical identifier.
-
-    """
+    caller_identifier = None
+    if credentials and credentials.credentials:
+        try:
+            caller_identifier = await verify_clerk_session(credentials)
+        except Exception:
+            pass
 
     match_record = find_judgment_by_id_or_canonical(case_id)
-
     if not match_record:
-
         raise HTTPException(status_code=404, detail=f"Judgment '{case_id}' not found.")
-
     match_record["full_text"] = format_clean_judgment_paragraphs(match_record.get("full_text", ""))
-
     return match_record
-
-
-
-    # 2. Pinecone Multi-Strategy Complete Sequence Chunk Retrieval
-
-    if pinecone_index:
-
-        try:
-
-            matches = []
-
-            dummy_vector = [0.0] * 1024
-
-            for field in ["case_id", "citation"]:
-
-                try:
-
-                    chunk_matches = pinecone_index.query(
-
-                        namespace=PINECONE_NAMESPACE,
-
-                        vector=dummy_vector,
-
-                        filter={field: {"$eq": decoded_case_id}},
-
-                        top_k=200,
-
-                        include_metadata=True
-
-                    )
-
-                    m = chunk_matches.get("matches", []) if isinstance(chunk_matches, dict) else getattr(chunk_matches, "matches", []) or []
-
-                    if m:
-
-                        matches = m
-
-                        break
-
-                except Exception:
-
-                    pass
-
-
-
-            # NOTE: we intentionally do NOT fall back to a broad semantic vector search here.
-
-            # Vector search always returns *a* nearest neighbour even when there's no real match,
-
-            # which for a "give me this exact judgment" lookup means silently returning the wrong
-
-            # case. If neither Supabase nor an exact Pinecone case_id/citation match found this
-
-            # judgment, we say so honestly rather than guess.
-
-
-
-            if matches:
-
-                # If matches found, find base_id and fetch complete sequence of chunks from 0 to N
-
-                sample_meta = matches[0].get("metadata", {}) if isinstance(matches[0], dict) else getattr(matches[0], "metadata", {}) or {}
-
-                canonical_base = sample_meta.get("case_id") or sample_meta.get("citation") or ""
-
-                
-
-                # Fetch all chunks for this canonical base ID
-
-                if canonical_base:
-
-                    try:
-
-                        clean_base = re.sub(r'[^a-zA-Z0-9_\-]', '_', canonical_base).lower()
-
-                        base_ids = [f"{clean_base}_chunk_{i}" for i in range(100)]
-
-                        fetch_res = pinecone_index.fetch(ids=base_ids, namespace=PINECONE_NAMESPACE)
-
-                        fetched_vecs = fetch_res.get("vectors", {}) if isinstance(fetch_res, dict) else getattr(fetch_res, "vectors", {}) or {}
-
-                        if fetched_vecs:
-
-                            matches = list(fetched_vecs.values())
-
-                    except Exception:
-
-                        pass
-
-
-
-                # Sort by chunk_index
-
-                def get_chunk_idx(x):
-
-                    m = x.get("metadata", {}) if isinstance(x, dict) else getattr(x, "metadata", {})
-
-                    return m.get("chunk_index", 0)
-
-
-
-                sorted_chunks = sorted(matches, key=get_chunk_idx)
-
-                
-
-                seen_texts = set()
-
-                full_reconstructed_parts = []
-
-                for c in sorted_chunks:
-
-                    c_meta = c.get("metadata", {}) if isinstance(c, dict) else getattr(c, "metadata", {}) or {}
-
-                    c_text = c_meta.get("text", "").strip()
-
-                    if c_text and c_text not in seen_texts:
-
-                        seen_texts.add(c_text)
-
-                        full_reconstructed_parts.append(c_text)
-
-                
-
-                if full_reconstructed_parts:
-
-                    first_meta = sorted_chunks[0].get("metadata", {}) if isinstance(sorted_chunks[0], dict) else getattr(sorted_chunks[0], "metadata", {}) or {}
-
-                    assembled_raw = "\n\n".join(full_reconstructed_parts)
-
-                    return {
-
-                        "case_id": decoded_case_id,
-
-                        "case_title": first_meta.get("title") or first_meta.get("case_title") or decoded_case_id,
-
-                        "neutral_citation": first_meta.get("citation") or decoded_case_id,
-
-                        "court": get_effective_court(first_meta) or first_meta.get("court", "Supreme Court / High Court of Pakistan"),
-
-                        "judgment_year": first_meta.get("year", 2024),
-
-                        "full_text": format_clean_judgment_paragraphs(assembled_raw),
-
-                        "reassembled_from_chunks": True
-
-                    }
-
-                
-
-                full_reconstructed_parts = []
-
-                for c in sorted_chunks:
-
-                    meta = c.get("metadata", {}) if isinstance(c, dict) else getattr(c, "metadata", {}) or {}
-
-                    chunk_str = str(meta.get("text", meta.get("text_preview", ""))).strip()
-
-                    if chunk_str and chunk_str not in seen_texts:
-
-                        seen_texts.add(chunk_str)
-
-                        full_reconstructed_parts.append(chunk_str)
-
-
-
-                first_meta = matches[0].get("metadata", {}) if isinstance(matches[0], dict) else getattr(matches[0], "metadata", {}) or {}
-
-                court_val = clean_court_name(str(get_effective_court(first_meta) or first_meta.get("court", "")))
-
-                title_val = str(first_meta.get("title") or first_meta.get("case_title", decoded_case_id))
-
-                official_citation = str(first_meta.get("citation") or first_meta.get("neutral_citation") or "").strip()
-
-                citation_val = format_neutral_citation(court_val, official_citation or decoded_case_id, str(first_meta.get("date") or first_meta.get("year") or ""))
-
-                assembled_raw = "\n\n".join(full_reconstructed_parts)
-
-
-
-                return {
-
-                    "case_id": decoded_case_id,
-
-                    "case_title": title_val,
-
-                    "neutral_citation": citation_val,
-
-                    "court_name": court_val,
-
-                    "decision_date": str(first_meta.get("date") or first_meta.get("year") or ""),
-
-                    "full_text": format_clean_judgment_paragraphs(assembled_raw)
-
-                }
-
-        except Exception as e:
-
-            print(f"⚠️ Pinecone retrieval error: {e}")
-
-
-
-    raise HTTPException(status_code=404, detail=f"Full judgment text for '{decoded_case_id}' not found.")
-
 
 
 # ============================================================================

@@ -669,15 +669,75 @@ def get_effective_court(record: Optional[Dict[str, Any]]) -> Optional[str]:
     Prioritizes verified canonical_court_name over legacy court_name/court fields.
     Guarantees that downstream subsystems (authority weighting, jurisdiction filtering,
     prompt context, client cards, document export) see the canonical court identity.
+    Enforces strict citation hierarchy:
+    - SCMR, PSC, PLD ... SC citations are inviolably 'Supreme Court of Pakistan'.
+    - FSC citations are 'Federal Shariat Court'.
+    - YLR, CLC, PCrLJ, MLD citations are Provincial High Courts.
     """
     if not record or not isinstance(record, dict):
         return None
+
+    # Replace underscores and hyphens with spaces so regex word boundaries match docket case_ids like '1986_SCMR_1496'
+    cit_haystack = " ".join([
+        str(record.get("citation") or ""),
+        str(record.get("neutral_citation") or ""),
+        str(record.get("case_id") or ""),
+        str(record.get("title") or ""),
+        str(record.get("case_title") or "")
+    ]).upper().replace("_", " ").replace("-", " ")
+
+    # 1. Apex Citation Invariant: SCMR, PSC, and PLD ... SC are exclusively Supreme Court of Pakistan
+    if re.search(r'\b(?:SCMR|PSC)\b', cit_haystack) or re.search(r'\bPLD\s+\d{4}\s+(?:SC|S\.C\.|SUPREME\s+COURT)\b', cit_haystack):
+        return "Supreme Court of Pakistan"
+
+    # 2. Federal Shariat Court Invariant
+    if re.search(r'\b(?:FSC)\b', cit_haystack) or re.search(r'\bPLD\s+\d{4}\s+(?:FSC|F\.S\.C\.|FEDERAL\s+SHARIAT\s+COURT)\b', cit_haystack):
+        return "Federal Shariat Court"
+
+    # 3. Canonical field check
+    canon = record.get("canonical_court_name")
+    if canon and canon in CANONICAL_COURTS:
+        return canon
+
+    # 4. Resolve from raw fields
+    raw_court = record.get("court_name") or record.get("court") or record.get("extracted_court_name")
+    if raw_court:
+        resolved = resolve_canonical_court(str(raw_court))
+        if resolved:
+            # High Court reporter guard: YLR, CLC, PCrLJ, MLD never belong to Supreme Court
+            if re.search(r'\b(?:YLR|CLC|PCRLJ|MLD)\b', cit_haystack) and resolved == "Supreme Court of Pakistan":
+                if any(k in cit_haystack or k in str(raw_court).upper() for k in ["LAHORE", "LHC"]):
+                    return "Lahore High Court"
+                elif any(k in cit_haystack or k in str(raw_court).upper() for k in ["SINDH", "KARACHI", "SHC"]):
+                    return "High Court of Sindh"
+                elif any(k in cit_haystack or k in str(raw_court).upper() for k in ["PESHAWAR", "PHC"]):
+                    return "Peshawar High Court"
+                elif any(k in cit_haystack or k in str(raw_court).upper() for k in ["BALOCHISTAN", "QUETTA", "BHC"]):
+                    return "High Court of Balochistan"
+                elif any(k in cit_haystack or k in str(raw_court).upper() for k in ["ISLAMABAD", "IHC"]):
+                    return "Islamabad High Court"
+                return "Lahore High Court"
+            return resolved
+
+    # 5. High Court reporter inference if raw court is absent or unresolved
+    if re.search(r'\b(?:YLR|CLC|PCRLJ|MLD)\b', cit_haystack):
+        if any(k in cit_haystack for k in ["LAHORE", "LHC"]):
+            return "Lahore High Court"
+        elif any(k in cit_haystack for k in ["SINDH", "KARACHI", "SHC"]):
+            return "High Court of Sindh"
+        elif any(k in cit_haystack for k in ["PESHAWAR", "PHC"]):
+            return "Peshawar High Court"
+        elif any(k in cit_haystack for k in ["BALOCHISTAN", "QUETTA", "BHC"]):
+            return "High Court of Balochistan"
+        elif any(k in cit_haystack for k in ["ISLAMABAD", "IHC"]):
+            return "Islamabad High Court"
+        return "Lahore High Court"
+
     return (
         record.get("canonical_court_name")
         or record.get("court_name")
         or record.get("court")
     )
-
 
 # ---------------------------------------------------------------------------
 # Central Authoritative Judicial Hierarchy & Precedent Weights

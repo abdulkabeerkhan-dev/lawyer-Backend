@@ -239,7 +239,7 @@ def fetch_storage_pdf_bytes(
         except Exception as e:
             err_str = str(e).lower()
             if "timeout" in err_str or "timed out" in err_str or "connection" in err_str or "544" in err_str or "429" in err_str or "database" in err_str:
-                trip_storage_circuit(30.0)
+                trip_storage_circuit(120.0)
 
     # 2. High-speed local fallback: Check formatted PDF master store on disk
     local_roots = [
