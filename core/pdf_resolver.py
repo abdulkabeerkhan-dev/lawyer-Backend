@@ -283,7 +283,16 @@ def fetch_storage_pdf_bytes(
             except Exception:
                 pass
 
-    # 2. Remote Cloud Storage Fallback (if running without local drive I:)
+    # 2. Remote Turso Database Fallback (high performance, cloud-accessible)
+    try:
+        from core.turso_client import get_case_pdf_bytes
+        turso_data = get_case_pdf_bytes(norm_jn, norm_yr, norm_pg, case_id)
+        if isinstance(turso_data, bytes) and turso_data.startswith(b"%PDF"):
+            return turso_data
+    except Exception:
+        pass
+
+    # 3. Remote Cloud Storage Fallback (if running without local drive I:)
     if supabase_client and not is_storage_circuit_open():
         try:
             storage_path = resolve_supabase_storage_path(supabase_client, norm_jn, norm_yr, norm_pg, case_id)

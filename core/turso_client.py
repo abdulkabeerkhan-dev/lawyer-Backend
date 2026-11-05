@@ -169,3 +169,43 @@ def search_cases_fts(query_text: str, limit: int = 15) -> List[Dict[str, Any]]:
     if res and "rows" in res[0]:
         return res[0]["rows"]
     return []
+
+def get_case_pdf_bytes(
+    journal: str,
+    year: Any,
+    page: Optional[Any] = None,
+    case_id: Optional[str] = None
+) -> Optional[bytes]:
+    """
+    Fetches authentic PDF bytes from Turso case_pdfs table.
+    Works anywhere including Railway container where local drive I: is unavailable.
+    """
+    import base64
+    norm_jn = str(journal).upper().strip() if journal else ""
+    norm_yr = int(year) if year and str(year).isdigit() else None
+    norm_pg = int(page) if page and str(page).isdigit() else None
+
+    sql = """
+    SELECT pdf_base64 FROM case_pdfs
+    WHERE (journal = ? AND year = ? AND page = ?) OR case_id = ?
+    LIMIT 1
+    """
+    args = [
+        {"type": "text", "value": norm_jn},
+        {"type": "integer", "value": str(norm_yr) if norm_yr else None},
+        {"type": "integer", "value": str(norm_pg) if norm_pg else None},
+        {"type": "text", "value": case_id or ""}
+    ]
+
+    res = execute_turso_pipeline([{"sql": sql, "args": args}])
+    if res and "rows" in res[0] and res[0]["rows"]:
+        b64_str = res[0]["rows"][0].get("pdf_base64")
+        if b64_str:
+            try:
+                raw_bytes = base64.b64decode(b64_str)
+                if raw_bytes.startswith(b"%PDF"):
+                    return raw_bytes
+            except Exception as e:
+                logger.warning(f"Failed to decode base64 PDF from Turso: {e}")
+    return None
+
