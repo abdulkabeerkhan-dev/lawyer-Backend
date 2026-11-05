@@ -4182,7 +4182,7 @@ async def process_query_job_legal_ai(
 
 
 
-        messages=[{"role": "user", "content": user_synthesis_content}]
+        messages=[{"role": "user", "content": user_synthesis_content}], stream_callback=(lambda delta: jobs_store[job_id].__setitem__("streaming_text", jobs_store[job_id].get("streaming_text", "") + delta) if job_id in jobs_store else None)
 
 
 

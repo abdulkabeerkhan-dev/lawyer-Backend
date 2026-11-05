@@ -545,5 +545,27 @@ class TestRemediationSpec(unittest.TestCase):
         self.assertIn("Truncated**: True", block)
         self.assertIn("PROMPT RULE (HEADNOTE-ONLY)", block)
 
+
+    def test_phase6_infrastructure_hygiene(self):
+        """
+        Remediation Spec Phase 6:
+        Infrastructure and hygiene checks:
+        1. Async Supabase execution helper safe_supabase_query_async is available.
+        2. Modular APIRouters (queries, judgments, auth) are defined and exportable.
+        3. server.py is available as clean entrypoint runner.
+        """
+        from legal_ai.config import safe_supabase_query_async
+        self.assertTrue(callable(safe_supabase_query_async))
+        
+        from routers.queries import router as q_router
+        from routers.judgments import router as j_router
+        from routers.auth import router as a_router
+        self.assertIsNotNone(q_router)
+        self.assertIsNotNone(j_router)
+        self.assertIsNotNone(a_router)
+        
+        import server
+        self.assertIsNotNone(server)
+
 if __name__ == "__main__":
     unittest.main()

@@ -395,6 +395,15 @@ app = FastAPI(
 
 )
 
+# Phase 6: Modular APIRouters
+from routers.queries import router as queries_router
+from routers.judgments import router as judgments_router
+from routers.auth import router as auth_router
+
+app.include_router(queries_router)
+app.include_router(judgments_router)
+app.include_router(auth_router)
+
 
 
 @app.middleware("http")
@@ -16251,6 +16260,7 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
         last_stage = None
 
         last_early_keys = set()
+        last_stream_pos = 0
 
         max_wait_seconds = 300
 
@@ -16283,6 +16293,13 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
             early_display = current_job.get("early_display")
 
             current_early_keys = set(early_display.keys()) if isinstance(early_display, dict) else set()
+
+            # Spec Phase 6: Stream real-time token deltas to frontend
+            stream_text = current_job.get("streaming_text", "")
+            if len(stream_text) > last_stream_pos:
+                delta = stream_text[last_stream_pos:]
+                last_stream_pos = len(stream_text)
+                yield f"data: {json.dumps({'type': 'token_delta', 'delta': delta, 'stage': 'generating'})}\n\n"
 
 
 

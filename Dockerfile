@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY . /app/
 
-RUN python3 -c "import os; [exec(open(f).read()) for f in ['/app/entrypoint_setup.py', '/app/lawyer-Backend-master/entrypoint_setup.py'] if os.path.exists(f)]" && \
+RUN python3 entrypoint_setup.py && \
     pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r /app/requirements.txt
 

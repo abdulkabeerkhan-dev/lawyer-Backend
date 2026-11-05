@@ -1992,6 +1992,17 @@ def build_honest_partial_response(
     )
 
     # 2. Verified Statutory Provisions on Record
+    if not statutory_provisions and query_text:
+        try:
+            from legal_ai.search.statute_search_service import search_statute_provisions
+            raw_stat = search_statute_provisions(query_text)
+            if isinstance(raw_stat, dict):
+                statutory_provisions = raw_stat.get("results", [])[:3]
+            elif isinstance(raw_stat, list):
+                statutory_provisions = raw_stat[:3]
+        except Exception:
+            statutory_provisions = []
+
     sections.append("## Verified Statutory Provisions on Record")
     if statutory_provisions:
         stat_blocks = []

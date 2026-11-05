@@ -157,6 +157,14 @@ def safe_supabase_query(query_fn, retries: int = 1):
             trip_supabase_circuit(30.0, err_str)
             raise e
 
+async def safe_supabase_query_async(query_fn, retries: int = 1):
+    """
+    Executes a Supabase query asynchronously using asyncio.to_thread
+    to prevent blocking the FastAPI asyncio event loop.
+    """
+    import asyncio
+    return await asyncio.to_thread(safe_supabase_query, query_fn, retries)
+
 
 # --- Pinecone Client Management ---
 def get_pinecone_index():
@@ -232,7 +240,16 @@ async def safe_create_anthropic_message(**kwargs):
         extra_body["temperature"] = temp_val
         call_kwargs["extra_body"] = extra_body
 
+    stream_cb = call_kwargs.pop("stream_callback", None)
     try:
+        if stream_cb and hasattr(client.messages, "stream"):
+            async with client.messages.stream(**call_kwargs) as stream:
+                async for text_delta in stream.text_stream:
+                    if asyncio.iscoroutinefunction(stream_cb):
+                        await stream_cb(text_delta)
+                    else:
+                        stream_cb(text_delta)
+                return await stream.get_final_message()
         return await client.messages.create(**call_kwargs)
     except Exception as e:
         err_str = str(e)
