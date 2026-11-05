@@ -2703,10 +2703,10 @@ async def process_query_job_legal_ai(
 
 
 
-    assistant = getattr(request, "assistant", None) or getattr(request, "agent", None) or ("mike" if getattr(request, "category", "") == "drafting" else "ark")
-    if str(assistant).lower() == "mike":
+    assistant = getattr(request, "assistant", None) or getattr(request, "agent", None) or ("counsel" if getattr(request, "category", "") == "drafting" else "jurist")
+    if str(assistant).lower() in ("mike", "counsel"):
         from prompts.pleading_generator import PLEADING_SYSTEM_PROMPT
-        system_prompt = PLEADING_SYSTEM_PROMPT + "\n\nYou are Mike AI, Senior Appellate & Litigation Drafting Assistant for Pakistani Courts. Draft a court-ready legal pleading (plaint, written statement, petition, application, or legal notice) adhering strictly to standard Pakistani court formatting (Court Heading, Parties, Title, Numbered Averments, Verified Grounds, Prayer Clause, Verification Clause, and Affidavit)."
+        system_prompt = PLEADING_SYSTEM_PROMPT + "\n\nYou are Counsel AI, Senior Appellate & Litigation Drafting Specialist for Pakistani Courts. Draft a court-ready legal pleading (plaint, written statement, petition, application, or legal notice) adhering strictly to standard Pakistani court formatting (Court Heading, Parties, Title, Numbered Averments, Verified Grounds, Prayer Clause, Verification Clause, and Affidavit)."
     else:
         system_prompt = _load_system_prompt()
         pakistan_invariants = (
@@ -6063,8 +6063,8 @@ async def process_query_job_legal_ai(
 
 
 
-                "mode": "drafting" if str(getattr(request, "assistant", None) or getattr(request, "agent", None) or getattr(request, "category", "")).lower() == "mike" else "formal_opinion",
-                "assistant": "mike" if str(getattr(request, "assistant", None) or getattr(request, "agent", None) or getattr(request, "category", "")).lower() == "mike" else "ark",
+                "mode": "drafting" if str(getattr(request, "assistant", None) or getattr(request, "agent", None) or getattr(request, "category", "")).lower() in ("mike", "counsel") else "formal_opinion",
+                "assistant": "counsel" if str(getattr(request, "assistant", None) or getattr(request, "agent", None) or getattr(request, "category", "")).lower() in ("mike", "counsel") else "jurist",
 
 
 

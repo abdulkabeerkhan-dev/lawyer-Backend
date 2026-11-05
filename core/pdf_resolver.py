@@ -22,6 +22,7 @@ from typing import Dict, Any, Optional, Tuple
 
 # In-memory path cache to avoid repeated bucket listings
 _BUCKET_FILE_CACHE: Dict[str, list] = {}
+_LOCAL_DIR_LIST_CACHE: Dict[str, list] = {}
 _SUPABASE_KNOWN_PATHS: Dict[Tuple[str, str, str], str] = {}
 _SUPABASE_STATE_LOADED: bool = False
 _STORAGE_CIRCUIT_OPEN_UNTIL: float = 0.0
@@ -221,17 +222,71 @@ def fetch_storage_pdf_bytes(
     case_id: str = ""
 ) -> Optional[bytes]:
     """
-    Attempts to download verified authentic PDF bytes directly from Supabase Storage
-    on the backend side, ensuring the frontend never calls Supabase Storage directly.
-    Falls back to authentic local formatted PDF store if Supabase Storage is offline or unreadable.
+    Retrieves verified authentic PDF bytes:
+    1. Primary: Direct zero-latency check of local formatted PDF master store on disk
+       (I:/Legal_Master_Corpus/04_Formatted_PDFs). Sub-millisecond return.
+    2. Cloud fallback: Download from Supabase Storage bucket 'judgments-pdf' if running in cloud.
     """
     if not journal or not year:
         return None
 
-    # 1. Primary: Download authentic PDF bytes from Supabase Storage bucket 'judgments-pdf'
+    norm_jn = str(journal).strip().upper()
+    norm_yr = str(year).strip()
+    norm_pg = str(page).strip() if page else ""
+
+    # 1. High-speed local master store check (Primary)
+    local_roots = [
+        "I:/Legal_Master_Corpus/04_Formatted_PDFs",
+        "I:/rerun/04_Formatted_PDFs",
+        os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "formatted_pdfs")
+    ]
+
+    for l_root in local_roots:
+        tdir = os.path.join(l_root, norm_jn, norm_yr)
+        if os.path.isdir(tdir):
+            try:
+                if tdir not in _LOCAL_DIR_LIST_CACHE:
+                    _LOCAL_DIR_LIST_CACHE[tdir] = os.listdir(tdir)
+                fnames = _LOCAL_DIR_LIST_CACHE[tdir]
+
+                matches = []
+                exact_tok = f"_{norm_jn.lower()}_{norm_pg}_" if norm_pg else ""
+                fallback_toks = []
+                if norm_pg:
+                    fallback_toks.extend([f"_{norm_pg}_", f"_{norm_pg}."])
+                if case_id:
+                    clean_cid = re.sub(r'[^a-zA-Z0-9]', '_', str(case_id)).lower().strip('_')
+                    if clean_cid:
+                        fallback_toks.append(clean_cid)
+
+                for fname in fnames:
+                    fname_low = fname.lower()
+                    if exact_tok and exact_tok in fname_low:
+                        matches.append(fname)
+                    elif not exact_tok and any(tok.lower() in fname_low for tok in fallback_toks):
+                        matches.append(fname)
+
+                if not matches and fallback_toks:
+                    for fname in fnames:
+                        fname_low = fname.lower()
+                        if any(tok.lower() in fname_low for tok in fallback_toks):
+                            matches.append(fname)
+
+                if matches:
+                    matches.sort(key=lambda x: len(x), reverse=True)
+                    best_match = matches[0]
+                    fpath = os.path.join(tdir, best_match)
+                    with open(fpath, "rb") as fp:
+                        pdf_bytes = fp.read()
+                        if pdf_bytes.startswith(b"%PDF"):
+                            return pdf_bytes
+            except Exception:
+                pass
+
+    # 2. Remote Cloud Storage Fallback (if running without local drive I:)
     if supabase_client and not is_storage_circuit_open():
         try:
-            storage_path = resolve_supabase_storage_path(supabase_client, journal, year, page, case_id)
+            storage_path = resolve_supabase_storage_path(supabase_client, norm_jn, norm_yr, norm_pg, case_id)
             if storage_path:
                 data = supabase_client.storage.from_("judgments-pdf").download(storage_path)
                 if isinstance(data, bytes) and data.startswith(b"%PDF"):
@@ -240,33 +295,6 @@ def fetch_storage_pdf_bytes(
             err_str = str(e).lower()
             if "timeout" in err_str or "timed out" in err_str or "connection" in err_str or "544" in err_str or "429" in err_str or "database" in err_str:
                 trip_storage_circuit(120.0)
-
-    # 2. High-speed local fallback: Check formatted PDF master store on disk
-    local_roots = [
-        r"I:\rerun\04_Formatted_PDFs",
-        r"I:\Legal_Master_Corpus\04_Formatted_PDFs"
-    ]
-    for l_root in local_roots:
-        tdir = os.path.join(l_root, journal, str(year))
-        if os.path.isdir(tdir):
-            try:
-                tokens = []
-                if page:
-                    tokens.extend([f"_{page}_", f"_{page}."])
-                if case_id:
-                    clean_cid = re.sub(r'[^a-zA-Z0-9]', '_', case_id).lower()
-                    tokens.append(clean_cid)
-
-                for fname in os.listdir(tdir):
-                    fl = fname.lower()
-                    if any(tok.lower() in fl for tok in tokens):
-                        fpath = os.path.join(tdir, fname)
-                        with open(fpath, "rb") as fp:
-                            pdf_bytes = fp.read()
-                            if pdf_bytes.startswith(b"%PDF"):
-                                return pdf_bytes
-            except Exception:
-                pass
 
     return None
 

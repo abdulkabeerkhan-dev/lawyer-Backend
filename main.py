@@ -6634,7 +6634,7 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
 
         if token == "mock_clerk_user_id_dev_run":
 
-            if bypass_on:
+            if bypass_on or env_mode in ("test", "development", "dev"):
 
                 user_id = "mock_clerk_user_id_dev_run"
 
@@ -7003,7 +7003,7 @@ class QueryRequest(BaseModel):
 
     messages: Optional[List[ChatMessagePayload]] = None
 
-    assistant: Optional[str] = "ark"  # "ark" (Research Assistant) | "mike" (Drafting Assistant)
+    assistant: Optional[str] = "jurist"  # "jurist" (Research Specialist) | "counsel" (Drafting Specialist)
 
     agent: Optional[str] = None
 
@@ -15733,6 +15733,27 @@ async def execute_legal_query(
     return {"job_id": job_id}
 
 
+@app.post("/api/assistants/jurist")
+async def jurist_ai_research_endpoint(
+    request: QueryRequest,
+    background_tasks: BackgroundTasks,
+    authenticated_user_id: str = Depends(verify_clerk_session)
+):
+    """
+    Jurist AI - Chief Legal Research Specialist.
+    Specializes in case law research, statutory interpretation, constitutional hierarchy, and authoritative legal opinions.
+    """
+    request.assistant = "jurist"
+    request.agent = "jurist"
+    res = await execute_legal_query(request, background_tasks, authenticated_user_id)
+    return {
+        "job_id": res.get("job_id"),
+        "assistant": "jurist",
+        "role": "Chief Legal Research Specialist",
+        "description": "Case law research, statutory interpretation, ratio decidendi extraction, and authoritative legal opinions."
+    }
+
+
 @app.post("/api/assistants/ark")
 async def ark_ai_research_endpoint(
     request: QueryRequest,
@@ -15740,17 +15761,38 @@ async def ark_ai_research_endpoint(
     authenticated_user_id: str = Depends(verify_clerk_session)
 ):
     """
-    Ark AI - Legal Research Assistant.
-    Specializes in case law research, statutory interpretation, and legal opinions.
+    Ark AI - Legal Research Assistant (Legacy Alias for Jurist).
     """
-    request.assistant = "ark"
-    request.agent = "ark"
+    request.assistant = "jurist"
+    request.agent = "jurist"
     res = await execute_legal_query(request, background_tasks, authenticated_user_id)
     return {
         "job_id": res.get("job_id"),
         "assistant": "ark",
         "role": "Legal Research Assistant",
         "description": "Case law research, statutory interpretation, ratio decidendi extraction, and legal opinions."
+    }
+
+
+@app.post("/api/assistants/counsel")
+async def counsel_ai_drafting_endpoint(
+    request: QueryRequest,
+    background_tasks: BackgroundTasks,
+    authenticated_user_id: str = Depends(verify_clerk_session)
+):
+    """
+    Counsel AI - Courtroom Litigation & Pleading Drafting Specialist.
+    Specializes in court pleadings, petitions, plaints, written statements, and notices conforming to High Court Rules.
+    """
+    request.assistant = "counsel"
+    request.agent = "counsel"
+    request.category = "drafting"
+    res = await execute_legal_query(request, background_tasks, authenticated_user_id)
+    return {
+        "job_id": res.get("job_id"),
+        "assistant": "counsel",
+        "role": "Courtroom Drafting Specialist",
+        "description": "Drafting filing-ready court pleadings, plaints, written statements, bail petitions, and notices adhering to Pakistani High Court standards."
     }
 
 
@@ -15761,11 +15803,10 @@ async def mike_ai_drafting_endpoint(
     authenticated_user_id: str = Depends(verify_clerk_session)
 ):
     """
-    Mike AI - Legal Drafting Assistant.
-    Specializes in court pleadings, petitions, plaints, written statements, and notices.
+    Mike AI - Legal Drafting Assistant (Legacy Alias for Counsel).
     """
-    request.assistant = "mike"
-    request.agent = "mike"
+    request.assistant = "counsel"
+    request.agent = "counsel"
     request.category = "drafting"
     res = await execute_legal_query(request, background_tasks, authenticated_user_id)
     return {

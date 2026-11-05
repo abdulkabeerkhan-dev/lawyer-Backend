@@ -218,24 +218,25 @@ def search_statute_provisions(
 
     # 2. Only treat numbers as statutory sections if preceded by section/article/rule/order prefix,
     # or distinctly formatted statutory tokens like '489-f', '12(2)', '561-a'.
-    target_nums = set()
+    target_nums_exact = set()
+    target_nums_base = set()
     for m in re.finditer(r'\b(?:sections?|secs?\.?|s\.|articles?|arts?\.?|rules?|orders?)\s*([0-9]+(?:-[a-z0-9]+|[a-z0-9]+)?(?:\([0-9a-z]+\))?)\b', q_sanitized):
         raw_num = m.group(1)
         norm_num = re.sub(r'[^a-z0-9]', '', raw_num)
         if norm_num:
-            target_nums.add(norm_num)
+            target_nums_exact.add(norm_num)
             base_m = re.match(r'^([0-9]+)', raw_num)
-            if base_m:
-                target_nums.add(base_m.group(1))
+            if base_m and base_m.group(1) != norm_num:
+                target_nums_base.add(base_m.group(1))
 
     for m in re.finditer(r'\b([0-9]+-[a-z]|[0-9]+\([0-9a-z]+\))\b', q_sanitized):
         raw_num = m.group(1)
         norm_num = re.sub(r'[^a-z0-9]', '', raw_num)
         if norm_num:
-            target_nums.add(norm_num)
+            target_nums_exact.add(norm_num)
             base_m = re.match(r'^([0-9]+)', raw_num)
-            if base_m:
-                target_nums.add(base_m.group(1))
+            if base_m and base_m.group(1) != norm_num:
+                target_nums_base.add(base_m.group(1))
 
     candidates = []
     seen_cids = set()
@@ -266,11 +267,15 @@ def search_statute_provisions(
 
         score = 0
 
-        # Exact section number match (Remediation Spec Phase 2: Require Act to match)
-        if p_num_norm in target_nums and (act_matches_query or act_code):
-            score += 500  # Dominant boost for exact section inside matching act
-        elif p_num_norm in target_nums:
-            score += 15  # Minor heuristic boost if act is unspecified
+        # Exact section number match (Highest priority)
+        if p_num_norm in target_nums_exact and (act_matches_query or act_code):
+            score += 1000  # Dominant boost for exact section inside matching act
+        elif p_num_norm in target_nums_exact:
+            score += 50
+        elif p_num_norm in target_nums_base and (act_matches_query or act_code):
+            score += 300  # Secondary boost for base section (e.g. 489 when 489-F was asked)
+        elif p_num_norm in target_nums_base:
+            score += 10
 
         # Act match bonus
         if act_matches_query:

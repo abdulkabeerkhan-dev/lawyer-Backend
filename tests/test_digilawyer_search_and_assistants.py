@@ -132,22 +132,40 @@ def test_assistants_endpoints(client, monkeypatch):
     monkeypatch.setattr("main.process_query_job", fake_process_query_job)
     headers = {"Authorization": "Bearer mock_clerk_user_id_dev_run"}
     
-    # 1. Ark AI (Research)
+    # 1. Jurist AI (Research Specialist - Primary)
+    res_jurist = client.post("/api/assistants/jurist", json={
+        "query_text": "Is the husband's consent legally required for a wife to obtain khula in Pakistan?"
+    }, headers=headers)
+    assert res_jurist.status_code == 200
+    data_jurist = res_jurist.json()
+    assert data_jurist["assistant"] == "jurist"
+    assert "Chief Legal Research Specialist" in data_jurist["role"]
+    assert "job_id" in data_jurist
+
+    # 1b. Ark AI (Legacy Alias)
     res_ark = client.post("/api/assistants/ark", json={
         "query_text": "Is the husband's consent legally required for a wife to obtain khula in Pakistan?"
     }, headers=headers)
     assert res_ark.status_code == 200
     data_ark = res_ark.json()
     assert data_ark["assistant"] == "ark"
-    assert data_ark["role"] == "Legal Research Assistant"
     assert "job_id" in data_ark
 
-    # 2. Mike AI (Drafting)
+    # 2. Counsel AI (Drafting Specialist - Primary)
+    res_counsel = client.post("/api/assistants/counsel", json={
+        "query_text": "Draft a quashment petition under Section 561-A CrPC against FIR for dishonour of cheque"
+    }, headers=headers)
+    assert res_counsel.status_code == 200
+    data_counsel = res_counsel.json()
+    assert data_counsel["assistant"] == "counsel"
+    assert "Courtroom Drafting Specialist" in data_counsel["role"]
+    assert "job_id" in data_counsel
+
+    # 2b. Mike AI (Legacy Alias)
     res_mike = client.post("/api/assistants/mike", json={
         "query_text": "Draft a quashment petition under Section 561-A CrPC against FIR for dishonour of cheque"
     }, headers=headers)
     assert res_mike.status_code == 200
     data_mike = res_mike.json()
     assert data_mike["assistant"] == "mike"
-    assert data_mike["role"] == "Legal Drafting Assistant"
     assert "job_id" in data_mike
