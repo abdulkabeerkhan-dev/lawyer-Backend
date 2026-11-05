@@ -1299,6 +1299,14 @@ async def process_query_job_legal_ai(
 
     ).strip() or raw_input_text
 
+    try:
+        from legal_ai.search.urdu_lexicon import expand_urdu_legal_query
+        _u_exp = expand_urdu_legal_query(effective_user_query)
+        if _u_exp.get("has_urdu_terms"):
+            effective_user_query = _u_exp["expanded_query"]
+    except Exception:
+        pass
+
 
 
 

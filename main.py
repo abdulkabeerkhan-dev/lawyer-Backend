@@ -399,10 +399,12 @@ app = FastAPI(
 from routers.queries import router as queries_router
 from routers.judgments import router as judgments_router
 from routers.auth import router as auth_router
+from routers.drafting import router as drafting_router
 
 app.include_router(queries_router)
 app.include_router(judgments_router)
 app.include_router(auth_router)
+app.include_router(drafting_router)
 
 
 
