@@ -1957,148 +1957,108 @@ def compute_relevance_point_label(
 
 
 
-def build_authoritative_opinion_fallback(query_text: str, query_plan: Any = None, precedent_cards: List[Dict[str, Any]] = None) -> str:
+def build_honest_partial_response(
+    query_text: str,
+    query_plan: Any = None,
+    statutory_provisions: Optional[List[Dict[str, Any]]] = None,
+    precedents: Optional[List[Dict[str, Any]]] = None,
+    reason: Optional[str] = None,
+) -> str:
     """
-    Builds a detailed, high-integrity legal opinion when LLM synthesis is blocked or unavailable,
-    ensuring real advocates always receive substantive, detailed legal analysis rather than an empty stub.
+    Builds an honest partial response when LLM synthesis is blocked or unavailable.
+    Per Remediation Spec Phase 1 (F1 fix):
+    - Zero hallucinated legal analysis prose.
+    - Zero hardcoded case citations or canned summaries.
+    - Honest presentation of verified retrieved statutory provisions and retrieved precedents on record.
+    - Explicit notice of verification block / synthesis unavailability.
     """
-    plan_provisions = []
-    plan_issues = []
-    if query_plan:
-        plan_provisions = getattr(query_plan, "statutory_provisions", []) or (query_plan.get("statutory_provisions") if isinstance(query_plan, dict) else [])
-        plan_issues = getattr(query_plan, "core_legal_issues", []) or (query_plan.get("core_legal_issues") if isinstance(query_plan, dict) else [])
-    plan_context = " ".join([str(p) for p in (plan_provisions or [])] + [str(i) for i in (plan_issues or [])]).lower()
-    q_low = f"{str(query_text or '').lower()} {plan_context}"
     sections = []
 
-    # 1. Executive Summary & Legal Opinion
-    sections.append("### EXECUTIVE SUMMARY & LEGAL OPINION")
-    if "partition" in q_low and any(k in q_low for k in ["set off", "set-off", "benami"]):
-        sections.append(
-            "Under Pakistani civil jurisprudence, a claim of **benami ownership** cannot legally be pleaded as a **set-off** in a suit for **partition of immovable property**.\n\n"
-            "1. **Order VIII, Rule 6 CPC Bar**: A plea of set-off under Order VIII, Rule 6 of the Code of Civil Procedure, 1908 is strictly confined to *suits for the recovery of money* for an ascertained sum legally recoverable. In an action for partition (governed by Order XX, Rule 18 CPC and the Partition Act, 1893), the subject-matter is the division of immovable property; an independent claim of title or separate property cannot be set off.\n\n"
-            "2. **Statutory Bar on Benami Defences**: Under Section 4(2) of the **Benami Transactions (Prohibition) Act, 2017 (Act VIII of 2017)**, no defence based on any right in respect of property held benami shall be allowed in any suit, claim, or action by or on behalf of a person claiming to be the real owner.\n\n"
-            "3. **Proper Procedural Recourse**: If a defendant claims that an additional property is joint family property held in the name of a co-sharer, the recognized procedural remedies are: (a) raising a preliminary objection that the suit is bad for partial partition; (b) filing a properly valued and stamped Counter-Claim; or (c) instituting an independent declaratory cross-suit under Section 42 of the Specific Relief Act, 1877 and applying for consolidation under Section 151 CPC."
-        )
-    elif "rent" in q_low or "prpa" in q_low or "eviction" in q_low:
-        sections.append(
-            "Under the **Punjab Rented Premises Act, 2009 (PRPA 2009)**, the relationship of tenancy, default, and eviction of commercial premises is governed exclusively by the special statutory regime before the Rent Tribunal.\n\n"
-            "1. **Exclusive Forum under Section 19**: Under Section 19 PRPA 2009, all applications for eviction or other relief must be instituted directly before the Special Judge (Rent) / Rent Tribunal of the relevant district. Ordinary civil court jurisdiction for declaration of tenancy rights is barred.\n\n"
-            "2. **Grounds of Eviction**: Ground of default in rent payment, expiry of tenancy period, or breach of registered agreement must be established under Section 15 PRPA 2009.\n\n"
-            "3. **Leave to Defend**: Under Section 22 PRPA 2009, a tenant cannot defend the eviction petition without obtaining leave from the Tribunal upon showing substantial questions of law or fact."
-        )
-    elif ("bail" in q_low or "497" in q_low or "498" in q_low or "arrest" in q_low) and any(k in q_low for k in ["cheque", "check", "489", "489-f", "dishonour", "dishonored", "bounced"]):
-        sections.append(
-            "Under Pakistani criminal jurisprudence, an FIR registered under Section 489-F of the Pakistan Penal Code (PPC) for dishonour of a cheque engages the pre-arrest bail jurisdiction under Section 498 CrPC and the non-prohibitory bail principles under Section 497 CrPC.\n\n"
-            "1. **Competent Forum & Jurisdiction (Section 498 CrPC)**: Both the **Court of Session** (Sessions Judge / Additional Sessions Judge) and the **High Court** exercise concurrent jurisdiction to grant pre-arrest bail under Section 498 CrPC. Established procedural practice requires the petitioner to first approach the Sessions Court of the district where the FIR was registered, unless exceptional circumstances warrant directly invoking the High Court's jurisdiction.\n\n"
-            "2. **Grounds for Pre-Arrest Bail & Mala Fides**: Under Section 498 CrPC, the petitioner must prima facie establish that the intended arrest is motivated by **mala fides, ulterior motives, or an intent to humiliate or coerce** (Supreme Court in *Shabbir Ahmed v. State* PLD 1981 SC 265; *Muhammad Fareedon Rehman v. State* 2026 SCMR 987). In commercial disputes, criminal proceedings under Section 489-F PPC cannot be weaponized as an engine of recovery or a substitute for a civil summary suit under Order XXXVII CPC.\n\n"
-            "3. **Offence Falls Outside the Prohibitory Clause of Section 497(1) CrPC**: Section 489-F PPC prescribes a maximum punishment of up to 3 years imprisonment, or fine, or both. Because the maximum sentence is well below 10 years, **Section 489-F falls strictly outside the prohibitory clause of Section 497(1) CrPC**. Under landmark Supreme Court authority (*Tariq Bashir v. State* PLD 1995 SC 34; *Muhammad Tanveer v. State* PLD 2017 SC 733), in non-prohibitory offences, **grant of bail is the rule and refusal is an exception**, restricted only to cases of repeated offenders, danger of abscondence, or tampering with evidence.\n\n"
-            "4. **Dishonest Intent as a Foundational Ingredient (*Mens Rea*)**: The Supreme Court has authoritatively settled (*Mian Allah Ditta v. State* 2013 SCMR 51; *Muhammad Fareedon Rehman v. State* 2026 SCMR 987) that **mere dishonour of a cheque due to insufficient funds does not per se constitute an offence under Section 489-F PPC**. The prosecution must affirmatively prove dishonest intention at the time of issuance and that the cheque was issued towards repayment of a loan or fulfillment of an obligation. The reverse statutory burden under the proviso (showing bank arrangements) shifts to the accused only *after* the prosecution establishes dishonest issuance towards an existing debt or obligation. If the cheque was issued as security, guarantee, or in a disputed commercial account, criminal liability is negated."
-        )
-    elif "bail" in q_low or "497" in q_low or "498" in q_low:
-        sections.append(
-            "Under the Code of Criminal Procedure, 1898, bail applications are governed by Sections 496, 497, and 498 CrPC.\n\n"
-            "1. **Bailable vs. Non-Bailable**: In bailable offences (Section 496 CrPC), bail is a statutory right, not a concession.\n\n"
-            "2. **Prohibitory Clause of Section 497(1) CrPC**: Where offences carry death, imprisonment for life, or 10 years, bail is generally withheld unless further inquiry under Section 497(2) CrPC or statutory proviso grounds (age, sickness, womanhood, or inordinate statutory delay) are satisfied. For offences carrying under 10 years, bail is granted as a rule under *Tariq Bashir v. State*.\n\n"
-            "3. **Pre-Arrest Bail Requirements**: For Section 498 pre-arrest bail, the petitioner must affirmatively establish ulterior motive, malice, or mala fides on the part of the complainant or police before the Court of Session or High Court."
-        )
-    elif "cheque" in q_low or "bounced" in q_low or "489-f" in q_low:
-        sections.append(
-            "Under Pakistani law, the dishonour of a cheque engages both criminal prosecution under Section 489-F PPC and civil summary recovery under Order XXXVII CPC.\n\n"
-            "1. **Section 489-F PPC Ingredients**: To sustain a conviction, the prosecution must strictly prove: (a) issuance of cheque with dishonest intention; (b) towards repayment of a loan or fulfillment of an obligation; and (c) dishonour upon presentation.\n\n"
-            "2. **Civil Summary Remedy**: The payee may simultaneously institute a summary suit under Order XXXVII Rule 2 CPC before the District Judge within 3 years under Article 64A of the Limitation Act, 1908."
-        )
-    elif any(k in q_low for k in ["khula", "dower", "maintenance", "dissolution of marriage", "zar-i-khula"]):
-        sections.append(
-            "Under Pakistani Muslim family jurisprudence and the landmark Supreme Court authority in *Khurshid Bibi v. Muhammad Amin* (PLD 1967 SC 97), a Muslim wife possesses an absolute legal right to obtain dissolution of marriage through Khula.\n\n"
-            "1. **Consent of Husband Not Required**: The Family Court is fully empowered to dissolve the marriage by Khula even if the husband adamantly refuses consent. Under Section 10(4) of the Family Courts Act, 1964, upon failure of pre-trial reconciliation, the Court is mandated to immediately pass a decree for dissolution of marriage.\n\n"
-            "2. **Dower / Zar-i-Khula Status**: The wife is directed to surrender unpaid dower or return received dower. However, non-return of dower is an independent civil liability and does not invalidate, suspend, or delay the dissolution decree.\n\n"
-            "3. **Maintenance Rights**: Under Section 9 of the Muslim Family Laws Ordinance, 1961, the father remains under a continuous statutory obligation to maintain his minor children regardless of custody disputes."
-        )
-    elif any(k in q_low for k in ["companies act", "oppression", "mismanagement", "company bench"]) and any(k in q_low for k in ["286", "288", "freeze", "provisional manager"]):
-        sections.append(
-            "Under the Companies Act, 2017, remedies against oppression and mismanagement are adjudicated exclusively by the Company Bench of the High Court.\n\n"
-            "1. **Section 286 Jurisdiction**: A petition under Section 286 may be instituted by members holding not less than 10% voting power who establish that company affairs are being conducted in an oppressive or prejudicial manner.\n\n"
-            "2. **Interim Relief Restrictions under Section 288**: While Section 288 confers interlocutory powers to regulate company affairs, superior court jurisprudence strictly prohibits granting sweeping interim orders that freeze operational bank accounts or paralyze the management of an active, solvent, profit-making commercial enterprise at the threshold of a petition."
-        )
-    elif any(k in q_low for k in ["banking court", "recovery of finance", "fio 2001", "financial institutions"]) and any(k in q_low for k in ["leave to defend", "leave to appear", "condonation"]):
-        sections.append(
-            "Under the Financial Institutions (Recovery of Finances) Ordinance, 2001 (FIO 2001), recovery proceedings before the Banking Court are subject to a strict summary procedure.\n\n"
-            "1. **Section 10 Leave to Defend**: The defendant must file an application for leave to defend within 30 days from the date of first service. The provisions of Section 5 of the Limitation Act, 1908 do not apply to condone delay in filing leave applications before the Banking Court.\n\n"
-            "2. **Mandatory Appeal Deposit under Section 22**: Under Section 22(5) FIO 2001, no appeal against a final decree shall be entertained by the High Court unless the appellant deposits 50% of the decreetal amount with the Court or furnishes acceptable security."
-        )
-    else:
-        sections.append(
-            "Based on the legal scenario presented, the matter engages substantive and procedural principles under Pakistani superior court jurisprudence. "
-            "The rights and liabilities of the parties must be evaluated strictly against the governing statutory provisions and controlling binding precedents."
-        )
+    # 1. Header & Explicit Verification Notice
+    sections.append("# PARTIAL LEGAL RESEARCH RECORD")
 
-    # 2. Statutory & Procedural Framework
-    sections.append("### STATUTORY & PROCEDURAL FRAMEWORK")
-    if "partition" in q_low or "benami" in q_low:
-        sections.append(
-            "- **Code of Civil Procedure, 1908 (Order VIII, Rule 6)**: Restricts set-off strictly to suits for recovery of an ascertained sum of money where both parties fill the same character.\n"
-            "- **Code of Civil Procedure, 1908 (Order XX, Rule 18)**: Governs preliminary and final decrees for the partition of immovable property and separate possession.\n"
-            "- **Benami Transactions (Prohibition) Act, 2017 (Section 4)**: Enacts an express statutory bar against any suit, claim, or defence asserting benami ownership by an ostensible or real claimant.\n"
-            "- **Specific Relief Act, 1877 (Section 42)**: Governs suits for declaration of status or right to property where title is denied or disputed.\n"
-            "- **Partition Act, 1893 (Sections 2 & 4)**: Governs distribution of proceeds, sale in lieu of partition, and pre-emptive buy-out rights of family members in dwelling houses."
-        )
-    elif "rent" in q_low or "prpa" in q_low:
-        sections.append(
-            "- **Punjab Rented Premises Act, 2009 (Section 19)**: Mandatory procedure for filing an application for eviction or other relief before the Rent Tribunal.\n"
-            "- **Punjab Rented Premises Act, 2009 (Section 15)**: Specific statutory grounds for eviction including expiry of tenancy, default in rent, and violation of terms.\n"
-            "- **Punjab Rented Premises Act, 2009 (Section 22)**: Mandatory leave to defend procedure gating the respondent's participation."
-        )
-    elif any(k in q_low for k in ["489-f", "489f", "cheque", "check"]) or (any(k in q_low for k in ["bail", "497", "498", "crpc"]) and any(k in q_low for k in ["cheque", "check", "dishonour", "bounced"])):
-        sections.append(
-            "- **Pakistan Penal Code, 1860 (Section 489-F)**: Dishonestly issuing a cheque towards repayment of a loan or fulfillment of an obligation which is dishonoured on presentation; maximum punishment is 3 years imprisonment, fine, or both.\n"
-            "- **Code of Criminal Procedure, 1898 (Section 498)**: Direction that any person may be admitted to bail before arrest by the High Court or Court of Session.\n"
-            "- **Code of Criminal Procedure, 1898 (Section 497)**: Bail in non-bailable offences; Section 489-F carries up to 3 years and falls outside the prohibitory clause of Section 497(1), making bail the rule and withholding it an exception.\n"
-            "- **Qanun-e-Shahadat Order, 1984 (Articles 117-129)**: Prosecution bears the foundational burden of proving dishonest intention (*mens rea*) and an existing lawful liability beyond reasonable doubt."
-        )
-    elif "bail" in q_low or "crpc" in q_low or "497" in q_low or "498" in q_low or "fir" in q_low:
-        sections.append(
-            "- **Code of Criminal Procedure, 1898 (Section 496)**: Bail in bailable offences as a mandatory statutory right.\n"
-            "- **Code of Criminal Procedure, 1898 (Section 497)**: Bail in non-bailable offences; prohibitory clause applies only to offences carrying death, life imprisonment, or 10 years.\n"
-            "- **Code of Criminal Procedure, 1898 (Section 498)**: Concurrent pre-arrest bail jurisdiction of the High Court and Court of Session upon proof of mala fides."
-        )
-    else:
-        sections.append(
-            "- **Controlling Bare Act Provisions**: Adjudication must proceed strictly under the relevant statutory provisions and rules of procedure in force."
-        )
+    notice_lead = (
+        reason
+        or "Direct narrative analysis was withheld to protect strict statutory accuracy and judicial verification standards."
+    )
+    sections.append(
+        f"> ⚠️ **Verification Notice**: {notice_lead}\n>\n"
+        "> The system cannot produce an automated narrative memorandum without independently verifying every legal claim against "
+        "authentic primary records. Below is the un-synthesized, factual record of statutes and superior court precedents retrieved "
+        "for this query."
+    )
 
-    # 3. Procedural Remedies & Strategic Guidance
-    sections.append("### PROCEDURAL REMEDIES & STRATEGY")
-    if "partition" in q_low or "benami" in q_low:
-        sections.append(
-            "1. **Do Not File an Order VIII Rule 6 Set-Off**: Such a plea is liable to be rejected as incompetent in a partition suit.\n"
-            "2. **Plead Bad for Partial Partition**: In the written statement, aver that the suit does not bring into hotchpot all undivided joint family properties.\n"
-            "3. **Institute a Counter-Claim or Cross-Suit**: File a cross-suit under Section 42 of the Specific Relief Act, 1877 seeking a declaration of title, pay the requisite court fee, and move an application under Section 151 CPC to consolidate both suits before the same civil judge."
-        )
-    elif "rent" in q_low or "prpa" in q_low:
-        sections.append(
-            "1. **File Application Before Rent Tribunal**: Ensure compliance with Section 19 PRPA 2009 with attached tenancy agreement.\n"
-            "2. **Serve Statutory Notice**: Attach proof of delivery and rent receipt history.\n"
-            "3. **Contest Leave to Defend**: Move for summary ejectment if the tenant fails to file a timely leave application with specific supporting affidavits."
-        )
-    elif any(k in q_low for k in ["489-f", "489f", "cheque", "check"]) or (any(k in q_low for k in ["bail", "497", "498", "crpc"]) and any(k in q_low for k in ["cheque", "check", "dishonour", "bounced"])):
-        sections.append(
-            "1. **File Pre-Arrest Bail Petition under Section 498 CrPC**: Immediately petition the Sessions Judge / Additional Sessions Judge of the competent district, pleading specific mala fides and police coercion to secure ad-interim pre-arrest bail.\n"
-            "2. **Plead Non-Prohibitory Nature & Rule of Bail**: Assert the binding Supreme Court ratio in *Tariq Bashir v. State* that offences carrying under 10 years are outside the prohibitory clause of Section 497(1) CrPC, making bail a matter of right in ordinary course.\n"
-            "3. **Demonstrate Absence of Dishonest Intent**: Submit documentation showing the cheque was a guarantee, security, or given in an unliquidated civil transaction, invoking *Muhammad Fareedon Rehman v. State* (2026 SCMR 987) to establish the dispute is civil in character and lacks criminal mens rea.\n"
-            "4. **Join Investigation under Court Protection**: Once ad-interim bail is granted, appear before the Investigating Officer (IO) and record petitioner's version with bank account statements."
-        )
-    elif "bail" in q_low or "crpc" in q_low or "497" in q_low or "498" in q_low or "fir" in q_low:
-        sections.append(
-            "1. **Pre-Arrest Protection under Section 498 CrPC**: Approach the Court of Session for ad-interim pre-arrest bail to prevent arrest and public humiliation.\n"
-            "2. **Establish Mala Fides & Ulterior Motives**: Document the dispute context to establish prima facie malice on the part of the complainant or investigating agency.\n"
-            "3. **Assert Prohibitory Boundary**: If the offence carries under 10 years imprisonment, argue entitlement to bail as a matter of right under Section 497(1) CrPC non-prohibitory jurisprudence.\n"
-            "4. **Join Investigation**: Once protected by ad-interim bail, join police inquiry to present documentary evidence."
-        )
+    # 2. Verified Statutory Provisions on Record
+    sections.append("## Verified Statutory Provisions on Record")
+    if statutory_provisions:
+        stat_blocks = []
+        for prov in statutory_provisions:
+            title = prov.get("display_name") or prov.get("title") or prov.get("canonical_id") or "Statutory Provision"
+            text_val = str(prov.get("text_cleaned") or prov.get("text") or "").strip()
+            verified = prov.get("verified", True)
+            v_status = "Verified in Primary Store" if verified else "Unverified Gazette Record"
+
+            if text_val and text_val != "no text available":
+                stat_blocks.append(f"### {title} ({v_status})\n\n```\n{text_val}\n```")
+            else:
+                stat_blocks.append(f"### {title}\n\n*[Statutory text not found in verified database]*")
+        sections.append("\n\n---\n\n".join(stat_blocks))
     else:
-        sections.append(
-            "1. **Jurisdictional Examination**: Ascertain the competent forum and verify statutory limitation before initiating pleadings.\n"
-            "2. **Evidentiary Grounding**: Collect certified copies of primary documents and relevant records to support the initial claim or defence."
-        )
+        sections.append("*No statutory provisions were verified in the primary database for this query.*")
+
+    # 3. Retrieved Precedents on Record
+    sections.append("## Retrieved Precedents on Record")
+    if precedents:
+        prec_blocks = []
+        for p in precedents:
+            meta = p.get("metadata") if isinstance(p.get("metadata"), dict) else {}
+            cit = p.get("citation") or meta.get("citation") or p.get("case_id") or "Precedent"
+            title = p.get("title") or p.get("case_title") or meta.get("title") or meta.get("case_title") or "Precedent on Record"
+            court = p.get("court") or p.get("court_name") or meta.get("court") or meta.get("court_name") or "UNKNOWN"
+            c_level = p.get("content_level") or meta.get("content_level") or "headnote_only"
+            v_status = p.get("verification_status") or ("verified" if p.get("is_verified") else "unverified")
+
+            snippet = str(p.get("preview") or p.get("snippet") or p.get("ratio") or p.get("headnote") or "").strip()
+            if len(snippet) > 400:
+                snippet = snippet[:400] + "..."
+
+            block = (
+                f"### {cit} - {title}\n"
+                f"- **Court**: {court}\n"
+                f"- **Record Type**: `{c_level}`\n"
+                f"- **Verification Status**: `{v_status}`\n"
+            )
+            if snippet:
+                block += f"\n> {snippet}"
+            prec_blocks.append(block)
+        sections.append("\n\n".join(prec_blocks))
+    else:
+        sections.append("*No relevant judicial precedents were admitted for this query.*")
+
+    # 4. Objective Procedural Guidance
+    sections.append("## Research & Procedural Guidance")
+    sections.append(
+        "1. **Primary Source Verification**: Review the bare act text under the retrieved provisions above.\n"
+        "2. **Jurisdictional Examination**: Ascertain the competent forum and verify statutory limitation before initiating pleadings.\n"
+        "3. **Evidentiary Grounding**: Collect certified copies of primary records to substantiate initial pleadings or defence."
+    )
 
     return "\n\n".join(sections)
+
+
+def build_authoritative_opinion_fallback(
+    query_text: str,
+    query_plan: Any = None,
+    precedent_cards: Optional[List[Dict[str, Any]]] = None,
+    statutory_provisions: Optional[List[Dict[str, Any]]] = None,
+) -> str:
+    """
+    Deprecated canned fallback replaced with build_honest_partial_response per Remediation Spec Phase 1.
+    """
+    return build_honest_partial_response(
+        query_text=query_text,
+        query_plan=query_plan,
+        statutory_provisions=statutory_provisions,
+        precedents=precedent_cards,
+        reason="Automated narrative memorandum synthesis was withheld to ensure legal accuracy."
+    )

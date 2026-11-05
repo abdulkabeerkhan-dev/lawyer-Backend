@@ -1115,7 +1115,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     if is_bail:
         if any(k in q_low for k in ["arrested", "in custody", "without a warrant", "without warrant", "post-arrest"]):
             questions.append("statutory distinction between bailable offences under Section 496 CrPC (mandatory right) vs non-bailable offences under Section 497 CrPC (judicial discretion)")
-            questions.append("scope of prohibitory clause (punishable with death, life, or 10+ years) vs non-prohibitory clause (bail is rule, refusal exception per Tariq Bashir PLD 1995 SC 34)")
+            questions.append("scope of prohibitory clause (punishable with death, life, or 10+ years) vs non-prohibitory clause (bail is rule, refusal exception per settled Supreme Court jurisprudence)")
         else:
             questions.append("grounds for pre-arrest bail under Section 498 CrPC (demonstration of mala fide, ulterior motive, and apprehension of imminent arrest)")
     if is_adverse_possession:
@@ -1252,7 +1252,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         if not any(l["lane"] == "bail_non_bailable_s497" for l in raw_lanes):
             raw_lanes.insert(1, {
                 "lane": "bail_non_bailable_s497",
-                "query": "Section 497 CrPC non-bailable prohibitory clause Tariq Bashir PLD 1995 SC 34 concession grace judicial discretion"
+                "query": "Section 497 CrPC non-bailable prohibitory clause concession grace judicial discretion non-prohibitory bail rule refusal exception"
             })
 
     if is_partition or is_benami:
@@ -1285,7 +1285,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             if not any(l["lane"] == "khula_without_consent" for l in raw_lanes):
                 raw_lanes.insert(0, {
                     "lane": "khula_without_consent",
-                    "query": "Khurshid Bibi PLD 1967 SC 97 Section 10 Family Courts Act 1964 Khula wife right without husband consent"
+                    "query": "Section 10 Family Courts Act 1964 Khula wife right without husband consent dissolution of marriage"
                 })
             if not any(l["lane"] == "khula_dower_zar_i_khula" for l in raw_lanes):
                 raw_lanes.append({

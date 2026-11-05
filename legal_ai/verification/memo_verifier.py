@@ -5132,6 +5132,27 @@ class MemoVerifier:
 
 
 
+        # -------------------------------------------------------------
+        # RULE (f): DOCTRINAL & STATUTORY ACCURACY CHECK (F15 fix)
+        # -------------------------------------------------------------
+        try:
+            from legal_ai.verification.memo_auditor import audit_memo
+            aud_res = audit_memo(memo_cleaned)
+            for err in getattr(aud_res, "errors", []):
+                err_code = getattr(err, "code", "")
+                if err_code in ("STATUTE_MISSTATEMENT", "SCHEDULE_II_MISCLASSIFICATION", "FORUM_PROVISION_MISMATCH"):
+                    failures.append({
+                        "rule": "(f)",
+                        "category": err_code,
+                        "id": getattr(err, "rule_id", getattr(err, "id", "489F_DISHONEST_INTENT_REQUIRED")),
+                        "issue": getattr(err, "message", ""),
+                        "reason": getattr(err, "message", ""),
+                        "span": getattr(err, "excerpt", "") or memo_cleaned[:100],
+                        "line": 1
+                    })
+        except Exception as aud_ex:
+            pass
+
         passed = (len(failures) == 0)
 
 

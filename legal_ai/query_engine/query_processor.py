@@ -1,3 +1,4 @@
+from legal_ai.analytics.pipeline_tracer import PipelineTracer
 """
 
 
@@ -1143,6 +1144,21 @@ def _build_precedent_context_block(cards: List[Dict[str, Any]]) -> str:
 
 
 
+
+
+
+def resolve_ranking_pool_post_gate(
+    post_gate_candidates: Optional[List[Dict[str, Any]]],
+    clean_candidates: Optional[List[Dict[str, Any]]] = None
+) -> List[Dict[str, Any]]:
+    """
+    Resolves ranking pool post domain gate per Remediation Spec Phase 4 (F12 fix):
+    If the post-rerank domain gate removes everything (post_gate_candidates is empty list),
+    return an empty pool (insufficient relevant authority), NEVER fall back to the ungated pool.
+    """
+    if post_gate_candidates is not None:
+        return list(post_gate_candidates)
+    return list(clean_candidates or [])
 
 
 async def process_query_job_legal_ai(
@@ -2391,7 +2407,7 @@ async def process_query_job_legal_ai(
         candidates=clean_candidates,
         topics=detected_topics
     )
-    ranking_pool = post_gate_candidates if post_gate_candidates else clean_candidates
+    ranking_pool = resolve_ranking_pool_post_gate(post_gate_candidates, clean_candidates)
 
     pipeline_metrics.record_candidate_filtering(
         raw_count=len(merged_candidates),

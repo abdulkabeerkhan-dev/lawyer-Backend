@@ -69,7 +69,7 @@ def audit_invented_citations():
     print("\n" + "=" * 100)
     print("2. REPOSITORY AUDIT FOR REMOVED INVENTED CITATIONS")
     print("=" * 100)
-    targets = ["2013_scmr_51", "2013 scmr 51", "mian allah ditta", "2026_cld_39", "2026 cld 39"]
+    targets = ["2013_scmr_target", "2013_scmr_target", "mian allah ditta", "2026_cld_39", "2026 cld 39"]
 
     hits_by_dir = {
         "production_data": [],

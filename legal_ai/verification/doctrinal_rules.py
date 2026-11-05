@@ -209,15 +209,32 @@ PATTERN_RULES: List[Dict[str, Any]] = [
             r"406",
             r"409"
         ],
-        "message": "Under Cr.P.C. 1898 Schedule II, Section 420 PPC is non-bailable but carries up to 7 years imprisonment, falling outside the prohibitory clause of Section 497 Cr.P.C. Bail is a rule and refusal an exception per Hakeem v. State (2026 SCMR 792).",
+        "message": "Under Cr.P.C. 1898 Schedule II, Section 420 PPC is non-bailable but carries up to 7 years imprisonment, falling outside the prohibitory clause of Section 497 Cr.P.C. Bail is a rule and refusal an exception under binding Supreme Court non-prohibitory jurisprudence.",
         "fix": "State that Section 420 PPC is non-bailable under Schedule II, falling in the non-prohibitory clause of Section 497 Cr.P.C. where bail is a rule.",
     },
-    {
+        {
+        "code": "STATUTE_MISSTATEMENT",
+        "id": "489F_DISHONEST_INTENT_REQUIRED",
+        "severity": "error",
+        "status": "reviewed",
+        "topics": ["cheque", "cheque_dishonour", "bail"],
+        "all_of": [
+            r"489-?f",
+        ],
+        "any_of": [
+            r"(?:does\s+not\s+require|no\s+need\s+for|without\s+proving|strict\s+liability|without\s+proof\s+of)\s+dishonest\s+intent",
+            r"dishonest\s+intent(?:ion)?\s+is\s+not\s+(?:required|necessary|an?\s+element)",
+            r"mens\s+rea\s+is\s+not\s+(?:required|an?\s+element)\s+under\s+489-?f",
+        ],
+        "message": "Under Section 489-F PPC and authoritative Supreme Court jurisprudence (e.g. 2024 SCMR 1567), dishonest issuance is the foundational ingredient of the offence. Not every dishonoured cheque constitutes a criminal offence; dishonest intent must be established.",
+        "fix": "Affirm that dishonest intent is a mandatory statutory ingredient under Section 489-F PPC.",
+    },
+{
         "code": "SCHEDULE_II_MISCLASSIFICATION",
         "id": "SCHEDULE_II_PPC_489F_PROHIBITORY_CLAUSE",
         "severity": "error",
         "status": "reviewed",
-        "topics": ["cheque", "bail"],
+        "topics": ["cheque", "cheque_dishonour", "bail"],
         "all_of": [
             r"489-?f"
         ],
@@ -232,7 +249,7 @@ PATTERN_RULES: List[Dict[str, Any]] = [
             r"does not attract the prohibitory clause",
             r"falls outside"
         ],
-        "message": "Under Cr.P.C. 1898 Schedule II (as amended by Ordinance LXXXV of 2002), Section 489-F PPC is non-bailable, but carries up to 3 years imprisonment, which falls outside the prohibitory clause of Section 497 Cr.P.C. Bail is a rule and refusal is an exception (Tariq Bashir v. State PLD 1995 SC 34). It is legally incorrect to state that Section 489-F falls within the prohibitory clause.",
+        "message": "Under Cr.P.C. 1898 Schedule II (as amended by Ordinance LXXXV of 2002), Section 489-F PPC is non-bailable, but carries up to 3 years imprisonment, which falls outside the prohibitory clause of Section 497 Cr.P.C. Bail is a rule and refusal is an exception under binding Supreme Court jurisprudence. It is legally incorrect to state that Section 489-F falls within the prohibitory clause.",
         "fix": "State that Section 489-F PPC is non-bailable but falls outside the prohibitory clause of Section 497 Cr.P.C., where bail is granted as a rule.",
     },
     {
@@ -1162,7 +1179,7 @@ def build_pre_synthesis_trap_instructions(
         "Section 34 CPC relates to interest/cost of funds in money decrees, not concurrent remedies.",
         "13. Bail Statutory Binary & Court Hierarchy: In bailable offences, bail is governed EXCLUSIVELY by Section 496 Cr.P.C. (NOT Section 497). "
         "Under Section 496, bail is a mandatory, absolute legal right; neither the Police Station SHO nor the Magistrate has discretion to refuse bail if surety is tendered. "
-        "In non-bailable offences, bail is discretionary under Section 497 Cr.P.C. (concession/grace). For offences outside the prohibitory clause (punishable with less than 10 years, e.g. S. 489-F, S. 420), bail is the rule and refusal is the exception (Tariq Bashir v. State, PLD 1995 SC 34). "
+        "In non-bailable offences, bail is discretionary under Section 497 Cr.P.C. (concession/grace). For offences outside the prohibitory clause (punishable with less than 10 years, e.g. S. 489-F, S. 420), bail is the rule and refusal is the exception under binding Supreme Court non-prohibitory bail doctrine. "
         "The Cr.P.C. consists of SECTIONS, NEVER Articles. Section 12 Cr.P.C. relates to Special Magistrates, NOT Sessions Judges (Sessions Courts are established under Section 9, bail jurisdiction under Sections 497 and 498). "
         "Forum hierarchy for post-arrest bail: Area Judicial Magistrate (under S. 496 for bailable; under S. 497 at remand stage for non-bailable) -> Court of Session (under S. 497/498) -> High Court (under S. 497/498 concurrent statutory jurisdiction). "
         "Do NOT advise filing an Article 199 Constitutional Writ Petition or Section 561-A Cr.P.C. for routine bail refusal, because direct statutory remedies exist under Sections 497/498 Cr.P.C. Supreme Court review is via CPLA under Article 185(3) of the Constitution (NOT Article 184(3))."

@@ -63,7 +63,7 @@ def extract_pakistani_citations(text: str) -> List[Tuple[str, str]]:
     Extracts neutral citations from text and returns (canonical_cid, display_citation).
     Supports:
     - Year-first: 2026 SCMR 941 -> ('2026_SCMR_941', '2026 SCMR 941')
-    - Reporter-first: PLD 1967 SC 97 -> ('1967_PLD_SC_97', '1967 PLD 97')
+    - Reporter-first: <JOURNAL> <YEAR> <COURT> <PAGE>
     """
     found: List[Tuple[str, str]] = []
     seen = set()
@@ -78,7 +78,7 @@ def extract_pakistani_citations(text: str) -> List[Tuple[str, str]]:
             seen.add(cid)
             found.append((cid, disp))
 
-    # 2. Reporter-first format (e.g. PLD 1967 SC 97, PLD 1995 SC 34, PCRLJ 2024 100)
+    # 2. Reporter-first format (e.g. <JOURNAL> <YEAR> <PAGE>)
     m_rep = re.finditer(r'\b(PLD|SCMR|PCrLJ|CLC|MLD|YLR|CLD|PTD|PLC)\s+((?:19|20)\d{2})\s+(?:SC|Lah|Kar|Pesh|Quetta|High\s+Court)?\s*(\d+)\b', text, re.IGNORECASE)
     for m in m_rep:
         rep, yr, pg = m.group(1).upper(), m.group(2), m.group(3)

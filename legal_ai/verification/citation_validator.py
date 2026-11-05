@@ -61,7 +61,7 @@ def parse_pakistan_citation(citation: str) -> Dict[str, Any]:
         clean
     )
     if not m:
-        # Check alternative format: PLD 1995 SC 34
+        # Check alternative format: <JOURNAL> <YEAR> <BENCH> <PAGE>
         m_alt = re.search(
             r'\b([A-Za-z]+)\s+(19\d{2}|20\d{2})\s+([A-Za-z\s]+)?\s*(\d+)\b',
             clean

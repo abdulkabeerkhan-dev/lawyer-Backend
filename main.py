@@ -2760,7 +2760,7 @@ def format_neutral_citation(court: str, case_identifier: str, year_or_date: str)
 
 
 
-    # 1. Pattern where PLD comes first: e.g. "PLD 1995 Supreme Court 34" or "PLD 1995 SC 34"
+    # 1. Pattern where PLD comes first: e.g. "PLD <YEAR> Supreme Court <PAGE>" or "PLD <YEAR> SC <PAGE>"
 
     m_pld = re.search(r'\b(PLD)\s+(19\d{2}|20\d{2})\s+([A-Za-z\s]+)?(\d+)\b', ident_clean, re.IGNORECASE)
 
@@ -8384,9 +8384,15 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     if len(clean_draft.strip()) > 100:
                         memo_body = clean_draft.strip()
                 if not memo_body:
-                    from legal_ai.synthesis.memorandum_generator import build_authoritative_opinion_fallback, sanitize_partner_markdown_presentation
+                    from legal_ai.synthesis.memorandum_generator import build_honest_partial_response, sanitize_partner_markdown_presentation
                     q_text = blocked_data.get("query_text") or jobs_store[job_id].get("query_text") or ""
-                    memo_body = sanitize_partner_markdown_presentation(build_authoritative_opinion_fallback(q_text, blocked_data.get("query_plan"), p_cards))
+                    memo_body = sanitize_partner_markdown_presentation(build_honest_partial_response(
+                        query_text=q_text,
+                        query_plan=blocked_data.get("query_plan"),
+                        precedents=p_cards,
+                        statutory_provisions=blocked_data.get("verified_statute_fallback") or [],
+                        reason=blocked_data.get("safe_reason")
+                    ))
                 response_text = memo_body or "Substantive legal analysis on record."
                 done_result = {
                     "answer": response_text,
@@ -16016,7 +16022,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
 
         # For real advocates: Deliver the substantive legal analysis and opinion
         if not show_audit_notices:
-            from legal_ai.synthesis.memorandum_generator import build_authoritative_opinion_fallback, sanitize_partner_markdown_presentation
+            from legal_ai.synthesis.memorandum_generator import build_honest_partial_response, sanitize_partner_markdown_presentation
             memo_body = ""
             raw_memo = job.get("unverified_memo") or job.get("raw_draft")
             if raw_memo:
@@ -16027,7 +16033,13 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                     memo_body = clean_draft.strip()
             if not memo_body:
                 q_text = job.get("query_text") or ""
-                memo_body = build_authoritative_opinion_fallback(q_text, job.get("query_plan"), precedent_cards)
+                memo_body = build_honest_partial_response(
+                    query_text=q_text,
+                    query_plan=job.get("query_plan"),
+                    precedents=precedent_cards,
+                    statutory_provisions=job.get("verified_statute_fallback") or [],
+                    reason=notice_text
+                )
             if memo_body:
                 response_text = memo_body + "\n\n" + response_text
 

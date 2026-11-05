@@ -32,7 +32,7 @@ MANDATORY ADJUDICATION RULES:
    - If precedents are provided in the context, you MUST cite them. DO NOT state "The database does not contain a direct precedent."
 
 7. SETTLED JURISPRUDENCE -- KHULA & DISSOLUTION OF MARRIAGE (MFLO 1961 & FAMILY COURTS ACT 1964):
-   - Landmark Apex Ruling: Khurshid Bibi v. Muhammad Amin (PLD 1967 SC 97) established that a Muslim wife has an absolute and independent right to claim Khula through the Family Court.
+   - Landmark Apex Ruling: Binding Supreme Court jurisprudence established that a Muslim wife has an absolute and independent right to claim Khula through the Family Court.
    - Husband's Consent is NOT Required: The Family Court has full power to dissolve the marriage by Khula even if the husband adamantly refuses consent. NEVER state that Khula requires the husband's consent or is a mutual contract requiring agreement.
    - Statutory Grounding: Family Courts Act 1964 Section 10(4) & Section 10(5) (reconciliation failure immediately mandates decree for dissolution of marriage on ground of Khula).
    - Dower / Zar-i-Khula: The wife returns dower received, or surrenders unpaid dower. However, non-return of dower is a civil liability (repayable as arrears) and DOES NOT suspend or invalidate the Khula decree.
@@ -96,8 +96,8 @@ MANDATORY ADJUDICATION RULES:
 6. CRIMINAL PROCEDURE -- BAIL CLASSIFICATION (NON-BAILABLE vs. OUTSIDE PROHIBITORY CLAUSE):
    CRITICAL DISTINCTION: "Non-bailable" and "bail is discretionary/hard to get" are NOT the same thing under Pakistani law. Do not conflate them.
    - Section 489-F PPC (dishonestly issuing a cheque) is explicitly classified as cognizable, NON-BAILABLE, and compoundable (with permission of the Court) under Schedule II of the Code of Criminal Procedure, 1898. NEVER describe it as a "bailable offence" -- that is a serious, court-embarrassing statutory error. If it were truly bailable, the accused would be entitled to bail as of right at the police station under Section 496 CrPC, making a pre-arrest bail application under Section 498 CrPC unnecessary.
-   - However, because its maximum punishment (3 years) is below the threshold in the prohibitory clause of Section 497(1) CrPC (which applies only to offences punishable with death, imprisonment for life, or imprisonment for 10 years or more), Section 489-F falls OUTSIDE that prohibitory clause. For non-prohibitory-clause offences, the Supreme Court has held that the grant of bail is the rule and refusal is the exception (Tariq Bashir v. The State, PLD 1995 SC 34).
-   - The correct, precise formulation: "Section 489-F PPC is a non-bailable offence, but because it falls outside the prohibitory clause of Section 497(1) CrPC, bail is the rule rather than the exception under the Tariq Bashir doctrine." Never shortcut this to simply "bailable."
+   - However, because its maximum punishment (3 years) is below the threshold in the prohibitory clause of Section 497(1) CrPC (which applies only to offences punishable with death, imprisonment for life, or imprisonment for 10 years or more), Section 489-F falls OUTSIDE that prohibitory clause. For non-prohibitory-clause offences, the Supreme Court has held that the grant of bail is the rule and refusal is the exception (under binding Supreme Court non-prohibitory bail jurisprudence).
+   - The correct, precise formulation: "Section 489-F PPC is a non-bailable offence, but because it falls outside the prohibitory clause of Section 497(1) CrPC, bail is the rule rather than the exception under the settled non-prohibitory bail doctrine." Never shortcut this to simply "bailable."
    - MANDATORY STATUTORY PROVENANCE DIRECTIVE:
      NEVER quote statutory text as verbatim official statute unless the exact text is provided in the verified retrieved context or authenticated statutory database with verified provenance.
      NEVER invent or present model-generated paraphrases as "Statutory Text" or official statutory wording (e.g. inventing subsections or deposit rules). If the exact official statutory text is not present in retrieved context, describe the statutory principle and state clearly: "Official verbatim statutory text is not available in the verified local repository; verify against the official gazette / Pakistan Code."
@@ -788,14 +788,14 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
         errors.append("Citing 'Evidence Act 1872' -- Pakistan replaced this with the Qanun-e-Shahadat Order 1984 (QSO 1984); do not cite the 1872 Evidence Act framework even without the word 'Indian'.")
 
     # Rule 6: Section 489-F PPC bail classification -- non-bailable is a matter of statutory fact
-    # (Schedule II CrPC 1898), independent of the "bail is the rule" Tariq Bashir doctrine that
+    # (Schedule II CrPC 1898), independent of the "bail is the rule" settled non-prohibitory bail doctrine that
     # applies BECAUSE it's outside the prohibitory clause. Conflating the two is a serious,
     # court-embarrassing error that keeps recurring, so it gets its own explicit check.
     if re.search(r'489-?f', text_lower):
         if re.search(r'\bis\s+a\s+bailable\s+offen', text_lower) or re.search(r'489-?f\s+ppc\s+is\s+bailable\b', text_lower):
-            errors.append("Describing Section 489-F PPC as a 'bailable offence' -- it is NON-BAILABLE under Schedule II CrPC 1898. It falls outside the Section 497(1) prohibitory clause (max punishment 3 years), so bail is the rule rather than the exception under Tariq Bashir v. The State (PLD 1995 SC 34) -- but it is still, as a matter of statutory classification, non-bailable. Never shortcut this to 'bailable'.")
+            errors.append("Describing Section 489-F PPC as a 'bailable offence' -- it is NON-BAILABLE under Schedule II CrPC 1898. It falls outside the Section 497(1) prohibitory clause (max punishment 3 years), so bail is the rule rather than the exception under binding Supreme Court jurisprudence -- but it is still, as a matter of statutory classification, non-bailable. Never shortcut this to 'bailable'.")
         elif re.search(r'\bbailable\b', text_lower) and "non-bailable" not in text_lower and "not bailable" not in text_lower:
-            errors.append("Discussing Section 489-F PPC and the word 'bailable' without ever stating it is NON-bailable -- confirm the draft explicitly classifies it as non-bailable (Schedule II CrPC 1898) even while explaining that bail is the rule under Tariq Bashir since it falls outside the Section 497(1) prohibitory clause.")
+            errors.append("Discussing Section 489-F PPC and the word 'bailable' without ever stating it is NON-bailable -- confirm the draft explicitly classifies it as non-bailable (Schedule II CrPC 1898) even while explaining that bail is the rule under settled Supreme Court principles since it falls outside the Section 497(1) prohibitory clause.")
 
     # Rule 7: Pre-arrest bail drafting completeness (Punjab) -- a full court-ready application
     # needs a standalone sworn Supporting Affidavit, not just a Certificate of Urgency.
@@ -846,7 +846,7 @@ def lint_legal_output(draft_text: str, query_context: str = "", context_chunks: 
         if re.search(r'section\s*2\s*\([a-z0-9ivx]+\)\s*(of\s*)?(the\s*)?mflo', text_lower) or "section 2(viii)" in text_lower or "2(viii) mflo" in text_lower:
             errors.append("Citing phantom Section 2(viii) MFLO 1961 (Section 2 contains only definitions: Chairman, Council, Prescribed; it has no subsection viii).")
         if re.search(r'khula\s+(?:is\s+a\s+contractual\s+dissolution|requires\s+(?:the\s+)?husband(?:\'s)?\s+consent)', text_lower) or "requires mutual agreement or, in the absence of agreement, the husband's consent" in text_lower:
-            errors.append("Holding that Khula requires husband's consent (Fatal error: Under Khurshid Bibi v. Muhammad Amin PLD 1967 SC 97 and Family Courts Act 1964 Section 10, the wife has an independent right to Khula and husband's consent is NOT required).")
+            errors.append("Holding that Khula requires husband's consent (Fatal error: Under binding Supreme Court jurisprudence and Family Courts Act 1964 Section 10, the wife has an independent right to Khula and husband's consent is NOT required).")
 
     # Rule 12: Pre-emption / Informer non-production stare decisis (PLD 2007 SC 302 / 2011 SCMR 1062)
     if any(k in text_lower or k in query_lower for k in ["pre-emption", "preemption", "talb-i-muwathibat", "informer"]):

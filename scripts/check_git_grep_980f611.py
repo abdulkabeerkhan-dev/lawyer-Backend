@@ -10,7 +10,7 @@ with open("reindex_queue.json", "r", encoding="utf-8") as f:
     lines = f.readlines()
 
 for i, l in enumerate(lines):
-    if "2013_SCMR_51" in l or "2013 SCMR 51" in l:
+    if "2013_SCMR_51" in l or "2013_SCMR_TARGET" in l:
         print(f"reindex_queue.json line {i+1}: {l.strip()}")
         # print surrounding
         for j in range(max(0, i-2), min(len(lines), i+3)):

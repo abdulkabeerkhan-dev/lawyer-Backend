@@ -1,3 +1,4 @@
+from core.court_derivation import derive_court_and_year, clean_judgment_title
 """
 core/structural_judgment_segmenter.py
 
@@ -471,89 +472,93 @@ class StructuralJudgmentSegmenter:
         detected_type: str
     ) -> List[Dict[str, Any]]:
         """
-        Builds the 3 segment vectors with structured metadata for Pinecone ingestion.
+        Builds segment vectors with derived metadata for Pinecone ingestion per Remediation Spec Phase 3:
+        - Court and year derived via derive_court_and_year (zero blind Supreme Court or 2024 defaults).
+        - Headnote-only records produce a single segment tagged 'headnote_only', not 3 duplicates.
+        - Titles cleaned of serial numbers and judge suffixes.
         """
         cid = str(meta.get("case_id") or "UNKNOWN")
-        # Pinecone ID max length is 512 chars; safeguard against long or aberrant case identifiers
         safe_cid = cid if len(cid) <= 120 else f"{cid[:100]}_{hashlib.md5(cid.encode('utf-8')).hexdigest()[:12]}"
         cit = meta.get("neutral_citation") or meta.get("citation") or cid
-        title = meta.get("case_title") or meta.get("title") or "Precedent on Record"
-        court = meta.get("court_name") or meta.get("court") or "Supreme Court of Pakistan"
-        year = meta.get("decision_date", "")[:4] if meta.get("decision_date") else meta.get("year", 2024)
-
-        header = f"[{cit} | {title} | {court} | {year} | Domain: {domain.upper()} | Subdomain: {subdomain.upper()}]"
+        raw_title = meta.get("case_title") or meta.get("title") or "Precedent on Record"
+        title = clean_judgment_title(raw_title) or raw_title
+        
+        court, court_src, year = derive_court_and_year(
+            citation=cit,
+            meta_court=meta.get("court_name") or meta.get("court"),
+            meta_year=meta.get("decision_date") or meta.get("year"),
+            case_title=title,
+            case_id=cid
+        )
+        
+        year_str = str(year) if year is not None else "UNKNOWN"
+        header = f"[{cit} | {title} | {court} | {year_str} | Domain: {domain.upper()} | Subdomain: {subdomain.upper()}]"
         segments = []
 
-        # Segment A: Headnote (The Legal Doctrine)
-        if headnote and len(headnote.split()) >= 20:
+        base_meta = {
+            "case_id": cid[:256],
+            "citation": cit[:256],
+            "case_title": title[:256],
+            "court": court[:128],
+            "court_source": court_src,
+            "year": year,
+            "domain": domain,
+            "legal_domain": domain,
+            "subdomain": subdomain,
+            "statutes": statutes[:8],
+            "provisions": provisions[:10],
+            "statutory_provisions": provisions[:10],
+            "metadata_schema_version": "2.0",
+            "detected_type": detected_type
+        }
+
+        # Headnote-only cases: produce a single segment tagged 'headnote_only' per F6
+        is_headnote_only = detected_type in ("headnote", "headnote_only") or not (ratio and facts)
+        if is_headnote_only:
+            body_text = headnote or ratio or facts or "Headnote record on file."
+            seg_meta = dict(base_meta)
+            seg_meta["segment_type"] = "headnote_only"
+            seg_meta["content_level"] = "headnote_only"
+            segments.append({
+                "segment_id": f"{safe_cid}_seg_headnote",
+                "segment_type": "headnote_only",
+                "text": f"{header}\n\nHEADNOTE & STATUTORY ANCHORS:\n{body_text}",
+                "metadata": seg_meta
+            })
+            return segments
+
+        # Full judgment records: produce distinct structured segments
+        if headnote and len(headnote.split()) >= 10:
+            seg_meta = dict(base_meta)
+            seg_meta["segment_type"] = "headnote"
+            seg_meta["content_level"] = "full_judgment"
             segments.append({
                 "segment_id": f"{safe_cid}_seg_headnote",
                 "segment_type": "headnote",
                 "text": f"{header}\n\nHEADNOTE & STATUTORY ANCHORS:\n{headnote}",
-                "metadata": {
-                    "case_id": cid[:256],
-                    "citation": cit[:256],
-                    "case_title": title[:256],
-                    "court": court[:128],
-                    "year": int(year) if str(year).isdigit() else 2024,
-                    "domain": domain,
-                    "legal_domain": domain,
-                    "subdomain": subdomain,
-                    "statutes": statutes[:8],
-                    "provisions": provisions[:10],
-                    "statutory_provisions": provisions[:10],
-                    "segment_type": "headnote",
-                    "metadata_schema_version": "1.0",
-                    "detected_type": detected_type
-                }
+                "metadata": seg_meta
             })
 
-        # Segment B: Ratio Decidendi (The Judicial Holding)
-        if ratio and len(ratio.split()) >= 20:
+        if ratio and len(ratio.split()) >= 10:
+            seg_meta = dict(base_meta)
+            seg_meta["segment_type"] = "ratio_decidendi"
+            seg_meta["content_level"] = "full_judgment"
             segments.append({
                 "segment_id": f"{safe_cid}_seg_ratio",
                 "segment_type": "ratio_decidendi",
                 "text": f"{header}\n\nRATIO DECIDENDI & JUDICIAL HOLDING:\n{ratio}",
-                "metadata": {
-                    "case_id": cid[:256],
-                    "citation": cit[:256],
-                    "case_title": title[:256],
-                    "court": court[:128],
-                    "year": int(year) if str(year).isdigit() else 2024,
-                    "domain": domain,
-                    "legal_domain": domain,
-                    "subdomain": subdomain,
-                    "statutes": statutes[:8],
-                    "provisions": provisions[:10],
-                    "statutory_provisions": provisions[:10],
-                    "segment_type": "ratio_decidendi",
-                    "metadata_schema_version": "1.0",
-                    "detected_type": detected_type
-                }
+                "metadata": seg_meta
             })
 
-        # Segment C: Facts & Outcome (Procedural Context)
-        if facts and len(facts.split()) >= 20:
+        if facts and len(facts.split()) >= 10:
+            seg_meta = dict(base_meta)
+            seg_meta["segment_type"] = "facts_and_order"
+            seg_meta["content_level"] = "full_judgment"
             segments.append({
                 "segment_id": f"{safe_cid}_seg_facts",
                 "segment_type": "facts_and_order",
                 "text": f"{header}\n\nFACTS & PROCEDURAL OUTCOME:\n{facts}",
-                "metadata": {
-                    "case_id": cid[:256],
-                    "citation": cit[:256],
-                    "case_title": title[:256],
-                    "court": court[:128],
-                    "year": int(year) if str(year).isdigit() else 2024,
-                    "domain": domain,
-                    "legal_domain": domain,
-                    "subdomain": subdomain,
-                    "statutes": statutes[:8],
-                    "provisions": provisions[:10],
-                    "statutory_provisions": provisions[:10],
-                    "segment_type": "facts_and_order",
-                    "metadata_schema_version": "1.0",
-                    "detected_type": detected_type
-                }
+                "metadata": seg_meta
             })
 
         return segments

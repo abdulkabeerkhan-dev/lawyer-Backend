@@ -210,13 +210,32 @@ def search_statute_provisions(
     q_raw = query.strip()
     q_lower = q_raw.lower()
 
-    # Find any standalone section numbers or alphanumeric section tokens (e.g. "489-f", "19", "561-a")
-    raw_tokens = re.findall(r'\b[0-9]+(?:-[a-z0-9]+|[a-z0-9]+)?\b', q_lower)
-    target_nums = {re.sub(r'[^a-z0-9]', '', t) for t in raw_tokens}
+    # Remediation Spec Phase 2 (F3 fix):
+    # 1. Ignore currency and quantity tokens (PKR, Rs, million, lakh, crore, years, days)
+    q_sanitized = re.sub(r'\b(?:pkr|rs\.?|rupees?|inr|usd|\$)\s*[0-9]+(?:\.[0-9]+)?\b', ' ', q_lower)
+    q_sanitized = re.sub(r'\b[0-9]+(?:\.[0-9]+)?\s*(?:million|crore|lakh|lac|billion|thousand|k)\b', ' ', q_sanitized)
+    q_sanitized = re.sub(r'\b[0-9]+\s*(?:years?|months?|weeks?|days?|hours?)\b', ' ', q_sanitized)
 
-    m_sec = re.search(r'\b(?:section|sec|article|art|rule|order|s\.)\s*([0-9]+(?:-[a-z0-9]+|[a-z0-9]+)?)\b', q_lower)
-    if m_sec:
-        target_nums.add(re.sub(r'[^a-z0-9]', '', m_sec.group(1)))
+    # 2. Only treat numbers as statutory sections if preceded by section/article/rule/order prefix,
+    # or distinctly formatted statutory tokens like '489-f', '12(2)', '561-a'.
+    target_nums = set()
+    for m in re.finditer(r'\b(?:sections?|secs?\.?|s\.|articles?|arts?\.?|rules?|orders?)\s*([0-9]+(?:-[a-z0-9]+|[a-z0-9]+)?(?:\([0-9a-z]+\))?)\b', q_sanitized):
+        raw_num = m.group(1)
+        norm_num = re.sub(r'[^a-z0-9]', '', raw_num)
+        if norm_num:
+            target_nums.add(norm_num)
+            base_m = re.match(r'^([0-9]+)', raw_num)
+            if base_m:
+                target_nums.add(base_m.group(1))
+
+    for m in re.finditer(r'\b([0-9]+-[a-z]|[0-9]+\([0-9a-z]+\))\b', q_sanitized):
+        raw_num = m.group(1)
+        norm_num = re.sub(r'[^a-z0-9]', '', raw_num)
+        if norm_num:
+            target_nums.add(norm_num)
+            base_m = re.match(r'^([0-9]+)', raw_num)
+            if base_m:
+                target_nums.add(base_m.group(1))
 
     candidates = []
     seen_cids = set()
@@ -247,11 +266,11 @@ def search_statute_provisions(
 
         score = 0
 
-        # Exact section number match
-        if p_num_norm in target_nums:
-            score += 300
-            if act_matches_query:
-                score += 500  # Dominant boost for exact section inside matching act
+        # Exact section number match (Remediation Spec Phase 2: Require Act to match)
+        if p_num_norm in target_nums and (act_matches_query or act_code):
+            score += 500  # Dominant boost for exact section inside matching act
+        elif p_num_norm in target_nums:
+            score += 15  # Minor heuristic boost if act is unspecified
 
         # Act match bonus
         if act_matches_query:

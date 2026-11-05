@@ -431,14 +431,7 @@ class StatuteInjector:
                 if not any(m.split()[1].lower() in p.lower() for p in target_provisions):
                     target_provisions.append(m)
 
-        if any(k in q_comb for k in ["cheating", "fraud", "420"]):
-            mandatory_fraud = [
-                "Section 420 PPC",
-                "Section 497 CrPC"
-            ]
-            for m in mandatory_fraud:
-                if not any(m.split()[1].lower() in p.lower() for p in target_provisions):
-                    target_provisions.append(m)
+        # Remediation Spec Phase 1: Removed keyword mandatory injection of Section 420 PPC / 497 CrPC for civil fraud queries
 
         if any(k in q_comb for k in ["breach of trust", "406", "criminal breach"]):
             mandatory_cbt = [
@@ -585,7 +578,7 @@ class StatuteInjector:
                     elif sched.get('max_imprisonment_years', 0) >= 10:
                         bail_expl = "Non-bailable (within prohibitory clause of Section 497 Cr.P.C.: bail may not be granted except under statutory provisos)"
                     else:
-                        bail_expl = "Non-bailable (falls outside prohibitory clause of Section 497 Cr.P.C.: grant of bail is rule and refusal exception per Hakeem v. State 2026 SCMR 792 and Tariq Bashir PLD 1995 SC 34)"
+                        bail_expl = "Non-bailable (falls outside prohibitory clause of Section 497 Cr.P.C.: grant of bail is rule and refusal exception under binding Supreme Court non-prohibitory bail jurisprudence)"
                     lines.append(f"- Bailable Status: {sched.get('bailable_status')} [Cr.P.C. Schedule II Column 5: {sched.get('schedule_ii_column_5', sched.get('bailable_status'))}] ({bail_expl})")
                     lines.append(f"- Compoundable: {sched.get('compoundable')}")
                     lines.append(f"- Punishment: {sched.get('punishment')}")
