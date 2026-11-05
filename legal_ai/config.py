@@ -298,8 +298,8 @@ async def safe_create_anthropic_message(**kwargs):
 
 
 # --- Voyage Embedding Helper ---
-async def get_voyage_embedding(text: str) -> List[float]:
-    """Fetches 1024-dimension dense embedding vector using voyage-law-2."""
+async def get_voyage_embedding(text: str, input_type: Optional[str] = "query") -> List[float]:
+    """Fetches 1024-dimension dense embedding vector using voyage-law-2 with input_type parameter."""
     from fastapi import HTTPException
     if not VOYAGE_API_KEY:
         raise HTTPException(status_code=500, detail="VOYAGE_API_KEY is missing from environment.")
@@ -312,6 +312,8 @@ async def get_voyage_embedding(text: str) -> List[float]:
         "input": [clean_input],
         "model": VOYAGE_MODEL
     }
+    if input_type:
+        payload["input_type"] = input_type
     async with httpx.AsyncClient(timeout=30.0) as client:
         res = await client.post(VOYAGE_API_URL, headers=headers, json=payload)
         if res.status_code != 200:

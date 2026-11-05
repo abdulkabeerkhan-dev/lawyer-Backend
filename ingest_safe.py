@@ -191,7 +191,7 @@ async def ingest_record_safely(record: Dict[str, Any]) -> bool:
         chunk_sections = extract_legal_sections(chunk_text) or extracted_sections
 
         try:
-            embedding = await get_voyage_embedding(chunk_text)
+            embedding = await get_voyage_embedding(chunk_text, input_type="document")
         except Exception as emb_err:
             logger.error(f"Embedding error for {vector_id}: {emb_err}")
             continue

@@ -52,14 +52,15 @@ def merge_candidates_with_rrf(
             norm_cid = re.sub(r'[\s_\-]+', '_', cid).lower()
             norm_cid = re.sub(r'(_chk_\d+|_chunk_\d+|#c\d+)$', '', norm_cid, flags=re.IGNORECASE).strip()
 
+            base_engine = engine_name.split("_")[0]
             if norm_cid not in merged_map:
                 merged_map[norm_cid] = dict(c)
-                merged_map[norm_cid]["retrieval_engines"] = [engine_name]
+                merged_map[norm_cid]["retrieval_engines"] = [base_engine]
                 rrf_scores[norm_cid] = 0.0
             else:
                 existing = merged_map[norm_cid]
-                if engine_name not in existing.get("retrieval_engines", []):
-                    existing.setdefault("retrieval_engines", []).append(engine_name)
+                if base_engine not in existing.get("retrieval_engines", []):
+                    existing.setdefault("retrieval_engines", []).append(base_engine)
 
             rrf_scores[norm_cid] += 1.0 / (rrf_k + rank + 1)
 
@@ -174,6 +175,52 @@ def anchor_provision_token(token: str, query_plan: Any = None) -> Optional[str]:
     return t
 
 
+def collapse_chunks_per_case(candidates: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Spec Phase 4: Collapses multiple vector/search chunks of the same case into a single entry
+    preserving the highest similarity score, richest text, and metadata before ranking.
+    """
+    if not candidates:
+        return []
+    seen_map: Dict[str, Dict[str, Any]] = {}
+    for c in candidates:
+        meta = c.get("metadata") if isinstance(c.get("metadata"), dict) else {}
+        raw_cid = str(c.get("case_id") or meta.get("case_id") or c.get("id") or "").strip()
+        if not raw_cid:
+            continue
+        norm_cid = re.sub(r'[\s_\-]+', '_', raw_cid).lower()
+        norm_cid = re.sub(r'(_chk_\d+|_chunk_\d+|#c\d+)$', '', norm_cid, flags=re.IGNORECASE).strip()
+
+        if norm_cid not in seen_map:
+            seen_map[norm_cid] = dict(c)
+        else:
+            existing = seen_map[norm_cid]
+            score_new = float(c.get("score") or c.get("similarity") or c.get("dense_score") or 0.0)
+            score_old = float(existing.get("score") or existing.get("similarity") or existing.get("dense_score") or 0.0)
+            if score_new > score_old:
+                existing["score"] = score_new
+                existing["similarity"] = score_new
+                if "dense_score" in c:
+                    existing["dense_score"] = c["dense_score"]
+            if "metadata" not in existing or not isinstance(existing.get("metadata"), dict):
+                existing["metadata"] = {}
+            existing_meta = existing["metadata"]
+            new_meta = c.get("metadata") if isinstance(c.get("metadata"), dict) else {}
+            new_text_len = len(str(new_meta.get("full_text") or new_meta.get("text") or c.get("text") or c.get("preview") or ""))
+            old_text_len = len(str(existing_meta.get("full_text") or existing_meta.get("text") or existing.get("text") or existing.get("preview") or ""))
+            if new_text_len > old_text_len:
+                if "preview" in c:
+                    existing["preview"] = c["preview"]
+                if "text" in c:
+                    existing["text"] = c["text"]
+                if new_meta:
+                    existing["metadata"].update(new_meta)
+
+    collapsed = list(seen_map.values())
+    collapsed.sort(key=lambda x: float(x.get("score") or x.get("similarity") or 0.0), reverse=True)
+    return collapsed
+
+
 async def retrieve_candidates_parallel(
     query_text: str,
     query_plan: Any = None,
@@ -262,27 +309,20 @@ async def retrieve_candidates_parallel(
             if iss_str and iss_str not in bm_queries:
                 bm_queries.append(iss_str)
 
-    def _execute_multi_bm25():
-        bm_results: List[Dict[str, Any]] = []
-        seen_bm = set()
-        for bq in bm_queries:
-            sub_res = search_bm25_sparse(bq, top_k=top_k_per_engine)
-            for c in sub_res:
-                cid = str(c.get("case_id") or c.get("id") or "")
-                if cid not in seen_bm:
-                    seen_bm.add(cid)
-                    bm_results.append(c)
-        return bm_results
+    import os
+    enable_supabase_fts = os.getenv("ENABLE_SUPABASE_FTS", "false").lower() in ("true", "1")
 
-    # 4. Fire concurrent search tasks with strict 2.5s timeout & circuit breaker guard
+    # 4. Fire concurrent search tasks with strict timeout & circuit breaker guard
     async def _guarded_supabase_search():
+        if not enable_supabase_fts:
+            return []
         from legal_ai.config import is_supabase_circuit_open, trip_supabase_circuit
         if is_supabase_circuit_open():
             return []
         try:
             return await asyncio.wait_for(
                 search_supabase_judgments(search_terms[:2], limit_per_term=5, query_plan=query_plan),
-                timeout=2.5
+                timeout=5.0
             )
         except Exception as sb_err:
             trip_supabase_circuit(60.0, f"Supabase search timeout in orchestrator: {sb_err}")
@@ -290,49 +330,58 @@ async def retrieve_candidates_parallel(
 
     supabase_task = asyncio.create_task(_guarded_supabase_search())
 
-    async def _execute_multi_pinecone():
+    def _execute_multi_bm25_lists() -> List[List[Dict[str, Any]]]:
+        raw_lists = []
+        for bq in bm_queries:
+            sub_res = search_bm25_sparse(bq, top_k=top_k_per_engine)
+            raw_lists.append(collapse_chunks_per_case(sub_res))
+        return raw_lists
+
+    async def _execute_multi_pinecone_lists() -> List[List[Dict[str, Any]]]:
         pc_tasks = [
             search_pinecone_dense(dq, top_k=top_k_per_engine, min_similarity=0.30, query_plan=query_plan)
             for dq in dense_queries
         ]
-        pc_lists = await asyncio.gather(*pc_tasks)
-        pc_results: List[Dict[str, Any]] = []
-        seen_pc = set()
-        for plist in pc_lists:
-            for c in plist:
-                cid = str(c.get("case_id") or c.get("id") or "")
-                if cid not in seen_pc:
-                    seen_pc.add(cid)
-                    pc_results.append(c)
-        return pc_results
+        raw_lists = await asyncio.gather(*pc_tasks)
+        return [collapse_chunks_per_case(plist) for plist in raw_lists]
 
-    pinecone_task = asyncio.create_task(_execute_multi_pinecone())
-    bm25_task = asyncio.create_task(asyncio.to_thread(_execute_multi_bm25))
+    pinecone_task = asyncio.create_task(_execute_multi_pinecone_lists())
+    bm25_task = asyncio.create_task(asyncio.to_thread(_execute_multi_bm25_lists))
 
     if include_external:
         external_task = asyncio.create_task(search_external_judgments(query_text, max_results=5))
-        sb_res, pc_res, bm_res, ext_res = await asyncio.gather(
+        sb_res, pc_lists, bm_lists, ext_res = await asyncio.gather(
             supabase_task, pinecone_task, bm25_task, external_task
         )
     else:
-        sb_res, pc_res, bm_res = await asyncio.gather(
+        sb_res, pc_lists, bm_lists = await asyncio.gather(
             supabase_task, pinecone_task, bm25_task
         )
         ext_res = []
 
-    engine_results = {
-        "Supabase": sb_res,
-        "Pinecone": pc_res,
-        "BM25": bm_res,
-        "External": ext_res
-    }
+    # Spec Phase 4: Run RRF over per-query ranked lists instead of one concatenated list
+    per_query_engine_results: Dict[str, List[Dict[str, Any]]] = {}
+    total_pc_cases = 0
+    for idx, plist in enumerate(pc_lists):
+        per_query_engine_results[f"Pinecone_q{idx}"] = plist
+        total_pc_cases += len(plist)
+
+    total_bm_cases = 0
+    for idx, blist in enumerate(bm_lists):
+        per_query_engine_results[f"BM25_q{idx}"] = blist
+        total_bm_cases += len(blist)
+
+    if sb_res:
+        per_query_engine_results["Supabase"] = collapse_chunks_per_case(sb_res)
+    if ext_res:
+        per_query_engine_results["External"] = collapse_chunks_per_case(ext_res)
 
     engine_counts = {
         "count_supabase": len(sb_res),
-        "count_pinecone": len(pc_res),
-        "count_bm25": len(bm_res),
+        "count_pinecone": total_pc_cases,
+        "count_bm25": total_bm_cases,
         "count_external": len(ext_res)
     }
 
-    merged = merge_candidates_with_rrf(engine_results, query_plan=query_plan)
+    merged = merge_candidates_with_rrf(per_query_engine_results, query_plan=query_plan)
     return merged, engine_counts

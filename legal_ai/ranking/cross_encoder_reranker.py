@@ -219,6 +219,8 @@ async def rerank_candidates_cross_encoder(
         c_copy["rerank_score"] = round(r_score, 4)
         c_copy["score"] = round(r_score, 4)  # Update primary score to rerank score
         c_copy["rerank_model"] = model_name
+        c_copy["rerank_scorer"] = model_name
+        c_copy["scorer"] = model_name
 
         decorated_candidates.append(c_copy)
 

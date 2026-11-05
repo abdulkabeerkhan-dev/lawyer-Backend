@@ -258,13 +258,10 @@ def calculate_authority_score(candidate: Dict[str, Any], query_plan: LegalQueryP
     text_overlap_count = sum(1 for term in plan_terms if term in haystack)
     relevance_points = scores["provision_match"] + scores["issue_match"]
 
-    if relevance_points == 0.0 and text_overlap_count < 2:
-        # Candidate has zero statutory relevance and zero legal issue match: total score is 0.
-        # An irrelevant Supreme Court case must NEVER score 85+ points.
+    if relevance_points == 0.0:
+        # Remediation Spec Phase 4: Relevance must dominate.
+        # Zero provision match and zero legal issue match strictly yields 0.0 authority score.
         return 0.0, scores
-    elif relevance_points == 0.0:
-        # Marginal text overlap without explicit provision or issue match
-        total_score = min(raw_authority_score * 0.25, 25.0)
     else:
         # Relevant cases receive relevance multiplier boost
         total_score = raw_authority_score + (relevance_points * 1.5)
@@ -317,15 +314,24 @@ def compute_constitutional_multiplier(
             "constitutional", "article 199", "article 184", "amendment", "vires", "fundamental rights"
         ])
 
-    m_court = 0.10
-    if "federal constitutional court" in court or "fcc" in court or "fccr" in citation:
+    from core.court_derivation import derive_court_and_year
+    derived_court, _court_src, _derived_yr = derive_court_and_year(citation=citation, meta_court=court, case_title=title)
+    derived_court_low = derived_court.lower()
+
+    # Spec Phase 4: Court tier comes strictly from derived court; UNKNOWN gets no bonus (0.0).
+    m_court = 0.0
+    if "federal constitutional court" in derived_court_low or "fcc" in court or "fccr" in citation:
         m_court = 1.00 if is_constitutional_query else 0.85
-    elif "supreme court" in court or "scmr" in citation or "supreme court" in title:
+    elif "supreme court" in derived_court_low or "supreme court" in court:
         m_court = 0.80
-    elif "federal shariat court" in court or "fsc" in court:
+    elif "federal shariat court" in derived_court_low or "fsc" in court:
         m_court = 0.35
-    elif any(hc in court for hc in ["high court", "lahore", "sindh", "peshawar", "balochistan", "islamabad"]) or any(j in citation for j in ["PLD", "CLC", "PCrLJ", "MLD", "YLR", "CLD"]):
+    elif "high court" in derived_court_low or any(hc in derived_court_low for hc in ["lahore", "sindh", "peshawar", "balochistan", "islamabad"]):
         m_court = 0.30
+    elif any(j in citation for j in ["PLD", "CLC", "PCrLJ", "MLD", "YLR", "CLD"]):
+        m_court = 0.30
+    else:
+        m_court = 0.0
 
     # 2. Recency Multiplier
     y = 2000
@@ -375,14 +381,17 @@ def compute_constitutional_multiplier(
 def compute_fused_authority_score(
     cross_encoder_score: float,
     constitutional_multiplier: float,
-    relevance_floor: float = 0.35
+    relevance_floor: float = 0.35,
+    scorer: str = "voyage-rerank-2"
 ) -> float:
     """
     Computes fused authority score (Phase 4, Step 7):
         Final Score = S_cross_encoder * (1.0 + Constitutional Multiplier)
     Clamped strictly to 0.0 if S_cross_encoder < relevance_floor (0.35).
+    Spec Phase 4: Apply separate calibration / no floor to heuristic scores.
     """
-    if cross_encoder_score < relevance_floor:
+    is_heuristic = bool("heuristic" in str(scorer).lower() or "fallback" in str(scorer).lower())
+    if not is_heuristic and cross_encoder_score < relevance_floor:
         return 0.0
     fused = cross_encoder_score * (1.0 + constitutional_multiplier)
     return round(fused, 4)
@@ -427,8 +436,9 @@ def rank_and_filter_authorities(
         has_rerank_score = "rerank_score" in c or "cross_encoder_score" in c
         if has_rerank_score:
             r_score = float(c.get("rerank_score") if "rerank_score" in c else c.get("cross_encoder_score", 0.0))
+            scorer = str(c.get("rerank_scorer") or c.get("scorer") or c.get("rerank_model") or "voyage-rerank-2")
             const_mult = compute_constitutional_multiplier(c, query_plan=query_plan)
-            fused_score = compute_fused_authority_score(r_score, const_mult, relevance_floor=relevance_floor)
+            fused_score = compute_fused_authority_score(r_score, const_mult, relevance_floor=relevance_floor, scorer=scorer)
             if fused_score == 0.0:
                 # Clamped by relevance floor: excluded from generation
                 continue

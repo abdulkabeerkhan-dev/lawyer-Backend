@@ -894,7 +894,7 @@ def get_backend_base_url() -> str:
 
 
 
-async def get_voyage_embedding(text: str) -> List[float]:
+async def get_voyage_embedding(text: str, input_type: Optional[str] = "query") -> List[float]:
 
     if not VOYAGE_API_KEY:
 
@@ -917,6 +917,8 @@ async def get_voyage_embedding(text: str) -> List[float]:
         "model": "voyage-law-2"
 
     }
+    if input_type:
+        payload["input_type"] = input_type
 
     async with httpx.AsyncClient(timeout=30.0) as client:
 

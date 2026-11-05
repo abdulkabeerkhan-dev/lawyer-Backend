@@ -420,5 +420,86 @@ class TestRemediationSpec(unittest.TestCase):
         self.assertNotEqual(report_unverified["verdict"], "ACCEPTED")
         self.assertFalse(report_unverified["passed"])
 
+
+    def test_collapse_chunks_per_case(self):
+        """
+        Remediation Spec Phase 4:
+        Multiple chunks belonging to the same case must be collapsed into a single entry
+        retaining the highest score and richer text before ranking.
+        """
+        from legal_ai.retrieval.unified_orchestrator import collapse_chunks_per_case
+        
+        candidates = [
+            {"case_id": "2024_scmr_1567_chk_0", "score": 0.72, "text": "Short chunk"},
+            {"case_id": "2024_scmr_1567_chk_1", "score": 0.88, "text": "Much longer chunk with ratio decidendi", "metadata": {"full_text": "Complete full text"}},
+            {"case_id": "2021_pld_sc_123", "score": 0.65, "text": "Another case"}
+        ]
+        collapsed = collapse_chunks_per_case(candidates)
+        # Should collapse 3 items to 2 unique cases
+        self.assertEqual(len(collapsed), 2)
+        # Highest score case (2024 SCMR 1567) should be first with score 0.88
+        top = collapsed[0]
+        self.assertTrue("2024_scmr_1567" in top["case_id"])
+        self.assertEqual(top["score"], 0.88)
+        self.assertTrue("full_text" in top.get("metadata", {}))
+
+    def test_unknown_court_receives_no_bonus(self):
+        """
+        Remediation Spec Phase 4:
+        Court tier comes from derived court; UNKNOWN gets no bonus (m_court == 0.0).
+        """
+        from core.authority_ranking import compute_constitutional_multiplier
+        
+        unknown_cand = {
+            "citation": "2024 ABC 123",  # Non-standard reporter
+            "court": "UNKNOWN",
+            "title": "Some Party v. Other Party",
+            "year": 2024
+        }
+        mult = compute_constitutional_multiplier(unknown_cand)
+        # Recency (2024) gets 0.15, but court should contribute 0.0
+        # If court got 0.10 or 0.30, mult would be >= 0.25
+        self.assertAlmostEqual(mult, 0.15, delta=0.01)
+
+    def test_zero_relevance_yields_zero_authority(self):
+        """
+        Remediation Spec Phase 4:
+        Relevance must dominate: a case with zero provision match and zero legal issue match
+        strictly yields 0.0 authority score, even if from Supreme Court.
+        """
+        from core.authority_ranking import calculate_authority_score
+        from core.legal_query_planner import LegalQueryPlan
+        
+        plan = LegalQueryPlan(
+            legal_domain=["Criminal", "Cheque Bounce"],
+            provisions=["Section 489-F PPC"],
+            legal_questions=["Whether dishonest intent is required under 489-F PPC"]
+        )
+        # Irrelevant Supreme Court civil rent case
+        cand = {
+            "title": "Rent Controller Case",
+            "citation": "2024 SCMR 9999",
+            "court": "Supreme Court of Pakistan",
+            "preview": "Ejectment of tenant for default of rent payment under urban rent ordinance.",
+            "year": 2024
+        }
+        score, breakdown = calculate_authority_score(cand, plan)
+        self.assertEqual(score, 0.0, "Zero relevance case must receive 0.0 authority score!")
+
+    def test_heuristic_scorer_no_floor_clamp(self):
+        """
+        Remediation Spec Phase 4:
+        Heuristic fallback cross-scorer is not clamped to 0.0 by the 0.35 Voyage reranker floor.
+        """
+        from core.authority_ranking import compute_fused_authority_score
+        
+        # Voyage score < 0.35 clamped to 0.0
+        voyage_fused = compute_fused_authority_score(0.30, 0.50, relevance_floor=0.35, scorer="voyage-rerank-2")
+        self.assertEqual(voyage_fused, 0.0)
+        
+        # Heuristic score < 0.35 is NOT clamped to 0.0
+        heuristic_fused = compute_fused_authority_score(0.30, 0.50, relevance_floor=0.35, scorer="fallback-heuristic")
+        self.assertGreater(heuristic_fused, 0.0)
+
 if __name__ == "__main__":
     unittest.main()
