@@ -4791,65 +4791,31 @@ class MemoVerifier:
 
             else:
 
-
-
                 statutes_failed += 1
 
-
-
-                is_disputed_missing_banner = (rec and rec.get("tier") in ("disputed", "extraction_disputed") and not has_disputed)
-
-
-
+                is_disputed_missing_banner = bool(rec and rec.get("tier") in ("disputed", "extraction_disputed") and not has_disputed)
                 if is_disputed_missing_banner:
-
-
-
                     disputed_notices.append({
-
-
-
                         "provision": cid or sc["span"],
-
-
-
                         "label": LABEL_DISPUTED_TEXT_NOTICE,
-
-
-
                         "issue": f"Provision '{cid or sc['span']}' is classified as disputed; human check required before reliance."
-
-
-
                     })
-
-
-
-                failures.append({
-
-
-
-                    "rule": "(d)",
-
-
-
-                    "category": "DISPUTED_TEXT_UNNOTICED" if is_disputed_missing_banner else "CITED_PROVISION_NOT_IN_VERIFIED_STORE",
-
-
-
-                    "label": LABEL_DISPUTED_TEXT_NOTICE if is_disputed_missing_banner else LABEL_CITED_PROVISION_NOT_IN_VERIFIED_STORE,
-
-
-
-                    "issue": f"{LABEL_DISPUTED_TEXT_NOTICE if is_disputed_missing_banner else LABEL_CITED_PROVISION_NOT_IN_VERIFIED_STORE}: {reason}",
-
-
-
-                    "span": sc["span"]
-
-
-
-                })
+                    failures.append({
+                        "rule": "(d)",
+                        "category": "DISPUTED_TEXT_UNNOTICED",
+                        "label": LABEL_DISPUTED_TEXT_NOTICE,
+                        "issue": f"{LABEL_DISPUTED_TEXT_NOTICE}: {reason}",
+                        "span": sc["span"]
+                    })
+                else:
+                    # Spec Phase 5 (F16 fix): Flag unindexed statutory mentions as unverified in report notices without blocking memo
+                    disputed_notices.append({
+                        "provision": cid or sc["span"],
+                        "label": LABEL_CITED_PROVISION_NOT_IN_VERIFIED_STORE,
+                        "issue": f"Provision '{cid or sc['span']}' is unindexed/unverified in local bare-act store; verify against primary legislation.",
+                        "span": sc["span"],
+                        "unverified": True
+                    })
 
 
 

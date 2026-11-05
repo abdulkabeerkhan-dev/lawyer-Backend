@@ -569,7 +569,10 @@ def classify_precedent_authority_level(
 
     citation = str(card.get("citation") or card.get("neutral_citation") or meta.get("citation") or "").upper()
 
-    court = str(card.get("court") or card.get("court_name") or card.get("canonical_court_name") or meta.get("court") or "").lower()
+    raw_court = str(card.get("court") or card.get("court_name") or card.get("canonical_court_name") or meta.get("court") or "")
+    from core.court_derivation import derive_court_and_year
+    derived_court, _court_src, _yr = derive_court_and_year(citation=citation, meta_court=raw_court, case_title=title)
+    court = (derived_court if derived_court != "UNKNOWN" else raw_court).lower()
 
     preview = str(card.get("preview") or card.get("ratio_decidendi") or card.get("legal_issue") or card.get("snippet") or meta.get("full_text") or meta.get("text") or "").lower()
 

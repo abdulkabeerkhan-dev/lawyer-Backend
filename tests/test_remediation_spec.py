@@ -501,5 +501,49 @@ class TestRemediationSpec(unittest.TestCase):
         heuristic_fused = compute_fused_authority_score(0.30, 0.50, relevance_floor=0.35, scorer="fallback-heuristic")
         self.assertGreater(heuristic_fused, 0.0)
 
+
+    def test_memo_verifier_rule_d_unindexed_statute_does_not_block(self):
+        """
+        Remediation Spec Phase 5 (F16 fix):
+        Unindexed peripheral statutory citations are flagged as unverified in report notices
+        without blocking the whole memorandum.
+        """
+        from legal_ai.verification.memo_verifier import verify_memorandum_text
+        
+        # Valid memo containing a peripheral unindexed statutory reference
+        memo_with_peripheral = (
+            "Under Section 489-F PPC, dishonest intent is a foundational ingredient.\n"
+            "The petitioner also referenced Section 888 of the Special Commercial Enactment."
+        )
+        report = verify_memorandum_text(memo_with_peripheral)
+        # Check that failures does NOT contain CITED_PROVISION_NOT_IN_VERIFIED_STORE
+        rule_d_failures = [f for f in report.get("failures", []) if f.get("category") == "CITED_PROVISION_NOT_IN_VERIFIED_STORE"]
+        self.assertEqual(len(rule_d_failures), 0, "Unindexed statute must not be a blocking failure!")
+
+    def test_content_level_and_prompt_rule_in_precedent_block(self):
+        """
+        Remediation Spec Phase 5:
+        _build_precedent_context_block passes content_level, truncated status,
+        and PROMPT RULE (HEADNOTE-ONLY) to the prompt.
+        """
+        from legal_ai.query_engine.query_processor import _build_precedent_context_block
+        
+        cards = [
+            {
+                "citation": "2024 SCMR 1567",
+                "case_name": "Tariq v. State",
+                "court": "Supreme Court of Pakistan",
+                "content_level": "headnote_only",
+                "is_headnote_only": True,
+                "truncated": True,
+                "preview": "Dishonest issuance under Section 489-F PPC requires mens rea at inception."
+            }
+        ]
+        block = _build_precedent_context_block(cards)
+        self.assertIn("Content Level", block)
+        self.assertIn("headnote_only", block)
+        self.assertIn("Truncated**: True", block)
+        self.assertIn("PROMPT RULE (HEADNOTE-ONLY)", block)
+
 if __name__ == "__main__":
     unittest.main()

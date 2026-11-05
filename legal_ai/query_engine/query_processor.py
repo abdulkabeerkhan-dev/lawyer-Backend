@@ -955,6 +955,14 @@ def _build_precedent_context_block(cards: List[Dict[str, Any]]) -> str:
 
 
         lines.append(f"- **Authority Level**: {auth_tag}")
+        c_level = c.get("content_level") or ("headnote_only" if is_headnote_only_card(c) else "full_judgment")
+        yr_str = str(c.get("year") or "UNKNOWN")
+        is_trunc = bool(c.get("truncated", False))
+        lines.append(f"- **Year**: {yr_str}")
+        lines.append(f"- **Content Level**: {c_level}")
+        lines.append(f"- **Truncated**: {is_trunc}")
+        if c_level == "headnote_only" or is_headnote_only_card(c):
+            lines.append("- **PROMPT RULE (HEADNOTE-ONLY)**: State ONLY what the headnote text explicitly provides. Do NOT infer judicial reasoning, multi-prong standards, or factual findings not in evidence.")
 
 
 
@@ -2970,38 +2978,20 @@ async def process_query_job_legal_ai(
 
 
 
+        is_bail_query = bool(re.search(r"\b(bail|pre-arrest|post-arrest|497|498|489-f|489f|fir)\b", effective_user_query, re.I))
+        bail_directive = ""
+        if is_bail_query:
+            bail_directive = (
+                "BAIL JURISDICTION INTEGRITY (MANDATORY):\n"
+                "- Distinguish strictly between Pre-Arrest Bail (Section 498 CrPC) and Post-Arrest Bail (Section 497 CrPC).\n"
+                "- Pre-arrest bail requires establishing prima facie mala fides, ulterior motives, or an intent to harass/humiliate by the complainant or police.\n"
+                "- Section 497 CrPC governs post-arrest bail (where offence is non-prohibitory, grant is the rule and refusal is an exception).\n"
+                "- NEVER cite a post-arrest bail precedent as a pre-arrest bail authority without explicitly stating that it is a post-arrest decision applied by analogy.\n\n"
+            )
         user_synthesis_content = (
-
-
-
-
-
-
-
             f"FACTUAL MATRIX / LEGAL QUERY:\n{effective_user_query}\n\n"
-
-
-
-
-
-
-
-            f"CURRENT SYSTEM DATE: {current_system_date}\n\n"
-
-
-
-
-
-
-
             f"STATUTORY & CURRENT LAW FRAMEWORK:\n{formatted_current_law_block}\n\n"
-
-
-
-
-
-
-
+            f"{bail_directive}"
             f"{precedent_context_block}\n\n"
 
 
@@ -6251,7 +6241,6 @@ async def process_query_job_legal_ai(
 
 
         })
-
 
 
 
