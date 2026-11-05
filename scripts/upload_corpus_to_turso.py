@@ -100,21 +100,23 @@ def send_batch_to_turso(batch: list, max_retries: int = 5) -> bool:
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """
     for r in batch:
+        year_arg = {"type": "integer", "value": str(r["year"])} if r.get("year") is not None else {"type": "null"}
+        page_arg = {"type": "integer", "value": str(r["page"])} if r.get("page") is not None else {"type": "null"}
         requests.append({
             "type": "execute",
             "stmt": {
                 "sql": sql,
                 "args": [
-                    {"type": "text", "value": r["case_id"]},
-                    {"type": "text", "value": r["neutral_citation"]},
-                    {"type": "text", "value": r["case_title"]},
-                    {"type": "text", "value": r["court_name"]},
-                    {"type": "integer", "value": str(r["year"]) if r["year"] else None},
-                    {"type": "text", "value": r["journal"]},
-                    {"type": "integer", "value": str(r["page"]) if r["page"] else None},
-                    {"type": "text", "value": r["content_level"]},
-                    {"type": "text", "value": r["full_text"]},
-                    {"type": "text", "value": r["headnote"]}
+                    {"type": "text", "value": str(r.get("case_id", ""))},
+                    {"type": "text", "value": str(r.get("neutral_citation", ""))},
+                    {"type": "text", "value": str(r.get("case_title", ""))},
+                    {"type": "text", "value": str(r.get("court_name", ""))},
+                    year_arg,
+                    {"type": "text", "value": str(r.get("journal", ""))},
+                    page_arg,
+                    {"type": "text", "value": str(r.get("content_level", ""))},
+                    {"type": "text", "value": str(r.get("full_text", ""))},
+                    {"type": "text", "value": str(r.get("headnote", "")) if r.get("headnote") else ""}
                 ]
             }
         })
@@ -222,12 +224,19 @@ def upload_csv(csv_path: str, filename: str, start_index: int = 0) -> int:
             if len(batch) >= BATCH_SIZE:
                 success = send_batch_to_turso(batch)
                 if not success:
-                    log(f"Abort in {filename} at index {i} due to insertion failure.")
-                    return total_processed
-                total_processed += len(batch)
-                checkpoint[filename] = i + 1
-                save_checkpoint(checkpoint)
-                batch = []
+                    log(f"Batch failed in {filename} at row {i+1}. Attempting row-by-row fallback...")
+                    for single_r in batch:
+                        ok_single = send_batch_to_turso([single_r], max_retries=2)
+                        if ok_single:
+                            total_processed += 1
+                    checkpoint[filename] = i + 1
+                    save_checkpoint(checkpoint)
+                    batch = []
+                else:
+                    total_processed += len(batch)
+                    checkpoint[filename] = i + 1
+                    save_checkpoint(checkpoint)
+                    batch = []
 
                 if total_processed % 500 == 0:
                     rate = total_processed / (time.time() - t_start)
