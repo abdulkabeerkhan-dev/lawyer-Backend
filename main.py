@@ -17455,6 +17455,17 @@ async def generate_pleading(
 
             verified_law_data.extend(_fetch_cases_by_field("case_id", case_ids))
 
+        already_found_ids = {c.get("id") for c in verified_law_data if c.get("id")}
+        already_found_ids.update({c.get("case_id") for c in verified_law_data if c.get("case_id")})
+        missing_ids = [cid for cid in selected_ids if cid not in already_found_ids]
+        if missing_ids:
+            try:
+                from core.turso_client import get_cases_batch
+                turso_cases = get_cases_batch(missing_ids)
+                verified_law_data.extend(turso_cases)
+            except Exception as e:
+                logging.getLogger("main").warning(f"Turso batch lookup failed in generate_pleading: {e}")
+
 
 
     except HTTPException:
@@ -17553,7 +17564,9 @@ VERIFIED LAW:
 
     # ORDER 1.9 - ITEM 5: PLEADING GENERATION VERIFICATION GATE
     from legal_ai.verification.memo_verifier import verify_pleading_citations_and_quotes
-    v_res = verify_pleading_citations_and_quotes(draft_markdown)
+    extra_cits = {c.get("neutral_citation") for c in verified_law_data if c.get("neutral_citation")}
+    extra_cits.update({c.get("case_id") for c in verified_law_data if c.get("case_id")})
+    v_res = verify_pleading_citations_and_quotes(draft_markdown, extra_citations=extra_cits)
     if not v_res.get("passed", False):
         raise HTTPException(
             status_code=422,

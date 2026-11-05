@@ -83,3 +83,9 @@ data/rate_limit_state.json
 data/*.jsonl
 data/batch_cursor.json
 data/*.log
+
+# Local database and checkpoint ignores
+*.db
+*.sqlite
+*.log
+*checkpoint*.json

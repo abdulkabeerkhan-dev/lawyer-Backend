@@ -5236,6 +5236,13 @@ def verify_memorandum_text(memo_text: str, **kwargs) -> Dict[str, Any]:
 
 
     verifier = MemoVerifier()
+    if extra_citations:
+        for ec in extra_citations:
+            if ec:
+                s_ec = str(ec).strip()
+                verifier.citations_set.add(" ".join(s_ec.upper().split()))
+                verifier.citations_set.add(" ".join(s_ec.upper().replace("_", " ").split()))
+                verifier.case_titles_set.add(s_ec.upper())
 
 
 
@@ -5379,7 +5386,7 @@ def attach_system_disputed_banner(memo_text: str, disputed_notices: List[Dict[st
 
 
 
-def verify_pleading_citations_and_quotes(pleading_text: str) -> Dict[str, Any]:
+def verify_pleading_citations_and_quotes(pleading_text: str, extra_citations: Optional[Any] = None) -> Dict[str, Any]:
 
 
 
@@ -5417,8 +5424,29 @@ def verify_pleading_citations_and_quotes(pleading_text: str) -> Dict[str, Any]:
 
     pleading_failures = [f for f in res["failures"] if f.get("rule") in ("(a)", "(b)", "(c)", "(d)")]
 
+    norm_extras = set()
+    if extra_citations:
+        for ec in extra_citations:
+            if ec:
+                s_ec = str(ec).strip().upper()
+                norm_extras.add(" ".join(s_ec.split()))
+                norm_extras.add(" ".join(s_ec.replace("_", " ").split()))
 
-
+    remaining_failures = []
+    for f in pleading_failures:
+        if f.get("rule") == "(c)":
+            span = f.get("span", "")
+            norm_span = " ".join(span.upper().split())
+            if norm_span in norm_extras or norm_span.replace(" ", "_") in norm_extras:
+                continue
+            try:
+                from core.turso_client import get_case_by_identifier
+                if get_case_by_identifier(span):
+                    continue
+            except Exception:
+                pass
+        remaining_failures.append(f)
+    pleading_failures = remaining_failures
     passed = (len(pleading_failures) == 0)
 
 
