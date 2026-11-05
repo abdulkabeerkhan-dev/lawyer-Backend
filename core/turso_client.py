@@ -24,7 +24,7 @@ TURSO_TOKEN = os.environ.get(
 # In-memory LRU-like cache for hot case lookups
 _CASE_CACHE: Dict[str, Dict[str, Any]] = {}
 
-def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 15) -> List[Dict[str, Any]]:
+def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 30, max_retries: int = 3) -> List[Dict[str, Any]]:
     """
     Executes one or more SQL statements against the Turso libSQL pipeline.
     stmts format: [{"sql": "...", "args": [{"type": "text", "value": "..."}, ...]}]
@@ -41,40 +41,45 @@ def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 15) -> Li
         requests.append({"type": "execute", "stmt": stmt_obj})
 
     payload = json.dumps({"requests": requests}).encode("utf-8")
-    req = urllib.request.Request(
-        TURSO_URL,
-        data=payload,
-        headers={
-            "Authorization": f"Bearer {TURSO_TOKEN}",
-            "Content-Type": "application/json"
-        },
-        method="POST"
-    )
 
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            results = []
-            for res_item in data.get("results", []):
-                if res_item.get("type") == "ok":
-                    exec_res = res_item.get("response", {}).get("result", {})
-                    cols = [c["name"] for c in exec_res.get("cols", [])]
-                    rows = []
-                    for row in exec_res.get("rows", []):
-                        row_dict = {}
-                        for i, cell in enumerate(row):
-                            val = cell.get("value")
-                            if cell.get("type") == "integer" and val is not None:
-                                val = int(val)
-                            row_dict[cols[i]] = val
-                        rows.append(row_dict)
-                    results.append({"cols": cols, "rows": rows, "affected": exec_res.get("affected_row_count", 0)})
-                else:
-                    results.append({"error": res_item.get("error")})
-            return results
-    except Exception as e:
-        logger.error(f"Turso pipeline execution error: {e}")
-        return []
+    import time
+    for attempt in range(1, max_retries + 1):
+        req = urllib.request.Request(
+            TURSO_URL,
+            data=payload,
+            headers={
+                "Authorization": f"Bearer {TURSO_TOKEN}",
+                "Content-Type": "application/json"
+            },
+            method="POST"
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                results = []
+                for res_item in data.get("results", []):
+                    if res_item.get("type") == "ok":
+                        exec_res = res_item.get("response", {}).get("result", {})
+                        cols = [c["name"] for c in exec_res.get("cols", [])]
+                        rows = []
+                        for row in exec_res.get("rows", []):
+                            row_dict = {}
+                            for i, cell in enumerate(row):
+                                val = cell.get("value")
+                                if cell.get("type") == "integer" and val is not None:
+                                    val = int(val)
+                                row_dict[cols[i]] = val
+                            rows.append(row_dict)
+                        results.append({"cols": cols, "rows": rows, "affected": exec_res.get("affected_row_count", 0)})
+                    else:
+                        results.append({"error": res_item.get("error")})
+                return results
+        except Exception as e:
+            if attempt == max_retries:
+                logger.error(f"Turso pipeline execution error on final attempt {attempt}: {e}")
+            else:
+                time.sleep(1.0 * attempt)
+    return []
 
 def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     """
