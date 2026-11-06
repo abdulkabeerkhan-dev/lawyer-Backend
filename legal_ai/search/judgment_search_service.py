@@ -148,10 +148,37 @@ async def search_judgments_by_citation(
         except Exception:
             pass
 
-    # 2. Check Supabase full_judgments (Circuit-breaker guarded)
+    # 1.5 Check Turso Master Corpus (low latency, 141,481 full judgments)
+    try:
+        from core.turso_client import get_case_by_identifier
+        t_case = None
+        if norm_expected:
+            t_case = get_case_by_identifier(norm_expected)
+        if not t_case and expected_citation:
+            t_case = get_case_by_identifier(expected_citation)
+        if not t_case and target_year and target_journal and target_page:
+            t_case = get_case_by_identifier(f"{target_year}_{target_journal}_{target_page}")
+
+        if t_case and t_case.get("case_id") not in seen_ids:
+            cid = t_case.get("case_id")
+            seen_ids.add(cid)
+            results.append(build_precedent_result(
+                cid=cid,
+                cit=t_case.get("neutral_citation") or expected_citation,
+                title=t_case.get("case_title") or "Authoritative Judgment",
+                court=t_case.get("court_name") or "Supreme Court of Pakistan",
+                year=t_case.get("year") or target_year or 2020,
+                snippet=t_case.get("headnote") or (t_case.get("full_text")[:500] if t_case.get("full_text") else ""),
+                score=1.0,
+                source_type="Turso Master Corpus"
+            ))
+    except Exception as _t_err:
+        pass
+
+    # 2. Check Supabase full_judgments (Circuit-breaker guarded fallback)
     from legal_ai.config import is_supabase_circuit_open
     sb = None if is_supabase_circuit_open() else get_supabase_client()
-    if sb and expected_citation:
+    if not results and sb and expected_citation:
         try:
             # Query exact neutral_citation or case_id
             for query_field in ["neutral_citation", "case_id"]:

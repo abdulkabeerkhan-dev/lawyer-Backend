@@ -4060,29 +4060,43 @@ def extract_and_intercept_citation(user_query: str):
 
 
 
-            # Fast indexed equality on case_id
-
+            # Fast indexed equality on case_id: Turso primary, Supabase fallback
             res_supa = None
-
             try:
+                from core.turso_client import get_case_by_identifier
+                t_cand = (
+                    (get_case_by_identifier(f"{yr}_{clean_j}_{req_court}_{pg}".upper()) if req_court else None) or
+                    get_case_by_identifier(norm_u) or
+                    (get_case_by_identifier(raw_u) if raw_u != norm_u else None)
+                )
+                if t_cand and t_cand.get("full_text"):
+                    class _TursoLookupResult:
+                        def __init__(self, c):
+                            self.data = [{
+                                "id": c.get("case_id"),
+                                "case_id": c.get("case_id"),
+                                "neutral_citation": c.get("neutral_citation") or norm_s,
+                                "case_title": c.get("case_title") or c.get("case_id"),
+                                "court_name": c.get("court_name") or "Supreme Court of Pakistan",
+                                "canonical_court_name": c.get("court_name") or "Supreme Court of Pakistan",
+                                "decision_date": str(c.get("year") or yr),
+                                "full_text": c.get("full_text") or ""
+                            }]
+                    res_supa = _TursoLookupResult(t_cand)
+            except Exception as _turso_err:
+                pass
 
-                if req_court:
-
-                    cq_u = f"{yr}_{clean_j}_{req_court}_{pg}".upper()
-
-                    res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text").eq("case_id", cq_u).limit(1).execute()
-
-                if not res_supa or not res_supa.data:
-
-                    res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text").eq("case_id", norm_u).limit(1).execute()
-
-                if not res_supa.data and raw_u != norm_u:
-
-                    res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text").eq("case_id", raw_u).limit(1).execute()
-
-            except Exception as _supa_err:
-
-                print(f"⚠️ Primary case_id lookup notice: {_supa_err}", file=sys.stderr)
+            if not res_supa and supabase and not is_supabase_circuit_open():
+                try:
+                    if req_court:
+                        cq_u = f"{yr}_{clean_j}_{req_court}_{pg}".upper()
+                        res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text").eq("case_id", cq_u).limit(1).execute()
+                    if not res_supa or not res_supa.data:
+                        res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text").eq("case_id", norm_u).limit(1).execute()
+                    if not res_supa.data and raw_u != norm_u:
+                        res_supa = supabase.table("full_judgments").select("id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text").eq("case_id", raw_u).limit(1).execute()
+                except Exception as _supa_err:
+                    print(f"⚠️ Primary case_id lookup notice: {_supa_err}", file=sys.stderr)
 
 
 
@@ -14458,7 +14472,33 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
 
         return rec_dict
 
-
+    # 0. Primary Store: Turso Master Corpus (141k+ full judgments, low-latency libSQL pipeline)
+    try:
+        from core.turso_client import get_case_by_identifier
+        tc_hit = (
+            get_case_by_identifier(decoded_id) or
+            get_case_by_identifier(norm_id) or
+            get_case_by_identifier(space_id)
+        )
+        if tc_hit and tc_hit.get("full_text"):
+            rec = {
+                "id": tc_hit.get("case_id"),
+                "case_id": tc_hit.get("case_id"),
+                "neutral_citation": tc_hit.get("neutral_citation") or space_id,
+                "case_title": tc_hit.get("case_title") or tc_hit.get("case_id"),
+                "court_name": tc_hit.get("court_name") or "Supreme Court of Pakistan",
+                "canonical_court_name": tc_hit.get("court_name") or "Supreme Court of Pakistan",
+                "year": tc_hit.get("year"),
+                "journal": tc_hit.get("journal"),
+                "page": tc_hit.get("page"),
+                "full_text": tc_hit.get("full_text") or "",
+                "headnote": tc_hit.get("headnote") or "",
+                "content_level": tc_hit.get("content_level") or "full_judgment",
+                "source_type": "Turso"
+            }
+            return _sanitize_record(rec)
+    except Exception as _turso_err:
+        pass
 
     if supabase and not is_supabase_circuit_open():
         def _trip_if_needed(err_exc):
@@ -17418,58 +17458,50 @@ async def generate_pleading(
 
 
 
-    # 1. Fetch Verified Law strictly from Supabase using the IDs
-
+    # 1. Primary: Fetch Verified Law from Turso Master Corpus (low-latency, 141k+ authorities)
     try:
-
-        uuid_pattern = re.compile(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$')
-
-        uuid_ids = [cid for cid in selected_ids if uuid_pattern.match(str(cid))]
-
-        case_ids = [cid for cid in selected_ids if not uuid_pattern.match(str(cid))]
-
-
-
         verified_law_data = []
+        try:
+            from core.turso_client import get_cases_batch
+            turso_cases = get_cases_batch(selected_ids)
+            for tc in turso_cases:
+                verified_law_data.append({
+                    "id": tc.get("case_id"),
+                    "case_id": tc.get("case_id"),
+                    "neutral_citation": tc.get("neutral_citation"),
+                    "case_title": tc.get("case_title"),
+                    "court_name": tc.get("court_name"),
+                    "full_text": tc.get("full_text") or "",
+                    "holding_snippet": tc.get("headnote") or (tc.get("full_text")[:500] if tc.get("full_text") else "")
+                })
+        except Exception as _tc_err:
+            logging.getLogger("main").warning(f"Turso batch lookup in generate_pleading: {_tc_err}")
 
-
-
-        def _fetch_cases_by_field(field_name, ids):
-
-            # Attempt to select with holding_snippet if available, fallback to full_text
-
-            try:
-
-                res = supabase.table("full_judgments").select("id, case_id, neutral_citation, holding_snippet, full_text").in_(field_name, ids).execute()
-
-                return res.data or []
-
-            except Exception:
-
-                res = supabase.table("full_judgments").select("id, case_id, neutral_citation, full_text").in_(field_name, ids).execute()
-
-                return res.data or []
-
-
-
-        if uuid_ids:
-
-            verified_law_data.extend(_fetch_cases_by_field("id", uuid_ids))
-
-        if case_ids:
-
-            verified_law_data.extend(_fetch_cases_by_field("case_id", case_ids))
-
+        # 2. Fallback: Query Supabase strictly for any IDs not found in Turso
         already_found_ids = {c.get("id") for c in verified_law_data if c.get("id")}
         already_found_ids.update({c.get("case_id") for c in verified_law_data if c.get("case_id")})
         missing_ids = [cid for cid in selected_ids if cid not in already_found_ids]
-        if missing_ids:
-            try:
-                from core.turso_client import get_cases_batch
-                turso_cases = get_cases_batch(missing_ids)
-                verified_law_data.extend(turso_cases)
-            except Exception as e:
-                logging.getLogger("main").warning(f"Turso batch lookup failed in generate_pleading: {e}")
+
+        if missing_ids and supabase and not is_supabase_circuit_open():
+            uuid_pattern = re.compile(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$')
+            uuid_ids = [cid for cid in missing_ids if uuid_pattern.match(str(cid))]
+            case_ids = [cid for cid in missing_ids if not uuid_pattern.match(str(cid))]
+
+            def _fetch_cases_by_field(field_name, ids):
+                try:
+                    res = supabase.table("full_judgments").select("id, case_id, neutral_citation, holding_snippet, full_text").in_(field_name, ids).execute()
+                    return res.data or []
+                except Exception:
+                    try:
+                        res = supabase.table("full_judgments").select("id, case_id, neutral_citation, full_text").in_(field_name, ids).execute()
+                        return res.data or []
+                    except Exception:
+                        return []
+
+            if uuid_ids:
+                verified_law_data.extend(_fetch_cases_by_field("id", uuid_ids))
+            if case_ids:
+                verified_law_data.extend(_fetch_cases_by_field("case_id", case_ids))
 
 
 
