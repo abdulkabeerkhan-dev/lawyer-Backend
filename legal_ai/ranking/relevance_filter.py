@@ -218,6 +218,23 @@ def filter_candidate_quality_before_ranking(
                     rejection_counts["mismatched_domain"] += 1
                     continue
 
+        # Case Integrity Engine Gate (drops corrupted records, e.g. 1989 SCMR 868 in property queries, title/domain contradictions)
+        try:
+            from core.case_integrity import verify_case_integrity
+            is_intact, int_reason, sanitized = verify_case_integrity(
+                c,
+                query_domain=domains[0] if domains else "civil",
+                sub_topic=questions_str,
+                query_text=questions_str
+            )
+            if not is_intact:
+                rejection_counts["unrelated_subject"] += 1
+                logger.info(f"[INTEGRITY_GATE_DROP] Dropped candidate '{cid}': {int_reason}")
+                continue
+            c.update(sanitized)
+        except Exception:
+            pass
+
         clean_candidates.append(c)
 
     return clean_candidates, rejection_counts

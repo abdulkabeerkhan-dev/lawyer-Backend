@@ -2553,6 +2553,27 @@ async def process_query_job_legal_ai(
     except Exception as e:
         logger.warning(f"Turso precedent hydration error: {e}")
 
+    # Phase 4 Case Record Integrity Engine Gate (drops corrupted cases e.g. 1989 SCMR 868 in property context)
+    try:
+        from core.case_integrity import verify_case_integrity
+        verified_precedents = []
+        _domain_nm = (legal_query_plan.legal_domain[0] if (legal_query_plan and getattr(legal_query_plan, "legal_domain", None)) else "civil")
+        for pc in precedent_cards:
+            is_valid, drop_reason, sanitized_pc = verify_case_integrity(
+                pc,
+                query_domain=_domain_nm,
+                sub_topic=effective_user_query,
+                query_text=effective_user_query
+            )
+            if is_valid:
+                verified_precedents.append(sanitized_pc)
+            else:
+                logger.warning(f"[INTEGRITY_DROP] Excluded precedent card '{pc.get('citation')}': {drop_reason}")
+        precedent_cards = verified_precedents
+    except Exception as _int_err:
+        logger.warning(f"Integrity gate error: {_int_err}")
+
+
 
 
 
@@ -2713,6 +2734,28 @@ async def process_query_job_legal_ai(
 
 
     pipeline_metrics.start_stage("drafting_opinion")
+
+    # Stage 4: Assemble Strict Evidence Pack (S1..Sn, C1..Cn) with two-way cross linking
+    from core.evidence_pipeline import (
+        execute_stage4_evidence_pack,
+        build_stage5_prompts,
+        execute_stage6_verification_and_rendering
+    )
+    evidence_pack, precedent_cards = execute_stage4_evidence_pack(
+        verified_statutory_provisions=verified_statutory_provisions,
+        precedent_cards=precedent_cards,
+        query_text=effective_user_query,
+        query_plan=legal_query_plan
+    )
+    stage5_sys_prompt, stage5_user_prompt = build_stage5_prompts(
+        evidence_pack=evidence_pack,
+        user_query=effective_user_query,
+        query_plan=legal_query_plan
+    )
+    # Stage 5 directives override prompts with strict JSON schema
+    system_prompt = stage5_sys_prompt
+    user_synthesis_content = stage5_user_prompt
+
 
 
 
@@ -4394,7 +4437,14 @@ async def process_query_job_legal_ai(
 
 
 
-    clean_answer = purge_debug_warnings(raw_answer)
+        # Stage 6: Code-level deterministic verification and honest memorandum rendering
+    rendered_markdown, v_report, memo_json_payload = execute_stage6_verification_and_rendering(
+        raw_llm_response=raw_answer,
+        evidence_pack=evidence_pack,
+        fallback_query=effective_user_query
+    )
+    clean_answer = rendered_markdown
+
 
 
 
@@ -6068,6 +6118,9 @@ async def process_query_job_legal_ai(
 
 
                 "model_answer": clean_answer,
+                "database_freshness": "Database current as of November 2026",
+                "verification_report": v_report if 'v_report' in locals() else None,
+                "evidence_pack": evidence_pack.to_dict() if 'evidence_pack' in locals() else None,
 
 
 
