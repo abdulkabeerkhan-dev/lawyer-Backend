@@ -1790,6 +1790,22 @@ def sanitize_precedent_card(card: Dict[str, Any], backend_base_url: str = "") ->
     full_judgment_text = str(meta_dict.get("full_text") or c.get("raw_judgment_text") or meta_dict.get("text") or c.get("preview") or "").strip()
 
     word_count = len(full_judgment_text.split())
+    if word_count < 150 and cit:
+        try:
+            from core.turso_client import get_case_by_identifier
+            t_case = get_case_by_identifier(cit)
+            if t_case and t_case.get("full_text"):
+                full_judgment_text = str(t_case["full_text"]).strip()
+                c["raw_judgment_text"] = full_judgment_text
+                c["full_text"] = full_judgment_text
+                word_count = len(full_judgment_text.split())
+                t_title = t_case.get("case_title")
+                if t_title and (not c.get("case_title") or c.get("case_title") in ("Reported Precedent", "Precedent on Record")):
+                    c["case_title"] = t_title
+                    c["title"] = t_title
+                    c["case_name"] = t_title
+        except Exception:
+            pass
 
 
 

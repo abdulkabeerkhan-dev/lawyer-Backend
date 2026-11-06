@@ -2576,6 +2576,7 @@ async def process_query_job_legal_ai(
 
 
         jobs_store[job_id]["early_display"]["precedent_cards"] = precedent_cards
+        jobs_store[job_id]["precedent_cards"] = precedent_cards
 
 
 

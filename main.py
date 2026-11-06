@@ -8390,7 +8390,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                     jobs_store[job_id]["result"] = None
                     return
                 raw_memo = blocked_data.get("unverified_memo") or blocked_data.get("raw_draft") or ""
-                p_cards = blocked_data.get("precedent_cards") or blocked_data.get("verified_precedents_fallback") or []
+                p_cards = blocked_data.get("precedent_cards") or blocked_data.get("early_display", {}).get("precedent_cards") or blocked_data.get("verified_precedents_fallback") or []
                 memo_body = ""
                 if raw_memo:
                     from legal_ai.synthesis.memorandum_generator import sanitize_partner_markdown_presentation
@@ -8447,7 +8447,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
             if job_id in jobs_store:
                 raw_memo = jobs_store[job_id].get("unverified_memo") or jobs_store[job_id].get("raw_draft")
                 if raw_memo and len(str(raw_memo).strip()) > 100:
-                    p_cards = jobs_store[job_id].get("precedent_cards") or []
+                    p_cards = jobs_store[job_id].get("precedent_cards") or jobs_store[job_id].get("early_display", {}).get("precedent_cards") or []
                     memo_str = str(raw_memo).strip()
                     done_result = {
                         "answer": memo_str,
@@ -16017,7 +16017,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                 else:
                     missing_provisions.append(disp_clean)
 
-        precedent_cards = job.get("precedent_cards") or job.get("verified_precedents_fallback") or []
+        precedent_cards = job.get("precedent_cards") or job.get("early_display", {}).get("precedent_cards") or job.get("verified_precedents_fallback") or []
         try:
             from legal_ai.synthesis.memorandum_generator import filter_and_cap_authorities
             precedent_cards = filter_and_cap_authorities(

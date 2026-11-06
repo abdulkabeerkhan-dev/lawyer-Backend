@@ -321,6 +321,8 @@ def search_statute_provisions(
                     "title": p_title,
                     "display_name": disp,
                     "snippet": excerpt,
+                    "text": p_text,
+                    "text_cleaned": p_text,
                     "has_text": bool(p_text and "no text available" not in p_text.lower()),
                     "in_force": prov.get("in_force", True),
                     "tier": prov.get("tier", "text_layer_extracted")
