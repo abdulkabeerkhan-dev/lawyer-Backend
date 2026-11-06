@@ -736,6 +736,9 @@ def _origin_is_allowed(origin: str) -> bool:
 
         return True
 
+    import re
+    if re.match(r"^https://[a-zA-Z0-9_\-.]+\.(up\.railway\.app|railway\.app|vercel\.app|lovable\.app|lovableproject\.com)$", origin):
+        return True
     if any("lovable.app" in o for o in allowed):
 
         import re
