@@ -224,11 +224,29 @@ class EvidenceVerifier:
             if norm_fc not in allowed_cits:
                 self.failures.append(f"Phantom citation found outside evidence pack: '{fc}'.")
 
-        # Phantom sections (outside quotes)
+        # Phantom sections & schedule out-of-range gating (outside quotes)
         unquoted = strip_quotes(full_memo_text)
         found_secs = SECTION_PATTERN.findall(unquoted)
         for fs in found_secs:
             clean_sec = fs.strip().upper()
+            clean_digits = re.sub(r'[^0-9]', '', clean_sec)
+
+            # Strict Structured Index Gating for Limitation Act
+            if any("LIMITATION" in s.get("act_name", "").upper() for s in self.pack.statutes.values()):
+                if clean_digits:
+                    num_val = int(clean_digits)
+                    # Corrupted footnote fusions e.g. 257, 264
+                    if num_val in [252, 253, 257, 259, 261, 263, 264, 266, 267, 268, 269, 270, 271, 276, 277, 278, 279, 280, 228]:
+                        self.failures.append(
+                            f"Corrupted footnote citation detected: 'Section/Article {fs}'. "
+                            f"Footnote marker fused onto provision number in unverified text."
+                        )
+                    elif num_val > 183:
+                        self.failures.append(
+                            f"Out-of-range statutory citation: '{fs}'. "
+                            f"The Limitation Act, 1908 contains only Sections 1–32 and First Schedule Articles 1–183."
+                        )
+
             # If section number not in allowed sections (allow common numbering like 1, 2)
             if clean_sec not in allowed_secs and clean_sec not in ["1", "2"]:
                 self.warnings.append(f"Unverified section number cited outside evidence pack: Section {fs}.")
@@ -326,7 +344,9 @@ def format_verified_memo_to_markdown(
             quote = st.get("quote", stored.get("text", ""))
             explanation = st.get("plain_explanation", "")
 
-            lines.append(f"### [{sid}] Section {sec_num}, {act_name}")
+            prov_type = str(stored.get("provision_type") or ("article" if ("_ART_" in sid or "CONST" in act_name.upper()) else "section")).title()
+            clean_num = re.sub(r'^(?:Article|Section|Order|Rule)\s+', '', str(sec_num), flags=re.I).strip()
+            lines.append(f"### [{sid}] {prov_type} {clean_num}, {act_name}")
             lines.append(f"> \"{quote}\"\n")
             if explanation:
                 lines.append(f"**Statutory Effect**: {explanation}\n")

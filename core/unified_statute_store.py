@@ -156,6 +156,17 @@ class UnifiedStatuteStore:
                         if not cid and num:
                             cid = f"{act}_SEC_{num}"
 
+                        # Unit type normalization
+                        if not r.get("provision_type"):
+                            if "_ART_" in (cid or "") or "article" in str(r.get("section", "")).lower() or "CONST" in act:
+                                r["provision_type"] = "article"
+                            elif "_ORD_" in (cid or ""):
+                                r["provision_type"] = "order"
+                            elif "_RULE_" in (cid or ""):
+                                r["provision_type"] = "rule"
+                            else:
+                                r["provision_type"] = "section"
+
                         # Backward compatibility alias for text_layer_matched <-> page_verified
                         if "text_layer_matched" in r:
                             r["page_verified"] = r.get("text_layer_matched")
@@ -187,6 +198,21 @@ class UnifiedStatuteStore:
         if not canonical_id:
             return None
         cid_clean = canonical_id.strip().upper()
+
+        # Limitation Act fused footnote normalization (e.g. 257 -> 57, 264 -> 64, 228 -> 28)
+        if "LIMITATION" in cid_clean:
+            fused_map = {
+                "252": "52", "253": "53", "257": "57", "259": "59",
+                "261": "61", "263": "63", "264": "64", "266": "66",
+                "267": "67", "268": "68", "269": "69", "270": "70",
+                "271": "71", "276": "76", "277": "77", "278": "78",
+                "279": "79", "280": "80", "228": "28"
+            }
+            m_fused = re.search(r'_(?:ART|SEC)_([0-9]+)', cid_clean)
+            if m_fused and m_fused.group(1) in fused_map:
+                clean_num = fused_map[m_fused.group(1)]
+                unit_str = "SEC" if (m_fused.group(1) == "228" or "_SEC_" in cid_clean) else "ART"
+                return self.get_by_canonical_id(f"LIMITATION_1908_{unit_str}_{clean_num}")
         res = self._by_cid.get(cid_clean)
         if res:
             return res
@@ -248,13 +274,26 @@ class UnifiedStatuteStore:
             return rec
 
         # 2. Canonical ID variants
-        cids_to_try = [
-            f"{act_upper}_SEC_{clean_num}",
-            f"{act_upper}_SEC_{norm_num}",
-            f"{act_upper}_ART_{clean_num}",
-            f"{act_upper}_ART_{norm_num}",
-            f"{act_upper}_{clean_num}"
-        ]
+        # Check prefix hints in provision_num
+        is_explicit_art = bool(re.search(r'\b(?:article|art)\b', str(provision_num), re.I)) or "_ART_" in clean_num
+        is_explicit_sec = bool(re.search(r'\b(?:section|sec|s\.)\b', str(provision_num), re.I)) or "_SEC_" in clean_num
+        
+        cids_to_try = []
+        if is_explicit_art or (act_upper == "LIMITATION_1908" and norm_num.isdigit() and int(norm_num) > 32):
+            cids_to_try.extend([
+                f"{act_upper}_ART_{clean_num}",
+                f"{act_upper}_ART_{norm_num}",
+                f"{act_upper}_SEC_{clean_num}",
+                f"{act_upper}_SEC_{norm_num}"
+            ])
+        else:
+            cids_to_try.extend([
+                f"{act_upper}_SEC_{clean_num}",
+                f"{act_upper}_SEC_{norm_num}",
+                f"{act_upper}_ART_{clean_num}",
+                f"{act_upper}_ART_{norm_num}"
+            ])
+        cids_to_try.append(f"{act_upper}_{clean_num}")
         for cid in cids_to_try:
             r = self._by_cid.get(cid)
             if r:

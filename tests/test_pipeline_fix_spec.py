@@ -199,3 +199,110 @@ def test_stage6_verifier_flags_phantom_citations_and_bad_quotes():
     assert any("S99" in f for f in report["failures"])
     assert any("exact substring" in f for f in report["failures"])
     assert any("Phantom citation" in f and "1999 SCMR 1234" in f for f in report["failures"])
+
+
+def test_limitation_schedule_unfused_and_unit_type():
+    """Validates that Article 57 and Article 64 are cleanly stored as articles without fused footnote digits."""
+    from core.unified_statute_store import get_unified_statute_store
+    store = get_unified_statute_store()
+    store.load()
+
+    # Article 57 must exist, have provision_type 'article', and contain 3 columns + caveat
+    art57 = store.get_by_canonical_id("LIMITATION_1908_ART_57")
+    assert art57 is not None
+    assert art57.get("provision_type") == "article"
+    assert "money lent" in art57.get("text", "").lower()
+    assert "three years" in art57.get("text", "").lower()
+    assert "when the loan is made" in art57.get("text", "").lower()
+    assert "punjab loans limitation act" in art57.get("text", "").lower()
+
+    # Corrupted 257 and 264 must normalize to genuine 57 and 64
+    res257 = store.get_by_canonical_id("LIMITATION_1908_ART_257")
+    assert res257 is not None
+    assert res257["canonical_id"] == "LIMITATION_1908_ART_57"
+
+    res264 = store.get_by_canonical_id("LIMITATION_1908_ART_264")
+    assert res264 is not None
+    assert res264["canonical_id"] == "LIMITATION_1908_ART_64"
+
+
+def test_statute_search_money_recovery_ranks_art57_and_demotes_sec5():
+    """Validates that money recovery queries rank Article 57 top and demote Section 5."""
+    from legal_ai.search.statute_search_service import search_statute_provisions
+    res = search_statute_provisions(
+        "What is the limitation period for filing a suit for recovery of money under the Limitation Act, 1908?",
+        act_code="LIMITATION_1908"
+    )
+    results = res.get("results", [])
+    assert len(results) > 0
+    top_cid = results[0]["canonical_id"]
+    assert top_cid == "LIMITATION_1908_ART_57"
+    assert results[0]["display_name"].startswith("Article 57")
+
+    # Section 5 must not be in the top 3 results for a suit query
+    top_3_cids = [r["canonical_id"] for r in results[:3]]
+    assert "LIMITATION_1908_SEC_5" not in top_3_cids
+
+
+def test_verifier_rejects_corrupted_article_numbers():
+    """Validates that verifier fails if a memo cites out-of-range or corrupted numbers (e.g. Section 257)."""
+    pack = EvidencePack()
+    pack.add_statute(
+        act_name="Limitation Act, 1908",
+        section_number="57",
+        section_text="Article 57: For money payable for money lent. Period of limitation: Three years. Time from which period begins to run: When the loan is made.",
+        title="Article 57"
+    )
+
+    memo_with_bad_cite = {
+        "question": "Limitation for money recovery",
+        "short_answer": [
+            {"text": "Under Section 257 of the Limitation Act, 1908, the period is three years.", "sources": ["S1"]}
+        ],
+        "statutes": [
+            {"id": "S1", "quote": "For money payable for money lent.", "plain_explanation": "Three years."}
+        ],
+        "cases": [],
+        "options_described_by_sources": [],
+        "gaps": [],
+        "needs_lawyer_review": True
+    }
+
+    verifier = EvidenceVerifier(pack)
+    report = verifier.verify(memo_with_bad_cite)
+    assert report["is_verified"] is False
+    assert any("Corrupted footnote citation" in f or "Out-of-range" in f for f in report["failures"])
+
+
+def test_markdown_renders_article_unit_type_dynamically():
+    """Validates that format_verified_memo_to_markdown outputs 'Article 57' and not 'Section 57'."""
+    pack = EvidencePack()
+    pack.add_statute(
+        act_name="Limitation Act, 1908",
+        section_number="57",
+        section_text="Article 57: For money payable for money lent. Period of limitation: Three years. Time from which period begins to run: When the loan is made.",
+        title="Article 57"
+    )
+    # Ensure provision_type is article
+    pack.statutes["S1"]["provision_type"] = "article"
+
+    memo = {
+        "question": "Limitation for money recovery",
+        "short_answer": [
+            {"text": "Under Article 57 of the Limitation Act, 1908, the period is three years from when the loan is made.", "sources": ["S1"]}
+        ],
+        "statutes": [
+            {"id": "S1", "quote": "For money payable for money lent.", "plain_explanation": "Three years."}
+        ],
+        "cases": [],
+        "options_described_by_sources": [],
+        "gaps": [],
+        "needs_lawyer_review": True
+    }
+
+    verifier = EvidenceVerifier(pack)
+    report = verifier.verify(memo)
+    markdown = format_verified_memo_to_markdown(memo, pack, report)
+    assert "### [S1] Article 57, Limitation Act, 1908" in markdown
+    assert "Section 57" not in markdown
+    assert "Section Article 57" not in markdown

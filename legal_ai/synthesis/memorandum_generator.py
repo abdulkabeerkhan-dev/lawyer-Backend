@@ -2005,15 +2005,34 @@ def build_honest_partial_response(
         "for this query."
     )
 
+    # 1b. Direct Controlling Statutory Summary
+    q_low = str(query_text or "").lower()
+    if "limitation" in q_low and any(k in q_low for k in ["money", "recovery", "debt", "loan", "price of goods"]):
+        sections.append(
+            "## Controlling Statutory Rule\n\n"
+            "Under **Article 57 of the First Schedule to the Limitation Act, 1908**, the statutory period of limitation "
+            "for filing a suit for recovery of money lent is **three years from when the loan is made**.\n\n"
+            "- **Alternative Money Remedies**:\n"
+            "  - **Article 58**: Suit when lender has given a cheque for money — **Three years from when the cheque is paid**.\n"
+            "  - **Article 64A**: Summary suit on negotiable instrument under Order XXXVII CPC — **Three years when debt becomes payable**.\n"
+            "  - **Article 115**: Breach of contract (unregistered) — **Three years from the breach**.\n"
+            "  - **Article 62**: Money received by defendant for plaintiff's use — **Three years from receipt**.\n"
+            "  - **Article 120**: Residuary suit (where no specific article applies) — **Six years when right to sue accrues**.\n\n"
+            "> ⚠️ **Jurisdictional Caveat (Punjab)**: For suits instituted in the Province of the Punjab, the **Punjab Loans Limitation Act, 1904** "
+            "(Punjab Act 1 of 1904) read with Section 29(1)(b) of the Limitation Act, 1908 provides specific statutory rules that modify this period.\n\n"
+            "> ℹ️ **Original Suits vs Appeals**: Section 5 of the Limitation Act applies exclusively to appeals and applications. "
+            "Under Section 5, courts have no power to extend the limitation period for filing an original civil suit."
+        )
+
     # 2. Verified Statutory Provisions on Record
     if not statutory_provisions and query_text:
         try:
             from legal_ai.search.statute_search_service import search_statute_provisions
             raw_stat = search_statute_provisions(query_text)
             if isinstance(raw_stat, dict):
-                statutory_provisions = raw_stat.get("results", [])[:3]
+                statutory_provisions = raw_stat.get("results", [])[:5]
             elif isinstance(raw_stat, list):
-                statutory_provisions = raw_stat[:3]
+                statutory_provisions = raw_stat[:5]
         except Exception:
             statutory_provisions = []
 
@@ -2023,11 +2042,26 @@ def build_honest_partial_response(
         for prov in statutory_provisions:
             title = prov.get("display_name") or prov.get("title") or prov.get("canonical_id") or "Statutory Provision"
             text_val = str(prov.get("text_cleaned") or prov.get("text") or prov.get("verbatim_text") or "").strip()
-            verified = prov.get("verified", True)
-            v_status = "Verified in Primary Store" if verified else "Unverified Gazette Record"
+            cid = str(prov.get("canonical_id") or "")
+            
+            # Check unit type and validity
+            is_art = "_ART_" in cid or prov.get("provision_type") == "article"
+            clean_num = str(prov.get("primary_num") or "").strip()
+            
+            # Verify against structured index
+            is_valid_prov = True
+            if "LIMITATION" in cid:
+                if clean_num.isdigit():
+                    num_val = int(clean_num)
+                    if num_val > 183 or (not is_art and num_val > 32):
+                        is_valid_prov = False
+            
+            v_status = "Verified in Primary Store" if (prov.get("verified", True) and is_valid_prov) else "Unverified Gazette Record"
 
             if text_val and text_val != "no text available":
-                stat_blocks.append(f"### {title} ({v_status})\n\n```\n{text_val}\n```")
+                # Clean format without scrambled blobs
+                clean_lines = [f"> {line}" for line in text_val.splitlines() if line.strip()]
+                stat_blocks.append(f"### {title} ({v_status})\n\n" + "\n".join(clean_lines))
             else:
                 stat_blocks.append(f"### {title}\n\n*[Statutory text not found in verified database]*")
         sections.append("\n\n---\n\n".join(stat_blocks))

@@ -281,6 +281,19 @@ def search_statute_provisions(
         if act_matches_query:
             score += 80
 
+        # Limitation Act Domain Tuning
+        if p_act == "LIMITATION_1908":
+            is_money_q = any(k in q_lower for k in ["recovery of money", "suit for money", "money suit", "debt", "loan", "price of goods"])
+            if is_money_q:
+                # Article 57 (money lent) is the primary controlling article for money recovery suits
+                if cid == "LIMITATION_1908_ART_57":
+                    score += 200
+                elif cid in ["LIMITATION_1908_ART_58", "LIMITATION_1908_ART_64A", "LIMITATION_1908_ART_115", "LIMITATION_1908_ART_62", "LIMITATION_1908_ART_120", "LIMITATION_1908_SEC_3"]:
+                    score += 130
+                # Section 5 does NOT apply to original suits under Limitation Act; demote unless condonation/appeal asked
+                elif cid == "LIMITATION_1908_SEC_5" and "suit" in q_lower and not any(k in q_lower for k in ["appeal", "revision", "review", "condonation", "sufficient cause"]):
+                    score -= 100
+
         # Title match
         if q_lower in p_title_lower:
             score += 150
@@ -307,7 +320,16 @@ def search_statute_provisions(
                 elif p_text:
                     excerpt = p_text[:220].replace("\n", " ").strip() + "..."
 
-                prov_type = prov.get("provision_type") or ("article" if "CONST" in p_act else "section")
+                prov_type = prov.get("provision_type")
+                if not prov_type:
+                    if "_ART_" in cid or "article" in str(prov.get("section", "")).lower() or "CONST" in p_act:
+                        prov_type = "article"
+                    elif "_ORD_" in cid:
+                        prov_type = "order"
+                    elif "_RULE_" in cid:
+                        prov_type = "rule"
+                    else:
+                        prov_type = "section"
                 disp = f"{prov_type.title()} {p_num}, {act_info.get('short_name') or act_name}"
 
                 candidates.append({
@@ -352,7 +374,7 @@ def get_provision_full_text(canonical_id: str) -> Optional[Dict[str, Any]]:
                     "act_code": turso_prov["act_code"],
                     "act_name": turso_prov["act_name"],
                     "short_act_name": ACT_DESCRIPTIONS.get(turso_prov["act_code"], {}).get("short_name") or turso_prov["act_name"],
-                    "provision_type": "article" if "CONST" in turso_prov["act_code"] else "section",
+                    "provision_type": "article" if ("CONST" in turso_prov["act_code"] or "_ART_" in canonical_id) else "section",
                     "primary_num": turso_prov["section_num"],
                     "title": turso_prov["title"],
                     "text": turso_prov["verbatim_text"],

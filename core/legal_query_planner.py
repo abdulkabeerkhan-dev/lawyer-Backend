@@ -980,9 +980,20 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             provisions.append("Section 489-F PPC")
 
     if is_money_recovery:
-        for default_p in ["Section 3 Limitation Act", "Article 62 Limitation Act", "Article 120 Limitation Act"]:
+        for default_p in [
+            "Article 57 Limitation Act",
+            "Article 58 Limitation Act",
+            "Article 64A Limitation Act",
+            "Article 115 Limitation Act",
+            "Article 62 Limitation Act",
+            "Article 120 Limitation Act",
+            "Section 3 Limitation Act"
+        ]:
             if not any(default_p.split()[1] in p for p in provisions):
                 provisions.append(default_p)
+        # Section 5 Limitation Act applies only to appeals/applications, NOT original suits
+        if not any(k in q_low for k in ["appeal", "revision", "review", "condonation", "sufficient cause"]):
+            provisions = [p for p in provisions if not ("section 5" in p.lower() and "limitation" in p.lower())]
 
     if is_adverse_possession:
         for default_p in ["Section 28 Limitation Act", "Article 144 Limitation Act", "Article 149 Limitation Act"]:

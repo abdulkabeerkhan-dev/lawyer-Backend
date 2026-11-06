@@ -55,12 +55,21 @@ def execute_stage4_evidence_pack(
     statute_records: List[Dict[str, Any]] = []
     seen_provisions = set()
 
+    fused_num_map = {
+        "252": "52", "253": "53", "257": "57", "259": "59",
+        "261": "61", "263": "63", "264": "64", "266": "66",
+        "267": "67", "268": "68", "269": "69", "270": "70",
+        "271": "71", "276": "76", "277": "77", "278": "78",
+        "279": "79", "280": "80", "228": "28"
+    }
+
     for p in (verified_statutory_provisions or []):
         cid = str(p.get("canonical_id") or "")
         display = str(p.get("display_name") or "")
         act_code = str(p.get("act_code") or "")
+        is_art = "_ART_" in cid or p.get("provision_type") == "article" or "article" in display.lower()
 
-        sec_num = str(p.get("section_number") or p.get("section") or p.get("sec") or "").strip()
+        sec_num = str(p.get("section_number") or p.get("section") or p.get("sec") or p.get("primary_num") or "").strip()
         if not sec_num:
             m_cid = re.search(r'_(?:SEC|ART|RULE)_([0-9]+[A-Za-z]?(?:_[0-9]+)?)', cid, re.IGNORECASE)
             if m_cid:
@@ -71,6 +80,8 @@ def execute_stage4_evidence_pack(
                     sec_num = m_disp.group(1).strip()
                 else:
                     sec_num = cid or "1"
+        if sec_num in fused_num_map:
+            sec_num = fused_num_map[sec_num]
 
         act_name = str(p.get("act_name") or p.get("act") or "").strip()
         if not act_name:
@@ -99,11 +110,13 @@ def execute_stage4_evidence_pack(
         key = f"{act_name.upper()}_{sec_num.upper()}"
         if key not in seen_provisions and txt:
             seen_provisions.add(key)
+            unit_label = "Article" if is_art else ("Order" if "_ORD_" in cid else "Section")
             statute_records.append({
                 "act_name": act_name,
                 "section_number": sec_num,
+                "provision_type": "article" if is_art else "section",
                 "text": txt,
-                "title": p.get("title") or p.get("section_title") or f"Section {sec_num}",
+                "title": p.get("title") or p.get("section_title") or f"{unit_label} {sec_num}",
                 "year": p.get("year"),
                 "jurisdiction": p.get("jurisdiction") or "Federal / Provincial",
                 "status": p.get("status") or "in_force",
@@ -112,19 +125,28 @@ def execute_stage4_evidence_pack(
 
     # 2b. Domain Anchor Injections (Limitation Act money suit provisions)
     lower_q = query_text.lower()
-    if "limitation" in lower_q and any(k in lower_q for k in ["money", "recovery", "debt", "loan"]):
+    if "limitation" in lower_q and any(k in lower_q for k in ["money", "recovery", "debt", "loan", "price of goods"]):
         try:
             store = get_unified_statute_store()
-            for l_cid in ["LIMITATION_1908_SEC_3", "LIMITATION_1908_ART_62", "LIMITATION_1908_ART_120"]:
+            for l_cid in [
+                "LIMITATION_1908_ART_57",
+                "LIMITATION_1908_ART_58",
+                "LIMITATION_1908_ART_64A",
+                "LIMITATION_1908_ART_115",
+                "LIMITATION_1908_ART_62",
+                "LIMITATION_1908_ART_120",
+                "LIMITATION_1908_SEC_3"
+            ]:
                 if l_cid not in seen_provisions:
                     prov = store.get_by_canonical_id(l_cid)
                     if prov and prov.get("text"):
                         seen_provisions.add(l_cid)
-                        is_art = "ART" in l_cid
-                        num = l_cid.split("_")[-1]
+                        is_art = "_ART_" in l_cid
+                        num = str(prov.get("primary_num") or l_cid.split("_")[-1])
                         statute_records.append({
                             "act_name": "Limitation Act, 1908",
-                            "section_number": f"Article {num}" if is_art else f"Section {num}",
+                            "section_number": num,
+                            "provision_type": "article" if is_art else "section",
                             "text": prov["text"],
                             "title": prov.get("title") or (f"Article {num}" if is_art else f"Section {num}"),
                             "status": "in_force"
