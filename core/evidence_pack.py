@@ -37,7 +37,8 @@ class EvidencePack:
         if not clean_text:
             return ""
 
-        lookup_key = f"{act_name.upper()}_{section_number.upper()}"
+        clean_num = re.sub(r'^(?:Section|Article|Order|Rule|Sec\.?|s\.)\s*', '', str(section_number).strip(), flags=re.IGNORECASE)
+        lookup_key = f"{act_name.upper()}_{clean_num.upper()}"
         if lookup_key in self.statute_by_sec:
             return self.statute_by_sec[lookup_key]
 

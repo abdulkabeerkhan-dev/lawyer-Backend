@@ -172,13 +172,23 @@ def verify_case_integrity(
 
     # 4. Ratio text sanitization & check
     clean_ratio = sanitize_ratio_text(raw_ratio)
+    sample_text = (
+        clean_ratio or
+        sanitized.get("judgment_text") or
+        sanitized.get("full_text") or
+        sanitized.get("preview") or
+        sanitized.get("snippet") or
+        sanitized.get("text") or
+        (sanitized.get("metadata", {}).get("preview") if isinstance(sanitized.get("metadata"), dict) else "") or
+        (sanitized.get("metadata", {}).get("snippet") if isinstance(sanitized.get("metadata"), dict) else "") or
+        ""
+    )
+    if len(str(sample_text).strip()) < 50:
+        return False, f"Case record '{citation}' has insufficient text content.", sanitized
+
     if not clean_ratio:
-        # If raw full text exists, try to extract ratio or mark empty
-        full_txt = str(sanitized.get("judgment_text") or sanitized.get("full_text") or "")
-        if full_txt and len(full_txt) > 200:
-            clean_ratio = ""  # Mark ratio empty; full text exists for tab
-        else:
-            return False, f"Case record '{citation}' has neither substantive ratio nor order text.", sanitized
+        # If full text or preview exists, derive or leave empty for tab fallback
+        clean_ratio = sanitize_ratio_text(str(sample_text)[:500])
 
     sanitized["ratio_decidendi"] = clean_ratio
     sanitized["holding"] = clean_ratio

@@ -94,13 +94,19 @@ class EvidenceVerifier:
         self._check_truncation(memo_json)
 
         # Check 8: Compute verification badge
-        is_verified = (len(self.failures) == 0) and is_schema_valid
-        status = "verified" if is_verified else "partially_verified"
-        
-        if is_verified:
-            badge_text = "All citations and quotes verified against primary judicial & statutory sources."
+        has_primary_records = bool(self.pack.statutes or self.pack.cases)
+        if not has_primary_records:
+            self.failures.append("No primary statutory provisions or precedents were admitted in the evidence pack for this query.")
+            is_verified = False
+            status = "unverified"
+            badge_text = "Unverified: No primary records found in verified database for this query."
         else:
-            badge_text = f"Partially verified ({len(self.failures)} item(s) unverified against primary records)"
+            is_verified = (len(self.failures) == 0) and is_schema_valid
+            status = "verified" if is_verified else "partially_verified"
+            if is_verified:
+                badge_text = "All citations and quotes verified against primary judicial & statutory sources."
+            else:
+                badge_text = f"Partially verified ({len(self.failures)} item(s) unverified against primary records)"
 
         return {
             "is_verified": is_verified,
@@ -273,8 +279,14 @@ def format_verified_memo_to_markdown(
     lines = []
 
     # Verification banner (Honest badge)
+    status = report.get("status", "unverified")
     is_verified = report.get("is_verified", False)
-    status_label = "VERIFIED LEGAL RESEARCH RECORD" if is_verified else "PARTIAL LEGAL RESEARCH RECORD"
+    if status == "unverified":
+        status_label = "UNVERIFIED LEGAL RESEARCH RECORD"
+    elif is_verified:
+        status_label = "VERIFIED LEGAL RESEARCH RECORD"
+    else:
+        status_label = "PARTIAL LEGAL RESEARCH RECORD"
     lines.append(f"# {status_label}")
     lines.append(f"**Verification Status**: {report.get('badge_text', 'Verified')}")
     lines.append(f"**Data Freshness**: {report.get('database_freshness', 'Database current as of November 2026')}")

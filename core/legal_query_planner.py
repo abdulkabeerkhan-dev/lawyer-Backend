@@ -466,7 +466,8 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     )
     is_execution = any(k in q_low for k in ["order xxi", "execution of decree", "objection petition", "rule 97", "rule 103"])
     is_specific_perf = any(k in q_low for k in ["sale deed", "agreement to sell", "specific performance", "advance money", "earnest money", "token money"]) or (any(k in q_low for k in ["seller", "buyer", "vendor", "vendee"]) and any(k in q_low for k in ["sale", "deed", "refused", "money", "property"]))
-    is_adverse_possession = any(k in q_low for k in ["adverse possession", "limitation act", "section 28", "article 144", "article 149", "state land"])
+    is_adverse_possession = any(k in q_low for k in ["adverse possession", "hostile possession", "ouster", "extinguishment of title"]) or ("section 28" in q_low and "limitation" in q_low) or ("article 144" in q_low and "limitation" in q_low) or ("article 149" in q_low and "limitation" in q_low)
+    is_money_recovery = any(k in q_low for k in ["recovery of money", "money suit", "suit for money", "debt", "loan", "price of goods", "suit for recovery"])
 
     # Classification Logic
     if is_quashment:
@@ -978,6 +979,11 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         if not any("489" in p for p in provisions):
             provisions.append("Section 489-F PPC")
 
+    if is_money_recovery:
+        for default_p in ["Section 3 Limitation Act", "Article 62 Limitation Act", "Article 120 Limitation Act"]:
+            if not any(default_p.split()[1] in p for p in provisions):
+                provisions.append(default_p)
+
     if is_adverse_possession:
         for default_p in ["Section 28 Limitation Act", "Article 144 Limitation Act", "Article 149 Limitation Act"]:
             if not any(default_p.split()[1] in p for p in provisions):
@@ -1175,6 +1181,11 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             questions.append("scope of prohibitory clause (punishable with death, life, or 10+ years) vs non-prohibitory clause (bail is rule, refusal exception per settled Supreme Court jurisprudence)")
         else:
             questions.append("grounds for pre-arrest bail under Section 498 CrPC (demonstration of mala fide, ulterior motive, and apprehension of imminent arrest)")
+    if is_money_recovery:
+        for default_p in ["Section 3 Limitation Act", "Article 62 Limitation Act", "Article 120 Limitation Act"]:
+            if not any(default_p.split()[1] in p for p in provisions):
+                provisions.append(default_p)
+
     if is_adverse_possession:
         questions.append("whether adverse possession can mature against Provincial Government under Section 28 Limitation Act")
         questions.append("statutory limitation period for Government recovery of land under Article 149 (60 years) vs Article 144")

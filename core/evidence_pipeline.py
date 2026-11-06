@@ -56,8 +56,41 @@ def execute_stage4_evidence_pack(
     seen_provisions = set()
 
     for p in (verified_statutory_provisions or []):
-        act_name = p.get("act_name") or p.get("act") or p.get("display_name") or p.get("canonical_id") or ""
+        cid = str(p.get("canonical_id") or "")
+        display = str(p.get("display_name") or "")
+        act_code = str(p.get("act_code") or "")
+
         sec_num = str(p.get("section_number") or p.get("section") or p.get("sec") or "").strip()
+        if not sec_num:
+            m_cid = re.search(r'_(?:SEC|ART|RULE)_([0-9]+[A-Za-z]?(?:_[0-9]+)?)', cid, re.IGNORECASE)
+            if m_cid:
+                sec_num = m_cid.group(1).replace("_", "(") + (")" if "_" in m_cid.group(1) else "")
+            else:
+                m_disp = re.search(r'(?:Section|Article|Order|Rule|Sec\.?|s\.)\s*([0-9IVXLCDM]+[A-Za-z]?(?:\s*\([0-9]+\))?)', display, re.IGNORECASE)
+                if m_disp:
+                    sec_num = m_disp.group(1).strip()
+                else:
+                    sec_num = cid or "1"
+
+        act_name = str(p.get("act_name") or p.get("act") or "").strip()
+        if not act_name:
+            if "LIMITATION" in (act_code + cid).upper():
+                act_name = "Limitation Act, 1908"
+            elif "BENAMI" in (act_code + cid).upper():
+                act_name = "Benami Transactions (Prohibition) Act, 2017"
+            elif "CPC" in (act_code + cid).upper() or "CIVIL_PROCEDURE" in (act_code + cid).upper():
+                act_name = "Code of Civil Procedure, 1908"
+            elif "CRPC" in (act_code + cid).upper() or "CRIMINAL_PROCEDURE" in (act_code + cid).upper():
+                act_name = "Code of Criminal Procedure, 1898"
+            elif "PPC" in (act_code + cid).upper() or "PENAL_CODE" in (act_code + cid).upper():
+                act_name = "Pakistan Penal Code, 1860"
+            elif "SPECIFIC_RELIEF" in (act_code + cid).upper():
+                act_name = "Specific Relief Act, 1877"
+            elif display and "," in display:
+                act_name = display.split(",", 1)[-1].strip()
+            else:
+                act_name = display or act_code or "Statute"
+
         txt = p.get("text_cleaned") or p.get("text") or p.get("section_text") or ""
         if isinstance(txt, dict):
             txt = " ".join(str(v) for v in txt.values())
@@ -70,12 +103,34 @@ def execute_stage4_evidence_pack(
                 "act_name": act_name,
                 "section_number": sec_num,
                 "text": txt,
-                "title": p.get("section_title") or f"Section {sec_num}",
+                "title": p.get("title") or p.get("section_title") or f"Section {sec_num}",
                 "year": p.get("year"),
                 "jurisdiction": p.get("jurisdiction") or "Federal / Provincial",
                 "status": p.get("status") or "in_force",
                 "amendment_history": p.get("amendment_history") or ""
             })
+
+    # 2b. Domain Anchor Injections (Limitation Act money suit provisions)
+    lower_q = query_text.lower()
+    if "limitation" in lower_q and any(k in lower_q for k in ["money", "recovery", "debt", "loan"]):
+        try:
+            store = get_unified_statute_store()
+            for l_cid in ["LIMITATION_1908_SEC_3", "LIMITATION_1908_ART_62", "LIMITATION_1908_ART_120"]:
+                if l_cid not in seen_provisions:
+                    prov = store.get_by_canonical_id(l_cid)
+                    if prov and prov.get("text"):
+                        seen_provisions.add(l_cid)
+                        is_art = "ART" in l_cid
+                        num = l_cid.split("_")[-1]
+                        statute_records.append({
+                            "act_name": "Limitation Act, 1908",
+                            "section_number": f"Article {num}" if is_art else f"Section {num}",
+                            "text": prov["text"],
+                            "title": prov.get("title") or (f"Article {num}" if is_art else f"Section {num}"),
+                            "status": "in_force"
+                        })
+        except Exception as e:
+            logger.warning(f"Limitation injection error: {e}")
 
     # 3. Two-way cross linking: Cases pull statutes invoked
     for c in clean_cases:
@@ -203,12 +258,20 @@ def execute_stage6_verification_and_rendering(
                 memo_json = json.loads(clean_text)
     except Exception as parse_err:
         logger.warning(f"JSON parsing fallback in Stage 6: {parse_err}")
-        # Build schema from raw markdown/text if model returned prose
+        # Build schema from raw markdown/text without truncating mid-sentence
+        paragraphs = [p.strip() for p in clean_text.split("\n\n") if p.strip()]
+        short_ans = []
+        for p in paragraphs[:6]:
+            if not p.startswith("#") and len(p) > 20:
+                short_ans.append({"text": p, "sources": list(evidence_pack.statutes.keys())[:1] + list(evidence_pack.cases.keys())[:1]})
+        if not short_ans and paragraphs:
+            short_ans.append({"text": paragraphs[0], "sources": []})
+
         memo_json = {
             "question": fallback_query or "Legal Inquiry",
-            "short_answer": [{"text": clean_text[:400], "sources": list(evidence_pack.statutes.keys())[:1] + list(evidence_pack.cases.keys())[:1]}],
+            "short_answer": short_ans,
             "statutes": [
-                {"id": sid, "quote": s.get("text", "")[:200], "plain_explanation": f"Operational provision of {s.get('act_name')}."}
+                {"id": sid, "quote": s.get("text", "")[:300], "plain_explanation": f"Operational provision of {s.get('act_name')}."}
                 for sid, s in list(evidence_pack.statutes.items())[:3]
             ],
             "cases": [

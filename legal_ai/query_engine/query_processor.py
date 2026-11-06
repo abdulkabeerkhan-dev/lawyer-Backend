@@ -4219,6 +4219,12 @@ async def process_query_job_legal_ai(
 
     synthesis_max_tokens = int(os.environ.get("MAX_SYNTHESIS_TOKENS", "8192"))
 
+    # Stage 5 Prompt Enforcement: Wire Evidence Pack prompt & JSON schema directly into Claude synthesis
+    if 'stage5_sys_prompt' in locals() and 'stage5_user_prompt' in locals():
+        system_prompt = stage5_sys_prompt
+        user_synthesis_content = stage5_user_prompt
+
+
 
 
     if job_id in jobs_store:
