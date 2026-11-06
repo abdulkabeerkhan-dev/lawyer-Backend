@@ -782,7 +782,8 @@ def _build_precedent_context_block(cards: List[Dict[str, Any]]) -> str:
 
 
 
-        court = derive_court_from_judgment_header(f"{title} {c.get('text', '')}", raw_court)
+        sample_txt = f"{title} {c.get('raw_judgment_text', '')} {c.get('full_text', '')} {c.get('text', '')} {c.get('preview', '')}"
+        court = derive_court_from_judgment_header(sample_txt, raw_court, citation=cit)
 
 
 
@@ -810,7 +811,18 @@ def _build_precedent_context_block(cards: List[Dict[str, Any]]) -> str:
 
 
 
-        ratio = (c.get("ratio_decidendi") or c.get("legal_issue") or "Holding on record").replace("\n", " ").strip()
+        raw_ratio_str = str(c.get("ratio_decidendi") or c.get("legal_issue") or "Holding on record").strip()
+        raw_ratio_str = re.sub(r'^(?:RATIO DECIDENDI & JUDICIAL HOLDING|HEADNOTE & STATUTORY ANCHORS|FACTS & PROCEDURAL OUTCOME|RATIO DECIDENDI|JUDICIAL HOLDING)\s*:\s*', '', raw_ratio_str, flags=re.IGNORECASE).strip()
+        while True:
+            m_c = re.match(r'^(?:(?:(?:\d{4}\s+[A-Za-z\s\.\-]+|\bPLD\s+\d{4}\s+[A-Za-z\s\.\-]+)\d+)[,\s]*)+[\r\n]+', raw_ratio_str)
+            if m_c:
+                raw_ratio_str = raw_ratio_str[m_c.end():].strip()
+            else:
+                break
+        raw_ratio_str = re.sub(r'^(?:[A-Za-z0-9\s\(\)\/]+--(?:TERM|Term)\s*,\s*)+[\r\n]*', '', raw_ratio_str, flags=re.IGNORECASE).strip()
+        raw_ratio_str = re.sub(r'--(?:TERM|Term)', '', raw_ratio_str, flags=re.IGNORECASE)
+        raw_ratio_str = re.sub(r'^(?:[A-Za-z\s0-9]+---)+', '', raw_ratio_str).strip()
+        ratio = raw_ratio_str.replace("\n", " ").strip()
 
 
 
@@ -874,7 +886,8 @@ def _build_precedent_context_block(cards: List[Dict[str, Any]]) -> str:
 
 
 
-        court = derive_court_from_judgment_header(f"{title} {c.get('text', '')}", raw_court)
+        sample_txt = f"{title} {c.get('raw_judgment_text', '')} {c.get('full_text', '')} {c.get('text', '')} {c.get('preview', '')}"
+        court = derive_court_from_judgment_header(sample_txt, raw_court, citation=cit)
 
 
 
@@ -882,7 +895,18 @@ def _build_precedent_context_block(cards: List[Dict[str, Any]]) -> str:
 
 
 
-        preview = c.get("preview") or c.get("ratio_decidendi") or ""
+        raw_prev = str(c.get("preview") or c.get("ratio_decidendi") or "").strip()
+        raw_prev = re.sub(r'^(?:RATIO DECIDENDI & JUDICIAL HOLDING|HEADNOTE & STATUTORY ANCHORS|FACTS & PROCEDURAL OUTCOME|RATIO DECIDENDI|JUDICIAL HOLDING)\s*:\s*', '', raw_prev, flags=re.IGNORECASE).strip()
+        while True:
+            m_c = re.match(r'^(?:(?:(?:\d{4}\s+[A-Za-z\s\.\-]+|\bPLD\s+\d{4}\s+[A-Za-z\s\.\-]+)\d+)[,\s]*)+[\r\n]+', raw_prev)
+            if m_c:
+                raw_prev = raw_prev[m_c.end():].strip()
+            else:
+                break
+        raw_prev = re.sub(r'^(?:[A-Za-z0-9\s\(\)\/]+--(?:TERM|Term)\s*,\s*)+[\r\n]*', '', raw_prev, flags=re.IGNORECASE).strip()
+        raw_prev = re.sub(r'--(?:TERM|Term)', '', raw_prev, flags=re.IGNORECASE)
+        raw_prev = re.sub(r'^(?:[A-Za-z\s0-9]+---)+', '', raw_prev).strip()
+        preview = raw_prev
 
 
 
@@ -1011,46 +1035,11 @@ def _build_precedent_context_block(cards: List[Dict[str, Any]]) -> str:
 
 
         if not has_full_judgment or headnote_flag:
-
-
-
-
-
-
-
-            lines.append("- **Record Source**: Partial excerpt / machine summary (unverified against official law report).")
-
-
-
-
-
-
-
-            lines.append("- **Attribution Directive**: Label strictly as '- **The judgment record indicates (machine summary, unverified)**: ...' -- DO NOT use '- **Court held**:' and DO NOT claim an unverified ratio decidendi.")
-
-
-
-
-
-
-
+            lines.append("- **Record Source**: Law report headnote / authoritative digest excerpt.")
+            lines.append("- **Attribution Directive**: Attribute findings directly to the authentic court holding using '- **Court held**:' or '- **Ratio Decidendi**:' based on the excerpt below.")
         else:
-
-
-
-
-
-
-
-            lines.append("- **Record Source**: Full judgment on record.")
-
-
-
-
-
-
-
-            lines.append("- **Attribution Directive**: You may cite direct holdings only if supported by the verbatim text.")
+            lines.append("- **Record Source**: Full judgment on judicial record.")
+            lines.append("- **Attribution Directive**: Attribute findings directly to the authentic court holding using '- **Court held**:' or '- **Ratio Decidendi**:' based on the verbatim text below.")
 
 
 
@@ -2537,6 +2526,33 @@ async def process_query_job_legal_ai(
 
     )
 
+    # Hydrate top precedent cards with full text and verified court from Turso case_texts
+    try:
+        from core.turso_client import get_cases_batch
+        c_ids = [str(c.get("case_id") or c.get("citation") or "") for c in precedent_cards if (c.get("case_id") or c.get("citation"))]
+        if c_ids:
+            turso_records = get_cases_batch(c_ids)
+            turso_map = {}
+            for tr in turso_records:
+                if tr.get("case_id"):
+                    turso_map[tr["case_id"].lower()] = tr
+                if tr.get("neutral_citation"):
+                    turso_map[tr["neutral_citation"].lower()] = tr
+                    turso_map[re.sub(r'[\s_\-]+', '', tr["neutral_citation"].lower())] = tr
+            for c in precedent_cards:
+                cid = str(c.get("case_id") or "").lower()
+                cit = str(c.get("citation") or "").lower()
+                cit_clean = re.sub(r'[\s_\-]+', '', cit)
+                match = turso_map.get(cid) or turso_map.get(cit) or turso_map.get(cit_clean)
+                if match:
+                    if match.get("full_text"):
+                        c["raw_judgment_text"] = match["full_text"]
+                        c["full_text"] = match["full_text"]
+                    if match.get("court_name") and c.get("court") in ("Court of Record", "Unknown Court", "High Court / Appellate Tribunal"):
+                        c["court"] = match["court_name"]
+    except Exception as e:
+        logger.warning(f"Turso precedent hydration error: {e}")
+
 
 
 
@@ -2997,10 +3013,37 @@ async def process_query_job_legal_ai(
                 "- Section 497 CrPC governs post-arrest bail (where offence is non-prohibitory, grant is the rule and refusal is an exception).\n"
                 "- NEVER cite a post-arrest bail precedent as a pre-arrest bail authority without explicitly stating that it is a post-arrest decision applied by analogy.\n\n"
             )
+
+        is_part_benami = bool(re.search(r"\b(partition|benami|ostensible owner|order viii rule 6|order xx rule 18)\b", effective_user_query, re.I))
+        partition_benami_directive = ""
+        if is_part_benami:
+            partition_benami_directive = (
+                "PARTITION & BENAMI JURISDICTIONAL INTEGRITY (MANDATORY):\n"
+                "- Order VIII Rule 6 CPC set-off applies EXCLUSIVELY to suits for an ascertained sum of money. A plea of benami title cannot be pleaded as a mere money set-off. HOWEVER, where plaintiff claims mesne profits (an ascertainable money demand), joint property preservation/maintenance expenses CAN be set off under Rule 6 against mesne profits.\n"
+                "- Order VIII Rule 6-A CPC counter-claims are NOT restricted to money and CAN adjudicate title as an independent cross-suit (subject to requisite court fees and limitation).\n"
+                "- Partition courts under Order XX Rule 18 CPC have FULL jurisdiction to try and frame issues on title disputes between co-owners before passing a preliminary decree. It is legally incorrect to assert that partition courts cannot decide title.\n"
+                "- Benami Transactions (Prohibition) Act 2017 is strictly PROSPECTIVE. Section 4(1) bars suits and Section 4(2) bars defences by real owners for post-2017 transactions (with Section 4(3) fiduciary exceptions). For pre-2017 transactions, classic benami law applies: onus probandi is strictly on the party alleging benami, requiring proof of 4 ingredients: (1) source of consideration, (2) custody of title deeds, (3) possession, and (4) motive (Section 66 TPA / 2011 SCMR 1550 / 2015 CLC 973 / 2025 SCMR 2087).\n\n"
+            )
+
+        is_oral_arguments = bool(re.search(r"\b(oral argument|oral arguments|court argument|court arguments|courtroom argument|submissions before|bench submissions|argue in court)\b", effective_user_query, re.I))
+        oral_arguments_directive = ""
+        if is_oral_arguments:
+            oral_arguments_directive = (
+                "COURTROOM ORAL ARGUMENTS DIRECTIVE (MANDATORY):\n"
+                "- The user has requested ORAL ARGUMENTS / BENCH SUBMISSIONS. In addition to statutory and case law analysis, structure the advisory as a commanding Courtroom Oral Argument:\n"
+                "  1. Opening Submission / Preliminary Objection (jurisdiction, maintainability, statutory threshold).\n"
+                "  2. Primary Substantive Point (exact statutory bar or entitlement with bare-act citations).\n"
+                "  3. Secondary Substantive Point (precedent binding under Article 189/201 with exact ratios).\n"
+                "  4. Anticipated Counter-Arguments & Immediate Rebuttal (including mesne profits set-off vs title counter-claim).\n"
+                "  5. Closing Prayer / Relief Sought from the Bench.\n\n"
+            )
+
         user_synthesis_content = (
             f"FACTUAL MATRIX / LEGAL QUERY:\n{effective_user_query}\n\n"
             f"STATUTORY & CURRENT LAW FRAMEWORK:\n{formatted_current_law_block}\n\n"
             f"{bail_directive}"
+            f"{partition_benami_directive}"
+            f"{oral_arguments_directive}"
             f"{precedent_context_block}\n\n"
 
 

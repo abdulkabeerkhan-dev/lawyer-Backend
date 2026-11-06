@@ -40,10 +40,28 @@ COURT_CANONICAL_NAMES: Dict[str, str] = {
 }
 
 
-def normalize_court_name(raw_name: str) -> str:
+def normalize_court_name(raw_name: str, citation: Optional[str] = None) -> str:
     """Normalizes raw or abbreviated court names into standard official title."""
-    if not raw_name:
+    cit_upper = (citation or "").upper()
+    if bool(re.search(r'\b(SCMR|PSC)\b', cit_upper) or re.search(r'\bPLD\b.*\b(SC|SUPREME)\b', cit_upper)):
         return "Supreme Court of Pakistan"
+    if bool(re.search(r'\b(CLC|PCRLJ|MLD|YLR|CLD|PLR)\b', cit_upper)):
+        if raw_name:
+            low = str(raw_name).lower()
+            if "lahore" in low or low == "lhc":
+                return "Lahore High Court"
+            if "sindh" in low or "karachi" in low or low == "shc":
+                return "High Court of Sindh"
+            if "peshawar" in low or low == "phc":
+                return "Peshawar High Court"
+            if "islamabad" in low or low == "ihc":
+                return "Islamabad High Court"
+            if "balochistan" in low or "quetta" in low or low == "bhc":
+                return "High Court of Balochistan"
+        return "High Court"
+
+    if not raw_name:
+        return "Court of Record"
     clean = str(raw_name).strip()
     low = clean.lower()
 

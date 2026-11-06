@@ -117,12 +117,24 @@ def verify_current_law_for_provisions(
             act_code = "CPC_1908"
         elif any(k in p_low for k in ["const", "article"]):
             act_code = "CONST_1973"
+        elif any(k in p_low for k in ["benami", "benamidar"]):
+            act_code = "BENAMI_2017"
+        elif any(k in p_low for k in ["partition act"]):
+            act_code = "PARTITION_1893"
+        elif any(k in p_low for k in ["qso", "qanun-e-shahadat", "evidence act"]):
+            act_code = "QSO_1984"
+        elif any(k in p_low for k in ["trust", "trusts act"]):
+            act_code = "TRUSTS_1882"
         elif query_text:
             q_low = query_text.lower()
             if any(k in q_low for k in ["companies act", "company law"]):
                 act_code = "COMPANIES_2017"
             elif any(k in q_low for k in ["financial institution", "recovery of finance", "banking court", "fio"]):
                 act_code = "FIO_2001"
+            elif any(k in q_low for k in ["benami", "benamidar"]):
+                act_code = "BENAMI_2017"
+            elif any(k in q_low for k in ["partition act"]):
+                act_code = "PARTITION_1893"
 
         if not act_code:
             continue

@@ -838,7 +838,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     if is_banking or any(k in q_low for k in ["banking court", "financial institution", "recovery of finance", "fio", "firo"]):
         statutes.append("Financial Institutions (Recovery of Finances) Ordinance, 2001")
     if is_partition or is_benami:
-        for part_s in ["Partition Act, 1893", "Code of Civil Procedure, 1908", "Specific Relief Act, 1877", "Benami Transactions (Prohibition) Act, 2017"]:
+        for part_s in ["Partition Act, 1893", "Code of Civil Procedure, 1908", "Specific Relief Act, 1877", "Benami Transactions (Prohibition) Act, 2017", "Transfer of Property Act, 1882", "Limitation Act, 1908"]:
             if part_s not in statutes:
                 statutes.append(part_s)
     if is_specific_perf:
@@ -1019,9 +1019,13 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     if is_partition or is_benami:
         for part_p in [
             "Order XX Rule 18 CPC",
+            "Order VIII Rule 6 CPC",
+            "Order VIII Rule 6-A CPC",
             "Section 4 Partition Act, 1893",
             "Section 42 Specific Relief Act, 1877",
-            "Order XXVI Rule 13 CPC"
+            "Section 66 Transfer of Property Act, 1882",
+            "Order XXVI Rule 13 CPC",
+            "Article 120 Limitation Act, 1908"
         ]:
             if not any(part_p.lower() == p.lower() for p in provisions):
                 provisions.append(part_p)
@@ -1107,26 +1111,33 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         if any(k in q_low for k in ["set off", "set-off", "claim"]):
             premise_corrections.append({
                 "queried_statute": "Code of Civil Procedure, 1908",
-                "queried_provision": "Order VIII, Rule 6",
+                "queried_provision": "Order VIII, Rule 6 & Rule 6-A",
                 "status": "LEGALLY_INAPPLICABLE_PREMISE",
-                "explanation": "Under Order VIII, Rule 6 CPC, a set-off claim is legally restricted to suits for recovery of an ascertained sum of money. In a suit for partition of immovable property, a claim of title or independent property cannot be pleaded as a set-off; the recognized procedural remedies are raising a plea of partial partition, filing a counter-claim with requisite court fee, or instituting an independent declaratory cross-suit under Section 42 Specific Relief Act 1877."
+                "explanation": "Under Order VIII, Rule 6 CPC, legal set-off is restricted to suits for recovery of an ascertained sum of money. A claim of title or benami ownership cannot be pleaded as a mere money set-off. However, where plaintiff claims mesne profits (an ascertainable money sum), joint property maintenance/preservation expenses may legitimately be set off under Rule 6. Furthermore, under Order VIII Rule 6-A CPC, counter-claims are NOT restricted to money and may determine title in the suit property as an independent cross-suit. A partition court (Order XX Rule 18 CPC) has full competence to try questions of title before passing a preliminary decree."
             })
             if not any("order viii rule 6" in p.lower() for p in provisions):
                 provisions.append("Order VIII Rule 6 CPC")
+            if not any("order viii rule 6-a" in p.lower() for p in provisions):
+                provisions.append("Order VIII Rule 6-A CPC")
             if not any("order xx rule 18" in p.lower() for p in provisions):
                 provisions.append("Order XX Rule 18 CPC")
-            questions.append("inapplicability of Order VIII Rule 6 CPC set-off in partition suits and requirement for counter-claim or independent cross-suit for declaration of title")
+            questions.append("distinction between Order VIII Rule 6 money set-off and Order VIII Rule 6-A title counter-claim in partition proceedings")
+            questions.append("jurisdiction of partition court under Order XX Rule 18 CPC to adjudicate disputed title before preliminary decree")
 
         if is_benami:
             premise_corrections.append({
                 "queried_statute": "Benami Transactions (Prohibition) Act, 2017",
-                "queried_provision": "Section 4",
+                "queried_provision": "Section 4(1), 4(2) & 4(3)",
                 "status": "STATUTORILY_BARRED_DEFENCE",
-                "explanation": "Under Section 4(2) of the Benami Transactions (Prohibition) Act, 2017, no defence based on any right in respect of property held benami shall be allowed in any suit, claim or action by or on behalf of a person claiming to be real owner. Under pre-2017 law, benami required strict proof of 4 ingredients (consideration, possession, custody of title deeds, and motive) via an independent declaratory action, not a set-off."
+                "explanation": "Under Section 4(1) of the Benami Transactions (Prohibition) Act, 2017, suits by real owners are barred, and under Section 4(2) defences by claimant real owners are barred, subject to Section 4(3) fiduciary/trustee exceptions. Crucially, the 2017 Act is strictly prospective under Supreme Court jurisprudence. For pre-2017 transactions, classic benami law applies: the onus probandi is strictly upon the party alleging benami (e.g. 2011 SCMR 1550, 2015 CLC 973, 2025 SCMR 2087), requiring affirmative proof of 4 ingredients: (1) source of consideration, (2) custody of title deeds, (3) possession, and (4) motive (Section 66 TPA). Any affirmative claim of title is also subject to the Limitation Act 1908 (Article 120)."
             })
             if not any("section 4" in p.lower() and "benami" in p.lower() for p in provisions):
                 provisions.append("Section 4 Benami Transactions (Prohibition) Act, 2017")
-            questions.append("statutory bar on benami defence under Section 4(2) Benami Transactions (Prohibition) Act 2017 and 4-factor test under pre-2017 law")
+            if not any("section 66" in p.lower() for p in provisions):
+                provisions.append("Section 66 Transfer of Property Act, 1882")
+            questions.append("prospective application of Benami Act 2017 vs classic 4-factor burden of proof on party alleging benami")
+            questions.append("fiduciary capacity exception under Section 4(3) Benami Act 2017")
+            questions.append("limitation under Article 120 Limitation Act 1908 for declaration of benami title")
 
     forum_hierarchy = ["Civil Court", "District Judge", "High Court", "Supreme Court of Pakistan"]
     employee_status_branching = None

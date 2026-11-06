@@ -1560,41 +1560,26 @@ def sanitize_precedent_card(card: Dict[str, Any], backend_base_url: str = "") ->
 
 
 
-    # 3. court
-
-    raw_court = str(c.get("court") or c.get("court_name") or "Supreme Court of Pakistan").strip()
-
-    court = normalize_court_name(raw_court)
-
-    c["court"] = court
-
-    c["court_name"] = court
-
-
-
-    # 2. citation
-
+    # 2. citation (processed first so court derivation knows reporter)
     cit = str(c.get("citation") or c.get("neutral_citation") or c.get("case_id") or "Neutral Citation").strip()
-
     try:
-
         from legal_ai.verification.statute_matcher import normalize_citation, norm_text, shingles
-
-        canon_cit, is_canon = normalize_citation(cit, court)
-
+        canon_cit, is_canon = normalize_citation(cit, str(c.get("court") or ""))
         if is_canon:
-
             cit = canon_cit
-
     except Exception:
-
         norm_text = None
-
         shingles = None
-
     c["citation"] = cit
-
     c["neutral_citation"] = cit
+
+    # 3. court (authoritative derivation)
+    from core.legal_guardrails import derive_court_from_judgment_header
+    raw_court = str(c.get("court") or c.get("court_name") or "").strip()
+    court_text = f"{title} {c.get('raw_judgment_text', '')} {c.get('preview', '')} {c.get('holding', '')}"
+    court = derive_court_from_judgment_header(court_text, raw_court, citation=cit)
+    c["court"] = court
+    c["court_name"] = court
 
 
 
@@ -1668,11 +1653,24 @@ def sanitize_precedent_card(card: Dict[str, Any], backend_base_url: str = "") ->
 
     # 7. ratio_decidendi
     raw_ratio = str(c.get("ratio_decidendi") or c.get("holding") or c.get("preview") or "Holding on record.").strip()
-    # ORDER 2.1 - ITEM 10: Strip CITATION:... TITLE:... blobs and cut at word boundaries
-    clean_ratio = re.sub(r'^(?:\[[^\]]*\]\s*)?(?:CITATION:\s*[^\n]+\s*)?(?:TITLE:\s*[^\n]+\s*)?(?:COURT:\s*[^\n]+\s*)?(?:BENCH:\s*[^\n]+\s*)?', '', raw_ratio, flags=re.IGNORECASE).strip()
+    clean_ratio = re.sub(r'^(?:\[[^\]]*\]\s*)?(?:CITATION:\s*[^\r\n]+\s*)?(?:TITLE:\s*[^\r\n]+\s*)?(?:COURT:\s*[^\r\n]+\s*)?(?:BENCH:\s*[^\r\n]+\s*)?', '', raw_ratio, flags=re.IGNORECASE).strip()
+    # Strip raw chunk headings
+    clean_ratio = re.sub(r'^(?:RATIO DECIDENDI & JUDICIAL HOLDING|HEADNOTE & STATUTORY ANCHORS|FACTS & PROCEDURAL OUTCOME|RATIO DECIDENDI|JUDICIAL HOLDING)\s*:\s*', '', clean_ratio, flags=re.IGNORECASE).strip()
+    # Strip opening lines that are just citation lists (e.g. 1991 SCMR 703, 1994 CLC 1437, ...)
+    while True:
+        m_cits = re.match(r'^(?:(?:(?:\d{4}\s+[A-Za-z\s\.\-]+|\bPLD\s+\d{4}\s+[A-Za-z\s\.\-]+)\d+)[,\s]*)+[\r\n]+', clean_ratio)
+        if m_cits:
+            clean_ratio = clean_ratio[m_cits.end():].strip()
+        else:
+            break
+    # Strip term tags e.g. Benami Transaction--TERM , Essential ingredients--Term ,
+    clean_ratio = re.sub(r'^(?:[A-Za-z0-9\s\(\)\/]+--(?:TERM|Term)\s*,\s*)+[\r\n]*', '', clean_ratio, flags=re.IGNORECASE).strip()
+    clean_ratio = re.sub(r'--(?:TERM|Term)', '', clean_ratio, flags=re.IGNORECASE)
+    # Strip headnote subject prefixes like 'Essential ingredients---Scope---'
+    clean_ratio = re.sub(r'^(?:[A-Za-z\s0-9]+---)+', '', clean_ratio).strip()
     if title and len(title) > 5:
         clean_ratio = re.sub(r'^(?:' + re.escape(title) + r')\s*[-–—:\s]*', '', clean_ratio, flags=re.IGNORECASE).strip()
-    clean_ratio = re.sub(r'^\d{4}\s+[A-Za-z\s\.]+\d+\s*\[[A-Za-z]+\]\s*Before\s+[^\n]+', '', clean_ratio, flags=re.IGNORECASE).strip()
+    clean_ratio = re.sub(r'^\d{4}\s+[A-Za-z\s\.]+\d+\s*\[[A-Za-z]+\]\s*Before\s+[^\r\n]+', '', clean_ratio, flags=re.IGNORECASE).strip()
     if len(clean_ratio) > 300:
         clean_ratio = clean_ratio[:300].rsplit(' ', 1)[0] + '...'
     c["ratio_decidendi"] = clean_ratio or "Holding on record."
@@ -2024,7 +2022,7 @@ def build_honest_partial_response(
         stat_blocks = []
         for prov in statutory_provisions:
             title = prov.get("display_name") or prov.get("title") or prov.get("canonical_id") or "Statutory Provision"
-            text_val = str(prov.get("text_cleaned") or prov.get("text") or "").strip()
+            text_val = str(prov.get("text_cleaned") or prov.get("text") or prov.get("verbatim_text") or "").strip()
             verified = prov.get("verified", True)
             v_status = "Verified in Primary Store" if verified else "Unverified Gazette Record"
 

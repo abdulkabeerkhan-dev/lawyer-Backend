@@ -1593,28 +1593,74 @@ def passes_positive_anchor_test(text: str, anchors: List[str]) -> bool:
     return False
 
 
-def derive_court_from_judgment_header(text: str, fallback_meta: Optional[str] = None) -> str:
+def derive_court_from_judgment_header(
+    text: str,
+    fallback_meta: Optional[str] = None,
+    citation: Optional[str] = None
+) -> str:
     """
-    Derives the actual court from the first 1,500 characters of the judgment header text.
-    FAIL-SAFE: If bench, bracket, or text indicates High Court (Lahore, Sindh, Peshawar, etc.),
-    it MUST NEVER display as Supreme Court, regardless of index metadata.
+    Derives the actual court from citation reporter, header text, and metadata.
+    FAIL-SAFE:
+    - SCMR, PSC, PLD ... SC are exclusively Supreme Court of Pakistan (Article 189).
+      Appellate procedural recitations of lower courts (e.g. 'impugned judgment of Lahore High Court')
+      MUST NEVER cause a Supreme Court appellate decision to be labelled as High Court.
+    - CLC, PCrLJ, MLD, YLR, CLD, PLR are exclusively High Courts (never Supreme Court).
     """
-    header_sample = (text or "")[:1500].upper()
+    raw_text = text or ""
+    header_sample = raw_text[:2000].upper()
     fallback_clean = (fallback_meta or "").strip()
-    is_lhc = any(k in header_sample for k in ["LAHORE HIGH COURT", "HIGH COURT LAHORE", "RAWALPINDI BENCH", "MULTAN BENCH", "BAHAWALPUR BENCH", "HIGH-COURT-LAHORE", "HIGH-COURT-PUNJAB", "LAHORE-HIGH-COURT"])
-    is_shc = any(k in header_sample for k in ["HIGH COURT OF SINDH", "SINDH HIGH COURT", "BENCH AT SUKKUR", "CIRCUIT COURT HYDERABAD", "HIGH-COURT-SINDH", "KARACHI-HIGH-COURT", "SINDH-HIGH-COURT"])
-    is_phc = any(k in header_sample for k in ["PESHAWAR HIGH COURT", "HIGH COURT PESHAWAR", "ABBOTTABAD BENCH", "HIGH-COURT-PESHAWAR", "PESHAWAR-HIGH-COURT"])
-    is_bhc = any(k in header_sample for k in ["HIGH COURT OF BALOCHISTAN", "BALOCHISTAN HIGH COURT", "HIGH-COURT-BALOCHISTAN", "QUETTA-HIGH-COURT"])
-    is_ihc = "ISLAMABAD HIGH COURT" in header_sample
+
+    # 1. Deterministic reporter binding
+    cit_to_check = (citation or "").upper()
+    if not cit_to_check and "CITATION NAME:" in header_sample:
+        m_cit = re.search(r"CITATION NAME:\s*([^\r\n]+)", header_sample)
+        if m_cit:
+            cit_to_check = m_cit.group(1).upper()
+
+    # Supreme Court reporters: SCMR, PSC, PLD SC
+    is_sc_reporter = bool(
+        re.search(r'\b(SCMR|PSC)\b', cit_to_check) or
+        re.search(r'\bPLD\b.*\b(SC|SUPREME)\b', cit_to_check)
+    )
+    if is_sc_reporter:
+        return "Supreme Court of Pakistan"
+
+    # High Court reporters: CLC, PCrLJ, MLD, YLR, CLD, PLR, PLD (provincial)
+    is_hc_reporter = bool(
+        re.search(r'\b(CLC|PCRLJ|MLD|YLR|CLD|PLR)\b', cit_to_check) or
+        re.search(r'\bPLD\b.*\b(LAH|KAR|PESH|QUETTA|SIND|BALOCH)\b', cit_to_check)
+    )
+
+    # 2. Check for Constitutional / Shariat Courts
     is_fcc = any(k in header_sample for k in ["FEDERAL CONSTITUTIONAL COURT", "CONSTITUTIONAL COURT OF PAKISTAN", "FEDERAL CONSTITUTIONAL"])
     is_fsc = any(k in header_sample for k in ["FEDERAL SHARIAT COURT", "SHARIAT APPELLATE BENCH", "IN THE FEDERAL SHARIAT COURT"])
-    is_sc = any(k in header_sample for k in ["SUPREME COURT OF PAKISTAN", "IN THE SUPREME COURT"]) and not (is_lhc or is_shc or is_phc or is_bhc or is_ihc or is_fcc or is_fsc)
     if is_fcc:
         return "Federal Constitutional Court"
     if is_fsc:
         return "Federal Shariat Court"
-    if is_sc:
-        return "Supreme Court of Pakistan"
+
+    # 3. Check opening forum (first 500 characters)
+    header_first_500 = header_sample[:500]
+    has_sc_header = bool(
+        "IN THE SUPREME COURT OF PAKISTAN" in header_first_500 or
+        "SUPREME-COURT" in header_first_500 or
+        ("SUPREME COURT" in header_first_500 and not is_hc_reporter)
+    )
+    if has_sc_header and not is_hc_reporter:
+        m_sc_pos = header_sample.find("SUPREME COURT")
+        m_lhc_pos = header_sample.find("LAHORE HIGH COURT")
+        m_shc_pos = header_sample.find("HIGH COURT OF SINDH")
+        first_hc = min([p for p in [m_lhc_pos, m_shc_pos] if p != -1], default=999999)
+        if m_sc_pos < first_hc:
+            return "Supreme Court of Pakistan"
+
+    # 4. Check specific High Court benches
+    is_lhc = any(k in header_sample for k in ["LAHORE HIGH COURT", "HIGH COURT LAHORE", "RAWALPINDI BENCH", "MULTAN BENCH", "BAHAWALPUR BENCH", "HIGH-COURT-LAHORE", "HIGH-COURT-PUNJAB", "LAHORE-HIGH-COURT"])
+    is_shc = any(k in header_sample for k in ["HIGH COURT OF SINDH", "SINDH HIGH COURT", "BENCH AT SUKKUR", "CIRCUIT COURT HYDERABAD", "HIGH-COURT-SINDH", "KARACHI-HIGH-COURT", "SINDH-HIGH-COURT", "KARACHI"])
+    is_phc = any(k in header_sample for k in ["PESHAWAR HIGH COURT", "HIGH COURT PESHAWAR", "ABBOTTABAD BENCH", "HIGH-COURT-PESHAWAR", "PESHAWAR-HIGH-COURT", "MINGORA BENCH"])
+    is_bhc = any(k in header_sample for k in ["HIGH COURT OF BALOCHISTAN", "BALOCHISTAN HIGH COURT", "HIGH-COURT-BALOCHISTAN", "QUETTA-HIGH-COURT", "QUETTA"])
+    is_ihc = any(k in header_sample for k in ["ISLAMABAD HIGH COURT", "HIGH COURT OF ISLAMABAD", "ISLAMABAD"])
+
     if is_lhc:
         return "Lahore High Court"
     if is_shc:
@@ -1625,11 +1671,20 @@ def derive_court_from_judgment_header(text: str, fallback_meta: Optional[str] = 
         return "High Court of Balochistan"
     if is_ihc:
         return "Islamabad High Court"
-    if fallback_clean and fallback_clean not in ("Court of Record", "Unknown Court", "Court not identified"):
-        if "Supreme Court" in fallback_clean and any(k in header_sample for k in ["HIGH COURT", "WRIT PETITION", "CIVIL REVISION"]):
-            return "High Court"
+
+    # 5. Fallback metadata handling
+    if is_hc_reporter:
+        return "High Court"
+
+    if fallback_clean and fallback_clean not in ("Court of Record", "Unknown Court", "Court not identified", "High Court / Appellate Tribunal"):
+        if "Supreme Court" in fallback_clean:
+            return "Supreme Court of Pakistan"
         return fallback_clean
-    return "Court of Record"
+
+    if "SUPREME COURT" in header_sample:
+        return "Supreme Court of Pakistan"
+
+    return fallback_clean or "Court of Record"
 
 
 def verify_case_identity(case_id: str, citation: str, record: Dict[str, Any]) -> bool:

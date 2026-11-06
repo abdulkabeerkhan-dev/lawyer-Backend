@@ -990,6 +990,22 @@ class TestRetrievalRelevance(unittest.TestCase):
         )
         self.assertEqual(derive_court_from_judgment_header(fsc_text), "Federal Shariat Court")
 
+        # SC appellate decision mentioning lower High Court procedural history must NOT be demoted to LHC
+        sc_appellate_text = (
+            "IN THE SUPREME COURT OF PAKISTAN\n"
+            "Civil Appeal No. 99 of 2020\n"
+            "Against the judgment of the Lahore High Court in Civil Revision No. 123\n"
+        )
+        self.assertEqual(derive_court_from_judgment_header(sc_appellate_text), "Supreme Court of Pakistan")
+
+        # Deterministic reporter tests
+        self.assertEqual(derive_court_from_judgment_header("", citation="2011 SCMR 1550"), "Supreme Court of Pakistan")
+        self.assertEqual(derive_court_from_judgment_header("", citation="2010 SCMR 171"), "Supreme Court of Pakistan")
+        self.assertEqual(derive_court_from_judgment_header("Citation Name: 2015 CLC 973 ISLAMABAD", citation="2015 CLC 973"), "Islamabad High Court")
+        self.assertEqual(derive_court_from_judgment_header("Citation Name: 1987 CLC 195 KARACHI-HIGH-COURT-SINDH", citation="1987 CLC 195"), "High Court of Sindh")
+        # CLC with no bench info must be High Court, NEVER Supreme Court
+        self.assertEqual(derive_court_from_judgment_header("", fallback_meta="Supreme Court of Pakistan", citation="2015 CLC 973"), "High Court")
+
     def test_count_real_cases_discussed(self):
         text = (
             "The court relied on 2024 SCMR 9999 and PLD 2020 SC 500. "

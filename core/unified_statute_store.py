@@ -186,7 +186,42 @@ class UnifiedStatuteStore:
             self.load()
         if not canonical_id:
             return None
-        return self._by_cid.get(canonical_id.strip().upper())
+        cid_clean = canonical_id.strip().upper()
+        res = self._by_cid.get(cid_clean)
+        if res:
+            return res
+
+        # Check subsection variants: e.g. BENAMI_2017_SEC_4_2 -> BENAMI_2017_SEC_4
+        m_base = re.match(r'^(.*_(?:SEC|ART|ORD)_[0-9A-Z]+)(?:_[0-9A-Za-z]+|-.*)?$', cid_clean)
+        if m_base:
+            base_cid = m_base.group(1)
+            res = self._by_cid.get(base_cid)
+            if res:
+                return res
+
+        # Fallback to Turso statute_provisions
+        try:
+            from core.turso_client import get_statute_provision
+            t_prov = get_statute_provision(cid_clean)
+            if not t_prov and m_base:
+                t_prov = get_statute_provision(m_base.group(1))
+            if t_prov:
+                rec = {
+                    "canonical_id": t_prov.get("canonical_id"),
+                    "act_code": t_prov.get("act_code"),
+                    "primary_num": t_prov.get("section_num"),
+                    "title": t_prov.get("title"),
+                    "text": t_prov.get("verbatim_text"),
+                    "tier": t_prov.get("tier", "text_layer_extracted"),
+                    "in_force": bool(t_prov.get("in_force", 1)),
+                    "quoting_allowed": True
+                }
+                self._by_cid[cid_clean] = rec
+                return rec
+        except Exception:
+            pass
+
+        return None
 
     def get_provision(self, act_code: str, provision_num: str) -> Optional[Dict[str, Any]]:
         if not self._loaded:
@@ -200,6 +235,8 @@ class UnifiedStatuteStore:
             "CONTRACT_ACT_1872": "CONTRACT_1872",
             "REGISTRATION_ACT_1908": "REGISTRATION_1908",
             "LIMITATION_ACT_1908": "LIMITATION_1908",
+            "BENAMI_ACT_2017": "BENAMI_2017",
+            "PARTITION_ACT_1893": "PARTITION_1893",
         }
         act_upper = alias_map.get(act_upper, act_upper)
         clean_num = str(provision_num).strip().upper()
@@ -222,6 +259,36 @@ class UnifiedStatuteStore:
             r = self._by_cid.get(cid)
             if r:
                 return r
+
+        # 3. Sub-section fallback e.g. 4_2 or 4(2) -> 4
+        m_base_num = re.match(r'^([0-9]+[A-Za-z]*)', clean_num)
+        if m_base_num and m_base_num.group(1) != clean_num:
+            base_num = m_base_num.group(1)
+            base_res = self.get_provision(act_upper, base_num)
+            if base_res:
+                return base_res
+
+        # 4. Fallback to Turso statute_provisions
+        try:
+            from core.turso_client import get_statute_provision
+            t_prov = get_statute_provision(f"{act_upper}_SEC_{clean_num}", act_code=act_upper)
+            if not t_prov and m_base_num:
+                t_prov = get_statute_provision(f"{act_upper}_SEC_{m_base_num.group(1)}", act_code=act_upper)
+            if t_prov:
+                rec = {
+                    "canonical_id": t_prov.get("canonical_id"),
+                    "act_code": t_prov.get("act_code"),
+                    "primary_num": t_prov.get("section_num"),
+                    "title": t_prov.get("title"),
+                    "text": t_prov.get("verbatim_text"),
+                    "tier": t_prov.get("tier", "text_layer_extracted"),
+                    "in_force": bool(t_prov.get("in_force", 1)),
+                    "quoting_allowed": True
+                }
+                self._by_cid[rec["canonical_id"]] = rec
+                return rec
+        except Exception:
+            pass
 
         return None
 

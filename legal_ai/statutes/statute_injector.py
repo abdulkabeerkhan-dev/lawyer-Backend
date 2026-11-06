@@ -325,6 +325,53 @@ class StatuteInjector:
                 sec_num = m_sec.group(1).upper()
                 return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Negotiable Instruments Act, 1881"
 
+        # 21. Benami Transactions (Prohibition) Act 2017
+        if "benami" in p_low:
+            act_code = "BENAMI_2017"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?(?:\([0-9a-z]+\)|_[0-9a-z]+)?)\b', p_low)
+            if m_sec:
+                sec_raw = m_sec.group(1).upper()
+                sec_clean = re.sub(r'[\(\)]', '_', sec_raw).strip('_')
+                m_base = re.match(r'^([0-9]+)', sec_clean)
+                base_num = m_base.group(1) if m_base else sec_clean
+                return act_code, f"{act_code}_SEC_{base_num}", f"Section {sec_raw}, Benami Transactions (Prohibition) Act, 2017"
+
+        # 22. Partition Act 1893
+        if "partition act" in p_low:
+            act_code = "PARTITION_1893"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Partition Act, 1893"
+
+        # 23. Qanun-e-Shahadat Order 1984 (QSO)
+        if any(k in p_low for k in ["qso", "qanun-e-shahadat", "evidence act"]):
+            act_code = "QSO_1984"
+            m_art = re.search(r'\b(?:articles?|art\.?|sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_art:
+                art_num = m_art.group(1).upper()
+                return act_code, f"{act_code}_ART_{art_num}", f"Article {art_num}, Qanun-e-Shahadat Order, 1984"
+
+        # 24. Trusts Act 1882
+        if "trust" in p_low:
+            act_code = "TRUSTS_1882"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Trusts Act, 1882"
+
+        # 25. Limitation Act 1908
+        if "limitation" in p_low:
+            act_code = "LIMITATION_1908"
+            m_art = re.search(r'\b(?:articles?|art\.?)\s*(\d+[a-z]?)\b', p_low)
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_art:
+                art_num = m_art.group(1).upper()
+                return act_code, f"{act_code}_ART_{art_num}", f"Article {art_num}, Limitation Act, 1908"
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Limitation Act, 1908"
+
         # Default fallback
         m_num = re.search(r'\b(\d+[a-z]?)\b', p_clean)
         num_str = m_num.group(1).upper() if m_num else "UNKNOWN"
@@ -333,14 +380,15 @@ class StatuteInjector:
     def get_provision_record(self, act_code: str, canonical_id: str) -> Optional[Dict[str, Any]]:
         """Retrieves provision record from unified cache, versions cache, or tables cache."""
         cid_upper = canonical_id.upper()
+        m_parent = re.match(r'^(.*_(?:SEC|ART|ORD)_[0-9A-Z]+)(?:_[0-9A-Za-z]+|-.*)?$', cid_upper)
+        parent_cid = m_parent.group(1) if m_parent else (cid_upper.split("_SR_")[0] if "_SR_" in cid_upper else None)
+
         # 0. Check primary authoritative unified cache
         if act_code in self._unified_cache:
             if cid_upper in self._unified_cache[act_code]:
                 return self._unified_cache[act_code][cid_upper]
-            if "_SR_" in cid_upper:
-                parent_cid = cid_upper.split("_SR_")[0]
-                if parent_cid in self._unified_cache[act_code]:
-                    return self._unified_cache[act_code][parent_cid]
+            if parent_cid and parent_cid in self._unified_cache[act_code]:
+                return self._unified_cache[act_code][parent_cid]
 
         # 1. Check version cache
         if act_code in self._version_cache:
