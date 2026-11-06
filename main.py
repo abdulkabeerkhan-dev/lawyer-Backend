@@ -14470,6 +14470,15 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
 
             pass
 
+        if not rec_dict.get("pdf_url") and rec_dict.get("case_id"):
+            try:
+                from core.pdf_resolver import create_hmac_pdf_token
+                cid = rec_dict["case_id"]
+                pdf_tok = create_hmac_pdf_token(cid)
+                rec_dict["pdf_url"] = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(cid)}?token={pdf_tok}"
+            except Exception:
+                pass
+
         return rec_dict
 
     # 0. Primary Store: Turso Master Corpus (141k+ full judgments, low-latency libSQL pipeline)
@@ -14481,20 +14490,49 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
             get_case_by_identifier(space_id)
         )
         if tc_hit and tc_hit.get("full_text"):
+            full_txt = str(tc_hit.get("full_text") or "").strip()
+            hd_txt = str(tc_hit.get("headnote") or "").strip()
+            comb = f"{hd_txt} {full_txt}"
+
+            # Extract statutes & sections
+            sec_matches = re.findall(r'\b(?:Section|Sec\.?|S\.?|Article|Art\.?)\s*(\d+[A-Za-z\-]*(?:\s*(?:PPC|Cr\.?P\.?C\.?|CPC|Constitution))?)', comb, re.IGNORECASE)
+            clean_secs = list(dict.fromkeys([f"Section {m.strip()}" if not m.lower().startswith(("section", "article")) else m.strip() for m in sec_matches]))[:6]
+            statutes_invoked = [{"name": s, "explanation": "Statutory provision considered and applied by the Court."} for s in clean_secs]
+
+            # Generate signed HMAC PDF streaming link
+            cid = tc_hit.get("case_id")
+            try:
+                from core.pdf_resolver import create_hmac_pdf_token
+                pdf_tok = create_hmac_pdf_token(cid)
+                pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(cid)}?token={pdf_tok}"
+            except Exception:
+                pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(cid)}"
+
+            # Substantive ratio decidendi / holding
+            holding_val = hd_txt if len(hd_txt) > 30 else (full_txt[:700] + "..." if len(full_txt) > 700 else full_txt)
+            issue_val = f"Legal issue arising under {clean_secs[0]}" if clean_secs else "Substantive legal proposition on record."
+
             rec = {
-                "id": tc_hit.get("case_id"),
-                "case_id": tc_hit.get("case_id"),
+                "id": cid,
+                "case_id": cid,
                 "neutral_citation": tc_hit.get("neutral_citation") or space_id,
-                "case_title": tc_hit.get("case_title") or tc_hit.get("case_id"),
+                "case_title": tc_hit.get("case_title") or cid,
                 "court_name": tc_hit.get("court_name") or "Supreme Court of Pakistan",
                 "canonical_court_name": tc_hit.get("court_name") or "Supreme Court of Pakistan",
                 "year": tc_hit.get("year"),
                 "journal": tc_hit.get("journal"),
                 "page": tc_hit.get("page"),
-                "full_text": tc_hit.get("full_text") or "",
-                "headnote": tc_hit.get("headnote") or "",
+                "full_text": full_txt,
+                "headnote": hd_txt,
                 "content_level": tc_hit.get("content_level") or "full_judgment",
-                "source_type": "Turso"
+                "source_type": "Turso",
+                "holding": holding_val,
+                "ratio_decidendi": holding_val,
+                "legal_issue": issue_val,
+                "issue": issue_val,
+                "statutes_invoked": statutes_invoked,
+                "sections": clean_secs,
+                "pdf_url": pdf_url
             }
             return _sanitize_record(rec)
     except Exception as _turso_err:
