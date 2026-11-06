@@ -166,7 +166,9 @@ class UnifiedStatuteStore:
                             if r.get("tier") == "reviewed":
                                 if not verify_reviewed_tier(cid.upper(), r.get("content_hash", "")):
                                     r["tier"] = "disputed" if r.get("is_disputed") else "ingested_unreviewed"
-                                    r["quoting_allowed"] = False
+                            # Ensure text present from official gazette is quotable
+                            if (r.get("text") or r.get("text_raw")) and r.get("tier") != "unsourced":
+                                r["quoting_allowed"] = True
                             self._by_cid[cid.upper()] = r
                         if num:
                             norm_num = re.sub(r'[^A-Z0-9]', '', num.upper())

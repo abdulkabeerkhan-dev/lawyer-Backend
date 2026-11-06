@@ -17448,6 +17448,17 @@ async def get_indexing_status(admin_id: str = Depends(verify_admin_role)):
 
         return {"status": "error", "error": str(e)}
 
+@app.post("/admin/index-statutes-pinecone")
+async def trigger_index_statutes_pinecone(background_tasks: BackgroundTasks):
+    """Asynchronously triggers indexing of all Turso statute_provisions into Pinecone 'statutes' namespace."""
+    from scripts.index_statutes_to_pinecone import index_statutes_to_pinecone
+    background_tasks.add_task(index_statutes_to_pinecone)
+    return {
+        "status": "accepted",
+        "message": "Statutes indexing to Pinecone namespace 'statutes' started in background."
+    }
+
+
 
 
 

@@ -62,10 +62,19 @@ class StatuteInjector:
                 try:
                     with open(ufile, "r", encoding="utf-8") as f:
                         data = json.load(f)
-                    records = data if isinstance(data, list) else list(data.values()) if isinstance(data, dict) else []
+                    if isinstance(data, dict):
+                        records = data.get("records") or data.get("sections") or data.get("provisions") or list(data.values())
+                    elif isinstance(data, list):
+                        records = data
+                    else:
+                        records = []
                     by_cid: Dict[str, Dict[str, Any]] = {}
                     for item in records:
                         if isinstance(item, dict) and item.get("canonical_id"):
+                            if not item.get("text") and item.get("text_raw"):
+                                item["text"] = item["text_raw"]
+                            if item.get("tier") != "unsourced" and (item.get("text") or item.get("text_raw")):
+                                item["quoting_allowed"] = True
                             by_cid[str(item["canonical_id"]).upper()] = item
                     self._unified_cache[act_code] = by_cid
                 except Exception as e:
@@ -352,6 +361,25 @@ class StatuteInjector:
                 for item in self._table_cache[act_code]:
                     if str(item.get("canonical_id", "")).upper() == parent_cid:
                         return item
+
+        # 3. Fallback to Turso statute_provisions table
+        try:
+            from core.turso_client import get_statute_provision
+            turso_prov = get_statute_provision(canonical_id, act_code=act_code)
+            if turso_prov:
+                return {
+                    "canonical_id": turso_prov["canonical_id"],
+                    "act_code": turso_prov["act_code"],
+                    "primary_num": turso_prov["section_num"],
+                    "title": turso_prov["title"],
+                    "text": turso_prov["verbatim_text"],
+                    "tier": turso_prov["tier"],
+                    "in_force": bool(turso_prov["in_force"]),
+                    "quoting_allowed": True
+                }
+        except Exception:
+            pass
+
         return None
 
     def inject_statutory_framework(
@@ -377,10 +405,14 @@ class StatuteInjector:
         # Gather target provisions
         target_provisions: List[str] = []
         if query_plan:
-            if hasattr(query_plan, "provisions") and query_plan.provisions:
-                target_provisions.extend([str(p) for p in query_plan.provisions])
-            elif isinstance(query_plan, dict) and query_plan.get("provisions"):
-                target_provisions.extend([str(p) for p in query_plan["provisions"]])
+            plan_provs = (
+                getattr(query_plan, "statutory_provisions", None)
+                or getattr(query_plan, "provisions", None)
+                or (query_plan.get("statutory_provisions") if isinstance(query_plan, dict) else None)
+                or (query_plan.get("provisions") if isinstance(query_plan, dict) else None)
+                or []
+            )
+            target_provisions.extend([str(p) for p in plan_provs])
 
         q_comb = f"{query_text} {' '.join(target_provisions)}".lower()
 
@@ -410,7 +442,7 @@ class StatuteInjector:
                 if not any(m_short.lower() in p.lower() for p in target_provisions):
                     target_provisions.append(m)
 
-        if any(k in q_comb for k in ["rent", "tenant", "landlord", "eviction", "prpa"]):
+        if re.search(r'\b(?:rent|rented|tenan[ct]|landlord|evict|ejectment)\b', q_comb) or 'prpa' in q_comb:
             if "lahore" in q_comb or "punjab" in q_comb or "prpa" in q_comb:
                 mandatory_rent = [
                     "Section 4 PRPA 2009",
@@ -422,14 +454,20 @@ class StatuteInjector:
                         target_provisions.append(m)
 
         if any(k in q_comb for k in ["cheque", "bounced", "dishonour", "dishonored", "489-f", "489f", "138"]):
-            mandatory_cheque = [
-                "Section 489-F PPC",
-                "Order XXXVII Rule 2 CPC",
-                "Section 118 Negotiable Instruments Act, 1881"
-            ]
+            mandatory_cheque = ["Section 489-F PPC"]
+            is_quashment_or_bail = any(k in q_comb for k in ["quash", "561", "bail", "497", "498", "fir"])
+            if not is_quashment_or_bail:
+                mandatory_cheque.extend([
+                    "Order XXXVII Rule 2 CPC",
+                    "Section 118 Negotiable Instruments Act, 1881"
+                ])
             for m in mandatory_cheque:
                 if not any(m.split()[1].lower() in p.lower() for p in target_provisions):
                     target_provisions.append(m)
+
+        if any(k in q_comb for k in ["quash", "561-a", "561a"]):
+            if not any("561" in p for p in target_provisions):
+                target_provisions.insert(0, "Section 561A CrPC")
 
         # Remediation Spec Phase 1: Removed keyword mandatory injection of Section 420 PPC / 497 CrPC for civil fraud queries
 
@@ -556,7 +594,7 @@ class StatuteInjector:
                 lines.append("********************************************************************************")
 
             # Check unsourced tier / quoting blocked gating (Order 1.4 Item 1)
-            elif tier == "unsourced" or in_force == "unknown" or (rec and rec.get("quoting_allowed") is False):
+            elif (tier == "unsourced" and not raw_text) or in_force == "unknown":
                 lines.append("********************************************************************************")
                 lines.append(f"CRITICAL REFUSAL: {display_name} HAS NO SOURCED OFFICIAL PDF IN REPOSITORY (TIER: UNSOURCED).")
                 lines.append("The engine strictly blocks quoting or applying unverified/unsourced statutory text.")

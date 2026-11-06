@@ -437,13 +437,17 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     # Domain Flags
     is_partition = any(k in q_low for k in ["partition", "co-sharer", "co-owner", "hotchpot", "joint property", "joint ancestral", "order xx rule 18", "partition act", "order viii rule 6", "metes and bounds"])
     is_benami = any(k in q_low for k in ["benami", "ostensible owner", "benamidar", "advancement"])
+    is_quashment = (
+        any(k in q_low for k in ["quashment", "quash", "quashing", "561-a", "561a"])
+        or (("fir" in q_low or "criminal" in q_low) and any(k in q_low for k in ["quash", "561"]))
+    )
     is_bail = any(k in q_low for k in ["pre-arrest bail", "pre arrest bail", "post-arrest bail", "post arrest bail", "anticipatory bail"]) or ("bail" in q_low and any(k in q_low for k in ["496", "497", "498", "arrest", "custody", "fir", "non-bailable"]))
     is_commercial_crime = (
-        any(k in q_low for k in ["405", "406", "409", "420", "breach of trust", "cheating", "misappropriat", "director", "fiduciary", "entrustment", "forgery", "468", "471", "quashment", "561-a", "561a"])
+        any(k in q_low for k in ["405", "406", "409", "420", "breach of trust", "cheating", "misappropriat", "director", "fiduciary", "entrustment", "forgery", "468", "471"])
         and any(k in q_low for k in ["contract", "commercial", "agreement", "loan", "civil dispute", "business", "company", "shares", "power of attorney", "pending civil", "civil court", "civil suit", "recovery", "same agreement"])
     )
     is_cheque_dishonour = any(k in q_low for k in ["cheque", "dishonour", "dishonored", "bounced", "489-f", "489f", "138"])
-    is_rent = any(k in q_low for k in ["rent", "tenant", "landlord", "eviction", "evict", "ejectment", "prpa", "srpo", "tenancy", "commercial shop", "rent tribunal"])
+    is_rent = bool(re.search(r'\b(?:rent|rented|tenan[ct]|landlord|evict|ejectment|tenancy|commercial shop|rent tribunal)\b', q_low) or any(k in q_low for k in ["prpa", "srpo"]))
     is_banking = any(k in q_low for k in ["banking court", "bank", "financial institution", "recovery of finance", "fio", "firo"]) and any(k in q_low for k in ["decree", "appeal", "loan", "finance", "stay", "deposit", "leave to defend", "banking", "section 22", "section 10"])
     is_corporate = any(k in q_low for k in ["companies act", "company law", "section 286", "section 288", "oppression", "mismanagement", "minority shareholder", "company bench", "secp"])
     is_service = any(k in q_low for k in ["civil servant", "service tribunal", "peeda", "removal from service", "dismissal from service", "article 212", "service tribunals act"])
@@ -465,7 +469,33 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     is_adverse_possession = any(k in q_low for k in ["adverse possession", "limitation act", "section 28", "article 144", "article 149", "state land"])
 
     # Classification Logic
-    if is_benami:
+    if is_quashment:
+        primary_domain = "criminal"
+        subdomains = ["quashment_of_fir", "inherent_powers_561a", "abuse_of_process"]
+        has_civil_suit_aspect = any(k in q_low for k in ["pending civil", "civil suit", "civil court", "same agreement", "contractual dispute"])
+        if has_civil_suit_aspect:
+            secondary_domains = ["civil"]
+            subdomains.extend(["civil_vs_criminal", "pending_civil_suit_quashment"])
+            legacy_domains.extend(["criminal law", "civil dispute"])
+            legacy_matter_type.extend(["criminal", "civil"])
+            is_cross_domain_relevant = True
+            cross_domain_reason = "Quashment of criminal proceedings under Section 561-A CrPC where civil proceedings/suit on the same subject matter are pending."
+            cross_domain_controlling_doctrines = ["mens_rea_at_inception", "civil_dispute_quashment_406_420"]
+            allowed_domains_filter = ["criminal", "civil"]
+        else:
+            secondary_domains = []
+            if is_cheque_dishonour:
+                subdomains.extend(["489f_quashment", "civil_nature_cheque"])
+                legacy_domains.append("criminal quashment & cheque dishonour")
+            else:
+                legacy_domains.append("criminal quashment")
+            legacy_matter_type.append("criminal")
+            is_cross_domain_relevant = False
+            allowed_domains_filter = ["criminal"]
+        procedural_remedy = "Criminal Miscellaneous Petition for Quashment of FIR under Section 561-A Cr.P.C."
+        competent_forum = "High Court"
+
+    elif is_benami:
         primary_domain = "civil"
         subdomains = ["benami", "property", "ostensible_owner"]
         if is_partition:
@@ -547,24 +577,34 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
 
     elif is_cheque_dishonour:
         primary_domain = "criminal"
-        secondary_domains = ["civil"]
-        subdomains = ["cheque_dishonour", "489f", "summary_suit_oxxxvii"]
-        legacy_domains.extend(["criminal law", "cheque dishonour"])
-        legacy_matter_type.extend(["criminal", "civil"])
-        is_cross_domain_relevant = True
-        cross_domain_reason = (
-            "Dishonour of cheques in Pakistan engages concurrent remedies: criminal penal prosecution "
-            "under Section 489-F PPC and civil summary recovery under Order XXXVII CPC / Section 118 NI Act. "
-            "Superior courts affirm both remedies proceed simultaneously."
-        )
-        cross_domain_controlling_doctrines = [
-            "concurrent_civil_criminal_remedies",
-            "presumption_under_s118_ni_act",
-            "obligation_incurred_for_consideration"
-        ]
-        allowed_domains_filter = ["criminal", "civil"]
-        procedural_remedy = "FIR under Section 489-F PPC & Summary Suit under Order XXXVII CPC"
-        competent_forum = "Judicial Magistrate 1st Class (criminal) / Civil Court (summary suit)"
+        if any(k in q_low for k in ["guarantee", "security deposit", "civil", "recovery", "summary suit", "order 37", "oxxxvii", "concurrent", "simultaneous", "both"]):
+            secondary_domains = ["civil"]
+            subdomains = ["cheque_dishonour", "489f", "summary_suit_oxxxvii"]
+            legacy_domains.extend(["criminal law", "cheque dishonour", "civil recovery"])
+            legacy_matter_type.extend(["criminal", "civil"])
+            is_cross_domain_relevant = True
+            cross_domain_reason = (
+                "Dishonour of cheques in Pakistan engages concurrent remedies: criminal penal prosecution "
+                "under Section 489-F PPC and civil summary recovery under Order XXXVII CPC / Section 118 NI Act. "
+                "Superior courts affirm both remedies proceed simultaneously."
+            )
+            cross_domain_controlling_doctrines = [
+                "concurrent_civil_criminal_remedies",
+                "presumption_under_s118_ni_act",
+                "obligation_incurred_for_consideration"
+            ]
+            allowed_domains_filter = ["criminal", "civil"]
+            procedural_remedy = "FIR under Section 489-F PPC & Summary Suit under Order XXXVII CPC"
+            competent_forum = "Judicial Magistrate 1st Class (criminal) / Civil Court (summary suit)"
+        else:
+            secondary_domains = []
+            subdomains = ["cheque_dishonour", "489f"]
+            legacy_domains.append("criminal law")
+            legacy_matter_type.append("criminal")
+            is_cross_domain_relevant = False
+            allowed_domains_filter = ["criminal"]
+            procedural_remedy = "Criminal Prosecution under Section 489-F PPC"
+            competent_forum = "Judicial Magistrate 1st Class / Sessions Court"
 
     elif is_female_inheritance:
         primary_domain = "civil"
@@ -928,7 +968,13 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
                 if not any(ap.split()[1] in p for p in provisions):
                     provisions.append(ap)
 
-    if is_cheque_dishonour:
+    if is_quashment:
+        if not any("561" in p for p in provisions):
+            provisions.insert(0, "Section 561A CrPC")
+        if is_cheque_dishonour and not any("489" in p for p in provisions):
+            provisions.append("Section 489-F PPC")
+
+    elif is_cheque_dishonour:
         if not any("489" in p for p in provisions):
             provisions.append("Section 489-F PPC")
 
@@ -1152,8 +1198,15 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         elif "rent" in dq_low or "eviction" in dq_low or "tenant" in dq_low or "prpa" in dq_low:
             lane_name = "rent_tribunal_eviction"
         elif "489" in dq_low or "cheque" in dq_low or "bounced" in dq_low or "dishonour" in dq_low or "138" in dq_low:
-            lane_name = "cheque_dishonour_489f"
-            dq = "Section 489-F PPC cheque dishonour bounced cheque ingredients punishment dishonest issuance"
+            if is_quashment or "quash" in dq_low or "561" in dq_low:
+                lane_name = "quashment_561a_cheque"
+                dq = "Section 561-A CrPC quashment of FIR Section 489-F PPC cheque dishonour civil dispute abuse of process"
+            elif "bail" in dq_low or "497" in dq_low or "498" in dq_low:
+                lane_name = "bail_489f_cheque"
+                dq = "Section 489-F PPC cheque dishonour pre-arrest bail post-arrest bail Section 497 CrPC Section 498 CrPC"
+            else:
+                lane_name = "cheque_dishonour_489f"
+                dq = "Section 489-F PPC cheque dishonour bounced cheque ingredients punishment dishonest issuance"
         elif "420" in dq_low and ("indian" in dq_low or "ipc" in dq_low):
             lane_name = "cheating_fraud_420ppc"
             dq = "Section 420 PPC cheating dishonestly inducing delivery of property ingredients punishment Schedule II"
@@ -1211,7 +1264,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
                     "lane": "cheque_dishonour_489f",
                     "query": "Section 489-F PPC dishonour of cheque ingredients punishment dishonest issuance"
                 })
-            if not any(l["lane"] == "cheque_civil_recovery" for l in raw_lanes):
+            if not is_quashment and not is_bail and not any(l["lane"] == "cheque_civil_recovery" for l in raw_lanes):
                 raw_lanes.append({
                     "lane": "cheque_civil_recovery",
                     "query": "Order XXXVII Rule 2 CPC summary suit dishonoured cheque Section 118 NI Act presumption"

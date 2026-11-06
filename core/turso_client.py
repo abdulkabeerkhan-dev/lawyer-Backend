@@ -214,3 +214,80 @@ def get_case_pdf_bytes(
                 logger.warning(f"Failed to decode base64 PDF from Turso: {e}")
     return None
 
+def get_statute_provision(canonical_id_or_sec: str, act_code: Optional[str] = None) -> Optional[Dict[str, Any]]:
+    """
+    Looks up a statutory provision from Turso statute_provisions table by canonical_id
+    (e.g. 'CRPC_1898_SEC_561A') or by (act_code, section_num).
+    """
+    ident = canonical_id_or_sec.strip().upper()
+    act = act_code.strip().upper() if act_code else None
+
+    # Check by canonical_id
+    sql = """
+    SELECT canonical_id, act_code, act_name, section_num, title, verbatim_text, domain, tier, in_force
+    FROM statute_provisions
+    WHERE canonical_id = ? OR UPPER(canonical_id) = ?
+    LIMIT 1
+    """
+    args = [{"type": "text", "value": ident}, {"type": "text", "value": ident}]
+    res = execute_turso_pipeline([{"sql": sql, "args": args}])
+    if res and "rows" in res[0] and res[0]["rows"]:
+        return res[0]["rows"][0]
+
+    # If act_code provided, check by act_code + section_num
+    if act:
+        sec_clean = ident.replace(f"{act}_SEC_", "").replace(f"{act}_ART_", "").replace(f"{act}_ORD_", "").strip()
+        sql2 = """
+        SELECT canonical_id, act_code, act_name, section_num, title, verbatim_text, domain, tier, in_force
+        FROM statute_provisions
+        WHERE act_code = ? AND (section_num = ? OR UPPER(section_num) = ?)
+        LIMIT 1
+        """
+        args2 = [
+            {"type": "text", "value": act},
+            {"type": "text", "value": sec_clean},
+            {"type": "text", "value": sec_clean.upper()}
+        ]
+        res2 = execute_turso_pipeline([{"sql": sql2, "args": args2}])
+        if res2 and "rows" in res2[0] and res2[0]["rows"]:
+            return res2[0]["rows"][0]
+
+    return None
+
+def search_statutes(query_text: str, act_code: Optional[str] = None, domain: Optional[str] = None, limit: int = 10) -> List[Dict[str, Any]]:
+    """
+    Searches statutory provisions in Turso by text or title match.
+    """
+    words = [w for w in query_text.replace("'", "").replace('"', '').split() if len(w) > 2]
+    if not words:
+        return []
+
+    word_clauses = []
+    args = []
+    for w in words[:4]:
+        word_clauses.append("(verbatim_text LIKE ? OR title LIKE ?)")
+        args.extend([{"type": "text", "value": f"%{w}%"}, {"type": "text", "value": f"%{w}%"}])
+
+    clauses = ["(" + " OR ".join(word_clauses) + ")"]
+
+    if act_code:
+        clauses.append("act_code = ?")
+        args.append({"type": "text", "value": act_code.strip().upper()})
+    if domain:
+        clauses.append("domain = ?")
+        args.append({"type": "text", "value": domain.strip().lower()})
+
+    sql = f"""
+    SELECT canonical_id, act_code, act_name, section_num, title, substr(verbatim_text, 1, 300) AS snippet, domain, tier, in_force
+    FROM statute_provisions
+    WHERE {' AND '.join(clauses)}
+    LIMIT ?
+    """
+    args.append({"type": "integer", "value": str(limit)})
+
+    res = execute_turso_pipeline([{"sql": sql, "args": args}])
+    if res and "rows" in res[0]:
+        return res[0]["rows"]
+    return []
+
+

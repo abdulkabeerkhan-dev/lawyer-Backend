@@ -20,6 +20,7 @@ from legal_ai.retrieval.pinecone_search import search_pinecone_dense
 from legal_ai.retrieval.bm25_search import search_bm25_sparse
 from legal_ai.retrieval.external_search import search_external_judgments
 from legal_ai.ranking.court_weighting import resolve_court_and_province
+from core.authority_ranking import is_irrelevant_subject
 
 
 def merge_candidates_with_rrf(
@@ -128,6 +129,9 @@ def merge_candidates_with_rrf(
         final_list.append(cand)
 
     final_list.sort(key=lambda x: x.get("rrf_score", 0.0), reverse=True)
+    if query_plan:
+        filtered_list = [c for c in final_list if not is_irrelevant_subject(c, query_plan)]
+        return filtered_list
     return final_list
 
 
@@ -250,7 +254,7 @@ async def retrieve_candidates_parallel(
                     search_terms.append(la)
 
     # Priority 2: Canonical statutory provisions from query plan (anchored to parent statute)
-    provisions = getattr(query_plan, "provisions", []) if hasattr(query_plan, "provisions") else []
+    provisions = getattr(query_plan, "statutory_provisions", None) or getattr(query_plan, "provisions", []) or []
     for p in provisions:
         anchored = anchor_provision_token(str(p), query_plan=query_plan)
         if anchored and anchored not in search_terms:
@@ -260,10 +264,9 @@ async def retrieve_candidates_parallel(
     lanes = getattr(query_plan, "search_lanes", []) if hasattr(query_plan, "search_lanes") else []
     issues = getattr(query_plan, "issues", []) if hasattr(query_plan, "issues") else (getattr(query_plan, "legal_questions", []) if hasattr(query_plan, "legal_questions") else [])
     for lane in lanes:
-        if isinstance(lane, dict) and lane.get("query"):
-            lq = str(lane["query"]).strip()
-            if lq and lq not in search_terms:
-                search_terms.append(lq)
+        lq = str(getattr(lane, "query", None) or (lane.get("query") if isinstance(lane, dict) else "")).strip()
+        if lq and lq not in search_terms:
+            search_terms.append(lq)
 
     for t in detected:
         if t in TOPICS_SPEC:
@@ -285,10 +288,9 @@ async def retrieve_candidates_parallel(
     dense_queries = [query_text]
     if lanes:
         for l in lanes[:5]:
-            if isinstance(l, dict) and l.get("query"):
-                q_str = str(l["query"]).strip()
-                if q_str and q_str not in dense_queries:
-                    dense_queries.append(q_str)
+            q_str = str(getattr(l, "query", None) or (l.get("query") if isinstance(l, dict) else "")).strip()
+            if q_str and q_str not in dense_queries:
+                dense_queries.append(q_str)
     elif issues:
         for iss in issues[:3]:
             iss_str = str(iss).strip()
@@ -299,10 +301,9 @@ async def retrieve_candidates_parallel(
     bm_queries = [query_text]
     if lanes:
         for l in lanes[:5]:
-            if isinstance(l, dict) and l.get("query"):
-                q_str = str(l["query"]).strip()
-                if q_str and q_str not in bm_queries:
-                    bm_queries.append(q_str)
+            q_str = str(getattr(l, "query", None) or (l.get("query") if isinstance(l, dict) else "")).strip()
+            if q_str and q_str not in bm_queries:
+                bm_queries.append(q_str)
     elif issues:
         for iss in issues[:3]:
             iss_str = str(iss).strip()

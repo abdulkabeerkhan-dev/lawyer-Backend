@@ -342,6 +342,27 @@ def get_provision_full_text(canonical_id: str) -> Optional[Dict[str, Any]]:
     """Retrieves the authentic verbatim text and details of a single provision."""
     store = get_unified_statute_store()
     prov = store.get_by_canonical_id(canonical_id)
+    if not prov or not prov.get("text"):
+        try:
+            from core.turso_client import get_statute_provision
+            turso_prov = get_statute_provision(canonical_id)
+            if turso_prov:
+                prov = {
+                    "canonical_id": turso_prov["canonical_id"],
+                    "act_code": turso_prov["act_code"],
+                    "act_name": turso_prov["act_name"],
+                    "short_act_name": ACT_DESCRIPTIONS.get(turso_prov["act_code"], {}).get("short_name") or turso_prov["act_name"],
+                    "provision_type": "article" if "CONST" in turso_prov["act_code"] else "section",
+                    "primary_num": turso_prov["section_num"],
+                    "title": turso_prov["title"],
+                    "text": turso_prov["verbatim_text"],
+                    "tier": turso_prov["tier"],
+                    "in_force": bool(turso_prov["in_force"]),
+                    "footnotes": []
+                }
+                return prov
+        except Exception:
+            pass
     if not prov:
         return None
 

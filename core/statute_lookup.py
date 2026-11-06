@@ -19,7 +19,7 @@ from core.quote_by_reference import format_system_blockquote
 
 QUARANTINED_ACTS = {
     "PECA_2016", "AMLA_2010", "ARBITRATION_1940", "MFLO_1961",
-    "ITO_2001", "LAND_REVENUE_1967", "NI_ACT_1881", "CNSA_1997"
+    "ITO_2001", "LAND_REVENUE_1967", "CNSA_1997"
 }
 
 DISPUTED_WARNING_BANNER = (

@@ -78,6 +78,24 @@ def is_irrelevant_subject(candidate: Dict[str, Any], query_plan: LegalQueryPlan)
             if not any(k in haystack for k in ["partition", "co-sharer", "benami"]):
                 return True
 
+    # Criminal Quashment (561-A CrPC) and Bail (497/498 CrPC) Domain Quarantine
+    is_criminal_strict = (
+        getattr(query_plan, "primary_domain", "") == "criminal"
+        and getattr(query_plan, "allowed_domains_filter", []) == ["criminal"]
+    )
+    if is_criminal_strict:
+        haystack_low = haystack.lower()
+        # Exclude pure civil recovery / Order 37 summary suits / rent eviction
+        if any(k in haystack_low for k in ["order xxxvii", "order 37", "leave to defend under order xxxvii", "summary suit for recovery", "suit for recovery of money", "punjab rented premises act", "rent tribunal", "eviction petition", "ejectment petition"]):
+            if not any(k in haystack_low for k in ["quashment", "561-a", "561a", "489-f", "489f", "fir", "bail", "criminal misc"]):
+                return True
+        # Exclude corporate oppression & winding up
+        if any(k in haystack_low for k in ["winding up petition", "section 286 companies act", "oppression and mismanagement"]):
+            return True
+        # Exclude service tribunal appeals
+        if any(k in haystack_low for k in ["service tribunal", "civil servants act", "plc(cs)"]):
+            return True
+
     is_family = any(k in domains or k in questions_str for k in ["family", "khula", "dower", "maintenance", "custody", "guardian", "mflo", "talaq", "zar-i-khula"])
     if is_family:
         if any(k in haystack for k in ["financial institutions", "recovery of finances", "fio 2001", "pawnor", "pledge of shares", "cld", "banking court", "loan default"]):
