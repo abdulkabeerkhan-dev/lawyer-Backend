@@ -5215,7 +5215,7 @@ class MemoVerifier:
 
 
 
-def verify_memorandum_text(memo_text: str, **kwargs) -> Dict[str, Any]:
+def verify_memorandum_text(memo_text: str, extra_citations: Optional[Any] = None, **kwargs) -> Dict[str, Any]:
 
 
 
@@ -5236,6 +5236,8 @@ def verify_memorandum_text(memo_text: str, **kwargs) -> Dict[str, Any]:
 
 
     verifier = MemoVerifier()
+    if not extra_citations and "extra_citations" in kwargs:
+        extra_citations = kwargs.pop("extra_citations")
     if extra_citations:
         for ec in extra_citations:
             if ec:
