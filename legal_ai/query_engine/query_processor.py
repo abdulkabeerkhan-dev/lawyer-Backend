@@ -4273,55 +4273,50 @@ async def process_query_job_legal_ai(
 
 
 
-    claude_message = await safe_create_anthropic_message(
-
-
-
-
-
-
-
-        model=CLAUDE_MODEL,
-
-
-
-
-
-
-
-        max_tokens=synthesis_max_tokens,
-
-
-
-
-
-
-
-        max_output_tokens=synthesis_max_tokens,
-
-
-
-
-
-
-
-        system=system_prompt,
-
-
-
-
-
-
-
-        messages=[{"role": "user", "content": user_synthesis_content}], stream_callback=(lambda delta: jobs_store[job_id].__setitem__("streaming_text", jobs_store[job_id].get("streaming_text", "") + delta) if job_id in jobs_store else None)
-
-
-
-
-
-
-
-    )
+        claude_message = None
+    try:
+        claude_message = await safe_create_anthropic_message(
+            model=CLAUDE_MODEL,
+            max_tokens=synthesis_max_tokens,
+            max_output_tokens=synthesis_max_tokens,
+            system=system_prompt,
+            messages=[{"role": "user", "content": user_synthesis_content}],
+            stream_callback=(lambda delta: jobs_store[job_id].__setitem__("streaming_text", jobs_store[job_id].get("streaming_text", "") + delta) if job_id in jobs_store else None)
+        )
+    except Exception as synth_err:
+        print(f"⚠️ [JOB {job_id}] Anthropic synthesis call failed: {synth_err}. Falling back to deterministic honest partial response...", file=sys.stderr, flush=True)
+        from legal_ai.synthesis.memorandum_generator import build_honest_partial_response, sanitize_partner_markdown_presentation
+        fallback_body = build_honest_partial_response(
+            query_text=effective_user_query,
+            query_plan=legal_query_plan,
+            statutory_provisions=statute_framework_res.get("injected_statutes", []) if isinstance(statute_framework_res, dict) else [],
+            precedents=final_authorities,
+            reason="Direct automated narrative synthesis was unavailable. Official statutory and precedent records are provided below."
+        )
+        clean_fallback = sanitize_partner_markdown_presentation(fallback_body)
+        done_result = {
+            "answer": clean_fallback,
+            "response": clean_fallback,
+            "model_answer": clean_fallback,
+            "precedents": final_authorities,
+            "precedent_cards": final_authorities,
+            "additional_authorities": [],
+            "citations": [p.get("citation") for p in final_authorities if isinstance(p, dict) and p.get("citation")],
+            "query_id": str(job_id),
+            "mode": "caselaw_search",
+            "truncated": False,
+            "export_allowed": True,
+            "copy_allowed": True
+        }
+        if job_id in jobs_store:
+            jobs_store[job_id]["status"] = "done"
+            jobs_store[job_id]["stage"] = "done"
+            jobs_store[job_id]["result"] = done_result
+            jobs_store[job_id]["completed_at"] = datetime.now(timezone.utc)
+            from main import persist_in_flight_job_state
+            persist_in_flight_job_state(job_id, "done", "done", extra={"result": done_result})
+        pipeline_metrics.end_stage("synthesizing")
+        return
 
 
 

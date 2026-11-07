@@ -260,25 +260,26 @@ async def safe_create_anthropic_message(**kwargs):
             print("⚠️ [legal_ai.config] Configured Anthropic key has depleted credit balance.", file=sys.stderr, flush=True)
             raise
 
-        # 2. Immediate Auto-Recovery for Workspace Header Errors
-        if "workspace" in err_str.lower() and ("not found" in err_str.lower() or "invalid" in err_str.lower()):
+        # 2. Immediate Auto-Recovery for Workspace Header or 401 Auth Errors
+        is_auth_or_ws_err = (
+            "workspace" in err_str.lower()
+            or "invalid x-api-key" in err_str.lower()
+            or "authentication_error" in err_str.lower()
+            or "401" in err_str
+        )
+        if is_auth_or_ws_err:
             print(
-                f"⚠️ [legal_ai.config] Anthropic rejected workspace ID. "
-                f"Auto-recovering with default workspace 'wrkspc_016AwCn1LDaCtQ39UsfQiWjU'...",
+                f"⚠️ [legal_ai.config] Anthropic rejected with authentication/workspace error: {err_str}. "
+                f"Auto-recovering cleanly by executing request without workspace header...",
                 file=sys.stderr,
                 flush=True
             )
             try:
                 from anthropic import AsyncAnthropic
-                recov_client = AsyncAnthropic(
-                    api_key=ANTHROPIC_API_KEY,
-                    default_headers={"anthropic-workspace-id": "wrkspc_016AwCn1LDaCtQ39UsfQiWjU"}
-                )
-                return await recov_client.messages.create(**call_kwargs)
-            except Exception as recov_err:
-                print(f"⚠️ [legal_ai.config] Workspace recovery attempt failed: {recov_err}. Trying without workspace header...", file=sys.stderr, flush=True)
                 recov_client_no_hdr = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
                 return await recov_client_no_hdr.messages.create(**call_kwargs)
+            except Exception as recov_err:
+                print(f"⚠️ [legal_ai.config] Direct retry without workspace header also failed: {recov_err}", file=sys.stderr, flush=True)
 
         # 3. Model 404 Failover (Only when error is specifically about model, not workspace or credit)
         is_model_error = ("model:" in err_str.lower() or "model_not_found" in err_str.lower() or ("404" in err_str and "model" in err_str.lower())) and "workspace" not in err_str.lower()

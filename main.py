@@ -840,7 +840,7 @@ ANTHROPIC_API_KEY = (os.environ.get("ANTHROPIC_API_KEY") or "").strip()
 
 _raw_main_ws = (os.environ.get("ANTHROPIC_WORKSPACE_ID") or "").strip()
 
-ANTHROPIC_WORKSPACE_ID = _raw_main_ws if (_raw_main_ws and _raw_main_ws.startswith("wrkspc_")) else "wrkspc_016AwCn1LDaCtQ39UsfQiWjU"
+ANTHROPIC_WORKSPACE_ID = _raw_main_ws if (_raw_main_ws and _raw_main_ws.startswith("wrkspc_")) else None
 
 VOYAGE_API_KEY = os.environ.get("VOYAGE_API_KEY")
 
@@ -2206,43 +2206,26 @@ async def safe_create_anthropic_message(**kwargs):
 
 
 
-        # 2. Immediate Auto-Recovery for Workspace Header Errors
-
-        if "workspace" in err_str.lower() and ("not found" in err_str.lower() or "invalid" in err_str.lower()):
-
+        # 2. Immediate Auto-Recovery for Workspace Header or 401 Auth Errors
+        is_auth_or_ws_err = (
+            "workspace" in err_str.lower()
+            or "invalid x-api-key" in err_str.lower()
+            or "authentication_error" in err_str.lower()
+            or "401" in err_str
+        )
+        if is_auth_or_ws_err:
             print(
-
-                f"⚠️ Anthropic rejected workspace ID '{ANTHROPIC_WORKSPACE_ID}'. "
-
-                f"Auto-recovering with default workspace 'wrkspc_016AwCn1LDaCtQ39UsfQiWjU'...",
-
+                f"⚠️ Anthropic rejected with authentication/workspace error: {err_str}. "
+                f"Auto-recovering cleanly by executing request without workspace header...",
                 file=sys.stderr,
-
                 flush=True
-
             )
-
             try:
-
                 from anthropic import AsyncAnthropic
-
-                recov_client = AsyncAnthropic(
-
-                    api_key=ANTHROPIC_API_KEY,
-
-                    default_headers={"anthropic-workspace-id": "wrkspc_016AwCn1LDaCtQ39UsfQiWjU"}
-
-                )
-
-                return await recov_client.messages.create(**call_kwargs)
-
-            except Exception as recov_err:
-
-                print(f"⚠️ Workspace recovery attempt failed: {recov_err}. Retrying without workspace header...", file=sys.stderr, flush=True)
-
                 recov_client_no_hdr = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
-
                 return await recov_client_no_hdr.messages.create(**call_kwargs)
+            except Exception as recov_err:
+                print(f"⚠️ Direct retry without workspace header also failed: {recov_err}", file=sys.stderr, flush=True)
 
 
 
@@ -7797,34 +7780,84 @@ def check_query_jobs_table_exists() -> bool:
 
     return _QUERY_JOBS_TABLE_EXISTS
 
+import sqlite3
+import tempfile
+
+_LOCAL_JOBS_DB_PATH = os.path.join(tempfile.gettempdir(), "section_jobs_cache.db")
+
+def _init_local_jobs_db():
+    try:
+        with sqlite3.connect(_LOCAL_JOBS_DB_PATH) as conn:
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS local_query_jobs (
+                    job_id TEXT PRIMARY KEY,
+                    user_id TEXT,
+                    stage TEXT,
+                    status TEXT,
+                    updated_at TEXT,
+                    metadata_json TEXT
+                )
+            """)
+    except Exception as e:
+        logger.debug(f"Local sqlite jobs db init error: {e}")
+
+_init_local_jobs_db()
+
 def _load_in_flight_jobs() -> Dict[str, Dict[str, Any]]:
     """
-    Load in-flight and recent jobs from the persistent database table `query_jobs`.
-    Falls back to memory cache if database is not reachable.
-    Zero query text or client tokens are written to local disk.
+    Load in-flight and recent jobs from persistent local SQLite disk cache and Supabase `query_jobs`.
+    Survives worker process recycling and Render service sleep wakeups.
     """
     store: Dict[str, Dict[str, Any]] = {}
-    if supabase:
+    # 1. Load from local SQLite cache first (fast, reliable, zero network latency)
+    try:
+        with sqlite3.connect(_LOCAL_JOBS_DB_PATH) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT job_id, user_id, stage, status, updated_at, metadata_json FROM local_query_jobs ORDER BY updated_at DESC LIMIT 100")
+            for row in cursor.fetchall():
+                jid, uid, stg, stat, up_at, m_json = row
+                meta = {}
+                if m_json:
+                    try:
+                        meta = json.loads(m_json)
+                    except Exception:
+                        pass
+                store[jid] = {
+                    "job_id": jid,
+                    "user_id": uid,
+                    "stage": stg or "processing",
+                    "status": stat or "running",
+                    "updated_at": up_at,
+                    "early_display": meta.get("early_display"),
+                    "result": meta.get("result")
+                }
+    except Exception as sq_err:
+        logger.debug(f"SQLite jobs cache read error: {sq_err}")
+
+    # 2. Supabase table lookup if circuit breaker is healthy
+    if supabase and not is_supabase_circuit_open():
         try:
             res = safe_supabase_query(
                 lambda: supabase.table("query_jobs")
                 .select("job_id, user_id, stage, status, updated_at, metadata")
                 .order("updated_at", desc=True)
-                .limit(100)
-                .execute()
+                .limit(50)
+                .execute(),
+                retries=1
             )
             if res and hasattr(res, "data") and res.data:
                 for row in res.data:
                     meta = row.get("metadata") or {}
-                    store[row["job_id"]] = {
-                        "job_id": row.get("job_id"),
-                        "user_id": row.get("user_id"),
-                        "stage": row.get("stage", "processing"),
-                        "status": row.get("status", "running"),
-                        "updated_at": row.get("updated_at"),
-                        "early_display": meta.get("early_display"),
-                        "result": meta.get("result")
-                    }
+                    if row["job_id"] not in store:
+                        store[row["job_id"]] = {
+                            "job_id": row.get("job_id"),
+                            "user_id": row.get("user_id"),
+                            "stage": row.get("stage", "processing"),
+                            "status": row.get("status", "running"),
+                            "updated_at": row.get("updated_at"),
+                            "early_display": meta.get("early_display"),
+                            "result": meta.get("result")
+                        }
         except Exception as e:
             logger.debug(f"Failed to query query_jobs table: {e}")
 
@@ -7836,7 +7869,7 @@ def _load_in_flight_jobs() -> Dict[str, Dict[str, Any]]:
 
 def persist_in_flight_job_state(job_id: str, stage: str, status: str = "running", extra: Optional[Dict[str, Any]] = None):
     """
-    Persist job execution stage and status to PostgreSQL `query_jobs` table.
+    Persist job execution stage and status to local SQLite cache and PostgreSQL `query_jobs` table.
     Enforces privacy by stripping raw query text from metadata before storing.
     """
     user_id = extra.get("user_id") if extra else None
@@ -7849,6 +7882,9 @@ def persist_in_flight_job_state(job_id: str, stage: str, status: str = "running"
                     sanitized_metadata[k] = v
 
     now_iso = datetime.now(timezone.utc).isoformat()
+    meta_json_str = json.dumps(sanitized_metadata) if sanitized_metadata else "{}"
+
+    # 1. Update memory cache
     with _IN_FLIGHT_JOBS_LOCK:
         rec = _IN_FLIGHT_JOBS_CACHE.get(job_id, {})
         rec.update({
@@ -7869,6 +7905,17 @@ def persist_in_flight_job_state(job_id: str, stage: str, status: str = "running"
         if extra:
             jobs_store[job_id].update(extra)
 
+    # 2. Persist to local SQLite disk database (survives worker recycle)
+    try:
+        with sqlite3.connect(_LOCAL_JOBS_DB_PATH) as conn:
+            conn.execute(
+                "INSERT INTO local_query_jobs (job_id, user_id, stage, status, updated_at, metadata_json) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(job_id) DO UPDATE SET stage=excluded.stage, status=excluded.status, updated_at=excluded.updated_at, metadata_json=excluded.metadata_json",
+                (job_id, user_id or "", stage, status, now_iso, meta_json_str)
+            )
+    except Exception as sq_err:
+        logger.debug(f"SQLite jobs cache write error: {sq_err}")
+
+    # 3. Supabase async upsert if circuit healthy
     if supabase and not is_supabase_circuit_open() and check_query_jobs_table_exists():
         try:
             payload = {
@@ -15935,25 +15982,26 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                     "result": persisted.get("result"),
                     "error": None
                 }
+            elif persisted.get("status") == "error":
+                return {
+                    "status": "error",
+                    "stage": persisted.get("stage", "error"),
+                    "early_display": None,
+                    "result": None,
+                    "error": persisted.get("error") or "The query encountered an error. Please try again."
+                }
 
-        if supabase:
-
+        if supabase and not is_supabase_circuit_open():
             try:
-
-                res = supabase.table("queries").select("*").eq("id", job_id).execute()
-
-                if res.data and len(res.data) > 0:
-
+                res = await asyncio.to_thread(
+                    lambda: supabase.table("queries").select("*").eq("id", job_id).execute()
+                )
+                if res and res.data and len(res.data) > 0:
                     db_job = res.data[0]
-
                     if db_job.get("user_id") and db_job["user_id"] != authenticated_user_id:
-
                         raise HTTPException(status_code=403, detail="Not authorized to access this job.")
-
                     citations_list = db_job.get("citations", []) or []
-
                     reconstructed_cards = []
-
                     for c in citations_list:
                         if isinstance(c, dict):
                             cid = c.get("case_id") or c.get("citation") or "precedent"
@@ -15968,80 +16016,53 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
                             c = {"case_id": cid, "citation": cid, "title": cid, "court": "Supreme Court of Pakistan", "holding": "Reported judicial precedent on record.", "pdf_url": p_url}
                         else:
                             continue
-
                         reconstructed_cards.append(sanitize_precedent_card({
-
                             "case_name": c.get("title") or c.get("case_name") or "Reported Precedent",
-
                             "case_id": cid,
-
                             "citation": c.get("citation") or "Neutral Citation",
-
                             "court": get_effective_court(c) or "High Court",
-
                             "court_name": get_effective_court(c) or "High Court",
-
                             "canonical_court_name": c.get("canonical_court_name"),
-
                             "holding": c.get("preview") or c.get("holding") or "Holding on record.",
-
                             "pdf_url": p_url,
-
                             "pdf_link": p_url,
-
                             "download_url": p_url,
-
                             "url": p_url,
-
                             "statutes_invoked": [{"name": str(s), "explanation": "Governing statutory authority"} for s in (c.get("statutes") or [])],
-
                             "outcome": c.get("outcome") or "Decided",
-
                             "operative_result": c.get("operative_result") or "Order passed on merits."
-
                         }))
-
                     return {
-
                         "status": "done",
-
                         "result": {
-
                             "answer": db_job.get("answer_text", ""),
-
                             "response": db_job.get("answer_text", ""),
-
                             "model_answer": db_job.get("answer_text", ""),
-
                             "precedents": reconstructed_cards,
-
                             "precedent_cards": reconstructed_cards,
-
                             "additional_authorities": [],
-
                             "citations": citations_list,
-
                             "query_id": str(db_job.get("id")),
-
                             "mode": "caselaw_search",
-
                             "truncated": False
-
                         },
-
                         "error": None
-
                     }
-
             except HTTPException:
-
                 raise
-
             except Exception as e:
-
                 print(f"Supabase query job status lookup notice: {e}")
 
-        raise HTTPException(status_code=404, detail="Job not found")
+        # Fail-safe: instead of returning HTTP 404 which causes frontend to poll in a loop for 4 minutes,
+        # return a terminal interrupted status with HTTP 200 so the frontend updates immediately
+        return {
+            "status": "error",
+            "stage": "interrupted",
+            "error": "The research session was interrupted by a server restart. Please re-submit your query to receive the memorandum.",
+            "code": "JOB_INTERRUPTED",
+            "result": None,
+            "early_display": None
+        }
 
     job = jobs_store[job_id]
 
