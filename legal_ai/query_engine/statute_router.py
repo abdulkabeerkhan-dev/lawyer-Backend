@@ -14,6 +14,31 @@ from typing import Dict, List, Any, Optional, Set, Tuple
 
 CONCEPTUAL_FACTUAL_PATTERNS = [
     {
+        "id": "BENAMI_PROHIBITION",
+        "keywords": ["benami", "benamidar", "real owner", "ostensible owner"],
+        "primary_provisions": [
+            "Section 4 Benami Transactions (Prohibition) Act, 2017",
+            "Section 3 Benami Transactions (Prohibition) Act, 2017"
+        ],
+        "act_codes": ["BENAMI_2017"],
+        "forum": "Federal Adjudicating Authority / Special Court",
+        "domain": "Civil Law / Benami Transactions"
+    },
+    {
+        "id": "MONEY_RECOVERY_LIMITATION",
+        "keywords": ["money lent", "debt", "loan", "recovery of money", "suit for money", "money payable", "price of goods", "borrowed money"],
+        "primary_provisions": [
+            "Article 57 Limitation Act, 1908",
+            "Article 64 Limitation Act, 1908",
+            "Article 64-A Limitation Act, 1908",
+            "Article 115 Limitation Act, 1908",
+            "Section 3 Limitation Act, 1908"
+        ],
+        "act_codes": ["LIMITATION_1908"],
+        "forum": "Civil Court (Senior Civil Judge)",
+        "domain": "Civil Law / Money Suits & Limitation"
+    },
+    {
         "id": "CHEQUE_DISHONOUR",
         "keywords": ["cheque", "check", "dishonour", "dishonored", "bounced", "lack of funds", "insufficient funds"],
         "primary_provisions": ["Section 489-F PPC", "Order XXXVII Rule 2 CPC", "Section 118 Negotiable Instruments Act, 1881"],
@@ -231,3 +256,244 @@ class DualTrackStatuteRouter:
             all_acts.add("CRPC_1898")
 
         return all_provisions, all_acts
+
+
+# ==============================================================================
+# Layers 3 & 4: Query Understanding, High-Precision Retrieval & Pack Assembly
+# ==============================================================================
+
+from pydantic import BaseModel, Field
+from legal_ai.statutes.legal_unit_record import LegalUnitRecord
+from legal_ai.evidence.bounded_evidence_pack import BoundedEvidencePack
+from core.unified_statute_store import get_unified_statute_store
+
+CANONICAL_ACT_MAP = {
+    "LIMITATION_1908": ("limitation-act-1908", "Limitation Act, 1908", "civil"),
+    "PPC_1860": ("pakistan-penal-code-1860", "Pakistan Penal Code, 1860", "criminal"),
+    "CRPC_1898": ("code-of-criminal-procedure-1898", "Code of Criminal Procedure, 1898", "criminal"),
+    "CPC_1908": ("code-of-civil-procedure-1908", "Code of Civil Procedure, 1908", "civil"),
+    "SRA_1877": ("specific-relief-act-1877", "Specific Relief Act, 1877", "civil"),
+    "CONTRACT_1872": ("contract-act-1872", "Contract Act, 1872", "civil"),
+    "BENAMI_2017": ("benami-transactions-act-2017", "Benami Transactions (Prohibition) Act, 2017", "civil"),
+    "CONST_1973": ("constitution-1973", "Constitution of the Islamic Republic of Pakistan, 1973", "constitutional"),
+    "FIO_2001": ("financial-institutions-ordinance-2001", "Financial Institutions (Recovery of Finances) Ordinance, 2001", "banking")
+}
+
+
+class StatuteQueryIntent(BaseModel):
+    query_text: str
+    domain: str = "civil"
+    jurisdiction: str = "federal"
+    likely_statutes: List[str] = Field(default_factory=list)
+    query_type: str = "general_rule"  # "specific_provision" or "general_rule"
+    named_provisions: List[str] = Field(default_factory=list)
+    sub_topic: str = ""
+
+
+def analyze_statute_query_intent(query_text: str) -> StatuteQueryIntent:
+    """
+    Layer 3: Query Understanding.
+    Classifies domain, jurisdiction, likely statutes, and whether a specific
+    provision is named or a general rule is sought.
+    """
+    router = DualTrackStatuteRouter()
+    routing = router.route_query(query_text)
+
+    q_lower = query_text.lower()
+    jurisdiction = "federal"
+    if "punjab" in q_lower or "lahore" in q_lower:
+        jurisdiction = "punjab"
+    elif "sindh" in q_lower or "karachi" in q_lower:
+        jurisdiction = "sindh"
+    elif "khyber" in q_lower or "kpk" in q_lower or "peshawar" in q_lower:
+        jurisdiction = "kpk"
+    elif "balochistan" in q_lower or "quetta" in q_lower:
+        jurisdiction = "balochistan"
+
+    acts = routing.get("governing_act_codes", [])
+    domains = routing.get("domains", [])
+
+    primary_domain = "civil"
+    if any(a in ["PPC_1860", "CRPC_1898"] for a in acts) or any("criminal" in str(d).lower() for d in domains):
+        primary_domain = "criminal"
+    elif any(a in ["CONST_1973"] for a in acts):
+        primary_domain = "constitutional"
+    elif any(a in ["FIO_2001"] for a in acts):
+        primary_domain = "business"
+
+    # Direct benami keyword support
+    if "benami" in q_lower and "BENAMI_2017" not in acts:
+        acts.append("BENAMI_2017")
+
+    named = routing.get("track_b_matched_citations", [])
+    q_type = "specific_provision" if named else "general_rule"
+
+    return StatuteQueryIntent(
+        query_text=query_text,
+        domain=primary_domain,
+        jurisdiction=jurisdiction,
+        likely_statutes=acts,
+        query_type=q_type,
+        named_provisions=routing.get("candidate_provisions", []),
+        sub_topic=query_text[:60]
+    )
+
+
+def retrieve_statute_provisions(
+    intent: StatuteQueryIntent,
+    max_results: int = 5
+) -> List[LegalUnitRecord]:
+    """
+    Layer 4: High-Precision Statute Retrieval.
+    1. Direct lookup when specific provisions are named.
+    2. Hybrid / Anchor lookup otherwise.
+    3. Caps at top 3-5 provisions and converts to atomic LegalUnitRecords.
+    """
+    store = get_unified_statute_store()
+    results: List[LegalUnitRecord] = []
+    seen_cids = set()
+
+    # Direct / Candidate Provision Lookup
+    for cand in intent.named_provisions:
+        m_art = re.search(r'Article\s*([0-9]+[A-Za-z]?(?:-[A-Za-z])?)\s+([A-Za-z\s,0-9]+)', cand, re.IGNORECASE)
+        m_sec = re.search(r'Section\s*([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z])?(?:\([0-9]+\))?)\s+([A-Za-z\s,0-9]+)', cand, re.IGNORECASE)
+        m_ord = re.search(r'Order\s*([IVXLCDM]+)\s*Rule\s*([0-9]+[A-Za-z]?)', cand, re.IGNORECASE)
+
+        act_code = "LIMITATION_1908" if "limitation" in cand.lower() else (
+            "CPC_1908" if "civil procedure" in cand.lower() or "cpc" in cand.lower() else (
+                "PPC_1860" if "penal code" in cand.lower() or "ppc" in cand.lower() else (
+                    "CRPC_1898" if "criminal procedure" in cand.lower() or "crpc" in cand.lower() else (
+                        "SRA_1877" if "specific relief" in cand.lower() or "sra" in cand.lower() else (
+                            "BENAMI_2017" if "benami" in cand.lower() else ""
+                        )
+                    )
+                )
+            )
+        )
+
+        cids_to_try = []
+        if m_art and act_code:
+            clean_num = m_art.group(1).upper().replace('-', '')
+            cids_to_try.append(f"{act_code}_ART_{clean_num}")
+        elif m_ord and act_code:
+            cids_to_try.append(f"{act_code}_ORD_{m_ord.group(1).upper()}_R_{m_ord.group(2).upper()}")
+        elif m_sec and act_code:
+            raw_s = m_sec.group(1).upper()
+            clean_s = re.sub(r'[^A-Z0-9]', '', raw_s)
+            cids_to_try.extend([f"{act_code}_SEC_{clean_s}", f"{act_code}_SEC_{raw_s}"])
+
+        for cid in cids_to_try:
+            if cid not in seen_cids:
+                rec = store.get_by_canonical_id(cid)
+                if rec and (rec.get("text") or rec.get("title")):
+                    seen_cids.add(cid)
+                    results.append(_convert_to_legal_unit_record(rec, cid))
+                    break
+
+    # Topic-specific anchors if fewer than 2 results found
+    if len(results) < 2:
+        q_low = intent.query_text.lower()
+        if "limitation" in q_low or any(k in q_low for k in ["money lent", "loan", "debt", "recovery"]):
+            for l_cid in ["LIMITATION_1908_ART_57", "LIMITATION_1908_ART_64", "LIMITATION_1908_ART_64A", "LIMITATION_1908_SEC_3"]:
+                if l_cid not in seen_cids:
+                    rec = store.get_by_canonical_id(l_cid)
+                    if rec and rec.get("text"):
+                        seen_cids.add(l_cid)
+                        results.append(_convert_to_legal_unit_record(rec, l_cid))
+        elif any(k in q_low for k in ["cheque", "dishonour", "489"]):
+            for c_cid in ["PPC_1860_SEC_489F", "PPC_1860_SEC_420"]:
+                if c_cid not in seen_cids:
+                    rec = store.get_by_canonical_id(c_cid)
+                    if rec and rec.get("text"):
+                        seen_cids.add(c_cid)
+                        results.append(_convert_to_legal_unit_record(rec, c_cid))
+        elif any(k in q_low for k in ["bail", "non-bailable"]):
+            for b_cid in ["CRPC_1898_SEC_497", "CRPC_1898_SEC_498"]:
+                if b_cid not in seen_cids:
+                    rec = store.get_by_canonical_id(b_cid)
+                    if rec and rec.get("text"):
+                        seen_cids.add(b_cid)
+                        results.append(_convert_to_legal_unit_record(rec, b_cid))
+        elif "benami" in q_low:
+            for b_cid in ["BENAMI_2017_SEC_4", "BENAMI_2017_SEC_3"]:
+                if b_cid not in seen_cids:
+                    rec = store.get_by_canonical_id(b_cid)
+                    if rec and rec.get("text"):
+                        seen_cids.add(b_cid)
+                        results.append(_convert_to_legal_unit_record(rec, b_cid))
+
+    return results[:max_results]
+
+
+def build_evidence_pack_for_query(
+    query_text: str,
+    precedent_cards: Optional[List[Dict[str, Any]]] = None,
+    max_statutes: int = 5
+) -> Tuple[BoundedEvidencePack, StatuteQueryIntent]:
+    """
+    Layers 3, 4, 5 Orchestrator:
+    Produces a populated BoundedEvidencePack with [E1], [E2], ...
+    and automatically pulls linked caveats (e.g. Punjab Loans Limitation Act, 1904).
+    """
+    intent = analyze_statute_query_intent(query_text)
+    statute_units = retrieve_statute_provisions(intent, max_results=max_statutes)
+
+    pack = BoundedEvidencePack()
+    for u in statute_units:
+        pack.add_legal_unit(u, pull_linked_caveats=True)
+
+    for card in (precedent_cards or []):
+        cit = card.get("citation") or card.get("case_id") or ""
+        ratio = card.get("ratio_decidendi") or card.get("holding") or card.get("preview") or ""
+        if cit and ratio:
+            pack.add_case_precedent(
+                citation=cit,
+                case_title=card.get("case_name") or card.get("title") or "Precedent",
+                court=card.get("court") or card.get("court_name") or "Supreme Court of Pakistan",
+                ratio=ratio,
+                year=card.get("year"),
+                statutes_invoked=[s.get("name", "") if isinstance(s, dict) else str(s) for s in (card.get("statutes_invoked") or [])],
+                pdf_url=card.get("pdf_url")
+            )
+
+    return pack, intent
+
+
+def _convert_to_legal_unit_record(rec: Dict[str, Any], canonical_id: str) -> LegalUnitRecord:
+    import hashlib
+    act_code = (rec.get("act_code") or "").upper()
+    if not act_code and "_" in canonical_id:
+        act_code = canonical_id.split("_")[0].upper()
+
+    meta = CANONICAL_ACT_MAP.get(act_code, (act_code.lower().replace("_", "-"), rec.get("act_name") or act_code, "civil"))
+    statute_id, default_title, _ = meta
+    act_name = rec.get("act_name") or rec.get("act") or default_title
+
+    u_type = rec.get("provision_type") or ("article" if "_ART_" in canonical_id else ("order" if "_ORD_" in canonical_id else "section"))
+    num = str(rec.get("primary_num") or rec.get("section") or canonical_id.split("_")[-1])
+
+    heading = rec.get("heading") or rec.get("title") or f"{u_type.capitalize()} {num}"
+    raw_txt = str(rec.get("text") or rec.get("text_raw") or "").strip()
+    # Normalize soft-hyphens
+    clean_txt = raw_txt.replace('­', '')
+
+    chk = hashlib.sha256(clean_txt.encode("utf-8")).hexdigest()
+
+    return LegalUnitRecord(
+        unit_id=f"{statute_id}:{u_type}:{num}".lower(),
+        statute_id=statute_id,
+        statute_title=act_name,
+        jurisdiction=rec.get("jurisdiction") or "federal",
+        unit_type=u_type,
+        number=num,
+        parent=rec.get("parent"),
+        heading_description=heading,
+        period=rec.get("period"),
+        trigger=rec.get("trigger"),
+        text=clean_txt,
+        footnotes=rec.get("footnotes") or [],
+        caveats=rec.get("caveats") or [],
+        cross_references=rec.get("cross_references") or [],
+        checksum=chk,
+        source_url=rec.get("source_url") or ""
+    )

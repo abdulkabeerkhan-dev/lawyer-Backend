@@ -2773,56 +2773,48 @@ async def process_query_job_legal_ai(
 
     pipeline_metrics.start_stage("drafting_opinion")
 
-    # Stage 4: Assemble Strict Evidence Pack (S1..Sn, C1..Cn) with two-way cross linking
+    # Layers 3, 4, 5: High-Precision Statute Knowledge Engine & Bounded Evidence Pack
+    from legal_ai.query_engine.statute_router import build_evidence_pack_for_query
+    from legal_ai.synthesis.structured_memo_engine import (
+        build_structured_memo_prompts,
+        execute_structured_memo_pipeline
+    )
     from core.evidence_pipeline import (
         execute_stage4_evidence_pack,
         build_stage5_prompts,
         execute_stage6_verification_and_rendering
     )
-    evidence_pack, precedent_cards = execute_stage4_evidence_pack(
-        verified_statutory_provisions=verified_statutory_provisions,
-        precedent_cards=precedent_cards,
-        query_text=effective_user_query,
-        query_plan=legal_query_plan
+
+    bounded_evidence_pack, statute_intent = build_evidence_pack_for_query(
+        effective_user_query,
+        precedent_cards=precedent_cards
     )
-    stage5_sys_prompt, stage5_user_prompt = build_stage5_prompts(
-        evidence_pack=evidence_pack,
-        user_query=effective_user_query,
-        query_plan=legal_query_plan
-    )
-    # Stage 5 directives override prompts with strict JSON schema
-    system_prompt = stage5_sys_prompt
-    user_synthesis_content = stage5_user_prompt
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    is_structured_mode = bool(bounded_evidence_pack.items)
 
     assistant = getattr(request, "assistant", None) or getattr(request, "agent", None) or ("counsel" if getattr(request, "category", "") == "drafting" else "jurist")
+
     if str(assistant).lower() in ("mike", "counsel"):
         from prompts.pleading_generator import PLEADING_SYSTEM_PROMPT
-        system_prompt = PLEADING_SYSTEM_PROMPT + "\n\nYou are Counsel AI, Senior Appellate & Litigation Drafting Specialist for Pakistani Courts. Draft a court-ready legal pleading (plaint, written statement, petition, application, or legal notice) adhering strictly to standard Pakistani court formatting (Court Heading, Parties, Title, Numbered Averments, Verified Grounds, Prayer Clause, Verification Clause, and Affidavit)."
-    else:
-        system_prompt = _load_system_prompt()
-        pakistan_invariants = (
-            "\n\nCRITICAL PAKISTANI JURISDICTIONAL INVARIANTS:\n"
-            "1. In Pakistan, dishonour of a cheque is governed SOLELY by Section 489-F of the Pakistan Penal Code (PPC 1860) and Order XXXVII CPC for summary civil recovery. Sections 138 and 139 of the Negotiable Instruments Act 1881 are INDIAN amendments (Act 66 of 1988) and DO NOT EXIST in Pakistani law. NEVER cite Section 138 or 139 NIA 1881 for Pakistan; Pakistan's NI Act 1881 stops at Section 137.\n"
-            "2. In Pakistani law reporting, SCMR, PSC, and PLD ... SC are exclusively Supreme Court of Pakistan decisions. In section headings and precedent summaries, NEVER label an SCMR or PSC citation as High Court. YLR, CLC, PCrLJ, MLD, and CLD are exclusively Provincial High Court decisions; NEVER label them as Supreme Court.\n"
+        system_prompt = PLEADING_SYSTEM_PROMPT + "\n\nYou are Counsel AI, Senior Appellate & Litigation Drafting Specialist for Pakistani Courts. Draft a court-ready legal pleading adhering strictly to standard Pakistani court formatting."
+    elif is_structured_mode:
+        system_prompt, user_synthesis_content = build_structured_memo_prompts(
+            evidence_pack=bounded_evidence_pack,
+            user_query=effective_user_query
         )
-        system_prompt = system_prompt + pakistan_invariants
-
-
+    else:
+        evidence_pack, precedent_cards = execute_stage4_evidence_pack(
+            verified_statutory_provisions=verified_statutory_provisions,
+            precedent_cards=precedent_cards,
+            query_text=effective_user_query,
+            query_plan=legal_query_plan
+        )
+        stage5_sys_prompt, stage5_user_prompt = build_stage5_prompts(
+            evidence_pack=evidence_pack,
+            user_query=effective_user_query,
+            query_plan=legal_query_plan
+        )
+        system_prompt = stage5_sys_prompt
+        user_synthesis_content = stage5_user_prompt
 
 
 
@@ -4482,12 +4474,32 @@ async def process_query_job_legal_ai(
 
 
         # Stage 6: Code-level deterministic verification and honest memorandum rendering
-    rendered_markdown, v_report, memo_json_payload = execute_stage6_verification_and_rendering(
-        raw_llm_response=raw_answer,
-        evidence_pack=evidence_pack,
-        fallback_query=effective_user_query
-    )
-    clean_answer = rendered_markdown
+    # Layer 6, 7, 8: Deterministic Verification & Verifiable Rendering
+    memo_is_verified = False
+    if is_structured_mode and str(assistant).lower() not in ("mike", "counsel"):
+        rendered_markdown, v_report, memo_json_payload = execute_structured_memo_pipeline(
+            raw_llm_response=raw_answer,
+            evidence_pack=bounded_evidence_pack,
+            fallback_query=effective_user_query
+        )
+        clean_answer = rendered_markdown
+        memo_is_verified = v_report.is_memo_verified
+        v_report_data = {
+            "is_memo_verified": v_report.is_memo_verified,
+            "total_claims": v_report.total_claims,
+            "verified_claims_count": v_report.verified_claims_count,
+            "unverified_claims_count": v_report.unverified_claims_count,
+            "blocking_violations": v_report.blocking_violations
+        }
+    else:
+        rendered_markdown, v_report, memo_json_payload = execute_stage6_verification_and_rendering(
+            raw_llm_response=raw_answer,
+            evidence_pack=evidence_pack,
+            fallback_query=effective_user_query
+        )
+        clean_answer = rendered_markdown
+        memo_is_verified = bool(isinstance(v_report, dict) and v_report.get("is_verified", False))
+        v_report_data = v_report
 
 
 
@@ -6163,6 +6175,7 @@ async def process_query_job_legal_ai(
 
                 "model_answer": clean_answer,
                 "database_freshness": "Database current as of November 2026",
+                "is_verified": memo_is_verified if 'memo_is_verified' in locals() else False,
                 "verification_report": v_report if 'v_report' in locals() else None,
                 "evidence_pack": evidence_pack.to_dict() if 'evidence_pack' in locals() else None,
 
