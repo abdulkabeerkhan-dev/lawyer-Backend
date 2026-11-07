@@ -1523,9 +1523,9 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
                 ai_client_fn(
                     system=PLANNER_SYSTEM_PROMPT,
                     messages=[{"role": "user", "content": user_msg}],
-                    max_tokens=1500
+                    max_tokens=4096
                 ),
-                timeout=12.0
+                timeout=45.0
             )
             raw_text = "".join(getattr(b, "text", "") for b in resp.content if getattr(b, "type", None) == "text").strip()
             m_json = re.search(r'\{.*\}', raw_text, re.DOTALL)
