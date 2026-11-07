@@ -984,6 +984,10 @@ def get_global_bm25_index() -> Optional[BM25Index]:
 
     global global_bm25_index
 
+    if os.environ.get("DISABLE_IN_MEMORY_BM25", "").lower() in ("true", "1", "yes"):
+        print("[BM25] Low-memory mode active (DISABLE_IN_MEMORY_BM25=true). In-memory BM25 index bypassed; utilizing Pinecone vector retrieval and Turso master corpus.", flush=True)
+        return None
+
     if global_bm25_index is None and os.path.exists(BM25_INDEX_FILE):
 
         try:

@@ -812,6 +812,16 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         ]
         allowed_domains_filter = ["civil", "constitutional", "criminal"]
 
+    elif any(k in q_low for k in ["cheque bounce", "dishonoured cheque", "dishonored cheque", "bounced cheque"]) and not any(k in q_low for k in ["489", "order 37", "order xxxvii", "fio", "financial institution", "summary suit"]):
+        is_ambiguous = True
+        ambiguity_reasons.append("Query does not specify whether you are pursuing a criminal prosecution or a civil summary recovery for the dishonoured cheque.")
+        clarification_options = [
+            {"branch": "Criminal Prosecution", "statute": "Section 489-F Pakistan Penal Code, 1860", "forum": "Criminal Magistrate / Police FIR"},
+            {"branch": "Summary Civil Suit on Negotiable Instrument", "statute": "Order XXXVII Rules 1 & 2 Code of Civil Procedure, 1908", "forum": "District Court / Civil Court"},
+            {"branch": "Banking Recovery (Customer/Bank)", "statute": "Financial Institutions (Recovery of Finances) Ordinance, 2001", "forum": "Banking Court"}
+        ]
+        allowed_domains_filter = ["criminal", "civil", "banking"]
+
     # 3. Governing Statutes
     statutes: List[str] = []
     if any(k in q_low for k in ["cpc", "order xxxix", "civil procedure", "sec 9", "review its own", "court review", "order xxi", "12(2)", "order xx", "order viii"]):

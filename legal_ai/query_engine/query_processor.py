@@ -1849,11 +1849,49 @@ async def process_query_job_legal_ai(
 
     pipeline_metrics.record_plan(legal_query_plan)
 
-
-
-
-
-
+    # CLARIFICATION GATE: Stop and ask the lawyer instead of guessing
+    if getattr(legal_query_plan, "is_ambiguous", False) and getattr(legal_query_plan, "clarification_options", None):
+        reasons = getattr(legal_query_plan, "ambiguity_reasons", [])
+        q_heading = reasons[0] if reasons else "Please clarify the legal domain or procedural forum for this matter."
+        options = getattr(legal_query_plan, "clarification_options", [])
+        
+        opt_lines = []
+        for opt in options:
+            label = opt.get("branch") or opt.get("label") or opt.get("domain") or "Option"
+            statute_info = f" ({opt.get('statute')})" if opt.get("statute") else ""
+            forum_info = f" [{opt.get('forum')}]" if opt.get("forum") else ""
+            opt_lines.append(f"- **{label}**{statute_info}{forum_info}")
+        
+        clarification_msg = (
+            f"### \xe2\x9a\xa0\xef\xb8\x8f Clarification Required Before Research\n\n"
+            f"{q_heading}\n\n"
+            f"To ensure statutory accuracy and avoid citing inapplicable precedent, please specify the remedy or forum you are pursuing:\n\n"
+            + "\n".join(opt_lines)
+            + "\n\n*Please refine your query or select your forum to proceed.*"
+        )
+        
+        clarification_result = {
+            "status": "needs_clarification",
+            "is_ambiguous": True,
+            "mode": "clarification_required",
+            "question": q_heading,
+            "clarification_options": options,
+            "model_answer": clarification_msg,
+            "answer": clarification_msg,
+            "response": clarification_msg,
+            "precedents": [],
+            "precedent_cards": [],
+            "citations": [],
+            "query_id": str(job_id)
+        }
+        if job_id in jobs_store:
+            jobs_store[job_id]["status"] = "done"
+            jobs_store[job_id]["stage"] = "done"
+            jobs_store[job_id]["result"] = clarification_result
+            from main import persist_in_flight_job_state
+            persist_in_flight_job_state(job_id, "done", "done", extra={"result": clarification_result})
+        pipeline_metrics.end_stage("understanding_query")
+        return
 
     pipeline_metrics.end_stage("understanding_query")
 
