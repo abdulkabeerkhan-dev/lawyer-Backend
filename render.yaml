@@ -11,3 +11,5 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
+      - key: DISABLE_IN_MEMORY_BM25
+        value: "true"
