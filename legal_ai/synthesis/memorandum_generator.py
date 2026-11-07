@@ -2005,8 +2005,59 @@ def build_honest_partial_response(
         "for this query."
     )
 
-    # 1b. Direct Controlling Statutory Summary
+    # 1b. Direct Controlling Statutory Summary & Limitation Analysis
     q_low = str(query_text or "").lower()
+
+    # Specific Performance & Limitation Fact Pattern
+    is_spec_perf_query = any(k in q_low for k in ["specific performance", "agreement to sell", "sale deed", "plot"]) or                          (any(k in q_low for k in ["seller", "buyer", "vendor", "vendee"]) and any(k in q_low for k in ["sale", "refused"]))
+
+    if is_spec_perf_query:
+        # Run deterministic standing limitation engine
+        lim_md = ""
+        try:
+            from core.limitation_engine import analyze_matter_limitation
+            lim_res = analyze_matter_limitation(query_text)
+            if lim_res.get("is_applicable") and lim_res.get("has_dates"):
+                lim_md = lim_res.get("analysis_markdown", "")
+        except Exception:
+            pass
+
+        if lim_md:
+            sections.append(lim_md)
+        else:
+            sections.append(
+                "## Controlling Statutory Framework: Specific Performance & Limitation\n\n"
+                "Under **Article 113 of the First Schedule to the Limitation Act, 1908**, the statutory period of limitation "
+                "for a suit for specific performance of a contract is **three years** from:\n"
+                "1. *First Limb*: **The date fixed for the performance**; or\n"
+                "2. *Second Limb*: If no date is fixed, **when the plaintiff has notice that performance is refused**.\n\n"
+                "> ⚠️ **Mandatory Bar (Section 3)**: Under Section 3 of the Limitation Act, 1908, the court is legally bound "
+                "to dismiss any suit instituted after the expiration of the prescribed period, even though limitation has not been set up as a defence.\n"
+                "> ℹ️ **Saving Exceptions**: A fresh period of limitation can only be computed under **Section 19** if the defendant signed a "
+                "valid written acknowledgment of liability *before* the expiry of the original 3-year period."
+            )
+
+        # Alternative Remedies Breakdown
+        sections.append(
+            "## Available Legal Remedies & Statutory Rights\n\n"
+            "### 1. Specific Performance Against Subsequent Transferee\n"
+            "- **Section 27(b), Specific Relief Act, 1877**: Specific performance of a contract may be enforced against any person claiming "
+            "title arising subsequently to the contract, **except a transferee for value who has paid his money in good faith and without notice "
+            "of the original contract** (*bona fide purchaser for value without notice*).\n"
+            "- **Section 52, Transfer of Property Act, 1882 (*Lis Pendens*)**: If the suit is instituted and transfer occurs during the active pendency "
+            "of the suit, the transfer is subordinate to the decree of the Court.\n\n"
+            "### 2. Compensation in Addition / Substitution for Specific Performance\n"
+            "- **Section 19, Specific Relief Act, 1877**: Any person suing for specific performance of a contract may also ask for compensation "
+            "for its breach, either in addition to, or in substitution for, such performance. Crucially, such compensation must be specifically claimed in the plaint.\n\n"
+            "### 3. Restitution & Refund of Earnest Money\n"
+            "- **Sections 64 & 65, Contract Act, 1872**: When an agreement is discovered to be void, or when a contract becomes void, any person who has received "
+            "any advantage under such agreement is bound to restore it. Settled superior court jurisprudence holds that a vendor cannot forfeit earnest money without "
+            "pleading and proving actual pecuniary damage suffered due to breach.\n\n"
+            "### 4. General Damages for Breach of Contract\n"
+            "- **Section 73, Contract Act, 1872**: When a contract has been broken, the party who suffers by such breach is entitled to receive compensation "
+            "for any loss or damage caused to him thereby which naturally arose in the usual course of things."
+        )
+
     if "limitation" in q_low and any(k in q_low for k in ["money", "recovery", "debt", "loan", "price of goods"]):
         sections.append(
             "## Controlling Statutory Rule\n\n"
@@ -2035,6 +2086,12 @@ def build_honest_partial_response(
                 statutory_provisions = raw_stat[:5]
         except Exception:
             statutory_provisions = []
+
+    if is_spec_perf_query and statutory_provisions:
+        statutory_provisions = [
+            p for p in statutory_provisions
+            if not any(bad in str(p.get("canonical_id") or p.get("display_name") or p.get("title") or "").upper() for bad in ["SRA_1877_SEC_8", "SRA_1877_SEC_9", "SRA_1877_SEC_56", "SECTION 8", "SECTION 9", "SECTION 56"])
+        ]
 
     sections.append("## Verified Statutory Provisions on Record")
     if statutory_provisions:

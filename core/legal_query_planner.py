@@ -902,7 +902,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         pass
 
     # Priority 2: Regex extraction
-    sec_matches = re.findall(r'(?:sections?|secs?\.?|ss\.?|s\.)\s*([0-9]+(?:-[a-z])?(?:\s*(?:and|&|,)\s*[0-9]+(?:-[a-z])?)*)\s*(ppc|crpc|cpc|qso|sra|fio)?', q_low)
+    sec_matches = re.findall(r'(?<![a-zA-Z0-9])(?:sections?|secs?\.?|ss\.?|s\.)\s*([0-9]+(?:-[a-z])?(?:\s*(?:and|&|,)\s*[0-9]+(?:-[a-z])?)*)\s*(ppc|crpc|cpc|qso|sra|fio)?', q_low)
     for m, statute in sec_matches:
         nums = re.findall(r'[0-9]+(?:-[a-z])?', m)
         for num in nums:
@@ -1464,6 +1464,36 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             schedule_ii=pc.get("schedule_ii")
         ))
 
+    # Multi-Issue Fact Pattern Decomposition Integration
+    try:
+        from core.legal_issue_extractor import extract_legal_issues_from_fact_pattern
+        decomp = extract_legal_issues_from_fact_pattern(query)
+        if decomp and decomp.issues:
+            for issue in decomp.issues:
+                for cs in issue.controlling_statutes:
+                    if cs not in statutes:
+                        statutes.append(cs)
+                for cp in issue.controlling_provisions:
+                    if not any(cp.lower() in p.lower() or p.lower() in cp.lower() for p in provisions):
+                        provisions.append(cp)
+                for sq in issue.search_queries:
+                    if not any(l.get("query") == sq for l in raw_lanes):
+                        raw_lanes.append({"lane": issue.issue_id, "query": sq})
+                if issue.heading not in questions:
+                    questions.append(issue.heading)
+    except Exception as e:
+        logger.warning(f"Fact pattern decomposition error in planner: {e}")
+
+    # Prune inapplicable provisions for specific performance (possession/injunction bars)
+    if is_specific_perf:
+        provisions = [
+            p for p in provisions
+            if not any(bad in p.lower() for bad in [
+                "section 8 specific", "section 9 specific", "section 56 specific",
+                "sra 8", "sra 9", "sra 56", "section 8 sra", "section 9 sra", "section 56 sra"
+            ])
+        ]
+
     # Ensure unique lists
     clean_provisions = list(dict.fromkeys(provisions))
     clean_statutes = list(dict.fromkeys(statutes))
@@ -1561,6 +1591,19 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
 
                 if not provisions:
                     provisions = fallback.statutory_provisions
+                elif fallback.statutory_provisions:
+                    for fp in fallback.statutory_provisions:
+                        if not any(fp.lower() in p.lower() or p.lower() in fp.lower() for p in provisions):
+                            provisions.append(fp)
+
+                if any(k in query.lower() for k in ["specific performance", "agreement to sell"]):
+                    provisions = [
+                        p for p in provisions
+                        if not any(bad in p.lower() for bad in [
+                            "section 8 specific", "section 9 specific", "section 56 specific",
+                            "sra 8", "sra 9", "sra 56", "section 8 sra", "section 9 sra", "section 56 sra"
+                        ])
+                    ]
 
                 province = data.get("target_province") or data.get("province") or fallback.target_province
                 binding_courts, persuasive_courts = resolve_jurisdiction_hierarchy(province)

@@ -281,6 +281,29 @@ def search_statute_provisions(
         if act_matches_query:
             score += 80
 
+        # Specific Performance, Limitation & Remedies Domain Tuning
+        is_sp_q = any(k in q_lower for k in ["specific performance", "agreement to sell", "sale deed", "completion date", "earnest money"]) or                   (any(k in q_lower for k in ["seller", "vendor"]) and any(k in q_lower for k in ["plot", "land", "refused"]))
+        
+        if is_sp_q:
+            # Article 113 Limitation Act is the controlling article for specific performance of contracts
+            if cid == "LIMITATION_1908_ART_113":
+                score += 400
+            elif cid in ["LIMITATION_1908_SEC_3", "LIMITATION_1908_SEC_19", "LIMITATION_1908_SEC_20"]:
+                score += 160
+            elif cid == "SRA_1877_SEC_12":
+                score += 350
+            elif cid in ["SRA_1877_SEC_27", "SRA_1877_SEC_19"]:
+                score += 320
+            elif cid in ["SRA_1877_SEC_21", "SRA_1877_SEC_22"]:
+                score += 220
+            elif cid in ["CONTRACT_1872_SEC_64", "CONTRACT_1872_SEC_65", "CONTRACT_1872_SEC_73", "CONTRACT_1872_SEC_74"]:
+                score += 260
+            elif cid in ["TPA_1882_SEC_52", "TPA_1882_SEC_53A"]:
+                score += 180
+            # Strict demotion: Sections 8 & 9 (possession/dispossession) and Section 56 (injunction bars) are irrelevant to specific performance of sale
+            elif cid in ["SRA_1877_SEC_8", "SRA_1877_SEC_9", "SRA_1877_SEC_56"]:
+                score -= 500
+
         # Limitation Act Domain Tuning
         if p_act == "LIMITATION_1908":
             is_money_q = any(k in q_lower for k in ["recovery of money", "suit for money", "money suit", "debt", "loan", "price of goods"])

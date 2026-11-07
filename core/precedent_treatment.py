@@ -49,8 +49,8 @@ KNOWN_NEGATIVE_TREATMENTS: Dict[str, Dict[str, Any]] = {
     "2006 SCMR 1692": {
         "case_name": "Muhammad Asghar v. State",
         "status": PrecedentStatus.OVERRULED,
-        "overruled_by": "2020 SCMR 874 & 2013 SCMR 51",
-        "overruling_case": "Abdul Saboor v. State & Mian Allah Ditta v. State",
+        "overruled_by": "2020 SCMR 874",
+        "overruling_case": "Abdul Saboor v. State",
         "bench_quorum": "Supreme Court Larger Bench",
         "reason": "Overruled on strict liability in cheque bounce cases. Held that dishonest intention (mens rea) and fulfillment of lawful debt/obligation are mandatory statutory ingredients under Section 489-F PPC.",
         "fatal_in_court": True

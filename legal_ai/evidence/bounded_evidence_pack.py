@@ -60,6 +60,7 @@ class BoundedEvidencePack:
         self.items: Dict[str, EvidenceItem] = {}
         self.item_by_unit_key: Dict[str, str] = {}
         self.item_by_citation: Dict[str, str] = {}
+        self.query_text: str = ""
 
     def add_legal_unit(self, unit: LegalUnitRecord, pull_linked_caveats: bool = True) -> str:
         """

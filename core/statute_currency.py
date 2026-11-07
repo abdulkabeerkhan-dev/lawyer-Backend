@@ -932,12 +932,17 @@ def detect_statutory_provisions_in_query(query: str) -> List[Tuple[str, str]]:
                 provisions.append((cid, act_code))
 
     # 2. General clause scanning with sentence-bound Act context
-    # ORDER 2.1 - ITEM 4: Mask 7/11, law report citations, percentages (e.g. 60%), and currency amounts (e.g. PKR 5 million)
+    # ORDER 2.1 - ITEM 4: Mask 7/11, law report citations, percentages (e.g. 60%), currency, land measurements, and dates
     clean_query_for_clauses = re.sub(r'\b7\s*[/\\-]\s*11\b', ' ', query)
     clean_query_for_clauses = re.sub(r'\b(19\d\d|20\d\d)\s+[A-Za-z]+(?:\s+[A-Za-z]+)?\s+\d+\b', ' LAW_REPORT_CITATION_MASKED ', clean_query_for_clauses)
     clean_query_for_clauses = re.sub(r'\b\d+\s*%', ' PERCENTAGE_MASKED ', clean_query_for_clauses)
-    clean_query_for_clauses = re.sub(r'(?i)\b(?:pkr|rs\.?|rupees)?\s*\d+(?:\.\d+)?\s*(?:million|m|lakh|crore|thousand|k|billion)\b', ' CURRENCY_AMOUNT_MASKED ', clean_query_for_clauses)
+    clean_query_for_clauses = re.sub(r'(?i)\b(?:pkr|rs\.?|rupees)?\s*\d+(?:\.\d+)?\s*(?:million|m|lakh|lac|crore|thousand|k|billion)\b', ' CURRENCY_AMOUNT_MASKED ', clean_query_for_clauses)
     clean_query_for_clauses = re.sub(r'(?i)\b(?:pkr|rs\.?)\s*\d+(?:,\d+)*(?:\.\d+)?\b', ' CURRENCY_AMOUNT_MASKED ', clean_query_for_clauses)
+    clean_query_for_clauses = re.sub(r'(?i)\b\d+(?:\.\d+)?\s*(?:marla|kanal|acre|acres|sq\s*ft|square\s*feet|yards|guz|murabba|plot|sector|phase|block)\b', ' LAND_MEASUREMENT_MASKED ', clean_query_for_clauses)
+    clean_query_for_clauses = re.sub(r'(?i)\b\d{1,2}\s+(?:january|february|march|april|may|june|july|august|september|october|november|december)(?:\s+\d{4})?\b', ' CALENDAR_DATE_MASKED ', clean_query_for_clauses)
+    clean_query_for_clauses = re.sub(r'(?i)\b(?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2}(?:,\s*\d{4})?\b', ' CALENDAR_DATE_MASKED ', clean_query_for_clauses)
+    clean_query_for_clauses = re.sub(r'\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b', ' CALENDAR_DATE_MASKED ', clean_query_for_clauses)
+    clean_query_for_clauses = re.sub(r'\b\d+\s*(?:years?|months?|weeks?|days?|hours?)\b', ' TIME_SPAN_MASKED ', clean_query_for_clauses)
     clauses = re.split(r'[,;.\n]|\b(?:and|or|vs|versus|read with)\b', clean_query_for_clauses)
     clauses = [query] + clauses
 

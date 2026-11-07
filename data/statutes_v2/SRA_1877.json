@@ -85,7 +85,7 @@
     "primary_num": "21",
     "secondary_num": null,
     "title": "Contracts not specifically enforceable",
-    "text": "The following contracts cannot be specifically enforced: (a) a contract for the non-performance of which compensation in money is an adequate relief; (b) a contract which runs into such minute or numerous details, or which is so dependent on the personal qualifications or volition of the parties, or otherwise from its nature is such, that the Court cannot enforce specific performance of its material terms; (c) a contract the terms of which the Court cannot find with reasonable certainty; (d) a contract which is in its nature revocable; (e) a contract made by trustees either in excess of their powers or in breach of their trust; (g) a contract the performance of which involves the performance of a continuous duty extending over a longer period than three years from its date.",
+    "text": "The following contracts cannot be specifically enforced: (a) a contract for the non-performance of which compensation in money is an adequate relief; (b) a contract which runs into such minute or numerous details, or which is so dependent on the personal qualifications or volition of the parties, or otherwise from its nature is such, that the Court cannot enforce specific performance of its material terms; (c) a contract the terms of which the Court cannot find with reasonable certainty; (d) a contract which is in its nature revocable; (e) a contract made by trustees either in excess of their powers or in breach of their trust; [(f) Clause (f) repealed by the Arbitration Act, 1940 (X of 1940), s. 49(1) and Fourth Schedule]; (g) a contract the performance of which involves the performance of a continuous duty extending over a longer period than three years from its date.",
     "missing_reason": null,
     "source_file": "https://pakistancode.gov.pk/pdffiles/administratorf257754bbb3c6863d879492bc8cd8f6e.pdf",
     "source_page": "unspecified",
@@ -101,7 +101,8 @@
     "in_force": true,
     "quoting_allowed": true,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "text_cleaned": "The following contracts cannot be specifically enforced: (a) a contract for the non-performance of which compensation in money is an adequate relief; (b) a contract which runs into such minute or numerous details, or which is so dependent on the personal qualifications or volition of the parties, or otherwise from its nature is such, that the Court cannot enforce specific performance of its material terms; (c) a contract the terms of which the Court cannot find with reasonable certainty; (d) a contract which is in its nature revocable; (e) a contract made by trustees either in excess of their powers or in breach of their trust; [(f) Clause (f) repealed by the Arbitration Act, 1940 (X of 1940), s. 49(1) and Fourth Schedule]; (g) a contract the performance of which involves the performance of a continuous duty extending over a longer period than three years from its date."
   },
   {
     "canonical_id": "SRA_1877_SEC_22",
@@ -319,7 +320,7 @@
     "primary_num": "56",
     "secondary_num": null,
     "title": "Injunction when refused",
-    "text": "An injunction cannot be granted: (a) to stay a judicial proceeding pending at the institution of the suit in which the injunction is sought, unless such restraint is necessary to prevent a multiplicity of proceedings; (b) to stay proceedings in a Court not subordinate to that from which the injunction is sought; (d) to interfere with the public duties of any department of the Federal Government, or any Provincial Government; (f) to prevent the breach of a contract the performance of which would not be specifically enforced; (i) when equally efficacious relief can certainly be obtained by any other usual mode of proceeding except in case of breach of trust; (j) when the conduct of the applicant or his agents has been such as to disentitle him to the assistance of the Court.",
+    "text": "An injunction cannot be granted: (a) to stay a judicial proceeding pending at the institution of the suit in which the injunction is sought, unless such restraint is necessary to prevent a multiplicity of proceedings; (b) to stay proceedings in a Court not subordinate to that from which the injunction is sought; [(c) Clause (c) repealed by the Specific Relief (Amendment) Act, 1940 (IX of 1940)]; (d) to interfere with the public duties of any department of the Federal Government, or any Provincial Government; [(e) Clause (e) repealed by the Specific Relief (Amendment) Act, 1940 (IX of 1940)]; (f) to prevent the breach of a contract the performance of which would not be specifically enforced; [(g) Clause (g) omitted by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981)]; [(h) Clause (h) omitted by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981)]; (i) when equally efficacious relief can certainly be obtained by any other usual mode of proceeding except in case of breach of trust; (j) when the conduct of the applicant or his agents has been such as to disentitle him to the assistance of the Court; [(k) Clause (k) omitted by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981)].",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Specific Relief Act, 1877",
     "source_page": "unspecified",
@@ -335,7 +336,8 @@
     "in_force": true,
     "quoting_allowed": true,
     "is_canonical": true,
-    "duplicate_of": null
+    "duplicate_of": null,
+    "text_cleaned": "An injunction cannot be granted: (a) to stay a judicial proceeding pending at the institution of the suit in which the injunction is sought, unless such restraint is necessary to prevent a multiplicity of proceedings; (b) to stay proceedings in a Court not subordinate to that from which the injunction is sought; [(c) Clause (c) repealed by the Specific Relief (Amendment) Act, 1940 (IX of 1940)]; (d) to interfere with the public duties of any department of the Federal Government, or any Provincial Government; [(e) Clause (e) repealed by the Specific Relief (Amendment) Act, 1940 (IX of 1940)]; (f) to prevent the breach of a contract the performance of which would not be specifically enforced; [(g) Clause (g) omitted by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981)]; [(h) Clause (h) omitted by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981)]; (i) when equally efficacious relief can certainly be obtained by any other usual mode of proceeding except in case of breach of trust; (j) when the conduct of the applicant or his agents has been such as to disentitle him to the assistance of the Court; [(k) Clause (k) omitted by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981)]."
   },
   {
     "canonical_id": "SRA_1877_SEC_19",

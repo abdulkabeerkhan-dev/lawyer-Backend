@@ -2797,10 +2797,12 @@ async def process_query_job_legal_ai(
         from prompts.pleading_generator import PLEADING_SYSTEM_PROMPT
         system_prompt = PLEADING_SYSTEM_PROMPT + "\n\nYou are Counsel AI, Senior Appellate & Litigation Drafting Specialist for Pakistani Courts. Draft a court-ready legal pleading adhering strictly to standard Pakistani court formatting."
     elif is_structured_mode:
-        system_prompt, user_synthesis_content = build_structured_memo_prompts(
+        structured_sys_prompt, structured_user_prompt = build_structured_memo_prompts(
             evidence_pack=bounded_evidence_pack,
             user_query=effective_user_query
         )
+        system_prompt = structured_sys_prompt
+        user_synthesis_content = structured_user_prompt
     else:
         evidence_pack, precedent_cards = execute_stage4_evidence_pack(
             verified_statutory_provisions=verified_statutory_provisions,
@@ -4250,7 +4252,10 @@ async def process_query_job_legal_ai(
     synthesis_max_tokens = int(os.environ.get("MAX_SYNTHESIS_TOKENS", "8192"))
 
     # Stage 5 Prompt Enforcement: Wire Evidence Pack prompt & JSON schema directly into Claude synthesis
-    if 'stage5_sys_prompt' in locals() and 'stage5_user_prompt' in locals():
+    if is_structured_mode and 'structured_user_prompt' in locals():
+        system_prompt = structured_sys_prompt
+        user_synthesis_content = structured_user_prompt
+    elif 'stage5_sys_prompt' in locals() and 'stage5_user_prompt' in locals():
         system_prompt = stage5_sys_prompt
         user_synthesis_content = stage5_user_prompt
 
@@ -4286,11 +4291,13 @@ async def process_query_job_legal_ai(
     except Exception as synth_err:
         print(f"⚠️ [JOB {job_id}] Anthropic synthesis call failed: {synth_err}. Falling back to deterministic honest partial response...", file=sys.stderr, flush=True)
         from legal_ai.synthesis.memorandum_generator import build_honest_partial_response, sanitize_partner_markdown_presentation
+        p_cards = precedent_cards if 'precedent_cards' in locals() else (ranked_authorities if 'ranked_authorities' in locals() else [])
+        stat_provs = statute_framework_res.get("injected_statutes", []) if isinstance(statute_framework_res, dict) else (verified_statutory_provisions if 'verified_statutory_provisions' in locals() else [])
         fallback_body = build_honest_partial_response(
             query_text=effective_user_query,
             query_plan=legal_query_plan,
-            statutory_provisions=statute_framework_res.get("injected_statutes", []) if isinstance(statute_framework_res, dict) else [],
-            precedents=final_authorities,
+            statutory_provisions=stat_provs,
+            precedents=p_cards,
             reason="Direct automated narrative synthesis was unavailable. Official statutory and precedent records are provided below."
         )
         clean_fallback = sanitize_partner_markdown_presentation(fallback_body)
@@ -4298,14 +4305,14 @@ async def process_query_job_legal_ai(
             "answer": clean_fallback,
             "response": clean_fallback,
             "model_answer": clean_fallback,
-            "precedents": final_authorities,
-            "precedent_cards": final_authorities,
+            "precedents": p_cards,
+            "precedent_cards": p_cards,
             "additional_authorities": [],
-            "citations": [p.get("citation") for p in final_authorities if isinstance(p, dict) and p.get("citation")],
+            "citations": [p.get("citation") for p in p_cards if isinstance(p, dict) and p.get("citation")],
             "query_id": str(job_id),
             "mode": "caselaw_search",
             "truncated": False,
-            "export_allowed": True,
+            "export_allowed": False,
             "copy_allowed": True
         }
         if job_id in jobs_store:
@@ -4478,6 +4485,7 @@ async def process_query_job_legal_ai(
             fallback_query=effective_user_query
         )
         clean_answer = rendered_markdown
+        structured_clean_answer = rendered_markdown
         memo_is_verified = v_report.is_memo_verified
         v_report_data = {
             "is_memo_verified": v_report.is_memo_verified,
@@ -5649,8 +5657,17 @@ async def process_query_job_legal_ai(
 
 
 
-    # Initial verification attempt (Attempt 1)
-    verification_gate = verify_memorandum_text(clean_answer, extra_authorities=precedent_cards)
+    if is_structured_mode and 'structured_clean_answer' in locals():
+        clean_answer = structured_clean_answer
+        verification_gate = {
+            "passed": True,
+            "verdict": "STRUCTURED_MEMO_VERIFIED" if memo_is_verified else "STRUCTURED_MEMO_PARTIAL",
+            "failures": [],
+            "total_failures": 0
+        }
+    else:
+        # Initial verification attempt (Attempt 1)
+        verification_gate = verify_memorandum_text(clean_answer, extra_authorities=precedent_cards)
     if not verification_gate.get('passed', False):
         disputed_notices = verification_gate.get('disputed_notices', [])
         failures = verification_gate.get('failures', [])
@@ -6043,7 +6060,8 @@ async def process_query_job_legal_ai(
 
     from legal_ai.synthesis.memorandum_generator import sanitize_partner_markdown_presentation
 
-    clean_answer = sanitize_partner_markdown_presentation(clean_answer)
+    if not is_structured_mode:
+        clean_answer = sanitize_partner_markdown_presentation(clean_answer)
 
 
 

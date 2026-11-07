@@ -505,9 +505,22 @@ def retrieve_statute_provisions(
             _fetch_and_add(cid, store, seen_cids, results)
         return results[:max_results]
 
-    # Query 2: Specific Performance Limitation
-    if ("specific performance" in q_low and "agreement to sell" in q_low) or ("limitation for a suit for specific performance" in q_low):
-        for cid in ["LIMITATION_1908_ART_113", "SRA_1877_SEC_12"]:
+    # Query 2: Specific Performance Limitation & Multi-Issue Fact Patterns
+    if ("specific performance" in q_low and "agreement to sell" in q_low) or ("limitation for a suit for specific performance" in q_low) or ("remedies" in q_low and "agreement to sell" in q_low):
+        sp_cids = ["LIMITATION_1908_ART_113", "SRA_1877_SEC_12"]
+        if any(k in q_low for k in ["third party", "subsequent", "transferee", "sold the plot", "sold to"]):
+            sp_cids.append("SRA_1877_SEC_27")
+            sp_cids.append("TPA_1882_SEC_52")
+        if any(k in q_low for k in ["earnest money", "advance", "remedies", "compensation", "damages", "refund"]):
+            sp_cids.append("SRA_1877_SEC_19")
+            sp_cids.append("CONTRACT_1872_SEC_65")
+            sp_cids.append("CONTRACT_1872_SEC_73")
+            sp_cids.append("CONTRACT_1872_SEC_64")
+        if any(k in q_low for k in ["within time", "limitation", "barred", "time-barred", "period"]):
+            sp_cids.append("LIMITATION_1908_SEC_3")
+            sp_cids.append("LIMITATION_1908_SEC_19")
+        sp_cids.extend(["SRA_1877_SEC_21", "SRA_1877_SEC_22"])
+        for cid in sp_cids:
             _fetch_and_add(cid, store, seen_cids, results)
         return results[:max_results]
 
@@ -649,7 +662,7 @@ def _fetch_and_add(cid: str, store: Any, seen: Set[str], res_list: List[LegalUni
 def build_evidence_pack_for_query(
     query_text: str,
     precedent_cards: Optional[List[Dict[str, Any]]] = None,
-    max_statutes: int = 7
+    max_statutes: int = 12
 ) -> Tuple[BoundedEvidencePack, StatuteQueryIntent]:
     """
     Layers 3, 4, 5 Orchestrator:
@@ -679,6 +692,7 @@ def build_evidence_pack_for_query(
                     pdf_url=card.get("pdf_url")
                 )
 
+    pack.query_text = query_text
     return pack, intent
 
 

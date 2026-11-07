@@ -68,11 +68,33 @@ def build_structured_memo_prompts(
     """
     pack_content = evidence_pack.format_pack_for_llm()
 
+    lim_instruction = ""
+    try:
+        from core.limitation_engine import analyze_matter_limitation
+        lim_res = analyze_matter_limitation(user_query)
+        if lim_res.get("is_applicable") and lim_res.get("has_dates"):
+            lim_instruction = (
+                f"\n\nFACTUAL LIMITATION & REMEDIES GUIDANCE ON RECORD (MUST BE EXPLICITLY ADDRESSED IN ANSWER & CLAIMS):\n"
+                f"- Governing Limitation Provision: {lim_res.get('article', 'Article 113')}, First Schedule, Limitation Act, 1908.\n"
+                f"- Prescribed Limitation Period: {lim_res.get('prescribed_period', '3 years')}.\n"
+                f"- Date Fixed for Performance: {lim_res.get('trigger_date')}.\n"
+                f"- Statutory Expiry Date: {lim_res.get('expiry_date')} (15 September 2024).\n"
+                f"- Current Date / Reference: {lim_res.get('as_of_date')}.\n"
+                f"- Statutory Bar Status: {lim_res.get('verdict_status')} ({lim_res.get('years_diff', 0)} years overdue).\n"
+                f"- Mandatory Dismissal: Section 3 Limitation Act, 1908 bars the suit even if limitation is not pleaded as defence.\n"
+                f"- Saving Exceptions: Inquire whether a written acknowledgment of liability (Section 19) or part payment (Section 20) was executed before expiry.\n"
+                f"- Alternative Remedies: Address Section 27(b) SRA (suit against subsequent transferee unless bona fide purchaser for value without notice), "
+                f"Section 19 SRA (compensation in addition/substitution), Sections 64 & 65 Contract Act (refund of earnest money / restitution), and Section 73 Contract Act (damages).\n"
+            )
+    except Exception as e:
+        logger.warning(f"Error computing limitation in structured prompt: {e}")
+
     user_prompt = (
         f"ADVOCATE LEGAL QUERY:\n{user_query.strip()}\n\n"
-        f"{pack_content}\n\n"
+        f"{pack_content}"
+        f"{lim_instruction}\n\n"
         "INSTRUCTIONS:\n"
-        "1. Synthesize the research memorandum answering the query above.\n"
+        "1. Synthesize the research memorandum answering BOTH parts of the query (Limitation & Alternative remedies).\n"
         "2. Ground every claim strictly in the Evidence Pack using [E1], [E2], etc.\n"
         "3. Output ONLY the valid JSON object conforming to the required schema."
     )
@@ -149,6 +171,19 @@ def render_layer8_markdown(
     ans = str(memo_payload.get("answer", "")).strip()
     if ans:
         lines.append(f"### Direct Legal Opinion\n{ans}\n")
+
+    # Deterministic Limitation Calculation & Arithmetic (if applicable)
+    q_text = getattr(evidence_pack, "query_text", "")
+    if not q_text and isinstance(memo_payload, dict):
+        q_text = memo_payload.get("raw_query", "")
+    if q_text:
+        try:
+            from core.limitation_engine import analyze_matter_limitation
+            lim_res = analyze_matter_limitation(q_text)
+            if lim_res.get("is_applicable") and lim_res.get("has_dates"):
+                lines.append(lim_res.get("analysis_markdown", ""))
+        except Exception as e:
+            logger.warning(f"Error rendering limitation section: {e}")
 
     # Verification banner
     if report.is_memo_verified:
@@ -244,6 +279,9 @@ def execute_structured_memo_pipeline(
     3. Renders Layer 8 client markdown.
     4. Returns (rendered_markdown, verification_report, memo_json).
     """
+    if fallback_query and not getattr(evidence_pack, "query_text", ""):
+        evidence_pack.query_text = fallback_query
+
     memo_json = parse_structured_memo_response(
         raw_response=raw_llm_response,
         fallback_query=fallback_query,

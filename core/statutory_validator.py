@@ -706,10 +706,17 @@ def parse_statutory_citation(text: str, context: Optional[str] = None) -> Dict[s
     if re.search(r'\b\d+\s*%', clean_text) or clean_text.endswith('%'):
         return {"is_valid": False, "status": "percentage_not_statute", "raw_citation": text}
 
-    # Currency and quantity amount guard: numbers expressing money, quantity, or duration are never section numbers
-    if re.search(r'(?i)\b(?:pkr|rs\.?|rupees|usd|\$)\s*\d+', clean_text) or re.search(r'(?i)\b\d+\s*(?:million|m|lakh|crore|thousand|k|billion|rupees|rs|pkr|days|months|years|weeks|hours|mins|minutes)\b', clean_text):
-        if not re.search(r'(?i)\b(?:sections?|secs?\.?|ss\.?|s\.|articles?|arts?\.?|orders?|ord\.?|o\.|rules?|r\.)\b', clean_text):
-            return {"is_valid": False, "status": "currency_or_quantity_not_statute", "raw_citation": text}
+    # Currency, quantity, land unit, and calendar date guard: numbers expressing money, land units, calendar dates, or duration are never section numbers
+    if (
+        re.search(r'(?i)\b(?:pkr|rs\.?|rupees|usd|\$)\s*\d+', clean_text)
+        or re.search(r'(?i)\b\d+\s*(?:million|m|lakh|lac|crore|thousand|k|billion|rupees|rs|pkr|days|months|years|weeks|hours|mins|minutes)\b', clean_text)
+        or re.search(r'(?i)\b\d+\s*(?:marla|kanal|acre|acres|sq\s*ft|square\s*feet|yards|guz|murabba|plot|sector|phase|block)\b', clean_text)
+        or re.search(r'(?i)\b\d{1,2}\s+(?:january|february|march|april|may|june|july|august|september|october|november|december)\b', clean_text)
+        or re.search(r'(?i)\b(?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2}\b', clean_text)
+        or re.search(r'\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b', clean_text)
+    ):
+        if not re.search(r'(?i)\b(?:sections?|secs?\.?|ss\.?|s\.|articles?|arts?\.?|orders?|ord\.?|o\.|rules?|r\.)\s*\d+', clean_text):
+            return {"is_valid": False, "status": "currency_date_or_measurement_not_statute", "raw_citation": text}
 
     lower_text = clean_text.lower()
     search_context = f"{lower_text} {str(context or '').lower()}"
