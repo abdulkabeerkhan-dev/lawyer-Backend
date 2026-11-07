@@ -152,9 +152,9 @@ def render_layer8_markdown(
 
     # Verification banner
     if report.is_memo_verified:
-        lines.append("> **✓ VERIFIED RESEARCH MEMORANDUM** — 100% of claims deterministically grounded in authenticated statutory provisions and reported precedents.\n")
+        lines.append("> **✓ VERIFIED RESEARCH MEMORANDUM** - 100% of claims deterministically grounded in authenticated statutory provisions and reported precedents.\n")
     else:
-        lines.append(f"> ⚠️ **PARTIAL RESULT / UNVERIFIED NOTICE** — {report.unverified_claims_count} claim(s) could not be deterministically verified against the primary statute store.\n")
+        lines.append(f"> ⚠️ **PARTIAL RESULT / UNVERIFIED NOTICE** - {report.unverified_claims_count} claim(s) could not be deterministically verified against the primary statute store.\n")
 
     # 2. Supporting Legal Units & Claims
     claims = memo_payload.get("claims", [])
@@ -177,7 +177,7 @@ def render_layer8_markdown(
         lines.append("### Authenticated Statutory Provisions on Record")
         for it in statute_items:
             unit_label = (it.unit_type or "Provision").capitalize()
-            lines.append(f"#### {it.statute_title} — {unit_label} {it.number}")
+            lines.append(f"#### {it.statute_title} - {unit_label} {it.number}")
             if it.parent:
                 lines.append(f"*Context / Schedule:* {it.parent}")
             lines.append(f"- **Description / Cause of Action:** {it.heading_description}")
@@ -205,7 +205,7 @@ def render_layer8_markdown(
     if case_items:
         lines.append("### Controlling Judicial Precedents")
         for it in case_items:
-            lines.append(f"- **{it.citation}** — *{it.case_title}* ({it.court}, {it.year or 'N/A'})")
+            lines.append(f"- **{it.citation}** - *{it.case_title}* ({it.court}, {it.year or 'N/A'})")
             lines.append(f"  *Recorded Ratio:* {it.ratio}\n")
 
     # 5. Not Found / Scope Limitations

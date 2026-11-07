@@ -43,7 +43,11 @@ class StatuteEvidenceVerifier:
     """
 
     UNIT_CITATION_REGEX = re.compile(
-        r'\b(section|sec\.?|article|art\.?|order|rule|schedule)\s*([0-9]+[A-Za-z]?(?:-[A-Za-z])?)\b(?:\s+of\s+(?:the\s+)?([^,\.;\n]+))?',
+        r'\b(section|sec\.?|article|art\.?|order|rule|schedule)\s*([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z])?)\b(?:\s+of\s+(?:the\s+)?([^,\.;\n]+))?',
+        re.IGNORECASE
+    )
+    ORDER_RULE_REGEX = re.compile(
+        r'\bOrder\s*([IVXLCDM]+|\d+)\s*(?:Rules?|R\.)\s*(\d+[A-Za-z]?(?:\s*(?:and|&)\s*\d+[A-Za-z]?)?)\b(?:\s+of\s+(?:the\s+)?([^,\.;\n]+))?',
         re.IGNORECASE
     )
 
@@ -206,8 +210,50 @@ class StatuteEvidenceVerifier:
                             f"recovery periods for money lent/accounts stated are governed by 'Article {num}', not Section {num}."
                         )
 
-            # Also verify against self.store if populated
-            if self.store:
+            # Check CPC Order vs Section rules
+            is_cpc = ("cpc" in statute_mention) or ("civil procedure" in statute_mention) or any(
+                "code-of-civil-procedure-1908" in str(getattr(evidence_pack.get(eid), "statute_id", "")).lower() or
+                "cpc" in str(getattr(evidence_pack.get(eid), "statute_id", "")).lower()
+                for eid in ev_ids
+            )
+            if is_cpc:
+                if norm_type == "section" and num == "90" and any(w in text.lower() for w in ["execution", "sale", "auction", "irregularity", "setting aside"]):
+                    violations.append(
+                        "Violation: Inapplicable unit type 'Section 90'. Challenging an execution sale on grounds of irregularity or fraud "
+                        "is governed by 'Order XXI Rule 90' of the Code of Civil Procedure, 1908, NOT 'Section 90'."
+                    )
+                elif norm_type == "section" and num == "11" and any(w in text.lower() for w in ["rejection", "reject", "plaint", "cause of action"]):
+                    violations.append(
+                        "Violation: Inapplicable unit type 'Section 11'. Rejection of a plaint is governed by "
+                        "'Order VII Rule 11' of the Code of Civil Procedure, 1908, NOT 'Section 11' (which governs Res Judicata)."
+                    )
+                elif norm_type == "section" and num in ("1", "2") and any(w in text.lower() for w in ["injunction", "stay order", "temporary injunction"]):
+                    violations.append(
+                        "Violation: Inapplicable unit type 'Section " + num + "'. Temporary injunctions are governed by "
+                        "'Order XXXIX Rules 1 and 2' of the Code of Civil Procedure, 1908."
+                    )
+
+            # Check PPC Section bounds
+            is_ppc = ("ppc" in statute_mention) or ("penal code" in statute_mention) or any(
+                "pakistan-penal-code-1860" in str(getattr(evidence_pack.get(eid), "statute_id", "")).lower() or
+                "ppc" in str(getattr(evidence_pack.get(eid), "statute_id", "")).lower()
+                for eid in ev_ids
+            )
+            if is_ppc:
+                num_digits = re.match(r"^(\d+)", num)
+                if num_digits and int(num_digits.group(1)) > 511:
+                    violations.append(
+                        f"Violation: Non-existent provision 'Section {num}' in Pakistan Penal Code, 1860 (terminates at Section 511)."
+                    )
+
+        # Also register Order & Rule citations as checked
+        for om in self.ORDER_RULE_REGEX.finditer(text):
+            ord_s = om.group(1).upper()
+            rule_s = om.group(2).strip()
+            checked.append(f"Order {ord_s} Rule {rule_s}")
+
+        # Also verify against self.store if populated
+        if self.store:
                 lim_art_key = f"limitation-act-1908:article:{num}".lower()
                 lim_sec_key = f"limitation-act-1908:section:{num}".lower()
                 if is_limitation:
