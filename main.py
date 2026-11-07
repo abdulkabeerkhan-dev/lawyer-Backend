@@ -15967,12 +15967,18 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
             if persisted.get("user_id") and persisted["user_id"] != authenticated_user_id:
                 raise HTTPException(status_code=403, detail="Not authorized to access this job.")
             if persisted.get("status") == "running":
+                # If the job is not in the active in-memory jobs_store, its background task was terminated
+                # by a server restart or worker shutdown. Fail fast instead of leaving the client polling.
+                persisted_error = "The query was interrupted by a server restart. Please try asking your question again."
+                persisted["status"] = "error"
+                persisted["error"] = persisted_error
+                persist_in_flight_job_state(job_id, "error", "server_restarted", extra={"error": persisted_error})
                 return {
-                    "status": "running",
-                    "stage": persisted.get("stage", "processing"),
-                    "early_display": persisted.get("early_display"),
+                    "status": "error",
+                    "stage": "error",
+                    "early_display": None,
                     "result": None,
-                    "error": None
+                    "error": persisted_error
                 }
             elif persisted.get("status") == "done" and persisted.get("result"):
                 return {
