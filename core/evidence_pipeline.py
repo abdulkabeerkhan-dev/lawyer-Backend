@@ -165,9 +165,10 @@ def execute_stage4_evidence_pack(
     3. Performs two-way cross-linking (statutes pull cases, cases pull invoked statutes).
     4. Assembles immutable EvidencePack with S1..Sn and C1..Cn IDs.
     """
-    domain = "civil"
-    if query_plan and getattr(query_plan, "legal_domain", None):
-        domain = query_plan.legal_domain[0]
+    domain = (
+        getattr(query_plan, "primary_domain", None)
+        or (query_plan.legal_domain[0] if (query_plan and getattr(query_plan, "legal_domain", None)) else "civil")
+    )
 
     # 1. Filter case precedents through case integrity engine
     clean_cases = []

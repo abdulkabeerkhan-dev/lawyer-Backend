@@ -2105,8 +2105,8 @@ def build_honest_partial_response(
     # 2. Verified Statutory Provisions on Record
     if not statutory_provisions and query_plan and getattr(query_plan, "statutory_provisions", None):
         try:
-            from data.unified_statute_store import UnifiedStatuteStore
-            store = UnifiedStatuteStore.get_instance()
+            from core.unified_statute_store import UnifiedStatuteStore
+            store = UnifiedStatuteStore()
             for cid in query_plan.statutory_provisions:
                 rec = store.get_by_canonical_id(str(cid).upper())
                 if rec:
@@ -2171,7 +2171,7 @@ def build_honest_partial_response(
         sections.append("*No statutory provisions were verified in the primary database for this query.*")
 
     # 3. Retrieved Precedents on Record
-    sections.append("## Retrieved Precedents on Record")
+    sections.append("## Retrieved Judicial Precedents on Record")
     if precedents:
         prec_blocks = []
         for p in precedents:

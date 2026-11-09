@@ -7,6 +7,7 @@ into the Turso libSQL database (table: statute_provisions).
 """
 
 import os
+import sys
 import glob
 import json
 import time
@@ -116,6 +117,10 @@ def send_batch(batch: list, max_retries: int = 5) -> bool:
 def main():
     print(f"Loading statute files from {STATUTES_DIR}...")
     files = sorted(glob.glob(os.path.join(STATUTES_DIR, "*.json")))
+    filter_args = [a.upper() for a in sys.argv[1:]]
+    if filter_args:
+        files = [f for f in files if any(fa in os.path.basename(f).upper() for fa in filter_args)]
+        print(f"Filtered to {len(files)} matching files: {[os.path.basename(f) for f in files]}")
     print(f"Found {len(files)} statute files.")
 
     all_provisions = []

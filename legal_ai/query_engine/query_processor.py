@@ -1416,6 +1416,7 @@ async def process_query_job_legal_ai(
 
 
                 "status": "done",
+            "streaming_text": chitchat_answer,
 
 
 
@@ -1888,7 +1889,7 @@ async def process_query_job_legal_ai(
             jobs_store[job_id]["status"] = "done"
             jobs_store[job_id]["stage"] = "done"
             jobs_store[job_id]["result"] = clarification_result
-            from main import persist_in_flight_job_state
+            from core.in_flight_jobs import persist_in_flight_job_state
             persist_in_flight_job_state(job_id, "done", "done", extra={"result": clarification_result})
         pipeline_metrics.end_stage("understanding_query")
         return
@@ -2595,7 +2596,10 @@ async def process_query_job_legal_ai(
     try:
         from core.case_integrity import verify_case_integrity
         verified_precedents = []
-        _domain_nm = (legal_query_plan.legal_domain[0] if (legal_query_plan and getattr(legal_query_plan, "legal_domain", None)) else "civil")
+        _domain_nm = (
+            getattr(legal_query_plan, "primary_domain", None)
+            or (legal_query_plan.legal_domain[0] if (legal_query_plan and getattr(legal_query_plan, "legal_domain", None)) else "civil")
+        )
         for pc in precedent_cards:
             is_valid, drop_reason, sanitized_pc = verify_case_integrity(
                 pc,
@@ -4354,7 +4358,7 @@ async def process_query_job_legal_ai(
             jobs_store[job_id]["stage"] = "done"
             jobs_store[job_id]["result"] = done_result
             jobs_store[job_id]["completed_at"] = datetime.now(timezone.utc)
-            from main import persist_in_flight_job_state
+            from core.in_flight_jobs import persist_in_flight_job_state
             persist_in_flight_job_state(job_id, "done", "done", extra={"result": done_result})
         pipeline_metrics.end_stage("synthesizing")
         return
@@ -6178,6 +6182,7 @@ async def process_query_job_legal_ai(
 
 
             "status": "done",
+            "streaming_text": clean_answer,
 
 
 
@@ -6425,6 +6430,11 @@ async def process_query_job_legal_ai(
 
 
         })
+        try:
+            from core.in_flight_jobs import persist_in_flight_job_state
+            persist_in_flight_job_state(job_id, "done", "done", extra={"result": jobs_store[job_id].get("result")})
+        except Exception as _p_err:
+            logger.debug(f"Persistence error: {_p_err}")
 
 
 

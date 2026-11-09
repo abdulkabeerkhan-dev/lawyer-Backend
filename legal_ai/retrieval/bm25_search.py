@@ -11,6 +11,25 @@ from typing import Dict, List, Any, Optional
 from legal_ai.ranking.court_weighting import normalize_court_name
 
 
+_GLOBAL_BM25_INSTANCE = None
+
+
+def get_bm25_index_instance() -> Any:
+    global _GLOBAL_BM25_INSTANCE
+    import os
+    if os.environ.get("RENDER") or os.environ.get("DISABLE_IN_MEMORY_BM25", "").lower() in ("true", "1", "yes"):
+        return None
+    if _GLOBAL_BM25_INSTANCE is None:
+        try:
+            from hybrid_search import BM25Index
+            idx_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "bm25_index.pkl")
+            if os.path.exists(idx_path):
+                _GLOBAL_BM25_INSTANCE = BM25Index.load(idx_path)
+        except Exception:
+            pass
+    return _GLOBAL_BM25_INSTANCE
+
+
 def search_bm25_sparse(
     query_text: str,
     top_k: int = 40,
@@ -24,18 +43,7 @@ def search_bm25_sparse(
 
     # Obtain BM25 index if not passed directly
     if bm25_index_instance is None:
-        try:
-            from main import get_global_bm25_index
-            bm25_index_instance = get_global_bm25_index()
-        except Exception:
-            try:
-                from hybrid_search import BM25Index
-                import os
-                idx_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "bm25_index.pkl")
-                if os.path.exists(idx_path):
-                    bm25_index_instance = BM25Index.load(idx_path)
-            except Exception:
-                pass
+        bm25_index_instance = get_bm25_index_instance()
 
     if not bm25_index_instance:
         return []

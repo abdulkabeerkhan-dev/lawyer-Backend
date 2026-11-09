@@ -210,6 +210,9 @@ class UnifiedStatuteStore:
             "CONTRACT_1872_SEC_73",
             "QSO_1984_ART_2",
             "CONST_1973_ART_199",
+            "NI_ACT_1881_SEC_8",
+            "NI_ACT_1881_SEC_31",
+            "PPC_1860_SEC_51",
         ]
         try:
             from core.turso_client import get_statute_provision, is_turso_circuit_open

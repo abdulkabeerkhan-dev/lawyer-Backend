@@ -293,10 +293,11 @@ def render_layer8_markdown(
     # 4. Judicial Precedents (if any)
     case_items = [it for it in evidence_pack.items.values() if it.item_type == "judicial_precedent"]
     if case_items:
-        lines.append("### Controlling Judicial Precedents")
+        lines.append("## Retrieved Judicial Precedents on Record")
         for it in case_items:
-            lines.append(f"- **{it.citation}** - *{it.case_title}* ({it.court}, {it.year or 'N/A'})")
-            lines.append(f"  *Recorded Ratio:* {it.ratio}\n")
+            lines.append(f"### {it.citation} - {it.case_title}")
+            lines.append(f"- **Court**: {it.court} | **Year**: {it.year or 'N/A'}")
+            lines.append(f"- **Recorded Ratio Decidendi**: {it.ratio}\n")
 
     # 5. Not Found / Scope Limitations
     not_found = memo_payload.get("not_found", [])
