@@ -346,11 +346,25 @@ async def retrieve_candidates_parallel(
         raw_lists = await asyncio.gather(*pc_tasks)
         return [collapse_chunks_per_case(plist) for plist in raw_lists]
 
-    pinecone_task = asyncio.create_task(_execute_multi_pinecone_lists())
+    async def _guarded_pinecone_search() -> List[List[Dict[str, Any]]]:
+        try:
+            return await asyncio.wait_for(_execute_multi_pinecone_lists(), timeout=12.0)
+        except Exception as pc_err:
+            print(f"⚠️ [UnifiedOrchestrator] Pinecone search timed out/failed: {pc_err}", file=sys.stderr, flush=True)
+            return []
+
+    async def _guarded_external_search() -> List[Dict[str, Any]]:
+        try:
+            return await asyncio.wait_for(search_external_judgments(query_text, max_results=5), timeout=4.0)
+        except Exception as ext_err:
+            print(f"⚠️ [UnifiedOrchestrator] External search timed out/failed: {ext_err}", file=sys.stderr, flush=True)
+            return []
+
+    pinecone_task = asyncio.create_task(_guarded_pinecone_search())
     bm25_task = asyncio.create_task(asyncio.to_thread(_execute_multi_bm25_lists))
 
     if include_external:
-        external_task = asyncio.create_task(search_external_judgments(query_text, max_results=5))
+        external_task = asyncio.create_task(_guarded_external_search())
         sb_res, pc_lists, bm_lists, ext_res = await asyncio.gather(
             supabase_task, pinecone_task, bm25_task, external_task
         )

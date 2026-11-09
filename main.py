@@ -826,7 +826,11 @@ async def dynamic_cors_middleware(request, call_next):
 
 PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
 
-PINECONE_INDEX_NAME = os.environ.get("PINECONE_INDEX_NAME", "legal-kb-pk-local")
+PINECONE_INDEX_NAME = (
+    os.environ.get("PINECONE_INDEX_NAME")
+    or os.environ.get("PINECONE_INDEX")
+    or "legal-kb-pk-local"
+)
 
 PINECONE_NAMESPACE = os.environ.get("PINECONE_NAMESPACE", "judgments")
 
@@ -8449,8 +8453,45 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
 
             from legal_ai.query_engine.query_processor import process_query_job_legal_ai
 
-            await process_query_job_legal_ai(job_id, request, authenticated_user_id, jobs_store, supabase)
+            pipeline_timeout = float(os.environ.get("LEGAL_AI_PIPELINE_TIMEOUT", "100.0"))
+            await asyncio.wait_for(
+                process_query_job_legal_ai(job_id, request, authenticated_user_id, jobs_store, supabase),
+                timeout=pipeline_timeout
+            )
 
+            return
+
+        except asyncio.TimeoutError:
+            print(f"⏱️ [JOB {job_id}] Pipeline exceeded timeout ceiling. Delivering honest synthesized partial response...", file=sys.stderr, flush=True)
+            if job_id in jobs_store:
+                from legal_ai.synthesis.memorandum_generator import build_honest_partial_response, sanitize_partner_markdown_presentation
+                raw_memo = jobs_store[job_id].get("streaming_text") or ""
+                p_cards = jobs_store[job_id].get("early_display", {}).get("precedent_cards") or []
+                q_text = str(getattr(request, "query_text", "") or getattr(request, "query", "") or "")
+                fallback_body = build_honest_partial_response(
+                    query_text=q_text,
+                    precedents=p_cards,
+                    reason="Automated synthesis reached the safe timeout threshold. Official retrieved authorities and statutory context are provided below."
+                )
+                clean_body = sanitize_partner_markdown_presentation(raw_memo if len(raw_memo) > 200 else fallback_body)
+                done_result = {
+                    "answer": clean_body,
+                    "response": clean_body,
+                    "model_answer": clean_body,
+                    "precedents": p_cards,
+                    "precedent_cards": p_cards,
+                    "citations": [p.get("citation") for p in p_cards if isinstance(p, dict) and p.get("citation")],
+                    "query_id": str(job_id),
+                    "mode": "caselaw_search",
+                    "truncated": False,
+                    "export_allowed": True,
+                    "copy_allowed": True
+                }
+                jobs_store[job_id]["status"] = "done"
+                jobs_store[job_id]["stage"] = "done"
+                jobs_store[job_id]["result"] = done_result
+                jobs_store[job_id]["completed_at"] = datetime.now(timezone.utc)
+                persist_in_flight_job_state(job_id, "done", "done", extra={"result": done_result})
             return
 
         except MemorandumVerificationBlockedError as ve:

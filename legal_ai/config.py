@@ -31,7 +31,11 @@ MAX_SYNTHESIS_TOKENS: int = int(os.environ.get("MAX_SYNTHESIS_TOKENS", "8192"))
 
 # --- Pinecone Vector Database Config ---
 PINECONE_API_KEY: Optional[str] = os.environ.get("PINECONE_API_KEY")
-PINECONE_INDEX_NAME: str = os.environ.get("PINECONE_INDEX_NAME", "legal-kb-pk-local")
+PINECONE_INDEX_NAME: str = (
+    os.environ.get("PINECONE_INDEX_NAME")
+    or os.environ.get("PINECONE_INDEX")
+    or "legal-kb-pk-local"
+)
 PINECONE_NAMESPACE: str = os.environ.get("PINECONE_NAMESPACE", "judgments")
 if not PINECONE_NAMESPACE or PINECONE_NAMESPACE == "default":
     PINECONE_NAMESPACE = "judgments"
@@ -242,16 +246,19 @@ async def safe_create_anthropic_message(**kwargs):
         call_kwargs["extra_body"] = extra_body
 
     stream_cb = call_kwargs.pop("stream_callback", None)
+    anthropic_timeout = float(os.environ.get("ANTHROPIC_TIMEOUT_SECONDS", "55.0"))
     try:
         if stream_cb and hasattr(client.messages, "stream"):
-            async with client.messages.stream(**call_kwargs) as stream:
-                async for text_delta in stream.text_stream:
-                    if asyncio.iscoroutinefunction(stream_cb):
-                        await stream_cb(text_delta)
-                    else:
-                        stream_cb(text_delta)
-                return await stream.get_final_message()
-        return await client.messages.create(**call_kwargs)
+            async def _run_stream():
+                async with client.messages.stream(**call_kwargs) as stream:
+                    async for text_delta in stream.text_stream:
+                        if asyncio.iscoroutinefunction(stream_cb):
+                            await stream_cb(text_delta)
+                        else:
+                            stream_cb(text_delta)
+                    return await stream.get_final_message()
+            return await asyncio.wait_for(_run_stream(), timeout=anthropic_timeout)
+        return await asyncio.wait_for(client.messages.create(**call_kwargs), timeout=anthropic_timeout)
     except Exception as e:
         err_str = str(e)
 
