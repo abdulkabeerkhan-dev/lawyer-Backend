@@ -2103,6 +2103,24 @@ def build_honest_partial_response(
         )
 
     # 2. Verified Statutory Provisions on Record
+    if not statutory_provisions and query_plan and getattr(query_plan, "statutory_provisions", None):
+        try:
+            from data.unified_statute_store import UnifiedStatuteStore
+            store = UnifiedStatuteStore.get_instance()
+            for cid in query_plan.statutory_provisions:
+                rec = store.get_by_canonical_id(str(cid).upper())
+                if rec:
+                    statutory_provisions.append({
+                        "canonical_id": cid,
+                        "display_name": f"{rec.get('act_name') or 'Statute'} - {str(rec.get('unit_type') or 'Section').capitalize()} {rec.get('primary_num') or rec.get('section') or ''}",
+                        "title": rec.get("title") or rec.get("heading") or f"Section {rec.get('primary_num') or ''}",
+                        "text": rec.get("verbatim_text") or rec.get("text") or "",
+                        "text_cleaned": rec.get("verbatim_text") or rec.get("text") or "",
+                        "verified": True
+                    })
+        except Exception:
+            pass
+
     if not statutory_provisions and query_text:
         try:
             from legal_ai.search.statute_search_service import search_statute_provisions

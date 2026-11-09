@@ -333,6 +333,11 @@ def format_verified_memo_to_markdown(
     # Statutory Provisions on Record
     lines.append("## Verified Statutory Provisions on Record")
     statutes = memo_json.get("statutes") or []
+    if not statutes and hasattr(pack, "statutes") and pack.statutes:
+        statutes = [
+            {"id": sid, "quote": sdata.get("text") or sdata.get("verbatim_text") or "", "plain_explanation": ""}
+            for sid, sdata in pack.statutes.items()
+        ]
     if not statutes:
         lines.append("_No verified statutory provisions were admitted for this query._\n")
     else:
@@ -356,6 +361,15 @@ def format_verified_memo_to_markdown(
     # Judicial Precedents on Record
     lines.append("## Retrieved Judicial Precedents on Record")
     cases = memo_json.get("cases") or []
+    if not cases and hasattr(pack, "cases") and pack.cases:
+        cases = [
+            {
+                "id": cid,
+                "ratio_as_recorded": cdata.get("ratio") or cdata.get("ratio_decidendi") or cdata.get("preview") or "",
+                "relevance": ""
+            }
+            for cid, cdata in pack.cases.items()
+        ]
     if not cases:
         lines.append("_No judicial precedents were admitted for this query._\n")
     else:

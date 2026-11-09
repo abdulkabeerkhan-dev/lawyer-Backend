@@ -4292,7 +4292,39 @@ async def process_query_job_legal_ai(
         print(f"⚠️ [JOB {job_id}] Anthropic synthesis call failed: {synth_err}. Falling back to deterministic honest partial response...", file=sys.stderr, flush=True)
         from legal_ai.synthesis.memorandum_generator import build_honest_partial_response, sanitize_partner_markdown_presentation
         p_cards = precedent_cards if 'precedent_cards' in locals() else (ranked_authorities if 'ranked_authorities' in locals() else [])
+        if not p_cards and 'bounded_evidence_pack' in locals() and bounded_evidence_pack:
+            p_cards = [
+                {
+                    "citation": it.citation,
+                    "case_name": it.case_title,
+                    "title": it.case_title,
+                    "court": it.court,
+                    "ratio": it.ratio,
+                    "ratio_decidendi": it.ratio,
+                    "year": it.year,
+                    "statutes_invoked": it.statutes_invoked,
+                    "pdf_url": it.pdf_url
+                }
+                for it in bounded_evidence_pack.items.values()
+                if it.item_type == "judicial_precedent"
+            ]
+
         stat_provs = statute_framework_res.get("injected_statutes", []) if isinstance(statute_framework_res, dict) else (verified_statutory_provisions if 'verified_statutory_provisions' in locals() else [])
+        if not stat_provs and 'bounded_evidence_pack' in locals() and bounded_evidence_pack:
+            stat_provs = [
+                {
+                    "canonical_id": f"{it.statute_id}_{it.unit_type}_{it.number}".upper(),
+                    "act_name": it.statute_title,
+                    "section": it.number,
+                    "primary_num": it.number,
+                    "title": it.heading_description or f"{it.unit_type.title()} {it.number}",
+                    "text": it.text,
+                    "statute_title": it.statute_title
+                }
+                for it in bounded_evidence_pack.items.values()
+                if it.item_type in ("statute_unit", "linked_caveat")
+            ]
+
         fallback_body = build_honest_partial_response(
             query_text=effective_user_query,
             query_plan=legal_query_plan,
@@ -4301,10 +4333,12 @@ async def process_query_job_legal_ai(
             reason="Direct automated narrative synthesis was unavailable. Official statutory and precedent records are provided below."
         )
         clean_fallback = sanitize_partner_markdown_presentation(fallback_body)
+        ev_pack_dict = bounded_evidence_pack.to_dict() if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else (evidence_pack.to_dict() if 'evidence_pack' in locals() else None)
         done_result = {
             "answer": clean_fallback,
             "response": clean_fallback,
             "model_answer": clean_fallback,
+            "evidence_pack": ev_pack_dict,
             "precedents": p_cards,
             "precedent_cards": p_cards,
             "additional_authorities": [],
@@ -5422,38 +5456,27 @@ async def process_query_job_legal_ai(
 
 
     citations_payload = []
-
-
-
-
-
-
-
     for c in precedent_cards:
-
-
-
-
-
-
-
         cit_str = c.get("citation")
-
-
-
-
-
-
-
         if cit_str and cit_str not in citations_payload:
-
-
-
-
-
-
-
             citations_payload.append(cit_str)
+
+    if 'bounded_evidence_pack' in locals() and bounded_evidence_pack:
+        for it in bounded_evidence_pack.items.values():
+            if it.item_type == "judicial_precedent" and it.citation:
+                if it.citation not in citations_payload:
+                    citations_payload.append(it.citation)
+
+    if clean_answer:
+        found_cits = re.findall(
+            r'\b(?:(?:19|20)\d{2}\s+(?:SCMR|PLD|CLD|YLR|MLD|CLC|PCrLJ|PTD|PLC|GBLR)\s+\d+|PLD\s+(?:19|20)\d{2}\s+(?:SC|Lahore|Karachi|Peshawar|Quetta|Islamabad)\s+\d+)\b',
+            clean_answer,
+            flags=re.IGNORECASE
+        )
+        for fc in found_cits:
+            fc_clean = re.sub(r'\s+', ' ', fc).strip()
+            if fc_clean not in citations_payload:
+                citations_payload.append(fc_clean)
 
 
 
@@ -6190,23 +6213,9 @@ async def process_query_job_legal_ai(
                 "database_freshness": "Database current as of November 2026",
                 "is_verified": memo_is_verified if 'memo_is_verified' in locals() else False,
                 "verification_report": v_report if 'v_report' in locals() else None,
-                "evidence_pack": evidence_pack.to_dict() if 'evidence_pack' in locals() else None,
-
-
-
-
-
-
-
-                "precedents": precedent_cards,
-
-
-
-
-
-
-
-                "precedent_cards": precedent_cards,
+                "evidence_pack": bounded_evidence_pack.to_dict() if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else (evidence_pack.to_dict() if 'evidence_pack' in locals() else None),
+                "precedents": precedent_cards or ([{"citation": it.citation, "case_name": it.case_title, "title": it.case_title, "court": it.court, "ratio": it.ratio, "ratio_decidendi": it.ratio, "year": it.year, "statutes_invoked": it.statutes_invoked, "pdf_url": it.pdf_url} for it in bounded_evidence_pack.items.values() if it.item_type == "judicial_precedent"] if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else []),
+                "precedent_cards": precedent_cards or ([{"citation": it.citation, "case_name": it.case_title, "title": it.case_title, "court": it.court, "ratio": it.ratio, "ratio_decidendi": it.ratio, "year": it.year, "statutes_invoked": it.statutes_invoked, "pdf_url": it.pdf_url} for it in bounded_evidence_pack.items.values() if it.item_type == "judicial_precedent"] if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else []),
 
 
 

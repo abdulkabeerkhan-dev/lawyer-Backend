@@ -86,7 +86,61 @@ def verify_current_law_for_provisions(
 
     # Step 2: Incorporate provisions from planner
     for prov_str in provisions:
-        p_low = prov_str.lower().strip()
+        prov_clean = str(prov_str).strip()
+        if not prov_clean:
+            continue
+
+        cid_upper = prov_clean.upper()
+        # Direct canonical ID match in store
+        rec_direct = store.get_by_canonical_id(cid_upper) or store.get_by_canonical_id(prov_clean)
+        if rec_direct or "_SEC_" in cid_upper or "_ART_" in cid_upper or "_ORD_" in cid_upper:
+            canonical_id = cid_upper
+            if canonical_id in seen_cids:
+                continue
+            seen_cids.add(canonical_id)
+
+            record = rec_direct or store.get_by_canonical_id(canonical_id)
+            act_code = (record.get("act_code") if record else "") or canonical_id.split("_")[0]
+            if "_SEC_" in canonical_id:
+                sec_num = canonical_id.split("_SEC_")[-1]
+                unit_label = "Section"
+            elif "_ART_" in canonical_id:
+                sec_num = canonical_id.split("_ART_")[-1]
+                unit_label = "Article"
+            elif "_ORD_" in canonical_id:
+                sec_num = canonical_id.split("_ORD_")[-1]
+                unit_label = "Order"
+            else:
+                sec_num = str((record.get("primary_num") if record else "") or canonical_id.split("_")[-1])
+                unit_label = "Provision"
+
+            act_pretty = ACT_PRETTY_NAMES.get(act_code, act_code.replace('_', ' '))
+            display_name = f"{unit_label} {sec_num}, {act_pretty}"
+            status = record.get("status", "in_force") if record else "in_force"
+            text_val = (record.get("text") or "").strip() if record else ""
+            title_val = record.get("title") or display_name if record else display_name
+            src_val = record.get("source_file") or "Official Pakistan Code" if record else "Official Pakistan Code"
+            page_val = record.get("source_page") or "" if record else ""
+            hash_val = record.get("content_hash") or "" if record else ""
+            tier_val = record.get("tier", "ingested_unreviewed") if record else "ingested_unreviewed"
+
+            results.append({
+                "canonical_id": canonical_id,
+                "act_code": act_code,
+                "display_name": display_name,
+                "status": "Active / In Force" if status == "in_force" else status,
+                "title": title_val,
+                "last_amended": src_val,
+                "text": text_val,
+                "tier": tier_val,
+                "source_page": page_val,
+                "content_hash": hash_val,
+                "amendment_notice": "",
+                "has_amendment": False
+            })
+            continue
+
+        p_low = prov_clean.lower().replace('_', ' ')
         m_num = re.search(r'\b([0-9]+(?:-[a-z])?)\b', p_low)
         if not m_num:
             continue

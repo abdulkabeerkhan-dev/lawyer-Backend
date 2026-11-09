@@ -85,7 +85,7 @@ CONCEPTUAL_FACTUAL_PATTERNS = [
             "bounced cheque", "bounce cheque", "lack of funds on cheque", "insufficient funds on cheque",
             "dishonestly issuing a cheque", "punishment for dishonestly issuing a cheque",
             "cheque deposited", "cheque return memo", "section 489-f", "489-f ppc", "489f ppc",
-            "cheque was dishonoured", "dishonoured on presentation"
+            "cheque was dishonoured", "dishonoured on presentation", "deposited a cheque", "returned unpaid", "cheque of", "cheque for"
         ],
         "primary_provisions": [
             "Section 489-F PPC",
@@ -346,6 +346,8 @@ class DualTrackStatuteRouter:
                 continue
             if entry_id == "CHEATING_AND_PUNISHMENT" and (is_land_rev or is_corporate_ctx):
                 continue
+            if entry_id == "CHEQUE_DISHONOUR" and not any(k in q_low for k in ["cheque", "check", "489-f", "489f"]):
+                continue
 
             if any(kw in q_low for kw in entry["keywords"]):
                 track_a_matches.append(entry["id"])
@@ -558,7 +560,7 @@ def analyze_statute_query_intent(query_text: str) -> StatuteQueryIntent:
         out_of_coverage_reason = "Income Tax Ordinance, 2001 and annual Finance Act salary tax slabs are not covered in the verified statutory database."
 
     # Out of Coverage 3: Supreme Court judgments request
-    if any(k in q_lower for k in ["supreme court judgments on cheque", "judgments on cheque dishonour", "give me supreme court judgments"]):
+    if any(k in q_lower for k in ["give me supreme court judgments on cheque dishonour"]):
         is_out_of_coverage = True
         out_of_coverage_reason = "Judicial precedents and Supreme Court judgments are not available in the database yet. No case citations are provided from memory."
 
@@ -799,15 +801,34 @@ def build_evidence_pack_for_query(
     # Attach precedents only if query is not out of coverage for case law
     if not (intent.is_out_of_coverage and "precedent" in intent.out_of_coverage_reason.lower()):
         for card in (precedent_cards or []):
-            cit = card.get("citation") or card.get("case_id") or ""
-            ratio = card.get("ratio_decidendi") or card.get("holding") or card.get("preview") or ""
+            cit = (card.get("citation") or card.get("neutral_citation") or card.get("case_id") or "").strip()
+            ratio = (
+                card.get("ratio_decidendi")
+                or card.get("holding")
+                or card.get("preview")
+                or card.get("snippet")
+                or card.get("summary")
+                or card.get("headnote")
+                or card.get("legal_issue")
+                or str(card.get("text") or card.get("full_text") or "")[:500]
+            ).strip()
             if cit and ratio:
+                clean_year = None
+                raw_year = card.get("year") or card.get("date")
+                if raw_year:
+                    m_yr = re.search(r'\b(19\d{2}|20\d{2})\b', str(raw_year))
+                    if m_yr:
+                        try:
+                            clean_year = int(m_yr.group(1))
+                        except (ValueError, TypeError):
+                            clean_year = None
+
                 pack.add_case_precedent(
                     citation=cit,
-                    case_title=card.get("case_name") or card.get("title") or "Precedent",
+                    case_title=card.get("case_name") or card.get("title") or card.get("case_title") or "Precedent",
                     court=card.get("court") or card.get("court_name") or "Supreme Court of Pakistan",
                     ratio=ratio,
-                    year=card.get("year"),
+                    year=clean_year,
                     statutes_invoked=[s.get("name", "") if isinstance(s, dict) else str(s) for s in (card.get("statutes_invoked") or [])],
                     pdf_url=card.get("pdf_url")
                 )
