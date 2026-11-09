@@ -84,6 +84,76 @@ def build_precedent_result(
     return sanitize_precedent_card(card)
 
 
+def _supplement_with_turso_cases(
+    query: str,
+    seen_ids: set,
+    results: List[Dict[str, Any]],
+    limit: int = 15,
+    year_from: Optional[int] = None,
+    year_to: Optional[int] = None,
+    court: Optional[str] = None,
+    journal: Optional[str] = None
+) -> None:
+    """Fallback search in Turso master case_texts table when BM25 or neural search has insufficient hits."""
+    if len(results) >= limit:
+        return
+    try:
+        from core.turso_client import execute_turso_pipeline, is_turso_circuit_open
+        if is_turso_circuit_open():
+            return
+        words = [w for w in re.findall(r'[A-Za-z0-9]+', query) if len(w) > 2]
+        if not words:
+            return
+
+        where_clauses = []
+        args = []
+        for w in words[:3]:
+            where_clauses.append("(case_title LIKE ? OR headnote LIKE ? OR neutral_citation LIKE ?)")
+            args.extend([
+                {"type": "text", "value": f"%{w}%"},
+                {"type": "text", "value": f"%{w}%"},
+                {"type": "text", "value": f"%{w}%"}
+            ])
+
+        if year_from:
+            where_clauses.append("year >= ?")
+            args.append({"type": "integer", "value": year_from})
+        if year_to:
+            where_clauses.append("year <= ?")
+            args.append({"type": "integer", "value": year_to})
+        if journal and str(journal).lower() not in ("all journals", "all journ...", "all", "none"):
+            where_clauses.append("journal LIKE ?")
+            args.append({"type": "text", "value": f"%{journal.strip()}%"})
+        if court and str(court).lower() not in ("all courts", "all cou...", "all", "none"):
+            where_clauses.append("court_name LIKE ?")
+            args.append({"type": "text", "value": f"%{court.strip()}%"})
+
+        where_sql = " AND ".join(where_clauses)
+        needed = limit - len(results)
+        sql = f"SELECT case_id, neutral_citation, case_title, court_name, year, journal, headnote, full_text FROM case_texts WHERE {where_sql} LIMIT {needed}"
+        t_res = execute_turso_pipeline([{"sql": sql, "args": args}], timeout=4)
+        if t_res and "rows" in t_res[0]:
+            for r in t_res[0]["rows"]:
+                cid = str(r.get("case_id") or "")
+                if cid and cid not in seen_ids:
+                    seen_ids.add(cid)
+                    snip = r.get("headnote") or (r.get("full_text")[:500] if r.get("full_text") else "")
+                    results.append(build_precedent_result(
+                        cid=cid,
+                        cit=r.get("neutral_citation") or cid.replace("_", " "),
+                        title=r.get("case_title") or "Authoritative Judgment",
+                        court=r.get("court_name") or "Supreme Court of Pakistan",
+                        year=r.get("year") or 2020,
+                        snippet=snip,
+                        score=0.85,
+                        source_type="Turso Master Corpus"
+                    ))
+                    if len(results) >= limit:
+                        break
+    except Exception:
+        pass
+
+
 async def search_judgments_by_citation(
     year: Optional[Union[int, str]] = None,
     journal: Optional[str] = None,
@@ -341,6 +411,18 @@ async def search_judgments_by_keyword(
         if len(results) >= limit:
             break
 
+    # Supplement from Turso Master Corpus (141,481 full judgments)
+    _supplement_with_turso_cases(
+        query=q_clean,
+        seen_ids=seen_ids,
+        results=results,
+        limit=limit,
+        year_from=year_from,
+        year_to=year_to,
+        court=court,
+        journal=journal
+    )
+
     return {
         "query": query,
         "filters": {
@@ -426,6 +508,18 @@ async def search_judgments_intelligent(
         ))
         if len(results) >= limit:
             break
+
+    # Supplement from Turso Master Corpus (141,481 full judgments)
+    _supplement_with_turso_cases(
+        query=query,
+        seen_ids=seen_ids,
+        results=results,
+        limit=limit,
+        year_from=year_from,
+        year_to=year_to,
+        court=court,
+        journal=journal
+    )
 
     return {
         "query": query,
