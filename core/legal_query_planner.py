@@ -18,9 +18,11 @@ Before any retrieval is executed, every user query is analyzed to extract:
 - Specialized multi-lane search queries
 """
 
+import os
 import re
 import json
 import asyncio
+from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional, Tuple, Literal, Set, Union
 from pydantic import BaseModel, Field, model_validator
 
@@ -1542,14 +1544,108 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     )
 
 
+def log_planner_audit_event(
+    query: str,
+    path_taken: str,
+    plan: StructuredLegalQueryPlan,
+    fallback_reason: Optional[str] = None
+) -> None:
+    """
+    Logs every planner query decision to persistent logs/planner_query_audit.jsonl
+    and emits an audit log line to stderr. Records the execution path, primary domain,
+    provisions returned, and verification status against UnifiedStatuteStore.
+    """
+    try:
+        from core.unified_statute_store import get_unified_statute_store
+
+        store = get_unified_statute_store()
+        provisions = list(plan.statutory_provisions or plan.provisions or [])
+        verified_status: Dict[str, bool] = {}
+
+        act_map = {
+            'ppc': 'PPC_1860', 'penal code': 'PPC_1860',
+            'crpc': 'CRPC_1898', 'criminal procedure': 'CRPC_1898',
+            'cpc': 'CPC_1908', 'civil procedure': 'CPC_1908',
+            'sra': 'SRA_1877', 'specific relief': 'SRA_1877',
+            'prpa': 'PRPA_2009', 'rented premises': 'PRPA_2009',
+            'fio': 'FIO_2001', 'financial institutions': 'FIO_2001',
+            'limitation': 'LIMITATION_1908',
+            'family courts': 'FAMILY_COURTS_1964', 'fca': 'FAMILY_COURTS_1964',
+            'muslim family': 'MFLO_1961', 'mflo': 'MFLO_1961',
+            'guardians': 'GWA_1890', 'gwa': 'GWA_1890',
+            'contract': 'CONTRACT_1872',
+            'negotiable': 'NI_ACT_1881', 'ni act': 'NI_ACT_1881',
+            'qanun': 'QSO_1984', 'qso': 'QSO_1984',
+            'constitution': 'CONST_1973', 'const': 'CONST_1973',
+            'registration': 'REGISTRATION_1908',
+            'stamp': 'STAMP_1899'
+        }
+
+        for p in provisions:
+            p_str = str(p).strip()
+            exists = False
+            if store.get_by_canonical_id(p_str):
+                exists = True
+            else:
+                m_sec = re.search(r'(?:sections?|sec\.?|articles?|art\.?|rules?|orders?|o\.|r\.)\s*([0-9]+[a-z]?(?:\s*\([0-9a-z]+\))?)', p_str, re.IGNORECASE)
+                num = m_sec.group(1).replace(' ', '') if m_sec else ''
+                low = p_str.lower()
+                for kw, act in act_map.items():
+                    if kw in low:
+                        if num and store.get_provision(act, num):
+                            exists = True
+                            break
+                        m_base = re.match(r'([0-9]+[a-z]?)', num)
+                        if m_base and store.get_provision(act, m_base.group(1)):
+                            exists = True
+                            break
+            verified_status[p_str] = exists
+
+        audit_entry = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "query": query,
+            "path_taken": path_taken,
+            "fallback_reason": fallback_reason,
+            "primary_domain": plan.primary_domain,
+            "controlling_provisions": provisions,
+            "provisions_in_unified_store": verified_status,
+            "all_provisions_verified": all(verified_status.values()) if verified_status else True
+        }
+
+        # Stderr / logger output
+        import sys
+        reason_str = f" fallback_reason={fallback_reason}" if fallback_reason else ""
+        verified_count = sum(1 for v in verified_status.values() if v)
+        sys.stderr.write(
+            f"[PLANNER_QUERY_AUDIT] path={path_taken} domain={plan.primary_domain} "
+            f"provisions={len(provisions)} verified={verified_count}/{len(provisions)}{reason_str}\n"
+        )
+        sys.stderr.flush()
+
+        # Append to logs/planner_query_audit.jsonl
+        log_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logs")
+        os.makedirs(log_dir, exist_ok=True)
+        log_file = os.path.join(log_dir, "planner_query_audit.jsonl")
+        with open(log_file, "a", encoding="utf-8") as f:
+            f.write(json.dumps(audit_entry, ensure_ascii=False) + "\n")
+    except Exception as audit_err:
+        import sys
+        sys.stderr.write(f"[PLANNER_QUERY_AUDIT_ERROR] Failed to record audit log: {audit_err}\n")
+        sys.stderr.flush()
+
+
 async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQueryPlan:
     """
     Analyzes user query and returns a StructuredLegalQueryPlan.
     Tries AI planner first; safely falls back to deterministic planner on any error or timeout.
+    Every query path decision is audited to logs/planner_query_audit.jsonl.
     """
     if not query or len(query.strip()) < 10:
-        return create_deterministic_fallback_plan(query)
+        plan = create_deterministic_fallback_plan(query)
+        log_planner_audit_event(query, path_taken="deterministic_fallback", plan=plan, fallback_reason="query_too_short")
+        return plan
 
+    fallback_reason: Optional[str] = None
     if ai_client_fn:
         try:
             user_msg = f'User Legal Query:\n\"\"\"{query}\"\"\"'
@@ -1630,7 +1726,7 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
                 cross_reason = data.get("cross_domain_reason") or fallback.cross_domain_reason
                 is_ambig = data.get("is_ambiguous", fallback.is_ambiguous)
 
-                return StructuredLegalQueryPlan(
+                plan = StructuredLegalQueryPlan(
                     query_text=query,
                     raw_query=query,
                     jurisdiction="Pakistan",
@@ -1666,9 +1762,22 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
                     forum_hierarchy=fallback.forum_hierarchy,
                     employee_status_branching=fallback.employee_status_branching
                 )
+                log_planner_audit_event(query, path_taken="llm_planner", plan=plan)
+                return plan
+            else:
+                fallback_reason = "ai_client_no_json_returned"
+        except asyncio.TimeoutError:
+            fallback_reason = "ai_client_timeout"
+            import sys
+            print(f"⚠️ analyze_legal_query timeout after 45s", file=sys.stderr, flush=True)
         except Exception as err:
+            fallback_reason = f"ai_client_exception: {type(err).__name__} - {err}"
             import sys
             print(f"⚠️ analyze_legal_query exception: {err}", file=sys.stderr, flush=True)
+    else:
+        fallback_reason = "no_ai_client_provided"
 
     # Deterministic fallback
-    return create_deterministic_fallback_plan(query)
+    plan = create_deterministic_fallback_plan(query)
+    log_planner_audit_event(query, path_taken="deterministic_fallback", plan=plan, fallback_reason=fallback_reason)
+    return plan
