@@ -5,6 +5,7 @@ Provides low-latency access to 278k+ authentic case texts and FTS5 search index.
 
 import os
 import json
+import time
 import logging
 import urllib.request
 import urllib.error
@@ -23,14 +24,27 @@ TURSO_TOKEN = os.environ.get(
 
 # In-memory LRU-like cache for hot case lookups
 _CASE_CACHE: Dict[str, Dict[str, Any]] = {}
+_STATUTE_CACHE: Dict[str, Dict[str, Any]] = {}
 
-def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 5, max_retries: int = 2) -> List[Dict[str, Any]]:
+# Fast Circuit Breaker for Turso network timeouts
+_TURSO_CIRCUIT_OPEN_UNTIL: float = 0.0
+
+def is_turso_circuit_open() -> bool:
+    global _TURSO_CIRCUIT_OPEN_UNTIL
+    return time.time() < _TURSO_CIRCUIT_OPEN_UNTIL
+
+def trip_turso_circuit(duration: float = 30.0):
+    global _TURSO_CIRCUIT_OPEN_UNTIL
+    _TURSO_CIRCUIT_OPEN_UNTIL = time.time() + duration
+
+def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 3, max_retries: int = 1) -> List[Dict[str, Any]]:
     """
     Executes one or more SQL statements against the Turso libSQL pipeline.
-    stmts format: [{"sql": "...", "args": [{"type": "text", "value": "..."}, ...]}]
+    Features strict 3s timeout and circuit breaker to prevent cascading worker hangs.
     """
     if not TURSO_TOKEN or not TURSO_URL:
-        logger.warning("Turso credentials not configured.")
+        return []
+    if is_turso_circuit_open():
         return []
 
     requests = []
@@ -42,7 +56,6 @@ def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 5, max_re
 
     payload = json.dumps({"requests": requests}).encode("utf-8")
 
-    import time
     for attempt in range(1, max_retries + 1):
         req = urllib.request.Request(
             TURSO_URL,
@@ -76,9 +89,10 @@ def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 5, max_re
                 return results
         except Exception as e:
             if attempt == max_retries:
-                logger.error(f"Turso pipeline execution error on final attempt {attempt}: {e}")
+                trip_turso_circuit(30.0)
+                logger.warning(f"Turso pipeline timeout/failure ({e}). Circuit breaker tripped for 30s.")
             else:
-                time.sleep(1.0 * attempt)
+                time.sleep(0.3)
     return []
 
 def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
@@ -86,6 +100,9 @@ def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     Looks up a single case by case_id (e.g. '2021_SCMR_1463') or neutral citation ('2021 SCMR 1463').
     Uses fast exact index lookups (< 0.5s) instead of unindexed table scan.
     """
+    if is_turso_circuit_open():
+        return None
+
     cleaned = case_id_or_cit.strip()
     norm_cit = " ".join(cleaned.replace("_", " ").split())
     norm_id = cleaned.replace(" ", "_").upper()
@@ -102,7 +119,7 @@ def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     WHERE case_id = ?
     LIMIT 1
     """
-    res = execute_turso_pipeline([{"sql": sql_id, "args": [{"type": "text", "value": norm_id}]}], timeout=4, max_retries=1)
+    res = execute_turso_pipeline([{"sql": sql_id, "args": [{"type": "text", "value": norm_id}]}], timeout=3, max_retries=1)
     if res and "rows" in res[0] and res[0]["rows"]:
         case_data = res[0]["rows"][0]
         _CASE_CACHE[norm_id] = case_data
@@ -120,7 +137,7 @@ def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
         {"type": "text", "value": norm_cit},
         {"type": "text", "value": cleaned}
     ]
-    res2 = execute_turso_pipeline([{"sql": sql_cit, "args": args_cit}], timeout=4, max_retries=1)
+    res2 = execute_turso_pipeline([{"sql": sql_cit, "args": args_cit}], timeout=3, max_retries=1)
     if res2 and "rows" in res2[0] and res2[0]["rows"]:
         case_data = res2[0]["rows"][0]
         _CASE_CACHE[norm_id] = case_data
@@ -132,7 +149,7 @@ def get_cases_batch(identifiers: List[str]) -> List[Dict[str, Any]]:
     """
     Fetches multiple cases in a single batch query.
     """
-    if not identifiers:
+    if not identifiers or is_turso_circuit_open():
         return []
 
     found = []
@@ -155,7 +172,7 @@ def get_cases_batch(identifiers: List[str]) -> List[Dict[str, Any]]:
     """
     args = [{"type": "text", "value": m} for m in missing_ids] + [{"type": "text", "value": m} for m in missing_ids]
 
-    res = execute_turso_pipeline([{"sql": sql, "args": args}])
+    res = execute_turso_pipeline([{"sql": sql, "args": args}], timeout=3, max_retries=1)
     if res and "rows" in res[0]:
         for row in res[0]["rows"]:
             c_norm = row.get("case_id", "").upper()
@@ -168,6 +185,8 @@ def search_cases_fts(query_text: str, limit: int = 15) -> List[Dict[str, Any]]:
     """
     Executes Okapi BM25 full-text search across the master judicial corpus in Turso.
     """
+    if is_turso_circuit_open():
+        return []
     clean_q = " ".join([w for w in query_text.replace('"', '').replace("'", "").split() if len(w) > 2])
     if not clean_q:
         return []
@@ -175,58 +194,48 @@ def search_cases_fts(query_text: str, limit: int = 15) -> List[Dict[str, Any]]:
     sql = """
     SELECT c.case_id, c.neutral_citation, c.case_title, c.court_name, c.year, c.journal, c.content_level,
            snippet(case_texts_fts, 2, '<b>', '</b>', '...', 25) AS snippet,
-           bm25(case_texts_fts) AS rank
-    FROM case_texts_fts
-    JOIN case_texts c ON case_texts_fts.rowid = c.rowid
+           bm25(case_texts_fts) AS rank_score
+    FROM case_texts_fts f
+    JOIN case_texts c ON c.case_id = f.case_id
     WHERE case_texts_fts MATCH ?
-    ORDER BY rank
+    ORDER BY rank_score ASC
     LIMIT ?
     """
     args = [
         {"type": "text", "value": clean_q},
-        {"type": "integer", "value": str(limit)}
+        {"type": "integer", "value": limit}
     ]
 
-    res = execute_turso_pipeline([{"sql": sql, "args": args}])
+    res = execute_turso_pipeline([{"sql": sql, "args": args}], timeout=3, max_retries=1)
     if res and "rows" in res[0]:
         return res[0]["rows"]
     return []
 
 def get_case_pdf_bytes(
-    journal: str,
-    year: Any,
-    page: Optional[Any] = None,
-    case_id: Optional[str] = None
+    case_id: str,
+    target_year: Optional[int] = None,
+    target_journal: Optional[str] = None,
+    target_page: Optional[int] = None
 ) -> Optional[bytes]:
     """
-    Fetches authentic PDF bytes from Turso case_pdfs table.
-    Works anywhere including Railway container where local drive I: is unavailable.
+    Retrieves compressed/base64 original scanned judgment PDF bytes from Turso case_pdfs table.
     """
+    if is_turso_circuit_open():
+        return None
     import base64
-    norm_jn = str(journal).upper().strip() if journal else ""
-    norm_yr = int(year) if year and str(year).isdigit() else None
-    norm_pg = int(page) if page and str(page).isdigit() else None
-
     sql = """
-    SELECT pdf_base64 FROM case_pdfs
-    WHERE (journal = ? AND year = ? AND page = ?) OR case_id = ?
+    SELECT pdf_base64
+    FROM case_pdfs
+    WHERE case_id = ?
     LIMIT 1
     """
-    args = [
-        {"type": "text", "value": norm_jn},
-        {"type": "integer", "value": str(norm_yr) if norm_yr else None},
-        {"type": "integer", "value": str(norm_pg) if norm_pg else None},
-        {"type": "text", "value": case_id or ""}
-    ]
-
-    res = execute_turso_pipeline([{"sql": sql, "args": args}])
+    args = [{"type": "text", "value": case_id.strip()}]
+    res = execute_turso_pipeline([{"sql": sql, "args": args}], timeout=3, max_retries=1)
     if res and "rows" in res[0] and res[0]["rows"]:
         b64_str = res[0]["rows"][0].get("pdf_base64")
         if b64_str:
             try:
-                raw_bytes = base64.b64decode(b64_str)
-                if raw_bytes.startswith(b"%PDF"):
-                    return raw_bytes
+                return base64.b64decode(b64_str)
             except Exception as e:
                 logger.warning(f"Failed to decode base64 PDF from Turso: {e}")
     return None
@@ -234,40 +243,50 @@ def get_case_pdf_bytes(
 def get_statute_provision(canonical_id_or_sec: str, act_code: Optional[str] = None) -> Optional[Dict[str, Any]]:
     """
     Looks up a statutory provision from Turso statute_provisions table by canonical_id
-    (e.g. 'CRPC_1898_SEC_561A') or by (act_code, section_num).
+    using fast exact indexed lookups (< 0.2s) with caching and circuit breaker protection.
     """
+    if is_turso_circuit_open():
+        return None
+
     ident = canonical_id_or_sec.strip().upper()
     act = act_code.strip().upper() if act_code else None
 
-    # Check by canonical_id
+    cache_key = f"{act}_{ident}" if act else ident
+    if cache_key in _STATUTE_CACHE:
+        return _STATUTE_CACHE[cache_key]
+
+    # 1. Check by exact canonical_id (Primary Key index < 0.2s)
     sql = """
     SELECT canonical_id, act_code, act_name, section_num, title, verbatim_text, domain, tier, in_force
     FROM statute_provisions
-    WHERE canonical_id = ? OR UPPER(canonical_id) = ?
+    WHERE canonical_id = ?
     LIMIT 1
     """
-    args = [{"type": "text", "value": ident}, {"type": "text", "value": ident}]
-    res = execute_turso_pipeline([{"sql": sql, "args": args}])
+    args = [{"type": "text", "value": ident}]
+    res = execute_turso_pipeline([{"sql": sql, "args": args}], timeout=3, max_retries=1)
     if res and "rows" in res[0] and res[0]["rows"]:
-        return res[0]["rows"][0]
+        prov = res[0]["rows"][0]
+        _STATUTE_CACHE[cache_key] = prov
+        return prov
 
-    # If act_code provided, check by act_code + section_num
+    # 2. If act_code provided, check by exact (act_code, section_num) index (< 0.3s)
     if act:
         sec_clean = ident.replace(f"{act}_SEC_", "").replace(f"{act}_ART_", "").replace(f"{act}_ORD_", "").strip()
         sql2 = """
         SELECT canonical_id, act_code, act_name, section_num, title, verbatim_text, domain, tier, in_force
         FROM statute_provisions
-        WHERE act_code = ? AND (section_num = ? OR UPPER(section_num) = ?)
+        WHERE act_code = ? AND section_num = ?
         LIMIT 1
         """
         args2 = [
             {"type": "text", "value": act},
-            {"type": "text", "value": sec_clean},
-            {"type": "text", "value": sec_clean.upper()}
+            {"type": "text", "value": sec_clean}
         ]
-        res2 = execute_turso_pipeline([{"sql": sql2, "args": args2}])
+        res2 = execute_turso_pipeline([{"sql": sql2, "args": args2}], timeout=3, max_retries=1)
         if res2 and "rows" in res2[0] and res2[0]["rows"]:
-            return res2[0]["rows"][0]
+            prov = res2[0]["rows"][0]
+            _STATUTE_CACHE[cache_key] = prov
+            return prov
 
     return None
 
@@ -275,6 +294,9 @@ def search_statutes(query_text: str, act_code: Optional[str] = None, domain: Opt
     """
     Searches statutory provisions in Turso by text or title match.
     """
+    if is_turso_circuit_open():
+        return []
+
     words = [w for w in query_text.replace("'", "").replace('"', '').split() if len(w) > 2]
     if not words:
         return []
@@ -295,16 +317,14 @@ def search_statutes(query_text: str, act_code: Optional[str] = None, domain: Opt
         args.append({"type": "text", "value": domain.strip().lower()})
 
     sql = f"""
-    SELECT canonical_id, act_code, act_name, section_num, title, substr(verbatim_text, 1, 300) AS snippet, domain, tier, in_force
+    SELECT canonical_id, act_code, act_name, section_num, title, verbatim_text, domain, tier, in_force
     FROM statute_provisions
     WHERE {' AND '.join(clauses)}
     LIMIT ?
     """
-    args.append({"type": "integer", "value": str(limit)})
+    args.append({"type": "integer", "value": limit})
 
-    res = execute_turso_pipeline([{"sql": sql, "args": args}])
+    res = execute_turso_pipeline([{"sql": sql, "args": args}], timeout=3, max_retries=1)
     if res and "rows" in res[0]:
         return res[0]["rows"]
     return []
-
-
