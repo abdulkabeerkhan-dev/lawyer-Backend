@@ -72,11 +72,30 @@ CONCEPTUAL_FACTUAL_PATTERNS = [
     },
     {
         "id": "CHEQUE_DISHONOUR",
-        "keywords": ["cheque", "check", "dishonour", "dishonored", "bounced", "lack of funds", "insufficient funds", "dishonestly issuing a cheque", "punishment for dishonestly issuing a cheque"],
-        "primary_provisions": ["Section 489-F PPC"],
-        "act_codes": ["PPC_1860"],
+        "keywords": ["cheque", "check", "dishonour", "dishonored", "bounced", "lack of funds", "insufficient funds", "unpaid", "dishonestly issuing a cheque", "punishment for dishonestly issuing a cheque", "cheque deposited", "return memo", "criminal proceedings"],
+        "primary_provisions": [
+            "Section 489-F PPC",
+            "Section 200 Code of Criminal Procedure, 1898",
+            "Section 190 Code of Criminal Procedure, 1898",
+            "Section 154 Code of Criminal Procedure, 1898"
+        ],
+        "act_codes": ["PPC_1860", "CRPC_1898"],
         "forum": "Judicial Magistrate 1st Class (Criminal)",
         "domain": "Criminal Law / Negotiable Instruments"
+    },
+    {
+        "id": "ARREST_AND_BAIL_PROCEDURE",
+        "keywords": ["arrest", "arrested", "custody", "remand", "apply for bail", "grounds for bail", "bail in non-bailable", "bail under 302", "bail in a non-bailable"],
+        "primary_provisions": [
+            "Section 497 Code of Criminal Procedure, 1898",
+            "Section 498 Code of Criminal Procedure, 1898",
+            "Section 496 Code of Criminal Procedure, 1898",
+            "Section 161 Code of Criminal Procedure, 1898",
+            "Section 173 Code of Criminal Procedure, 1898"
+        ],
+        "act_codes": ["CRPC_1898"],
+        "forum": "Trial Magistrate / Court of Session / High Court",
+        "domain": "Criminal Procedure / Bail & Custody"
     },
     {
         "id": "CHEATING_AND_PUNISHMENT",
@@ -530,9 +549,18 @@ def retrieve_statute_provisions(
             _fetch_and_add(cid, store, seen_cids, results)
         return results[:max_results]
 
-    # Query 4: Cheque Dishonour Penalty
-    if ("punishment" in q_low and "cheque" in q_low) or ("dishonestly issuing a cheque" in q_low):
-        _fetch_and_add("PPC_1860_SEC_489F", store, seen_cids, results)
+    # Query 4: Cheque Dishonour Penalty & Fact-Pattern (Section 489-F PPC + CrPC Procedure + Limitation)
+    is_cheque_pattern = any(k in q_low for k in ["cheque", "check"]) and any(
+        k in q_low for k in ["dishonour", "dishonored", "bounced", "unpaid", "insufficient funds", "lack of funds", "punishment", "criminal", "proceedings", "489-f", "489f"]
+    )
+    if is_cheque_pattern or ("dishonestly issuing a cheque" in q_low):
+        cheque_cids = ["PPC_1860_SEC_489F"]
+        if any(k in q_low for k in ["procedure", "initiate", "complaint", "file", "action", "proceedings", "magistrate"]):
+            cheque_cids.extend(["CRPC_1898_SEC_200", "CRPC_1898_SEC_190", "CRPC_1898_SEC_154", "CRPC_1898_SEC_204"])
+        if any(k in q_low for k in ["limitation", "period", "time", "delay"]):
+            cheque_cids.extend(["LIMITATION_1908_SEC_3", "LIMITATION_1908_ART_64A"])
+        for cid in cheque_cids:
+            _fetch_and_add(cid, store, seen_cids, results)
         return results[:max_results]
 
     # Query 5: Cheating Definition & Punishment
@@ -546,14 +574,14 @@ def retrieve_statute_provisions(
         _fetch_and_add("PPC_1860_SEC_302", store, seen_cids, results)
         return results[:max_results]
 
-    # Query 7: Post-Arrest Bail in Non-Bailable Offence
-    if ("non-bailable" in q_low and "after arrest" in q_low) or ("bail in a non-bailable offence after arrest" in q_low):
-        _fetch_and_add("CRPC_1898_SEC_497", store, seen_cids, results)
-        return results[:max_results]
-
-    # Query 8: Pre-Arrest Bail
-    if any(k in q_low for k in ["bail before arrest", "pre-arrest bail", "pre arrest bail", "anticipatory bail"]):
-        for cid in ["CRPC_1898_SEC_498", "CRPC_1898_SEC_497"]:
+    # Query 7 & 8: Bail Fact Patterns (Arrest, Non-Bailable Offence, Section 302, Pre/Post-Arrest Bail)
+    is_bail_or_arrest = any(k in q_low for k in ["arrest", "arrested", "custody", "remand", "bail", "pre-arrest", "post-arrest", "bailable", "non-bailable"])
+    if is_bail_or_arrest:
+        bail_cids = []
+        if any(k in q_low for k in ["302", "murder", "qatl"]):
+            bail_cids.append("PPC_1860_SEC_302")
+        bail_cids.extend(["CRPC_1898_SEC_497", "CRPC_1898_SEC_498", "CRPC_1898_SEC_496", "CRPC_1898_SEC_161", "CRPC_1898_SEC_173"])
+        for cid in bail_cids:
             _fetch_and_add(cid, store, seen_cids, results)
         return results[:max_results]
 

@@ -335,3 +335,90 @@ def test_q20_out_of_coverage_case_law():
     # Precedent items must be empty; cites zero cases from memory
     case_items = [it for it in pack.items.values() if it.item_type == "judicial_precedent"]
     assert len(case_items) == 0
+
+
+# --- 21. Cheque Dishonour Fact Pattern (Query 21) ---
+def test_q21_cheque_dishonour_fact_pattern():
+    q = "My client deposited a cheque of Rs. 15 lakh issued by the defendant. It was returned unpaid for insufficient funds. We want to initiate criminal proceedings. What provision applies, what is the procedure, and is there a limitation period?"
+    pack, intent = build_evidence_pack_for_query(q)
+    assert intent.domain == "criminal"
+
+    sec_tuples = [(it.statute_id, it.number) for it in pack.items.values() if it.item_type == "statute_unit"]
+    assert ("pakistan-penal-code-1860", "489F") in sec_tuples
+    assert ("code-of-criminal-procedure-1898", "200") in sec_tuples
+    assert ("code-of-criminal-procedure-1898", "190") in sec_tuples
+    assert ("code-of-criminal-procedure-1898", "154") in sec_tuples
+
+    # Verify Section 489-F PPC text is authentic
+    ppc_item = next(it for it in pack.items.values() if it.number == "489F")
+    assert "dishonestly issues a cheque" in ppc_item.text.lower()
+    assert "repayment of a loan" in ppc_item.text.lower()
+
+    # Verify structured memo pipeline
+    memo_json = """
+    {
+      "answer": "The dishonour of a cheque issued towards repayment of a loan or fulfillment of an obligation constitutes a cognizable criminal offence under Section 489-F of the Pakistan Penal Code, 1860, punishable with up to three years imprisonment. Criminal proceedings may be initiated by lodging an FIR under Section 154 CrPC or by filing a direct private complaint before the Judicial Magistrate under Section 200 CrPC. Under settled Pakistani criminal jurisprudence, no statutory limitation period under the Limitation Act, 1908 applies to the lodging of an FIR or institution of a criminal complaint, though promptness is vital to establish bona fides; concurrent civil summary recovery under Order XXXVII CPC carries a three-year limitation period.",
+      "claims": [
+        {
+          "statement": "Under Section 489-F PPC, 'Whoever dishonestly issues a cheque towards repayment of a loan or fulfillment of an obligation which is dishonoured on presentation, shall be punishable with imprisonment which may extend to three years, or with fine, or with both'.",
+          "evidence_ids": ["E1"]
+        }
+      ],
+      "caveats": ["Under Section 489-F PPC, the burden of proof rests on the accused to establish that he had made arrangements with his bank to ensure the cheque would be honoured."],
+      "not_found": [],
+      "open_questions": ["Whether the cheque was issued towards repayment of an existing debt versus as a security or guarantee."]
+    }
+    """
+    md, report, _ = execute_structured_memo_pipeline(
+        raw_llm_response=memo_json,
+        evidence_pack=pack,
+        fallback_query=q
+    )
+    assert report.is_memo_verified is True
+    assert "Section 489-F" in md
+
+
+# --- 22. Section 302 PPC Arrest & Bail Fact Pattern (Query 22) ---
+def test_q22_section_302_arrest_and_bail_fact_pattern():
+    q = "Accused arrested under Section 302 PPC. We want to apply for bail. What are the grounds and relevant sections?"
+    pack, intent = build_evidence_pack_for_query(q)
+    assert intent.domain == "criminal"
+
+    sec_tuples = [(it.statute_id, it.number) for it in pack.items.values() if it.item_type == "statute_unit"]
+    assert ("pakistan-penal-code-1860", "302") in sec_tuples
+    assert ("code-of-criminal-procedure-1898", "497") in sec_tuples
+    assert ("code-of-criminal-procedure-1898", "498") in sec_tuples
+
+    s302_item = next(it for it in pack.items.values() if it.number == "302")
+    assert "punishment" in s302_item.text.lower()
+    assert "fasad" in s302_item.text.lower()
+
+    s497_item = next(it for it in pack.items.values() if it.number == "497")
+    assert "bailable" in s497_item.text.lower()
+
+    # Test memo verification
+    memo_json = """
+    {
+      "answer": "An accused arrested under Section 302 PPC for Qatl-i-Amd faces a capital charge falling within the prohibitory clause of Section 497(1) CrPC. Post-arrest bail can be granted by the trial court or High Court under Section 497 CrPC only if the case falls under the statutory exceptions of sickness, infirmity, minority, or womanhood, or if there are reasonable grounds for further inquiry under Section 497(2) CrPC. Pre-arrest bail under Section 498 CrPC requires demonstrating ulterior motives and mala fides.",
+      "claims": [
+        {
+          "statement": "Section 302 PPC penalizes Qatl-i-Amd with death, imprisonment for life, or imprisonment up to twenty-five years where the principle of fasad-fil-arz applies.",
+          "evidence_ids": ["E1"]
+        },
+        {
+          "statement": "Under Section 497 CrPC, an accused shall not be released on bail in a non-bailable offence if there appear reasonable grounds for believing that he has been guilty of an offence punishable with death or imprisonment for life, unless falling under statutory provisos or further inquiry.",
+          "evidence_ids": ["E2"]
+        }
+      ],
+      "caveats": ["Bail in capital offences under Section 302 PPC is governed strictly by the prohibitory clause of Section 497(1) CrPC."],
+      "not_found": [],
+      "open_questions": ["Whether there is direct ocular evidence or recovery linking the accused."]
+    }
+    """
+    md, report, _ = execute_structured_memo_pipeline(
+        raw_llm_response=memo_json,
+        evidence_pack=pack,
+        fallback_query=q
+    )
+    assert report.is_memo_verified is True
+    assert "Section 497" in md

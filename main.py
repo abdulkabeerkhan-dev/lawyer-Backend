@@ -15203,7 +15203,13 @@ async def export_court_pleading(
             "Analysis was withheld to protect",
             "Output withheld to protect",
             "Strict Anti-Hallucination Policy",
-            "withheld to protect strict"
+            "withheld to protect strict",
+            "Unaddressed Points & Source Limitations",
+            "Not Found:",
+            "- *Not Found:*",
+            "HEADNOTE_ONLY - not verified",
+            "STRUCTURED_MEMO_PARTIAL",
+            "PARTIAL LEGAL RESEARCH RECORD"
         ])
         if is_withheld_notice:
             raise HTTPException(
