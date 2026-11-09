@@ -6741,6 +6741,8 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
 
                         "algorithms": ["RS256"],
 
+                        "leeway": 300,
+
                         "options": {
 
                             "verify_signature": True,
