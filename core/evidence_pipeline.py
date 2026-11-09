@@ -132,7 +132,8 @@ def execute_stage4_evidence_pack(
 
     try:
         from core.legal_issue_extractor import extract_legal_issues_from_fact_pattern
-        decomp = extract_legal_issues_from_fact_pattern(query_text)
+        plan_dom = getattr(query_plan, "primary_domain", None) if query_plan else None
+        decomp = extract_legal_issues_from_fact_pattern(query_text, planner_domain=plan_dom)
         for issue in getattr(decomp, "issues", []):
             for prov in getattr(issue, "controlling_provisions", []):
                 norm_cid = normalize_provision_string_to_canonical_id(prov)

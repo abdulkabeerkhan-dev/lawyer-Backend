@@ -33,12 +33,14 @@ from core.legal_guardrails import (
 
 LegalDomainType = Literal[
     "civil", "criminal", "constitutional", "family",
-    "corporate", "rent", "banking", "taxation", "service", "labour"
+    "corporate", "rent", "banking", "taxation", "service", "labour",
+    "cybercrime", "intellectual_property", "environmental", "general_legal"
 ]
 
 ALL_LEGAL_DOMAINS: Set[str] = {
     "civil", "criminal", "constitutional", "family",
-    "corporate", "rent", "banking", "taxation", "service", "labour"
+    "corporate", "rent", "banking", "taxation", "service", "labour",
+    "cybercrime", "intellectual_property", "environmental", "general_legal"
 }
 
 ProvinceType = Literal[
@@ -386,6 +388,29 @@ def check_query_premises(query: str) -> List[Dict[str, Any]]:
             })
 
     return checks
+
+
+def filter_provisions_by_domain(provisions: List[str], domain: str) -> List[str]:
+    """
+    Validation Gate: Ensures provisions added to the plan strictly align with primary_domain.
+    Prevents cross-contamination (e.g. 489-F PPC or CrPC in family law; Section 12 SRA in rent or banking).
+    """
+    clean = []
+    dom = (domain or "civil").lower()
+    for p in provisions:
+        p_str = str(p).strip()
+        p_low = p_str.lower()
+        if dom == "family":
+            if any(bad in p_low for bad in ["ppc", "489-f", "489f", "crpc", "penal code", "criminal procedure", "sra", "specific relief", "order xxxvii"]):
+                continue
+        elif dom in ("rent", "banking"):
+            if any(bad in p_low for bad in ["ppc", "489-f", "489f", "crpc", "penal code", "criminal procedure", "sra", "specific relief"]):
+                continue
+        elif dom == "criminal":
+            if any(bad in p_low for bad in ["sra", "specific relief", "guardians and wards", "family courts act", "mflo"]):
+                continue
+        clean.append(p_str)
+    return clean
 
 
 def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
@@ -1469,7 +1494,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     # Multi-Issue Fact Pattern Decomposition Integration
     try:
         from core.legal_issue_extractor import extract_legal_issues_from_fact_pattern
-        decomp = extract_legal_issues_from_fact_pattern(query)
+        decomp = extract_legal_issues_from_fact_pattern(query, planner_domain=primary_domain)
         if decomp and decomp.issues:
             for issue in decomp.issues:
                 for cs in issue.controlling_statutes:
@@ -1500,8 +1525,8 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             ])
         ]
 
-    # Ensure unique lists
-    clean_provisions = list(dict.fromkeys(provisions))
+    # Ensure unique lists and enforce domain isolation
+    clean_provisions = filter_provisions_by_domain(list(dict.fromkeys(provisions)), primary_domain)
     clean_statutes = list(dict.fromkeys(statutes))
     clean_legacy_domains = list(dict.fromkeys(legacy_domains))
     clean_legacy_matter = list(dict.fromkeys(legacy_matter_type))
@@ -1719,6 +1744,14 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
                     issues = clean_issues
 
                 primary_domain = data.get("primary_domain") or fallback.primary_domain
+                if primary_domain not in ALL_LEGAL_DOMAINS:
+                    primary_domain = fallback.primary_domain
+
+                # Validation Gate: Ensure all provisions strictly align with primary_domain
+                provisions = filter_provisions_by_domain(provisions, primary_domain)
+                if not provisions:
+                    provisions = filter_provisions_by_domain(fallback.statutory_provisions, primary_domain)
+
                 secondary_domains = data.get("secondary_domains") or fallback.secondary_domains
                 subdomains = data.get("subdomains") or fallback.subdomains
                 allowed_domains_filter = data.get("allowed_domains_filter") or fallback.allowed_domains_filter
