@@ -430,7 +430,7 @@ def check_query_premises(query: str) -> List[Dict[str, Any]]:
 def filter_provisions_by_domain(provisions: List[str], domain: str) -> List[str]:
     """
     Validation Gate: Ensures provisions added to the plan strictly align with primary_domain.
-    Prevents cross-contamination (e.g. 489-F PPC or CrPC in family law; Section 12 SRA in rent or banking).
+    Prevents cross-contamination across the 10 Priority Domains.
     """
     clean = []
     dom = (domain or "civil").lower()
@@ -443,8 +443,17 @@ def filter_provisions_by_domain(provisions: List[str], domain: str) -> List[str]
         elif dom in ("rent", "banking"):
             if any(bad in p_low for bad in ["ppc", "489-f", "489f", "crpc", "penal code", "criminal procedure", "sra", "specific relief"]):
                 continue
+        elif dom == "service":
+            if any(bad in p_low for bad in ["ppc", "489-f", "489f", "sra", "specific relief", "family courts", "mflo", "gwa", "prpa", "fio"]):
+                continue
+        elif dom == "constitutional":
+            if any(bad in p_low for bad in ["489-f", "489f", "sra", "specific relief", "prpa", "fio", "family courts"]):
+                continue
+        elif dom in ("cybercrime", "intellectual_property"):
+            if any(bad in p_low for bad in ["family courts", "mflo", "gwa", "prpa", "fio", "sra", "specific relief"]):
+                continue
         elif dom == "criminal":
-            if any(bad in p_low for bad in ["sra", "specific relief", "guardians and wards", "family courts act", "mflo"]):
+            if any(bad in p_low for bad in ["sra", "specific relief", "guardians and wards", "family courts act", "mflo", "prpa", "fio"]):
                 continue
         clean.append(p_str)
     return clean
@@ -514,13 +523,16 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     is_rent = bool(re.search(r'\b(?:rent|rented|tenan[ct]|landlord|evict|ejectment|tenancy|commercial shop|rent tribunal)\b', q_low) or any(k in q_low for k in ["prpa", "srpo"]))
     is_banking = any(k in q_low for k in ["banking court", "bank", "financial institution", "recovery of finance", "fio", "firo"]) and any(k in q_low for k in ["decree", "appeal", "loan", "finance", "stay", "deposit", "leave to defend", "banking", "section 22", "section 10"])
     is_corporate = any(k in q_low for k in ["companies act", "company law", "section 286", "section 288", "oppression", "mismanagement", "minority shareholder", "company bench", "secp"])
-    is_service = any(k in q_low for k in ["civil servant", "service tribunal", "peeda", "removal from service", "dismissal from service", "article 212", "service tribunals act"])
-    is_constitutional_general = any(k in q_low for k in ["article 199", "article 184", "article 189", "article 201", "writ petition", "fundamental right", "public interest litigation"])
+    is_habeas_corpus = any(k in q_low for k in ["habeas corpus", "unlawful detention", "illegal detention", "detenue", "without production"])
+    is_cybercrime = any(k in q_low for k in ["peca", "cybercrime", "cyber crime", "hacking", "cyberstalking", "cyber stalking", "online harassment", "identity theft", "electronic crimes", "unauthorized access to secure"])
+    is_ip = any(k in q_low for k in ["trademark", "trade mark", "passing off", "copyright", "software piracy", "pirated software"])
+    is_service = any(k in q_low for k in ["civil servant", "service tribunal", "seniority list", "superseded in promotion", "promotion eligibility", "reversion", "civil servants act", "peeda", "removal from service", "dismissal from service", "article 212", "service tribunals act"])
+    is_constitutional_general = any(k in q_low for k in ["article 199", "article 184", "article 189", "article 201", "writ petition", "writ of", "fundamental right", "mandamus", "certiorari", "public interest litigation"])
     is_family = (
         any(k in q_low for k in ["khula", "dower", "maintenance", "guardian", "custody of minor", "talaq", "mflo", "zar-i-khula", "family court", "hizanat", "guardians and wards"])
         or ("family" in q_low and not any(k in q_low for k in ["land", "property", "partition", "estate", "ancestral", "share", "heir"]))
     )
-    is_female_inheritance = any(k in q_low for k in ["female heir", "female legal heir", "female co-heir", "sister", "daughter", "mother"]) and any(k in q_low for k in ["inheritance", "tamleek", "relinquishment", "mutation", "shari share", "depriv"])
+    is_female_inheritance = any(k in q_low for k in ["female heir", "female legal heir", "female co-heir", "sister", "daughter", "mother", "sister's share", "refusing sister"]) and any(k in q_low for k in ["inheritance", "tamleek", "relinquishment", "mutation", "shari share", "depriv", "estate", "women's property", "498-a", "498a"])
     is_sec12_2 = (
         any(k in q_low for k in ["12(2)", "section 12(2)", "12 (2)", "decree obtained through fraud", "fraudulent decree", "setting aside decree", "set aside decree", "decree by fraud", "decree through fraud"])
         or (
@@ -534,7 +546,49 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     is_money_recovery = any(k in q_low for k in ["recovery of money", "money suit", "suit for money", "debt", "loan", "price of goods", "suit for recovery"])
 
     # Classification Logic
-    if is_quashment:
+    if is_habeas_corpus:
+        primary_domain = "constitutional"
+        secondary_domains = ["criminal"]
+        subdomains = ["habeas_corpus", "illegal_detention", "article_199", "crpc_61"]
+        legacy_domains = ["constitutional law", "criminal procedure"]
+        legacy_matter_type = ["constitutional", "criminal"]
+        allowed_domains_filter = ["constitutional", "criminal"]
+        procedural_remedy = "Writ of Habeas Corpus under Article 199(1)(b)(i) Constitution 1973"
+        competent_forum = "High Court"
+
+    elif is_service:
+        primary_domain = "service"
+        secondary_domains = ["constitutional"]
+        subdomains = ["service_tribunal", "civil_servant", "article_212_bar", "seniority_promotion"]
+        legacy_domains = ["service law", "constitutional law"]
+        legacy_matter_type = ["service", "constitutional"]
+        is_cross_domain_relevant = True
+        cross_domain_reason = "Service matters of civil servants fall under exclusive jurisdiction of Service Tribunal barred by Article 212 Constitution."
+        allowed_domains_filter = ["service", "constitutional"]
+        procedural_remedy = "Appeal before Service Tribunal under s.4 Service Tribunals Act 1973"
+        competent_forum = "Federal Service Tribunal / Provincial Service Tribunal"
+
+    elif is_cybercrime:
+        primary_domain = "cybercrime"
+        secondary_domains = ["criminal"]
+        subdomains = ["peca", "cyber_offences", "unauthorized_access", "online_harassment"]
+        legacy_domains = ["cybercrime", "criminal law"]
+        legacy_matter_type = ["cybercrime", "criminal"]
+        allowed_domains_filter = ["cybercrime", "criminal"]
+        procedural_remedy = "Complaint before FIA Cyber Crime Wing / Special Court under PECA 2016"
+        competent_forum = "Court of Session / Special Court (PECA)"
+
+    elif is_ip:
+        primary_domain = "intellectual_property"
+        secondary_domains = ["civil"]
+        subdomains = ["trademark_infringement", "passing_off", "copyright_piracy"]
+        legacy_domains = ["intellectual property", "civil law"]
+        legacy_matter_type = ["commercial", "civil"]
+        allowed_domains_filter = ["intellectual_property", "civil"]
+        procedural_remedy = "Suit for Infringement & Injunction under Trade Marks Ordinance 2001 / Copyright Ordinance 1962"
+        competent_forum = "District Court / Intellectual Property Tribunal"
+
+    elif is_quashment:
         primary_domain = "criminal"
         subdomains = ["quashment_of_fir", "inherent_powers_561a", "abuse_of_process"]
         has_civil_suit_aspect = any(k in q_low for k in ["pending civil", "civil suit", "civil court", "same agreement", "contractual dispute"])
