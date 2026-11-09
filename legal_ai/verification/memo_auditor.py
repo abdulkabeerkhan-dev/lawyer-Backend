@@ -455,13 +455,28 @@ def audit_memo(
             claim = norm_text(" ".join(str(c.get(f, "")) for f in ("ratio_decidendi", "important_paragraphs")))
             sh = shingles(claim)
             score = round(len([x for x in sh if x in j.norm]) / max(1, len(sh)), 2)
-            c["verification_status"] = f"FULL_TEXT_CHECKED (overlap {score})" if score >= 0.35 else f"FULL_TEXT_CHECKED_LOW_OVERLAP ({score})"
+            if score >= 0.35:
+                c["verification_status"] = f"FULL_TEXT_CHECKED (overlap {score})"
+                c["verified_source"] = True
+                c["is_verified"] = True
+                c["verified"] = True
+            else:
+                c["verification_status"] = f"FULL_TEXT_CHECKED_LOW_OVERLAP ({score})"
+                c["verified_source"] = False
+                c["is_verified"] = False
+                c["verified"] = False
             if score < 0.35:
                 add("CARD_NOT_GROUNDED", WARN, "Card ratio/paragraph text has low overlap with the stored judgment.", k)
         elif k in cases and (cases[k].get("holding") or cases[k].get("headnote")):
-            c["verification_status"] = "HEADNOTE_ONLY"
+            c["verification_status"] = "HEADNOTE_ONLY - not verified"
+            c["verified_source"] = False
+            c["is_verified"] = False
+            c["verified"] = False
         else:
-            c["verification_status"] = "UNVERIFIED_NO_SOURCE_TEXT"
+            c["verification_status"] = "HEADNOTE_ONLY - not verified"
+            c["verified_source"] = False
+            c["is_verified"] = False
+            c["verified"] = False
 
         if not str(c.get("pdf_url", "")).startswith("http"):
             c["pdf_url"] = None

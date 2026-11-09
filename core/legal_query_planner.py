@@ -1481,6 +1481,10 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
                         raw_lanes.append({"lane": issue.issue_id, "query": sq})
                 if issue.heading not in questions:
                     questions.append(issue.heading)
+            if hasattr(decomp, "open_questions") and decomp.open_questions:
+                for oq in decomp.open_questions:
+                    if oq not in questions:
+                        questions.append(oq)
     except Exception as e:
         logger.warning(f"Fact pattern decomposition error in planner: {e}")
 

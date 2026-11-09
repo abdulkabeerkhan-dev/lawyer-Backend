@@ -6581,17 +6581,26 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
 
 
 
-    # 12. verification_status (Full Judgment (unreviewed), Headnote (unreviewed), Unverified Metadata)
+    # 12. verification_status (Full Judgment (unreviewed), HEADNOTE_ONLY - not verified)
     c_type = str(c.get("content_type", "")).lower()
-    raw_txt = str(c.get("raw_judgment_text", "") or c.get("text", "") or c.get("full_text", "") or "").strip()
+    meta_dict = c.get("metadata") if isinstance(c.get("metadata"), dict) else {}
+    raw_txt = str(c.get("full_text", "") or meta_dict.get("full_text", "") or "").strip()
+    if not raw_txt and c.get("raw_judgment_text"):
+        r_cand = str(c.get("raw_judgment_text")).strip()
+        if r_cand and r_cand != str(c.get("preview", "")).strip():
+            raw_txt = r_cand
     words = len(raw_txt.split()) if raw_txt else 0
 
     if c_type in ("full_text", "fresh_court_fetch") and words >= 150:
         c["verification_status"] = "Full Judgment (unreviewed)"
-    elif c_type in ("headnote_only", "editorial_summary", "headnote") or (0 < words < 150):
-        c["verification_status"] = "Headnote (unreviewed)"
+        c["verified_source"] = True
+        c["is_verified"] = True
+        c["verified"] = True
     else:
-        c["verification_status"] = "Unverified Metadata"
+        c["verification_status"] = "HEADNOTE_ONLY - not verified"
+        c["verified_source"] = False
+        c["is_verified"] = False
+        c["verified"] = False
 
     # Score handling: never display synthetic 0.99 score as similarity
     if c.get("is_boosted") or c.get("direct_citation_match") or c.get("score") == 0.99:
@@ -13543,7 +13552,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
                         "outcome": determine_case_outcome(c.get("preview") or "", c.get("outcome")) or "Decided",
 
-                        "verified_source": True,
+                        "verified_source": bool(c.get("full_text") and len(str(c.get("full_text")).split()) >= 150 and c.get("content_type") not in ("headnote_only", "editorial_summary", "headnote")),
 
                         "content_type": c.get("content_type") or "unknown",
 
@@ -13563,7 +13572,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
                         "legal_principle": sanitize_holding_text(c.get("preview", "")) or "Holding on record.",
 
-                        "raw_judgment_text": strip_control_characters(c.get("preview", "")),
+                        "raw_judgment_text": strip_control_characters(c.get("full_text", "")) if c.get("full_text") else "",
 
                         "parties": c.get("parties") or extract_case_roles(c.get("preview") or "", c.get("title") or ""),
 

@@ -29,6 +29,7 @@ class FactPatternDecomposition(BaseModel):
     has_monetary_amounts: bool = False
     issues: List[LegalSubIssue] = Field(default_factory=list)
     executive_answer_outline: Dict[str, str] = Field(default_factory=dict)
+    open_questions: List[str] = Field(default_factory=list)
 
 
 def extract_legal_issues_from_fact_pattern(query_text: str) -> FactPatternDecomposition:
@@ -37,6 +38,7 @@ def extract_legal_issues_from_fact_pattern(query_text: str) -> FactPatternDecomp
     """
     q_low = query_text.lower()
     issues: List[LegalSubIssue] = []
+    open_questions: List[str] = []
     
     # 1. Limitation & Time-Bar Issue
     has_dates = bool(re.search(r'\b(?:19|20)\d\d\b', q_low) or re.search(r'\b(?:january|february|march|april|may|june|july|august|september|october|november|december)\b', q_low))
@@ -63,6 +65,31 @@ def extract_legal_issues_from_fact_pattern(query_text: str) -> FactPatternDecomp
                 "Section 19 Limitation Act 1908 written acknowledgment of liability agreement to sell"
             ],
             factual_anchors=["completion date", "fixed date", "limitation", "time barred", "within time"]
+        ))
+
+    # 1b. Standing Open Question: Time as Essence of Contract (Section 55 Contract Act, 1872)
+    has_fixed_completion_date = has_dates or any(k in q_low for k in ["completion date", "fixed date", "agreed date", "time limit", "date fixed", "deadline"])
+    if is_sale_specific_perf and has_fixed_completion_date:
+        time_essence_inquiry = (
+            "Whether time was made of the essence of the contract by express stipulation, notice, or conduct under "
+            "Section 55 of the Contract Act, 1872 (in the absence of which the settled Supreme Court presumption under "
+            "PLD 2002 SC 229 and 1987 SCMR 1005 is that time is not of the essence in contracts for the sale of immovable property)."
+        )
+        open_questions.append(time_essence_inquiry)
+        issues.append(LegalSubIssue(
+            issue_id="issue_time_as_essence_contract",
+            heading="Time as Essence of Contract in Immovable Property (Section 55, Contract Act, 1872)",
+            description="Whether time was specifically made of the essence of the contract by express stipulation, notice, or conduct under Section 55 of the Contract Act, 1872.",
+            controlling_statutes=["Contract Act, 1872"],
+            controlling_provisions=[
+                "Section 55 Contract Act, 1872"
+            ],
+            search_queries=[
+                "Section 55 Contract Act 1872 time is not of the essence sale of immovable property",
+                "time of essence agreement to sell immovable property intention notice PLD 2002 SC 229",
+                "Section 55 Contract Act 1872 extension of time waiver specific performance"
+            ],
+            factual_anchors=["completion date", "time of the essence", "fixed date", "delay in completion", "stipulated time"]
         ))
 
     # 2. Specific Performance of Immovable Property
@@ -148,5 +175,6 @@ def extract_legal_issues_from_fact_pattern(query_text: str) -> FactPatternDecomp
         primary_domain="civil",
         has_dates=has_dates,
         has_monetary_amounts=has_amounts,
-        issues=issues
+        issues=issues,
+        open_questions=open_questions
     )
