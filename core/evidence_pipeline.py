@@ -10,7 +10,7 @@ Pipeline Orchestrator for Stages 4, 5, and 6 of the Legal Research Pipeline Fix 
 import json
 import logging
 import re
-from typing import Dict, List, Any, Tuple, Optional
+from typing import Dict, List, Any, Tuple, Optional, Set
 
 from core.case_integrity import verify_case_integrity, sanitize_ratio_text, normalize_citation
 from core.evidence_pack import EvidencePack, assemble_evidence_pack
@@ -18,6 +18,75 @@ from core.evidence_verifier import EvidenceVerifier, format_verified_memo_to_mar
 from core.unified_statute_store import get_unified_statute_store
 
 logger = logging.getLogger(__name__)
+
+
+ACT_CODE_MAP = {
+    "PPC": "PPC_1860",
+    "PAKISTAN PENAL CODE": "PPC_1860",
+    "CRPC": "CRPC_1898",
+    "CRIMINAL PROCEDURE": "CRPC_1898",
+    "CODE OF CRIMINAL PROCEDURE": "CRPC_1898",
+    "CPC": "CPC_1908",
+    "CIVIL PROCEDURE": "CPC_1908",
+    "CODE OF CIVIL PROCEDURE": "CPC_1908",
+    "LIMITATION": "LIMITATION_1908",
+    "LIMITATION ACT": "LIMITATION_1908",
+    "SPECIFIC RELIEF": "SRA_1877",
+    "CONTRACT": "CONTRACT_1872",
+    "CONTRACT ACT": "CONTRACT_1872",
+    "QSO": "QSO_1984",
+    "QANUN-E-SHAHADAT": "QSO_1984",
+    "CONST": "CONST_1973",
+    "CONSTITUTION": "CONST_1973",
+    "BENAMI": "BENAMI_2017",
+    "FAMILY COURTS": "FAMILY_COURTS_1964",
+    "NEGOTIABLE INSTRUMENTS": "NIA_1881",
+    "ARBITRATION": "ARBITRATION_1940",
+    "RENT": "PRPA_2009",
+    "PRPA": "PRPA_2009",
+}
+
+
+def normalize_provision_string_to_canonical_id(s: str) -> Optional[str]:
+    """
+    Normalizes human-readable provision references (e.g. 'Section 489-F PPC', 'Article 64-A Limitation Act')
+    or raw canonical IDs into authoritative canonical IDs (e.g. 'PPC_1860_SEC_489F').
+    """
+    if not s:
+        return None
+    s = str(s).strip()
+    if re.match(r'^[A-Z0-9_]+_(?:SEC|ART|ORD|RULE)_[0-9A-Z]+$', s):
+        return s.upper()
+
+    act_code = None
+    s_upper = s.upper()
+    for kw, code in sorted(ACT_CODE_MAP.items(), key=lambda x: -len(x[0])):
+        if kw in s_upper:
+            act_code = code
+            break
+
+    is_art = bool(re.search(r'\b(?:article|art)\b', s, re.I))
+    is_ord = bool(re.search(r'\b(?:order|ord)\b', s, re.I))
+    unit = "ART" if is_art else ("ORD" if is_ord else "SEC")
+
+    m_num = re.search(r'(?:section|sec\.?|article|art\.?|order|ord\.?|s\.)\s*([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z])?)', s, re.I)
+    if not m_num:
+        m_num = re.search(r'([0-9]+[A-Za-z]?(?:-[A-Za-z])?)', s)
+    if not m_num:
+        return None
+
+    num_str = m_num.group(1).upper().replace('-', '')
+    roman_map = {
+        'I': 1, 'II': 2, 'III': 3, 'IV': 4, 'V': 5, 'VI': 6, 'VII': 7, 'VIII': 8, 'IX': 9, 'X': 10,
+        'XI': 11, 'XII': 12, 'XIII': 13, 'XIV': 14, 'XV': 15, 'XVI': 16, 'XVII': 17, 'XVIII': 18,
+        'XIX': 19, 'XX': 20, 'XXI': 21, 'XXXVII': 37, 'XXXVIII': 38, 'XXXIX': 39
+    }
+    if num_str in roman_map:
+        num_str = str(roman_map[num_str])
+
+    if act_code:
+        return f"{act_code}_{unit}_{num_str}"
+    return None
 
 
 def execute_stage4_evidence_pack(
@@ -51,9 +120,36 @@ def execute_stage4_evidence_pack(
         else:
             logger.warning(f"[STAGE4_INTEGRITY_DROP] Excluded precedent '{card.get('citation')}': {reason}")
 
-    # 2. Gather statutory provisions
+    # 2. Gather statutory provisions and build admitted_cids gate
     statute_records: List[Dict[str, Any]] = []
     seen_provisions = set()
+    admitted_cids: Set[str] = set()
+
+    for p in (verified_statutory_provisions or []):
+        cid = p.get("canonical_id")
+        if cid:
+            admitted_cids.add(str(cid).strip().upper())
+
+    try:
+        from core.legal_issue_extractor import extract_legal_issues_from_fact_pattern
+        decomp = extract_legal_issues_from_fact_pattern(query_text)
+        for issue in getattr(decomp, "issues", []):
+            for prov in getattr(issue, "controlling_provisions", []):
+                norm_cid = normalize_provision_string_to_canonical_id(prov)
+                if norm_cid:
+                    admitted_cids.add(norm_cid.upper())
+    except Exception as e:
+        logger.warning(f"Error extracting controlling provisions for cross-linker gate: {e}")
+
+    if query_plan:
+        plan_provisions = (
+            (getattr(query_plan, "statutory_provisions", []) or []) +
+            (getattr(query_plan, "provisions", []) or [])
+        )
+        for prov in plan_provisions:
+            norm_cid = normalize_provision_string_to_canonical_id(prov)
+            if norm_cid:
+                admitted_cids.add(norm_cid.upper())
 
     fused_num_map = {
         "252": "52", "253": "53", "257": "57", "259": "59",
@@ -123,11 +219,11 @@ def execute_stage4_evidence_pack(
                 "amendment_history": p.get("amendment_history") or ""
             })
 
-    # 2b. Domain Anchor Injections (Limitation Act money suit provisions)
+    # 2b. Domain Anchor Injections (Limitation Act money suit provisions gated by admitted_cids)
     lower_q = query_text.lower()
+    store = get_unified_statute_store()
     if "limitation" in lower_q and any(k in lower_q for k in ["money", "recovery", "debt", "loan", "price of goods"]):
         try:
-            store = get_unified_statute_store()
             for l_cid in [
                 "LIMITATION_1908_ART_57",
                 "LIMITATION_1908_ART_58",
@@ -137,6 +233,8 @@ def execute_stage4_evidence_pack(
                 "LIMITATION_1908_ART_120",
                 "LIMITATION_1908_SEC_3"
             ]:
+                if admitted_cids and l_cid not in admitted_cids:
+                    continue
                 if l_cid not in seen_provisions:
                     prov = store.get_by_canonical_id(l_cid)
                     if prov and prov.get("text"):
@@ -154,27 +252,57 @@ def execute_stage4_evidence_pack(
         except Exception as e:
             logger.warning(f"Limitation injection error: {e}")
 
-    # 3. Two-way cross linking: Cases pull statutes invoked
+    # 2c. Direct injection of admitted controlling statutory provisions for identified issues
+    try:
+        for cid in admitted_cids:
+            if cid not in seen_provisions:
+                prov = store.get_by_canonical_id(cid)
+                if prov and prov.get("text"):
+                    seen_provisions.add(cid)
+                    is_art = "_ART_" in cid
+                    is_ord = "_ORD_" in cid
+                    unit_label = "Article" if is_art else ("Order" if is_ord else "Section")
+                    num = str(prov.get("primary_num") or cid.split("_")[-1])
+                    statute_records.append({
+                        "act_name": prov.get("act_name") or prov.get("act_code") or "Statute",
+                        "section_number": num,
+                        "provision_type": "article" if is_art else ("order" if is_ord else "section"),
+                        "text": prov["text"],
+                        "title": prov.get("title") or f"{unit_label} {num}",
+                        "year": prov.get("year"),
+                        "jurisdiction": prov.get("jurisdiction") or "Federal / Provincial",
+                        "status": "in_force"
+                    })
+    except Exception as e:
+        logger.warning(f"Error populating admitted controlling provisions: {e}")
+
+    # 3. Two-way cross linking: Cases pull statutes invoked (GATED BY ADMITTED_CIDS)
     for c in clean_cases:
         invoked_list = c.get("statutes_invoked") or []
         for inv in invoked_list:
             inv_str = inv.get("name") if isinstance(inv, dict) else str(inv)
             # Try to resolve statute provision from unified store
-            m_sec = re.search(r'(?:section|sec\.?|s\.)\s*(\d+[A-Za-z]?(?:\(\d+\))?)', inv_str, re.IGNORECASE)
+            m_sec = re.search(r'(?:section|sec\.?|article|art\.?|order|ord\.?|s\.)\s*([0-9IVXLCDM]+[A-Za-z]?(?:\(\d+\))?)', inv_str, re.IGNORECASE)
             if m_sec:
                 sec_found = m_sec.group(1)
                 for act_kw in [
                     "BENAMI", "SPECIFIC RELIEF", "CIVIL PROCEDURE", "CPC", "CONTRACT",
-                    "LIMITATION", "TRANSFER OF PROPERTY", "CRIMINAL PROCEDURE", "CRPC"
+                    "LIMITATION", "TRANSFER OF PROPERTY", "CRIMINAL PROCEDURE", "CRPC", "PPC"
                 ]:
                     if act_kw in inv_str.upper():
                         key = f"{act_kw}_{sec_found.upper()}"
                         if key not in seen_provisions:
                             try:
-                                store = get_unified_statute_store()
                                 prov = store.get_provision(act_kw, sec_found)
                                 if prov and prov.get("text"):
+                                    res_cid = prov.get("canonical_id")
+                                    # ISSUE-MEMBERSHIP GATE: Discard if not relevant to any identified issue
+                                    if admitted_cids:
+                                        if not res_cid or res_cid.upper() not in admitted_cids:
+                                            continue
                                     seen_provisions.add(key)
+                                    if res_cid:
+                                        seen_provisions.add(res_cid.upper())
                                     statute_records.append({
                                         "act_name": prov.get("act_name") or act_kw,
                                         "section_number": sec_found,

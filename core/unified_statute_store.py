@@ -191,6 +191,51 @@ class UnifiedStatuteStore:
                 pass
 
         self._loaded = True
+        if not os.environ.get("SKIP_TURSO_DRIFT_CHECK"):
+            self._verify_turso_drift_sample()
+
+    def _verify_turso_drift_sample(self):
+        """
+        Compares 10 sampled canonical IDs in memory against Turso to alert on drift.
+        Loudly logs an error if local JSON files and Turso have diverged.
+        """
+        sample_cids = [
+            "LIMITATION_1908_ART_150",
+            "PPC_1860_SEC_489F",
+            "PPC_1860_SEC_302",
+            "CRPC_1898_SEC_497",
+            "CRPC_1898_SEC_498",
+            "CRPC_1898_SEC_154",
+            "CPC_1908_SEC_9",
+            "CONTRACT_1872_SEC_73",
+            "QSO_1984_ART_2",
+            "CONST_1973_ART_199",
+        ]
+        try:
+            from core.turso_client import get_statute_provision, is_turso_circuit_open
+            if is_turso_circuit_open():
+                return
+            drifted = []
+            for cid in sample_cids:
+                local_rec = self._by_cid.get(cid)
+                if not local_rec:
+                    continue
+                remote = get_statute_provision(cid)
+                if not remote or not remote.get("verbatim_text"):
+                    continue
+                local_txt = (local_rec.get("text") or local_rec.get("verbatim_text") or "").strip()
+                remote_txt = (remote.get("verbatim_text") or "").strip()
+                if local_txt and remote_txt and local_txt != remote_txt:
+                    drifted.append(cid)
+            if drifted:
+                import logging
+                logger = logging.getLogger(__name__)
+                logger.error(
+                    f"CRITICAL DRIFT DETECTED: JSON files and Turso differ for {drifted}! "
+                    "Run scripts/export_turso_to_json.py to synchronize."
+                )
+        except Exception:
+            pass
 
     def get_by_canonical_id(self, canonical_id: str) -> Optional[Dict[str, Any]]:
         if not self._loaded:

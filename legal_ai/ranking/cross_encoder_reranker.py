@@ -147,10 +147,36 @@ async def rerank_candidates_cross_encoder(
 
     t0 = time.time()
 
-    # Step 1: Prepare documents for cross-encoder
+    # Step 1: Build per-issue query map from decomposition and query plan
+    issue_query_map: Dict[str, str] = {}
+    try:
+        from core.legal_issue_extractor import extract_legal_issues_from_fact_pattern
+        decomp = extract_legal_issues_from_fact_pattern(query_text)
+        for issue in getattr(decomp, "issues", []):
+            iq = f"{issue.heading}. {issue.description}"
+            issue_query_map[issue.issue_id] = iq
+    except Exception:
+        pass
+
+    if query_plan and hasattr(query_plan, "search_lanes"):
+        for l in query_plan.search_lanes:
+            lid = getattr(l, "lane_id", None) or (l.get("lane_id") if isinstance(l, dict) else "") or (l.get("lane") if isinstance(l, dict) else "")
+            lq = getattr(l, "query", None) or (l.get("query") if isinstance(l, dict) else "")
+            if lid and lq and lid not in issue_query_map:
+                issue_query_map[lid] = lq
+
+    def _resolve_candidate_query(cand: Dict[str, Any]) -> str:
+        sid = cand.get("source_issue_id")
+        if sid and sid in issue_query_map:
+            return issue_query_map[sid]
+        slq = cand.get("source_lane_query")
+        if slq:
+            return slq
+        return query_text
+
     doc_texts = [_get_candidate_text_for_reranking(c) for c in candidates]
 
-    # Step 2: Attempt Voyage AI Cross-Encoder Rerank
+    # Step 2: Attempt Voyage AI Cross-Encoder Rerank (grouped by targeted issue query)
     voyage_api_key = VOYAGE_API_KEY
     can_use_voyage = bool(voyage_api_key and len(doc_texts) > 0)
 
@@ -161,25 +187,33 @@ async def rerank_candidates_cross_encoder(
         try:
             client = voyageai.Client(api_key=voyage_api_key)
 
-            def _sync_rerank():
-                return client.rerank(
-                    query=query_text,
-                    documents=doc_texts,
-                    model=model,
-                    top_k=min(len(doc_texts), max(top_k * 2, 20))
-                )
+            # Group candidates by targeted candidate query
+            query_to_indices: Dict[str, List[int]] = {}
+            for idx, c in enumerate(candidates):
+                cq = _resolve_candidate_query(c)
+                query_to_indices.setdefault(cq, []).append(idx)
+
+            def _sync_rerank_all():
+                for cq, indices in query_to_indices.items():
+                    sub_docs = [doc_texts[i] for i in indices]
+                    res = client.rerank(
+                        query=cq,
+                        documents=sub_docs,
+                        model=model,
+                        top_k=min(len(sub_docs), max(top_k * 2, 20))
+                    )
+                    for item in getattr(res, "results", []):
+                        sub_i = getattr(item, "index", None)
+                        score = getattr(item, "relevance_score", 0.0)
+                        if sub_i is not None and sub_i < len(indices):
+                            orig_idx = indices[sub_i]
+                            rerank_scores[orig_idx] = float(score)
 
             loop = asyncio.get_running_loop()
-            res = await asyncio.wait_for(
-                loop.run_in_executor(None, _sync_rerank),
+            await asyncio.wait_for(
+                loop.run_in_executor(None, _sync_rerank_all),
                 timeout=timeout_seconds
             )
-
-            for item in getattr(res, "results", []):
-                idx = getattr(item, "index", None)
-                score = getattr(item, "relevance_score", 0.0)
-                if idx is not None:
-                    rerank_scores[idx] = float(score)
 
             model_name = f"voyage-{model}"
             telemetry["model_used"] = model_name
@@ -196,12 +230,13 @@ async def rerank_candidates_cross_encoder(
         telemetry["fallback_triggered"] = True
         telemetry["fallback_reason"] = "Voyage API key missing or unavailable"
 
-    # Step 3: Fill missing scores with deterministic heuristic cross-scorer
+    # Step 3: Fill missing scores with deterministic per-issue heuristic cross-scorer
     if not rerank_scores or telemetry["fallback_triggered"]:
         model_name = "fallback-heuristic"
         telemetry["model_used"] = model_name
         for idx, c in enumerate(candidates):
-            rerank_scores[idx] = _heuristic_legal_cross_score(query_text, c, query_plan)
+            cand_q = _resolve_candidate_query(c)
+            rerank_scores[idx] = _heuristic_legal_cross_score(cand_q, c, query_plan)
 
     # Step 4: Construct decorated, reranked candidate list
     decorated_candidates: List[Dict[str, Any]] = []

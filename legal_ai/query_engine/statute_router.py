@@ -735,20 +735,34 @@ def _convert_to_legal_unit_record(rec: Dict[str, Any], canonical_id: str) -> Leg
 
     order_num = rec.get("order_num")
     if "_ORD_" in canonical_id or order_num:
-        ord_s = str(order_num or "XXI")
-        primary_s = str(rec.get("primary_num") or "90")
+        ord_s = str(order_num or "")
+        primary_s = str(rec.get("primary_num") or "")
+        m_cid = re.search(r'_ORD_([A-Z0-9]+)_R_([0-9A-Za-z]+)', canonical_id)
+        if m_cid:
+            if not ord_s:
+                ord_s = m_cid.group(1)
+            primary_s = m_cid.group(2)
+        elif not ord_s:
+            ord_s = "XXI"
+        if not primary_s:
+            primary_s = "90"
+        m_r = re.search(r'Rule\s*([0-9A-Za-z]+)', primary_s, re.I)
+        if m_r:
+            primary_s = m_r.group(1)
         u_type = "rule"
         num = f"Order {ord_s} Rule {primary_s}"
         parent = f"First Schedule, Order {ord_s}"
         heading = rec.get("heading") or rec.get("title") or f"Order {ord_s} Rule {primary_s}"
     elif "_ART_" in canonical_id:
         u_type = "article"
-        num = str(rec.get("primary_num") or rec.get("section") or canonical_id.split("_")[-1])
+        raw_num = str(rec.get("primary_num") or rec.get("section") or canonical_id.split("_")[-1])
+        num = re.sub(r'^(?:article|art\.?)\s*', '', raw_num, flags=re.I).strip()
         parent = rec.get("parent") or "First Schedule"
         heading = rec.get("heading") or rec.get("title") or f"Article {num}"
     else:
         u_type = rec.get("provision_type") or "section"
-        num = str(rec.get("primary_num") or rec.get("section") or canonical_id.split("_")[-1])
+        raw_num = str(rec.get("primary_num") or rec.get("section") or canonical_id.split("_")[-1])
+        num = re.sub(r'^(?:section|sec\.?|s\.)\s*', '', raw_num, flags=re.I).strip()
         parent = rec.get("parent")
         heading = rec.get("heading") or rec.get("title") or f"Section {num}"
 
@@ -756,6 +770,18 @@ def _convert_to_legal_unit_record(rec: Dict[str, Any], canonical_id: str) -> Leg
     clean_txt = raw_txt.replace('A-', '')
 
     chk = hashlib.sha256(clean_txt.encode("utf-8")).hexdigest()
+
+    period = rec.get("period")
+    if not period and "period of limitation:" in raw_txt.lower():
+        m_p = re.search(r'Period of limitation:\s*([^\n\r.]+)', raw_txt, re.I)
+        if m_p:
+            period = m_p.group(1).strip()
+
+    trigger = rec.get("trigger")
+    if not trigger and "time from which period begins to run:" in raw_txt.lower():
+        m_t = re.search(r'Time from which period begins to run:\s*([^\n\r.]+)', raw_txt, re.I)
+        if m_t:
+            trigger = m_t.group(1).strip()
 
     return LegalUnitRecord(
         unit_id=f"{statute_id}:{u_type}:{num}".lower().replace(" ", "_"),
@@ -766,8 +792,8 @@ def _convert_to_legal_unit_record(rec: Dict[str, Any], canonical_id: str) -> Leg
         number=num,
         parent=parent,
         heading_description=heading,
-        period=rec.get("period"),
-        trigger=rec.get("trigger"),
+        period=period,
+        trigger=trigger,
         text=clean_txt,
         footnotes=rec.get("footnotes") or [],
         caveats=rec.get("caveats") or [],

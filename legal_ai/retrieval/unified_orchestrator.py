@@ -60,6 +60,9 @@ def merge_candidates_with_rrf(
                 rrf_scores[norm_cid] = 0.0
             else:
                 existing = merged_map[norm_cid]
+                if "source_issue_id" in c and "source_issue_id" not in existing:
+                    existing["source_issue_id"] = c["source_issue_id"]
+                    existing["source_lane_query"] = c.get("source_lane_query")
                 if base_engine not in existing.get("retrieval_engines", []):
                     existing.setdefault("retrieval_engines", []).append(base_engine)
 
@@ -199,6 +202,10 @@ def collapse_chunks_per_case(candidates: List[Dict[str, Any]]) -> List[Dict[str,
             seen_map[norm_cid] = dict(c)
         else:
             existing = seen_map[norm_cid]
+            if "source_issue_id" in c and "source_issue_id" not in existing:
+                existing["source_issue_id"] = c["source_issue_id"]
+                existing["source_lane_query"] = c.get("source_lane_query")
+            existing = seen_map[norm_cid]
             score_new = float(c.get("score") or c.get("similarity") or c.get("dense_score") or 0.0)
             score_old = float(existing.get("score") or existing.get("similarity") or existing.get("dense_score") or 0.0)
             if score_new > score_old:
@@ -284,31 +291,39 @@ async def retrieve_candidates_parallel(
         if not re.match(r'^(?:sections?|secs?\.?|s\.)?\s*\d+$', st.strip(), re.IGNORECASE)
     ]
 
-    # 2. Build multi-lane queries for Pinecone dense semantic search
+    # 2. Build multi-lane queries and lane identifiers for Pinecone dense semantic search
     dense_queries = [query_text]
+    dense_lane_ids = ["global_query"]
     if lanes:
         for l in lanes[:5]:
+            lid = getattr(l, "lane_id", None) or (l.get("lane_id") if isinstance(l, dict) else "") or (l.get("lane") if isinstance(l, dict) else "")
             q_str = str(getattr(l, "query", None) or (l.get("query") if isinstance(l, dict) else "")).strip()
             if q_str and q_str not in dense_queries:
                 dense_queries.append(q_str)
+                dense_lane_ids.append(lid or f"lane_{len(dense_lane_ids)}")
     elif issues:
-        for iss in issues[:3]:
+        for idx, iss in enumerate(issues[:3]):
             iss_str = str(iss).strip()
             if iss_str and iss_str not in dense_queries:
                 dense_queries.append(iss_str)
+                dense_lane_ids.append(f"issue_{idx+1}")
 
-    # 3. Build multi-query for BM25 sparse search across all search lanes
+    # 3. Build multi-query and lane identifiers for BM25 sparse search across all search lanes
     bm_queries = [query_text]
+    bm_lane_ids = ["global_query"]
     if lanes:
         for l in lanes[:5]:
+            lid = getattr(l, "lane_id", None) or (l.get("lane_id") if isinstance(l, dict) else "") or (l.get("lane") if isinstance(l, dict) else "")
             q_str = str(getattr(l, "query", None) or (l.get("query") if isinstance(l, dict) else "")).strip()
             if q_str and q_str not in bm_queries:
                 bm_queries.append(q_str)
+                bm_lane_ids.append(lid or f"lane_{len(bm_lane_ids)}")
     elif issues:
-        for iss in issues[:3]:
+        for idx, iss in enumerate(issues[:3]):
             iss_str = str(iss).strip()
             if iss_str and iss_str not in bm_queries:
                 bm_queries.append(iss_str)
+                bm_lane_ids.append(f"issue_{idx+1}")
 
     import os
     enable_supabase_fts = os.getenv("ENABLE_SUPABASE_FTS", "false").lower() in ("true", "1")
@@ -333,8 +348,13 @@ async def retrieve_candidates_parallel(
 
     def _execute_multi_bm25_lists() -> List[List[Dict[str, Any]]]:
         raw_lists = []
-        for bq in bm_queries:
+        for bq, lid in zip(bm_queries, bm_lane_ids):
             sub_res = search_bm25_sparse(bq, top_k=top_k_per_engine)
+            for c in sub_res:
+                if "source_issue_id" not in c:
+                    c["source_issue_id"] = lid
+                if "source_lane_query" not in c:
+                    c["source_lane_query"] = bq
             raw_lists.append(collapse_chunks_per_case(sub_res))
         return raw_lists
 
@@ -344,7 +364,15 @@ async def retrieve_candidates_parallel(
             for dq in dense_queries
         ]
         raw_lists = await asyncio.gather(*pc_tasks)
-        return [collapse_chunks_per_case(plist) for plist in raw_lists]
+        tagged_lists = []
+        for plist, lid, dq in zip(raw_lists, dense_lane_ids, dense_queries):
+            for c in plist:
+                if "source_issue_id" not in c:
+                    c["source_issue_id"] = lid
+                if "source_lane_query" not in c:
+                    c["source_lane_query"] = dq
+            tagged_lists.append(collapse_chunks_per_case(plist))
+        return tagged_lists
 
     async def _guarded_pinecone_search() -> List[List[Dict[str, Any]]]:
         try:
