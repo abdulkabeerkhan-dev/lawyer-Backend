@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 ACT_CODE_MAP = {
     "PPC": "PPC_1860",
     "PAKISTAN PENAL CODE": "PPC_1860",
+    "PENAL CODE": "PPC_1860",
     "CRPC": "CRPC_1898",
     "CRIMINAL PROCEDURE": "CRPC_1898",
     "CODE OF CRIMINAL PROCEDURE": "CRPC_1898",
@@ -32,19 +33,50 @@ ACT_CODE_MAP = {
     "LIMITATION": "LIMITATION_1908",
     "LIMITATION ACT": "LIMITATION_1908",
     "SPECIFIC RELIEF": "SRA_1877",
+    "SRA": "SRA_1877",
     "CONTRACT": "CONTRACT_1872",
     "CONTRACT ACT": "CONTRACT_1872",
+    "TPA": "TPA_1882",
+    "TRANSFER OF PROPERTY": "TPA_1882",
     "QSO": "QSO_1984",
     "QANUN-E-SHAHADAT": "QSO_1984",
     "CONST": "CONST_1973",
     "CONSTITUTION": "CONST_1973",
     "BENAMI": "BENAMI_2017",
     "FAMILY COURTS": "FAMILY_COURTS_1964",
-    "NEGOTIABLE INSTRUMENTS": "NIA_1881",
+    "FAMILY COURTS ACT": "FAMILY_COURTS_1964",
+    "FCA": "FAMILY_COURTS_1964",
+    "MFLO": "MFLO_1961",
+    "MUSLIM FAMILY LAWS": "MFLO_1961",
+    "DMMA": "DMMA_1939",
+    "DISSOLUTION OF MUSLIM MARRIAGES": "DMMA_1939",
+    "GWA": "GWA_1890",
+    "GUARDIANS AND WARDS": "GWA_1890",
+    "FIO": "FIO_2001",
+    "FINANCIAL INSTITUTIONS": "FIO_2001",
+    "NEGOTIABLE INSTRUMENTS": "NI_ACT_1881",
+    "NI ACT": "NI_ACT_1881",
+    "NIA": "NI_ACT_1881",
     "ARBITRATION": "ARBITRATION_1940",
     "RENT": "PRPA_2009",
     "PRPA": "PRPA_2009",
+    "PUNJAB RENTED PREMISES": "PRPA_2009",
+    "SRPO": "SRPO_1979",
+    "SINDH RENTED PREMISES": "SRPO_1979",
 }
+
+
+def _int_to_roman(num: int) -> str:
+    val = [50, 40, 10, 9, 5, 4, 1]
+    syb = ["L", "XL", "X", "IX", "V", "IV", "I"]
+    res = ""
+    i = 0
+    while num > 0:
+        for _ in range(num // val[i]):
+            res += syb[i]
+            num -= val[i]
+        i += 1
+    return res
 
 
 def normalize_provision_string_to_canonical_id(s: str) -> Optional[str]:
@@ -54,24 +86,39 @@ def normalize_provision_string_to_canonical_id(s: str) -> Optional[str]:
     """
     if not s:
         return None
-    s = str(s).strip()
-    if re.match(r'^[A-Z0-9_]+_(?:SEC|ART|ORD|RULE)_[0-9A-Z]+$', s):
-        return s.upper()
+    s_str = str(s).strip()
+    if re.match(r'^[A-Z0-9_]+_(?:SEC|ART|ORD|RULE)_[0-9A-Z_()]+$', s_str, re.IGNORECASE):
+        return s_str.upper()
+
+    m_ord_rule = re.search(r'(?:order|ord\.?)\s*([0-9IVXLCDM]+)\s*(?:rule|r\.?)\s*([0-9]+[A-Za-z]?)', s_str, re.I)
+    if m_ord_rule and any(k in s_str.upper() for k in ["CPC", "CIVIL PROCEDURE", "CODE OF CIVIL"]):
+        ord_val = m_ord_rule.group(1).upper()
+        r_val = m_ord_rule.group(2).upper()
+        if ord_val.isdigit():
+            ord_val = _int_to_roman(int(ord_val))
+        return f"CPC_1908_ORD_{ord_val}_R_{r_val}"
+
+    m_ord_only = re.search(r'(?:order|ord\.?)\s*([0-9IVXLCDM]+)', s_str, re.I)
+    if m_ord_only and any(k in s_str.upper() for k in ["CPC", "CIVIL PROCEDURE", "CODE OF CIVIL"]):
+        ord_val = m_ord_only.group(1).upper()
+        if ord_val.isdigit():
+            ord_val = _int_to_roman(int(ord_val))
+        return f"CPC_1908_ORD_{ord_val}"
 
     act_code = None
-    s_upper = s.upper()
+    s_upper = s_str.upper()
     for kw, code in sorted(ACT_CODE_MAP.items(), key=lambda x: -len(x[0])):
         if kw in s_upper:
             act_code = code
             break
 
-    is_art = bool(re.search(r'\b(?:article|art)\b', s, re.I))
-    is_ord = bool(re.search(r'\b(?:order|ord)\b', s, re.I))
+    is_art = bool(re.search(r'\b(?:article|art)\b', s_str, re.I))
+    is_ord = bool(re.search(r'\b(?:order|ord)\b', s_str, re.I))
     unit = "ART" if is_art else ("ORD" if is_ord else "SEC")
 
-    m_num = re.search(r'(?:section|sec\.?|article|art\.?|order|ord\.?|s\.)\s*([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z])?)', s, re.I)
+    m_num = re.search(r'(?:section|sec\.?|article|art\.?|order|ord\.?|s\.)\s*([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z])?)', s_str, re.I)
     if not m_num:
-        m_num = re.search(r'([0-9]+[A-Za-z]?(?:-[A-Za-z])?)', s)
+        m_num = re.search(r'([0-9]+[A-Za-z]?(?:-[A-Za-z])?)', s_str)
     if not m_num:
         return None
 
@@ -81,12 +128,13 @@ def normalize_provision_string_to_canonical_id(s: str) -> Optional[str]:
         'XI': 11, 'XII': 12, 'XIII': 13, 'XIV': 14, 'XV': 15, 'XVI': 16, 'XVII': 17, 'XVIII': 18,
         'XIX': 19, 'XX': 20, 'XXI': 21, 'XXXVII': 37, 'XXXVIII': 38, 'XXXIX': 39
     }
-    if num_str in roman_map:
+    if num_str in roman_map and unit != "ORD":
         num_str = str(roman_map[num_str])
 
     if act_code:
         return f"{act_code}_{unit}_{num_str}"
     return None
+
 
 
 def execute_stage4_evidence_pack(

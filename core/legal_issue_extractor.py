@@ -145,9 +145,7 @@ def extract_legal_issues_from_fact_pattern(
                 description="Right of wife to claim dissolution of marriage through Khula on ground of aversion or desertion, and non-contingency of divorce upon return of dower or husband's consent.",
                 controlling_statutes=["Family Courts Act, 1964", "Dissolution of Muslim Marriages Act, 1939"],
                 controlling_provisions=[
-                    "Section 10 Family Courts Act, 1964",
-                    "Section 5 Family Courts Act, 1964",
-                    "Section 2 Dissolution of Muslim Marriages Act, 1939"
+                    "FAMILY_COURTS_1964_SEC_10", "FAMILY_COURTS_1964_SEC_5", "DMMA_1939_SEC_2"
                 ],
                 search_queries=[
                     "Section 10 Family Courts Act 1964 Khula wife right without husband consent dissolution of marriage",
@@ -164,8 +162,7 @@ def extract_legal_issues_from_fact_pattern(
                 description="Statutory claim for recovery of unpaid prompt dower as an absolute debt payable on demand, which remains a distinct civil liability not extinguished by Khula decree.",
                 controlling_statutes=["Family Courts Act, 1964", "Muslim Family Laws Ordinance, 1961"],
                 controlling_provisions=[
-                    "Section 5 Family Courts Act, 1964",
-                    "Section 10 Family Courts Act, 1964"
+                    "MFLO_1961_SEC_10", "FAMILY_COURTS_1964_SEC_5"
                 ],
                 search_queries=[
                     "return of dower zar-i-khula civil liability does not invalidate dissolution of marriage Section 10(4)",
@@ -182,8 +179,7 @@ def extract_legal_issues_from_fact_pattern(
                 description="Statutory and Islamic obligation of father to maintain minor children until majority/marriage and wife during subsistence of marriage, including schedule of interim maintenance.",
                 controlling_statutes=["Muslim Family Laws Ordinance, 1961", "Family Courts Act, 1964"],
                 controlling_provisions=[
-                    "Section 9 Muslim Family Laws Ordinance, 1961",
-                    "Section 5 Family Courts Act, 1964"
+                    "MFLO_1961_SEC_9", "FAMILY_COURTS_1964_SEC_17A", "FAMILY_COURTS_1964_SEC_5"
                 ],
                 search_queries=[
                     "Section 9 Muslim Family Laws Ordinance 1961 Section 5 Family Courts Act 1964 maintenance of minor children father statutory duty",
@@ -200,10 +196,7 @@ def extract_legal_issues_from_fact_pattern(
                 description="Determination of custody (Hizanat) of minor children where welfare of the minor is paramount consideration, and preferential custody rights of mother for children of tender age.",
                 controlling_statutes=["Guardians and Wards Act, 1890", "Family Courts Act, 1964"],
                 controlling_provisions=[
-                    "Section 7 Guardians and Wards Act, 1890",
-                    "Section 17 Guardians and Wards Act, 1890",
-                    "Section 25 Guardians and Wards Act, 1890",
-                    "Section 5 Family Courts Act, 1964"
+                    "GWA_1890_SEC_7", "GWA_1890_SEC_17", "GWA_1890_SEC_25", "FAMILY_COURTS_1964_SEC_5"
                 ],
                 search_queries=[
                     "welfare of minor paramount consideration Section 17 Section 25 Guardians and Wards Act 1890 hizanat mother preferential right",
@@ -227,8 +220,7 @@ def extract_legal_issues_from_fact_pattern(
             description="Substantive grounds for ejectment under Section 15 of the Punjab Rented Premises Act, 2009: establishing willful default in payment of rent and proving genuine personal bona fide need of landlord.",
             controlling_statutes=["Punjab Rented Premises Act, 2009"],
             controlling_provisions=[
-                "Section 15 PRPA 2009",
-                "Section 4 PRPA 2009"
+                "PRPA_2009_SEC_15", "PRPA_2009_SEC_4"
             ],
             search_queries=[
                 "Section 15 PRPA 2009 grounds for eviction default in payment of rent personal bona fide need",
@@ -243,9 +235,7 @@ def extract_legal_issues_from_fact_pattern(
             description="Mandatory procedural requirement under Section 22 PRPA 2009 to file an application for leave to contest within ten days of appearance/service, disclosing substantial questions of law or fact.",
             controlling_statutes=["Punjab Rented Premises Act, 2009"],
             controlling_provisions=[
-                "Section 22 PRPA 2009",
-                "Section 19 PRPA 2009",
-                "Section 34 PRPA 2009"
+                "PRPA_2009_SEC_22", "PRPA_2009_SEC_19", "PRPA_2009_SEC_34"
             ],
             search_queries=[
                 "Section 22 PRPA 2009 leave to contest mandatory 10 days limitation substantial defense",
@@ -260,8 +250,7 @@ def extract_legal_issues_from_fact_pattern(
             description="Statutory defense where tenant paid cash rent but landlord refused receipts, and evaluation of rent deposit remedies through postal money order or bank account.",
             controlling_statutes=["Punjab Rented Premises Act, 2009"],
             controlling_provisions=[
-                "Section 4 PRPA 2009",
-                "Section 15 PRPA 2009"
+                "PRPA_2009_SEC_4", "PRPA_2009_SEC_15"
             ],
             search_queries=[
                 "Section 4 PRPA 2009 landlord obligation to issue rent receipt tenant defense cash payment",
@@ -285,8 +274,7 @@ def extract_legal_issues_from_fact_pattern(
             description="Statutory recovery suit by financial institution under Section 9 of the Financial Institutions (Recovery of Finances) Ordinance, 2001 and requirements of valid statement of account.",
             controlling_statutes=["Financial Institutions (Recovery of Finances) Ordinance, 2001"],
             controlling_provisions=[
-                "Section 9 Financial Institutions (Recovery of Finances) Ordinance 2001",
-                "Section 22 Financial Institutions (Recovery of Finances) Ordinance 2001"
+                "FIO_2001_SEC_9", "FIO_2001_SEC_22"
             ],
             search_queries=[
                 "Section 9 Financial Institutions Recovery of Finances Ordinance 2001 recovery suit statement of account",
@@ -300,9 +288,7 @@ def extract_legal_issues_from_fact_pattern(
             heading="Mandatory Leave to Defend Procedure & 30-Day Limitation (Section 10, FIO 2001)",
             description="Mandatory statutory requirement under Section 10 FIO 2001 to file petition for leave to defend within 30 days of service of summons, strictly supported by affidavit and specific dispute of finance amounts.",
             controlling_statutes=["Financial Institutions (Recovery of Finances) Ordinance, 2001"],
-            controlling_provisions=[
-                "Section 10 Financial Institutions (Recovery of Finances) Ordinance 2001"
-            ],
+            controlling_provisions=["FIO_2001_SEC_10"],
             search_queries=[
                 "Section 10 Financial Institutions Recovery of Finances Ordinance 2001 leave to defend 30 days mandatory limitation",
                 "Section 10 FIO 2001 leave to defend affidavit summary procedure Banking Court"
@@ -316,8 +302,7 @@ def extract_legal_issues_from_fact_pattern(
             description="Substantive legal defense challenging unlawful compound mark-up, liquidated damages, and penal charges imposed beyond the agreed finance agreement, which constitutes a bona fide substantial question of law for grant of unconditional leave to defend.",
             controlling_statutes=["Financial Institutions (Recovery of Finances) Ordinance, 2001"],
             controlling_provisions=[
-                "Section 10 Financial Institutions (Recovery of Finances) Ordinance 2001",
-                "Section 14 Financial Institutions (Recovery of Finances) Ordinance 2001"
+                "FIO_2001_SEC_10", "FIO_2001_SEC_14"
             ],
             search_queries=[
                 "Section 10 FIO 2001 compound markup penal interest beyond finance agreement substantial question of fact law leave to defend",
@@ -342,7 +327,7 @@ def extract_legal_issues_from_fact_pattern(
                 heading="Criminal Offence of Dishonestly Issuing a Cheque (Section 489-F, PPC 1860)",
                 description="Whether the returned cheque was dishonestly issued towards repayment of a loan or fulfillment of an obligation under Section 489-F PPC.",
                 controlling_statutes=["Pakistan Penal Code, 1860"],
-                controlling_provisions=["Section 489-F PPC"],
+                controlling_provisions=["PPC_1860_SEC_489F", "CPC_1908_ORD_XXXVII_R_1"],
                 search_queries=[
                     "Section 489-F PPC dishonour of cheque ingredients dishonest issuance lack of funds",
                     "Section 489-F Pakistan Penal Code 1860 dishonestly issuing a cheque prima facie offence"
@@ -362,8 +347,7 @@ def extract_legal_issues_from_fact_pattern(
                 description="Statutory ingredients of theft under Section 378 PPC requiring dishonest taking of movable property out of possession without consent, and punishment under Section 379 PPC.",
                 controlling_statutes=["Pakistan Penal Code, 1860"],
                 controlling_provisions=[
-                    "Section 378 PPC",
-                    "Section 379 PPC"
+                    "PPC_1860_SEC_378", "PPC_1860_SEC_379"
                 ],
                 search_queries=[
                     "Section 378 Section 379 PPC theft ingredients movable property dishonest intention taking out of possession",
@@ -379,8 +363,7 @@ def extract_legal_issues_from_fact_pattern(
                 description="Statutory ingredients of cheating under Section 415 PPC and aggravated punishment under Section 420 PPC requiring fraudulent or dishonest inducement at the very inception of transaction.",
                 controlling_statutes=["Pakistan Penal Code, 1860"],
                 controlling_provisions=[
-                    "Section 415 PPC",
-                    "Section 420 PPC"
+                    "PPC_1860_SEC_415", "PPC_1860_SEC_420"
                 ],
                 search_queries=[
                     "Section 415 Section 420 PPC cheating dishonest intention at inception delivery of property",
@@ -396,8 +379,7 @@ def extract_legal_issues_from_fact_pattern(
                 description="Statutory ingredients of criminal breach of trust under Section 405 PPC requiring entrustment with property or dominion over property and dishonest misappropriation, punished under Section 406 PPC.",
                 controlling_statutes=["Pakistan Penal Code, 1860"],
                 controlling_provisions=[
-                    "Section 405 PPC",
-                    "Section 406 PPC"
+                    "PPC_1860_SEC_405", "PPC_1860_SEC_406"
                 ],
                 search_queries=[
                     "Section 405 Section 406 PPC criminal breach of trust entrustment dishonest misappropriation",
@@ -413,7 +395,7 @@ def extract_legal_issues_from_fact_pattern(
                 heading="Substantive Penal Offence of Murder (Section 302, Pakistan Penal Code, 1860)",
                 description="Analysis of the charged penal offence of Qatl-i-Amd under Section 302 PPC, clauses (a), (b), (c), and the fasad-fil-arz proviso.",
                 controlling_statutes=["Pakistan Penal Code, 1860"],
-                controlling_provisions=["Section 302 PPC"],
+                controlling_provisions=["PPC_1860_SEC_302"],
                 search_queries=[
                     "Section 302 PPC punishment for murder qatl-i-amd ingredients clauses",
                     "Section 302 clause b PPC tazir capital sentence life imprisonment"
@@ -429,9 +411,7 @@ def extract_legal_issues_from_fact_pattern(
                 description="Pre-arrest bail under Section 498 CrPC based on demonstration of mala fides, ulterior motives, or humiliation by prosecution arising out of a civil/commercial dispute, and post-arrest bail principles under Section 497 CrPC.",
                 controlling_statutes=["Code of Criminal Procedure, 1898"],
                 controlling_provisions=[
-                    "Section 498 CrPC",
-                    "Section 497 CrPC",
-                    "Section 496 CrPC"
+                    "CRPC_1898_SEC_498", "CRPC_1898_SEC_497", "CRPC_1898_SEC_496"
                 ],
                 search_queries=[
                     "Section 498 Section 497 CrPC pre-arrest bail mala fide ulterior motive civil dispute commercial recovery arrest humiliation",
@@ -447,9 +427,7 @@ def extract_legal_issues_from_fact_pattern(
                 heading="Inherent Powers of High Court for Quashment of FIR (Section 561-A, CrPC 1898)",
                 description="Quashment of criminal proceedings under Section 561-A CrPC where FIR is lodged to exert coercive pressure for recovery in a purely civil/commercial breach of contract, constituting an abuse of process of the Court.",
                 controlling_statutes=["Code of Criminal Procedure, 1898"],
-                controlling_provisions=[
-                    "Section 561-A CrPC"
-                ],
+                controlling_provisions=["CRPC_1898_SEC_561A"],
                 search_queries=[
                     "Section 561-A CrPC quashment of FIR commercial transaction cancelled distributorship agreement civil dispute criminal breach of trust",
                     "criminal breach of trust vs civil dispute dishonest intention at inception commercial transaction loan repayment quashment"
@@ -478,9 +456,7 @@ def extract_legal_issues_from_fact_pattern(
             description="Enforceability of agreement to sell immovable property and statutory presumption that breach cannot be adequately compensated in money under Section 12 Specific Relief Act.",
             controlling_statutes=["Specific Relief Act, 1877"],
             controlling_provisions=[
-                "Section 12 Specific Relief Act, 1877",
-                "Section 21 Specific Relief Act, 1877",
-                "Section 22 Specific Relief Act, 1877"
+                "SRA_1877_SEC_12", "SRA_1877_SEC_19", "SRA_1877_SEC_21", "SRA_1877_SEC_22", "CONTRACT_1872_SEC_73"
             ],
             search_queries=[
                 "Section 12 Specific Relief Act 1877 presumption immovable property compensation in money not adequate relief",
@@ -498,7 +474,7 @@ def extract_legal_issues_from_fact_pattern(
             heading="Civil Relief & Statutory Grounds",
             description="Examination of rights, cause of action, and competent civil remedies.",
             controlling_statutes=["Code of Civil Procedure, 1908"],
-            controlling_provisions=["Section 9 CPC", "Section 151 CPC"],
+            controlling_provisions=["CPC_1908_SEC_9", "CPC_1908_SEC_151"],
             search_queries=[query_text],
             factual_anchors=[]
         ))

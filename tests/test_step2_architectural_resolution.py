@@ -54,7 +54,7 @@ def test_gate_query1_family_law():
         all_controlling.extend(iss.controlling_provisions)
 
     # Must contain family statutes
-    assert any("Family Courts Act" in p for p in all_controlling), "Missing Family Courts Act provisions"
+    assert any("Family Courts Act" in p or "FAMILY_COURTS" in p for p in all_controlling), "Missing Family Courts Act provisions"
     assert any("Muslim Family Laws" in p or "MFLO" in p for p in all_controlling), "Missing MFLO provisions"
     assert any("Guardians and Wards" in p or "GWA" in p for p in all_controlling), "Missing GWA provisions"
 
@@ -114,8 +114,8 @@ def test_gate_query3_banking_recovery():
         all_controlling.extend(iss.controlling_provisions)
 
     # Must contain FIO provisions
-    assert any("Section 9" in p and "Financial Institutions" in p for p in all_controlling), "Missing Section 9 FIO 2001"
-    assert any("Section 10" in p and "Financial Institutions" in p for p in all_controlling), "Missing Section 10 FIO 2001"
+    assert any(("Section 9" in p or "SEC_9" in p) and ("Financial Institutions" in p or "FIO" in p) for p in all_controlling), "Missing Section 9 FIO 2001"
+    assert any(("Section 10" in p or "SEC_10" in p) and ("Financial Institutions" in p or "FIO" in p) for p in all_controlling), "Missing Section 10 FIO 2001"
 
     # MUST NOT contain Section 12 SRA
     for p in all_controlling + plan.statutory_provisions:
