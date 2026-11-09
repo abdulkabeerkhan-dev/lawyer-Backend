@@ -35,7 +35,11 @@ CONCEPTUAL_FACTUAL_PATTERNS = [
     },
     {
         "id": "MONEY_RECOVERY_LIMITATION",
-        "keywords": ["money lent", "debt", "loan", "recovery of money", "suit for money", "money payable", "price of goods", "borrowed money", "suit to recover money lent"],
+        "keywords": [
+            "money lent", "recovery of money", "suit for money", "money payable",
+            "price of goods sold", "borrowed money", "suit to recover money lent",
+            "recovery of debt", "suit for debt", "civil money suit"
+        ],
         "primary_provisions": [
             "Article 57 Limitation Act, 1908",
             "Article 64 Limitation Act, 1908",
@@ -49,7 +53,11 @@ CONCEPTUAL_FACTUAL_PATTERNS = [
     },
     {
         "id": "SPECIFIC_PERFORMANCE_SALE",
-        "keywords": ["specific performance", "agreement to sell", "sale deed", "advance money", "earnest money", "token money", "refused to execute", "refused to register"],
+        "keywords": [
+            "specific performance", "agreement to sell", "sale deed of plot",
+            "advance money on sale", "earnest money for plot", "token money for property",
+            "refused to execute sale deed", "refused to register sale deed", "suit for specific performance"
+        ],
         "primary_provisions": [
             "Article 113 Limitation Act, 1908",
             "Section 12 Specific Relief Act, 1877",
@@ -72,7 +80,13 @@ CONCEPTUAL_FACTUAL_PATTERNS = [
     },
     {
         "id": "CHEQUE_DISHONOUR",
-        "keywords": ["cheque", "check", "dishonour", "dishonored", "bounced", "lack of funds", "insufficient funds", "unpaid", "dishonestly issuing a cheque", "punishment for dishonestly issuing a cheque", "cheque deposited", "return memo", "criminal proceedings"],
+        "keywords": [
+            "cheque returned unpaid", "cheque dishonour", "dishonoured cheque", "dishonored cheque",
+            "bounced cheque", "bounce cheque", "lack of funds on cheque", "insufficient funds on cheque",
+            "dishonestly issuing a cheque", "punishment for dishonestly issuing a cheque",
+            "cheque deposited", "cheque return memo", "section 489-f", "489-f ppc", "489f ppc",
+            "cheque was dishonoured", "dishonoured on presentation"
+        ],
         "primary_provisions": [
             "Section 489-F PPC",
             "Section 200 Code of Criminal Procedure, 1898",
@@ -85,7 +99,12 @@ CONCEPTUAL_FACTUAL_PATTERNS = [
     },
     {
         "id": "ARREST_AND_BAIL_PROCEDURE",
-        "keywords": ["arrest", "arrested", "custody", "remand", "apply for bail", "grounds for bail", "bail in non-bailable", "bail under 302", "bail in a non-bailable"],
+        "keywords": [
+            "apply for bail", "grounds for bail", "bail in non-bailable", "bail under 302",
+            "bail in a non-bailable", "pre-arrest bail", "post-arrest bail", "anticipatory bail",
+            "grant of bail", "remand to police custody", "police remand", "arrested by police",
+            "police arrested the accused", "arrest of accused", "bail application"
+        ],
         "primary_provisions": [
             "Section 497 Code of Criminal Procedure, 1898",
             "Section 498 Code of Criminal Procedure, 1898",
@@ -99,7 +118,11 @@ CONCEPTUAL_FACTUAL_PATTERNS = [
     },
     {
         "id": "CHEATING_AND_PUNISHMENT",
-        "keywords": ["cheating under the ppc", "what is cheating", "punishment for cheating", "cheating under ppc", "cheating", "fraudulent inducement"],
+        "keywords": [
+            "cheating under the ppc", "what is cheating", "punishment for cheating",
+            "cheating under ppc", "section 420 ppc", "section 415 ppc",
+            "fraudulent inducement to deliver property", "cheated and dishonestly induced"
+        ],
         "primary_provisions": [
             "Section 415 Pakistan Penal Code, 1860",
             "Section 420 Pakistan Penal Code, 1860"
@@ -194,7 +217,10 @@ CONCEPTUAL_FACTUAL_PATTERNS = [
     },
     {
         "id": "PARTNER_JOINT_ACCOUNT_DISPUTE",
-        "keywords": ["partner took", "joint account", "partner withdrew", "partner took money", "rs. 5 million", "5 million", "my partner took rs. 5 million from our joint account"],
+        "keywords": [
+            "partner took", "partner withdrew from joint account", "partner withdrew money",
+            "partner took money", "partner took rs. 5 million from our joint account", "partner misappropriated from joint account"
+        ],
         "primary_provisions": [
             "Section 405 Pakistan Penal Code, 1860",
             "Section 406 Pakistan Penal Code, 1860",
@@ -218,7 +244,10 @@ CONCEPTUAL_FACTUAL_PATTERNS = [
     },
     {
         "id": "FRAUDULENT_DECREE",
-        "keywords": ["fraud decree", "decree by fraud", "misrepresentation", "set aside decree", "want of jurisdiction", "12(2)"],
+        "keywords": [
+            "fraud decree", "decree by fraud", "decree obtained through fraud", "decree obtained by misrepresentation",
+            "set aside decree on ground of fraud", "want of jurisdiction", "12(2) cpc", "section 12(2)"
+        ],
         "primary_provisions": ["Section 12(2) Code of Civil Procedure, 1908"],
         "act_codes": ["CPC_1908"],
         "forum": "Court which passed the final decree",
@@ -284,6 +313,20 @@ class DualTrackStatuteRouter:
         q_clean = query.strip()
         q_low = q_clean.lower()
 
+        is_civil_exec = (
+            any(k in q_low for k in ["judgment debtor", "execution of decree", "money decree", "order xxi", "section 55", "civil prison", "executing court"])
+            and not any(k in q_low for k in ["fir", "police station", "remand", "challan", "post-arrest bail", "pre-arrest bail"])
+        )
+        is_child_custody = any(k in q_low for k in ["custody of minor", "minor children", "hizanat", "guardians and wards", "tender age"])
+        is_rent_ctx = any(k in q_low for k in ["tenant", "landlord", "ejectment", "eviction", "prpa", "srpo", "rent tribunal"])
+        is_banking_ctx = any(k in q_low for k in ["banking court", "fio", "financial institution", "recovery of finance", "borrower"])
+        is_service_ctx = any(k in q_low for k in ["civil servant", "service tribunal", "seniority list", "pension", "civil servants act"])
+        is_land_rev = any(k in q_low for k in ["mutation", "intiqal", "patwari", "record of rights", "jamabandi", "land revenue"])
+        is_corporate_ctx = (
+            any(k in q_low for k in ["companies act", "section 286", "oppression", "mismanagement", "minority shareholder"]) or
+            (any(k in q_low for k in ["director", "board of directors", "shareholder"]) and any(k in q_low for k in ["siphoning", "siphon", "issuing shares"]))
+        )
+
         # Track A: Conceptual & Factual Mapping
         track_a_matches = []
         track_a_provisions = []
@@ -292,6 +335,18 @@ class DualTrackStatuteRouter:
         target_forum = "Civil Court / High Court"
 
         for entry in CONCEPTUAL_FACTUAL_PATTERNS:
+            entry_id = entry["id"]
+
+            # Exclusion guards to prevent keyword contamination
+            if entry_id == "ARREST_AND_BAIL_PROCEDURE" and (is_civil_exec or is_child_custody):
+                continue
+            if entry_id == "MONEY_RECOVERY_LIMITATION" and (is_rent_ctx or is_banking_ctx or is_service_ctx or is_civil_exec or ("stolen" in q_low)):
+                continue
+            if entry_id == "SPECIFIC_PERFORMANCE_SALE" and (is_rent_ctx or is_banking_ctx or is_service_ctx or is_land_rev or is_corporate_ctx or is_civil_exec):
+                continue
+            if entry_id == "CHEATING_AND_PUNISHMENT" and (is_land_rev or is_corporate_ctx):
+                continue
+
             if any(kw in q_low for kw in entry["keywords"]):
                 track_a_matches.append(entry["id"])
                 track_a_provisions.extend(entry["primary_provisions"])
@@ -310,7 +365,7 @@ class DualTrackStatuteRouter:
                 matched_span = m.group(0)
                 primary_val = m.group(1).strip()
                 sec_val = m.group(2).strip() if m.lastindex and m.lastindex >= 2 else ""
-                
+
                 formatted = tmpl.format(primary_val, sec_val).strip()
                 track_b_matches.append(matched_span)
                 track_b_provisions.append(formatted)
@@ -341,34 +396,71 @@ class DualTrackStatuteRouter:
         all_provisions = list(dict.fromkeys(provisions_b + provisions_a))
         all_acts = set(acts_b | acts_a)
 
-        # 1. Section 12 Ambiguity: SRA 1877 (Specific Performance) vs CPC 1908 (Fraud decree challenge)
-        has_property_or_sale = any(k in q_low for k in ["sale deed", "property", "advance", "contract", "buyer", "seller", "earnest", "agreement to sell", "specific performance"])
-        has_fraud_or_decree = any(k in q_low for k in ["fraud", "misrepresentation", "decree", "set aside", "12(2)"])
+        is_civil_exec = (
+            any(k in q_low for k in ["judgment debtor", "execution of decree", "money decree", "order xxi", "section 55", "civil prison", "executing court"])
+            and not any(k in q_low for k in ["fir", "police station", "remand", "challan", "post-arrest bail", "pre-arrest bail"])
+        )
+        is_rent_ctx = any(k in q_low for k in ["tenant", "landlord", "ejectment", "eviction", "prpa", "srpo", "rent tribunal"])
+        is_service_ctx = any(k in q_low for k in ["civil servant", "service tribunal", "seniority list", "pension", "civil servants act"])
+        is_family_ctx = any(k in q_low for k in ["khula", "dower", "mahr", "maintenance", "nafaqa", "custody", "hizanat", "iddat", "talaq", "family court", "guardians and wards act"]) and not any(k in q_low for k in ["inheritance", "partition"])
+        is_land_rev = any(k in q_low for k in ["mutation", "intiqal", "patwari", "record of rights", "jamabandi", "land revenue"])
+        is_corporate_ctx = (
+            any(k in q_low for k in ["companies act", "section 286", "oppression", "mismanagement", "minority shareholder"]) or
+            (any(k in q_low for k in ["director", "board of directors", "shareholder"]) and any(k in q_low for k in ["siphoning", "siphon", "issuing shares"]))
+        )
 
-        if has_property_or_sale and not has_fraud_or_decree:
-            all_provisions = [p for p in all_provisions if not ("cpc" in p.lower() and "12" in p.lower())]
-            all_acts.add("SRA_1877")
-        elif has_fraud_or_decree:
+        # 1. Section 12 Ambiguity: SRA 1877 (Specific Performance) vs CPC 1908 (Fraud decree challenge)
+        is_decree_challenge = (
+            any(k in q_low for k in ["12(2)", "12 (2)", "decree obtained through fraud", "decree obtained by fraud", "fraudulent decree", "setting aside decree", "decree by fraud"])
+            or ("decree" in q_low and "fraud" in q_low and not (is_civil_exec or is_land_rev or is_corporate_ctx))
+        )
+        has_property_or_sale = any(k in q_low for k in ["sale deed", "property", "advance", "contract", "buyer", "seller", "earnest", "agreement to sell", "specific performance"])
+
+        if is_decree_challenge:
             all_provisions = [p for p in all_provisions if not ("specific relief" in p.lower() and "12" in p.lower())]
             if not any("12(2)" in p for p in all_provisions):
                 all_provisions.insert(0, "Section 12(2) Code of Civil Procedure, 1908")
             all_acts.add("CPC_1908")
+        elif has_property_or_sale and not (is_rent_ctx or is_land_rev or is_service_ctx or is_civil_exec):
+            all_provisions = [p for p in all_provisions if not ("cpc" in p.lower() and "12" in p.lower())]
+            all_acts.add("SRA_1877")
 
         # 2. Section 22 Ambiguity: FIO 2001 vs CPC 1908
         if any(k in q_low for k in ["banking", "bank", "borrower", "finance", "fio"]):
             all_provisions = [p for p in all_provisions if not ("cpc" in p.lower() and "22" in p.lower())]
             all_acts.add("FIO_2001")
 
-        # 3. Bail & Act 1882 Anti-Collision: If bail query, scrub TPA 1882
-        if "bail" in q_low:
-            all_provisions = [p for p in all_provisions if not ("transfer of property" in p.lower() or "tpa" in p.lower())]
-            all_acts.discard("TPA_1882")
-            all_acts.add("CRPC_1898")
+        # 3. Domain Scrubbing
+        if is_family_ctx:
+            all_provisions = [p for p in all_provisions if not any(bad in p.lower() for bad in ["ppc", "489-f", "489f", "crpc", "penal code", "criminal procedure", "sra", "specific relief", "order xxxvii", "order xxi"])]
+            all_acts.discard("PPC_1860")
+            all_acts.discard("CRPC_1898")
+            all_acts.discard("SRA_1877")
+
+        if is_rent_ctx and not any(k in q_low for k in ["bounced", "dishonour", "489"]):
+            all_provisions = [p for p in all_provisions if not any(bad in p.lower() for bad in ["ppc", "489-f", "489f", "crpc", "sra", "article 57", "article 58", "article 64", "section 12"])]
+            all_acts.discard("PPC_1860")
+            all_acts.discard("CRPC_1898")
+            all_acts.discard("SRA_1877")
+
+        if is_service_ctx:
+            all_provisions = [p for p in all_provisions if not any(bad in p.lower() for bad in ["ppc", "489-f", "489f", "crpc", "sra", "article 57", "article 58", "section 12"])]
+            all_acts.discard("PPC_1860")
+            all_acts.discard("CRPC_1898")
+            all_acts.discard("SRA_1877")
+
+        if is_civil_exec:
+            all_provisions = [p for p in all_provisions if not any(bad in p.lower() for bad in ["crpc", "497", "498", "496", "161", "173", "article 57", "article 58", "article 64", "section 12(2)"])]
+            all_acts.discard("CRPC_1898")
+
+        if is_land_rev:
+            all_provisions = [p for p in all_provisions if not any(bad in p.lower() for bad in ["420", "ppc", "crpc", "section 12 "]) or "section 42" in p.lower()]
+            all_acts.discard("PPC_1860")
+            all_acts.discard("CRPC_1898")
 
         return all_provisions, all_acts
 
 
-# ==============================================================================
 # Layers 3 & 4: Query Understanding, High-Precision Retrieval & Pack Assembly
 # ==============================================================================
 
@@ -424,7 +516,7 @@ def analyze_statute_query_intent(query_text: str) -> StatuteQueryIntent:
 
     # Domain classification
     primary_domain = "civil"
-    if any(k in q_lower for k in ["partner took", "joint account", "5 million", "our joint account"]):
+    if any(k in q_lower for k in ["partner took", "our joint account"]) or ("partner" in q_lower and "joint account" in q_lower):
         primary_domain = "mixed"
     elif any(a in ["PPC_1860", "CRPC_1898"] for a in acts) or any("criminal" in str(d).lower() for d in domains):
         primary_domain = "criminal"

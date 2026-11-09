@@ -441,10 +441,15 @@ def filter_provisions_by_domain(provisions: List[str], domain: str) -> List[str]
             if any(bad in p_low for bad in ["ppc", "489-f", "489f", "crpc", "penal code", "criminal procedure", "sra", "specific relief", "order xxxvii"]):
                 continue
         elif dom in ("rent", "banking"):
-            if any(bad in p_low for bad in ["ppc", "489-f", "489f", "crpc", "penal code", "criminal procedure", "sra", "specific relief"]):
+            if any(bad in p_low for bad in ["ppc", "489-f", "489f", "crpc", "penal code", "criminal procedure", "sra", "specific relief", "article 57", "article 58", "article 62", "article 64"]):
+                continue
+        elif dom == "corporate":
+            if any(bad in p_low for bad in ["sra", "specific relief", "family courts", "mflo", "gwa", "prpa", "article 57", "article 58"]):
+                continue
+            if any(bad in p_low for bad in ["420", "415"]) and not any(k in p_low for k in ["409", "companies"]):
                 continue
         elif dom == "service":
-            if any(bad in p_low for bad in ["ppc", "489-f", "489f", "sra", "specific relief", "family courts", "mflo", "gwa", "prpa", "fio"]):
+            if any(bad in p_low for bad in ["ppc", "489-f", "489f", "sra", "specific relief", "family courts", "mflo", "gwa", "prpa", "fio", "article 57", "article 58"]):
                 continue
         elif dom == "constitutional":
             if any(bad in p_low for bad in ["489-f", "489f", "sra", "specific relief", "prpa", "fio", "family courts"]):
@@ -453,7 +458,10 @@ def filter_provisions_by_domain(provisions: List[str], domain: str) -> List[str]
             if any(bad in p_low for bad in ["family courts", "mflo", "gwa", "prpa", "fio", "sra", "specific relief"]):
                 continue
         elif dom == "criminal":
-            if any(bad in p_low for bad in ["sra", "specific relief", "guardians and wards", "family courts act", "mflo", "prpa", "fio"]):
+            if any(bad in p_low for bad in ["sra", "specific relief", "guardians and wards", "family courts act", "mflo", "prpa", "fio", "article 57", "article 58", "article 62", "article 64"]):
+                continue
+        elif dom == "civil":
+            if any(bad in p_low for bad in ["crpc", "497", "498", "496", "489-f", "489f"]):
                 continue
         clean.append(p_str)
     return clean
@@ -508,21 +516,40 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     clarification_options: List[Dict[str, Any]] = []
 
     # Domain Flags
+    is_civil_execution = (
+        any(k in q_low for k in ["judgment debtor", "execution of decree", "money decree", "order xxi", "section 55", "warrant of arrest against judgment debtor", "civil prison", "executing court"])
+        and not any(k in q_low for k in ["fir", "police station", "remand", "challan", "post-arrest bail", "pre-arrest bail"])
+    )
+    is_land_revenue = any(k in q_low for k in [
+        "land revenue", "mutation", "intiqal", "record of rights", "jamabandi",
+        "revenue officer", "patwari", "revenue court", "partition of agricultural",
+        "section 42 land revenue", "section 135 land revenue", "section 172 land revenue",
+        "illegal dispossession act", "land grabber", "illegal dispossession"
+    ])
     is_partition = any(k in q_low for k in ["partition", "co-sharer", "co-owner", "hotchpot", "joint property", "joint ancestral", "order xx rule 18", "partition act", "order viii rule 6", "metes and bounds"])
     is_benami = any(k in q_low for k in ["benami", "ostensible owner", "benamidar", "advancement"])
     is_quashment = (
         any(k in q_low for k in ["quashment", "quash", "quashing", "561-a", "561a"])
         or (("fir" in q_low or "criminal" in q_low) and any(k in q_low for k in ["quash", "561"]))
     )
-    is_bail = any(k in q_low for k in ["pre-arrest bail", "pre arrest bail", "post-arrest bail", "post arrest bail", "anticipatory bail"]) or ("bail" in q_low and any(k in q_low for k in ["496", "497", "498", "arrest", "custody", "fir", "non-bailable"]))
-    is_commercial_crime = (
-        any(k in q_low for k in ["405", "406", "409", "420", "breach of trust", "cheating", "misappropriat", "director", "fiduciary", "entrustment", "forgery", "468", "471"])
-        and any(k in q_low for k in ["contract", "commercial", "agreement", "loan", "civil dispute", "business", "company", "shares", "power of attorney", "pending civil", "civil court", "civil suit", "recovery", "same agreement"])
+    is_bail = (
+        (any(k in q_low for k in ["pre-arrest bail", "pre arrest bail", "post-arrest bail", "post arrest bail", "anticipatory bail"]) or ("bail" in q_low and any(k in q_low for k in ["496", "497", "498", "arrest", "custody", "fir", "non-bailable"])))
+        and not is_civil_execution
     )
-    is_cheque_dishonour = any(k in q_low for k in ["cheque", "dishonour", "dishonored", "bounced", "489-f", "489f", "138"])
+    is_corporate = (
+        any(k in q_low for k in ["companies act", "company law", "section 286", "section 288", "oppression", "mismanagement", "minority shareholder", "company bench", "secp"])
+        or (
+            any(k in q_low for k in ["director", "board of directors", "majority director", "managing director", "shareholder"])
+            and any(k in q_low for k in ["siphoning", "siphon", "allotment of shares", "issuing shares", "agm", "eogm", "company assets", "corporate assets"])
+        )
+    )
+    is_commercial_crime = (
+        any(k in q_low for k in ["405", "406", "409", "420", "breach of trust", "cheating", "misappropriat", "fiduciary", "entrustment", "forgery", "468", "471"])
+        and any(k in q_low for k in ["contract", "commercial", "agreement", "loan", "civil dispute", "business", "power of attorney", "pending civil", "civil court", "civil suit", "recovery", "same agreement"])
+        and not (is_land_revenue or is_corporate or is_civil_execution)
+    )
     is_rent = bool(re.search(r'\b(?:rent|rented|tenan[ct]|landlord|evict|ejectment|tenancy|commercial shop|rent tribunal)\b', q_low) or any(k in q_low for k in ["prpa", "srpo"]))
     is_banking = any(k in q_low for k in ["banking court", "bank", "financial institution", "recovery of finance", "fio", "firo"]) and any(k in q_low for k in ["decree", "appeal", "loan", "finance", "stay", "deposit", "leave to defend", "banking", "section 22", "section 10"])
-    is_corporate = any(k in q_low for k in ["companies act", "company law", "section 286", "section 288", "oppression", "mismanagement", "minority shareholder", "company bench", "secp"])
     is_habeas_corpus = any(k in q_low for k in ["habeas corpus", "unlawful detention", "illegal detention", "detenue", "without production"])
     is_cybercrime = any(k in q_low for k in ["peca", "cybercrime", "cyber crime", "hacking", "cyberstalking", "cyber stalking", "online harassment", "identity theft", "electronic crimes", "unauthorized access to secure"])
     is_ip = any(k in q_low for k in ["trademark", "trade mark", "passing off", "copyright", "software piracy", "pirated software"])
@@ -533,17 +560,41 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         or ("family" in q_low and not any(k in q_low for k in ["land", "property", "partition", "estate", "ancestral", "share", "heir"]))
     )
     is_female_inheritance = any(k in q_low for k in ["female heir", "female legal heir", "female co-heir", "sister", "daughter", "mother", "sister's share", "refusing sister"]) and any(k in q_low for k in ["inheritance", "tamleek", "relinquishment", "mutation", "shari share", "depriv", "estate", "women's property", "498-a", "498a"])
+    is_cheque_dishonour = (
+        (
+            any(k in q_low for k in ["cheque", "check", "489-f", "489f"])
+            and any(k in q_low for k in ["dishonour", "dishonored", "bounced", "unpaid", "return memo", "insufficient", "138"])
+        )
+        or any(k in q_low for k in ["dishonestly issuing a cheque", "bounced cheque", "dishonoured cheque", "dishonored cheque"])
+    ) and not (is_family or is_service or is_rent or is_corporate or is_land_revenue or is_civil_execution)
     is_sec12_2 = (
         any(k in q_low for k in ["12(2)", "section 12(2)", "12 (2)", "decree obtained through fraud", "fraudulent decree", "setting aside decree", "set aside decree", "decree by fraud", "decree through fraud"])
         or (
             "decree" in q_low
             and any(k in q_low for k in ["fraud", "misrepresentation", "mis-representation", "collusion", "want of jurisdiction", "without jurisdiction", "void decree", "nullity"])
+            and not (is_civil_execution or is_land_revenue or is_corporate)
         )
     )
-    is_execution = any(k in q_low for k in ["order xxi", "execution of decree", "objection petition", "rule 97", "rule 103"])
-    is_specific_perf = any(k in q_low for k in ["sale deed", "agreement to sell", "specific performance", "advance money", "earnest money", "token money"]) or (any(k in q_low for k in ["seller", "buyer", "vendor", "vendee"]) and any(k in q_low for k in ["sale", "deed", "refused", "money", "property"]))
+    is_execution = any(k in q_low for k in ["order xxi", "execution of decree", "objection petition", "rule 97", "rule 103"]) or is_civil_execution
+    is_specific_perf = (
+        (
+            any(k in q_low for k in ["sale deed", "agreement to sell", "specific performance", "advance money", "earnest money", "token money"])
+            or (any(k in q_low for k in ["seller", "buyer", "vendor", "vendee"]) and any(k in q_low for k in ["sale", "deed", "refused", "money", "property"]))
+        )
+        and not (is_rent or is_banking or is_family or is_service or is_corporate or is_land_revenue or is_civil_execution)
+    )
     is_adverse_possession = any(k in q_low for k in ["adverse possession", "hostile possession", "ouster", "extinguishment of title"]) or ("section 28" in q_low and "limitation" in q_low) or ("article 144" in q_low and "limitation" in q_low) or ("article 149" in q_low and "limitation" in q_low)
-    is_money_recovery = any(k in q_low for k in ["recovery of money", "money suit", "suit for money", "debt", "loan", "price of goods", "suit for recovery"])
+    is_money_recovery = (
+        any(k in q_low for k in ["recovery of money", "money suit", "suit for money", "debt", "loan", "price of goods", "suit for recovery"])
+        and not is_rent
+        and not is_banking
+        and not is_civil_execution
+        and not any(k in q_low for k in [
+            "recovery of possession", "possession from tenant", "recovery of stolen",
+            "recovery of vehicle", "recovery of child", "custody", "arrears of pension",
+            "pension", "dower", "unpaid dower", "arrears of rent"
+        ])
+    )
 
     # Classification Logic
     if is_habeas_corpus:
@@ -587,6 +638,27 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         allowed_domains_filter = ["intellectual_property", "civil"]
         procedural_remedy = "Suit for Infringement & Injunction under Trade Marks Ordinance 2001 / Copyright Ordinance 1962"
         competent_forum = "District Court / Intellectual Property Tribunal"
+
+    elif is_civil_execution:
+        primary_domain = "civil"
+        subdomains = ["execution_of_decree", "arrest_of_judgment_debtor", "section_55_cpc", "order_xxi"]
+        legacy_domains.append("general civil law / execution")
+        legacy_matter_type.append("civil")
+        is_cross_domain_relevant = False
+        allowed_domains_filter = ["civil"]
+        procedural_remedy = "Show Cause Notice & Execution of Money Decree under Section 55 & Order XXI Rule 37 CPC"
+        competent_forum = "Executing Court / Civil Court"
+
+    elif is_land_revenue:
+        primary_domain = "civil"
+        secondary_domains = []
+        subdomains = ["land_revenue", "mutation_challenge", "revenue_record", "section_42_land_revenue"]
+        legacy_domains.extend(["civil property", "land revenue"])
+        legacy_matter_type.extend(["civil", "land_revenue"])
+        is_cross_domain_relevant = False
+        allowed_domains_filter = ["civil"]
+        procedural_remedy = "Suit for Declaration & Cancellation of Mutation (s.42 SRA 1877 / s.42 Land Revenue Act 1967)"
+        competent_forum = "Civil Court / Revenue Officer (Collector / Commissioner)"
 
     elif is_quashment:
         primary_domain = "criminal"
@@ -821,7 +893,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         procedural_remedy = "Company Petition under Section 286 Companies Act 2017"
         competent_forum = "Special Court / High Court Company Bench"
 
-    elif is_bail or any(k in q_low for k in ["fir", "arrest", "accused", "police", "custody", "murder", "302", "ppc", "crpc"]):
+    elif not is_civil_execution and (is_bail or any(k in q_low for k in ["fir", "arrest", "accused", "police", "custody", "murder", "302", "ppc", "crpc"])):
         primary_domain = "criminal"
         if "pre-arrest" in q_low or "pre arrest" in q_low or "anticipatory bail" in q_low:
             subdomains = ["bail", "pre_arrest_bail"]

@@ -115,30 +115,49 @@ def extract_legal_issues_from_fact_pattern(
         "deceased father's estate", "pre-emption of dwelling"
     ])
 
+    is_civil_execution = (
+        any(k in q_low for k in ["judgment debtor", "execution of decree", "money decree", "order xxi", "section 55", "warrant of arrest against judgment debtor", "civil prison", "executing court"])
+        and not any(k in q_low for k in ["fir", "police station", "remand", "challan", "post-arrest bail", "pre-arrest bail"])
+    )
+
+    is_corporate_signal = (
+        any(k in q_low for k in ["companies act", "company law", "section 286", "section 288", "oppression", "mismanagement", "minority shareholder", "company bench", "secp"]) or
+        (any(k in q_low for k in ["director", "board of directors", "majority director", "managing director", "shareholder"]) and
+         any(k in q_low for k in ["siphoning", "siphon", "allotment of shares", "issuing shares", "agm", "eogm", "company assets", "corporate assets"]))
+    )
+
     is_cheque_signal = any(phrase in q_low for phrase in [
         "cheque returned unpaid", "insufficient funds", "dishonoured cheque",
         "dishonored cheque", "bounced cheque", "return memo", "section 489-f",
         "489f ppc", "cheque was dishonoured", "cheque dishonour", "dishonoured on presentation",
         "cheque of rs", "deposited a cheque"
-    ]) and not (is_family_signal or is_inheritance_signal)
+    ]) and not (is_family_signal or is_inheritance_signal or is_service_signal or is_rent_signal or is_corporate_signal or is_civil_execution)
 
     is_criminal_signal = (
-        is_cheque_signal or
-        is_quashment_signal or
-        any(k in q_low for k in [
-            "fir", "police", "arrest", "arrested", "custody", "remand", "bail",
-            "pre-arrest", "post-arrest", "theft", "379", "378",
-            "cheating", "420", "415", "criminal breach of trust", "406", "405",
-            "302", "murder", "qatl", "stolen"
-        ])
+        (
+            is_cheque_signal or
+            is_quashment_signal or
+            any(k in q_low for k in [
+                "fir", "police", "pre-arrest", "post-arrest", "theft", "379", "378",
+                "cheating", "420", "415", "criminal breach of trust", "406", "405",
+                "302", "murder", "qatl", "stolen"
+            ]) or
+            (any(k in q_low for k in ["arrest", "arrested", "custody", "remand", "bail"]) and not (is_civil_execution or is_family_signal))
+        )
+        and not (is_civil_execution or is_land_revenue_signal or is_corporate_signal)
     )
 
-    is_sale_specific_perf = any(k in q_low for k in [
-        "specific performance", "agreement to sell", "sale deed",
-        "plot", "earnest money", "advance money"
-    ]) or (
-        any(k in q_low for k in ["seller", "buyer", "vendor", "vendee"]) and
-        any(k in q_low for k in ["sale", "refused"])
+    is_sale_specific_perf = (
+        (
+            any(k in q_low for k in [
+                "specific performance", "agreement to sell", "sale deed",
+                "plot", "earnest money", "advance money"
+            ]) or (
+                any(k in q_low for k in ["seller", "buyer", "vendor", "vendee"]) and
+                any(k in q_low for k in ["sale", "refused"])
+            )
+        )
+        and not (is_family_signal or is_rent_signal or is_banking_signal or is_service_signal or is_constitutional_signal or is_land_revenue_signal or is_cyber_ip_signal or is_corporate_signal or is_civil_execution)
     )
 
     if planner_domain and planner_domain in {
@@ -157,6 +176,10 @@ def extract_legal_issues_from_fact_pattern(
         primary_domain = "service"
     elif is_constitutional_signal:
         primary_domain = "constitutional"
+    elif is_civil_execution:
+        primary_domain = "civil"
+    elif is_corporate_signal:
+        primary_domain = "corporate"
     elif is_quashment_signal:
         primary_domain = "criminal"
     elif is_cyber_ip_signal:
@@ -660,15 +683,15 @@ def extract_legal_issues_from_fact_pattern(
         has_cheating = any(k in q_low for k in ["cheating", "420", "415", "fraud", "deceiv", "dishonest inducement"])
         has_cbt = any(k in q_low for k in ["breach of trust", "406", "405", "409", "misappropriat", "entrustment"])
 
-        if has_theft:
+        if has_theft or any(k in q_low for k in ["stolen", "recovery of stolen", "recovery of vehicle", "411"]):
             issues.append(LegalSubIssue(
                 issue_id="issue_theft_379_ppc",
-                heading="Offence of Theft (Sections 378 & 379 Pakistan Penal Code, 1860)",
-                description="Statutory ingredients of theft under Section 378 PPC and punishment under Section 379 PPC.",
-                controlling_statutes=["Pakistan Penal Code, 1860"],
-                controlling_provisions=["PPC_1860_SEC_378", "PPC_1860_SEC_379"],
-                search_queries=["Section 378 Section 379 PPC theft ingredients movable property dishonest intention", "Section 379 PPC false implication"],
-                factual_anchors=["theft", "Section 379 PPC"]
+                heading="Offence of Theft & Recovery of Stolen Property (Sections 379 & 411 PPC 1860, Section 103 CrPC)",
+                description="Statutory ingredients of theft under Section 379 PPC, dishonestly receiving stolen property under Section 411 PPC, and recovery memo under Section 103 CrPC.",
+                controlling_statutes=["Pakistan Penal Code, 1860", "Code of Criminal Procedure, 1898"],
+                controlling_provisions=["PPC_1860_SEC_379", "PPC_1860_SEC_411", "CRPC_1898_SEC_103"],
+                search_queries=["Section 379 Section 411 PPC theft receiving stolen property recovery memo Section 103 CrPC", "recovery of stolen vehicle independent witnesses"],
+                factual_anchors=["theft", "stolen property", "Section 411 PPC", "Section 103 CrPC"]
             ))
 
         if has_cheating:
@@ -772,6 +795,50 @@ def extract_legal_issues_from_fact_pattern(
             ))
 
         open_questions.append("Whether there is any recovery of property or documentary proof demonstrating fraudulent intent at the inception of the contract.")
+
+    # =========================================================================
+    # 10A. CORPORATE OPPRESSION & MISMANAGEMENT
+    # =========================================================================
+    elif primary_domain == "corporate":
+        issues.append(LegalSubIssue(
+            issue_id="issue_corporate_oppression_mismanagement",
+            heading="Oppression and Mismanagement by Majority Directors (Sections 286-288 Companies Act 2017)",
+            description="Petition before Company Bench against fraudulent diversion or siphoning of corporate assets and illegal share allotment.",
+            controlling_statutes=["Companies Act, 2017"],
+            controlling_provisions=["COMPANIES_2017_SEC_286", "COMPANIES_2017_SEC_287"],
+            search_queries=[
+                "Section 286 Companies Act 2017 oppression and mismanagement directors siphoning company assets",
+                "Section 287 powers of company bench interim relief"
+            ],
+            factual_anchors=["directors", "siphoning", "shares", "Companies Act"]
+        ))
+        if any(k in q_low for k in ["409", "criminal breach of trust", "misappropriat"]):
+            issues.append(LegalSubIssue(
+                issue_id="issue_corporate_breach_of_trust_director",
+                heading="Criminal Breach of Trust by Director (Section 409 PPC 1860)",
+                description="Penal liability for criminal breach of trust committed by director or officer of company having dominion over corporate funds.",
+                controlling_statutes=["Pakistan Penal Code, 1860"],
+                controlling_provisions=["PPC_1860_SEC_409"],
+                search_queries=["Section 409 PPC criminal breach of trust director company funds dominion"],
+                factual_anchors=["director", "misappropriation", "Section 409 PPC"]
+            ))
+
+    # =========================================================================
+    # 10B. CIVIL EXECUTION & ARREST OF JUDGMENT DEBTOR
+    # =========================================================================
+    if is_civil_execution or any(k in q_low for k in ["judgment debtor", "execution of decree", "section 55 cpc", "arrest of judgment debtor", "order xxi"]):
+        issues.append(LegalSubIssue(
+            issue_id="issue_civil_execution_arrest_debtor",
+            heading="Execution of Money Decree & Arrest of Judgment Debtor (Sections 51 & 55, Order XXI Rule 37 CPC)",
+            description="Statutory procedure for execution of decree against person of judgment debtor; mandatory requirement of show-cause notice and proof of means before detention in civil prison.",
+            controlling_statutes=["Code of Civil Procedure, 1908"],
+            controlling_provisions=["CPC_1908_SEC_55", "CPC_1908_SEC_51", "CPC_1908_ORD_XXI_R_37"],
+            search_queries=[
+                "Section 55 CPC arrest detention judgment debtor civil prison execution money decree",
+                "Order XXI Rule 37 CPC notice before arrest show cause means to pay"
+            ],
+            factual_anchors=["judgment debtor", "Section 55 CPC", "execution of decree", "warrant of arrest"]
+        ))
 
     # =========================================================================
     # 11. CIVIL SPECIFIC PERFORMANCE
