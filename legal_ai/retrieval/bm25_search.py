@@ -7,26 +7,57 @@ Scores 40,575 indexed judgment chunks for exact statutory phrases and terms.
 
 import sys
 import re
+import os
+import gc
+import threading
 from typing import Dict, List, Any, Optional
 from legal_ai.ranking.court_weighting import normalize_court_name
 
 
 _GLOBAL_BM25_INSTANCE = None
+_BM25_LOCK = threading.Lock()
+
+
+def set_bm25_index_instance(instance: Any) -> None:
+    """Explicitly injects or overrides the global singleton BM25 instance."""
+    global _GLOBAL_BM25_INSTANCE
+    with _BM25_LOCK:
+        _GLOBAL_BM25_INSTANCE = instance
 
 
 def get_bm25_index_instance() -> Any:
+    """
+    Returns the thread-safe global singleton BM25 index instance.
+    Reuses main.global_bm25_index if already loaded to eliminate duplicate RAM usage.
+    """
     global _GLOBAL_BM25_INSTANCE
-    import os
     if os.environ.get("RENDER") or os.environ.get("DISABLE_IN_MEMORY_BM25", "").lower() in ("true", "1", "yes"):
         return None
-    if _GLOBAL_BM25_INSTANCE is None:
+
+    if _GLOBAL_BM25_INSTANCE is not None:
+        return _GLOBAL_BM25_INSTANCE
+
+    with _BM25_LOCK:
+        if _GLOBAL_BM25_INSTANCE is not None:
+            return _GLOBAL_BM25_INSTANCE
+
+        # Check if main.py has already loaded the global index
+        main_mod = sys.modules.get("main")
+        if main_mod is not None:
+            main_idx = getattr(main_mod, "global_bm25_index", None)
+            if main_idx is not None:
+                _GLOBAL_BM25_INSTANCE = main_idx
+                return _GLOBAL_BM25_INSTANCE
+
         try:
             from hybrid_search import BM25Index
             idx_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "bm25_index.pkl")
             if os.path.exists(idx_path):
                 _GLOBAL_BM25_INSTANCE = BM25Index.load(idx_path)
-        except Exception:
-            pass
+                gc.collect()
+        except Exception as err:
+            print(f"⚠️ [BM25Search] Error loading BM25 index: {err}", file=sys.stderr)
+
     return _GLOBAL_BM25_INSTANCE
 
 

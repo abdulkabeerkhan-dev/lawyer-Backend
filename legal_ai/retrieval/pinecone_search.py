@@ -43,6 +43,26 @@ from core.authority_ranking import is_irrelevant_subject
 
 logger = logging.getLogger(__name__)
 
+# Pinecone Circuit Breaker to fast-fail on auth errors (e.g. 401 UNAUTHENTICATED)
+_PINECONE_CIRCUIT_TRIPPED_UNTIL: float = 0.0
+_PINECONE_CIRCUIT_REASON: str = ""
+
+
+def is_pinecone_circuit_open() -> bool:
+    """Returns True if the Pinecone circuit breaker is active."""
+    import time
+    return time.time() < _PINECONE_CIRCUIT_TRIPPED_UNTIL
+
+
+def trip_pinecone_circuit(duration: float = 60.0, reason: str = "") -> None:
+    """Trips the Pinecone circuit breaker to avoid cascading timeouts and thread storms."""
+    global _PINECONE_CIRCUIT_TRIPPED_UNTIL, _PINECONE_CIRCUIT_REASON
+    import time
+    _PINECONE_CIRCUIT_TRIPPED_UNTIL = time.time() + duration
+    _PINECONE_CIRCUIT_REASON = reason
+    logger.warning(f"⚠️ [PineconeSearch] CIRCUIT BREAKER TRIPPED for {duration}s: {reason}")
+
+
 # Feature flag: disabled by default in production until explicit rollout
 ENABLE_DUAL_MODE_PINECONE_SEARCH: bool = (
     os.getenv("ENABLE_DUAL_MODE_PINECONE_SEARCH", "false").lower() in ("true", "1", "yes")
@@ -132,6 +152,8 @@ async def execute_pinecone_query_safe(
     """
     Executes a Pinecone query safely with timeout catching and non-blocking degradation.
     """
+    if not index or query_vector is None or is_pinecone_circuit_open():
+        return []
     try:
         def _sync_query():
             if filter_dict:
@@ -160,7 +182,11 @@ async def execute_pinecone_query_safe(
         logger.warning(f"⚠️ [PineconeSearch] Query timed out after {timeout_seconds}s (filter={filter_dict is not None})")
         return []
     except Exception as err:
-        logger.warning(f"⚠️ [PineconeSearch] Query error: {err} (filter={filter_dict is not None})")
+        err_msg = str(err)
+        if any(tok in err_msg for tok in ("401", "UNAUTHENTICATED", "Wrong API key", "Invalid API key")):
+            trip_pinecone_circuit(60.0, err_msg)
+        else:
+            logger.warning(f"⚠️ [PineconeSearch] Query error: {err} (filter={filter_dict is not None})")
         return []
 
 
@@ -192,6 +218,9 @@ async def search_pinecone_dual_mode(
         "allowed_domains": [],
         "is_cross_domain_relevant": False
     }
+
+    if is_pinecone_circuit_open():
+        return [], telemetry
 
     index = get_pinecone_index()
     if not index or not query_text:
@@ -393,6 +422,9 @@ async def search_pinecone_dense(
         return candidates
 
     # Default Legacy Production Search (Identical to original implementation)
+    if is_pinecone_circuit_open():
+        return []
+
     index = get_pinecone_index()
     if not index or not query_text:
         return []

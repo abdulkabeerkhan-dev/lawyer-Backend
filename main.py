@@ -1004,6 +1004,16 @@ def get_global_bm25_index() -> Optional[BM25Index]:
         print("[BM25] Low-memory mode active (RENDER detected or DISABLE_IN_MEMORY_BM25=true). In-memory BM25 index bypassed; utilizing Pinecone vector retrieval and Turso master corpus.", flush=True)
         return None
 
+    if global_bm25_index is None:
+        try:
+            from legal_ai.retrieval.bm25_search import get_bm25_index_instance
+            shared_inst = get_bm25_index_instance()
+            if shared_inst is not None:
+                global_bm25_index = shared_inst
+                return global_bm25_index
+        except Exception:
+            pass
+
     if global_bm25_index is None and os.path.exists(BM25_INDEX_FILE):
 
         try:
@@ -1011,6 +1021,14 @@ def get_global_bm25_index() -> Optional[BM25Index]:
             global_bm25_index = BM25Index.load(BM25_INDEX_FILE)
 
             print(f"[BM25] Global BM25 index loaded: {global_bm25_index.corpus_size:,} chunks.", flush=True)
+
+            try:
+                from legal_ai.retrieval.bm25_search import set_bm25_index_instance
+                set_bm25_index_instance(global_bm25_index)
+            except Exception:
+                pass
+            import gc
+            gc.collect()
 
         except Exception as bm25_err:
 

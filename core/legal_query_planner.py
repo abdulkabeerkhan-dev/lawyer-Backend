@@ -2056,9 +2056,30 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
                 timeout=45.0
             )
             raw_text = "".join(getattr(b, "text", "") for b in resp.content if getattr(b, "type", None) == "text").strip()
-            m_json = re.search(r'\{.*\}', raw_text, re.DOTALL)
-            if m_json:
-                data = json.loads(m_json.group(0))
+            data = None
+            # 1. Try markdown code block
+            m_code = re.search(r'```(?:json)?\s*(\{[\s\S]*?\})\s*```', raw_text)
+            if m_code:
+                try:
+                    data = json.loads(m_code.group(1))
+                except Exception:
+                    pass
+
+            # 2. Try raw JSON extraction with comma cleaning
+            if not data:
+                m_json = re.search(r'\{[\s\S]*\}', raw_text)
+                if m_json:
+                    json_str = m_json.group(0)
+                    try:
+                        data = json.loads(json_str)
+                    except Exception:
+                        clean_json = re.sub(r',\s*([\}\]])', r'', json_str)
+                        try:
+                            data = json.loads(clean_json)
+                        except Exception:
+                            pass
+
+            if data and isinstance(data, dict):
                 fallback = create_deterministic_fallback_plan(query)
 
                 # Normalize provisions & gather from decomposition issues

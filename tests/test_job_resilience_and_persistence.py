@@ -18,7 +18,7 @@ from main import (
 )
 
 def test_job_persistence_survives_jobs_store_wipe():
-    """Verify that jobs persisted via persist_in_flight_job_state are recovered after jobs_store is cleared."""
+    """Verify that jobs persisted via persist_in_flight_job_state fail fast on orphan rather than hung 404."""
     async def _run():
         test_job_id = "test-job-uuid-12345"
         test_user_id = "test-user-999"
@@ -41,10 +41,24 @@ def test_job_persistence_survives_jobs_store_wipe():
         assert recovered_store[test_job_id]["stage"] == "searching_precedents"
         assert recovered_store[test_job_id]["status"] == "running"
         
-        # 4. Polling get_query_job_status should return running, NOT 404!
+        # 4. Polling get_query_job_status fails fast on orphaned in-flight jobs after server restart
         status_res = await get_query_job_status(test_job_id, authenticated_user_id=test_user_id)
-        assert status_res["status"] == "running"
-        assert status_res["stage"] == "searching_precedents"
+        assert status_res["status"] == "error"
+        assert "interrupted by a server restart" in status_res["error"]
+
+        # 5. Persisted DONE job with result correctly returns done after jobs_store wipe
+        done_job_id = "test-done-uuid-67890"
+        persist_in_flight_job_state(
+            done_job_id,
+            stage="done",
+            status="done",
+            extra={"user_id": test_user_id, "result": {"answer": "Completed legal memo", "citations": []}}
+        )
+        if done_job_id in jobs_store:
+            del jobs_store[done_job_id]
+        done_res = await get_query_job_status(done_job_id, authenticated_user_id=test_user_id)
+        assert done_res["status"] == "done"
+        assert done_res["result"]["answer"] == "Completed legal memo"
 
     asyncio.run(_run())
 
