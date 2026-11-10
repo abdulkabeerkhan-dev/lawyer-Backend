@@ -433,6 +433,18 @@ async def on_startup_reap_jobs():
     except Exception as e:
         print(f"Startup job reaper notice: {e}")
 
+@app.get("/")
+def root_info():
+    return {
+        "status": "ok",
+        "service": "lawyer-backend",
+        "version": "2.5.1-search-optimized",
+        "frontend": "https://section-frontend-production-f959.up.railway.app",
+        "health": "/health",
+        "message": "Lawyer Backend API is running. Access the user interface at https://section-frontend-production-f959.up.railway.app",
+    }
+
+
 @app.get("/health")
 
 def health_check():
