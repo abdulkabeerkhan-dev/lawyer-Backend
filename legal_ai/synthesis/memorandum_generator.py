@@ -1794,24 +1794,42 @@ def sanitize_precedent_card(card: Dict[str, Any], backend_base_url: str = "") ->
             full_judgment_text = r_cand
 
     word_count = len(full_judgment_text.split()) if full_judgment_text else 0
-    if word_count < 150 and cit:
+    t_case = None
+    if cit or c.get("case_id"):
         try:
             from core.turso_client import get_case_by_identifier
-            t_case = get_case_by_identifier(cit)
-            if t_case and t_case.get("full_text"):
+            t_case = get_case_by_identifier(cit) or (get_case_by_identifier(c.get("case_id", "")) if c.get("case_id") else None)
+        except Exception:
+            pass
+
+    if t_case:
+        turso_text_type = str(t_case.get("text_type") or t_case.get("content_level") or "").strip().lower()
+        if turso_text_type:
+            c["text_type"] = turso_text_type
+            c["content_level"] = turso_text_type
+        if turso_text_type in ("headnote", "headnote_only", "editorial_summary", "summary") or (t_case.get("headnote") and not t_case.get("full_text")):
+            c_type = "headnote_only"
+            c["is_headnote_only"] = True
+        elif t_case.get("full_text"):
+            if not full_judgment_text or word_count < 150:
                 full_judgment_text = str(t_case["full_text"]).strip()
                 c["raw_judgment_text"] = full_judgment_text
                 c["full_text"] = full_judgment_text
                 word_count = len(full_judgment_text.split())
-                t_title = t_case.get("case_title")
-                if t_title and (not c.get("case_title") or c.get("case_title") in ("Reported Precedent", "Precedent on Record")):
-                    c["case_title"] = t_title
-                    c["title"] = t_title
-                    c["case_name"] = t_title
-        except Exception:
-            pass
+        t_title = t_case.get("case_title")
+        if t_title and (not c.get("case_title") or c.get("case_title") in ("Reported Precedent", "Precedent on Record")):
+            c["case_title"] = t_title
+            c["title"] = t_title
+            c["case_name"] = t_title
 
-    if word_count >= 150 and ratio_txt and (norm_text is not None and shingles is not None) and c_type not in ("headnote_only", "editorial_summary", "headnote", "summary"):
+    is_headnote_precedent = bool(
+        c_type in ("headnote_only", "editorial_summary", "headnote", "summary")
+        or str(c.get("text_type", "")).lower() in ("headnote", "headnote_only")
+        or str(c.get("content_level", "")).lower() in ("headnote", "headnote_only")
+        or c.get("is_headnote_only")
+    )
+
+    if word_count >= 150 and ratio_txt and (norm_text is not None and shingles is not None) and not is_headnote_precedent:
 
         ratio_norm = norm_text(ratio_txt)
 

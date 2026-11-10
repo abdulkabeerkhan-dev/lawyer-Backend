@@ -194,6 +194,14 @@ def execute_stage4_evidence_pack(
         if cid:
             admitted_cids.add(str(cid).strip().upper())
 
+    # DIRECT STATUTE LOOKUP: If query names a specific statute, add canonical IDs directly before retrieval
+    try:
+        from core.legal_issue_extractor import extract_named_statute_canonical_ids
+        for n_cid in extract_named_statute_canonical_ids(query_text):
+            admitted_cids.add(n_cid.upper())
+    except Exception as e:
+        logger.warning(f"Error in direct named statute lookup: {e}")
+
     try:
         from core.legal_issue_extractor import extract_legal_issues_from_fact_pattern
         plan_dom = getattr(query_plan, "primary_domain", None) if query_plan else None
@@ -203,6 +211,8 @@ def execute_stage4_evidence_pack(
                 norm_cid = normalize_provision_string_to_canonical_id(prov)
                 if norm_cid:
                     admitted_cids.add(norm_cid.upper())
+        for n_cid in getattr(decomp, "named_statute_canonical_ids", []):
+            admitted_cids.add(n_cid.upper())
     except Exception as e:
         logger.warning(f"Error extracting controlling provisions for cross-linker gate: {e}")
 
@@ -336,7 +346,9 @@ def execute_stage4_evidence_pack(
                         "title": prov.get("title") or f"{unit_label} {num}",
                         "year": prov.get("year"),
                         "jurisdiction": prov.get("jurisdiction") or "Federal / Provincial",
-                        "status": "in_force"
+                        "status": "in_force",
+                        "canonical_id": cid,
+                        "citation": cid
                     })
     except Exception as e:
         logger.warning(f"Error populating admitted controlling provisions: {e}")

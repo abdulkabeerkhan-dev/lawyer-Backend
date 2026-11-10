@@ -35,6 +35,125 @@ class FactPatternDecomposition(BaseModel):
     secondary_domains: List[str] = Field(default_factory=list)
     issues: List[LegalSubIssue] = Field(default_factory=list)
     open_questions: List[str] = Field(default_factory=list)
+    named_statute_canonical_ids: List[str] = Field(default_factory=list)
+
+
+def extract_named_statute_canonical_ids(query_text: str) -> List[str]:
+    """
+    Direct lookup extractor: When a query explicitly mentions a statute name or citation
+    (e.g. 'PECA 2016', 'FIO 2001', 'Section X of the Y Act'), resolves that statute's
+    canonical IDs directly without running search.
+    """
+    q_low = query_text.lower()
+    admitted: List[str] = []
+
+    # 1. Whole-statute direct mappings
+    statute_canonical_map = {
+        ("peca 2016", "peca", "prevention of electronic crimes act"): [
+            "PECA_2016_SEC_20", "PECA_2016_SEC_21", "PECA_2016_SEC_10", "PECA_2016_SEC_3", "PECA_2016_SEC_16"
+        ],
+        ("fio 2001", "fio", "financial institutions ordinance", "financial institutions (recovery"): [
+            "FIO_2001_SEC_9", "FIO_2001_SEC_10", "FIO_2001_SEC_22", "FIO_2001_SEC_2"
+        ],
+        ("fia act", "fia 1974", "federal investigation agency act"): [
+            "FIA_1974_SEC_5", "FIA_1974_SEC_3"
+        ],
+        ("prpa 2009", "prpa", "punjab rented premises act"): [
+            "PRPA_2009_SEC_15", "PRPA_2009_SEC_22", "PRPA_2009_SEC_4", "PRPA_2009_SEC_19"
+        ],
+        ("srpo 1979", "srpo", "sindh rented premises ordinance"): [
+            "SRPO_1979_SEC_15", "SRPO_1979_SEC_16", "SRPO_1979_SEC_21"
+        ],
+        ("mflo 1961", "mflo", "muslim family laws ordinance"): [
+            "MFLO_1961_SEC_7", "MFLO_1961_SEC_9", "MFLO_1961_SEC_10"
+        ],
+        ("family courts act 1964", "family courts act", "fca 1964"): [
+            "FAMILY_COURTS_1964_SEC_5", "FAMILY_COURTS_1964_SEC_10", "FAMILY_COURTS_1964_SEC_14", "FAMILY_COURTS_1964_SEC_17A"
+        ],
+        ("specific relief act 1877", "specific relief act", "sra 1877"): [
+            "SRA_1877_SEC_12", "SRA_1877_SEC_42", "SRA_1877_SEC_54", "SRA_1877_SEC_19"
+        ],
+        ("contract act 1872", "contract act"): [
+            "CONTRACT_1872_SEC_73", "CONTRACT_1872_SEC_2"
+        ],
+        ("limitation act 1908", "limitation act"): [
+            "LIMITATION_1908_SEC_3", "LIMITATION_1908_SEC_5", "LIMITATION_1908_SEC_14"
+        ],
+        ("arbitration act 1940", "arbitration act"): [
+            "ARBITRATION_1940_SEC_34", "ARBITRATION_1940_SEC_20"
+        ],
+        ("qanun-e-shahadat order", "qanun-e-shahadat", "qso 1984", "qso"): [
+            "QSO_1984_ART_2", "QSO_1984_ART_17", "QSO_1984_ART_129"
+        ],
+        ("trade marks ordinance 2001", "trade marks ordinance", "trademarks ordinance"): [
+            "TRADEMARKS_2001_SEC_40", "TRADEMARKS_2001_SEC_46"
+        ],
+        ("copyright ordinance 1962", "copyright ordinance"): [
+            "COPYRIGHT_1962_SEC_56", "COPYRIGHT_1962_SEC_60"
+        ],
+    }
+
+    for keys, cids in statute_canonical_map.items():
+        if any(k in q_low for k in keys):
+            for c in cids:
+                if c not in admitted:
+                    admitted.append(c)
+
+    # 2. Section X of [the] Y Act patterns
+    statute_code_map = {
+        "peca": "PECA_2016", "peca 2016": "PECA_2016",
+        "fio": "FIO_2001", "fio 2001": "FIO_2001",
+        "crpc": "CRPC_1898", "cr.p.c": "CRPC_1898", "cr.p.c.": "CRPC_1898",
+        "ppc": "PPC_1860", "p.p.c": "PPC_1860", "p.p.c.": "PPC_1860",
+        "cpc": "CPC_1908", "c.p.c": "CPC_1908", "c.p.c.": "CPC_1908",
+        "constitution": "CONST_1973", "const": "CONST_1973",
+        "fia": "FIA_1974", "fia act": "FIA_1974",
+        "prpa": "PRPA_2009", "srpo": "SRPO_1979",
+        "sra": "SRA_1877", "specific relief": "SRA_1877",
+        "contract": "CONTRACT_1872", "contract act": "CONTRACT_1872",
+        "limitation": "LIMITATION_1908", "limitation act": "LIMITATION_1908",
+        "qso": "QSO_1984", "qanun-e-shahadat": "QSO_1984",
+    }
+
+    # Matches "Section 20 of PECA", "Section 498 of CrPC", "Section 10 of the FIO 2001", "Article 199 of the Constitution"
+    sec_of_matches = re.finditer(
+        r'(?:section|sec\.?|s\.|article|art\.?|order|ord\.?)\s*([0-9IVXLCDM]+[A-Za-z]?(?:\s*\([0-9]+\))?)\s*(?:of\s+(?:the\s+)?)?([A-Za-z0-9\s,\-]+?(?:Act|Ordinance|Code|Order|Constitution|PPC|CrPC|CPC|PECA|FIO|PRPA|SRPO|MFLO|QSO|SRA|GWA|ATA|CNSA|BCO|FIA))',
+        query_text,
+        re.IGNORECASE
+    )
+    for m in sec_of_matches:
+        sec_raw = m.group(1).strip()
+        act_raw = m.group(2).strip().lower()
+        matched_act = None
+        for k, code in statute_code_map.items():
+            if k in act_raw:
+                matched_act = code
+                break
+        if matched_act:
+            sec_num = re.sub(r'[\(\)\s]', '', sec_raw).upper()
+            unit = "ART" if "art" in m.group(0).lower() or "CONST" in matched_act else "SEC"
+            cid = f"{matched_act}_{unit}_{sec_num}"
+            if cid not in admitted:
+                admitted.append(cid)
+
+    # Pattern: "Section 498 CrPC", "Section 20 PECA", "Section 489-F PPC"
+    sec_prefix_matches = re.finditer(
+        r'(?:section|sec\.?|s\.|article|art\.?)\s*([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z0-9]+)?)\s+([A-Za-z]{2,8})',
+        query_text,
+        re.IGNORECASE
+    )
+    for m in sec_prefix_matches:
+        sec_raw = m.group(1).strip()
+        act_raw = m.group(2).strip().lower()
+        if act_raw in statute_code_map:
+            matched_act = statute_code_map[act_raw]
+            sec_num = re.sub(r'[\(\)\s\-]', '', sec_raw).upper()
+            unit = "ART" if "art" in m.group(0).lower() or "CONST" in matched_act else "SEC"
+            cid = f"{matched_act}_{unit}_{sec_num}"
+            if cid not in admitted:
+                admitted.append(cid)
+
+    return admitted
 
 
 def extract_legal_issues_from_fact_pattern(
@@ -102,7 +221,14 @@ def extract_legal_issues_from_fact_pattern(
         "section 172 land revenue", "illegal dispossession act", "land grabber", "illegal dispossession"
     ])
 
-    is_cyber_ip_signal = any(k in q_low for k in [
+    peca_keywords = [
+        "peca", "cybercrime", "cyber crime", "fia notice", "online defamation",
+        "digital content", "electronic fraud", "unauthorized access", "cyberstalking",
+        "cyber stalking"
+    ]
+    is_peca_signal = any(k in q_low for k in peca_keywords)
+
+    is_cyber_ip_signal = is_peca_signal or any(k in q_low for k in [
         "peca", "cybercrime", "cyber crime", "hacking", "cyberstalking", "cyber stalking",
         "online harassment", "electronic crimes", "trademark", "trade mark", "passing off",
         "copyright", "software piracy", "infringement of trademark", "counterfeit goods"
@@ -160,7 +286,9 @@ def extract_legal_issues_from_fact_pattern(
         and not (is_family_signal or is_rent_signal or is_banking_signal or is_service_signal or is_constitutional_signal or is_land_revenue_signal or is_cyber_ip_signal or is_corporate_signal or is_civil_execution)
     )
 
-    if planner_domain and planner_domain in {
+    if is_peca_signal:
+        primary_domain = "cybercrime"
+    elif planner_domain and planner_domain in {
         "civil", "criminal", "constitutional", "family", "corporate", "rent",
         "banking", "taxation", "service", "labour", "cybercrime",
         "intellectual_property", "environmental", "general_legal"
@@ -555,9 +683,69 @@ def extract_legal_issues_from_fact_pattern(
         open_questions.append("Whether an appeal or revision has been filed before the Collector or Commissioner under Section 161 of the Land Revenue Act.")
 
     # =========================================================================
-    # 8. CYBERCRIME & INTELLECTUAL PROPERTY DECOMPOSITION
+    # 8. PECA CYBERCRIME DETERMINISTIC BRANCH & IP DECOMPOSITION
     # =========================================================================
-    elif is_cyber_ip_signal or primary_domain in ("cybercrime", "intellectual_property"):
+    elif is_peca_signal or primary_domain == "cybercrime":
+        # Sub-issue 1: Specific PECA Section Alleged (Dignity, Modesty, Fraud)
+        issues.append(LegalSubIssue(
+            issue_id="issue_peca_specific_section_alleged",
+            heading="Specific PECA Section Alleged: Dignity, Modesty & Electronic Fraud (Sections 20, 21, 10 PECA 2016)",
+            description="Identification of the specific substantive cybercrime offences alleged under PECA 2016: offences against dignity of natural person (Section 20), cyberstalking and modesty (Section 21), and electronic fraud / cyber-terrorism (Section 10).",
+            controlling_statutes=["Prevention of Electronic Crimes Act, 2016"],
+            controlling_provisions=["PECA_2016_SEC_20", "PECA_2016_SEC_21", "PECA_2016_SEC_10"] + (["PECA_2016_SEC_3"] if any(k in q_low for k in ["unauthorized access", "hacking"]) else []),
+            search_queries=[
+                "Section 20 Section 21 Section 10 PECA 2016 cybercrime dignity cyberstalking electronic fraud",
+                "Section 20 PECA online defamation false information"
+            ],
+            factual_anchors=["PECA 2016", "online defamation", "cyberstalking", "electronic fraud"]
+        ))
+
+        # Sub-issue 2: Punishment & Prohibitory Clause Applicability
+        issues.append(LegalSubIssue(
+            issue_id="issue_peca_punishment_prohibitory_clause",
+            heading="Punishment & Prohibitory Clause Applicability (Section 497 CrPC & Section 43 PECA 2016)",
+            description="Examination of the maximum statutory punishment under the alleged PECA sections, determining whether offences fall outside the prohibitory clause of Section 497 CrPC (punishable with less than 10 years) and are bailable under Section 43 PECA 2016.",
+            controlling_statutes=["Code of Criminal Procedure, 1898", "Prevention of Electronic Crimes Act, 2016"],
+            controlling_provisions=["CRPC_1898_SEC_498", "CRPC_1898_SEC_497", "PECA_2016_SEC_20"],
+            search_queries=[
+                "Section 43 PECA bailable non-bailable offences prohibitory clause Section 497 CrPC",
+                "punishment under Section 20 Section 21 PECA 2016"
+            ],
+            factual_anchors=["prohibitory clause", "punishment under PECA", "Section 43 PECA"]
+        ))
+
+        # Sub-issue 3: FIA procedure under PECA
+        issues.append(LegalSubIssue(
+            issue_id="issue_peca_fia_procedure",
+            heading="FIA Notice, Inquiry & Investigation Procedure under PECA (Section 5 FIA Act 1974)",
+            description="Procedural legality of FIA Cyber Crime Wing inquiry, call-up notice, registration of FIR, and statutory powers of investigation under Section 5 of the Federal Investigation Agency Act, 1974 read with PECA 2016.",
+            controlling_statutes=["Federal Investigation Agency Act, 1974", "Prevention of Electronic Crimes Act, 2016"],
+            controlling_provisions=["FIA_1974_SEC_5"],
+            search_queries=[
+                "Section 5 FIA Act 1974 inquiry call-up notice cyber crime wing powers investigation",
+                "FIA procedure under PECA 2016 inquiry notice"
+            ],
+            factual_anchors=["FIA notice", "FIA Cyber Crime Wing", "Section 5 FIA Act 1974"]
+        ))
+
+        # Sub-issue 4: Pre-arrest bail under Section 498 CrPC
+        issues.append(LegalSubIssue(
+            issue_id="issue_peca_pre_arrest_bail",
+            heading="Pre-Arrest Bail in Cybercrime Offences (Section 498 CrPC)",
+            description="Entitlement to pre-arrest bail under Section 498 CrPC in respect of allegations under PECA 2016 on grounds of mala fides, ulterior motives, false implication, or absence of prima facie electronic evidence.",
+            controlling_statutes=["Code of Criminal Procedure, 1898"],
+            controlling_provisions=["CRPC_1898_SEC_498"],
+            search_queries=[
+                "Section 498 CrPC pre-arrest bail PECA 2016 cybercrime mala fides ulterior motive",
+                "pre-arrest bail Section 20 PECA online defamation"
+            ],
+            factual_anchors=["pre-arrest bail", "Section 498 CrPC", "mala fides"]
+        ))
+
+        open_questions.append("Whether an FIR has been registered by the FIA Cyber Crime Wing or only a call-up notice / inquiry is pending.")
+        open_questions.append("Whether the alleged digital material was publicly exhibited on an information system as required under Section 20 of PECA 2016.")
+
+    elif is_cyber_ip_signal or primary_domain == "intellectual_property":
         if any(k in q_low for k in ["peca", "hacking", "unauthorized access", "cybercrime"]):
             issues.append(LegalSubIssue(
                 issue_id="issue_cyber_unauthorized_access",
@@ -869,8 +1057,10 @@ def extract_legal_issues_from_fact_pattern(
             factual_anchors=[]
         ))
 
+    named_cids = extract_named_statute_canonical_ids(query_text)
     return FactPatternDecomposition(
         primary_domain=primary_domain,
         issues=issues,
-        open_questions=open_questions
+        open_questions=open_questions,
+        named_statute_canonical_ids=named_cids
     )

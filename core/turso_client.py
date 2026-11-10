@@ -146,6 +146,7 @@ def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     res = execute_turso_pipeline([{"sql": sql_id, "args": [{"type": "text", "value": norm_id}]}], timeout=3, max_retries=1)
     if res and "rows" in res[0] and res[0]["rows"]:
         case_data = res[0]["rows"][0]
+        case_data["text_type"] = case_data.get("content_level") or ("headnote" if case_data.get("headnote") and not case_data.get("full_text") else "full_judgment")
         _CASE_CACHE[norm_id] = case_data
         _CASE_CACHE[norm_cit] = case_data
         return case_data
@@ -164,6 +165,7 @@ def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     res2 = execute_turso_pipeline([{"sql": sql_cit, "args": args_cit}], timeout=3, max_retries=1)
     if res2 and "rows" in res2[0] and res2[0]["rows"]:
         case_data = res2[0]["rows"][0]
+        case_data["text_type"] = case_data.get("content_level") or ("headnote" if case_data.get("headnote") and not case_data.get("full_text") else "full_judgment")
         _CASE_CACHE[norm_id] = case_data
         _CASE_CACHE[norm_cit] = case_data
         return case_data
@@ -199,6 +201,7 @@ def get_cases_batch(identifiers: List[str]) -> List[Dict[str, Any]]:
     res = execute_turso_pipeline([{"sql": sql, "args": args}], timeout=3, max_retries=1)
     if res and "rows" in res[0]:
         for row in res[0]["rows"]:
+            row["text_type"] = row.get("content_level") or ("headnote" if row.get("headnote") and not row.get("full_text") else "full_judgment")
             c_norm = row.get("case_id", "").upper()
             _CASE_CACHE[c_norm] = row
             found.append(row)

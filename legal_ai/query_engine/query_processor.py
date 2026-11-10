@@ -2584,11 +2584,23 @@ async def process_query_job_legal_ai(
                 cit_clean = re.sub(r'[\s_\-]+', '', cit)
                 match = turso_map.get(cid) or turso_map.get(cit) or turso_map.get(cit_clean)
                 if match:
+                    t_type = str(match.get("text_type") or match.get("content_level") or "").strip().lower()
+                    if t_type:
+                        c["text_type"] = t_type
+                        c["content_level"] = t_type
                     if match.get("full_text"):
                         c["raw_judgment_text"] = match["full_text"]
                         c["full_text"] = match["full_text"]
                     if match.get("court_name") and c.get("court") in ("Court of Record", "Unknown Court", "High Court / Appellate Tribunal"):
                         c["court"] = match["court_name"]
+                    # If Turso text_type or content_level is headnote, downgrade badge
+                    if t_type in ("headnote", "headnote_only", "editorial_summary", "summary") or (match.get("headnote") and not match.get("full_text")):
+                        c["is_headnote_only"] = True
+                        c["is_verified"] = False
+                        c["verified"] = False
+                        c["verified_source"] = False
+                        c["verification_status"] = "HEADNOTE_ONLY - not verified"
+                        c["source_badge"] = "Headnote Only - Not Verified" 
     except Exception as e:
         logger.warning(f"Turso precedent hydration error: {e}")
 
