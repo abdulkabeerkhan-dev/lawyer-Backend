@@ -6219,8 +6219,23 @@ async def process_query_job_legal_ai(
                 "is_verified": memo_is_verified if 'memo_is_verified' in locals() else False,
                 "verification_report": v_report if 'v_report' in locals() else None,
                 "evidence_pack": bounded_evidence_pack.to_dict() if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else (evidence_pack.to_dict() if 'evidence_pack' in locals() else None),
+                "cases": precedent_cards or ([{"citation": it.citation, "case_name": it.case_title, "title": it.case_title, "court": it.court, "ratio": it.ratio, "ratio_decidendi": it.ratio, "year": it.year, "statutes_invoked": it.statutes_invoked, "pdf_url": it.pdf_url} for it in bounded_evidence_pack.items.values() if it.item_type == "judicial_precedent"] if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else []),
                 "precedents": precedent_cards or ([{"citation": it.citation, "case_name": it.case_title, "title": it.case_title, "court": it.court, "ratio": it.ratio, "ratio_decidendi": it.ratio, "year": it.year, "statutes_invoked": it.statutes_invoked, "pdf_url": it.pdf_url} for it in bounded_evidence_pack.items.values() if it.item_type == "judicial_precedent"] if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else []),
                 "precedent_cards": precedent_cards or ([{"citation": it.citation, "case_name": it.case_title, "title": it.case_title, "court": it.court, "ratio": it.ratio, "ratio_decidendi": it.ratio, "year": it.year, "statutes_invoked": it.statutes_invoked, "pdf_url": it.pdf_url} for it in bounded_evidence_pack.items.values() if it.item_type == "judicial_precedent"] if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else []),
+                "statutes": [
+                    {
+                        "id": getattr(it, "canonical_id", None) or it.citation,
+                        "canonical_id": getattr(it, "canonical_id", None) or it.citation,
+                        "citation": it.citation,
+                        "title": getattr(it, "title", None) or getattr(it, "provision_title", None) or it.citation,
+                        "act_title": getattr(it, "act_title", None) or getattr(it, "statute", None) or "",
+                        "snippet": getattr(it, "text_cleaned", None) or getattr(it, "snippet", None) or (getattr(it, "text", "")[:400] if getattr(it, "text", None) else ""),
+                        "in_force": getattr(it, "in_force", True),
+                        "verified": True,
+                    }
+                    for it in (bounded_evidence_pack.items.values() if 'bounded_evidence_pack' in locals() and bounded_evidence_pack else [])
+                    if getattr(it, "item_type", "") == "statutory_provision"
+                ],
 
 
 

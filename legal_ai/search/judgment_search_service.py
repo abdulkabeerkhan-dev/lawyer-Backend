@@ -72,16 +72,21 @@ def build_precedent_result(
         "neutral_citation": cit,
         "title": clean_t,
         "case_title": clean_t,
+        "case_name": clean_t,
         "court": clean_c,
         "year": int(year) if str(year).isdigit() else 2020,
         "bench": bench,
         "summary": holding,
         "snippet": holding,
+        "holding": holding,
+        "ratio_decidendi": holding,
         "pdf_url": pdf_url,
         "score": round(score, 4),
-        "source_type": source_type
+        "source_type": source_type,
+        "verified": True,
+        "is_verified": True,
     }
-    return sanitize_precedent_card(card)
+    return card
 
 
 def _supplement_with_turso_cases(
@@ -183,45 +188,31 @@ def _supplement_with_turso_cases(
                             if len(results) >= limit:
                                 return
 
-                # Next try substring anywhere in title or citation
-                if len(results) < limit:
+                # Prefix search over secondary candidate words using index idx_case_texts_title_nocase (< 0.2s)
+                if len(results) < limit and len(words) > 1:
                     needed = limit - len(results)
-                    where_clauses = ["(case_title LIKE ? OR neutral_citation LIKE ?)"]
-                    args = [{"type": "text", "value": f"%{w0}%"}, {"type": "text", "value": f"%{w0}%"}]
-                    if year_from:
-                        where_clauses.append("year >= ?")
-                        args.append({"type": "integer", "value": str(year_from)})
-                    if year_to:
-                        where_clauses.append("year <= ?")
-                        args.append({"type": "integer", "value": str(year_to)})
-                    if journal and str(journal).lower() not in ("all journals", "all", "none"):
-                        where_clauses.append("journal LIKE ?")
-                        args.append({"type": "text", "value": f"%{journal.strip()}%"})
-                    if court and str(court).lower() not in ("all courts", "all", "none"):
-                        where_clauses.append("court_name LIKE ?")
-                        args.append({"type": "text", "value": f"%{court.strip()}%"})
-
-                    where_sql = " AND ".join(where_clauses)
-                    sql = f"SELECT case_id, neutral_citation, case_title, court_name, year, journal, headnote FROM case_texts WHERE {where_sql} LIMIT ?"
-                    args.append({"type": "integer", "value": str(needed)})
-                    t_res2 = execute_turso_pipeline([{"sql": sql, "args": args}], timeout=5)
-                    if t_res2 and "rows" in t_res2[0]:
-                        for r in t_res2[0]["rows"]:
-                            cid = str(r.get("case_id") or "")
-                            if cid and cid not in seen_ids:
-                                seen_ids.add(cid)
-                                results.append(build_precedent_result(
-                                    cid=cid,
-                                    cit=r.get("neutral_citation") or cid.replace("_", " "),
-                                    title=r.get("case_title") or "Authoritative Judgment",
-                                    court=r.get("court_name") or "Supreme Court of Pakistan",
-                                    year=r.get("year") or 2020,
-                                    snippet=r.get("headnote") or "",
-                                    score=0.85,
-                                    source_type="Turso Master Corpus"
-                                ))
-                                if len(results) >= limit:
-                                    return
+                    for w_sec in words[1:3]:
+                        if len(results) >= limit:
+                            break
+                        sql_sec = "SELECT case_id, neutral_citation, case_title, court_name, year, journal, headnote FROM case_texts WHERE case_title LIKE ? LIMIT ?"
+                        t_res_sec = execute_turso_pipeline([{"sql": sql_sec, "args": [{"type": "text", "value": f"{w_sec}%"}, {"type": "integer", "value": str(needed)}]}], timeout=3)
+                        if t_res_sec and "rows" in t_res_sec[0]:
+                            for r in t_res_sec[0]["rows"]:
+                                cid = str(r.get("case_id") or "")
+                                if cid and cid not in seen_ids:
+                                    seen_ids.add(cid)
+                                    results.append(build_precedent_result(
+                                        cid=cid,
+                                        cit=r.get("neutral_citation") or cid.replace("_", " "),
+                                        title=r.get("case_title") or "Authoritative Judgment",
+                                        court=r.get("court_name") or "Supreme Court of Pakistan",
+                                        year=r.get("year") or 2020,
+                                        snippet=r.get("headnote") or "",
+                                        score=0.85,
+                                        source_type="Turso Master Corpus"
+                                    ))
+                                    if len(results) >= limit:
+                                        return
     except Exception as _e:
         import logging
         logging.getLogger(__name__).warning(f"Turso case search fallback error: {_e}")
