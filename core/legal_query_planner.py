@@ -100,6 +100,78 @@ class PremiseCorrection(BaseModel):
             return default
 
 
+
+# ---------------------------------------------------------------------------
+# 5-Dimensional Legal Intent Decomposition Models
+# ---------------------------------------------------------------------------
+class FactualIntent(BaseModel):
+    material_facts: List[str] = Field(default_factory=list)
+    transaction_nature: str = ""
+    disputed_circumstances: str = ""
+    commercial_context: bool = False
+
+    def __getitem__(self, item: str) -> Any:
+        return getattr(self, item)
+
+    def get(self, item: str, default: Any = None) -> Any:
+        return getattr(self, item, default)
+
+
+class DoctrinalIntent(BaseModel):
+    controlling_doctrine: str = ""
+    competing_doctrines: List[str] = Field(default_factory=list)
+    legal_tests: List[str] = Field(default_factory=list)
+    exceptions_and_provisos: List[str] = Field(default_factory=list)
+
+    def __getitem__(self, item: str) -> Any:
+        return getattr(self, item)
+
+    def get(self, item: str, default: Any = None) -> Any:
+        return getattr(self, item, default)
+
+
+class ProceduralIntent(BaseModel):
+    relief_sought: str = ""
+    procedural_framework: str = ""
+    threshold_condition: str = ""
+    timing_or_limitation: str = ""
+
+    def __getitem__(self, item: str) -> Any:
+        return getattr(self, item)
+
+    def get(self, item: str, default: Any = None) -> Any:
+        return getattr(self, item, default)
+
+
+class ForumHierarchyIntent(BaseModel):
+    competent_forum: str = ""
+    appellate_forum: str = ""
+    binding_courts: List[str] = Field(default_factory=list)
+    persuasive_courts: List[str] = Field(default_factory=list)
+    jurisdictional_ouster: Optional[str] = None
+
+    def __getitem__(self, item: str) -> Any:
+        return getattr(self, item)
+
+    def get(self, item: str, default: Any = None) -> Any:
+        return getattr(self, item, default)
+
+
+class MultiLaneQueryIntent(BaseModel):
+    dense_conceptual_query: str = ""
+    sparse_lexical_query: str = ""
+    procedural_query: str = ""
+    doctrinal_query: str = ""
+    statutory_provisions: List[str] = Field(default_factory=list)
+    direct_citations: List[str] = Field(default_factory=list)
+
+    def __getitem__(self, item: str) -> Any:
+        return getattr(self, item)
+
+    def get(self, item: str, default: Any = None) -> Any:
+        return getattr(self, item, default)
+
+
 class StructuredLegalQueryPlan(BaseModel):
     query_text: str
     jurisdiction: str = "Pakistan"
@@ -115,6 +187,14 @@ class StructuredLegalQueryPlan(BaseModel):
     search_lanes: List[Union[SearchLane, Dict[str, Any]]] = Field(default_factory=list)
     premise_corrections: List[Union[PremiseCorrection, Dict[str, Any]]] = Field(default_factory=list)
     allowed_domains_filter: List[str] = Field(default_factory=list)
+
+    # 5-Dimensional Legal Intent Decomposition
+    factual_intent: Optional[FactualIntent] = None
+    substantive_doctrine: Optional[Union[str, DoctrinalIntent]] = None
+    doctrinal_intent: Optional[DoctrinalIntent] = None
+    procedural_intent: Optional[ProceduralIntent] = None
+    forum_intent: Optional[ForumHierarchyIntent] = None
+    multi_lane_queries: Optional[MultiLaneQueryIntent] = None
 
     # Cross-domain synthesis & isolation controls
     is_cross_domain_relevant: bool = False
@@ -227,6 +307,72 @@ class StructuredLegalQueryPlan(BaseModel):
             if not data.get("persuasive_courts"):
                 data["persuasive_courts"] = p_courts
 
+        # 10. Populate 5-Dimensional Intent Objects if missing
+        q_low = q_text.lower()
+
+        # 10a. Factual Intent
+        if not data.get("factual_intent"):
+            f_mat = data.get("factual_matrix") or [q_text]
+            is_comm = any(k in q_low for k in ["cheque", "loan", "bank", "contract", "finance", "business", "company", "director"])
+            data["factual_intent"] = FactualIntent(
+                material_facts=list(f_mat) if isinstance(f_mat, list) else [str(f_mat)],
+                transaction_nature="Commercial / Financial Transaction" if is_comm else "Civil / General Dispute",
+                disputed_circumstances=q_text[:240],
+                commercial_context=is_comm
+            )
+
+        # 10b. Doctrinal Intent
+        if not data.get("doctrinal_intent"):
+            sub_doc = data.get("substantive_doctrine")
+            doc_str = sub_doc if isinstance(sub_doc, str) else (
+                data.get("cross_domain_reason") or
+                f"Controlling substantive legal doctrine under {prim} law in Pakistan"
+            )
+            data["doctrinal_intent"] = DoctrinalIntent(
+                controlling_doctrine=doc_str,
+                competing_doctrines=data.get("cross_domain_controlling_doctrines", []),
+                legal_tests=list(data.get("core_legal_issues", [])),
+                exceptions_and_provisos=[]
+            )
+
+        # 10c. Procedural Intent
+        if not data.get("procedural_intent"):
+            p_rem = data.get("procedural_remedy") or ""
+            data["procedural_intent"] = ProceduralIntent(
+                relief_sought=p_rem or "Appropriate judicial relief before competent Pakistani forum",
+                procedural_framework="CrPC / CPC / Special Statute",
+                threshold_condition="Prima facie maintainability and jurisdictional threshold",
+                timing_or_limitation=""
+            )
+
+        # 10d. Forum Hierarchy Intent
+        if not data.get("forum_intent"):
+            data["forum_intent"] = ForumHierarchyIntent(
+                competent_forum=frm,
+                appellate_forum="Supreme Court of Pakistan" if "High Court" in frm else "High Court",
+                binding_courts=data.get("binding_courts", ["Supreme Court of Pakistan"]),
+                persuasive_courts=data.get("persuasive_courts", [])
+            )
+
+        # 10e. Multi-Lane Query Generation
+        if not data.get("multi_lane_queries"):
+            stat_tokens = [p.replace("_", " ") for p in data.get("statutory_provisions", [])]
+            iss_tokens = data.get("core_legal_issues", [])
+            dense_q = q_text
+            sparse_q = f"{q_text} {' '.join(stat_tokens[:5])} {' '.join(iss_tokens[:2])}".strip()[:500]
+            proc_q = f"{data.get('procedural_remedy', '')} {frm} {q_text}".strip()[:350]
+            doct_controlling = data["doctrinal_intent"].controlling_doctrine if hasattr(data.get("doctrinal_intent"), "controlling_doctrine") else str(data.get("doctrinal_intent", {}).get("controlling_doctrine", ""))
+            doct_q = f"{doct_controlling} {q_text}".strip()[:350]
+
+            data["multi_lane_queries"] = MultiLaneQueryIntent(
+                dense_conceptual_query=dense_q,
+                sparse_lexical_query=sparse_q,
+                procedural_query=proc_q,
+                doctrinal_query=doct_q,
+                statutory_provisions=list(data.get("statutory_provisions", [])),
+                direct_citations=[]
+            )
+
         return data
 
 
@@ -270,6 +416,15 @@ def resolve_jurisdiction_hierarchy(province: str) -> Tuple[List[str], List[str]]
 
 PLANNER_SYSTEM_PROMPT = """You are a senior Pakistani legal research director and legal query planner.
 Analyze the user's legal scenario and produce an actionable, structured legal research plan.
+
+
+FIVE-DIMENSIONAL LEGAL RESEARCH INTENT MANDATE:
+Every legal query must be decomposed into 5 foundational dimensions of legal research:
+1. FACTUAL MATRIX (factual_intent): Material facts, commercial/banking context, parties, and transaction nature.
+2. SUBSTANTIVE DOCTRINE (doctrinal_intent): Controlling legal principle, competing legal tests (e.g. mens rea at inception vs subsequent civil default), and statutory exceptions.
+3. PROCEDURAL RELIEF (procedural_intent): Specific judicial remedy (e.g. Quashment under 561-A CrPC, Pre-arrest bail under 498 CrPC, Leave to defend under Section 10 FIO 2001, Specific performance under Sec 12 SRA 1877).
+4. FORUM & JURISDICTION (forum_intent): First-instance competent forum, appellate level, binding courts (Art. 189 apex, Art. 201 provincial), and persuasive sister courts.
+5. STATUTORY & PRECEDENTIAL ANCHORS (multi_lane_queries): Controlling canonical IDs, plus targeted search queries for dense conceptual, sparse lexical, procedural, and doctrinal lanes.
 
 CRITICAL PAKISTANI JURISDICTIONAL INVARIANTS:
 - CHEQUE DISHONOUR: In Pakistan, dishonour of a cheque is governed SOLELY by Section 489-F PPC (PPC_1860_SEC_489F) and Order XXXVII CPC (CPC_1908_ORD_XXXVII_R_1) for summary civil recovery.
@@ -427,13 +582,33 @@ def check_query_premises(query: str) -> List[Dict[str, Any]]:
     return checks
 
 
-def filter_provisions_by_domain(provisions: List[str], domain: str) -> List[str]:
+def filter_provisions_by_domain(
+    provisions: List[str], 
+    domain: str,
+    secondary_domains: Optional[List[str]] = None,
+    is_cross_domain_relevant: bool = False
+) -> List[str]:
     """
-    Validation Gate: Ensures provisions added to the plan strictly align with primary_domain.
-    Prevents cross-contamination across the 10 Priority Domains.
+    Validation Gate: Ensures provisions align with primary domain or legitimate cross-domain synergies.
+    Does NOT strip valid cross-domain statutory provisions when is_cross_domain_relevant is True or 
+    when secondary domains bridge the subject areas (e.g. Criminal Section 489-F + Banking FIO/CPC).
     """
     clean = []
     dom = (domain or "civil").lower()
+    sec_doms = [str(s).lower() for s in (secondary_domains or [])]
+
+    # Check for recognized interdisciplinary synergies
+    has_commercial_criminal_synergy = (
+        is_cross_domain_relevant or
+        (dom == "criminal" and any(s in sec_doms for s in ["civil", "banking", "corporate"])) or
+        (dom in ["civil", "banking", "corporate"] and "criminal" in sec_doms)
+    )
+    has_constitutional_service_synergy = (
+        is_cross_domain_relevant or
+        (dom == "constitutional" and "service" in sec_doms) or
+        (dom == "service" and "constitutional" in sec_doms)
+    )
+
     for p in provisions:
         p_str = str(p).strip()
         p_low = p_str.lower()
@@ -441,28 +616,39 @@ def filter_provisions_by_domain(provisions: List[str], domain: str) -> List[str]
             if any(bad in p_low for bad in ["ppc", "489-f", "489f", "crpc", "penal code", "criminal procedure", "sra", "specific relief", "order xxxvii"]):
                 continue
         elif dom in ("rent", "banking"):
-            if any(bad in p_low for bad in ["ppc", "489-f", "489f", "crpc", "penal code", "criminal procedure", "sra", "specific relief", "article 57", "article 58", "article 62", "article 64"]):
-                continue
+            if not has_commercial_criminal_synergy:
+                if any(bad in p_low for bad in ["ppc", "489-f", "489f", "crpc", "penal code", "criminal procedure", "sra", "specific relief", "article 57", "article 58", "article 62", "article 64"]):
+                    continue
         elif dom == "corporate":
             if any(bad in p_low for bad in ["sra", "specific relief", "family courts", "mflo", "gwa", "prpa", "article 57", "article 58"]):
                 continue
-            if any(bad in p_low for bad in ["420", "415"]) and not any(k in p_low for k in ["409", "companies"]):
+            if any(bad in p_low for bad in ["420", "415"]) and not any(k in p_low for k in ["409", "companies"]) and not has_commercial_criminal_synergy:
                 continue
         elif dom == "service":
-            if any(bad in p_low for bad in ["ppc", "489-f", "489f", "sra", "specific relief", "family courts", "mflo", "gwa", "prpa", "fio", "article 57", "article 58"]):
+            # SRA, Family, Rent, FIO must ALWAYS be barred in Service matters
+            if any(bad in p_low for bad in ["sra", "specific relief", "family courts", "mflo", "gwa", "prpa", "fio", "article 57", "article 58"]):
                 continue
+            if not has_constitutional_service_synergy:
+                if any(bad in p_low for bad in ["ppc", "489-f", "489f"]):
+                    continue
         elif dom == "constitutional":
-            if any(bad in p_low for bad in ["489-f", "489f", "sra", "specific relief", "prpa", "fio", "family courts"]):
-                continue
+            if not has_commercial_criminal_synergy and not has_constitutional_service_synergy:
+                if any(bad in p_low for bad in ["489-f", "489f", "sra", "specific relief", "prpa", "fio", "family courts"]):
+                    continue
         elif dom in ("cybercrime", "intellectual_property"):
             if any(bad in p_low for bad in ["family courts", "mflo", "gwa", "prpa", "fio", "sra", "specific relief"]):
                 continue
         elif dom == "criminal":
-            if any(bad in p_low for bad in ["sra", "specific relief", "guardians and wards", "family courts act", "mflo", "prpa", "fio", "article 57", "article 58", "article 62", "article 64"]):
-                continue
+            if has_commercial_criminal_synergy:
+                if any(bad in p_low for bad in ["guardians and wards", "family courts act", "mflo", "prpa", "article 57", "article 58"]):
+                    continue
+            else:
+                if any(bad in p_low for bad in ["sra", "specific relief", "guardians and wards", "family courts act", "mflo", "prpa", "fio", "article 57", "article 58", "article 62", "article 64"]):
+                    continue
         elif dom == "civil":
-            if any(bad in p_low for bad in ["crpc", "497", "498", "496", "489-f", "489f"]):
-                continue
+            if not has_commercial_criminal_synergy:
+                if any(bad in p_low for bad in ["crpc", "497", "498", "496", "489-f", "489f"]):
+                    continue
         clean.append(p_str)
     return clean
 
@@ -663,16 +849,28 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     elif is_quashment:
         primary_domain = "criminal"
         subdomains = ["quashment_of_fir", "inherent_powers_561a", "abuse_of_process"]
-        has_civil_suit_aspect = any(k in q_low for k in ["pending civil", "civil suit", "civil court", "same agreement", "contractual dispute"])
+        has_civil_suit_aspect = any(k in q_low for k in [
+            "pending civil", "civil suit", "civil court", "same agreement", 
+            "contractual dispute", "banking", "commercial", "loan", "recovery", "489-f", "489f", "cheque"
+        ])
         if has_civil_suit_aspect:
-            secondary_domains = ["civil"]
-            subdomains.extend(["civil_vs_criminal", "pending_civil_suit_quashment"])
+            is_banking_aspect = any(k in q_low for k in ["banking", "bank", "financial institution", "fio"])
+            secondary_domains = ["civil", "banking"] if is_banking_aspect else ["civil"]
+            subdomains.extend(["civil_vs_criminal", "commercial_loan_quashment" if "loan" in q_low else "pending_civil_suit_quashment"])
             legacy_domains.extend(["criminal law", "civil dispute"])
             legacy_matter_type.extend(["criminal", "civil"])
             is_cross_domain_relevant = True
-            cross_domain_reason = "Quashment of criminal proceedings under Section 561-A CrPC where civil proceedings/suit on the same subject matter are pending."
-            cross_domain_controlling_doctrines = ["mens_rea_at_inception", "civil_dispute_quashment_406_420"]
-            allowed_domains_filter = ["criminal", "civil"]
+            cross_domain_reason = (
+                "Quashment of criminal proceedings under Section 561-A CrPC where the dispute is essentially "
+                "of a civil, commercial or banking loan recovery nature; criminal law cannot be used as an "
+                "instrument for coercive debt recovery."
+            )
+            cross_domain_controlling_doctrines = [
+                "mens_rea_at_inception",
+                "civil_dispute_quashment_406_420",
+                "abuse_of_criminal_process_for_debt_recovery"
+            ]
+            allowed_domains_filter = ["criminal", "civil", "banking"] if is_banking_aspect else ["criminal", "civil"]
         else:
             secondary_domains = []
             if is_cheque_dishonour:
@@ -1171,9 +1369,11 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
 
     if is_quashment:
         if not any("561" in p for p in provisions):
-            provisions.insert(0, "Section 561A CrPC")
-        if is_cheque_dishonour and not any("489" in p for p in provisions):
-            provisions.append("Section 489-F PPC")
+            provisions.insert(0, "CRPC_1898_SEC_561A")
+        if (is_cheque_dishonour or "489" in q_low or "cheque" in q_low) and not any("489" in p for p in provisions):
+            provisions.append("PPC_1860_SEC_489F")
+        if any(k in q_low for k in ["banking", "bank", "fio"]) and not any("FIO" in p for p in provisions):
+            provisions.append("FIO_2001_SEC_9")
 
     elif is_cheque_dishonour:
         if not any("489" in p for p in provisions):
@@ -1689,7 +1889,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         ]
 
     # Ensure unique lists and enforce domain isolation
-    raw_clean_provisions = filter_provisions_by_domain(list(dict.fromkeys(provisions)), primary_domain)
+    raw_clean_provisions = filter_provisions_by_domain(list(dict.fromkeys(provisions)), primary_domain, secondary_domains=secondary_domains, is_cross_domain_relevant=is_cross_domain_relevant)
     from core.evidence_pipeline import normalize_provision_string_to_canonical_id
     from core.unified_statute_store import get_unified_statute_store
     store = get_unified_statute_store()
@@ -1699,7 +1899,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         if cid and store.get_by_canonical_id(cid):
             if cid not in canonical_provisions:
                 canonical_provisions.append(cid)
-    clean_provisions = filter_provisions_by_domain(canonical_provisions, primary_domain) if canonical_provisions else raw_clean_provisions
+    clean_provisions = filter_provisions_by_domain(canonical_provisions, primary_domain, secondary_domains=secondary_domains, is_cross_domain_relevant=is_cross_domain_relevant) if canonical_provisions else raw_clean_provisions
     clean_statutes = list(dict.fromkeys(statutes))
     clean_legacy_domains = list(dict.fromkeys(legacy_domains))
     clean_legacy_matter = list(dict.fromkeys(legacy_matter_type))
@@ -1936,9 +2136,9 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
                     primary_domain = fallback.primary_domain
 
                 # Validation Gate: Ensure all provisions strictly align with primary_domain
-                provisions = filter_provisions_by_domain(provisions, primary_domain)
+                provisions = filter_provisions_by_domain(provisions, primary_domain, secondary_domains=secondary_domains, is_cross_domain_relevant=is_cross_domain)
                 if not provisions:
-                    provisions = filter_provisions_by_domain(fallback.statutory_provisions, primary_domain)
+                    provisions = filter_provisions_by_domain(fallback.statutory_provisions, primary_domain, secondary_domains=secondary_domains, is_cross_domain_relevant=is_cross_domain)
 
                 secondary_domains = data.get("secondary_domains") or fallback.secondary_domains
                 subdomains = data.get("subdomains") or fallback.subdomains
