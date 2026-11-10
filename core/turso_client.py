@@ -13,13 +13,22 @@ from typing import Optional, Dict, Any, List
 
 logger = logging.getLogger(__name__)
 
-TURSO_URL = os.environ.get(
+_raw_turso_url = os.environ.get(
     "TURSO_DATABASE_URL_PIPELINE",
-    "https://section-legal-db-lawyerbackend.aws-ap-south-1.turso.io/v2/pipeline"
+    os.environ.get("TURSO_DATABASE_URL", os.environ.get("TURSO_URL", ""))
 )
+if _raw_turso_url.startswith("libsql://"):
+    _raw_turso_url = _raw_turso_url.replace("libsql://", "https://")
+if _raw_turso_url and not _raw_turso_url.endswith("/v2/pipeline"):
+    _raw_turso_url = _raw_turso_url.rstrip("/") + "/v2/pipeline"
+
+TURSO_URL = _raw_turso_url or "https://section-legal-db-lawyerbackend.aws-ap-south-1.turso.io/v2/pipeline"
 TURSO_TOKEN = os.environ.get(
     "TURSO_AUTH_TOKEN",
-    "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3OTM4OTc2NTQsImlkIjoiMDFhMWFjYTEtOTIwMS03OTE3LTlmMzctZjY0ZDg5NDM1NTFkIiwia2lkIjoianNXWWVWbGJYWlg2Yy1rSFNHVExWU3UwRWcxSnV3WGVvTWNuUGpPWERFNCIsInJpZCI6Ijg0MjQ1ODg0LTgzOGUtNDZlOC05YmNkLTcyMzZhNzdmNTljMCJ9.jvdO06iANK63zeYn8JAm6Iyjnz4RuLVQnvhPWoJ-OGlhzGNo70ehyH57cPKDUJBJU3xcNldel3KT_BwLqBCwCQ"
+    os.environ.get(
+        "TURSO_TOKEN",
+        "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3OTM4OTc2NTQsImlkIjoiMDFhMWFjYTEtOTIwMS03OTE3LTlmMzctZjY0ZDg5NDM1NTFkIiwia2lkIjoianNXWWVWbGJYWlg2Yy1rSFNHVExWU3UwRWcxSnV3WGVvTWNuUGpPWERFNCIsInJpZCI6Ijg0MjQ1ODg0LTgzOGUtNDZlOC05YmNkLTcyMzZhNzdmNTljMCJ9.jvdO06iANK63zeYn8JAm6Iyjnz4RuLVQnvhPWoJ-OGlhzGNo70ehyH57cPKDUJBJU3xcNldel3KT_BwLqBCwCQ"
+    )
 )
 
 # In-memory LRU-like cache for hot case lookups
@@ -33,11 +42,11 @@ def is_turso_circuit_open() -> bool:
     global _TURSO_CIRCUIT_OPEN_UNTIL
     return time.time() < _TURSO_CIRCUIT_OPEN_UNTIL
 
-def trip_turso_circuit(duration: float = 30.0):
+def trip_turso_circuit(duration: float = 5.0):
     global _TURSO_CIRCUIT_OPEN_UNTIL
     _TURSO_CIRCUIT_OPEN_UNTIL = time.time() + duration
 
-def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 3, max_retries: int = 1) -> List[Dict[str, Any]]:
+def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 5, max_retries: int = 2) -> List[Dict[str, Any]]:
     """
     Executes one or more SQL statements against the Turso libSQL pipeline.
     Features strict 3s timeout and circuit breaker to prevent cascading worker hangs.
@@ -51,7 +60,14 @@ def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 3, max_re
     for s in stmts:
         stmt_obj = {"sql": s["sql"]}
         if "args" in s and s["args"]:
-            stmt_obj["args"] = s["args"]
+            clean_args = []
+            for a in s["args"]:
+                arg_copy = dict(a)
+                # libSQL pipeline requires integer values to be serialized as string
+                if arg_copy.get("type") == "integer" and not isinstance(arg_copy.get("value"), str) and arg_copy.get("value") is not None:
+                    arg_copy["value"] = str(arg_copy["value"])
+                clean_args.append(arg_copy)
+            stmt_obj["args"] = clean_args
         requests.append({"type": "execute", "stmt": stmt_obj})
 
     payload = json.dumps({"requests": requests}).encode("utf-8")
@@ -87,12 +103,20 @@ def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 3, max_re
                     else:
                         results.append({"error": res_item.get("error")})
                 return results
+        except urllib.error.HTTPError as he:
+            err_body = ""
+            try:
+                err_body = he.read().decode("utf-8")
+            except Exception:
+                pass
+            logger.warning(f"Turso HTTP {he.code} client error: {err_body or he}")
+            return []
         except Exception as e:
             if attempt == max_retries:
-                trip_turso_circuit(30.0)
-                logger.warning(f"Turso pipeline timeout/failure ({e}). Circuit breaker tripped for 30s.")
+                trip_turso_circuit(5.0)
+                logger.warning(f"Turso pipeline timeout/failure ({e}). Circuit breaker tripped for 5s.")
             else:
-                time.sleep(0.3)
+                time.sleep(0.2)
     return []
 
 def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
