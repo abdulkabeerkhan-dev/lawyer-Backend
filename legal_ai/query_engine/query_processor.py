@@ -1158,6 +1158,22 @@ def resolve_ranking_pool_post_gate(
     return list(clean_candidates or [])
 
 
+def _has_contentful_final_result(payload: Any) -> bool:
+    """Return True only when the final answer payload contains usable response text."""
+    if payload is None:
+        return False
+    if isinstance(payload, str):
+        return bool(payload.strip())
+    if isinstance(payload, dict):
+        for key in ("answer", "response", "model_answer", "result", "text", "content"):
+            if key in payload and _has_contentful_final_result(payload.get(key)):
+                return True
+        return any(v not in (None, "", {}, []) for v in payload.values())
+    if isinstance(payload, list):
+        return any(_has_contentful_final_result(item) for item in payload)
+    return bool(payload)
+
+
 async def process_query_job_legal_ai(
 
 
@@ -1416,7 +1432,7 @@ async def process_query_job_legal_ai(
 
 
                 "status": "done",
-            "streaming_text": chitchat_answer,
+                    "streaming_text": chitchat_answer,
 
 
 
@@ -4366,12 +4382,21 @@ async def process_query_job_legal_ai(
             "copy_allowed": True
         }
         if job_id in jobs_store:
-            jobs_store[job_id]["status"] = "done"
-            jobs_store[job_id]["stage"] = "done"
-            jobs_store[job_id]["result"] = done_result
-            jobs_store[job_id]["completed_at"] = datetime.now(timezone.utc)
-            from core.in_flight_jobs import persist_in_flight_job_state
-            persist_in_flight_job_state(job_id, "done", "done", extra={"result": done_result})
+            if _has_contentful_final_result(done_result):
+                jobs_store[job_id]["status"] = "done"
+                jobs_store[job_id]["stage"] = "done"
+                jobs_store[job_id]["result"] = done_result
+                jobs_store[job_id]["completed_at"] = datetime.now(timezone.utc)
+                from core.in_flight_jobs import persist_in_flight_job_state
+                persist_in_flight_job_state(job_id, "done", "done", extra={"result": done_result})
+            else:
+                jobs_store[job_id]["status"] = "failed"
+                jobs_store[job_id]["stage"] = "failed"
+                jobs_store[job_id]["result"] = None
+                jobs_store[job_id]["error"] = "finalization produced no payload"
+                jobs_store[job_id]["completed_at"] = datetime.now(timezone.utc)
+                from core.in_flight_jobs import persist_in_flight_job_state
+                persist_in_flight_job_state(job_id, "failed", "failed", extra={"result": None, "error": "finalization produced no payload"})
         pipeline_metrics.end_stage("synthesizing")
         return
 
@@ -6177,7 +6202,47 @@ async def process_query_job_legal_ai(
 
 
 
+        final_payload = {
+            "answer": clean_answer,
+            "response": clean_answer,
+            "model_answer": clean_answer,
+            "database_freshness": "Database current as of November 2026",
+            "is_verified": memo_is_verified if 'memo_is_verified' in locals() else False,
+            "verification_report": v_report if 'v_report' in locals() else None,
+            "evidence_pack": bounded_evidence_pack.to_dict() if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else (evidence_pack.to_dict() if 'evidence_pack' in locals() else None),
+            "cases": precedent_cards or ([{"citation": it.citation, "case_name": it.case_title, "title": it.case_title, "court": it.court, "ratio": it.ratio, "ratio_decidendi": it.ratio, "year": it.year, "statutes_invoked": it.statutes_invoked, "pdf_url": it.pdf_url} for it in bounded_evidence_pack.items.values() if it.item_type == "judicial_precedent"] if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else []),
+            "precedents": precedent_cards or ([{"citation": it.citation, "case_name": it.case_title, "title": it.case_title, "court": it.court, "ratio": it.ratio, "ratio_decidendi": it.ratio, "year": it.year, "statutes_invoked": it.statutes_invoked, "pdf_url": it.pdf_url} for it in bounded_evidence_pack.items.values() if it.item_type == "judicial_precedent"] if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else []),
+            "precedent_cards": precedent_cards or ([{"citation": it.citation, "case_name": it.case_title, "title": it.case_title, "court": it.court, "ratio": it.ratio, "ratio_decidendi": it.ratio, "year": it.year, "statutes_invoked": it.statutes_invoked, "pdf_url": it.pdf_url} for it in bounded_evidence_pack.items.values() if it.item_type == "judicial_precedent"] if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else []),
+            "statutes": [
+                {
+                    "id": getattr(it, "canonical_id", None) or it.citation,
+                    "canonical_id": getattr(it, "canonical_id", None) or it.citation,
+                    "citation": it.citation,
+                    "title": getattr(it, "title", None) or getattr(it, "provision_title", None) or it.citation,
+                    "act_title": getattr(it, "act_title", None) or getattr(it, "statute", None) or "",
+                    "snippet": getattr(it, "text_cleaned", None) or getattr(it, "snippet", None) or (getattr(it, "text", "")[:400] if getattr(it, "text", None) else ""),
+                    "in_force": getattr(it, "in_force", True),
+                    "verified": True,
+                }
+                for it in (bounded_evidence_pack.items.values() if 'bounded_evidence_pack' in locals() and bounded_evidence_pack else [])
+                if getattr(it, "item_type", "") == "statutory_provision"
+            ],
+            "additional_authorities": [],
+            "citations": citations_payload,
+            "query_id": inserted_row_id,
+            "mode": "drafting" if str(getattr(request, "assistant", None) or getattr(request, "agent", None) or getattr(request, "category", "")).lower() in ("mike", "counsel") else "formal_opinion",
+            "assistant": "counsel" if str(getattr(request, "assistant", None) or getattr(request, "agent", None) or getattr(request, "category", "")).lower() in ("mike", "counsel") else "jurist",
+            "truncated": False,
+            "precedent_status": None,
+            "precedent_status_warning": None,
+            "superseding_citation": None,
+            "superseding_case_name": None,
+            "doctrinal_note": None,
+            "verification_report": verification_report_payload,
+            "shadow_rerank_stats": shadow_rerank_stats,
+        }
         jobs_store[job_id].setdefault("stage_timings", {})["completed"] = time.perf_counter()
+        if _has_contentful_final_result(final_payload):
 
 
 
@@ -6457,11 +6522,18 @@ async def process_query_job_legal_ai(
 
 
         })
-        try:
-            from core.in_flight_jobs import persist_in_flight_job_state
-            persist_in_flight_job_state(job_id, "done", "done", extra={"result": jobs_store[job_id].get("result")})
-        except Exception as _p_err:
-            logger.debug(f"Persistence error: {_p_err}")
+        else:
+            jobs_store[job_id].update({
+                "status": "failed",
+                "result": None,
+                "error": "finalization produced no payload",
+                "completed_at": datetime.now(timezone.utc),
+            })
+            try:
+                from core.in_flight_jobs import persist_in_flight_job_state
+                persist_in_flight_job_state(job_id, "failed", "failed", extra={"result": None, "error": "finalization produced no payload"})
+            except Exception as _p_err:
+                logger.debug(f"Persistence error: {_p_err}")
 
 
 
