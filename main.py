@@ -445,7 +445,7 @@ def health_check():
 
         "model": CLAUDE_MODEL,
 
-        "version": "2.5.0-remediation-phase6",
+        "version": "2.5.1-search-optimized",
 
         "build": os.environ.get("RAILWAY_GIT_COMMIT_SHA", os.environ.get("BUILD_SHA", "deploy-trigger"))[:7]
 
