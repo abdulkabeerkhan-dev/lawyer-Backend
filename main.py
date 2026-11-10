@@ -14985,7 +14985,9 @@ async def export_court_pleading(
             "- *Not Found:*",
             "HEADNOTE_ONLY - not verified",
             "STRUCTURED_MEMO_PARTIAL",
-            "PARTIAL LEGAL RESEARCH RECORD"
+            "PARTIAL LEGAL RESEARCH RECORD",
+            "PARTIAL RESEARCH RECORD",
+            "issues unresolved"
         ])
         if is_withheld_notice:
             raise HTTPException(

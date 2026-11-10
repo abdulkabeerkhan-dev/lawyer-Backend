@@ -241,10 +241,14 @@ def render_layer8_markdown(
             logger.warning(f"Error rendering limitation section: {e}")
 
     # Verification banner
-    if report.is_memo_verified:
+    not_found = memo_payload.get("not_found", []) if isinstance(memo_payload, dict) else []
+    is_partial = bool(getattr(report, "is_partial", False) or (isinstance(memo_payload, dict) and memo_payload.get("is_partial", False)) or getattr(report, "mode", "") == "partial_result" or not getattr(report, "is_memo_verified", False) or not_found)
+
+    if not is_partial:
         lines.append("> **✓ VERIFIED RESEARCH MEMORANDUM** - 100% of claims deterministically grounded in authenticated statutory provisions and reported precedents.\n")
     else:
-        lines.append(f"> ⚠️ **PARTIAL RESULT / UNVERIFIED NOTICE** - {report.unverified_claims_count} claim(s) could not be deterministically verified against the primary statute store.\n")
+        unresolved_count = len(not_found) if not_found else max(getattr(report, "unverified_claims_count", 0), 1)
+        lines.append(f"> ⚠️ **PARTIAL RESEARCH RECORD - {unresolved_count} issues unresolved.**\n")
 
     # 2. Supporting Legal Units & Claims
     claims = memo_payload.get("claims", [])
@@ -369,6 +373,11 @@ def execute_structured_memo_pipeline(
         memo_payload=memo_json,
         evidence_pack=evidence_pack.to_dict()
     )
+
+    not_found = memo_json.get("not_found", []) if isinstance(memo_json, dict) else []
+    if not_found or (isinstance(memo_json, dict) and memo_json.get("is_partial", False)):
+        report.is_memo_verified = False
+        report.mode = "partial_result"
 
     # Layer 8 Markdown Rendering
     rendered_markdown = render_layer8_markdown(

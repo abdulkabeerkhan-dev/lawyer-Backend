@@ -134,7 +134,9 @@ class StatuteEvidenceVerifier:
 
             report.claim_statuses.append(c_status)
 
-        report.is_memo_verified = all_ok and (report.verified_claims_count == report.total_claims)
+        not_found = memo_payload.get("not_found", []) if isinstance(memo_payload, dict) else []
+        is_partial_input = bool(memo_payload.get("is_partial", False)) if isinstance(memo_payload, dict) else False
+        report.is_memo_verified = all_ok and (report.verified_claims_count == report.total_claims) and not not_found and not is_partial_input
         if not report.is_memo_verified:
             report.mode = "partial_result"
             for cs in report.claim_statuses:

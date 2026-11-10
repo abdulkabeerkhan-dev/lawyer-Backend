@@ -151,7 +151,7 @@ def test_structured_memo_pipeline_blocks_section_264_and_section_57(sample_limit
     assert report_264.is_memo_verified is False
     assert report_264.unverified_claims_count == 1
     assert any("Section 264" in v or "does not exist" in v for v in report_264.blocking_violations)
-    assert "PARTIAL RESULT / UNVERIFIED NOTICE" in markdown_264
+    assert "PARTIAL RESEARCH RECORD" in markdown_264
     assert "`⚠️ Unverified`" in markdown_264
 
     # Case B: Calling Article 57 'Section 57'
@@ -212,3 +212,41 @@ def test_structured_memo_pipeline_blocks_unadmitted_evidence_id(sample_limitatio
 
     assert report.is_memo_verified is False
     assert any("E99" in v for v in report.blocking_violations)
+
+
+def test_structured_memo_pipeline_blocks_verified_banner_on_not_found(sample_limitation_article_57):
+    """
+    Fix A: Whenever not_found[] is non-empty, '✓ VERIFIED RESEARCH MEMORANDUM' is blocked
+    and replaced with 'PARTIAL RESEARCH RECORD - [N] issues unresolved.'
+    """
+    pack = BoundedEvidencePack()
+    pack.query_text = "What is the limitation for money lent and what about foreign loans?"
+    pack.add_legal_unit(sample_limitation_article_57, pull_linked_caveats=True)
+    verifier = StatuteEvidenceVerifier()
+    verifier.register_units([sample_limitation_article_57])
+
+    json_with_not_found = """
+    {
+      "answer": "Money lent is barred after three years under Article 57.",
+      "claims": [
+        {
+          "statement": "Under Article 57 of the Limitation Act, 1908, the period is three years.",
+          "evidence_ids": ["E1"]
+        }
+      ],
+      "caveats": [],
+      "not_found": ["Limitation rules for foreign cross-border loans were not found in the primary store."],
+      "open_questions": []
+    }
+    """
+
+    markdown, report, _ = execute_structured_memo_pipeline(
+        raw_llm_response=json_with_not_found,
+        evidence_pack=pack,
+        verifier=verifier
+    )
+
+    assert report.is_memo_verified is False
+    assert "✓ VERIFIED RESEARCH MEMORANDUM" not in markdown
+    assert "100% of claims deterministically grounded" not in markdown
+    assert "PARTIAL RESEARCH RECORD - 1 issues unresolved." in markdown
