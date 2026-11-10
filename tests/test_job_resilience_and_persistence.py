@@ -72,3 +72,21 @@ def test_lost_job_returns_interrupted_error_instead_of_404():
         assert "interrupted by a server restart" in res["error"]
 
     asyncio.run(_run())
+
+
+def test_done_job_requires_non_empty_result_payload():
+    """A job must never be persisted as done when the final result payload is empty or missing."""
+    bad_job_id = "bad-done-no-result-001"
+    persist_in_flight_job_state(
+        bad_job_id,
+        stage="done",
+        status="done",
+        extra={"user_id": "tester-123", "result": None, "error": "finalization produced no payload"}
+    )
+
+    job_record = _load_in_flight_jobs().get(bad_job_id)
+    assert job_record is not None
+    assert job_record["status"] == "failed"
+    assert job_record["stage"] == "failed"
+    assert job_record["result"] is None
+

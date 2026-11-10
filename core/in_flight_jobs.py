@@ -33,6 +33,24 @@ _REGISTERED_JOBS_STORE: Optional[Dict[str, Any]] = None
 _REGISTERED_SUPABASE_CLIENT: Any = None
 
 
+def _has_valid_final_result(payload: Any) -> bool:
+    """Returns True only when a terminal result payload carries usable content."""
+    if payload is None:
+        return False
+    if isinstance(payload, str):
+        return bool(payload.strip())
+    if isinstance(payload, dict):
+        if payload.get("result") is not None:
+            return _has_valid_final_result(payload.get("result"))
+        for key in ("answer", "response", "model_answer", "text", "content"):
+            if key in payload and _has_valid_final_result(payload.get(key)):
+                return True
+        return any(v not in (None, "", {}, []) for v in payload.values())
+    if isinstance(payload, list):
+        return any(_has_valid_final_result(item) for item in payload)
+    return bool(payload)
+
+
 def register_jobs_store(jobs_store: Dict[str, Any]) -> None:
     """Registers the active in-memory jobs store from the application context."""
     global _REGISTERED_JOBS_STORE
@@ -223,6 +241,16 @@ def persist_in_flight_job_state(
     Persist job execution stage and status to local memory cache, SQLite disk, and PostgreSQL `query_jobs`.
     Enforces privacy by stripping raw query text from metadata before storing.
     """
+    if extra is None:
+        extra = {}
+
+    if status == "done":
+        result_payload = extra.get("result")
+        if not _has_valid_final_result(result_payload):
+            status = "failed"
+            stage = "failed"
+            extra = {**extra, "error": extra.get("error") or "finalization produced no payload", "result": None}
+
     user_id = extra.get("user_id") if extra else None
     sanitized_metadata = {}
     if extra:
