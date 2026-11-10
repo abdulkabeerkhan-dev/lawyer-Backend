@@ -14363,10 +14363,10 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
 
         if not rec_dict.get("pdf_url") and rec_dict.get("case_id"):
             try:
-                from core.pdf_resolver import create_hmac_pdf_token
+                from core.pdf_resolver import create_hmac_pdf_token as _gen_pdf_token
                 cid = rec_dict["case_id"]
-                pdf_tok = create_hmac_pdf_token(cid)
-                rec_dict["pdf_url"] = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(cid)}?token={pdf_tok}"
+                pdf_tok = _gen_pdf_token(str(cid))
+                rec_dict["pdf_url"] = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(cid))}?token={pdf_tok}"
             except Exception:
                 pass
 
@@ -14393,11 +14393,11 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
             # Generate signed HMAC PDF streaming link
             cid = tc_hit.get("case_id")
             try:
-                from core.pdf_resolver import create_hmac_pdf_token
-                pdf_tok = create_hmac_pdf_token(cid)
-                pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(cid)}?token={pdf_tok}"
+                from core.pdf_resolver import create_hmac_pdf_token as _gen_pdf_token
+                pdf_tok = _gen_pdf_token(str(cid))
+                pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(cid))}?token={pdf_tok}"
             except Exception:
-                pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(cid)}"
+                pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(cid))}"
 
             # Substantive ratio decidendi / holding
             holding_val = hd_txt if len(hd_txt) > 30 else (full_txt[:700] + "..." if len(full_txt) > 700 else full_txt)
@@ -14584,8 +14584,12 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                         text=assembled_raw
                     )
 
-                    pdf_tok = create_hmac_pdf_token(norm_id)
-                    backend_pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(norm_id)}?token={pdf_tok}"
+                    try:
+                        from core.pdf_resolver import create_hmac_pdf_token as _gen_pdf_token
+                        pdf_tok = _gen_pdf_token(str(norm_id))
+                    except Exception:
+                        pdf_tok = "dev_token"
+                    backend_pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(norm_id))}?token={pdf_tok}"
 
                     return _sanitize_record({
                         "id": first_meta.get("judgment_id") or decoded_id,
@@ -14607,8 +14611,12 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
         except Exception as e:
             print(f"Pinecone multi-namespace lookup notice: {e}")
 
-    pdf_tok = create_hmac_pdf_token(norm_id)
-    backend_pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(norm_id)}?token={pdf_tok}"
+    try:
+        from core.pdf_resolver import create_hmac_pdf_token as _gen_pdf_token
+        pdf_tok = _gen_pdf_token(str(norm_id))
+    except Exception:
+        pdf_tok = "dev_token"
+    backend_pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(norm_id))}?token={pdf_tok}"
 
     fallback_court = clean_court_name("", title=space_id, case_id=norm_id)
     if not fallback_court or fallback_court == "Court not identified":
