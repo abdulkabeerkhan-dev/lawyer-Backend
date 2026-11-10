@@ -97,15 +97,23 @@ class InvertedBM25:
 
 
 # ---------------------------------------------------------------------------
+# BM25 Index Version & Constants
+# ---------------------------------------------------------------------------
+INDEX_VERSION = "2.0.0"
+
+
+# ---------------------------------------------------------------------------
 # BM25 Index
 # ---------------------------------------------------------------------------
 class BM25Index:
     """
     Pre-fitted BM25 index over judgment text chunks.
     Serializable to disk for fast startup.
+    Features version metadata and atomic serialization to eliminate index corruption.
     """
 
-    def __init__(self):
+    def __init__(self, version: str = INDEX_VERSION):
+        self.version: str = version
         self.bm25: Optional[BM25Okapi] = None
         self.doc_ids: List[str] = []          # vector IDs
         self.doc_metadata: List[Dict] = []    # metadata dicts
@@ -204,6 +212,7 @@ class BM25Index:
             })
 
         return {
+            "version": getattr(self, "version", INDEX_VERSION),
             "inverted": inverted,
             "idf": idf,
             "doc_len": doc_len,
@@ -216,20 +225,27 @@ class BM25Index:
         }
 
     def save(self, path: str, compact: bool = True) -> None:
-        """Serialize the fitted BM25 index to disk (compact inverted format by default)."""
+        """
+        Serialize the fitted BM25 index to disk with atomic replacement.
+        Writes to a temporary file path.tmp and renames to path, ensuring that
+        an interrupted rebuild or write never corrupts the active index.
+        """
         if compact:
             data = self.to_compact()
         else:
             data = {
+                "version": getattr(self, "version", INDEX_VERSION),
                 "bm25": self.bm25,
                 "doc_ids": self.doc_ids,
                 "doc_metadata": self.doc_metadata,
                 "corpus_size": self.corpus_size,
             }
-        with open(path, "wb") as f:
+        tmp_path = f"{path}.tmp"
+        with open(tmp_path, "wb") as f:
             pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+        os.replace(tmp_path, path)
         size_mb = os.path.getsize(path) / (1024 * 1024)
-        logger.info(f"BM25 index saved to {path} ({size_mb:.1f} MB, {self.corpus_size} docs, compact={compact})")
+        logger.info(f"BM25 index (v{getattr(self, 'version', INDEX_VERSION)}) saved to {path} ({size_mb:.1f} MB, {self.corpus_size} docs, compact={compact})")
 
     @classmethod
     def load(cls, path: str) -> "BM25Index":
@@ -252,7 +268,8 @@ class BM25Index:
         idx.doc_ids = data["doc_ids"]
         idx.doc_metadata = data["doc_metadata"]
         idx.corpus_size = data["corpus_size"]
-        logger.info(f"BM25 index loaded from {path} ({idx.corpus_size} docs, is_inverted={'inverted' in data})")
+        idx.version = data.get("version", "1.0.0")
+        logger.info(f"BM25 index (v{idx.version}) loaded from {path} ({idx.corpus_size} docs, is_inverted={'inverted' in data})")
         return idx
 
 
@@ -343,6 +360,108 @@ def get_recency_weight(year_val: Any, citation: str = "", doc_id: str = "") -> f
 # ---------------------------------------------------------------------------
 # Reciprocal Rank Fusion
 # ---------------------------------------------------------------------------
+def multi_lane_reciprocal_rank_fusion(
+    lane_results: Dict[str, Any],
+    k: int = 60,
+    court_weighting: bool = True,
+    recency_weighting: bool = True
+) -> List[Dict[str, Any]]:
+    """
+    Merge candidates across multiple independent retrieval lanes (e.g. 5 lanes:
+    dense_conceptual, sparse_lexical, procedural, doctrinal, statutory) using
+    Reciprocal Rank Fusion (RRF).
+
+    Formula:
+        RRF(d) = sum_{lane in Lanes} 1 / (k + rank_{lane}(d))
+        FinalScore(d) = RRF(d) * CourtWeight(d) * RecencyWeight(d)
+
+    Preserves lane attribution (retrieval_lanes), individual lane ranks, highest text snippet,
+    and metadata.
+    """
+    rrf_scores: Dict[str, float] = {}
+    lane_ranks: Dict[str, Dict[str, int]] = {}
+    lane_scores: Dict[str, Dict[str, float]] = {}
+    metadata_map: Dict[str, Dict[str, Any]] = {}
+    best_candidate_map: Dict[str, Dict[str, Any]] = {}
+
+    for lane_name, items in lane_results.items():
+        if not items:
+            continue
+        for rank, item in enumerate(items):
+            if isinstance(item, tuple) and len(item) >= 3:
+                doc_id = str(item[0])
+                score = float(item[1])
+                meta = item[2] if isinstance(item[2], dict) else {}
+                orig_dict = {"id": doc_id, "score": score, "metadata": meta}
+            elif isinstance(item, dict):
+                meta = item.get("metadata") if isinstance(item.get("metadata"), dict) else {}
+                doc_id = str(item.get("id") or item.get("case_id") or meta.get("case_id") or item.get("citation") or "")
+                score = float(item.get("score") or item.get("similarity") or item.get("dense_score") or item.get("bm25_score") or 0.0)
+                orig_dict = item
+            else:
+                continue
+
+            if not doc_id:
+                continue
+
+            norm_id = re.sub(r'[\s_\-]+', '_', doc_id).lower()
+            norm_id = re.sub(r'(_chk_\d+|_chunk_\d+|#c\d+)$', '', norm_id, flags=re.IGNORECASE).strip('_')
+            target_id = norm_id if norm_id else doc_id
+
+            rrf_scores[target_id] = rrf_scores.get(target_id, 0.0) + 1.0 / (k + rank + 1)
+            lane_ranks.setdefault(target_id, {})[lane_name] = rank + 1
+            lane_scores.setdefault(target_id, {})[lane_name] = score
+
+            if target_id not in best_candidate_map:
+                cand_copy = dict(orig_dict)
+                cand_copy["id"] = target_id
+                cand_copy["retrieval_lanes"] = [lane_name]
+                best_candidate_map[target_id] = cand_copy
+                metadata_map[target_id] = dict(meta)
+            else:
+                existing = best_candidate_map[target_id]
+                if lane_name not in existing.get("retrieval_lanes", []):
+                    existing.setdefault("retrieval_lanes", []).append(lane_name)
+                new_text = str(orig_dict.get("preview") or meta.get("full_text") or meta.get("text") or "")
+                old_text = str(existing.get("preview") or metadata_map[target_id].get("full_text") or metadata_map[target_id].get("text") or "")
+                if len(new_text) > len(old_text):
+                    existing["preview"] = orig_dict.get("preview") or new_text[:2000]
+                    metadata_map[target_id].update(meta)
+
+    results = []
+    from core.court_taxonomy import get_effective_court
+    for doc_id, base_rrf in rrf_scores.items():
+        cand = best_candidate_map[doc_id]
+        meta = metadata_map.get(doc_id, {}) or cand.get("metadata", {}) or {}
+        cit = str(cand.get("citation") or meta.get("citation") or meta.get("neutral_citation") or doc_id)
+        court = str(get_effective_court(meta) or cand.get("court") or cand.get("court_name") or meta.get("court") or "")
+        raw_year = meta.get("year", 0) or meta.get("decision_date", "") or cand.get("year", 0)
+
+        court_weight = get_court_authority_weight(cit, court) if court_weighting else 1.0
+        recency_weight = get_recency_weight(raw_year, citation=cit, doc_id=doc_id) if recency_weighting else 1.0
+
+        final_rank_score = base_rrf * court_weight * recency_weight
+
+        cand["score"] = final_rank_score
+        cand["rrf_score"] = base_rrf
+        cand["final_rank_score"] = final_rank_score
+        cand["court_weight"] = court_weight
+        cand["recency_weight"] = recency_weight
+        cand["retrieval_lanes"] = cand.get("retrieval_lanes", [])
+        cand["lane_ranks"] = dict(lane_ranks.get(doc_id, {}))
+        cand["lane_scores"] = dict(lane_scores.get(doc_id, {}))
+        cand["metadata"] = meta
+        if "court" not in cand or not cand["court"]:
+            cand["court"] = court
+        if "citation" not in cand or not cand["citation"]:
+            cand["citation"] = cit
+
+        results.append(cand)
+
+    results.sort(key=lambda x: x["final_rank_score"], reverse=True)
+    return results
+
+
 def reciprocal_rank_fusion(
     dense_results: List[Tuple[str, float, Dict]],
     sparse_results: List[Tuple[str, float, Dict]],
@@ -350,63 +469,50 @@ def reciprocal_rank_fusion(
 ) -> List[Dict[str, Any]]:
     """
     Merge two ranked result lists via Reciprocal Rank Fusion (RRF) with
-    judicial hierarchy and recency re-weighting.
-
-    RRF(d) = sum over each ranker r: 1 / (k + rank_r(d))
-    FinalScore(d) = RRF(d) * CourtWeight(d) * RecencyWeight(d)
+    judicial hierarchy and recency re-weighting. Backward-compatible wrapper.
     """
-    rrf_scores: Dict[str, float] = {}
-    dense_scores: Dict[str, float] = {}
-    sparse_scores: Dict[str, float] = {}
-    dense_ranks: Dict[str, int] = {}
-    sparse_ranks: Dict[str, int] = {}
-    metadata_map: Dict[str, Dict] = {}
+    lane_results = {
+        "dense": dense_results,
+        "sparse": sparse_results
+    }
+    return multi_lane_reciprocal_rank_fusion(lane_results, k=k)
 
-    for rank, (doc_id, score, meta) in enumerate(dense_results):
-        rrf_scores[doc_id] = rrf_scores.get(doc_id, 0.0) + 1.0 / (k + rank + 1)
-        dense_scores[doc_id] = score
-        dense_ranks[doc_id] = rank + 1
-        metadata_map[doc_id] = meta
 
-    for rank, (doc_id, score, meta) in enumerate(sparse_results):
-        rrf_scores[doc_id] = rrf_scores.get(doc_id, 0.0) + 1.0 / (k + rank + 1)
-        sparse_scores[doc_id] = score
-        sparse_ranks[doc_id] = rank + 1
-        if doc_id not in metadata_map:
-            metadata_map[doc_id] = meta
+class MultiLaneRetrievalEngine:
+    """
+    Phase 2: Multi-Lane Hybrid Retrieval Engine.
+    Executes and fuses 5 distinct legal retrieval lanes:
+    1. Dense Conceptual: Semantic similarity via Pinecone dense vectors (Voyage Law-2)
+    2. Sparse Lexical: Exact statutory keywords and terms via BM25
+    3. Procedural: Relief, maintainability, and forum hierarchy via targeted dense + sparse
+    4. Doctrinal: Controlling judicial principles and legal ratios via targeted dense + sparse
+    5. Statutory: Exact statutory provisions and statute-anchored precedents
+    """
 
-    results = []
-    for doc_id in rrf_scores:
-        meta = metadata_map.get(doc_id, {}) or {}
-        cit = meta.get("citation", "") or meta.get("neutral_citation", "")
-        from core.court_taxonomy import get_effective_court
-        court = get_effective_court(meta) or ""
-        raw_year = meta.get("year", 0) or meta.get("decision_date", "") or meta.get("date", "")
-        court_weight = get_court_authority_weight(cit, court)
+    def __init__(self, bm25_index: Optional[BM25Index] = None, rrf_k: int = 60):
+        self.bm25_index = bm25_index
+        self.rrf_k = rrf_k
 
-        recency_weight = get_recency_weight(raw_year, citation=cit, doc_id=doc_id)
-
-        base_rrf = rrf_scores[doc_id]
-        final_rank_score = base_rrf * court_weight * recency_weight
-
-        results.append({
-            "id": doc_id,
-            "score": final_rank_score,  # Re-weighted candidate score
-            "rrf_score": base_rrf,
-            "final_rank_score": final_rank_score,
-            "court_weight": court_weight,
-            "recency_weight": recency_weight,
-            "similarity_score": dense_scores.get(doc_id, 0.0),
-            "dense_score": dense_scores.get(doc_id, 0.0),
-            "sparse_score": sparse_scores.get(doc_id, 0.0),
-            "dense_rank": dense_ranks.get(doc_id, 0),
-            "sparse_rank": sparse_ranks.get(doc_id, 0),
-            "metadata": meta,
-        })
-
-    # Sort final candidates by final_rank_score descending
-    results.sort(key=lambda x: x["final_rank_score"], reverse=True)
-    return results
+    def fuse_5_lanes(
+        self,
+        dense_conceptual: List[Any],
+        sparse_lexical: List[Any],
+        procedural: List[Any],
+        doctrinal: List[Any],
+        statutory: List[Any],
+        k: Optional[int] = None
+    ) -> List[Dict[str, Any]]:
+        """
+        Combines candidates from all 5 distinct legal retrieval lanes via Reciprocal Rank Fusion.
+        """
+        lane_dict = {
+            "dense_conceptual": dense_conceptual,
+            "sparse_lexical": sparse_lexical,
+            "procedural": procedural,
+            "doctrinal": doctrinal,
+            "statutory": statutory,
+        }
+        return multi_lane_reciprocal_rank_fusion(lane_dict, k=k or self.rrf_k)
 
 
 # ---------------------------------------------------------------------------

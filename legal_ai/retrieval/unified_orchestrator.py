@@ -57,6 +57,8 @@ def merge_candidates_with_rrf(
             if norm_cid not in merged_map:
                 merged_map[norm_cid] = dict(c)
                 merged_map[norm_cid]["retrieval_engines"] = [base_engine]
+                merged_map[norm_cid]["retrieval_lanes"] = [engine_name]
+                merged_map[norm_cid]["lane_ranks"] = {engine_name: rank + 1}
                 rrf_scores[norm_cid] = 0.0
             else:
                 existing = merged_map[norm_cid]
@@ -65,6 +67,9 @@ def merge_candidates_with_rrf(
                     existing["source_lane_query"] = c.get("source_lane_query")
                 if base_engine not in existing.get("retrieval_engines", []):
                     existing.setdefault("retrieval_engines", []).append(base_engine)
+                if engine_name not in existing.get("retrieval_lanes", []):
+                    existing.setdefault("retrieval_lanes", []).append(engine_name)
+                existing.setdefault("lane_ranks", {})[engine_name] = rank + 1
 
             rrf_scores[norm_cid] += 1.0 / (rrf_k + rank + 1)
 
@@ -116,19 +121,27 @@ def merge_candidates_with_rrf(
             cand["metadata"]["canonical_court_name"] = cand_court
 
         weight_mult = 1.0
-        # Article 189: Supreme Court is apex binding
-        if "supreme court" in cand_court.lower():
-            weight_mult = 1.25
+        # Article 189: Supreme Court is apex binding precedent across Pakistan (1.35x)
+        if "supreme court" in cand_court.lower() or "scmr" in c_cit.lower() or "pld sc" in c_cit.lower():
+            weight_mult = 1.35
         elif binding_courts and any(bc in cand_court.lower() for bc in binding_courts):
             weight_mult = 1.15
-        elif target_province in ["Punjab", "Sindh", "Khyber Pakhtunkhwa", "Balochistan"]:
-            # Cross-provincial leakage penalty if non-binding sister High Court
-            if cand_prov in ["Punjab", "Sindh", "Khyber Pakhtunkhwa", "Balochistan"] and cand_prov != target_province:
-                weight_mult = 0.65
+        elif "high court" in cand_court.lower():
+            # Article 201: High Court binding precedent within provincial jurisdiction (1.10x)
+            weight_mult = 1.10
+            if target_province in ["Punjab", "Sindh", "Khyber Pakhtunkhwa", "Balochistan"]:
+                # Cross-provincial leakage penalty if non-binding sister High Court
+                if cand_prov in ["Punjab", "Sindh", "Khyber Pakhtunkhwa", "Balochistan"] and cand_prov != target_province:
+                    weight_mult = 0.65
+        elif any(tk in cand_court.lower() for tk in ["tribunal", "fto", "ombudsman"]):
+            weight_mult = 0.95
 
         final_score = base_score * weight_mult
+        cand["court_weight"] = weight_mult
+        cand["recency_weight"] = 1.0
         cand["rrf_score"] = round(final_score, 6)
         cand["score"] = round(final_score, 6)
+        cand["final_rank_score"] = round(final_score, 6)
         final_list.append(cand)
 
     final_list.sort(key=lambda x: x.get("rrf_score", 0.0), reverse=True)
@@ -239,19 +252,53 @@ async def retrieve_candidates_parallel(
     top_k_per_engine: int = 40
 ) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
     """
-    Executes parallel per-issue retrieval across Supabase, Pinecone, BM25, and optional External search.
-    Returns:
-        merged_candidates: Unified RRF-ranked candidate list
-        engine_counts: Dict with {count_supabase, count_pinecone, count_bm25, count_external}
+    Executes Phase 2 Multi-Lane Hybrid Retrieval across 5 distinct legal intent lanes:
+    1. Dense Conceptual: Pinecone dense vector semantic retrieval (voyage-law-2)
+    2. Sparse Lexical: Local inverted BM25 keyword matching for exact terms & citations
+    3. Procedural: Targeted dual dense + sparse retrieval on relief, forum, limitation, maintainability
+    4. Doctrinal: Targeted dual dense + sparse retrieval on substantive judicial ratios & legal tests
+    5. Statutory: Exact statutory ID matching and provision-anchored precedent retrieval
+
+    Candidates are fused via Reciprocal Rank Fusion (k=60), adjusted for Article 189/201 judicial authority
+    and neutral recency, collapsed per case, and passed to downstream cross-encoder reranking.
     """
+    import logging
+    logger = logging.getLogger(__name__)
+
     if query_plan is None:
         from core.legal_query_planner import create_deterministic_fallback_plan
         query_plan = create_deterministic_fallback_plan(query_text)
 
-    # 1. Build prioritized search terms for Supabase exact & keyword search
-    search_terms: List[str] = []
+    # 1. Deconstruct query plan into the 5 dimensional intent lanes
+    multi_lane = getattr(query_plan, "multi_lane_queries", None)
 
-    # Priority 1: Landmark authorities from detected doctrinal topics
+    dense_conceptual_query = (
+        getattr(multi_lane, "dense_conceptual_query", None)
+        or getattr(query_plan, "primary_issue", None)
+        or query_text
+    )
+    sparse_lexical_query = (
+        getattr(multi_lane, "sparse_lexical_query", None)
+        or query_text
+    )
+    procedural_query = (
+        getattr(multi_lane, "procedural_query", None)
+        or query_text
+    )
+    doctrinal_query = (
+        getattr(multi_lane, "doctrinal_query", None)
+        or getattr(query_plan, "primary_issue", None)
+        or query_text
+    )
+    statutory_provisions = (
+        getattr(multi_lane, "statutory_provisions", None)
+        or getattr(query_plan, "statutory_provisions", None)
+        or getattr(query_plan, "governing_statutes", None)
+        or []
+    )
+
+    # 2. Build prioritized search terms for exact statute & keyword matching
+    search_terms: List[str] = []
     from legal_ai.verification.doctrinal_rules import detect_topics, TOPICS_SPEC
     detected = detect_topics(query_text)
     for t in detected:
@@ -260,75 +307,166 @@ async def retrieve_candidates_parallel(
                 if la not in search_terms:
                     search_terms.append(la)
 
-    # Priority 2: Canonical statutory provisions from query plan (anchored to parent statute)
-    provisions = getattr(query_plan, "statutory_provisions", None) or getattr(query_plan, "provisions", []) or []
-    for p in provisions:
+    for p in statutory_provisions:
         anchored = anchor_provision_token(str(p), query_plan=query_plan)
         if anchored and anchored not in search_terms:
             search_terms.append(anchored)
 
-    # Priority 3: Doctrinal issue queries and search lanes
     lanes = getattr(query_plan, "search_lanes", []) if hasattr(query_plan, "search_lanes") else []
-    issues = getattr(query_plan, "issues", []) if hasattr(query_plan, "issues") else (getattr(query_plan, "legal_questions", []) if hasattr(query_plan, "legal_questions") else [])
     for lane in lanes:
-        lq = str(getattr(lane, "query", None) or (lane.get("query") if isinstance(lane, dict) else "")).strip()
+        lq = str(getattr(lane, "query", None) or (lane.get("query") if isinstance(lane, dict) else "") or "")
         if lq and lq not in search_terms:
             search_terms.append(lq)
 
-    for t in detected:
-        if t in TOPICS_SPEC:
-            for eq in TOPICS_SPEC[t].get("extra_queries", [])[:2]:
-                if eq not in search_terms:
-                    search_terms.append(eq)
-
-    # Priority 4: Raw user query
     if query_text not in search_terms:
         search_terms.append(query_text)
 
-    # Hard filter: Eliminate any bare numbers or unanchored section tokens
     search_terms = [
         st for st in search_terms
         if not re.match(r'^(?:sections?|secs?\.?|s\.)?\s*\d+$', st.strip(), re.IGNORECASE)
     ]
 
-    # 2. Build multi-lane queries and lane identifiers for Pinecone dense semantic search
-    dense_queries = [query_text]
-    dense_lane_ids = ["global_query"]
-    if lanes:
-        for l in lanes[:5]:
-            lid = getattr(l, "lane_id", None) or (l.get("lane_id") if isinstance(l, dict) else "") or (l.get("lane") if isinstance(l, dict) else "")
-            q_str = str(getattr(l, "query", None) or (l.get("query") if isinstance(l, dict) else "")).strip()
-            if q_str and q_str not in dense_queries:
-                dense_queries.append(q_str)
-                dense_lane_ids.append(lid or f"lane_{len(dense_lane_ids)}")
-    elif issues:
-        for idx, iss in enumerate(issues[:3]):
-            iss_str = str(iss).strip()
-            if iss_str and iss_str not in dense_queries:
-                dense_queries.append(iss_str)
-                dense_lane_ids.append(f"issue_{idx+1}")
-
-    # 3. Build multi-query and lane identifiers for BM25 sparse search across all search lanes
-    bm_queries = [query_text]
-    bm_lane_ids = ["global_query"]
-    if lanes:
-        for l in lanes[:5]:
-            lid = getattr(l, "lane_id", None) or (l.get("lane_id") if isinstance(l, dict) else "") or (l.get("lane") if isinstance(l, dict) else "")
-            q_str = str(getattr(l, "query", None) or (l.get("query") if isinstance(l, dict) else "")).strip()
-            if q_str and q_str not in bm_queries:
-                bm_queries.append(q_str)
-                bm_lane_ids.append(lid or f"lane_{len(bm_lane_ids)}")
-    elif issues:
-        for idx, iss in enumerate(issues[:3]):
-            iss_str = str(iss).strip()
-            if iss_str and iss_str not in bm_queries:
-                bm_queries.append(iss_str)
-                bm_lane_ids.append(f"issue_{idx+1}")
-
     import os
     enable_supabase_fts = os.getenv("ENABLE_SUPABASE_FTS", "false").lower() in ("true", "1")
 
-    # 4. Fire concurrent search tasks with strict timeout & circuit breaker guard
+    # 3. Define concurrent lane executors with strict timeouts & circuit breakers
+
+    # Lane 1: Dense Conceptual
+    async def _lane_dense_conceptual() -> List[Dict[str, Any]]:
+        try:
+            raw = await asyncio.wait_for(
+                search_pinecone_dense(
+                    dense_conceptual_query,
+                    top_k=top_k_per_engine,
+                    min_similarity=0.30,
+                    query_plan=query_plan
+                ),
+                timeout=12.0
+            )
+            for c in raw:
+                c["source_lane"] = "dense_conceptual"
+                c["source_issue_id"] = "dense_conceptual"
+                c["source_lane_query"] = dense_conceptual_query
+            return collapse_chunks_per_case(raw)
+        except Exception as e:
+            logger.warning(f"[Lane 1: Dense Conceptual] query error: {e}")
+            return []
+
+    # Lane 2: Sparse Lexical (BM25)
+    def _lane_sparse_lexical() -> List[Dict[str, Any]]:
+        try:
+            raw = search_bm25_sparse(sparse_lexical_query, top_k=top_k_per_engine)
+            for c in raw:
+                c["source_lane"] = "sparse_lexical"
+                c["source_issue_id"] = "sparse_lexical"
+                c["source_lane_query"] = sparse_lexical_query
+            return collapse_chunks_per_case(raw)
+        except Exception as e:
+            logger.warning(f"[Lane 2: Sparse Lexical] query error: {e}")
+            return []
+
+    # Lane 3: Procedural Retrieval (Targeted dense + sparse)
+    async def _lane_procedural() -> List[Dict[str, Any]]:
+        async def _pc_proc():
+            try:
+                return await asyncio.wait_for(
+                    search_pinecone_dense(
+                        procedural_query,
+                        top_k=top_k_per_engine,
+                        min_similarity=0.30,
+                        query_plan=query_plan
+                    ),
+                    timeout=10.0
+                )
+            except Exception:
+                return []
+
+        def _bm_proc():
+            try:
+                return search_bm25_sparse(procedural_query, top_k=top_k_per_engine)
+            except Exception:
+                return []
+
+        pc_hits, bm_hits = await asyncio.gather(
+            _pc_proc(),
+            asyncio.to_thread(_bm_proc)
+        )
+        combined = []
+        for c in pc_hits:
+            c["source_lane"] = "procedural"
+            c["source_issue_id"] = "procedural_dense"
+            c["source_lane_query"] = procedural_query
+            combined.append(c)
+        for c in bm_hits:
+            c["source_lane"] = "procedural"
+            c["source_issue_id"] = "procedural_sparse"
+            c["source_lane_query"] = procedural_query
+            combined.append(c)
+        return collapse_chunks_per_case(combined)
+
+    # Lane 4: Doctrinal Retrieval (Targeted dense + sparse)
+    async def _lane_doctrinal() -> List[Dict[str, Any]]:
+        async def _pc_doc():
+            try:
+                return await asyncio.wait_for(
+                    search_pinecone_dense(
+                        doctrinal_query,
+                        top_k=top_k_per_engine,
+                        min_similarity=0.30,
+                        query_plan=query_plan
+                    ),
+                    timeout=10.0
+                )
+            except Exception:
+                return []
+
+        def _bm_doc():
+            try:
+                return search_bm25_sparse(doctrinal_query, top_k=top_k_per_engine)
+            except Exception:
+                return []
+
+        pc_hits, bm_hits = await asyncio.gather(
+            _pc_doc(),
+            asyncio.to_thread(_bm_doc)
+        )
+        combined = []
+        for c in pc_hits:
+            c["source_lane"] = "doctrinal"
+            c["source_issue_id"] = "doctrinal_dense"
+            c["source_lane_query"] = doctrinal_query
+            combined.append(c)
+        for c in bm_hits:
+            c["source_lane"] = "doctrinal"
+            c["source_issue_id"] = "doctrinal_sparse"
+            c["source_lane_query"] = doctrinal_query
+            combined.append(c)
+        return collapse_chunks_per_case(combined)
+
+    # Lane 5: Statutory Retrieval (Exact statutory tokens & precedents)
+    def _lane_statutory() -> List[Dict[str, Any]]:
+        statute_queries = []
+        for p in statutory_provisions:
+            anchored = anchor_provision_token(str(p), query_plan=query_plan)
+            if anchored and anchored not in statute_queries:
+                statute_queries.append(anchored)
+        if not statute_queries:
+            statute_queries = [str(p) for p in statutory_provisions if str(p)] or [sparse_lexical_query]
+
+        statute_hits = []
+        for sq in statute_queries[:4]:
+            try:
+                hits = search_bm25_sparse(sq, top_k=top_k_per_engine)
+                for h in hits:
+                    h["source_lane"] = "statutory"
+                    h["source_issue_id"] = "statutory"
+                    h["source_lane_query"] = sq
+                    statute_hits.append(h)
+            except Exception as e:
+                logger.warning(f"[Lane 5: Statutory] error querying '{sq}': {e}")
+        return collapse_chunks_per_case(statute_hits)
+
+    # Supplementary Tasks: Supabase FTS & External Judicial Search
     async def _guarded_supabase_search():
         if not enable_supabase_fts:
             return []
@@ -344,87 +482,60 @@ async def retrieve_candidates_parallel(
             trip_supabase_circuit(60.0, f"Supabase search timeout in orchestrator: {sb_err}")
             return []
 
-    supabase_task = asyncio.create_task(_guarded_supabase_search())
-
-    def _execute_multi_bm25_lists() -> List[List[Dict[str, Any]]]:
-        raw_lists = []
-        for bq, lid in zip(bm_queries, bm_lane_ids):
-            sub_res = search_bm25_sparse(bq, top_k=top_k_per_engine)
-            for c in sub_res:
-                if "source_issue_id" not in c:
-                    c["source_issue_id"] = lid
-                if "source_lane_query" not in c:
-                    c["source_lane_query"] = bq
-            raw_lists.append(collapse_chunks_per_case(sub_res))
-        return raw_lists
-
-    async def _execute_multi_pinecone_lists() -> List[List[Dict[str, Any]]]:
-        pc_tasks = [
-            search_pinecone_dense(dq, top_k=top_k_per_engine, min_similarity=0.30, query_plan=query_plan)
-            for dq in dense_queries
-        ]
-        raw_lists = await asyncio.gather(*pc_tasks)
-        tagged_lists = []
-        for plist, lid, dq in zip(raw_lists, dense_lane_ids, dense_queries):
-            for c in plist:
-                if "source_issue_id" not in c:
-                    c["source_issue_id"] = lid
-                if "source_lane_query" not in c:
-                    c["source_lane_query"] = dq
-            tagged_lists.append(collapse_chunks_per_case(plist))
-        return tagged_lists
-
-    async def _guarded_pinecone_search() -> List[List[Dict[str, Any]]]:
-        try:
-            return await asyncio.wait_for(_execute_multi_pinecone_lists(), timeout=12.0)
-        except Exception as pc_err:
-            print(f"⚠️ [UnifiedOrchestrator] Pinecone search timed out/failed: {pc_err}", file=sys.stderr, flush=True)
-            return []
-
     async def _guarded_external_search() -> List[Dict[str, Any]]:
         try:
-            return await asyncio.wait_for(search_external_judgments(query_text, max_results=5), timeout=4.0)
+            return await asyncio.wait_for(search_external_judgments(query_text, max_results=5), timeout=5.0)
         except Exception as ext_err:
-            print(f"⚠️ [UnifiedOrchestrator] External search timed out/failed: {ext_err}", file=sys.stderr, flush=True)
+            logger.warning(f"External search timed out/failed: {ext_err}")
             return []
 
-    pinecone_task = asyncio.create_task(_guarded_pinecone_search())
-    bm25_task = asyncio.create_task(asyncio.to_thread(_execute_multi_bm25_lists))
+    # 4. Fire all 5 lanes + supplementary tasks concurrently
+    l1_task = asyncio.create_task(_lane_dense_conceptual())
+    l2_task = asyncio.create_task(asyncio.to_thread(_lane_sparse_lexical))
+    l3_task = asyncio.create_task(_lane_procedural())
+    l4_task = asyncio.create_task(_lane_doctrinal())
+    l5_task = asyncio.create_task(asyncio.to_thread(_lane_statutory))
+    sb_task = asyncio.create_task(_guarded_supabase_search())
 
     if include_external:
-        external_task = asyncio.create_task(_guarded_external_search())
-        sb_res, pc_lists, bm_lists, ext_res = await asyncio.gather(
-            supabase_task, pinecone_task, bm25_task, external_task
+        ext_task = asyncio.create_task(_guarded_external_search())
+        l1_res, l2_res, l3_res, l4_res, l5_res, sb_res, ext_res = await asyncio.gather(
+            l1_task, l2_task, l3_task, l4_task, l5_task, sb_task, ext_task
         )
     else:
-        sb_res, pc_lists, bm_lists = await asyncio.gather(
-            supabase_task, pinecone_task, bm25_task
+        l1_res, l2_res, l3_res, l4_res, l5_res, sb_res = await asyncio.gather(
+            l1_task, l2_task, l3_task, l4_task, l5_task, sb_task
         )
         ext_res = []
 
-    # Spec Phase 4: Run RRF over per-query ranked lists instead of one concatenated list
-    per_query_engine_results: Dict[str, List[Dict[str, Any]]] = {}
-    total_pc_cases = 0
-    for idx, plist in enumerate(pc_lists):
-        per_query_engine_results[f"Pinecone_q{idx}"] = plist
-        total_pc_cases += len(plist)
-
-    total_bm_cases = 0
-    for idx, blist in enumerate(bm_lists):
-        per_query_engine_results[f"BM25_q{idx}"] = blist
-        total_bm_cases += len(blist)
-
+    # 5. Populate Multi-Lane Engine Results for Reciprocal Rank Fusion
+    per_lane_engine_results: Dict[str, List[Dict[str, Any]]] = {
+        "dense_conceptual": l1_res,
+        "sparse_lexical": l2_res,
+        "procedural": l3_res,
+        "doctrinal": l4_res,
+        "statutory": l5_res,
+    }
     if sb_res:
-        per_query_engine_results["Supabase"] = collapse_chunks_per_case(sb_res)
+        per_lane_engine_results["supabase_fts"] = collapse_chunks_per_case(sb_res)
     if ext_res:
-        per_query_engine_results["External"] = collapse_chunks_per_case(ext_res)
+        per_lane_engine_results["external_leads"] = collapse_chunks_per_case(ext_res)
+
+    total_dense_cases = len(l1_res) + len([c for c in l3_res if "dense" in c.get("source_issue_id", "")]) + len([c for c in l4_res if "dense" in c.get("source_issue_id", "")])
+    total_sparse_cases = len(l2_res) + len([c for c in l3_res if "sparse" in c.get("source_issue_id", "")]) + len([c for c in l4_res if "sparse" in c.get("source_issue_id", "")]) + len(l5_res)
 
     engine_counts = {
+        "count_dense_conceptual": len(l1_res),
+        "count_sparse_lexical": len(l2_res),
+        "count_procedural": len(l3_res),
+        "count_doctrinal": len(l4_res),
+        "count_statutory": len(l5_res),
         "count_supabase": len(sb_res),
-        "count_pinecone": total_pc_cases,
-        "count_bm25": total_bm_cases,
+        "count_pinecone": total_dense_cases,
+        "count_bm25": total_sparse_cases,
         "count_external": len(ext_res)
     }
 
-    merged = merge_candidates_with_rrf(per_query_engine_results, query_plan=query_plan)
+    # 6. Reciprocal Rank Fusion & Judicial Authority Weighting
+    merged = merge_candidates_with_rrf(per_lane_engine_results, query_plan=query_plan, rrf_k=60)
     return merged, engine_counts

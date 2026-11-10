@@ -158,15 +158,15 @@ def main():
 
     logger.info(f"Metadata fetch complete in {time.time() - start_time:.1f}s. Total documents with text: {len(all_docs):,}")
 
-    from hybrid_search import BM25Index
+    from hybrid_search import BM25Index, INDEX_VERSION
 
-    logger.info("Tokenizing legal corpus and fitting BM25 index...")
+    logger.info(f"Tokenizing legal corpus and fitting BM25 index (v{INDEX_VERSION})...")
     fit_start = time.time()
-    bm25_idx = BM25Index()
+    bm25_idx = BM25Index(version=INDEX_VERSION)
     bm25_idx.fit(all_docs)
     logger.info(f"BM25 fitting finished in {time.time() - fit_start:.1f}s")
 
-    logger.info(f"Saving BM25 index to {OUTPUT_FILE}...")
+    logger.info(f"Saving BM25 index (v{INDEX_VERSION}) to {OUTPUT_FILE} (atomic replacement)...")
     bm25_idx.save(OUTPUT_FILE)
 
     total_time = time.time() - start_time
