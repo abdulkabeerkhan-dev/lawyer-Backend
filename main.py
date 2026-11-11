@@ -76,7 +76,7 @@ from hybrid_search import BM25Index, HybridSearchEngine, reciprocal_rank_fusion,
 
 
 from fastapi import FastAPI, HTTPException, status, Depends, Response, BackgroundTasks, Request, Query
-
+from fastapi.exception_handlers import http_exception_handler
 from fastapi.responses import StreamingResponse, HTMLResponse, JSONResponse
 
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -392,8 +392,20 @@ app = FastAPI(
     redoc_url=None if IS_PRODUCTION else "/redoc",
 
     openapi_url=None if IS_PRODUCTION else "/openapi.json"
-
 )
+
+
+@app.exception_handler(HTTPException)
+async def handle_http_exception(request: Request, exc: HTTPException):
+    if exc.status_code == status.HTTP_429_TOO_MANY_REQUESTS:
+        message = exc.detail if isinstance(exc.detail, str) else "Request was rate limited."
+        return JSONResponse(
+            status_code=exc.status_code,
+            content={"detail": exc.detail, "error": message},
+            headers=exc.headers,
+        )
+    return await http_exception_handler(request, exc)
+
 
 # Phase 6: Modular APIRouters
 from routers.queries import router as queries_router
@@ -2385,49 +2397,42 @@ def get_clerk_public_key(kid: str, force_refresh: bool = False) -> Optional[Any]
 
 
 
-    if not clerk_jwks_url:
+    # Build candidate URLs to fetch JWKS from
+    candidate_urls = []
+    if clerk_jwks_url:
+        candidate_urls.append(clerk_jwks_url)
+    candidate_urls.append("https://api.clerk.com/v1/jwks")
 
-        print("⚠️ CLERK_ISSUER is not configured. Cannot determine JWKS URL.", file=sys.stderr)
+    clerk_secret = (os.environ.get("CLERK_SECRET_KEY") or "").strip()
+    req_headers = {"User-Agent": "Clerk/v1 python", "Accept": "application/json"}
+    if clerk_secret:
+        req_headers["Authorization"] = f"Bearer {clerk_secret}"
 
-        return None
+    for target_url in candidate_urls:
+        try:
+            resp = httpx.get(target_url, headers=req_headers, timeout=10.0)
+            if resp.status_code == 200:
+                jwks_data = resp.json()
+                new_keys = {}
+                for k in jwks_data.get("keys", []):
+                    k_kid = k.get("kid")
+                    if k_kid:
+                        try:
+                            new_keys[k_kid] = RSAAlgorithm.from_jwk(k)
+                        except Exception as parse_err:
+                            print(f"⚠️ Failed to parse JWK {k_kid}: {parse_err}", file=sys.stderr)
 
+                if new_keys:
+                    with _clerk_jwks_cache["lock"]:
+                        _clerk_jwks_cache["keys"].update(new_keys)
+                        _clerk_jwks_cache["last_fetched"] = now
+                        if kid in _clerk_jwks_cache["keys"]:
+                            return _clerk_jwks_cache["keys"].get(kid)
+        except Exception as e:
+            print(f"⚠️ Failed to fetch Clerk JWKS from {target_url}: {e}", file=sys.stderr)
 
-
-    try:
-
-        resp = httpx.get(clerk_jwks_url, timeout=10.0)
-
-        if resp.status_code == 200:
-
-            jwks_data = resp.json()
-
-            new_keys = {}
-
-            for k in jwks_data.get("keys", []):
-
-                k_kid = k.get("kid")
-
-                if k_kid:
-
-                    try:
-
-                        new_keys[k_kid] = RSAAlgorithm.from_jwk(k)
-
-                    except Exception as parse_err:
-
-                        print(f"⚠️ Failed to parse JWK {k_kid}: {parse_err}", file=sys.stderr)
-
-            with _clerk_jwks_cache["lock"]:
-
-                _clerk_jwks_cache["keys"].update(new_keys)
-
-                _clerk_jwks_cache["last_fetched"] = now
-
-                return _clerk_jwks_cache["keys"].get(kid)
-
-    except Exception as e:
-
-        print(f"⚠️ Failed to fetch Clerk JWKS from {clerk_jwks_url}: {e}", file=sys.stderr)
+    with _clerk_jwks_cache["lock"]:
+        return _clerk_jwks_cache["keys"].get(kid)
 
 
 
@@ -7801,7 +7806,9 @@ from core.in_flight_jobs import (
     register_supabase_client,
     _IN_FLIGHT_JOBS_CACHE,
     _IN_FLIGHT_JOBS_LOCK,
-    _LOCAL_JOBS_DB_PATH
+    _LOCAL_JOBS_DB_PATH,
+    WORKER_INSTANCE_ID,
+    _job_is_stale,
 )
 register_jobs_store(jobs_store)
 if 'supabase' in locals() and supabase:
@@ -15838,21 +15845,46 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
         in_flight_store = _load_in_flight_jobs()
         if job_id in in_flight_store:
             persisted = in_flight_store[job_id]
-            if persisted.get("user_id") and persisted["user_id"] != authenticated_user_id:
+            if persisted.get("user_id") != authenticated_user_id:
                 raise HTTPException(status_code=403, detail="Not authorized to access this job.")
             if persisted.get("status") == "running":
+                persisted_worker_id = persisted.get("worker_instance_id")
+                if (
+                    persisted_worker_id != WORKER_INSTANCE_ID
+                    and not _job_is_stale(persisted)
+                ):
+                    return {
+                        "status": "running",
+                        "stage": persisted.get("stage", "processing"),
+                        "early_display": persisted.get("early_display"),
+                        "result": None,
+                        "error": None,
+                    }
                 # If the job is not in the active in-memory jobs_store, its background task was terminated
                 # by a server restart or worker shutdown. Fail fast instead of leaving the client polling.
                 persisted_error = "The query was interrupted by a server restart. Please try asking your question again."
                 persisted["status"] = "error"
                 persisted["error"] = persisted_error
-                persist_in_flight_job_state(job_id, "error", "server_restarted", extra={"error": persisted_error})
+                persist_in_flight_job_state(
+                    job_id,
+                    "error",
+                    "server_restarted",
+                    extra={"error": persisted_error, "user_id": persisted.get("user_id")},
+                )
                 return {
                     "status": "error",
                     "stage": "error",
                     "early_display": None,
                     "result": None,
                     "error": persisted_error
+                }
+            elif persisted.get("status") == "failed":
+                return {
+                    "status": "error",
+                    "stage": persisted.get("stage", "failed"),
+                    "early_display": None,
+                    "result": None,
+                    "error": persisted.get("error") or "The query failed during finalization. Please try again.",
                 }
             elif persisted.get("status") == "done" and persisted.get("result"):
                 return {
@@ -16203,7 +16235,7 @@ async def stream_query_job_status(job_id: str, authenticated_user_id: str = Depe
         in_flight_store = _load_in_flight_jobs()
         if job_id in in_flight_store:
             persisted = in_flight_store[job_id]
-            if persisted.get("user_id") and persisted["user_id"] != authenticated_user_id:
+            if persisted.get("user_id") != authenticated_user_id:
                 raise HTTPException(status_code=403, detail="Not authorized to access this job.")
             if persisted.get("status") == "running":
                 return {
