@@ -26,8 +26,9 @@ class TestJudgmentFallback(unittest.TestCase):
         self.assertIn("id", res)
         self.assertEqual(res["id"], unknown_id)
         self.assertIn("full_text", res)
-        self.assertTrue(len(res["full_text"]) > 0)
-        self.assertIn("undergoing index synchronization", res["full_text"])
+        self.assertEqual(res["full_text"], "")
+        self.assertEqual(res["content_status"], "unavailable")
+        self.assertNotIn("undergoing index synchronization", res["full_text"])
 
     def test_find_judgment_fallback_short_text_preservation(self):
         # Even if target_id is passed, it should always return a non-None dict with valid structure

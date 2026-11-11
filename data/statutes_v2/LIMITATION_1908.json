@@ -3523,20 +3523,23 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "The date fixed for the performance, or, if no such date is fixed, when the plaintiff has notice that performance is refused.",
-    "text": "113.—For specific performance of a \ncontract. \nPart VI.—Three years—\ncontd. \n \n1[Three years] \n \n \n \n1[Three years] \n \n \n1[Three years] \n \n \n \n \n \nPart VII.—Six years. \n \nSix years .. .. \n \n \n \n \n1[Six years] \n \n \n1[Six years] \n \n \n \n1[Six years] \n \n1[Six years] \n \nPart VIII— \nTwelve years. \n \n \n1[Twelve years] \n \n \n \nThe date fixed for the performance, or,  \nif no such date is fixed, when the \nplaintiff has notice that performance is \nrefused.",
-    "text_raw": "113.—For specific performance of a \ncontract. \nPart VI.—Three years—\ncontd. \n \n1[Three years] \n \n \n \n1[Three years] \n \n \n1[Three years] \n \n \n \n \n \nPart VII.—Six years. \n \nSix years .. .. \n \n \n \n \n1[Six years] \n \n \n1[Six years] \n \n \n \n1[Six years] \n \n1[Six years] \n \nPart VIII— \nTwelve years. \n \n \n1[Twelve years] \n \n \n \nThe date fixed for the performance, or,  \nif no such date is fixed, when the \nplaintiff has notice that performance is \nrefused.",
+    "text": "",
+    "text_raw": "",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
     ],
     "caveats": [],
     "cross_references": [],
-    "content_hash": "099afaa6b3e6e34a3714464dee8dfa0577af20aa30a787af88f4c10a7e480d6d",
-    "tier": "reviewed",
-    "quoting_allowed": true,
+    "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tier": "ingested_unreviewed",
+    "quoting_allowed": false,
     "in_force": true,
-    "page_verified": true,
+    "page_verified": false,
     "source_url": "PakistanLawSite",
-    "retrieved_at": "2026-11-07 00:28:48"
+    "retrieved_at": "2026-11-07 00:28:48",
+    "text_kind": "structured_table_entry",
+    "structured_summary": "Description: For specific performance of a contract.\nPeriod of limitation: Three years\nTime from which period begins to run: The date fixed for the performance, or, if no such date is fixed, when the plaintiff has notice that performance is refused.",
+    "text_layer_matched": false
   },
   {
     "canonical_id": "LIMITATION_1908_ART_114",

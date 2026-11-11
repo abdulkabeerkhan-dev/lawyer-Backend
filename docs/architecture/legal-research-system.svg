@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">Legal research system architecture</title>
+  <desc id="desc">End-to-end architecture for authenticated legal research, durable jobs, query planning, retrieval, evidence validation, grounded drafting, verification, persistence, and observability.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/>
+    </marker>
+    <style>
+      text { font-family: "Segoe UI", Arial, sans-serif; fill: #172033; }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 15px; fill: #526179; }
+      .label { font-size: 17px; font-weight: 700; }
+      .small { font-size: 13px; fill: #42526b; }
+      .tiny { font-size: 12px; fill: #526179; }
+      .box { stroke-width: 1.5; rx: 12; }
+      .edge { fill: none; stroke: #64748b; stroke-width: 2; marker-end: url(#arrow); }
+      .edgeBlue { fill: none; stroke: #2563eb; stroke-width: 2.4; marker-end: url(#arrowBlue); }
+      .dashed { fill: none; stroke: #8b9bb1; stroke-width: 1.7; stroke-dasharray: 7 6; }
+      .section { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.5; rx: 16; }
+    </style>
+  </defs>
+  <rect width="1600" height="1120" fill="#ffffff"/>
+  <text x="54" y="58" class="title">Legal Research System — End-to-End Architecture</text>
+  <text x="56" y="86" class="subtitle">Target design: durable jobs, source-aware retrieval, bounded evidence, verified answers, and visible failures</text>
+
+  <rect x="45" y="120" width="1510" height="560" class="section"/>
+  <text x="70" y="153" class="label">QUERY AND ANSWER PATH</text>
+
+  <rect x="75" y="205" width="190" height="88" class="box" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="170" y="239" text-anchor="middle" class="label">Web app</text>
+  <text x="170" y="263" text-anchor="middle" class="small">query_text + context</text>
+
+  <rect x="315" y="192" width="225" height="112" class="box" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="427" y="228" text-anchor="middle" class="label">FastAPI boundary</text>
+  <text x="427" y="252" text-anchor="middle" class="small">Clerk JWT · input checks</text>
+  <text x="427" y="274" text-anchor="middle" class="small">quota · rate limit</text>
+
+  <rect x="590" y="192" width="205" height="112" class="box" fill="#eff6ff" stroke="#60a5fa"/>
+  <text x="692" y="229" text-anchor="middle" class="label">Durable job</text>
+  <text x="692" y="253" text-anchor="middle" class="small">queue + shared state</text>
+  <text x="692" y="275" text-anchor="middle" class="small">return job_id</text>
+
+  <rect x="850" y="192" width="210" height="112" class="box" fill="#f5f3ff" stroke="#a78bfa"/>
+  <text x="955" y="229" text-anchor="middle" class="label">Query worker</text>
+  <text x="955" y="253" text-anchor="middle" class="small">bounded execution</text>
+  <text x="955" y="275" text-anchor="middle" class="small">provider health checks</text>
+
+  <rect x="1120" y="192" width="225" height="112" class="box" fill="#fef3c7" stroke="#f59e0b"/>
+  <text x="1232" y="229" text-anchor="middle" class="label">Legal query plan</text>
+  <text x="1232" y="253" text-anchor="middle" class="small">issues · forum · province</text>
+  <text x="1232" y="275" text-anchor="middle" class="small">statutes · search lanes</text>
+
+  <path d="M265 249 H309" class="edgeBlue"/>
+  <path d="M540 249 H584" class="edgeBlue"/>
+  <path d="M795 249 H844" class="edgeBlue"/>
+  <path d="M1060 249 H1114" class="edgeBlue"/>
+
+  <path d="M1232 304 V349 H955 V371" class="edge"/>
+  <rect x="820" y="371" width="270" height="86" class="box" fill="#ecfdf5" stroke="#34d399"/>
+  <text x="955" y="405" text-anchor="middle" class="label">Parallel retrieval</text>
+  <text x="955" y="429" text-anchor="middle" class="small">exact · dense · sparse · full text</text>
+
+  <path d="M955 457 V480" class="edge"/>
+  <rect x="820" y="480" width="270" height="86" class="box" fill="#ecfdf5" stroke="#34d399"/>
+  <text x="955" y="514" text-anchor="middle" class="label">Evidence admission</text>
+  <text x="955" y="538" text-anchor="middle" class="small">provenance · jurisdiction · currency</text>
+
+  <path d="M1090 523 H1162" class="edge"/>
+  <polygon points="1240,475 1320,523 1240,571 1160,523" fill="#fff7ed" stroke="#fb923c" stroke-width="1.7"/>
+  <text x="1240" y="519" text-anchor="middle" class="small" font-weight="700">Enough trusted</text>
+  <text x="1240" y="538" text-anchor="middle" class="small" font-weight="700">evidence?</text>
+  <path d="M1240 475 V430 H1096" class="edge"/>
+  <text x="1151" y="420" class="tiny">bounded retry</text>
+
+  <path d="M1320 523 H1370 V391 H1390" class="edge"/>
+  <text x="1330" y="510" class="tiny">yes</text>
+  <rect x="1386" y="350" width="142" height="82" class="box" fill="#f5f3ff" stroke="#a78bfa"/>
+  <text x="1457" y="383" text-anchor="middle" class="label">Grounded</text>
+  <text x="1457" y="406" text-anchor="middle" class="small">draft</text>
+
+  <path d="M1240 571 V614 H1370 V563 H1386" class="edge"/>
+  <text x="1270" y="602" class="tiny">no: clarify / disclose gap</text>
+  <rect x="1386" y="523" width="142" height="82" class="box" fill="#fff7ed" stroke="#fb923c"/>
+  <text x="1457" y="556" text-anchor="middle" class="label">Honest</text>
+  <text x="1457" y="579" text-anchor="middle" class="small">partial result</text>
+
+  <rect x="1120" y="618" width="225" height="48" class="box" fill="#fdf2f8" stroke="#f472b6"/>
+  <text x="1232" y="648" text-anchor="middle" class="small" font-weight="700">Verify claims · citations · quotes</text>
+  <path d="M1457 432 V594 H1348 V642 H1345" class="edge"/>
+  <path d="M1457 605 V642 H1345" class="edge"/>
+
+  <rect x="45" y="710" width="740" height="338" class="section"/>
+  <text x="70" y="745" class="label">LEGAL KNOWLEDGE AND RETRIEVAL STORES</text>
+  <rect x="75" y="785" width="205" height="86" class="box" fill="#ecfdf5" stroke="#34d399"/>
+  <text x="177" y="819" text-anchor="middle" class="label">Statute store</text>
+  <text x="177" y="843" text-anchor="middle" class="small">versions · units · provenance</text>
+  <rect x="305" y="785" width="205" height="86" class="box" fill="#ecfdf5" stroke="#34d399"/>
+  <text x="407" y="819" text-anchor="middle" class="label">Judgment store</text>
+  <text x="407" y="843" text-anchor="middle" class="small">text · citation · court · date</text>
+  <rect x="535" y="785" width="205" height="86" class="box" fill="#ecfdf5" stroke="#34d399"/>
+  <text x="637" y="819" text-anchor="middle" class="label">Search indexes</text>
+  <text x="637" y="843" text-anchor="middle" class="small">dense · BM25 · exact / FTS</text>
+  <rect x="75" y="905" width="665" height="86" class="box" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="407" y="940" text-anchor="middle" class="label">Ingestion and quality control</text>
+  <text x="407" y="964" text-anchor="middle" class="small">official sources → parse → normalize → verify → deduplicate → index</text>
+  <path d="M177 905 V877" class="edge"/>
+  <path d="M407 905 V877" class="edge"/>
+  <path d="M637 905 V877" class="edge"/>
+  <path d="M785 830 H810 V414 H815" class="dashed"/>
+  <path d="M785 830 H800 V523 H815" class="dashed"/>
+
+  <rect x="825" y="710" width="730" height="338" class="section"/>
+  <text x="850" y="745" class="label">RELIABILITY, DELIVERY, AND AUDIT</text>
+  <rect x="855" y="785" width="200" height="86" class="box" fill="#eff6ff" stroke="#60a5fa"/>
+  <text x="955" y="819" text-anchor="middle" class="label">Result store</text>
+  <text x="955" y="843" text-anchor="middle" class="small">job state + final answer</text>
+  <rect x="1080" y="785" width="200" height="86" class="box" fill="#eff6ff" stroke="#60a5fa"/>
+  <text x="1180" y="819" text-anchor="middle" class="label">Status delivery</text>
+  <text x="1180" y="843" text-anchor="middle" class="small">polling or event stream</text>
+  <rect x="1305" y="785" width="210" height="86" class="box" fill="#fdf2f8" stroke="#f472b6"/>
+  <text x="1410" y="819" text-anchor="middle" class="label">Audit trail</text>
+  <text x="1410" y="843" text-anchor="middle" class="small">evidence IDs + decisions</text>
+  <path d="M1345 642 H1390 V780" class="edge"/>
+  <path d="M1055 828 H1074" class="edge"/>
+  <path d="M1280 828 H1299" class="edge"/>
+  <rect x="855" y="914" width="660" height="82" class="box" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="1185" y="947" text-anchor="middle" class="label">Observability and provider health</text>
+  <text x="1185" y="971" text-anchor="middle" class="small">lane success / failure · latency · timeouts · answer-quality metrics</text>
+  <path d="M955 914 V877" class="dashed"/>
+  <path d="M1180 914 V877" class="dashed"/>
+  <path d="M1410 914 V877" class="dashed"/>
+
+  <text x="56" y="1090" class="tiny">Design principle: a failed retrieval source is a visible degraded state, never silent evidence that no law or authority exists.</text>
+</svg>

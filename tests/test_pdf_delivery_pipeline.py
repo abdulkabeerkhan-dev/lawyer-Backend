@@ -68,3 +68,30 @@ def test_api_judgment_pdf_endpoint_browser_mode():
     assert res.status_code == 200
     assert res.headers.get("content-type") == "application/pdf"
     assert res.content.startswith(b"%PDF")
+
+
+def test_pdf_builder_does_not_return_invalid_success_shaped_pdf(monkeypatch):
+    import main
+
+    monkeypatch.setattr(main, "REPORTLAB_AVAILABLE", False)
+    with pytest.raises(RuntimeError, match="ReportLab is required"):
+        main.build_judgment_pdf_bytes("Case", "PLD 2020 SC 1", "Supreme Court", "Text")
+
+    monkeypatch.setattr(main, "fetch_storage_pdf_bytes", lambda *args, **kwargs: None)
+    monkeypatch.setattr(
+        main,
+        "find_judgment_by_id_or_canonical",
+        lambda _: {
+            "case_id": "1984_SCMR_201",
+            "neutral_citation": "1984 SCMR 201",
+            "full_text": "Verified source judgment text.",
+            "content_level": "full_judgment",
+            "content_status": "available",
+        },
+    )
+    response = client.get(
+        "/api/judgments/1984_SCMR_201/pdf",
+        headers={"sec-fetch-mode": "navigate", "accept": "application/pdf"},
+    )
+    assert response.status_code == 503
+    assert response.json()["detail"] == "PDF generation is unavailable on this server."

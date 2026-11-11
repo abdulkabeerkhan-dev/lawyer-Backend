@@ -153,11 +153,10 @@ class TestLegalAIPhase1(unittest.TestCase):
         self.assertEqual(main.get_backend_base_url(), "https://lawyer-backend-production-3b52.up.railway.app")
 
         client = TestClient(main.app)
-        # Request with NO Authorization bearer token
+        # A missing source record must not produce a placeholder PDF.
         resp = client.get("/judgment-pdf/aa5ec63f-e7fd-4bb5-83f4-b2c23d1ba76a")
-        self.assertEqual(resp.status_code, 200)
-        self.assertEqual(resp.headers.get("content-type"), "application/pdf")
-        self.assertTrue(resp.content.startswith(b"%PDF"))
+        self.assertEqual(resp.status_code, 404)
+        self.assertIn("No source PDF or judgment text is available", resp.json()["detail"])
 
 
 if __name__ == "__main__":

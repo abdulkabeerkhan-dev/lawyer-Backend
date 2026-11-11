@@ -40,6 +40,7 @@ from core.legal_query_planner import (
     LegalQueryPlan
 )
 from core.authority_ranking import is_irrelevant_subject
+from core.provider_ledger import ProviderStatus, record_provider_event
 
 logger = logging.getLogger(__name__)
 
@@ -152,7 +153,14 @@ async def execute_pinecone_query_safe(
     """
     Executes a Pinecone query safely with timeout catching and non-blocking degradation.
     """
-    if not index or query_vector is None or is_pinecone_circuit_open():
+    if not index:
+        record_provider_event("Pinecone", ProviderStatus.PROVIDER_DOWN, message="Pinecone index is unavailable.")
+        return []
+    if query_vector is None:
+        record_provider_event("Pinecone", ProviderStatus.ERROR, message="Query embedding is unavailable.")
+        return []
+    if is_pinecone_circuit_open():
+        record_provider_event("Pinecone", ProviderStatus.PROVIDER_DOWN, message="Pinecone circuit breaker is open.")
         return []
     try:
         def _sync_query():
@@ -177,16 +185,29 @@ async def execute_pinecone_query_safe(
             loop.run_in_executor(None, _sync_query),
             timeout=timeout_seconds
         )
-        return res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", [])
+        matches = res.get("matches", []) if isinstance(res, dict) else getattr(res, "matches", [])
+        record_provider_event(
+            "Pinecone",
+            ProviderStatus.SUCCESS if matches else ProviderStatus.EMPTY,
+            result_count=len(matches),
+        )
+        return matches
     except asyncio.TimeoutError:
         logger.warning(f"⚠️ [PineconeSearch] Query timed out after {timeout_seconds}s (filter={filter_dict is not None})")
+        record_provider_event(
+            "Pinecone",
+            ProviderStatus.TIMEOUT,
+            message=f"Query exceeded {timeout_seconds:g} seconds.",
+        )
         return []
     except Exception as err:
         err_msg = str(err)
         if any(tok in err_msg for tok in ("401", "UNAUTHENTICATED", "Wrong API key", "Invalid API key")):
             trip_pinecone_circuit(60.0, err_msg)
+            record_provider_event("Pinecone", ProviderStatus.PROVIDER_DOWN, message=err_msg)
         else:
             logger.warning(f"⚠️ [PineconeSearch] Query error: {err} (filter={filter_dict is not None})")
+            record_provider_event("Pinecone", ProviderStatus.ERROR, message=err_msg)
         return []
 
 
@@ -423,16 +444,22 @@ async def search_pinecone_dense(
 
     # Default Legacy Production Search (Identical to original implementation)
     if is_pinecone_circuit_open():
+        record_provider_event("Pinecone", ProviderStatus.PROVIDER_DOWN, message="Pinecone circuit breaker is open.")
         return []
 
     index = get_pinecone_index()
-    if not index or not query_text:
+    if not index:
+        record_provider_event("Pinecone", ProviderStatus.PROVIDER_DOWN, message="Pinecone index is unavailable.")
+        return []
+    if not query_text:
+        record_provider_event("Pinecone", ProviderStatus.EMPTY, message="Search query is empty.")
         return []
 
     try:
         query_vector = await get_voyage_embedding(query_text)
     except Exception as emb_err:
         print(f"⚠️ [PineconeSearch] Voyage embedding error: {emb_err}", file=sys.stderr)
+        record_provider_event("Voyage", ProviderStatus.PROVIDER_DOWN, message=str(emb_err))
         return []
 
     try:
@@ -444,6 +471,7 @@ async def search_pinecone_dense(
         )
     except Exception as q_err:
         print(f"⚠️ [PineconeSearch] Pinecone query error: {q_err}", file=sys.stderr)
+        record_provider_event("Pinecone", ProviderStatus.PROVIDER_DOWN, message=str(q_err))
         return []
 
     candidates: List[Dict[str, Any]] = []
@@ -454,4 +482,9 @@ async def search_pinecone_dense(
         if cand:
             candidates.append(cand)
 
+    record_provider_event(
+        "Pinecone",
+        ProviderStatus.SUCCESS if candidates else ProviderStatus.EMPTY,
+        result_count=len(candidates),
+    )
     return candidates

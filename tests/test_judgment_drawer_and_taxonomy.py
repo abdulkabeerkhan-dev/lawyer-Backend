@@ -49,7 +49,7 @@ def test_query_planner_decree_fraud():
     plan = create_deterministic_fallback_plan(q)
     assert plan.primary_domain == "civil"
     assert "Section 12(2) CPC" in plan.procedural_remedy or "Section 12(2)" in plan.procedural_remedy
-    assert any("12(2)" in p for p in plan.statutory_provisions)
+    assert any("12(2)" in p or "SEC_12_2" in p for p in plan.statutory_provisions)
     assert any(l.lane == "sec12_2_decree_fraud" for l in plan.search_lanes)
 
 
@@ -63,7 +63,8 @@ def test_public_judgment_endpoint_drawer_no_401():
     assert "FAQIR MUHAMMAD" in data["case_title"]
     assert data["court_name"] == "Lahore High Court"
     assert len(data.get("full_text", "")) > 500
-    assert len(data.get("order_text", "")) > 100
+    assert data.get("content_level") == "full_judgment"
+    assert data.get("content_status") == "available"
     assert "pdf_url" in data and len(data["pdf_url"]) > 0
 
 
@@ -145,4 +146,3 @@ def test_build_authoritative_opinion_fallback_cheque_bail():
     # Mandate verified statutory provisions on record per Spec Phase 1
     assert "Section 489" in memo or "489F" in memo or "489-F" in memo
     assert "PARTIAL LEGAL RESEARCH RECORD" in memo
-

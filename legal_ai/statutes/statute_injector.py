@@ -73,7 +73,11 @@ class StatuteInjector:
                         if isinstance(item, dict) and item.get("canonical_id"):
                             if not item.get("text") and item.get("text_raw"):
                                 item["text"] = item["text_raw"]
-                            if item.get("tier") != "unsourced" and (item.get("text") or item.get("text_raw")):
+                            if (
+                                item.get("quoting_allowed") is not False
+                                and item.get("tier") != "unsourced"
+                                and (item.get("text") or item.get("text_raw"))
+                            ):
                                 item["quoting_allowed"] = True
                             by_cid[str(item["canonical_id"]).upper()] = item
                     self._unified_cache[act_code] = by_cid
@@ -602,12 +606,16 @@ class StatuteInjector:
 
             rec = self.get_provision_record(act_code, cid)
             raw_text = ""
+            structured_summary = ""
             title = ""
             status = "in_force"
             tier = ""
             in_force = True
             if rec:
                 raw_text = str(rec.get("text") or rec.get("statutory_text") or "").strip()
+                if rec.get("text_kind") == "structured_table_entry":
+                    structured_summary = str(rec.get("structured_summary") or "").strip()
+                    raw_text = ""
                 title = str(rec.get("title") or rec.get("display_name") or "").strip()
                 tier = str(rec.get("tier") or "").lower().strip()
                 in_force = rec.get("in_force", True)
@@ -621,6 +629,9 @@ class StatuteInjector:
             lines.append(f"Status in Force: {status.replace('_', ' ').title()}")
             if title:
                 lines.append(f"Subject / Title: {title}")
+            if structured_summary:
+                lines.append("Structured limitation-table entry (not verbatim bare-act text):")
+                lines.append(structured_summary)
 
             # Check in_force status gating (Item 6)
             if in_force is False:

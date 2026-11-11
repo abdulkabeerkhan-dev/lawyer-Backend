@@ -467,6 +467,10 @@ def health_check():
 
         "healthy": True,
 
+        "job_state_storage": (
+            "shared_database" if check_query_jobs_table_exists() else "worker_local_fallback"
+        ),
+
         "model": CLAUDE_MODEL,
 
         "version": "2.5.1-search-optimized",
@@ -14124,11 +14128,17 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
 
 
-def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -> bytes:
+def build_judgment_pdf_bytes(
+    title: str,
+    citation: str,
+    court: str,
+    text: str,
+    content_label: Optional[str] = None
+) -> bytes:
 
     if not REPORTLAB_AVAILABLE:
 
-        return b"%PDF-1.4\n% PDF Generation Unavailable"
+        raise RuntimeError("ReportLab is required to generate a judgment PDF.")
 
     buffer = io.BytesIO()
 
@@ -14216,13 +14226,16 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
 
         story.append(Paragraph(html.escape(f"Citation: {citation}"), cit_style))
 
+    if content_label:
+        story.append(Paragraph(html.escape(content_label), heading_style))
+
     story.append(Spacer(1, 10))
 
 
 
     if not paragraphs_list:
 
-        story.append(Paragraph("Full judgment text is currently undergoing index synchronization.", body_style))
+        story.append(Paragraph("No judgment text is available for this record.", body_style))
 
     else:
 
@@ -14291,6 +14304,7 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
         if not rec_dict:
 
             return rec_dict
+        from core.content_classification import classify_judgment_content
 
         eff_court = get_effective_court(rec_dict)
 
@@ -14316,27 +14330,34 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
 
             rec_dict["content_type"] = "full_text"
 
+            rec_dict["content_level"] = "full_judgment"
+
             rec_dict["is_headnote"] = False
 
         else:
 
-            raw_c = rec_dict.get("content_type")
+            if rec_dict.get("content_status") == "unavailable" and not (rec_dict.get("full_text") or rec_dict.get("headnote")):
+                rec_dict["content_level"] = "unknown"
+                rec_dict["content_type"] = "unavailable"
+                rec_dict["is_headnote"] = False
+                content_level = "unknown"
+            else:
+                content_level = classify_judgment_content(rec_dict)
+            if content_level == "unknown":
+                raw_text = str(rec_dict.get("full_text") or "").strip()
+                if raw_text and rec_dict.get("content_status") != "unavailable":
+                    content_level = "headnote_only" if len(raw_text.split()) < 300 else "full_judgment"
 
-            if not raw_c or str(raw_c).lower() in ("unknown", "none"):
-
-                raw_text = rec_dict.get("full_text") or ""
-
-                if len(raw_text.split()) < 300:
-
-                    rec_dict["content_type"] = "headnote_only"
-
-                    rec_dict["is_headnote"] = True
-
-                else:
-
-                    rec_dict["content_type"] = "full_text"
-
-                    rec_dict["is_headnote"] = False
+            if rec_dict.get("content_status") != "unavailable":
+                rec_dict["content_level"] = content_level
+                rec_dict["content_type"] = (
+                    "headnote_only"
+                    if content_level == "headnote_only"
+                    else "full_text"
+                    if content_level == "full_judgment"
+                    else "unknown"
+                )
+                rec_dict["is_headnote"] = content_level == "headnote_only"
 
 
 
@@ -14405,10 +14426,12 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
             get_case_by_identifier(norm_id) or
             get_case_by_identifier(space_id)
         )
-        if tc_hit and tc_hit.get("full_text"):
+        if tc_hit and (tc_hit.get("full_text") or tc_hit.get("headnote")):
             full_txt = str(tc_hit.get("full_text") or "").strip()
             hd_txt = str(tc_hit.get("headnote") or "").strip()
             comb = f"{hd_txt} {full_txt}"
+            from core.content_classification import classify_judgment_content
+            content_level = classify_judgment_content(tc_hit)
 
             # Extract statutes & sections
             sec_matches = re.findall(r'\b(?:Section|Sec\.?|S\.?|Article|Art\.?)\s*(\d+[A-Za-z\-]*(?:\s*(?:PPC|Cr\.?P\.?C\.?|CPC|Constitution))?)', comb, re.IGNORECASE)
@@ -14440,7 +14463,16 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                 "page": tc_hit.get("page"),
                 "full_text": full_txt,
                 "headnote": hd_txt,
-                "content_level": tc_hit.get("content_level") or "full_judgment",
+                "content_level": content_level,
+                "content_type": (
+                    "headnote_only"
+                    if content_level == "headnote_only"
+                    else "full_text"
+                    if content_level == "full_judgment"
+                    else "unknown"
+                ),
+                "is_headnote": content_level == "headnote_only",
+                "content_status": "available",
                 "source_type": "Turso",
                 "holding": holding_val,
                 "ratio_decidendi": holding_val,
@@ -14467,8 +14499,6 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                 res = supabase.table("full_judgments").select("*").eq("id", lookup_uuid).execute()
                 if res.data and len(res.data) > 0:
                     rec = res.data[0]
-                    if not rec.get("full_text"):
-                        rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
                     return _sanitize_record(rec)
             except Exception as e:
                 print(f"Supabase UUID lookup notice: {e}")
@@ -14480,8 +14510,6 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                 res = supabase.table("full_judgments").select("*").eq("case_id", norm_id).execute()
                 if res.data and len(res.data) > 0:
                     rec = res.data[0]
-                    if not rec.get("full_text"):
-                        rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
                     return _sanitize_record(rec)
             except Exception as e:
                 print(f"Supabase case_id lookup notice: {e}")
@@ -14493,8 +14521,6 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                 res = supabase.table("full_judgments").select("*").eq("neutral_citation", space_id).execute()
                 if res.data and len(res.data) > 0:
                     rec = res.data[0]
-                    if not rec.get("full_text"):
-                        rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
                     return _sanitize_record(rec)
             except Exception as e:
                 print(f"Supabase neutral_citation lookup notice: {e}")
@@ -14506,8 +14532,6 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                 res = supabase.table("full_judgments").select("*").ilike("case_title", f"%{space_id}%").limit(1).execute()
                 if res.data and len(res.data) > 0:
                     rec = res.data[0]
-                    if not rec.get("full_text"):
-                        rec["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
                     return _sanitize_record(rec)
             except Exception as e:
                 print(f"Supabase case_title lookup notice: {e}")
@@ -14520,8 +14544,6 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                 if res_cw.data and len(res_cw.data) > 0:
                     fj = res_cw.data[0].get("full_judgments")
                     if fj:
-                        if not fj.get("full_text"):
-                            fj["full_text"] = f"Full judgment record for {decoded_id} is currently undergoing index synchronization."
                         return _sanitize_record(fj)
             except Exception as e:
                 print(f"Supabase crosswalk lookup notice: {e}")
@@ -14625,7 +14647,7 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                         "court_name": resolved_court,
                         "court": resolved_court,
                         "decision_date": str(first_meta.get("date") or first_meta.get("year") or ""),
-                        "full_text": assembled_raw or f"Full judgment record for {decoded_id} is currently undergoing index synchronization.",
+                        "full_text": assembled_raw,
                         "order_text": order_text or assembled_raw,
                         "ratio_decidendi": ratio_text,
                         "legal_issue": first_meta.get("subdomain") or first_meta.get("domain") or "",
@@ -14655,8 +14677,10 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
         "neutral_citation": space_id if not is_valid_uuid(decoded_id) else "",
         "court_name": fallback_court,
         "court": fallback_court,
-        "full_text": f"Full judgment record for {decoded_id} is currently undergoing index synchronization.",
-        "order_text": f"Full judgment record for {decoded_id} is currently undergoing index synchronization.",
+        "full_text": "",
+        "order_text": "",
+        "content_level": "unknown",
+        "content_status": "unavailable",
         "pdf_url": backend_pdf_url
     })
 
@@ -14758,7 +14782,8 @@ async def get_api_judgment_pdf_endpoint(
                 media_type="application/pdf",
                 headers={
                     "Content-Disposition": f'inline; filename="{safe_filename}"',
-                    "Content-Type": "application/pdf"
+                    "Content-Type": "application/pdf",
+                    "X-PDF-Source": "stored_pdf",
                 }
             )
 
@@ -14776,24 +14801,50 @@ async def get_api_judgment_pdf_endpoint(
                     media_type="application/pdf",
                     headers={
                         "Content-Disposition": f'inline; filename="{safe_filename}"',
-                        "Content-Type": "application/pdf"
+                        "Content-Type": "application/pdf",
+                        "X-PDF-Source": "stored_pdf",
                     }
                 )
+
+    if not match_record or match_record.get("content_status") == "unavailable":
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No source PDF or judgment text is available for this case.",
+        )
 
     raw_title = (get_effective_title(match_record) if match_record else decoded_id) or decoded_id
     citation = (match_record.get("neutral_citation") if match_record else "") or ""
     court = (get_effective_court(match_record) if match_record else clean_court_name("", case_id=decoded_id)) or "High Court / Supreme Court"
-    text = (match_record.get("full_text") if match_record else f"Full judgment record for {decoded_id} is currently undergoing index synchronization.") or ""
+    text = str(match_record.get("full_text") or match_record.get("headnote") or "").strip()
+    if not text or "undergoing index synchronization" in text.lower():
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No source PDF or judgment text is available for this case.",
+        )
+    from core.content_classification import classify_judgment_content
+    content_level = classify_judgment_content(match_record)
+    content_label = (
+        "Reported Headnote / Summary — not the full judgment"
+        if content_level == "headnote_only"
+        else "Generated text copy — not an original scanned PDF"
+    )
+    if not REPORTLAB_AVAILABLE:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="PDF generation is unavailable on this server.",
+        )
     title = clean_or_extract_title(raw_title, text)
 
-    pdf_bytes = build_judgment_pdf_bytes(title, citation, court, text)
+    pdf_bytes = build_judgment_pdf_bytes(title, citation, court, text, content_label=content_label)
     safe_filename = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_id).strip('_') + ".pdf"
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
         headers={
             "Content-Disposition": f'inline; filename="{safe_filename}"',
-            "Content-Type": "application/pdf"
+            "Content-Type": "application/pdf",
+            "X-PDF-Source": "generated_text_copy",
+            "X-Content-Level": content_level,
         }
     )
 

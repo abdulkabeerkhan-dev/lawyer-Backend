@@ -20,6 +20,7 @@ from main import (
     _LOCAL_JOBS_DB_PATH
 )
 from core.in_flight_jobs import WORKER_INSTANCE_ID, _job_is_stale
+import core.in_flight_jobs as in_flight_jobs
 
 
 def test_fresh_remote_worker_job_is_not_marked_interrupted():
@@ -158,3 +159,97 @@ def test_done_job_requires_non_empty_result_payload():
     assert job_record["status"] == "failed"
     assert job_record["stage"] == "failed"
     assert job_record["result"] is None
+
+
+def test_query_jobs_probe_retries_transient_supabase_failures(monkeypatch):
+    class Query:
+        def __init__(self, fail):
+            self.fail = fail
+
+        def select(self, _columns):
+            return self
+
+        def limit(self, _count):
+            return self
+
+        def execute(self):
+            if self.fail:
+                raise ConnectionError("Supabase temporarily unavailable")
+            return object()
+
+    class Client:
+        def __init__(self):
+            self.fail = True
+
+        def table(self, _name):
+            return Query(self.fail)
+
+    client = Client()
+    monkeypatch.setattr(in_flight_jobs, "_QUERY_JOBS_TABLE_EXISTS", None)
+    monkeypatch.setattr(in_flight_jobs, "_QUERY_JOBS_TABLE_CHECKED_AT", None)
+
+    assert not in_flight_jobs.check_query_jobs_table_exists(client)
+    assert in_flight_jobs._QUERY_JOBS_TABLE_EXISTS is None
+
+    client.fail = False
+    assert in_flight_jobs.check_query_jobs_table_exists(client)
+
+
+def test_missing_query_jobs_table_probe_expires(monkeypatch):
+    class Query:
+        def __init__(self, exists):
+            self.exists = exists
+
+        def select(self, _columns):
+            return self
+
+        def limit(self, _count):
+            return self
+
+        def execute(self):
+            if not self.exists:
+                raise RuntimeError("PGRST205: table not found")
+            return object()
+
+    class Client:
+        def __init__(self):
+            self.exists = False
+
+        def table(self, _name):
+            return Query(self.exists)
+
+    client = Client()
+    monkeypatch.setattr(in_flight_jobs, "_QUERY_JOBS_TABLE_EXISTS", None)
+    monkeypatch.setattr(in_flight_jobs, "_QUERY_JOBS_TABLE_CHECKED_AT", None)
+
+    assert not in_flight_jobs.check_query_jobs_table_exists(client)
+    assert in_flight_jobs._QUERY_JOBS_TABLE_EXISTS is False
+
+    client.exists = True
+    monkeypatch.setattr(
+        in_flight_jobs,
+        "_QUERY_JOBS_TABLE_CHECKED_AT",
+        in_flight_jobs.time.monotonic() - in_flight_jobs._QUERY_JOBS_TABLE_CACHE_TTL_SECONDS - 1,
+    )
+    assert in_flight_jobs.check_query_jobs_table_exists(client)
+
+
+def test_health_discloses_worker_local_job_storage(monkeypatch):
+    import main
+
+    monkeypatch.setattr(main, "check_query_jobs_table_exists", lambda: False)
+    assert main.health_check()["job_state_storage"] == "worker_local_fallback"
+
+
+def test_job_state_persistence_does_not_store_raw_query_text():
+    job_id = f"privacy-test-{datetime.now(timezone.utc).timestamp()}"
+    persist_in_flight_job_state(
+        job_id,
+        stage="pending",
+        status="running",
+        extra={"user_id": "privacy-test-user", "query_text": "private client facts"},
+    )
+
+    persisted = _load_in_flight_jobs()[job_id]
+    assert "query_text" not in persisted
+    assert "private client facts" not in str(persisted)

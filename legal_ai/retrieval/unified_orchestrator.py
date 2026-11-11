@@ -15,6 +15,12 @@ and provincial jurisdiction weighting (Articles 189 & 201).
 import asyncio
 import re
 from typing import Dict, List, Any, Tuple, Optional
+from core.provider_ledger import (
+    ProviderHealthLedger,
+    ProviderStatus,
+    record_provider_event,
+    retrieval_lane_scope,
+)
 from legal_ai.retrieval.supabase_search import search_supabase_judgments
 from legal_ai.retrieval.pinecone_search import search_pinecone_dense
 from legal_ai.retrieval.bm25_search import search_bm25_sparse
@@ -250,7 +256,7 @@ async def retrieve_candidates_parallel(
     query_plan: Any = None,
     include_external: bool = False,
     top_k_per_engine: int = 40
-) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
+) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     """
     Executes Phase 2 Multi-Lane Hybrid Retrieval across 5 distinct legal intent lanes:
     1. Dense Conceptual: Pinecone dense vector semantic retrieval (voyage-law-2)
@@ -264,6 +270,13 @@ async def retrieve_candidates_parallel(
     """
     import logging
     logger = logging.getLogger(__name__)
+    provider_ledger = ProviderHealthLedger()
+    provider_ledger.record(
+        lane="turso_fts",
+        provider="Turso",
+        status=ProviderStatus.DISABLED,
+        message="Turso FTS is not invoked by this query-retrieval path.",
+    )
 
     if query_plan is None:
         from core.legal_query_planner import create_deterministic_fallback_plan
@@ -356,6 +369,11 @@ async def retrieve_candidates_parallel(
     def _lane_sparse_lexical() -> List[Dict[str, Any]]:
         try:
             raw = search_bm25_sparse(sparse_lexical_query, top_k=top_k_per_engine)
+            record_provider_event(
+                "BM25",
+                ProviderStatus.SUCCESS if raw else ProviderStatus.EMPTY,
+                result_count=len(raw),
+            )
             for c in raw:
                 c["source_lane"] = "sparse_lexical"
                 c["source_issue_id"] = "sparse_lexical"
@@ -383,8 +401,15 @@ async def retrieve_candidates_parallel(
 
         def _bm_proc():
             try:
-                return search_bm25_sparse(procedural_query, top_k=top_k_per_engine)
+                hits = search_bm25_sparse(procedural_query, top_k=top_k_per_engine)
+                record_provider_event(
+                    "BM25",
+                    ProviderStatus.SUCCESS if hits else ProviderStatus.EMPTY,
+                    result_count=len(hits),
+                )
+                return hits
             except Exception:
+                record_provider_event("BM25", ProviderStatus.ERROR, message="Procedural BM25 search failed.")
                 return []
 
         pc_hits, bm_hits = await asyncio.gather(
@@ -422,8 +447,15 @@ async def retrieve_candidates_parallel(
 
         def _bm_doc():
             try:
-                return search_bm25_sparse(doctrinal_query, top_k=top_k_per_engine)
+                hits = search_bm25_sparse(doctrinal_query, top_k=top_k_per_engine)
+                record_provider_event(
+                    "BM25",
+                    ProviderStatus.SUCCESS if hits else ProviderStatus.EMPTY,
+                    result_count=len(hits),
+                )
+                return hits
             except Exception:
+                record_provider_event("BM25", ProviderStatus.ERROR, message="Doctrinal BM25 search failed.")
                 return []
 
         pc_hits, bm_hits = await asyncio.gather(
@@ -457,6 +489,11 @@ async def retrieve_candidates_parallel(
         for sq in statute_queries[:4]:
             try:
                 hits = search_bm25_sparse(sq, top_k=top_k_per_engine)
+                record_provider_event(
+                    "BM25",
+                    ProviderStatus.SUCCESS if hits else ProviderStatus.EMPTY,
+                    result_count=len(hits),
+                )
                 for h in hits:
                     h["source_lane"] = "statutory"
                     h["source_issue_id"] = "statutory"
@@ -469,36 +506,83 @@ async def retrieve_candidates_parallel(
     # Supplementary Tasks: Supabase FTS & External Judicial Search
     async def _guarded_supabase_search():
         if not enable_supabase_fts:
+            record_provider_event("Supabase", ProviderStatus.DISABLED, message="Supabase FTS is disabled.")
             return []
         from legal_ai.config import is_supabase_circuit_open, trip_supabase_circuit
         if is_supabase_circuit_open():
+            record_provider_event("Supabase", ProviderStatus.PROVIDER_DOWN, message="Supabase circuit breaker is open.")
             return []
         try:
-            return await asyncio.wait_for(
+            hits = await asyncio.wait_for(
                 search_supabase_judgments(search_terms[:2], limit_per_term=5, query_plan=query_plan),
                 timeout=5.0
             )
+            if is_supabase_circuit_open():
+                record_provider_event("Supabase", ProviderStatus.PROVIDER_DOWN, message="Supabase circuit breaker opened during retrieval.")
+                return hits
+            record_provider_event(
+                "Supabase",
+                ProviderStatus.SUCCESS if hits else ProviderStatus.EMPTY,
+                result_count=len(hits),
+            )
+            return hits
+        except asyncio.TimeoutError:
+            record_provider_event("Supabase", ProviderStatus.TIMEOUT, message="Supabase FTS exceeded 5 seconds.")
+            trip_supabase_circuit(60.0, "Supabase search timeout in orchestrator")
+            return []
         except Exception as sb_err:
             trip_supabase_circuit(60.0, f"Supabase search timeout in orchestrator: {sb_err}")
+            record_provider_event("Supabase", ProviderStatus.PROVIDER_DOWN, message=str(sb_err))
             return []
 
     async def _guarded_external_search() -> List[Dict[str, Any]]:
         try:
-            return await asyncio.wait_for(search_external_judgments(query_text, max_results=5), timeout=5.0)
+            hits = await asyncio.wait_for(search_external_judgments(query_text, max_results=5), timeout=5.0)
+            if not any(event.provider == "External" for event in provider_ledger.events):
+                record_provider_event("External", ProviderStatus.SUCCESS if hits else ProviderStatus.EMPTY, result_count=len(hits))
+            return hits
+        except asyncio.TimeoutError:
+            record_provider_event("External", ProviderStatus.TIMEOUT, message="External search exceeded 5 seconds.")
+            logger.warning("[ExternalSearch] Search exceeded the 5-second orchestrator limit.")
+            return []
         except Exception as ext_err:
             logger.warning(f"External search timed out/failed: {ext_err}")
+            record_provider_event("External", ProviderStatus.ERROR, message=str(ext_err))
             return []
 
+    async def _run_lane(lane_name: str, lane_fn: Any) -> List[Dict[str, Any]]:
+        with retrieval_lane_scope(provider_ledger, lane_name):
+            try:
+                if asyncio.iscoroutinefunction(lane_fn):
+                    results = await lane_fn()
+                else:
+                    results = await asyncio.to_thread(lane_fn)
+                normalized = results if isinstance(results, list) else []
+                record_provider_event(
+                    "lane",
+                    ProviderStatus.SUCCESS if normalized else ProviderStatus.EMPTY,
+                    result_count=len(normalized),
+                )
+                return normalized
+            except asyncio.TimeoutError:
+                record_provider_event("lane", ProviderStatus.TIMEOUT, message="Retrieval lane timed out.")
+                logger.warning("[RetrievalLane:%s] timed out.", lane_name)
+                return []
+            except Exception as lane_err:
+                record_provider_event("lane", ProviderStatus.ERROR, message=str(lane_err))
+                logger.exception("[RetrievalLane:%s] failed.", lane_name)
+                return []
+
     # 4. Fire all 5 lanes + supplementary tasks concurrently
-    l1_task = asyncio.create_task(_lane_dense_conceptual())
-    l2_task = asyncio.create_task(asyncio.to_thread(_lane_sparse_lexical))
-    l3_task = asyncio.create_task(_lane_procedural())
-    l4_task = asyncio.create_task(_lane_doctrinal())
-    l5_task = asyncio.create_task(asyncio.to_thread(_lane_statutory))
-    sb_task = asyncio.create_task(_guarded_supabase_search())
+    l1_task = asyncio.create_task(_run_lane("dense_conceptual", _lane_dense_conceptual))
+    l2_task = asyncio.create_task(_run_lane("sparse_lexical", _lane_sparse_lexical))
+    l3_task = asyncio.create_task(_run_lane("procedural", _lane_procedural))
+    l4_task = asyncio.create_task(_run_lane("doctrinal", _lane_doctrinal))
+    l5_task = asyncio.create_task(_run_lane("statutory", _lane_statutory))
+    sb_task = asyncio.create_task(_run_lane("supabase_fts", _guarded_supabase_search))
 
     if include_external:
-        ext_task = asyncio.create_task(_guarded_external_search())
+        ext_task = asyncio.create_task(_run_lane("external", _guarded_external_search))
         l1_res, l2_res, l3_res, l4_res, l5_res, sb_res, ext_res = await asyncio.gather(
             l1_task, l2_task, l3_task, l4_task, l5_task, sb_task, ext_task
         )
@@ -535,6 +619,7 @@ async def retrieve_candidates_parallel(
         "count_bm25": total_sparse_cases,
         "count_external": len(ext_res)
     }
+    engine_counts["provider_health"] = provider_ledger.to_dict()
 
     # 6. Reciprocal Rank Fusion & Judicial Authority Weighting
     merged = merge_candidates_with_rrf(per_lane_engine_results, query_plan=query_plan, rrf_k=60)

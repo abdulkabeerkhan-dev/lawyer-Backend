@@ -2335,20 +2335,11 @@ async def process_query_job_legal_ai(
 
 
         top_k_per_engine=40
-
-
-
-
-
-
-
     )
 
-
-
-
-
-
+    retrieval_health = engine_counts.get("provider_health", {"status": "unknown", "events": []})
+    if job_id in jobs_store:
+        jobs_store[job_id].setdefault("early_display", {})["retrieval_health"] = retrieval_health
 
     pipeline_metrics.end_stage("searching_precedents")
 
@@ -6222,6 +6213,7 @@ async def process_query_job_legal_ai(
             "answer": clean_answer,
             "response": clean_answer,
             "model_answer": clean_answer,
+            "retrieval_health": retrieval_health,
             "database_freshness": "Database current as of November 2026",
             "is_verified": memo_is_verified if 'memo_is_verified' in locals() else False,
             "verification_report": v_report if 'v_report' in locals() else None,
@@ -6256,6 +6248,7 @@ async def process_query_job_legal_ai(
             "doctrinal_note": None,
             "verification_report": verification_report_payload,
             "shadow_rerank_stats": shadow_rerank_stats,
+            "retrieval_health": retrieval_health,
         }
         jobs_store[job_id].setdefault("stage_timings", {})["completed"] = time.perf_counter()
         if _has_contentful_final_result(final_payload):
@@ -6552,5 +6545,3 @@ async def process_query_job_legal_ai(
                 persist_in_flight_job_state(job_id, "failed", "failed", extra={"result": None, "error": "finalization produced no payload"})
             except Exception as _p_err:
                 logger.debug(f"Persistence error: {_p_err}")
-
-

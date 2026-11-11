@@ -10,6 +10,7 @@ import logging
 import urllib.request
 import urllib.error
 from typing import Optional, Dict, Any, List
+from core.provider_ledger import ProviderStatus, record_provider_event
 
 logger = logging.getLogger(__name__)
 
@@ -52,8 +53,10 @@ def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 5, max_re
     Features strict 3s timeout and circuit breaker to prevent cascading worker hangs.
     """
     if not TURSO_TOKEN or not TURSO_URL:
+        record_provider_event("Turso", ProviderStatus.PROVIDER_DOWN, message="Turso is not configured.")
         return []
     if is_turso_circuit_open():
+        record_provider_event("Turso", ProviderStatus.PROVIDER_DOWN, message="Turso circuit breaker is open.")
         return []
 
     requests = []
@@ -102,6 +105,14 @@ def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 5, max_re
                         results.append({"cols": cols, "rows": rows, "affected": exec_res.get("affected_row_count", 0)})
                     else:
                         results.append({"error": res_item.get("error")})
+                errors = [item.get("error") for item in results if item.get("error")]
+                row_count = sum(len(item.get("rows", [])) for item in results)
+                record_provider_event(
+                    "Turso",
+                    ProviderStatus.ERROR if errors else (ProviderStatus.SUCCESS if row_count else ProviderStatus.EMPTY),
+                    result_count=row_count,
+                    message="; ".join(str(error) for error in errors[:2]) if errors else None,
+                )
                 return results
         except urllib.error.HTTPError as he:
             err_body = ""
@@ -110,11 +121,17 @@ def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 5, max_re
             except Exception:
                 pass
             logger.warning(f"Turso HTTP {he.code} client error: {err_body or he}")
+            record_provider_event("Turso", ProviderStatus.PROVIDER_DOWN, message=f"HTTP {he.code}: {err_body or he}")
             return []
         except Exception as e:
             if attempt == max_retries:
                 trip_turso_circuit(5.0)
                 logger.warning(f"Turso pipeline timeout/failure ({e}). Circuit breaker tripped for 5s.")
+                record_provider_event(
+                    "Turso",
+                    ProviderStatus.TIMEOUT if isinstance(e, TimeoutError) else ProviderStatus.PROVIDER_DOWN,
+                    message=str(e),
+                )
             else:
                 time.sleep(0.2)
     return []
@@ -146,7 +163,9 @@ def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     res = execute_turso_pipeline([{"sql": sql_id, "args": [{"type": "text", "value": norm_id}]}], timeout=3, max_retries=1)
     if res and "rows" in res[0] and res[0]["rows"]:
         case_data = res[0]["rows"][0]
-        case_data["text_type"] = case_data.get("content_level") or ("headnote" if case_data.get("headnote") and not case_data.get("full_text") else "full_judgment")
+        from core.content_classification import classify_judgment_content
+        case_data["content_level"] = classify_judgment_content(case_data)
+        case_data["text_type"] = case_data["content_level"]
         _CASE_CACHE[norm_id] = case_data
         _CASE_CACHE[norm_cit] = case_data
         return case_data
@@ -165,7 +184,9 @@ def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     res2 = execute_turso_pipeline([{"sql": sql_cit, "args": args_cit}], timeout=3, max_retries=1)
     if res2 and "rows" in res2[0] and res2[0]["rows"]:
         case_data = res2[0]["rows"][0]
-        case_data["text_type"] = case_data.get("content_level") or ("headnote" if case_data.get("headnote") and not case_data.get("full_text") else "full_judgment")
+        from core.content_classification import classify_judgment_content
+        case_data["content_level"] = classify_judgment_content(case_data)
+        case_data["text_type"] = case_data["content_level"]
         _CASE_CACHE[norm_id] = case_data
         _CASE_CACHE[norm_cit] = case_data
         return case_data
@@ -201,7 +222,9 @@ def get_cases_batch(identifiers: List[str]) -> List[Dict[str, Any]]:
     res = execute_turso_pipeline([{"sql": sql, "args": args}], timeout=3, max_retries=1)
     if res and "rows" in res[0]:
         for row in res[0]["rows"]:
-            row["text_type"] = row.get("content_level") or ("headnote" if row.get("headnote") and not row.get("full_text") else "full_judgment")
+            from core.content_classification import classify_judgment_content
+            row["content_level"] = classify_judgment_content(row)
+            row["text_type"] = row["content_level"]
             c_norm = row.get("case_id", "").upper()
             _CASE_CACHE[c_norm] = row
             found.append(row)
@@ -250,13 +273,30 @@ def get_case_pdf_bytes(
     if is_turso_circuit_open():
         return None
     import base64
+    normalized_case_id = case_id.strip().replace(" ", "_").upper()
+    journal = (target_journal or "").strip().upper()
+    try:
+        year = int(target_year) if target_year is not None else None
+    except (TypeError, ValueError):
+        year = None
+    try:
+        page = int(target_page) if target_page is not None else None
+    except (TypeError, ValueError):
+        page = None
     sql = """
     SELECT pdf_base64
     FROM case_pdfs
-    WHERE case_id = ?
+    WHERE case_id = ? OR case_id = ?
+       OR (journal = ? AND year = ? AND page = ?)
     LIMIT 1
     """
-    args = [{"type": "text", "value": case_id.strip()}]
+    args = [
+        {"type": "text", "value": case_id.strip()},
+        {"type": "text", "value": normalized_case_id},
+        {"type": "text", "value": journal},
+        {"type": "integer", "value": year},
+        {"type": "integer", "value": page},
+    ]
     res = execute_turso_pipeline([{"sql": sql, "args": args}], timeout=3, max_retries=1)
     if res and "rows" in res[0] and res[0]["rows"]:
         b64_str = res[0]["rows"][0].get("pdf_base64")

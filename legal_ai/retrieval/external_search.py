@@ -8,6 +8,7 @@ and online law reporters when corpus-miss occurs.
 import sys
 from typing import Dict, List, Any, Optional
 from legal_ai.ranking.court_weighting import normalize_court_name
+from core.provider_ledger import ProviderStatus, record_provider_event
 
 
 async def search_external_judgments(
@@ -18,6 +19,7 @@ async def search_external_judgments(
     Executes external judicial portal and SearxNG searches for fresh court precedents.
     """
     if not query_text:
+        record_provider_event("External", ProviderStatus.EMPTY, message="Search query is empty.")
         return []
 
     try:
@@ -25,6 +27,7 @@ async def search_external_judgments(
         external_results = await search_recent_external_judgments(query_text, budget_s=2.5)
     except Exception as e:
         print(f"⚠️ [ExternalSearch] External search error: {e}", file=sys.stderr)
+        record_provider_event("External", ProviderStatus.PROVIDER_DOWN, message=str(e))
         return []
 
     candidates: List[Dict[str, Any]] = []
@@ -54,4 +57,9 @@ async def search_external_judgments(
             "metadata": meta or item
         })
 
+    record_provider_event(
+        "External",
+        ProviderStatus.SUCCESS if candidates else ProviderStatus.EMPTY,
+        result_count=len(candidates),
+    )
     return candidates

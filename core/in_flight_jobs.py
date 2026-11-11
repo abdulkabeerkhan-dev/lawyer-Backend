@@ -20,6 +20,7 @@ import tempfile
 import threading
 import logging
 import uuid
+import time
 from datetime import datetime, timezone
 from typing import Dict, Any, Optional
 
@@ -29,6 +30,8 @@ _IN_FLIGHT_JOBS_CACHE: Dict[str, Dict[str, Any]] = {}
 _IN_FLIGHT_JOBS_LOCK = threading.Lock()
 _LOCAL_JOBS_DB_PATH = os.path.join(tempfile.gettempdir(), "section_jobs_cache.db")
 _QUERY_JOBS_TABLE_EXISTS: Optional[bool] = None
+_QUERY_JOBS_TABLE_CHECKED_AT: Optional[float] = None
+_QUERY_JOBS_TABLE_CACHE_TTL_SECONDS = 60.0
 WORKER_INSTANCE_ID = str(uuid.uuid4())
 
 _REGISTERED_JOBS_STORE: Optional[Dict[str, Any]] = None
@@ -168,23 +171,28 @@ def check_query_jobs_table_exists(supabase_client: Any = None) -> bool:
     Evaluates whether the public.query_jobs table exists in Supabase.
     Caches the result to avoid repeated schema checks.
     """
-    global _QUERY_JOBS_TABLE_EXISTS
-    if _QUERY_JOBS_TABLE_EXISTS is not None:
+    global _QUERY_JOBS_TABLE_EXISTS, _QUERY_JOBS_TABLE_CHECKED_AT
+    if (
+        _QUERY_JOBS_TABLE_EXISTS is not None
+        and _QUERY_JOBS_TABLE_CHECKED_AT is not None
+        and time.monotonic() - _QUERY_JOBS_TABLE_CHECKED_AT < _QUERY_JOBS_TABLE_CACHE_TTL_SECONDS
+    ):
         return _QUERY_JOBS_TABLE_EXISTS
 
     sb = _get_supabase_client(supabase_client)
     if not sb:
-        _QUERY_JOBS_TABLE_EXISTS = False
         return False
 
     try:
         sb.table("query_jobs").select("job_id").limit(1).execute()
         _QUERY_JOBS_TABLE_EXISTS = True
+        _QUERY_JOBS_TABLE_CHECKED_AT = time.monotonic()
         logger.info("[STARTUP SELF-CHECK] Table 'public.query_jobs' verified in Supabase.")
     except Exception as e:
         err_msg = str(e)
-        _QUERY_JOBS_TABLE_EXISTS = False
         if "PGRST205" in err_msg or "schema cache" in err_msg or "not find" in err_msg:
+            _QUERY_JOBS_TABLE_EXISTS = False
+            _QUERY_JOBS_TABLE_CHECKED_AT = time.monotonic()
             print(
                 "⚠️ [STARTUP SELF-CHECK] Notice: 'public.query_jobs' table is missing in Supabase (PGRST205). "
                 "In-flight persistence will use memory store. To enable database persistence, apply migrations/query_jobs.sql.",
@@ -193,9 +201,11 @@ def check_query_jobs_table_exists(supabase_client: Any = None) -> bool:
             )
             logger.warning(f"[STARTUP SELF-CHECK] Table 'public.query_jobs' missing: {err_msg}")
         else:
-            logger.debug(f"[STARTUP SELF-CHECK] query_jobs check encountered: {err_msg}")
+            _QUERY_JOBS_TABLE_EXISTS = None
+            _QUERY_JOBS_TABLE_CHECKED_AT = None
+            logger.warning(f"[STARTUP SELF-CHECK] query_jobs check failed; it will be retried: {err_msg}")
 
-    return _QUERY_JOBS_TABLE_EXISTS
+    return _QUERY_JOBS_TABLE_EXISTS is True
 
 
 def load_in_flight_jobs(
