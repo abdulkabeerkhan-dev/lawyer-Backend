@@ -268,7 +268,7 @@ def render_layer8_markdown(
     # Admitted Provisions Detail Table / Cards
     statute_items = [it for it in evidence_pack.items.values() if it.item_type == "statute_unit"]
     if statute_items:
-        lines.append("### Authenticated Statutory Provisions on Record")
+        lines.append("### Statutory Provisions on Record")
         for it in statute_items:
             unit_label = (it.unit_type or "Provision").capitalize()
             lines.append(f"#### {it.statute_title} - {unit_label} {it.number}")
@@ -279,7 +279,15 @@ def render_layer8_markdown(
                 lines.append(f"- **Limitation Period:** **{it.period}**")
             if it.trigger:
                 lines.append(f"- **Commencement Trigger:** {it.trigger}")
-            lines.append(f"\n*Authentic Verbatim Text:*\n> \"{it.text}\"\n")
+            if it.quote_verified:
+                src = f" ({it.verification_label})" if it.verification_label else ""
+                lines.append(f"\n*Verbatim Text — ✓ Verified{src}:*\n> \"{it.text}\"\n")
+            else:
+                lines.append(
+                    "\n*Extracted Text (not yet verified against the official Gazette — "
+                    "check the current official text before quoting or filing):*\n"
+                    f"> {it.text}\n"
+                )
             if it.footnotes:
                 lines.append(f"*Statutory Annotations:* {'; '.join(it.footnotes)}\n")
 

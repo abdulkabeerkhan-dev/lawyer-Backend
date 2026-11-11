@@ -33,6 +33,8 @@ class EvidenceItem(BaseModel):
     period: Optional[str] = None
     trigger: Optional[str] = None
     text: str = ""
+    quote_verified: bool = False
+    verification_label: Optional[str] = None
     footnotes: List[str] = Field(default_factory=list)
     caveats: List[str] = Field(default_factory=list)
     jurisdiction: str = "federal"
@@ -86,6 +88,8 @@ class BoundedEvidencePack:
             period=unit.period,
             trigger=unit.trigger,
             text=unit.text,
+            quote_verified=unit.quote_verified,
+            verification_label=unit.verification_label,
             footnotes=list(unit.footnotes),
             caveats=list(unit.caveats),
             jurisdiction=unit.jurisdiction,

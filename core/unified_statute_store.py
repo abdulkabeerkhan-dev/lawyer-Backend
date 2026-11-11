@@ -19,6 +19,8 @@ import json
 import re
 from typing import Dict, List, Any, Optional
 
+from core.statute_quote_policy import is_quote_verified
+
 REPO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UNIFIED_DIR = os.path.join(REPO_DIR, "data", "statutes_v2")
 TABLES_DIR = os.path.join(REPO_DIR, "data", "statute_tables")
@@ -177,13 +179,8 @@ class UnifiedStatuteStore:
                             if r.get("tier") == "reviewed":
                                 if not verify_reviewed_tier(cid.upper(), r.get("content_hash", "")):
                                     r["tier"] = "disputed" if r.get("is_disputed") else "ingested_unreviewed"
-                            # Ensure text present from official gazette is quotable
-                            if (
-                                r.get("quoting_allowed") is not False
-                                and (r.get("text") or r.get("text_raw"))
-                                and r.get("tier") != "unsourced"
-                            ):
-                                r["quoting_allowed"] = True
+                            # Quotable only if the text is verified (see core/statute_quote_policy.py)
+                            r["quoting_allowed"] = is_quote_verified(r)
                             self._by_cid[cid.upper()] = r
                         if num:
                             norm_num = re.sub(r'[^A-Z0-9]', '', num.upper())
@@ -290,10 +287,10 @@ class UnifiedStatuteStore:
                     "primary_num": t_prov.get("section_num"),
                     "title": t_prov.get("title"),
                     "text": t_prov.get("verbatim_text"),
-                    "tier": t_prov.get("tier", "text_layer_extracted"),
+                    "tier": t_prov.get("tier") or "unknown",
                     "in_force": bool(t_prov.get("in_force", 1)),
-                    "quoting_allowed": True
                 }
+                rec["quoting_allowed"] = is_quote_verified(rec)
                 self._by_cid[cid_clean] = rec
                 return rec
         except Exception:
@@ -372,10 +369,10 @@ class UnifiedStatuteStore:
                     "primary_num": t_prov.get("section_num"),
                     "title": t_prov.get("title"),
                     "text": t_prov.get("verbatim_text"),
-                    "tier": t_prov.get("tier", "text_layer_extracted"),
+                    "tier": t_prov.get("tier") or "unknown",
                     "in_force": bool(t_prov.get("in_force", 1)),
-                    "quoting_allowed": True
                 }
+                rec["quoting_allowed"] = is_quote_verified(rec)
                 self._by_cid[rec["canonical_id"]] = rec
                 return rec
         except Exception:

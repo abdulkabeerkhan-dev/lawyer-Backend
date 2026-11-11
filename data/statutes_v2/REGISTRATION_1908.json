@@ -17,7 +17,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 6,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_2",
@@ -41,7 +50,13 @@
     "footnotes": [
       "This Act has been declared to be in force in Baluchistan by s. 3 of the British Baluchistan Laws Regulation, 1913, (2 of 1913). \nIt has been extended to the Leased Areas of Baluchistan, see the Leased Areas (Laws) Order, 1950 (G.G.O. 3 of 1950); and  applied in the Federated \nAreas of Baluchistan, see Gazette of India, 1937, Pt. I, p. 1499 \nIt has been extended to the Baluchistan States Union by the Baluchistan States Union (Federal Laws) (Extension) Order, 1953 (G.G. O. 4 of 1953), as \namended. \nIt has been extended to the Khairpur State by the Khairpur (Federal Laws) (Extension) Order, 1953 (G.G.O. 5 of 1953), as amended. \nThe Act has been and shall be deemed to have been brought into force in Gwadur with effect from the 8th September, 1958, by t he Gwadur \n(Application of Central Laws) Ordinance, 1960 (37 of 1960), s. 2. \nIt has been amended in Sind by the Transfer of Property and the Indian Registration (Sind Amdt.) Act, 1939 (Sind 14 of 1939) and the Indian \nRegistration (Amdt.) Act, 1946 (Sind 7 of 1946). \nIt has been amended in the Punjab by the Indian Registration (Punjab Amdt.) Act, 1941 (Punjab 8 of 1941). \nIt has also been applied to Phulera in the excluded Area of Upper Tanawal to the extent the Act is applicable in the N.­W.F.P., and has been extended \nto the Excluded Area of Upper Tanawal other than Phulera by the N.­W.F.P. (Upper Tanawal) (Excluded Area) Laws Regulation, 195 0 and declared \nto be in force in that area with effect from the 1st June, 1951, see N.­ W.F.P. Gazette Ext., dated the 1st June, 1951. \nThe Act, as in force in the North­West Frontier Province immediatly before the commencement of N.W.F.P. Regulation No. II of 1974, has been \napplied to the Provincially Administered Tribal Areas of Chitral, Dir, Kalam, Swat and Malakand Protected Area, by N.­W.F.P. Regulation No II of \n1974, s.3. \n2The word “Indian” Omitted by A.O,. 1949. \n3Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (21 of 1960) s. 3 and 2nd Sch. ( with effect from 14th October, 1955 ), for “all the \nprovinces and the Capital of the Federation” which had been subs. by A.O., 1949, for “the whole of British India”. \n4Subs. by A.O., 1937, for “L.G.”. \n5The words “with the previous sanction of the G.G. in C.” omitted by the Devolution Act, 1920 (38 of 1920), s. 2 and First Sch. \n6The words, comma and brackets “and, in the case of a native of [Pakistan] his caste (if any)” omitted by Ordinance 21 of 1960, s. 3 and 2nd Sch. (with \neffect from the 14th October,1955). The word in crochet was subs. by A. O., 1949, for “India”. \n\n1[(2a) “co‑operative society” means a co ‑operative society registered under the Co ‑operative \nSocieties Act, 1912 ( II of 1912 ), or under any other law for the time being in force relati ng to the \nregistration of co­operative societies :]  \n(3) “district” and “sub‑district” respectively mean a district and sub­district formed under this \nAct: \n(4) “District Court” includes the High Court in its ordinary original civil jurisdiction: \n(5) “endorsement” and “endorsed” include and apply to an entry in writing by a registering \nofficer on a rider or covering slip to any document tendered for registration under this Act: \n2[(6) “immoveable property” includes land, buildings,  benefits to arise out of land and things \nattached to the earth, or permanently fastened to anything attached to the earth, hereditary allowances, \nrights to ways, lights, ferries and fisheries but does not Include—  \n(a) standing timber, growing crops or grass whether immediate severance thereof \nit intended or not; \n(b) fruit upon and juice in trees whether in existence or to grow in future; and \n(c) machinery embedded in or attached to the earth, when dealt with apart from the \nland:] \n3[(7)  “lease” includes a counter­part, kabuliyat and an undertaking to cultivate or occupy:] \n(8) “minor” means a person who, according to the personal law to which he is subject, has \nnot attained majority: \n \n3[(9) “moveable property” means property of every description, except immoveable property:]  \n(10) “representative” includes the guardian of a minor and the committee or other legal \ncurator of a lunatic or idiot. \n_________ \n \nPART II \n \nOF THE REGISTRATION­ESTABLISHMENT"
     ],
-    "verbatim_text": "2. Definitions. In this Act, unless there is anything repugnant in the subject or context,—  \n(1) “addition” means the place of residence, and the profession, trade, rank and title, (if any) \nof a person described,6 * * *and his father’s name, or where he is usually described as the son of his \nmother, then his mother’s name: \n(2) “book” includes a portion of a book and also any number of sheets connected together with \na view of forming a book or portion of a book: \n \n1For Statement of Objects and Reasons, see Gazette of India, 1908, Pt. V, p. 325, for Report of Select Committee, see ibid., 1908, Pt. V. p. 387; and for \nProceeding in Council, see ibid.,1908, Pt. VI, pp. 148, 154 and 182."
+    "verbatim_text": "2. Definitions. In this Act, unless there is anything repugnant in the subject or context,—  \n(1) “addition” means the place of residence, and the profession, trade, rank and title, (if any) \nof a person described,6 * * *and his father’s name, or where he is usually described as the son of his \nmother, then his mother’s name: \n(2) “book” includes a portion of a book and also any number of sheets connected together with \na view of forming a book or portion of a book: \n \n1For Statement of Objects and Reasons, see Gazette of India, 1908, Pt. V, p. 325, for Report of Select Committee, see ibid., 1908, Pt. V. p. 387; and for \nProceeding in Council, see ibid.,1908, Pt. VI, pp. 148, 154 and 182.",
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_3",
@@ -61,7 +76,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 7,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_4",
@@ -81,7 +105,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 8,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_5",
@@ -101,7 +134,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 8,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_7",
@@ -121,7 +163,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 8,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_8",
@@ -141,7 +192,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 8,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_9",
@@ -161,7 +221,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_5S",
@@ -181,7 +247,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_10",
@@ -201,7 +273,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 9,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_11",
@@ -221,7 +302,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 9,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_13",
@@ -241,7 +331,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 9,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_14",
@@ -261,7 +360,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 9,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_15",
@@ -281,7 +389,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 9,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_16",
@@ -301,7 +418,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_17",
@@ -321,7 +444,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_18",
@@ -341,7 +470,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 12,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_19",
@@ -361,7 +499,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 12,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_20",
@@ -381,7 +528,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 12,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_21",
@@ -401,7 +557,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 12,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_22",
@@ -421,7 +586,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_23",
@@ -441,7 +612,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 13,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_23A",
@@ -461,7 +641,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 13,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_24",
@@ -481,7 +670,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 13,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_25",
@@ -501,7 +699,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 13,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_1S",
@@ -521,7 +728,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_26",
@@ -541,7 +754,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 14,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_27",
@@ -561,7 +783,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 14,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_228",
@@ -581,7 +812,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 14,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_29",
@@ -601,7 +841,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_30",
@@ -621,7 +867,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 15,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_31",
@@ -641,7 +896,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 15,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_32",
@@ -661,7 +925,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_33",
@@ -681,7 +951,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_34",
@@ -701,7 +977,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_35",
@@ -721,7 +1003,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 17,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_36",
@@ -741,7 +1032,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 18,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_37",
@@ -761,7 +1061,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 18,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_38",
@@ -781,7 +1090,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 18,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_39",
@@ -801,7 +1119,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_40",
@@ -821,7 +1145,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 19,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_41",
@@ -841,7 +1174,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_42",
@@ -861,7 +1200,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 19,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_43",
@@ -881,7 +1229,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_44",
@@ -901,7 +1255,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 20,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_45",
@@ -921,7 +1284,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_46",
@@ -941,7 +1310,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 20,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_46A",
@@ -961,7 +1339,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_47",
@@ -981,7 +1365,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 21,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_48",
@@ -1001,7 +1394,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_49",
@@ -1021,7 +1420,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 21,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_50",
@@ -1041,7 +1449,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_51",
@@ -1061,7 +1476,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_52",
@@ -1081,7 +1502,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 23,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_53",
@@ -1101,7 +1531,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 23,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_54",
@@ -1121,7 +1560,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 23,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_55",
@@ -1141,7 +1589,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_56",
@@ -1161,7 +1615,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 24,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_57",
@@ -1181,7 +1644,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 24,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_58",
@@ -1201,7 +1673,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 24,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_59",
@@ -1221,7 +1702,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 24,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_60",
@@ -1241,7 +1731,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 25,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_61",
@@ -1261,7 +1760,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 25,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_62",
@@ -1281,7 +1789,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 25,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_63",
@@ -1301,7 +1818,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 25,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_64",
@@ -1321,7 +1847,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 25,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_65",
@@ -1341,7 +1876,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 26,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_66",
@@ -1361,7 +1905,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 26,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_67",
@@ -1381,7 +1934,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 26,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_68",
@@ -1401,7 +1963,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 26,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_69",
@@ -1421,7 +1992,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_70",
@@ -1441,7 +2018,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_71",
@@ -1461,7 +2044,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 30,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_72",
@@ -1481,7 +2073,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 30,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_73",
@@ -1501,7 +2102,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 30,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_74",
@@ -1521,7 +2131,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 30,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_75",
@@ -1541,7 +2160,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 31,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_76",
@@ -1561,7 +2189,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 31,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_77",
@@ -1581,7 +2218,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_78",
@@ -1601,7 +2244,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 32,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_79",
@@ -1621,7 +2273,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 32,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_80",
@@ -1641,7 +2302,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_81",
@@ -1661,7 +2328,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 33,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_82",
@@ -1681,7 +2357,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 33,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_83",
@@ -1701,7 +2386,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 33,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_84",
@@ -1721,7 +2415,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_85",
@@ -1741,7 +2441,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 34,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_86",
@@ -1761,7 +2470,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 34,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_87",
@@ -1781,7 +2499,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 34,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_88",
@@ -1801,7 +2528,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 34,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_89",
@@ -1821,7 +2557,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "registration_act_1908.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_90",
@@ -1841,7 +2583,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 35,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_91",
@@ -1861,7 +2612,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 35,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_92",
@@ -1881,7 +2641,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 35,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "REGISTRATION_1908_SEC_93",
@@ -1901,6 +2670,15 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "registration_act_1908.pdf",
+      "source_pdf_sha256": "b9f6a700e43ad5824252330b41abd675690035b2347da61978f08d486fa40674",
+      "page": 35,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   }
 ]

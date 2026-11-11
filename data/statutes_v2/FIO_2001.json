@@ -17,7 +17,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 3,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_2",
@@ -37,7 +46,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 3,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_3",
@@ -57,7 +75,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 5,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_4",
@@ -77,7 +104,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_5",
@@ -97,7 +131,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 6,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_6",
@@ -117,7 +160,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_7",
@@ -137,7 +187,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_8",
@@ -157,7 +214,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 8,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_9",
@@ -177,7 +243,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 8,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_10",
@@ -197,7 +272,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_11",
@@ -217,7 +299,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "fio_2001.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_12",
@@ -237,7 +325,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_13",
@@ -257,7 +352,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 11,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_14",
@@ -277,7 +381,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 11,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_15",
@@ -297,7 +410,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 11,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_15A",
@@ -317,7 +439,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_16",
@@ -337,7 +466,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 18,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_17",
@@ -357,7 +495,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 19,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_18",
@@ -377,7 +524,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 19,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_19",
@@ -397,7 +553,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 20,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_20",
@@ -417,7 +582,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 21,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_21",
@@ -437,7 +611,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 23,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_22",
@@ -457,7 +640,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 23,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_23",
@@ -477,7 +669,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 24,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_24",
@@ -497,7 +698,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 24,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_25",
@@ -517,7 +727,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 24,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_26",
@@ -537,7 +756,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_27",
@@ -557,7 +783,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 25,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_28",
@@ -577,7 +812,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 25,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "FIO_2001_SEC_29",
@@ -597,6 +841,15 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "fio_2001.pdf",
+      "source_pdf_sha256": "b1b54c7b2e1103dac8e28c35114825ea6cdb0a8f9fb6af7de10aa741386e2219",
+      "page": 25,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   }
 ]

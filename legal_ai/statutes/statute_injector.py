@@ -17,6 +17,8 @@ import logging
 from pathlib import Path
 from typing import Dict, List, Any, Optional, Tuple, Set
 
+from core.statute_quote_policy import is_quote_verified
+
 logger = logging.getLogger(__name__)
 
 ENABLE_STATUTE_INJECTION: bool = os.environ.get("ENABLE_STATUTE_INJECTION", "true").lower() in ("true", "1", "yes")
@@ -73,12 +75,7 @@ class StatuteInjector:
                         if isinstance(item, dict) and item.get("canonical_id"):
                             if not item.get("text") and item.get("text_raw"):
                                 item["text"] = item["text_raw"]
-                            if (
-                                item.get("quoting_allowed") is not False
-                                and item.get("tier") != "unsourced"
-                                and (item.get("text") or item.get("text_raw"))
-                            ):
-                                item["quoting_allowed"] = True
+                            item["quoting_allowed"] = is_quote_verified(item)
                             by_cid[str(item["canonical_id"]).upper()] = item
                     self._unified_cache[act_code] = by_cid
                 except Exception as e:
@@ -420,7 +417,7 @@ class StatuteInjector:
             from core.turso_client import get_statute_provision
             turso_prov = get_statute_provision(canonical_id, act_code=act_code)
             if turso_prov:
-                return {
+                rec = {
                     "canonical_id": turso_prov["canonical_id"],
                     "act_code": turso_prov["act_code"],
                     "primary_num": turso_prov["section_num"],
@@ -428,8 +425,9 @@ class StatuteInjector:
                     "text": turso_prov["verbatim_text"],
                     "tier": turso_prov["tier"],
                     "in_force": bool(turso_prov["in_force"]),
-                    "quoting_allowed": True
                 }
+                rec["quoting_allowed"] = is_quote_verified(rec)
+                return rec
         except Exception:
             pass
 

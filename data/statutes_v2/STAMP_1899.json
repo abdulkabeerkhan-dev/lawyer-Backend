@@ -17,7 +17,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 5,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_23A",
@@ -37,7 +46,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "stamp_act_1899.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_32A",
@@ -57,7 +72,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "stamp_act_1899.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_140",
@@ -77,7 +98,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_162",
@@ -97,7 +125,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 31,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_66",
@@ -117,7 +154,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 32,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_67",
@@ -137,7 +183,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "stamp_act_1899.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_68",
@@ -157,7 +209,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_69",
@@ -177,7 +236,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 33,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_70",
@@ -197,7 +265,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 33,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_71",
@@ -217,7 +294,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 33,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_72",
@@ -237,7 +323,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "stamp_act_1899.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_73",
@@ -257,7 +349,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 34,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_74",
@@ -277,7 +378,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "stamp_act_1899.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_75",
@@ -297,7 +404,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 34,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_76",
@@ -317,7 +433,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 34,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_76A",
@@ -337,7 +462,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "stamp_act_1899.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_77",
@@ -357,7 +488,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_78",
@@ -377,7 +515,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "stamp_act_1899.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_79",
@@ -397,7 +541,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 35,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_1",
@@ -417,7 +570,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 36,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_2",
@@ -437,7 +599,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 36,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_3",
@@ -457,7 +628,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 36,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_4",
@@ -477,7 +657,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 36,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_5",
@@ -497,7 +686,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 37,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_6",
@@ -517,7 +715,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 37,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_7",
@@ -537,7 +744,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 38,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_8",
@@ -557,7 +773,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 38,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_9",
@@ -577,7 +802,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 39,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_10",
@@ -597,7 +831,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 39,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_11",
@@ -617,7 +860,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 39,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_12",
@@ -637,7 +889,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 40,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_13",
@@ -657,7 +918,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 40,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_14",
@@ -677,7 +947,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 41,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_15",
@@ -697,7 +976,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 41,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_16",
@@ -717,7 +1005,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 41,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_17",
@@ -737,7 +1034,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "stamp_act_1899.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_18",
@@ -757,7 +1060,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 42,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_19",
@@ -777,7 +1089,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 42,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_20",
@@ -797,7 +1118,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 42,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_21",
@@ -817,7 +1147,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "stamp_act_1899.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_22",
@@ -837,7 +1173,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 42,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_23",
@@ -857,7 +1202,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 42,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_24",
@@ -877,7 +1231,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 42,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_25",
@@ -897,7 +1260,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 43,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_26",
@@ -917,7 +1289,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 43,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_27",
@@ -937,7 +1318,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 43,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_28",
@@ -957,7 +1347,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 44,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_29",
@@ -977,7 +1376,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 45,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_30",
@@ -997,7 +1405,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 45,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_31",
@@ -1017,7 +1434,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 45,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_32",
@@ -1037,7 +1463,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 45,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_33",
@@ -1057,7 +1492,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 46,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_34",
@@ -1077,7 +1521,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 46,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_35",
@@ -1097,7 +1550,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 46,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_36",
@@ -1117,7 +1579,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 48,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_37",
@@ -1137,7 +1608,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 48,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_38",
@@ -1157,7 +1637,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 48,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_39",
@@ -1177,7 +1666,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 48,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_40",
@@ -1197,7 +1695,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 49,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_41",
@@ -1217,7 +1724,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 50,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_42",
@@ -1237,7 +1753,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 50,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_43",
@@ -1257,7 +1782,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 50,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_44",
@@ -1277,7 +1811,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 50,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_45",
@@ -1297,7 +1840,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 51,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_46",
@@ -1317,7 +1869,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 52,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_500",
@@ -1337,7 +1898,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 52,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_47",
@@ -1357,7 +1927,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 52,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_48",
@@ -1377,7 +1956,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 54,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_49",
@@ -1397,7 +1985,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 55,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_50",
@@ -1417,7 +2014,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 55,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_51",
@@ -1437,7 +2043,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 55,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_0",
@@ -1457,7 +2072,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 55,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_52",
@@ -1477,7 +2101,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 56,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_53",
@@ -1497,7 +2130,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 56,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_54",
@@ -1517,7 +2159,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 58,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_55",
@@ -1537,7 +2188,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 58,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_56",
@@ -1557,7 +2217,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 58,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_57",
@@ -1577,7 +2246,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 58,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_58",
@@ -1597,7 +2275,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 59,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_59",
@@ -1617,7 +2304,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 60,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_60",
@@ -1637,7 +2333,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 60,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_61",
@@ -1657,7 +2362,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 61,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_62",
@@ -1677,7 +2391,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "stamp_act_1899.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_63",
@@ -1697,7 +2417,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 62,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_64",
@@ -1717,7 +2446,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 62,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "STAMP_1899_SEC_65",
@@ -1737,6 +2475,15 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "stamp_act_1899.pdf",
+      "source_pdf_sha256": "0e8ab282efa6836bc6809feb01e29bbca51c70c1f077ab86e91ccbabe08334fb",
+      "page": 62,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   }
 ]

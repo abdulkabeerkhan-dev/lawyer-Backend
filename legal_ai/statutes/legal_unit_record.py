@@ -29,6 +29,8 @@ class LegalUnitRecord(BaseModel):
     period: Optional[str] = Field(default=None, description="Prescribed period of limitation, e.g. 'Three years'")
     trigger: Optional[str] = Field(default=None, description="Time from which period begins to run")
     text: str = Field(..., description="Full canonical clean text of the provision")
+    quote_verified: bool = Field(default=False, description="True only if text passed core.statute_quote_policy; otherwise it must not be presented as authentic verbatim text")
+    verification_label: Optional[str] = Field(default=None, description="Provenance of verification, e.g. 'matches official text: ppc_1860.pdf, p. 106'")
     footnotes: List[str] = Field(default_factory=list, description="Extracted, isolated footnotes")
     cross_references: List[str] = Field(default_factory=list, description="IDs of linked or cross-referenced statutes/provisions")
     caveats: List[str] = Field(default_factory=list, description="Explicit statutory caveats (e.g. Punjab loan override)")

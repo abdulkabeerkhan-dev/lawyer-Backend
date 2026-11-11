@@ -17,7 +17,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_13",
@@ -37,7 +43,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_14",
@@ -57,7 +70,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 19,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_15",
@@ -77,7 +99,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 21,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_15A",
@@ -97,7 +128,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 21,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_15B",
@@ -117,7 +157,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_15C",
@@ -137,7 +183,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_16",
@@ -157,7 +209,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 22,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_17",
@@ -177,7 +238,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 22,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_18",
@@ -197,7 +267,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 22,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_19",
@@ -217,7 +296,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_20",
@@ -237,7 +323,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_21",
@@ -257,7 +349,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_22",
@@ -277,7 +375,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_23",
@@ -297,7 +402,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_24",
@@ -317,7 +428,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 26,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_25",
@@ -337,7 +457,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_25A",
@@ -357,7 +483,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 27,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_25B",
@@ -377,7 +512,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 28,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_26",
@@ -397,7 +541,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_26A",
@@ -417,7 +568,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_27",
@@ -437,7 +594,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 30,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_27A",
@@ -457,7 +623,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 31,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_27B",
@@ -477,7 +652,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 32,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_28",
@@ -497,7 +681,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_29",
@@ -517,7 +708,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_30",
@@ -537,7 +734,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_31",
@@ -557,7 +761,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_32",
@@ -577,7 +787,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 38,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_33",
@@ -597,7 +816,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 38,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_33A",
@@ -617,7 +845,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_33B",
@@ -637,7 +871,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 39,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_34",
@@ -657,7 +900,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 39,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_35",
@@ -677,7 +929,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_36",
@@ -697,7 +956,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_37",
@@ -717,7 +982,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 41,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_38",
@@ -737,7 +1011,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 41,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39",
@@ -757,7 +1040,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 41,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39A",
@@ -777,7 +1069,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 41,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39B",
@@ -797,7 +1098,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 41,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39C",
@@ -817,7 +1127,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 43,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39D",
@@ -837,7 +1156,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 43,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39E",
@@ -857,7 +1185,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 43,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39F",
@@ -877,7 +1214,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 44,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39G",
@@ -897,7 +1243,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 44,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39H",
@@ -917,7 +1272,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 44,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39I",
@@ -937,7 +1301,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 44,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39J",
@@ -957,7 +1330,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 44,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39K",
@@ -977,7 +1359,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 45,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_39L",
@@ -997,7 +1388,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 45,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_40A",
@@ -1017,7 +1417,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_41",
@@ -1037,7 +1444,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 46,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_41A",
@@ -1057,7 +1473,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 47,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_41B",
@@ -1077,7 +1502,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_41C",
@@ -1097,7 +1529,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 49,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_41D",
@@ -1117,7 +1558,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 49,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_42",
@@ -1137,7 +1587,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 49,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_42A",
@@ -1157,7 +1616,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 52,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_42B",
@@ -1177,7 +1645,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 52,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_42C",
@@ -1197,7 +1674,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 52,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_42D",
@@ -1217,7 +1703,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 53,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_42E",
@@ -1237,7 +1732,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_42F",
@@ -1257,7 +1759,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 58,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_42G",
@@ -1277,7 +1788,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_42H",
@@ -1297,7 +1815,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_42I",
@@ -1317,7 +1842,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 65,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_43",
@@ -1337,7 +1871,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 66,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_43A",
@@ -1357,7 +1900,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 67,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_40",
@@ -1377,7 +1929,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_43B",
@@ -1397,7 +1955,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_43C",
@@ -1417,7 +1982,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 69,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_43D",
@@ -1437,7 +2011,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_43E",
@@ -1457,7 +2038,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 70,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_43F",
@@ -1477,7 +2067,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 70,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_44",
@@ -1497,7 +2096,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 71,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_45",
@@ -1517,7 +2125,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_46",
@@ -1537,7 +2152,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 72,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_47",
@@ -1557,7 +2181,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_48",
@@ -1577,7 +2207,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_49",
@@ -1597,7 +2234,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_50",
@@ -1617,7 +2261,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_51",
@@ -1637,7 +2287,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_52",
@@ -1657,7 +2314,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 76,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_53",
@@ -1677,7 +2343,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 76,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_54",
@@ -1697,7 +2372,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_55",
@@ -1717,7 +2398,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 77,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_56",
@@ -1737,7 +2427,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 77,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_57",
@@ -1757,7 +2456,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 77,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_58",
@@ -1777,7 +2485,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_59",
@@ -1797,7 +2511,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 80,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_60",
@@ -1817,7 +2540,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 80,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_61",
@@ -1837,7 +2569,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 80,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_62",
@@ -1857,7 +2598,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_63",
@@ -1877,7 +2624,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_64",
@@ -1897,7 +2651,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 82,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_65",
@@ -1917,7 +2680,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 82,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_66",
@@ -1937,7 +2709,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_67",
@@ -1957,7 +2735,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_68",
@@ -1977,7 +2761,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 84,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_69",
@@ -1997,7 +2790,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_70",
@@ -2017,7 +2816,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_71",
@@ -2037,7 +2842,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_72",
@@ -2057,7 +2868,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 87,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_73",
@@ -2077,7 +2897,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 87,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_74",
@@ -2097,7 +2926,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 87,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_75",
@@ -2117,7 +2955,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_76",
@@ -2137,7 +2982,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 88,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_77",
@@ -2157,7 +3011,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 88,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_78",
@@ -2177,7 +3040,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 88,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_79",
@@ -2197,7 +3069,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 89,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_80",
@@ -2217,7 +3098,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 89,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_81",
@@ -2237,7 +3127,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 89,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_82",
@@ -2257,7 +3156,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 89,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_82A",
@@ -2277,7 +3185,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 89,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_82B",
@@ -2297,7 +3214,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 90,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_82C",
@@ -2317,7 +3243,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 91,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_82D",
@@ -2337,7 +3272,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 91,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_82E",
@@ -2357,7 +3301,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_82F",
@@ -2377,7 +3327,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 93,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_82G",
@@ -2397,7 +3356,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_83",
@@ -2417,7 +3382,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_83A",
@@ -2437,7 +3408,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 96,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_84",
@@ -2457,7 +3437,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_85",
@@ -2477,7 +3463,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_86",
@@ -2497,7 +3490,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 97,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_87",
@@ -2517,7 +3519,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 97,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_88",
@@ -2537,7 +3548,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 97,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_89",
@@ -2557,7 +3577,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 97,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_90",
@@ -2577,7 +3606,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 97,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_91",
@@ -2597,7 +3635,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 97,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_91A",
@@ -2617,7 +3664,14 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_91B",
@@ -2637,7 +3691,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 98,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_92",
@@ -2657,7 +3720,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 98,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_93",
@@ -2677,7 +3749,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 98,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_93A",
@@ -2697,7 +3778,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 98,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_93B",
@@ -2717,7 +3807,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 98,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_1S",
@@ -2737,7 +3836,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_93C",
@@ -2757,7 +3862,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 99,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_93D",
@@ -2777,7 +3891,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_94",
@@ -2797,7 +3917,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 100,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_95",
@@ -2817,7 +3946,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_12",
@@ -2837,7 +3972,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_3",
@@ -2857,7 +3998,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_6",
@@ -2877,7 +4024,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_7",
@@ -2897,7 +4050,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_8",
@@ -2917,7 +4076,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "text not found contiguously in official PDF",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_9",
@@ -2937,7 +4102,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_10",
@@ -2957,7 +4128,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_11",
@@ -2977,7 +4154,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "unverified",
+      "reason": "stored text mixes footnote text into the provision wording",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_1",
@@ -2997,7 +4180,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 108,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_2",
@@ -3017,7 +4209,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 108,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_4",
@@ -3037,7 +4238,16 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "page": 108,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    }
   },
   {
     "canonical_id": "BCO_1962_SEC_5",
@@ -3057,6 +4267,13 @@
     "quoting_allowed": true,
     "in_force": true,
     "jurisdiction": "federal",
-    "page_verified": true
+    "page_verified": true,
+    "verification": {
+      "status": "near_match_needs_review",
+      "reason": "wording matches official PDF except numerals (footnote markers / sub-section labels)",
+      "source_pdf": "banking_companies_ordinance_1962.pdf",
+      "source_pdf_sha256": "b8502f6f9b1d189471dbf4e6fe694fc3d6bb432f3d5eaf5711a97eb9a750657b",
+      "checked_at": "2026-11-11T13:58:38+00:00"
+    }
   }
 ]

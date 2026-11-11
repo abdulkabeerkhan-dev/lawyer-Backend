@@ -19,6 +19,7 @@ from pydantic import BaseModel, Field
 from legal_ai.statutes.legal_unit_record import LegalUnitRecord
 from legal_ai.evidence.bounded_evidence_pack import BoundedEvidencePack
 from core.unified_statute_store import get_unified_statute_store
+from core.statute_quote_policy import is_quote_verified, display_text, verification_label
 
 
 CONCEPTUAL_FACTUAL_PATTERNS = [
@@ -880,7 +881,10 @@ def _convert_to_legal_unit_record(rec: Dict[str, Any], canonical_id: str) -> Leg
         heading = rec.get("heading") or rec.get("title") or f"Section {num}"
 
     raw_txt = str(rec.get("text") or rec.get("text_raw") or "").strip()
-    clean_txt = raw_txt.replace('A-', '')
+    quote_ok = is_quote_verified(rec)
+    # Unverified cleaned text may be a rewrite (e.g. PPC s.302 proviso); show the
+    # direct official extraction instead, flagged as unverified downstream.
+    clean_txt = display_text(rec).replace('A-', '') or raw_txt.replace('A-', '')
 
     chk = hashlib.sha256(clean_txt.encode("utf-8")).hexdigest()
 
@@ -908,6 +912,8 @@ def _convert_to_legal_unit_record(rec: Dict[str, Any], canonical_id: str) -> Leg
         period=period,
         trigger=trigger,
         text=clean_txt,
+        quote_verified=quote_ok,
+        verification_label=verification_label(rec),
         footnotes=rec.get("footnotes") or [],
         caveats=rec.get("caveats") or [],
         cross_references=rec.get("cross_references") or [],
