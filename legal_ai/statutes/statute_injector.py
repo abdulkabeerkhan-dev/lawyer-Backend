@@ -121,7 +121,8 @@ class StatuteInjector:
             act_code, typ, rest = m_cid.groups()
             pretty_act = ACT_PRETTY_NAMES.get(act_code, act_code)
             if typ == "SEC":
-                return act_code, p_clean, f"Section {rest}, {pretty_act}"
+                display_section = re.sub(r"^(\d+)([A-Z])(?=_|$)", r"\1-\2", rest)
+                return act_code, p_clean, f"Section {display_section}, {pretty_act}"
             elif typ == "ART":
                 return act_code, p_clean, f"Article {rest}, {pretty_act}"
             elif typ == "ORD":

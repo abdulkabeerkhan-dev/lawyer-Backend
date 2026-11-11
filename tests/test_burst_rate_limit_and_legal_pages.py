@@ -2,6 +2,7 @@ import unittest
 import os
 import sys
 import time
+from collections import deque
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
@@ -37,6 +38,22 @@ class TestBurstRateLimitAndLegalPages(unittest.TestCase):
         self.assertIn('Retry-After', ctx.exception.headers)
         self.assertIn('Burst rate limit exceeded', ctx.exception.detail)
 
+    def test_query_burst_limit_returns_frontend_readable_error(self):
+        uid = "query_burst_frontend_error_test"
+        with _BURST_RATE_LIMIT_LOCK:
+            _BURST_RATE_LIMIT_STORE[uid] = deque([time.time()] * main.BURST_MAX_REQUESTS)
+        app.dependency_overrides[main.verify_clerk_session] = lambda: uid
+        try:
+            response = self.client.post("/query", json={"query_text": "Explain Section 9 CPC"})
+        finally:
+            app.dependency_overrides.pop(main.verify_clerk_session, None)
+            with _BURST_RATE_LIMIT_LOCK:
+                _BURST_RATE_LIMIT_STORE.pop(uid, None)
+
+        self.assertEqual(response.status_code, 429)
+        self.assertIn("Burst rate limit exceeded", response.json()["error"])
+        self.assertIn("Retry-After", response.headers)
+
     def test_burst_rate_limit_mock_user_exempt(self):
         uid = 'mock_clerk_user_id_dev_run'
         for _ in range(15):
@@ -58,7 +75,8 @@ class TestBurstRateLimitAndLegalPages(unittest.TestCase):
         self.assertIn('searxng_and_upstream_search', flows)
         self.assertIn('leave private infrastructure', flows['searxng_and_upstream_search'])
         self.assertIn('anthropic', flows)
-        self.assertIn('Zero Data Retention is subject to verified enterprise agreement', flows['anthropic'])
+        self.assertIn('to be confirmed by owner', flows['anthropic'])
+        self.assertIn('provider enterprise terms', flows['anthropic'])
 
     def test_terms_endpoint_public(self):
         res = self.client.get('/terms')

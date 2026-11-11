@@ -20,7 +20,7 @@ def test_ni_act_138_query_planning():
     plan = create_deterministic_fallback_plan(q)
     assert len(plan.premise_corrections) >= 1
     # Provisions must route to Pakistani law
-    assert any("489-F" in p for p in plan.provisions)
+    assert "PPC_1860_SEC_489F" in plan.provisions
     assert not any("138" in p for p in plan.provisions)
     # Search lanes must route to 489-F
     assert any("489-F" in l.get("query", "") for l in plan.search_lanes)
@@ -39,7 +39,9 @@ def test_ipc_420_query_planning():
 
     plan = create_deterministic_fallback_plan(q)
     assert len(plan.premise_corrections) >= 1
-    assert any("420 PPC" in p for p in plan.provisions)
+    assert "PPC_1860_SEC_420" in plan.provisions
+    assert plan.primary_domain == "criminal"
+    assert not any(p in plan.provisions for p in ["CPC_1908_SEC_9", "CPC_1908_SEC_151"])
     assert not any("Indian" in p or "IPC" in p for p in plan.provisions)
 
 
@@ -51,6 +53,11 @@ def test_cpc_order_xxxix_rule_2a_planning():
     assert r2a_check["status"] == "EXISTS"
 
     plan = create_deterministic_fallback_plan(q)
-    assert any("Rule 2(3)" in p or "Rule 2" in p for p in plan.provisions)
-    assert any("Rule 2A" in p for p in plan.provisions)
-    assert any("injunction_breach_rule_2_3" in l.get("lane", "") for l in plan.search_lanes)
+    assert "CPC_1908_ORD_XXXIX_R_2" in plan.provisions
+    breach_lanes = [
+        lane for lane in plan.search_lanes
+        if lane.get("lane") == "injunction_breach_rule_2_3"
+    ]
+    assert breach_lanes
+    assert any("Rule 2(3)" in lane.get("query", "") for lane in breach_lanes)
+    assert "CPC_1908_ORD_XXXIX_R_2A" in plan.provisions

@@ -19,6 +19,7 @@ import sqlite3
 import tempfile
 import threading
 import logging
+import uuid
 from datetime import datetime, timezone
 from typing import Dict, Any, Optional
 
@@ -28,24 +29,69 @@ _IN_FLIGHT_JOBS_CACHE: Dict[str, Dict[str, Any]] = {}
 _IN_FLIGHT_JOBS_LOCK = threading.Lock()
 _LOCAL_JOBS_DB_PATH = os.path.join(tempfile.gettempdir(), "section_jobs_cache.db")
 _QUERY_JOBS_TABLE_EXISTS: Optional[bool] = None
+WORKER_INSTANCE_ID = str(uuid.uuid4())
 
 _REGISTERED_JOBS_STORE: Optional[Dict[str, Any]] = None
 _REGISTERED_SUPABASE_CLIENT: Any = None
 
 
+def _parse_utc_timestamp(value: Any) -> Optional[datetime]:
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        return parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def _job_is_stale(record: Dict[str, Any], now: Optional[datetime] = None) -> bool:
+    updated_at = _parse_utc_timestamp(record.get("updated_at"))
+    if updated_at is None:
+        return False
+    try:
+        timeout_seconds = float(os.environ.get("LEGAL_AI_PIPELINE_TIMEOUT", "100"))
+    except ValueError:
+        logger.warning("Invalid LEGAL_AI_PIPELINE_TIMEOUT; using 100 seconds for job staleness.")
+        timeout_seconds = 100
+    stale_after = max(180.0, timeout_seconds + 60.0)
+    current_time = now or datetime.now(timezone.utc)
+    return (current_time - updated_at).total_seconds() > stale_after
+
+
+def _timestamp_key(value: Any) -> datetime:
+    return _parse_utc_timestamp(value) or datetime.min.replace(tzinfo=timezone.utc)
+
+
 def _has_valid_final_result(payload: Any) -> bool:
-    """Returns True only when a terminal result payload carries usable content."""
+    """Returns True only when a terminal result payload carries usable answer content.
+
+    Metadata-only payloads (e.g. a dict with precedent lists or verification flags but no
+    actual textual answer) must not be treated as a valid final result.
+    """
     if payload is None:
         return False
     if isinstance(payload, str):
-        return bool(payload.strip())
+        normalized = payload.strip().casefold()
+        return bool(normalized) and normalized != "headnote_only"
     if isinstance(payload, dict):
-        if payload.get("result") is not None:
-            return _has_valid_final_result(payload.get("result"))
-        for key in ("answer", "response", "model_answer", "text", "content"):
+        for key in (
+            "answer",
+            "response",
+            "model_answer",
+            "final_answer",
+            "result",
+            "text",
+            "content",
+            "memo",
+            "output",
+            "summary",
+        ):
             if key in payload and _has_valid_final_result(payload.get(key)):
                 return True
-        return any(v not in (None, "", {}, []) for v in payload.values())
+        return False
     if isinstance(payload, list):
         return any(_has_valid_final_result(item) for item in payload)
     return bool(payload)
@@ -186,7 +232,9 @@ def load_in_flight_jobs(
                     "status": stat or "running",
                     "updated_at": up_at,
                     "early_display": meta.get("early_display"),
-                    "result": meta.get("result")
+                    "result": meta.get("result"),
+                    "error": meta.get("error"),
+                    "worker_instance_id": meta.get("worker_instance_id"),
                 }
     except Exception as sq_err:
         logger.debug(f"SQLite jobs cache read error: {sq_err}")
@@ -205,7 +253,11 @@ def load_in_flight_jobs(
             if res and hasattr(res, "data") and res.data:
                 for row in res.data:
                     meta = row.get("metadata") or {}
-                    if row["job_id"] not in store:
+                    job_id = row.get("job_id")
+                    if job_id and (
+                        job_id not in store
+                        or _timestamp_key(row.get("updated_at")) > _timestamp_key(store[job_id].get("updated_at"))
+                    ):
                         store[row["job_id"]] = {
                             "job_id": row.get("job_id"),
                             "user_id": row.get("user_id"),
@@ -213,7 +265,9 @@ def load_in_flight_jobs(
                             "status": row.get("status", "running"),
                             "updated_at": row.get("updated_at"),
                             "early_display": meta.get("early_display"),
-                            "result": meta.get("result")
+                            "result": meta.get("result"),
+                            "error": meta.get("error"),
+                            "worker_instance_id": meta.get("worker_instance_id"),
                         }
         except Exception as e:
             logger.debug(f"Failed to query query_jobs table: {e}")
@@ -251,6 +305,7 @@ def persist_in_flight_job_state(
             stage = "failed"
             extra = {**extra, "error": extra.get("error") or "finalization produced no payload", "result": None}
 
+    extra = {**extra, "worker_instance_id": WORKER_INSTANCE_ID}
     user_id = extra.get("user_id") if extra else None
     sanitized_metadata = {}
     if extra:
@@ -266,6 +321,8 @@ def persist_in_flight_job_state(
     # 1. Update memory cache
     with _IN_FLIGHT_JOBS_LOCK:
         rec = _IN_FLIGHT_JOBS_CACHE.get(job_id, {})
+        if not user_id:
+            user_id = rec.get("user_id")
         rec.update({
             "job_id": job_id,
             "stage": stage,
@@ -293,7 +350,9 @@ def persist_in_flight_job_state(
                 "INSERT INTO local_query_jobs (job_id, user_id, stage, status, updated_at, metadata_json) "
                 "VALUES (?, ?, ?, ?, ?, ?) "
                 "ON CONFLICT(job_id) DO UPDATE SET stage=excluded.stage, status=excluded.status, "
-                "updated_at=excluded.updated_at, metadata_json=excluded.metadata_json",
+                "updated_at=excluded.updated_at, metadata_json=excluded.metadata_json, "
+                "user_id=CASE WHEN excluded.user_id = '' THEN local_query_jobs.user_id "
+                "ELSE excluded.user_id END",
                 (job_id, user_id or "", stage, status, now_iso, meta_json_str)
             )
     except Exception as sq_err:
@@ -322,10 +381,10 @@ def reap_interrupted_jobs_on_startup(
     supabase_client: Any = None
 ) -> int:
     """
-    Startup reaper: marks any stuck running or processing jobs as interrupted.
-    When server launches, any previously in-flight jobs were abandoned by process restart.
+    Startup reaper: marks stale running or processing jobs as interrupted.
+    A fresh job may belong to a different live application worker.
     """
-    reaped_count = 0
+    reaped_job_ids = set()
     now_iso = datetime.now(timezone.utc).isoformat()
     sb = _get_supabase_client(supabase_client)
 
@@ -333,29 +392,30 @@ def reap_interrupted_jobs_on_startup(
         try:
             res = _safe_supabase_exec(
                 lambda: sb.table("query_jobs")
-                .select("job_id, status, stage")
+                .select("job_id, status, stage, updated_at")
                 .in_("status", ["running", "processing"])
                 .execute()
             )
             if res and hasattr(res, "data") and res.data:
                 for row in res.data:
                     jid = row.get("job_id")
-                    if jid:
+                    if jid and _job_is_stale(row):
                         try:
-                            _safe_supabase_exec(
-                                lambda: sb.table("query_jobs")
-                                .update({
-                                    "status": "error",
-                                    "stage": "interrupted",
-                                    "updated_at": now_iso,
-                                    "metadata": {
-                                        "error": "The research session was interrupted by a server restart. Please re-submit your query."
-                                    }
-                                })
-                                .eq("job_id", jid)
-                                .execute()
+                            update_query = sb.table("query_jobs").update({
+                                "status": "error",
+                                "stage": "interrupted",
+                                "updated_at": now_iso,
+                                "metadata": {
+                                    "error": "The research session was interrupted by a server restart. Please re-submit your query."
+                                }
+                            }).eq("job_id", jid)
+                            if row.get("updated_at"):
+                                update_query = update_query.eq("updated_at", row["updated_at"])
+                            result = _safe_supabase_exec(
+                                lambda: update_query.execute()
                             )
-                            reaped_count += 1
+                            if result is not None:
+                                reaped_job_ids.add(jid)
                         except Exception as update_err:
                             logger.debug(f"Failed to reap query_job {jid}: {update_err}")
         except Exception as e:
@@ -364,23 +424,34 @@ def reap_interrupted_jobs_on_startup(
     # Reconcile memory and SQLite cache
     with _IN_FLIGHT_JOBS_LOCK:
         for jid, rec in list(_IN_FLIGHT_JOBS_CACHE.items()):
-            if rec.get("status") in ("running", "processing"):
+            if rec.get("status") in ("running", "processing") and _job_is_stale(rec):
                 rec["status"] = "error"
                 rec["stage"] = "interrupted"
                 rec["error"] = "The research session was interrupted by a server restart. Please re-submit your query."
                 rec["updated_at"] = now_iso
+                reaped_job_ids.add(jid)
 
     try:
         with sqlite3.connect(_LOCAL_JOBS_DB_PATH) as conn:
-            conn.execute(
-                "UPDATE local_query_jobs SET status = 'error', stage = 'interrupted', updated_at = ? "
-                "WHERE status IN ('running', 'processing')",
-                (now_iso,)
-            )
+            rows = conn.execute(
+                "SELECT job_id, updated_at FROM local_query_jobs "
+                "WHERE status IN ('running', 'processing')"
+            ).fetchall()
+            stale_job_ids = [
+                jid for jid, updated_at in rows
+                if _job_is_stale({"updated_at": updated_at})
+            ]
+            for jid in stale_job_ids:
+                conn.execute(
+                    "UPDATE local_query_jobs SET status = 'error', stage = 'interrupted', updated_at = ? "
+                    "WHERE job_id = ? AND status IN ('running', 'processing')",
+                    (now_iso, jid)
+                )
+                reaped_job_ids.add(jid)
     except Exception as sq_err:
         logger.debug(f"SQLite jobs cache reaper error: {sq_err}")
 
-    if reaped_count > 0:
-        print(f"🧹 [STARTUP REAPER] Cleaned up {reaped_count} abandoned in-flight query jobs.", flush=True)
+    if reaped_job_ids:
+        print(f"🧹 [STARTUP REAPER] Cleaned up {len(reaped_job_ids)} abandoned in-flight query jobs.", flush=True)
 
-    return reaped_count
+    return len(reaped_job_ids)

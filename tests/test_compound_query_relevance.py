@@ -81,7 +81,7 @@ class TestCompoundQueryRelevance(unittest.TestCase):
         # Confirm verbatim text of Section 489-F PPC is injected
         self.assertIn("Section 489-F", block)
         self.assertIn("dishonestly issues a cheque", block)
-        self.assertIn("re-payment of a loan or fulfilment of an obligation", block)
+        self.assertIn("towards repayment of a loan or fulfillment of an obligation", block)
         self.assertNotIn("[NOT_RETRIEVED]", block.split("Section 489-F")[1].split("---")[0])
 
     def test_candidate_quality_filter_preserves_both_rent_and_cheque(self):

@@ -45,7 +45,7 @@ def test_query_detection_excludes_act_years():
 
 def test_fio_s22_subsections_verified_in_stored_text():
     # Load stored FIO Section 22
-    fio_file = os.path.join(REPO_DIR, "data", "unified_statutes", "FIO_2001.json")
+    fio_file = os.path.join(REPO_DIR, "data", "statute_tables", "FIO_2001.json")
     with open(fio_file, "r", encoding="utf-8") as f:
         provisions = json.load(f)
     p22 = next(p for p in provisions if str(p.get("primary_num")) == "22")

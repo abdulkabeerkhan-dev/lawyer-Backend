@@ -3141,7 +3141,11 @@ class MemoVerifier:
 
 
 
-            if not re.match(r'^\s*[,;\(\[]?\s*(?:(?:19\d\d|20\d\d)\s+[A-Za-z]+(?:\s+[A-Za-z]+)?\s+\d+|\bcases?\b)', following, re.IGNORECASE):
+            if not re.match(
+                r'^\s*[,;\(\[]?\s*(?:(?:19\d\d|20\d\d)\s+[A-Za-z]+(?:\s+[A-Za-z]+)?\s+\d+|\bcases?\b|(?:the\s+)?(?:court|judge|bench)\s+(?:has\s+)?(?:held|ruled|observed|decided|found)\b)',
+                following,
+                re.IGNORECASE,
+            ):
 
 
 
@@ -3454,7 +3458,7 @@ class MemoVerifier:
 
 
 
-            r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z0-9]+)?(?:\(\d+\))*(?:\([a-z]\))*)(?:(?:\s*,\s*(?!and\b|or\b|the\b)|\s+of\s+(?:the\s+)?)(?:(?:the\s+)?(?:[A-Z][a-zA-Z0-9\(\)]*\s*){1,6}\b(?:Act|Ordinance|Code|Order|Rules|CPC|PPC|CrPC|FIO|FIFO|TPA|BCO)\b(?:\s*,\s*\d{4})?))?',
+            r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z0-9]+)?(?:\(\d+\))*(?:\([a-z]\))*)(?:(?:\s*,\s*(?!and\b|or\b|the\b)|\s+of\s+(?:the\s+)?)(?:Code\s+of\s+(?:Civil|Criminal)\s+Procedure|(?:the\s+)?(?:[A-Z][a-zA-Z0-9\(\)]*\s*){1,6}\b(?:Act|Ordinance|Code|Order|Rules|CPC|PPC|CrPC|FIO|FIFO|TPA|BCO)\b)(?:\s*,\s*\d{4})?)?',
 
 
 
@@ -3480,7 +3484,10 @@ class MemoVerifier:
 
             r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z]+)?)\s+(PPC|CPC|CrPC|FIO|FIFO|TPA|BCO)\b',
 
-            # 7. Act-First pattern: Partition Act 1893 Section 4, Civil Courts Ordinance 1962 Section 18
+            # 7. FIO citations containing lowercase title connectors
+            r'\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z0-9]+)?(?:\(\d+\))*(?:\([a-z]\))*)\s+of\s+(?:the\s+)?Financial\s+Institutions\s+\(Recovery\s+of\s+Finances\)\s+Ordinance(?:\s*,\s*\d{4})?',
+
+            # 8. Act-First pattern: Partition Act 1893 Section 4, Civil Courts Ordinance 1962 Section 18
             r'\b((?:West\s+Pakistan\s+)?(?:Civil\s+Courts|Partition|Specific\s+Relief|Limitation|Contract|Arbitration|Court\s+Fees|Suits\s+Valuation|Registration|Stamp|Muslim\s+Family\s+Laws|Family\s+Courts|Defamation|Financial\s+Institutions)\s+(?:Act|Ordinance)(?:\s*,\s*\d{4}|\s+\d{4})?)\s+(?:Section|Sec\.?|s\.)\s*(\d+[A-Za-z]?(?:-[A-Za-z0-9]+)?(?:\(\d+\))*(?:\([a-z]\))*)'
 
 
@@ -5423,6 +5430,25 @@ def verify_pleading_citations_and_quotes(pleading_text: str, extra_citations: Op
 
 
     pleading_failures = [f for f in res["failures"] if f.get("rule") in ("(a)", "(b)", "(c)", "(d)")]
+    reported_unverified_spans = {
+        f.get("span")
+        for f in pleading_failures
+        if f.get("category") == "CITED_PROVISION_NOT_IN_VERIFIED_STORE"
+    }
+    for notice in res.get("disputed_notices", []):
+        if not notice.get("unverified"):
+            continue
+        span = notice.get("span") or notice.get("provision")
+        if not span or span in reported_unverified_spans:
+            continue
+        pleading_failures.append({
+            "rule": "(d)",
+            "category": "CITED_PROVISION_NOT_IN_VERIFIED_STORE",
+            "label": notice.get("label") or LABEL_CITED_PROVISION_NOT_IN_VERIFIED_STORE,
+            "issue": notice.get("issue") or f"{LABEL_CITED_PROVISION_NOT_IN_VERIFIED_STORE}: '{span}'",
+            "span": span,
+        })
+        reported_unverified_spans.add(span)
 
     norm_extras = set()
     if extra_citations:
@@ -5640,4 +5666,3 @@ def omit_unverified_blockquotes(memo_text: str, failures: List[Dict[str, Any]]) 
 
 
     return "".join(new_lines)
-

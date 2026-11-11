@@ -769,7 +769,16 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         )
         and not (is_rent or is_banking or is_family or is_service or is_corporate or is_land_revenue or is_civil_execution)
     )
-    is_adverse_possession = any(k in q_low for k in ["adverse possession", "hostile possession", "ouster", "extinguishment of title"]) or ("section 28" in q_low and "limitation" in q_low) or ("article 144" in q_low and "limitation" in q_low) or ("article 149" in q_low and "limitation" in q_low)
+    is_adverse_possession = (
+        any(k in q_low for k in ["adverse possession", "hostile possession", "extinguishment of title"])
+        or (
+            "ouster" in q_low
+            and any(k in q_low for k in ["possession", "co-sharer", "co-owner", "coowner", "title"])
+        )
+        or ("section 28" in q_low and "limitation" in q_low)
+        or ("article 144" in q_low and "limitation" in q_low)
+        or ("article 149" in q_low and "limitation" in q_low)
+    )
     is_money_recovery = (
         any(k in q_low for k in ["recovery of money", "money suit", "suit for money", "debt", "loan", "price of goods", "suit for recovery"])
         and not is_rent
@@ -932,6 +941,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         legacy_matter_type.append("rent")
         if any(k in q_low for k in ["cheque", "bounced", "dishonour", "489"]):
             secondary_domains = ["criminal", "civil"]
+            legacy_matter_type.append("criminal")
             is_cross_domain_relevant = True
             cross_domain_reason = "Concurrent civil eviction under PRPA 2009 and criminal prosecution under Section 489-F PPC for bounced rent cheques."
             allowed_domains_filter = ["rent", "criminal", "civil"]
@@ -941,6 +951,8 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             allowed_domains_filter = ["rent", "civil"]
         procedural_remedy = "Application for Eviction under Section 15 PRPA 2009"
         competent_forum = "Special Judge (Rent) / Rent Tribunal"
+        if any(k in q_low for k in ["cheque", "bounced", "dishonour", "489"]):
+            competent_forum += " / Magistrate First Class for Section 489-F PPC"
 
     elif is_commercial_crime:
         primary_domain = "criminal"
@@ -1053,6 +1065,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         legacy_matter_type.append("rent")
         if any(k in q_low for k in ["cheque", "bounced", "489"]):
             secondary_domains = ["criminal", "civil"]
+            legacy_matter_type.append("criminal")
             is_cross_domain_relevant = True
             cross_domain_reason = "Concurrent civil eviction under PRPA 2009 and criminal prosecution under Section 489-F PPC for bounced rent cheques."
             allowed_domains_filter = ["rent", "criminal", "civil"]
@@ -1062,6 +1075,8 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             allowed_domains_filter = ["rent", "civil"]
         procedural_remedy = "Application for Eviction under Section 15 PRPA 2009"
         competent_forum = "Special Judge (Rent) / Rent Tribunal"
+        if any(k in q_low for k in ["cheque", "bounced", "489"]):
+            competent_forum += " / Magistrate First Class for Section 489-F PPC"
 
     elif is_banking:
         primary_domain = "banking"
@@ -1091,7 +1106,11 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         procedural_remedy = "Company Petition under Section 286 Companies Act 2017"
         competent_forum = "Special Court / High Court Company Bench"
 
-    elif not is_civil_execution and (is_bail or any(k in q_low for k in ["fir", "arrest", "accused", "police", "custody", "murder", "302", "ppc", "crpc"])):
+    elif not is_civil_execution and (
+        is_bail
+        or any(k in q_low for k in ["fir", "arrest", "accused", "police", "custody", "murder", "302", "ppc", "crpc"])
+        or re.search(r"\b(?:indian penal code|i\.?p\.?c\.?)\b", q_low)
+    ):
         primary_domain = "criminal"
         if "pre-arrest" in q_low or "pre arrest" in q_low or "anticipatory bail" in q_low:
             subdomains = ["bail", "pre_arrest_bail"]
@@ -1264,28 +1283,9 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     try:
         from core.statute_currency import detect_statutory_provisions_in_query
         detected_cids = detect_statutory_provisions_in_query(query)
-        for cid, act_c in detected_cids:
-            m_sec = re.search(r'SEC_([0-9]+[A-Za-z]*)', cid)
-            sec_n = m_sec.group(1) if m_sec else ""
-            act_disp = act_c.replace('_', ' ')
-            if "FIO" in act_c:
-                act_disp = "Financial Institutions (Recovery of Finances) Ordinance 2001"
-            elif "NI_ACT" in act_c:
-                act_disp = "Negotiable Instruments Act, 1881"
-            elif "CRPC" in act_c:
-                act_disp = "CrPC"
-            elif "PPC" in act_c:
-                act_disp = "PPC"
-            elif "CPC" in act_c:
-                act_disp = "CPC"
-            elif "SRA" in act_c:
-                act_disp = "Specific Relief Act, 1877"
-            elif "TPA" in act_c:
-                act_disp = "Transfer of Property Act, 1882"
-
-            p_label = f"Section {sec_n} {act_disp}".strip() if sec_n else cid
-            if p_label not in provisions:
-                provisions.append(p_label)
+        for cid, _act_code in detected_cids:
+            if cid not in provisions:
+                provisions.append(cid)
     except Exception:
         pass
 
@@ -1484,9 +1484,24 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             q_stat = str(check.get("queried_statute") or "")
             q_prov = str(check.get("queried_provision") or "")
             clean_sec = re.sub(r'[^0-9a-z]', '', q_prov.lower())
+            is_foreign_ni_138 = (
+                "138" in q_prov
+                and ("ni" in q_stat.lower() or "negotiable" in q_stat.lower())
+            )
             provisions = [
                 p for p in provisions
-                if not (q_prov.lower() == p.lower() or (clean_sec and clean_sec in re.sub(r'[^0-9a-z]', '', p.lower()) and any(k in p.lower() for k in ["ni", "negotiable", "ipc", "indian"])))
+                if not (
+                    q_prov.lower() == p.lower()
+                    or (
+                        clean_sec
+                        and clean_sec in re.sub(r'[^0-9a-z]', '', p.lower())
+                        and any(k in p.lower() for k in ["ni", "negotiable", "ipc", "indian"])
+                    )
+                    or (
+                        is_foreign_ni_138
+                        and re.search(r"(?:_SEC_|\bsection\s*)138\b", p, re.IGNORECASE)
+                    )
+                )
             ]
             if "138" in q_prov and ("ni" in q_stat.lower() or "negotiable" in q_stat.lower() or "cheque" in q_low or "bounced" in q_low):
                 if not any("489-f" in p.lower() for p in provisions):
@@ -2156,17 +2171,17 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
                 if primary_domain not in ALL_LEGAL_DOMAINS:
                     primary_domain = fallback.primary_domain
 
-                # Validation Gate: Ensure all provisions strictly align with primary_domain
-                provisions = filter_provisions_by_domain(provisions, primary_domain, secondary_domains=secondary_domains, is_cross_domain_relevant=is_cross_domain)
-                if not provisions:
-                    provisions = filter_provisions_by_domain(fallback.statutory_provisions, primary_domain, secondary_domains=secondary_domains, is_cross_domain_relevant=is_cross_domain)
-
                 secondary_domains = data.get("secondary_domains") or fallback.secondary_domains
                 subdomains = data.get("subdomains") or fallback.subdomains
                 allowed_domains_filter = data.get("allowed_domains_filter") or fallback.allowed_domains_filter
                 is_cross_domain = data.get("is_cross_domain_relevant", fallback.is_cross_domain_relevant)
                 cross_reason = data.get("cross_domain_reason") or fallback.cross_domain_reason
                 is_ambig = data.get("is_ambiguous", fallback.is_ambiguous)
+
+                # Validation Gate: Ensure all provisions strictly align with primary_domain
+                provisions = filter_provisions_by_domain(provisions, primary_domain, secondary_domains=secondary_domains, is_cross_domain_relevant=is_cross_domain)
+                if not provisions:
+                    provisions = filter_provisions_by_domain(fallback.statutory_provisions, primary_domain, secondary_domains=secondary_domains, is_cross_domain_relevant=is_cross_domain)
 
                 plan = StructuredLegalQueryPlan(
                     query_text=query,

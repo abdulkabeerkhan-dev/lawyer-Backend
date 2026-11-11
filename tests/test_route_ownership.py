@@ -38,8 +38,9 @@ def make_mock_request(headers_dict=None, client_host="127.0.0.1"):
 
 # --- 1. PROXY IP EXTRACTION TESTS ---
 
-def test_get_real_client_ip_cloudflare():
-    """Extracts genuine client IP from CF-Connecting-IP."""
+def test_get_real_client_ip_cloudflare_when_proxy_is_trusted(monkeypatch):
+    """Uses CF-Connecting-IP only when Cloudflare is explicitly trusted."""
+    monkeypatch.setenv("TRUST_CLOUDFLARE_PROXY", "true")
     req = make_mock_request(
         headers_dict={"cf-connecting-ip": "203.0.113.195", "x-forwarded-for": "172.68.1.1, 10.0.0.1"},
         client_host="10.0.0.1"
@@ -48,12 +49,12 @@ def test_get_real_client_ip_cloudflare():
 
 
 def test_get_real_client_ip_x_forwarded_for():
-    """Extracts leftmost client IP from X-Forwarded-For when not behind Cloudflare."""
+    """Uses the rightmost proxy hop instead of the spoofable leftmost entry."""
     req = make_mock_request(
         headers_dict={"x-forwarded-for": "198.51.100.42, 10.10.1.5, 10.10.1.1"},
         client_host="10.10.1.1"
     )
-    assert get_real_client_ip(req) == "198.51.100.42"
+    assert get_real_client_ip(req) == "10.10.1.1"
 
 
 def test_get_real_client_ip_envoy():

@@ -36,7 +36,7 @@ def test_civil_partition_preliminary_decree():
     assert "partition" in plan.subdomains
     assert plan.allowed_domains_filter == ["civil"]
     assert plan.is_cross_domain_relevant is False
-    assert any("order xx rule 18" in p.lower() for p in plan.statutory_provisions)
+    assert "CPC_1908_ORD_XX_R_18" in plan.statutory_provisions
     assert any("partition act" in s.lower() for s in plan.governing_statutes)
 
 
@@ -64,7 +64,7 @@ def test_civil_partition_local_commission():
 
     assert plan.primary_domain == "civil"
     assert plan.allowed_domains_filter == ["civil"]
-    assert any("order xxvi rule 13" in p.lower() for p in plan.statutory_provisions)
+    assert "CPC_1908_ORD_XXVI_R_13" in plan.statutory_provisions
     assert "Civil Court / District Judge" in plan.competent_forum
 
 
@@ -75,7 +75,7 @@ def test_civil_partition_preemption_dwelling_house():
 
     assert plan.primary_domain == "civil"
     assert plan.allowed_domains_filter == ["civil"]
-    assert any("section 4 partition act" in p.lower() for p in plan.statutory_provisions)
+    assert "PARTITION_1893_SEC_4" in plan.statutory_provisions
 
 
 # ==============================================================================
@@ -103,7 +103,7 @@ def test_benami_statutory_bar_section_4():
     assert plan.primary_domain == "civil"
     assert "benami" in plan.subdomains
     assert plan.allowed_domains_filter == ["civil"]
-    assert any("section 4" in p.lower() and "benami" in p.lower() for p in plan.statutory_provisions)
+    assert "BENAMI_2017_SEC_4" in plan.statutory_provisions
     # Must flag statutory bar correction
     corrections = [pc for pc in plan.premise_corrections if "benami" in str(pc.get("queried_statute", "")).lower()]
     assert len(corrections) >= 1
@@ -185,7 +185,7 @@ def test_cheque_dishonour_section_489f_cross_domain():
     assert plan.is_cross_domain_relevant is True
     assert "criminal" in plan.allowed_domains_filter
     assert "civil" in plan.allowed_domains_filter
-    assert any("489-f" in p.lower() for p in plan.statutory_provisions)
+    assert "PPC_1860_SEC_489F" in plan.statutory_provisions
 
 
 # ==============================================================================
@@ -197,13 +197,14 @@ def test_constitutional_service_tribunal_article_212():
     q = "Ouster of High Court jurisdiction under Article 212 of Constitution in terms and conditions of civil servants Service Tribunal exclusive forum"
     plan = create_deterministic_fallback_plan(q)
 
-    assert plan.primary_domain == "constitutional"
-    assert "service" in plan.secondary_domains
+    assert plan.primary_domain == "service"
+    assert "constitutional" in plan.secondary_domains
     assert plan.is_cross_domain_relevant is True
-    assert "constitutional" in plan.allowed_domains_filter
     assert "service" in plan.allowed_domains_filter
+    assert "constitutional" in plan.allowed_domains_filter
     assert plan.employee_status_branching is not None
     assert any("212" in p for p in plan.statutory_provisions)
+    assert not any(p.startswith("LIMITATION_1908_") for p in plan.statutory_provisions)
     assert any("Service Tribunals Act" in s for s in plan.governing_statutes)
 
 
@@ -242,7 +243,7 @@ def test_family_child_maintenance_father_obligation():
     assert plan.primary_domain == "family"
     assert "maintenance" in plan.subdomains
     assert plan.allowed_domains_filter == ["family"]
-    assert any("section 9" in p.lower() and "muslim family laws" in p.lower() for p in plan.statutory_provisions)
+    assert "MFLO_1961_SEC_9" in plan.statutory_provisions
 
 
 def test_family_custody_welfare_of_minor():
@@ -281,7 +282,7 @@ def test_rent_eviction_leave_to_defend_prpa():
     assert "eviction" in plan.subdomains
     assert "rent" in plan.allowed_domains_filter
     assert "criminal" not in plan.allowed_domains_filter
-    assert any("section 15" in p.lower() or "section 22" in p.lower() for p in plan.statutory_provisions)
+    assert any(p in plan.statutory_provisions for p in ["PRPA_2009_SEC_15", "PRPA_2009_SEC_22"])
     assert "Special Judge (Rent) / Rent Tribunal" in plan.competent_forum
 
 
@@ -309,7 +310,7 @@ def test_banking_recovery_appeal_deposit_fio():
     assert plan.primary_domain == "banking"
     assert "banking" in plan.allowed_domains_filter
     assert "criminal" not in plan.allowed_domains_filter
-    assert any("section 22" in p.lower() and "financial institutions" in p.lower() for p in plan.statutory_provisions)
+    assert "FIO_2001_SEC_22" in plan.statutory_provisions
     assert "Banking Court" in plan.competent_forum
 
 
@@ -325,7 +326,7 @@ def test_corporate_oppression_section_286():
     assert plan.primary_domain == "corporate"
     assert "corporate" in plan.allowed_domains_filter
     assert "criminal" not in plan.allowed_domains_filter
-    assert any("section 286" in p.lower() for p in plan.statutory_provisions)
+    assert "COMPANIES_2017_SEC_286" in plan.statutory_provisions
 
 
 def test_corporate_director_misappropriation_crime_cross_domain():
@@ -351,7 +352,7 @@ def test_civil_section_12_2_fraud_decree():
 
     assert plan.primary_domain == "civil"
     assert plan.allowed_domains_filter == ["civil"]
-    assert any("12(2)" in p for p in plan.statutory_provisions)
+    assert "CPC_1908_SEC_12_2" in plan.statutory_provisions
 
 
 def test_civil_order_xxi_execution_objection():
@@ -361,7 +362,7 @@ def test_civil_order_xxi_execution_objection():
 
     assert plan.primary_domain == "civil"
     assert plan.allowed_domains_filter == ["civil"]
-    assert any("order xxi rule 97" in p.lower() for p in plan.statutory_provisions)
+    assert "CPC_1908_ORD_XXI_R_97" in plan.statutory_provisions
 
 
 # ==============================================================================

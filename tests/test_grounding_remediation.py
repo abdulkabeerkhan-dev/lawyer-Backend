@@ -39,7 +39,8 @@ def test_acceptance_query_1_bounced_cheque_ni_138():
     assert any("Section 489-F" in c.get("mandatory_opening_thesis", "") for c in corrections)
 
     plan = create_deterministic_fallback_plan(query)
-    assert "Section 489-F PPC" in plan.provisions
+    assert "PPC_1860_SEC_489F" in plan.provisions
+    assert not any("138" in p for p in plan.provisions)
     assert "Section 138" not in [p for p in plan.provisions if "NI" in p]
     assert any("cheque" in l["lane"] or "cheque" in l["query"] for l in plan.search_lanes)
 
@@ -95,7 +96,9 @@ def test_acceptance_query_2_cheating_ipc_420():
     assert any("Pakistan Penal Code" in c.get("mandatory_opening_thesis", "") or "PPC" in c.get("mandatory_opening_thesis", "") for c in corrections)
 
     plan = create_deterministic_fallback_plan(query)
-    assert "Section 420 PPC" in plan.provisions
+    assert "PPC_1860_SEC_420" in plan.provisions
+    assert plan.primary_domain == "criminal"
+    assert not any(p in plan.provisions for p in ["CPC_1908_SEC_9", "CPC_1908_SEC_151"])
 
     # Step 2: Schedule II verification from verified database
     sched2 = get_crpc_schedule_ii("420")
@@ -144,12 +147,19 @@ def test_acceptance_query_3_injunction_breach_order_39_rule_2a():
 
     # Step 2: Planner identifies both Rule 2A and Rule 2(3) CPC
     plan = create_deterministic_fallback_plan(query)
-    assert any("Order XXXIX Rule 2" in p or "Rule 2" in p for p in plan.provisions)
+    assert "CPC_1908_ORD_XXXIX_R_2" in plan.provisions
+    assert any(
+        lane.get("lane") == "injunction_breach_rule_2_3"
+        and "Rule 2(3)" in lane.get("query", "")
+        for lane in plan.search_lanes
+    )
 
     # Step 3: Statutory injector provides bare act text of Rule 2(3)
     injected_result = inject_statutory_framework(plan, query_text=query)
     statute_block = injected_result["statute_block"]
     assert "Rule 2" in statute_block
+    assert "disobedience" in statute_block.lower()
+    assert "detained in [...] prison" in statute_block.lower()
 
     # Step 4: Claim verifier routes Rule 2A assertions to Rule 2(3) (2006 YLR 2758)
     memo_with_rule_2a_claim = (

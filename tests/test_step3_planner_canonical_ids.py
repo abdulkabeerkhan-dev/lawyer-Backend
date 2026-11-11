@@ -31,10 +31,24 @@ from core.legal_query_planner import (
 )
 from core.legal_issue_extractor import extract_legal_issues_from_fact_pattern
 from core.unified_statute_store import get_unified_statute_store
+from core.evidence_pipeline import normalize_provision_string_to_canonical_id
 
 # Ensure Turso network checks are skipped for instantaneous test execution
 os.environ["SKIP_TURSO_DRIFT_CHECK"] = "1"
 CANONICAL_ID_REGEX = re.compile(r'^[A-Z0-9_]+_(?:SEC|ART|ORD|RULE)_[0-9A-Z_()]+$')
+
+
+@pytest.mark.parametrize(
+    ("reference", "expected"),
+    [
+        ("Section 12(2) CPC", "CPC_1908_SEC_12_2"),
+        ("Article 199(1) Constitution", "CONST_1973_ART_199_1"),
+        ("Section 22-A(6)(a) CrPC", "CRPC_1898_SEC_22A_6"),
+        ("12(2) CPC", "CPC_1908_SEC_12_2"),
+    ],
+)
+def test_normalizer_preserves_nested_provision_numbers(reference, expected):
+    assert normalize_provision_string_to_canonical_id(reference) == expected
 
 
 def test_planner_prompt_has_canonical_mandate_and_lookup():
@@ -207,6 +221,7 @@ def test_gate_query4_criminal_canonical_ids():
 
 
 @pytest.mark.anyio
+@pytest.mark.parametrize("anyio_backend", ["asyncio"])
 async def test_llm_planner_response_validation_and_hallucination_filter():
     """
     Simulates LLM response containing valid canonical IDs and a hallucinated provision (e.g. Section 138 NIA).

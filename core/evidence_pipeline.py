@@ -131,9 +131,22 @@ def normalize_provision_string_to_canonical_id(s: str) -> Optional[str]:
     is_ord = bool(re.search(r'\b(?:order|ord)\b', s_str, re.I))
     unit = "ART" if is_art else ("ORD" if is_ord else "SEC")
 
-    m_num = re.search(r'(?:section|sec\.?|article|art\.?|order|ord\.?|s\.)\s*([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z])?)', s_str, re.I)
+    m_num = re.search(
+        r'(?:section|sec\.?|article|art\.?|order|ord\.?|s\.)\s*'
+        r'([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z])?)'
+        r'(?:\s*\(\s*(\d+)\s*\))?'
+        r'(?:\s*\(\s*([A-Za-z])\s*\))?',
+        s_str,
+        re.I,
+    )
     if not m_num:
-        m_num = re.search(r'([0-9]+[A-Za-z]?(?:-[A-Za-z])?)', s_str)
+        m_num = re.search(
+            r'([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z])?)'
+            r'(?:\s*\(\s*(\d+)\s*\))?'
+            r'(?:\s*\(\s*([A-Za-z])\s*\))?',
+            s_str,
+            re.I,
+        )
     if not m_num:
         return None
 
@@ -147,7 +160,23 @@ def normalize_provision_string_to_canonical_id(s: str) -> Optional[str]:
         num_str = str(roman_map[num_str])
 
     if act_code:
-        return f"{act_code}_{unit}_{num_str}"
+        canonical_id = f"{act_code}_{unit}_{num_str}"
+        if m_num.group(2):
+            canonical_id += f"_{m_num.group(2)}"
+        if m_num.group(3):
+            canonical_id += f"_{m_num.group(3).upper()}"
+        if m_num.group(2) or m_num.group(3):
+            store = get_unified_statute_store()
+            if store.get_by_canonical_id(canonical_id):
+                return canonical_id
+            if m_num.group(3):
+                subsection_id = f"{act_code}_{unit}_{num_str}_{m_num.group(2)}"
+                if store.get_by_canonical_id(subsection_id):
+                    return subsection_id
+            primary_id = f"{act_code}_{unit}_{num_str}"
+            if store.get_by_canonical_id(primary_id):
+                return primary_id
+        return canonical_id
     return None
 
 

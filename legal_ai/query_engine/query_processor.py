@@ -1159,16 +1159,32 @@ def resolve_ranking_pool_post_gate(
 
 
 def _has_contentful_final_result(payload: Any) -> bool:
-    """Return True only when the final answer payload contains usable response text."""
+    """Return True only when the final payload contains actual answer text.
+
+    A payload with cases, citations, and verification metadata is not a valid terminal
+    result unless it also contains real textual answer content.
+    """
     if payload is None:
         return False
     if isinstance(payload, str):
-        return bool(payload.strip())
+        normalized = payload.strip().casefold()
+        return bool(normalized) and normalized != "headnote_only"
     if isinstance(payload, dict):
-        for key in ("answer", "response", "model_answer", "result", "text", "content"):
+        for key in (
+            "answer",
+            "response",
+            "model_answer",
+            "final_answer",
+            "result",
+            "text",
+            "content",
+            "memo",
+            "output",
+            "summary",
+        ):
             if key in payload and _has_contentful_final_result(payload.get(key)):
                 return True
-        return any(v not in (None, "", {}, []) for v in payload.values())
+        return False
     if isinstance(payload, list):
         return any(_has_contentful_final_result(item) for item in payload)
     return bool(payload)
@@ -6250,7 +6266,7 @@ async def process_query_job_legal_ai(
 
 
 
-        jobs_store[job_id].update({
+            jobs_store[job_id].update({
 
 
 
@@ -6515,16 +6531,18 @@ async def process_query_job_legal_ai(
 
             }
 
-
-
-
-
-
-
-        })
+            })
+            from core.in_flight_jobs import persist_in_flight_job_state
+            persist_in_flight_job_state(
+                job_id,
+                "done",
+                "done",
+                extra={"result": jobs_store[job_id]["result"]},
+            )
         else:
             jobs_store[job_id].update({
                 "status": "failed",
+                "stage": "failed",
                 "result": None,
                 "error": "finalization produced no payload",
                 "completed_at": datetime.now(timezone.utc),
@@ -6534,9 +6552,5 @@ async def process_query_job_legal_ai(
                 persist_in_flight_job_state(job_id, "failed", "failed", extra={"result": None, "error": "finalization produced no payload"})
             except Exception as _p_err:
                 logger.debug(f"Persistence error: {_p_err}")
-
-
-
-
 
 
