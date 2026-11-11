@@ -2079,7 +2079,7 @@ class MemoVerifier:
 
                 from legal_ai.retrieval.bm25_search import get_bm25_index_instance
                 idx = get_bm25_index_instance()
-                if idx is None:
+                if idx is None or not getattr(idx, "doc_metadata", None):
                     from hybrid_search import BM25Index
                     idx = BM25Index.load(BM25_PATH)
 

@@ -31,8 +31,14 @@ def get_bm25_index_instance() -> Any:
     Reuses main.global_bm25_index if already loaded to eliminate duplicate RAM usage.
     """
     global _GLOBAL_BM25_INSTANCE
+    from legal_ai.retrieval.turso_fts_index import wrap_keyword_index
+
     if os.environ.get("RENDER") or os.environ.get("DISABLE_IN_MEMORY_BM25", "").lower() in ("true", "1", "yes"):
-        return None
+        # No in-memory pickle on low-memory hosts; keyword search runs on Turso FTS.
+        with _BM25_LOCK:
+            if _GLOBAL_BM25_INSTANCE is None:
+                _GLOBAL_BM25_INSTANCE = wrap_keyword_index(None)
+        return _GLOBAL_BM25_INSTANCE
 
     if _GLOBAL_BM25_INSTANCE is not None:
         return _GLOBAL_BM25_INSTANCE
@@ -53,7 +59,7 @@ def get_bm25_index_instance() -> Any:
             from hybrid_search import BM25Index
             idx_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "bm25_index.pkl")
             if os.path.exists(idx_path):
-                _GLOBAL_BM25_INSTANCE = BM25Index.load(idx_path)
+                _GLOBAL_BM25_INSTANCE = wrap_keyword_index(BM25Index.load(idx_path))
                 gc.collect()
         except Exception as err:
             print(f"⚠️ [BM25Search] Error loading BM25 index: {err}", file=sys.stderr)

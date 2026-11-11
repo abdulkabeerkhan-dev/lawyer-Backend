@@ -461,11 +461,23 @@ def root_info():
 
 def health_check():
 
+    # Always 200 so the platform does not restart-loop on a provider outage;
+    # "degraded" + per-provider detail tell operators retrieval is impaired.
+    pinecone_status = probe_pinecone()
+    keyword_index = get_global_bm25_index()
+
     return {
 
-        "status": "ok",
+        "status": "ok" if pinecone_status.get("ok") else "degraded",
 
         "healthy": True,
+
+        "degraded": not pinecone_status.get("ok"),
+
+        "retrieval": {
+            "pinecone": pinecone_status,
+            "keyword_search": type(keyword_index).__name__ if keyword_index is not None else "disabled",
+        },
 
         "job_state_storage": (
             "shared_database" if check_query_jobs_table_exists() else "worker_local_fallback"
@@ -1005,6 +1017,51 @@ if PINECONE_API_KEY:
         print(f"[WARN] Pinecone startup warning: {launch_err}", file=sys.stderr, flush=True)
 
 
+# Creating the client never validates the key, and retrieval code turns every
+# Pinecone error into an empty result list. Without an explicit probe, an invalid
+# key makes the app look healthy while dense retrieval silently returns nothing.
+_PINECONE_PROBE_CACHE: Dict[str, Any] = {"checked_at": 0.0, "result": None}
+_PINECONE_PROBE_TTL_S = 60.0
+
+
+def probe_pinecone(force: bool = False) -> Dict[str, Any]:
+    now = time.time()
+    cached = _PINECONE_PROBE_CACHE.get("result")
+    if cached is not None and not force and now - _PINECONE_PROBE_CACHE["checked_at"] < _PINECONE_PROBE_TTL_S:
+        return cached
+    if not PINECONE_API_KEY:
+        result = {"ok": False, "error": "PINECONE_API_KEY not set"}
+    elif pinecone_index is None:
+        result = {"ok": False, "error": "Pinecone index client failed to initialise"}
+    else:
+        try:
+            stats = pinecone_index.describe_index_stats()
+            namespaces = getattr(stats, "namespaces", None) or (stats.get("namespaces") if isinstance(stats, dict) else {}) or {}
+            ns = namespaces.get(PINECONE_NAMESPACE) if hasattr(namespaces, "get") else None
+            ns_count = getattr(ns, "vector_count", None) if ns is not None else None
+            if ns_count is None and isinstance(ns, dict):
+                ns_count = ns.get("vector_count")
+            result = {"ok": bool(ns_count), "namespace": PINECONE_NAMESPACE, "namespace_vectors": ns_count}
+            if not ns_count:
+                result["error"] = f"namespace '{PINECONE_NAMESPACE}' is empty or missing"
+        except Exception as probe_err:
+            result = {"ok": False, "error": f"{type(probe_err).__name__}: {str(probe_err)[:300]}"}
+    _PINECONE_PROBE_CACHE.update(checked_at=now, result=result)
+    return result
+
+
+_startup_probe = (
+    {"ok": True, "skipped": True} if "pytest" in sys.modules or os.environ.get("SKIP_PINECONE_STARTUP_PROBE")
+    else probe_pinecone(force=True)
+)
+if _startup_probe.get("skipped"):
+    pass
+elif _startup_probe.get("ok"):
+    print(f"[Pinecone] OK: namespace '{PINECONE_NAMESPACE}' has {_startup_probe.get('namespace_vectors'):,} vectors.", flush=True)
+else:
+    print(f"[ERROR] Pinecone NOT usable, dense retrieval will return nothing: {_startup_probe.get('error')}", file=sys.stderr, flush=True)
+
+
 
 # INITIALIZE HYBRID SEARCH ENGINE & BM25 INDEX
 
@@ -1016,9 +1073,14 @@ def get_global_bm25_index() -> Optional[BM25Index]:
 
     global global_bm25_index
 
+    from legal_ai.retrieval.turso_fts_index import wrap_keyword_index
+
     if os.environ.get("RENDER") or os.environ.get("DISABLE_IN_MEMORY_BM25", "").lower() in ("true", "1", "yes"):
-        print("[BM25] Low-memory mode active (RENDER detected or DISABLE_IN_MEMORY_BM25=true). In-memory BM25 index bypassed; utilizing Pinecone vector retrieval and Turso master corpus.", flush=True)
-        return None
+        if global_bm25_index is None:
+            # No in-memory pickle; keyword search still runs on Turso FTS (no RAM cost).
+            global_bm25_index = wrap_keyword_index(None)
+            print("[BM25] Low-memory mode: in-memory BM25 bypassed; keyword search via Turso FTS.", flush=True)
+        return global_bm25_index
 
     if global_bm25_index is None:
         try:
@@ -1034,9 +1096,11 @@ def get_global_bm25_index() -> Optional[BM25Index]:
 
         try:
 
-            global_bm25_index = BM25Index.load(BM25_INDEX_FILE)
+            pickle_index = BM25Index.load(BM25_INDEX_FILE)
 
-            print(f"[BM25] Global BM25 index loaded: {global_bm25_index.corpus_size:,} chunks.", flush=True)
+            print(f"[BM25] In-memory BM25 index loaded: {pickle_index.corpus_size:,} chunks.", flush=True)
+
+            global_bm25_index = wrap_keyword_index(pickle_index)
 
             try:
                 from legal_ai.retrieval.bm25_search import set_bm25_index_instance
