@@ -235,7 +235,7 @@ class HierarchicalLegalChunker:
         if not text:
             return ""
         t = re.sub(r'<[^>]+>', ' ', text)
-        t = re.sub(r'(?i)(?:Citation Name:\s*[^\n]+|Bookmark this Case|Copyrights?\s*©?[^\n]+|Help\s+FAQ\'?s\s+Sitemap)', '', t)
+        t = re.sub(r'(?i)(?:Citation Name:\s*[^\n]+|Bookmark this Case|Copyrights?\s*©?[^\n]+|Help\s+FAQ\'?s\s+Sitemap|This site is developed\s*&?\s*maintained[^\n]*)', '', t)
         t = re.sub(r'(?i)(?:page \d+ of \d+|all rights reserved)', '', t)
         t = t.replace('\xa0', ' ')
         t = re.sub(r'[\r\t]+', ' ', t)
