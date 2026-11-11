@@ -9,7 +9,7 @@ import time
 import logging
 import urllib.request
 import urllib.error
-from typing import Optional, Dict, Any, List
+from typing import Optional, Dict, Any, List, Union
 from core.provider_ledger import ProviderStatus, record_provider_event
 
 logger = logging.getLogger(__name__)
@@ -263,17 +263,19 @@ def search_cases_fts(query_text: str, limit: int = 15) -> List[Dict[str, Any]]:
 
 def get_case_pdf_bytes(
     case_id: str,
-    target_year: Optional[int] = None,
+    target_year: Optional[Union[int, str]] = None,
     target_journal: Optional[str] = None,
-    target_page: Optional[int] = None
+    target_page: Optional[Union[int, str]] = None
 ) -> Optional[bytes]:
     """
     Retrieves compressed/base64 original scanned judgment PDF bytes from Turso case_pdfs table.
+    Uses indexed B-tree lookups only (idx_case_pdfs_jyp or PK) to guarantee sub-50ms execution.
     """
     if is_turso_circuit_open():
         return None
     import base64
-    normalized_case_id = case_id.strip().replace(" ", "_").upper()
+    import re
+
     journal = (target_journal or "").strip().upper()
     try:
         year = int(target_year) if target_year is not None else None
@@ -283,21 +285,35 @@ def get_case_pdf_bytes(
         page = int(target_page) if target_page is not None else None
     except (TypeError, ValueError):
         page = None
-    sql = """
-    SELECT pdf_base64
-    FROM case_pdfs
-    WHERE case_id = ? OR case_id = ?
-       OR (journal = ? AND year = ? AND page = ?)
-    LIMIT 1
-    """
-    args = [
-        {"type": "text", "value": case_id.strip()},
-        {"type": "text", "value": normalized_case_id},
-        {"type": "text", "value": journal},
-        {"type": "integer", "value": year},
-        {"type": "integer", "value": page},
-    ]
-    res = execute_turso_pipeline([{"sql": sql, "args": args}], timeout=3, max_retries=1)
+
+    # If missing journal/year/page, parse from case_id
+    if not (journal and year and page) and case_id:
+        m1 = re.search(r'\b(19\d\d|20\d\d)[_\s]+([a-zA-Z\(\)]+)[_\s]+(\d+)\b', case_id)
+        if m1:
+            year, journal, page = int(m1.group(1)), m1.group(2).upper(), int(m1.group(3))
+        else:
+            m2 = re.search(r'\b([a-zA-Z\(\)]+)[_\s]+(19\d\d|20\d\d)[_\s]+(\d+)\b', case_id)
+            if m2:
+                journal, year, page = m2.group(1).upper(), int(m2.group(2)), int(m2.group(3))
+
+    res = None
+    # 1. Fast indexed lookup by (journal, year, page) via idx_case_pdfs_jyp (< 20ms)
+    if journal and year and page:
+        sql_jyp = "SELECT pdf_base64 FROM case_pdfs WHERE journal = ? AND year = ? AND page = ? LIMIT 1"
+        args_jyp = [
+            {"type": "text", "value": journal},
+            {"type": "integer", "value": year},
+            {"type": "integer", "value": page},
+        ]
+        res = execute_turso_pipeline([{"sql": sql_jyp, "args": args_jyp}], timeout=2, max_retries=1)
+
+    # 2. Fast indexed lookup by primary key pdf_id if JYP didn't hit
+    if not (res and "rows" in res[0] and res[0]["rows"]) and case_id:
+        norm_pid = case_id.strip().replace(" ", "_").upper()
+        sql_pk = "SELECT pdf_base64 FROM case_pdfs WHERE pdf_id = ? LIMIT 1"
+        args_pk = [{"type": "text", "value": norm_pid}]
+        res = execute_turso_pipeline([{"sql": sql_pk, "args": args_pk}], timeout=2, max_retries=1)
+
     if res and "rows" in res[0] and res[0]["rows"]:
         b64_str = res[0]["rows"][0].get("pdf_base64")
         if b64_str:

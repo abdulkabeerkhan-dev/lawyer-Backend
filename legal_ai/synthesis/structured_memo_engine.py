@@ -306,9 +306,10 @@ def render_layer8_markdown(
     # 5. Not Found / Scope Limitations
     not_found = memo_payload.get("not_found", [])
     if not_found:
-        lines.append("### Unaddressed Points & Source Limitations")
-        for nf in not_found:
-            lines.append(f"- *Not Found:* {nf}")
+        lines.append("### Unaddressed Points & Source Limitations\n")
+        for i, nf in enumerate(not_found, 1):
+            clean_nf = re.sub(r'^(?:not\s*found\s*:\s*)+', '', str(nf).strip(), flags=re.IGNORECASE)
+            lines.append(f"{i}. {clean_nf}")
         lines.append("")
 
     # 6. Priority 3: Open Questions for Counsel (Standing 'Time as Essence' inquiry for specific performance)
