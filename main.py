@@ -463,19 +463,30 @@ def health_check():
 
     # Always 200 so the platform does not restart-loop on a provider outage;
     # "degraded" + per-provider detail tell operators retrieval is impaired.
-    pinecone_status = probe_pinecone()
+    from legal_ai.config import VECTOR_BACKEND
+    from legal_ai.retrieval.zilliz_search import probe_zilliz
+
+    vector_backend = VECTOR_BACKEND
+    if vector_backend == "zilliz":
+        vector_status = probe_zilliz()
+    else:
+        vector_status = probe_pinecone()
+
     keyword_index = get_global_bm25_index()
 
     return {
 
-        "status": "ok" if pinecone_status.get("ok") else "degraded",
+        "status": "ok" if vector_status.get("ok") else "degraded",
 
         "healthy": True,
 
-        "degraded": not pinecone_status.get("ok"),
+        "degraded": not vector_status.get("ok"),
 
         "retrieval": {
-            "pinecone": pinecone_status,
+            "backend": vector_backend,
+            "vector_status": vector_status,
+            "zilliz": probe_zilliz() if vector_backend == "zilliz" else {"status": "inactive"},
+            "pinecone": probe_pinecone() if vector_backend == "pinecone" else {"status": "inactive"},
             "keyword_search": type(keyword_index).__name__ if keyword_index is not None else "disabled",
         },
 

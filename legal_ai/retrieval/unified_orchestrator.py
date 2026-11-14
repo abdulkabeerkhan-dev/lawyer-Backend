@@ -22,7 +22,11 @@ from core.provider_ledger import (
     retrieval_lane_scope,
 )
 from legal_ai.retrieval.supabase_search import search_supabase_judgments
-from legal_ai.retrieval.pinecone_search import search_pinecone_dense
+from legal_ai.config import VECTOR_BACKEND
+if VECTOR_BACKEND == "zilliz":
+    from legal_ai.retrieval.zilliz_search import search_zilliz_hybrid as search_pinecone_dense
+else:
+    from legal_ai.retrieval.pinecone_search import search_pinecone_dense
 from legal_ai.retrieval.bm25_search import search_bm25_sparse
 from legal_ai.retrieval.external_search import search_external_judgments
 from legal_ai.ranking.court_weighting import resolve_court_and_province

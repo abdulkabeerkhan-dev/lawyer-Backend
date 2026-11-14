@@ -52,10 +52,19 @@ SUPABASE_SERVICE_KEY: Optional[str] = os.environ.get("SUPABASE_SERVICE_KEY")
 ANTHROPIC_API_KEY: Optional[str] = (os.environ.get("ANTHROPIC_API_KEY") or "").strip() or None
 ANTHROPIC_WORKSPACE_ID: Optional[str] = (os.environ.get("ANTHROPIC_WORKSPACE_ID") or "").strip() or None
 
+# --- Vector Backend Selection & Zilliz Cloud Config ---
+VECTOR_BACKEND: str = os.environ.get("VECTOR_BACKEND", "zilliz" if os.environ.get("ZILLIZ_URI") else "pinecone").lower().strip()
+ZILLIZ_URI: Optional[str] = os.environ.get("ZILLIZ_URI")
+ZILLIZ_TOKEN: Optional[str] = os.environ.get("ZILLIZ_TOKEN")
+ZILLIZ_COLLECTION: str = os.environ.get("ZILLIZ_COLLECTION", "judgments_v1")
+
 # --- Voyage AI Embedding Config ---
 VOYAGE_API_KEY: Optional[str] = os.environ.get("VOYAGE_API_KEY")
 VOYAGE_API_URL: str = "https://api.voyageai.com/v1/embeddings"
-VOYAGE_MODEL: str = "voyage-law-2"
+VOYAGE_MODEL: str = os.environ.get(
+    "VOYAGE_MODEL",
+    "voyage-4-large" if (VECTOR_BACKEND == "zilliz" or os.environ.get("ZILLIZ_URI")) else "voyage-law-2"
+)
 
 # --- CORS & Base URL ---
 ALLOWED_ORIGINS: List[str] = [
@@ -186,6 +195,21 @@ def get_pinecone_index():
         except Exception as launch_err:
             print(f"⚠️ [legal_ai.config] Pinecone init warning: {launch_err}", file=sys.stderr, flush=True)
     return _pinecone_index
+
+
+# --- Zilliz Client Management ---
+_zilliz_client = None
+
+def get_zilliz_client():
+    """Returns singleton MilvusClient instance for Zilliz Cloud."""
+    global _zilliz_client
+    if _zilliz_client is None and ZILLIZ_URI and ZILLIZ_TOKEN:
+        try:
+            from pymilvus import MilvusClient
+            _zilliz_client = MilvusClient(uri=ZILLIZ_URI, token=ZILLIZ_TOKEN)
+        except Exception as launch_err:
+            print(f"⚠️ [legal_ai.config] Zilliz init warning: {launch_err}", file=sys.stderr, flush=True)
+    return _zilliz_client
 
 
 # --- Anthropic Client Management ---
