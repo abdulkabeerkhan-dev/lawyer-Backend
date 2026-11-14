@@ -404,18 +404,30 @@ class EmbedUpsertPipeline:
 
         if not self.dry_run and self.milvus_client:
             max_retries = 5
-            for attempt in range(max_retries):
-                try:
-                    self.milvus_client.upsert(
-                        collection_name=self.collection_name,
-                        data=records_to_upsert,
-                    )
-                    break
-                except Exception as e:
-                    logger.warning(f"Zilliz upsert attempt {attempt+1} failed: {e}")
-                    if attempt == max_retries - 1:
-                        raise
-                    time.sleep(2 ** attempt)
+            # Sub-batch upsert to prevent oversized gRPC messages (500 records max per RPC)
+            UPSERT_CHUNK_SIZE = 500
+            for offset in range(0, len(records_to_upsert), UPSERT_CHUNK_SIZE):
+                sub_records = records_to_upsert[offset : offset + UPSERT_CHUNK_SIZE]
+                for attempt in range(max_retries):
+                    try:
+                        self.milvus_client.upsert(
+                            collection_name=self.collection_name,
+                            data=sub_records,
+                        )
+                        break
+                    except Exception as e:
+                        logger.warning(f"Zilliz upsert attempt {attempt+1} failed: {e}")
+                        if attempt == max_retries - 1:
+                            raise
+                        # Re-instantiate client connection to heal dropped gRPC sockets
+                        try:
+                            uri = os.environ.get("ZILLIZ_URI")
+                            token = os.environ.get("ZILLIZ_TOKEN")
+                            if uri and token:
+                                self.milvus_client = MilvusClient(uri=uri, token=token)
+                        except Exception as re_err:
+                            logger.warning(f"Reconnection attempt failed: {re_err}")
+                        time.sleep(2 ** attempt)
 
         # Update manifest
         self.manifest.mark_chunks_done(manifest_rows)
