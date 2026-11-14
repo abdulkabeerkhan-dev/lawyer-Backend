@@ -293,6 +293,12 @@ def segment_case(
 
     # 2. Segment Judgment Body
     if judgment_text:
+        # Strip trailing Word binary OLE scraps if present
+        judgment_text = re.split(
+            r'\n+(?:Times New Roman|Microsoft Word|Root Entry|WordDocument|Oratier Technologies \(Pvt\))',
+            judgment_text,
+            flags=re.IGNORECASE,
+        )[0].strip()
         sections = HierarchicalLegalChunker.parse_judgment_sections(judgment_text)
         for sec in sections:
             raw_sec_type = sec["section_type"]

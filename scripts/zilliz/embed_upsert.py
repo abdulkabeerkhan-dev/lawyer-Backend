@@ -24,6 +24,7 @@ import argparse
 from datetime import datetime
 from typing import Dict, List, Any, Optional, Set, Tuple
 from collections import OrderedDict
+import numpy as np
 
 # Ensure project root in sys.path
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -132,6 +133,21 @@ class EmbedUpsertPipeline:
         self.total_tokens_used = 0
         self.total_spend_usd = 0.0
 
+        # Optional pre-computed embedding cache (e.g. from bakeoff)
+        model_slug = embed_model.replace("-", "_")
+        bakeoff_cache_dir = os.path.join(r"I:\zilliz_work\bakeoff", model_slug)
+        self.embedding_cache: Dict[str, List[float]] = {}
+        npy_path = os.path.join(bakeoff_cache_dir, "embeddings.npy")
+        manifest_path = os.path.join(bakeoff_cache_dir, "manifest.json")
+        if os.path.exists(npy_path) and os.path.exists(manifest_path):
+            logger.info(f"Loading pre-computed embeddings cache from {bakeoff_cache_dir}...")
+            with open(manifest_path, "r", encoding="utf-8") as f:
+                c_man = json.load(f)
+            cached_embs = np.load(npy_path)
+            for cid, emb in zip(c_man.get("chunk_ids", []), cached_embs):
+                self.embedding_cache[cid] = emb.tolist()
+            logger.info(f"Loaded {len(self.embedding_cache)} embeddings into memory cache.")
+
         load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
         api_key = os.environ.get("VOYAGE_API_KEY")
         if not api_key:
@@ -187,17 +203,35 @@ class EmbedUpsertPipeline:
         return []
 
     def embed_cases_contextual(self, cases_chunks: List[List[Dict[str, Any]]]) -> List[List[float]]:
-        """Embed a list of cases (each case = list of chunk dicts) using voyage-context-4."""
+        """Embed a list of cases (each case = list of chunk dicts) using voyage-context-4 with 25k windowing."""
         if self.dry_run:
             total_chunks = sum(len(c) for c in cases_chunks)
             return [[0.0] * 1024 for _ in range(total_chunks)]
 
-        docs_texts = [[c["text"] for c in case] for case in cases_chunks]
+        # Window cases exceeding 25k tokens into sub-documents
+        MAX_CASE_DOC_TOKENS = 25000
+        sub_docs: List[List[str]] = []
+        for case in cases_chunks:
+            curr_texts: List[str] = []
+            curr_toks = 0
+            for c in case:
+                t = c["text"]
+                tok = c.get("token_count", len(t.split()))
+                if curr_toks + tok > MAX_CASE_DOC_TOKENS and curr_texts:
+                    sub_docs.append(curr_texts)
+                    curr_texts = [t]
+                    curr_toks = tok
+                else:
+                    curr_texts.append(t)
+                    curr_toks += tok
+            if curr_texts:
+                sub_docs.append(curr_texts)
+
         max_retries = 5
         for attempt in range(max_retries):
             try:
                 res = self.voyage_client.contextualized_embed(
-                    inputs=docs_texts,
+                    inputs=sub_docs,
                     model=self.embed_model,
                     input_type="document",
                 )
@@ -215,27 +249,30 @@ class EmbedUpsertPipeline:
 
     def clean_stale_chunks(self, case_keys_to_chunks: Dict[str, List[Dict[str, Any]]]):
         """Delete lingering chunks from previously segmented versions of these cases."""
-        if self.dry_run or not self.milvus_client:
+        if self.dry_run or not self.milvus_client or not case_keys_to_chunks:
             return
 
-        for ck, chunks in case_keys_to_chunks.items():
-            active_ids = {c["chunk_id"] for c in chunks}
-            try:
-                # Query existing chunks for this case
-                existing = self.milvus_client.query(
+        active_ids = {c["chunk_id"] for chunks in case_keys_to_chunks.values() for c in chunks}
+        case_keys_list = list(case_keys_to_chunks.keys())
+
+        try:
+            # Batch query existing chunks for all cases in this batch
+            expr = f"case_key in {json.dumps(case_keys_list)}"
+            existing = self.milvus_client.query(
+                collection_name=self.collection_name,
+                filter=expr,
+                output_fields=["chunk_id"],
+                limit=16384,
+            )
+            stale_ids = [row["chunk_id"] for row in existing if row["chunk_id"] not in active_ids]
+            if stale_ids:
+                logger.info(f"Removing {len(stale_ids)} stale chunks across batch")
+                self.milvus_client.delete(
                     collection_name=self.collection_name,
-                    filter=f'case_key == "{ck}"',
-                    output_fields=["chunk_id"],
+                    pks=stale_ids,
                 )
-                stale_ids = [row["chunk_id"] for row in existing if row["chunk_id"] not in active_ids]
-                if stale_ids:
-                    logger.info(f"Removing {len(stale_ids)} stale chunks for case {ck}")
-                    self.milvus_client.delete(
-                        collection_name=self.collection_name,
-                        pks=stale_ids,
-                    )
-            except Exception as e:
-                logger.warning(f"Stale chunk check failed for {ck}: {e}")
+        except Exception as e:
+            logger.warning(f"Stale chunk check failed: {e}")
 
     def upsert_case_batch(
         self,
@@ -262,24 +299,43 @@ class EmbedUpsertPipeline:
             # All chunks in this batch are already done!
             return
 
-        # Perform embeddings
-        if self.embed_model == "voyage-context-4":
-            embeddings = self.embed_cases_contextual(cases_for_contextual)
-            # Map embeddings back to chunks
-            emb_idx = 0
-            for case_chunks in cases_for_contextual:
-                for c in case_chunks:
-                    c["dense"] = embeddings[emb_idx]
-                    emb_idx += 1
-        else:
-            texts = [c["text"] for c in chunks_to_embed]
-            # Embed in slices of at most 100 texts
-            embeddings = []
-            for i in range(0, len(texts), 100):
-                sub_texts = texts[i : i + 100]
-                embeddings.extend(self.embed_texts(sub_texts))
-            for c, emb in zip(chunks_to_embed, embeddings):
-                c["dense"] = emb
+        # Check cache first for chunks needing embedding
+        chunks_still_needing_api: List[Dict[str, Any]] = []
+        for c in chunks_to_embed:
+            cid = c["chunk_id"]
+            if cid in self.embedding_cache:
+                c["dense"] = self.embedding_cache[cid]
+            else:
+                chunks_still_needing_api.append(c)
+
+        if chunks_still_needing_api:
+            # Perform embeddings via Voyage API
+            if self.embed_model == "voyage-context-4":
+                # Group still needing API by case
+                cases_for_api: List[List[Dict[str, Any]]] = []
+                case_groups = OrderedDict()
+                for c in chunks_still_needing_api:
+                    ck = c["case_key"]
+                    if ck not in case_groups:
+                        case_groups[ck] = []
+                    case_groups[ck].append(c)
+                cases_for_api = list(case_groups.values())
+                embeddings = self.embed_cases_contextual(cases_for_api)
+                emb_idx = 0
+                for case_chunks in cases_for_api:
+                    for c in case_chunks:
+                        c["dense"] = embeddings[emb_idx]
+                        self.embedding_cache[c["chunk_id"]] = c["dense"]
+                        emb_idx += 1
+            else:
+                texts = [c["text"] for c in chunks_still_needing_api]
+                embeddings = []
+                for i in range(0, len(texts), 100):
+                    sub_texts = texts[i : i + 100]
+                    embeddings.extend(self.embed_texts(sub_texts))
+                for c, emb in zip(chunks_still_needing_api, embeddings):
+                    c["dense"] = emb
+                    self.embedding_cache[c["chunk_id"]] = emb
 
         # Clean stale chunks for cases being written
         case_map = {ck: chunks for ck, chunks in batch_cases}

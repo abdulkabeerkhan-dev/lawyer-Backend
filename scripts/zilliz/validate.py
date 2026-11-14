@@ -23,7 +23,7 @@ import random
 import sqlite3
 import logging
 import argparse
-from typing import Dict, List, Any, Optional, Set
+from typing import Dict, List, Any, Optional, Set, Tuple
 
 # Ensure project root in sys.path
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -60,11 +60,13 @@ class ZillizValidator:
     def __init__(
         self,
         collection_name: str = "judgments_v1",
+        embed_model: str = "voyage-4-large",
         manifest_db: str = r"I:\zilliz_work\manifest.db",
         registry_file: str = r"I:\zilliz_work\registry.jsonl",
         chunks_file: str = r"I:\zilliz_work\chunks.jsonl",
     ):
         self.collection_name = collection_name
+        self.embed_model = embed_model
         self.manifest_db = manifest_db
         self.registry_file = registry_file
         self.chunks_file = chunks_file
@@ -113,7 +115,7 @@ class ZillizValidator:
             report["all_passed"] = False
 
         # Gate 5: Zero boilerplate markers
-        g5_pass, g5_data = self.gate_5_zero_boilerplate()
+        g5_pass, g5_data = self.gate_5_zero_boilerplate(stage=stage)
         report["gates"]["gate_5_zero_boilerplate"] = {"passed": g5_pass, **g5_data}
         if not g5_pass:
             report["all_passed"] = False
@@ -141,13 +143,14 @@ class ZillizValidator:
 
     def gate_1_count_match(self) -> Tuple[bool, Dict[str, Any]]:
         logger.info("Gate 1: Checking entity count match...")
+        self.client.flush(self.collection_name)
         stats = self.client.get_collection_stats(self.collection_name)
         coll_count = stats.get("row_count", 0)
 
         cur = self.manifest_conn.cursor()
         cur.execute(
-            "SELECT count(*) FROM vector_ingest_manifest WHERE collection = ? AND status = 'done'",
-            (self.collection_name,),
+            "SELECT count(chunk_id) FROM vector_ingest_manifest WHERE collection = ? AND embed_model = ? AND status = 'done'",
+            (self.collection_name, self.embed_model),
         )
         manifest_count = cur.fetchone()[0]
 
@@ -205,39 +208,30 @@ class ZillizValidator:
         logger.info(f"Gate 4: Distinct text hashes = {len(text_hash_to_cases)}, Collisions = {len(collisions)} -> {'PASS' if passed else 'FAIL'}")
         return passed, {"collision_count": len(collisions), "sample_collisions": list(collisions.items())[:3]}
 
-    def gate_5_zero_boilerplate(self) -> Tuple[bool, Dict[str, Any]]:
+    def gate_5_zero_boilerplate(self, stage: str = "pilot") -> Tuple[bool, Dict[str, Any]]:
         logger.info("Gate 5: Checking for boilerplate markers in chunks...")
-        boilerplate_hits = {}
-        for pat in BOILERPLATE_PATTERNS:
-            # Query Zilliz text field using filter
-            try:
-                res = self.client.query(
-                    collection_name=self.collection_name,
-                    filter=f'text like "%{pat}%"',
-                    output_fields=["chunk_id"],
-                    limit=5,
-                )
-                if res:
-                    boilerplate_hits[pat] = len(res)
-            except Exception as e:
-                # If 'like' filter is unsupported on analyzer field, verify against local chunks file
-                logger.debug(f"Direct filter error for {pat}: {e}, falling back to local verification")
-                pass
+        cur = self.manifest_conn.cursor()
+        cur.execute(
+            "SELECT DISTINCT case_key FROM vector_ingest_manifest WHERE collection = ? AND embed_model = ? AND status = 'done'",
+            (self.collection_name, self.embed_model),
+        )
+        ingested_keys = {r[0] for r in cur.fetchall()}
 
-        # Also verify locally over chunks file
-        local_hits = {p: 0 for p in BOILERPLATE_PATTERNS}
+        hits = {p: 0 for p in BOILERPLATE_PATTERNS}
         with open(self.chunks_file, "r", encoding="utf-8") as f:
             for line in f:
                 c = json.loads(line)
+                if c["case_key"] not in ingested_keys:
+                    continue
                 t = c.get("text", "")
                 for p in BOILERPLATE_PATTERNS:
                     if p in t:
-                        local_hits[p] += 1
+                        hits[p] += 1
 
-        total_local_hits = sum(local_hits.values())
-        passed = (total_local_hits == 0)
-        logger.info(f"Gate 5: Boilerplate occurrences = {total_local_hits} -> {'PASS' if passed else 'FAIL'}")
-        return passed, {"boilerplate_hits": local_hits}
+        total_hits = sum(hits.values())
+        passed = (total_hits == 0)
+        logger.info(f"Gate 5: Boilerplate occurrences across {len(ingested_keys)} cases = {total_hits} -> {'PASS' if passed else 'FAIL'}")
+        return passed, {"boilerplate_hits": hits}
 
     def gate_6_spot_check_concatenation(self) -> Tuple[bool, Dict[str, Any]]:
         logger.info("Gate 6: Spot checking 20 random cases...")
@@ -309,8 +303,8 @@ class ZillizValidator:
         results = []
         for tq in test_queries:
             q_text = tq["query"]
-            # Generate query embedding with voyage-law-2
-            res = voyage_client.embed(texts=[q_text], model="voyage-law-2", input_type="query")
+            # Generate query embedding with winning model
+            res = voyage_client.embed(texts=[q_text], model=self.embed_model, input_type="query")
             q_vec = res.embeddings[0]
 
             # Dense vector search on Zilliz

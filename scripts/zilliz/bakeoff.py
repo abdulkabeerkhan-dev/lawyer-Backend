@@ -290,7 +290,7 @@ class BakeoffRunner:
             logger.info(f"[DRY-RUN] Would embed {len(chunks)} chunks with {model}")
             return np.zeros((len(chunks), 1024), dtype=np.float32), chunk_ids, case_keys
 
-        # Group chunks by case_key
+        # Group chunks by case_key and window at <= 25k tokens to respect Voyage 32k context limit
         from collections import OrderedDict
         case_to_chunks = OrderedDict()
         for c in chunks:
@@ -305,22 +305,48 @@ class BakeoffRunner:
         cases_list = list(case_to_chunks.items())
         total_cases = len(cases_list)
 
+        # Window cases exceeding 25,000 tokens into sub-documents
+        MAX_CASE_DOC_TOKENS = 25000
+        case_docs: List[Tuple[List[str], List[str]]] = []
+
+        for ck, case_chunks in cases_list:
+            curr_texts: List[str] = []
+            curr_cids: List[str] = []
+            curr_toks = 0
+
+            for c in case_chunks:
+                t = c["text"]
+                tok = c.get("token_count", len(t.split()))
+                if curr_toks + tok > MAX_CASE_DOC_TOKENS and curr_texts:
+                    case_docs.append((curr_texts, curr_cids))
+                    curr_texts = [t]
+                    curr_cids = [c["chunk_id"]]
+                    curr_toks = tok
+                else:
+                    curr_texts.append(t)
+                    curr_cids.append(c["chunk_id"])
+                    curr_toks += tok
+
+            if curr_texts:
+                case_docs.append((curr_texts, curr_cids))
+
+        logger.info(f"Prepared {len(case_docs)} contextual sub-documents across {total_cases} cases.")
+
         batch_docs: List[List[str]] = []
         batch_case_chunk_ids: List[List[str]] = []
         curr_batch_tokens = 0
-        MAX_BATCH_TOKENS = 35000
+        MAX_BATCH_TOKENS = 28000
+        total_sub_docs = len(case_docs)
 
-        for i, (ck, case_chunks) in enumerate(cases_list):
-            doc_texts = [c["text"] for c in case_chunks]
-            doc_chunk_ids = [c["chunk_id"] for c in case_chunks]
-            doc_tokens = sum(c.get("token_count", len(t.split())) for c, t in zip(case_chunks, doc_texts))
+        for i, (doc_texts, doc_chunk_ids) in enumerate(case_docs):
+            doc_tokens = sum(len(t.split()) for t in doc_texts)
 
             batch_docs.append(doc_texts)
             batch_case_chunk_ids.append(doc_chunk_ids)
             curr_batch_tokens += doc_tokens
 
             # Send batch if reaching token limit or at the end
-            if curr_batch_tokens >= MAX_BATCH_TOKENS or i == total_cases - 1 or len(batch_docs) >= 50:
+            if curr_batch_tokens >= MAX_BATCH_TOKENS or i == total_sub_docs - 1 or len(batch_docs) >= 30:
                 max_retries = 5
                 for attempt in range(max_retries):
                     try:
@@ -335,7 +361,7 @@ class BakeoffRunner:
                         self.record_usage(res.total_tokens)
                         break
                     except Exception as e:
-                        logger.warning(f"Contextual batch at case {i} attempt {attempt+1} failed: {e}")
+                        logger.warning(f"Contextual batch at doc {i} attempt {attempt+1} failed: {e}")
                         if attempt == max_retries - 1:
                             raise
                         time.sleep(2 ** attempt)
@@ -344,8 +370,8 @@ class BakeoffRunner:
                 batch_case_chunk_ids = []
                 curr_batch_tokens = 0
 
-                if (i + 1) % 100 == 0 or i == total_cases - 1:
-                    logger.info(f"Progress: {i+1}/{total_cases} cases ({len(chunk_id_to_emb)}/{len(chunks)} chunks) embedded ({model})")
+                if (i + 1) % 100 == 0 or i == total_sub_docs - 1:
+                    logger.info(f"Progress: {i+1}/{total_sub_docs} sub-docs ({len(chunk_id_to_emb)}/{len(chunks)} chunks) embedded ({model})")
 
         # Assemble embeddings in original chunk order
         embeddings_list = [chunk_id_to_emb[cid] for cid in chunk_ids]
