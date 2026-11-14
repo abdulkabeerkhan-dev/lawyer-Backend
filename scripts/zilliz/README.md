@@ -50,13 +50,16 @@ scripts/zilliz/
 ├── create_collection.py  # Declares Zilliz collection schema, indexes, and BM25 function
 ├── embed_upsert.py       # Batched case upsert with manifest tracking & stale chunk cleanup
 ├── validate.py           # 7-gate validation suite for pilot and full runs
-├── load_cases_v2.py      # Populates Turso cases_v2 table and builds FTS5 index
+├── load_cases_sqlite.py  # Option B: High-perf local SQLite cases_v2 & FTS5 full-text index
+├── load_cases_v2.py      # Populates Turso cases_v2 table and builds FTS5 index (if remote write allowed)
 └── README.md             # Pipeline documentation
 
 tests/zilliz/
 ├── test_registry.py      # Tests for citation parsing, junk detection, and court mapping
 ├── test_segment.py       # Tests for section chunking, token bounds, and statute tagging
-└── test_bakeoff.py       # Tests for cosine similarity, case aggregation, and retrieval metrics
+├── test_bakeoff.py       # Tests for cosine similarity, case aggregation, and retrieval metrics
+├── test_embed_upsert.py  # Tests for manifest idempotency and spending cap enforcement
+└── test_sqlite.py        # Tests for SQLite schema, triggers, and FTS5 search index
 
 Working directory (I:\zilliz_work\):
 ├── registry.jsonl        # Cleaned, deduplicated case registry (137,503 cases)
@@ -103,15 +106,18 @@ python scripts/zilliz/embed_upsert.py --case-keys-file I:\zilliz_work\sample_200
 python scripts/zilliz/validate.py --stage pilot
 ```
 
-### Phase 5: Full Ingestion & Turso Sync
+### Phase 5: Full Ingestion & Database Population
 ```bash
-# 1. Full corpus ingestion
-python scripts/zilliz/embed_upsert.py --spend-cap 60.0
+# 1. Full corpus ingestion into Zilliz Cloud (using voyage-4-large, spend cap <= $65)
+python scripts/zilliz/embed_upsert.py --chunks I:\zilliz_work\chunks.jsonl --model voyage-4-large --spend-cap 65.0 --batch-size 100
 
-# 2. Full validation gates
+# 2. Full validation gates (7 gates)
 python scripts/zilliz/validate.py --stage full
 
-# 3. Load registry into Turso cases_v2 and build FTS5
+# 3. Load registry into local SQLite cases_v2 and build FTS5 (Option B: zero remote lockouts, zero latency)
+python scripts/zilliz/load_cases_sqlite.py
+
+# 4. (Optional) Load into remote Turso when write limits are cleared
 python scripts/zilliz/load_cases_v2.py
 ```
 
