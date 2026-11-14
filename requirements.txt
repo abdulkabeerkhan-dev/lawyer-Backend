@@ -21,3 +21,4 @@ pdfminer.six
 PyMuPDF>=1.24.0,<=1.28.2
 pillow
 rank-bm25
+pymilvus
