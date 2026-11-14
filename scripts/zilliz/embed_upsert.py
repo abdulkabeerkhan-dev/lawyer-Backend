@@ -76,6 +76,25 @@ class IngestManifest:
             """)
             self.conn.execute("CREATE INDEX IF NOT EXISTS idx_manifest_case ON vector_ingest_manifest(case_key);")
             self.conn.execute("CREATE INDEX IF NOT EXISTS idx_manifest_status ON vector_ingest_manifest(status);")
+            self.conn.execute("""
+                CREATE TABLE IF NOT EXISTS run_metadata (
+                    key TEXT PRIMARY KEY,
+                    value TEXT
+                );
+            """)
+
+    def get_metadata(self, key: str, default: Optional[str] = None) -> Optional[str]:
+        cur = self.conn.cursor()
+        cur.execute("SELECT value FROM run_metadata WHERE key = ?", (key,))
+        row = cur.fetchone()
+        return row[0] if row else default
+
+    def set_metadata(self, key: str, value: str):
+        with self.conn:
+            self.conn.execute(
+                "INSERT INTO run_metadata (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+                (key, value),
+            )
 
     def is_chunk_done(self, chunk_id: str, chunk_hash: str, embed_model: str) -> bool:
         cursor = self.conn.cursor()
@@ -130,8 +149,8 @@ class EmbedUpsertPipeline:
         self.dry_run = dry_run
         self.manifest = IngestManifest(db_path=manifest_db)
 
-        self.total_tokens_used = 0
-        self.total_spend_usd = 0.0
+        self.total_tokens_used = int(self.manifest.get_metadata("total_tokens_used", "0"))
+        self.total_spend_usd = self.total_tokens_used * PRICE_PER_MILLION_TOKENS / 1_000_000
 
         # Optional pre-computed embedding cache (e.g. from bakeoff)
         model_slug = embed_model.replace("-", "_")
@@ -179,6 +198,7 @@ class EmbedUpsertPipeline:
             )
         self.total_tokens_used += tokens
         self.total_spend_usd = self.total_tokens_used * PRICE_PER_MILLION_TOKENS / 1_000_000
+        self.manifest.set_metadata("total_tokens_used", str(self.total_tokens_used))
 
     def embed_texts(self, texts: List[str]) -> List[List[float]]:
         """Embed a list of texts with Voyage model and exponential backoff retry."""
@@ -347,25 +367,30 @@ class EmbedUpsertPipeline:
         manifest_rows = []
 
         for c in chunks_to_embed:
+            # Enforce max 64 items and max 64 chars per statute string as required by Zilliz schema
+            safe_statutes = [
+                str(s)[:64] for s in c.get("statutes", [])[:64]
+                if s and isinstance(s, str)
+            ]
             rec = {
-                "chunk_id": c["chunk_id"],
-                "case_key": c["case_key"],
-                "text": c["text"],
+                "chunk_id": str(c["chunk_id"])[:128],
+                "case_key": str(c["case_key"])[:64],
+                "text": str(c["text"])[:65535],
                 "dense": c["dense"],
-                "citation": c.get("citation", ""),
-                "journal": c.get("journal", ""),
-                "court_code": c.get("court_code", ""),
+                "citation": str(c.get("citation", ""))[:128],
+                "journal": str(c.get("journal", ""))[:32],
+                "court_code": str(c.get("court_code", ""))[:32],
                 "year": int(c.get("year", 0)),
                 "court_level": int(c.get("court_level", 3)),
                 "cited_by_count": int(c.get("cited_by_count", 0)),
-                "section": c.get("section", "headnote"),
-                "content_level": c.get("content_level", "full_judgment"),
-                "domain": c.get("domain", "civil"),
-                "statutes": c.get("statutes", []),
-                "chunk_hash": c.get("chunk_hash", ""),
-                "embed_model": self.embed_model,
+                "section": str(c.get("section", "headnote"))[:32],
+                "content_level": str(c.get("content_level", "full_judgment"))[:32],
+                "domain": str(c.get("domain", "civil"))[:32],
+                "statutes": safe_statutes,
+                "chunk_hash": str(c.get("chunk_hash", ""))[:64],
+                "embed_model": str(self.embed_model)[:64],
                 "schema_version": "v1",
-                "ingested_at": now_iso,
+                "ingested_at": now_iso[:32],
             }
             records_to_upsert.append(rec)
             manifest_rows.append((
