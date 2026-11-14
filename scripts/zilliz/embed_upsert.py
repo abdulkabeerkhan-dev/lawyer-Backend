@@ -476,6 +476,10 @@ class EmbedUpsertPipeline:
                     f"{total_chunks_processed} chunks | Tokens: {self.total_tokens_used:,} | Spend: ${self.total_spend_usd:.4f} | Elapsed: {elapsed:.1f}s"
                 )
 
+        if not self.dry_run and self.milvus_client:
+            logger.info("Flushing collection to ensure persistent indexing...")
+            self.milvus_client.flush(self.collection_name)
+
         logger.info(f"\nPipeline run completed!")
         logger.info(f"Total cases: {total_cases_processed} | Total chunks: {total_chunks_processed}")
         logger.info(f"Total tokens used: {self.total_tokens_used:,} | Total spend: ${self.total_spend_usd:.4f}")
@@ -487,7 +491,7 @@ def main():
     parser.add_argument("--chunks", default=r"I:\zilliz_work\chunks.jsonl", help="Path to chunks.jsonl")
     parser.add_argument("--case-keys-file", default=None, help="JSON file containing list of case_keys")
     parser.add_argument("--collection", default="judgments_v1", help="Target collection name")
-    parser.add_argument("--model", default="voyage-law-2", help="Embedding model name")
+    parser.add_argument("--model", default="voyage-4-large", help="Embedding model name")
     parser.add_argument("--spend-cap", type=float, default=60.0, help="Spending cap in USD")
     parser.add_argument("--limit-cases", type=int, default=None, help="Limit number of cases")
     parser.add_argument("--case-keys", type=str, default=None, help="Comma-separated case keys")
