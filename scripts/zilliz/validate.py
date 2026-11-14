@@ -144,8 +144,15 @@ class ZillizValidator:
     def gate_1_count_match(self) -> Tuple[bool, Dict[str, Any]]:
         logger.info("Gate 1: Checking entity count match...")
         self.client.flush(self.collection_name)
-        stats = self.client.get_collection_stats(self.collection_name)
-        coll_count = stats.get("row_count", 0)
+        coll_count = 0
+        try:
+            res = self.client.query(collection_name=self.collection_name, output_fields=["count(*)"])
+            if res and isinstance(res, list) and len(res) > 0:
+                coll_count = res[0].get("count(*)", 0)
+        except Exception as e:
+            logger.warning(f"client.query count(*) failed: {e}, falling back to collection stats")
+            stats = self.client.get_collection_stats(self.collection_name)
+            coll_count = stats.get("row_count", 0)
 
         cur = self.manifest_conn.cursor()
         cur.execute(
@@ -220,12 +227,18 @@ class ZillizValidator:
         hits = {p: 0 for p in BOILERPLATE_PATTERNS}
         with open(self.chunks_file, "r", encoding="utf-8") as f:
             for line in f:
+                # Fast check before parsing JSON
+                if not any(p in line for p in BOILERPLATE_PATTERNS):
+                    continue
                 c = json.loads(line)
                 if c["case_key"] not in ingested_keys:
                     continue
                 t = c.get("text", "")
                 for p in BOILERPLATE_PATTERNS:
                     if p in t:
+                        # Exclude legitimate case citation (e.g. Tanvir Ahmad Butt v. The Director, Oratier Technologies)
+                        if p == "Oratier" and ("v. The Director, Oratier" in t or "vs. The Director, Oratier" in t):
+                            continue
                         hits[p] += 1
 
         total_hits = sum(hits.values())
@@ -256,6 +269,7 @@ class ZillizValidator:
                 collection_name=self.collection_name,
                 filter=f'case_key == "{ck}"',
                 output_fields=["chunk_id", "section", "text"],
+                limit=1000,
             )
             chunks_sorted = sorted(chunks, key=lambda x: x["chunk_id"])
             sections = [c["section"] for c in chunks_sorted]

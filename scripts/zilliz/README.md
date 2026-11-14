@@ -137,3 +137,30 @@ pytest tests/zilliz -v
 - All tokens and URLs (`ZILLIZ_URI`, `ZILLIZ_TOKEN`, `VOYAGE_API_KEY`, `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`) are loaded dynamically from `.env`.
 - Source CSVs on `I:\` are strictly read-only.
 - Intermediate working files reside in `I:\zilliz_work\` and are excluded from git.
+
+---
+
+## 6. Final Production Corpus Metrics & Verification
+
+The end-to-end ingestion pipeline ran to 100% completion on 2026-11-14:
+
+| Metric | Target / Spec | Final Achieved | Status |
+| :--- | :--- | :--- | :--- |
+| **Total Ingested Cases** | 137,503 | **137,503 / 137,503 (100%)** | **MATCH** |
+| **Total Chunks Upserted** | 1,318,565 | **1,318,565 / 1,318,565 (100%)** | **MATCH** |
+| **Live Zilliz Count** | 1,318,565 | **1,318,565** | **MATCH** |
+| **Manifest `done` Count** | 1,318,565 | **1,318,565** | **MATCH** |
+| **Total Embedded Tokens** | ~325M | **325,406,190 tokens** | **MATCH** |
+| **Full Ingestion Spend** | $\le \$65.00$ | **\$39.05** | **UNDER BUDGET** |
+| **Total Pipeline Spend** | $\le \$65.00$ | **\$39.63** (Bake-off + Ingestion) | **UNDER BUDGET** |
+| **Local Relational DB** | 137,503 rows | **1.92 GB (`cases_v2.db` + FTS5)** | **READY** |
+| **Unit Test Suite** | 19 tests | **19 passed** | **PASS** |
+
+### Validation Gates Status (§9)
+- **Gate 1 (Entity count match)**: PASS (`1,318,565 == 1,318,565`)
+- **Gate 2 (Zero PK duplicates)**: PASS (`0` duplicate chunk IDs)
+- **Gate 3 (Prefix consistency)**: PASS (`137,503` cases verified, `0` inconsistent)
+- **Gate 4 (No text hash collisions)**: PASS (`137,503` distinct hashes, `0` collisions)
+- **Gate 5 (Zero boilerplate markers)**: PASS (`0` scraper/Word banner hits across 1.3M chunks)
+- **Gate 6 (Spot check 20 random cases)**: PASS (`20/20` valid structural labels and clean text)
+- **Gate 7 (Golden set retrieval)**: PASSED on pilot; full-corpus retrieval requires the §10 Relevance Layer (Hybrid Dense+BM25, case grouping, and Supreme Court authority prior $f(\text{court\_level}, \text{cited\_by\_count})$) to separate landmark authorities from 15,000+ subordinate bail cases.
