@@ -21,6 +21,7 @@ import json
 import sqlite3
 import logging
 import argparse
+import gc
 from datetime import datetime
 from typing import Dict, List, Any, Optional, Set, Tuple
 from collections import OrderedDict
@@ -345,7 +346,6 @@ class EmbedUpsertPipeline:
                 for case_chunks in cases_for_api:
                     for c in case_chunks:
                         c["dense"] = embeddings[emb_idx]
-                        self.embedding_cache[c["chunk_id"]] = c["dense"]
                         emb_idx += 1
             else:
                 texts = [c["text"] for c in chunks_still_needing_api]
@@ -355,7 +355,6 @@ class EmbedUpsertPipeline:
                     embeddings.extend(self.embed_texts(sub_texts))
                 for c, emb in zip(chunks_still_needing_api, embeddings):
                     c["dense"] = emb
-                    self.embedding_cache[c["chunk_id"]] = emb
 
         # Clean stale chunks for cases being written
         case_map = {ck: chunks for ck, chunks in batch_cases}
@@ -424,6 +423,10 @@ class EmbedUpsertPipeline:
                             uri = os.environ.get("ZILLIZ_URI")
                             token = os.environ.get("ZILLIZ_TOKEN")
                             if uri and token:
+                                try:
+                                    self.milvus_client.close()
+                                except Exception:
+                                    pass
                                 self.milvus_client = MilvusClient(uri=uri, token=token)
                         except Exception as re_err:
                             logger.warning(f"Reconnection attempt failed: {re_err}")
@@ -431,6 +434,9 @@ class EmbedUpsertPipeline:
 
         # Update manifest
         self.manifest.mark_chunks_done(manifest_rows)
+        del records_to_upsert
+        del manifest_rows
+        gc.collect()
 
     def run(
         self,
@@ -491,6 +497,15 @@ class EmbedUpsertPipeline:
                                 f"{total_chunks_processed} chunks | Tokens: {self.total_tokens_used:,} | Spend: ${self.total_spend_usd:.4f} | Elapsed: {elapsed:.1f}s"
                             )
                             cases_batch = []
+                            # Refresh Milvus connection every 100 batches to prevent HTTP/2 channel aging
+                            if batch_idx % 100 == 0 and not self.dry_run and self.milvus_client:
+                                try:
+                                    uri = os.environ.get("ZILLIZ_URI")
+                                    token = os.environ.get("ZILLIZ_TOKEN")
+                                    self.milvus_client.close()
+                                    self.milvus_client = MilvusClient(uri=uri, token=token)
+                                except Exception as e:
+                                    logger.warning(f"Periodic connection refresh failed: {e}")
 
                     current_case_key = ck
                     current_case_chunks = [c]
