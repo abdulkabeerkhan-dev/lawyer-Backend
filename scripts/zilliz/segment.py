@@ -159,7 +159,28 @@ def pack_paragraphs_into_chunks(
 
             for sent in sentences:
                 s_tok = count_tokens(sent)
-                if sub_tokens + s_tok > max_tokens and sub_tokens >= min_tokens:
+                if s_tok > max_tokens:
+                    # Hard split sentence by words
+                    words = sent.split()
+                    word_chunk: List[str] = []
+                    word_tok = 0
+                    for w in words:
+                        wt = count_tokens(w + " ")
+                        if word_tok + wt > max_tokens:
+                            if sub_chunk:
+                                chunks.append(" ".join(sub_chunk))
+                                sub_chunk = []
+                                sub_tokens = 0
+                            chunks.append(" ".join(word_chunk))
+                            word_chunk = [w]
+                            word_tok = wt
+                        else:
+                            word_chunk.append(w)
+                            word_tok += wt
+                    if word_chunk:
+                        sub_chunk.extend(word_chunk)
+                        sub_tokens += word_tok
+                elif sub_tokens + s_tok > max_tokens and sub_tokens >= min_tokens:
                     chunks.append(" ".join(sub_chunk))
                     sub_chunk = [sent]
                     sub_tokens = s_tok
@@ -242,26 +263,33 @@ def segment_case(
     if headnote_text:
         hn_blocks = split_headnote_into_blocks(headnote_text)
         for block in hn_blocks:
-            section_ordinals["headnote"] += 1
-            ord_num = section_ordinals["headnote"]
-            chunk_id = f"{case_key}:headnote:{ord_num:03d}"
+            if count_tokens(block) > 500:
+                paras = [p.strip() for p in block.split('\n\n') if p.strip()]
+                sub_blocks = pack_paragraphs_into_chunks(paras, min_tokens=300, max_tokens=500)
+            else:
+                sub_blocks = [block]
 
-            # Chunk-specific statutes
-            chunk_statutes = enricher.extract_statutes(block)
-            statutes_merged = sorted(list(set(chunk_statutes or case_statutes)))[:64]
-            statutes_summary = ", ".join(statutes_merged[:3]) if statutes_merged else "General"
+            for sub_b in sub_blocks:
+                section_ordinals["headnote"] += 1
+                ord_num = section_ordinals["headnote"]
+                chunk_id = f"{case_key}:headnote:{ord_num:03d}"
 
-            # Context header
-            header = f"[{citation} | {court_display} | {case_domain.title()} | {statutes_summary} | headnote]"
-            full_text = f"{header}\n\n{block}".strip()
+                # Chunk-specific statutes
+                chunk_statutes = enricher.extract_statutes(sub_b)
+                statutes_merged = sorted(list(set(chunk_statutes or case_statutes)))[:64]
+                statutes_summary = ", ".join(statutes_merged[:3]) if statutes_merged else "General"
 
-            raw_chunks.append({
-                "chunk_id": chunk_id,
-                "section": "headnote",
-                "clean_body": block,
-                "text": full_text,
-                "statutes": statutes_merged,
-            })
+                # Context header
+                header = f"[{citation} | {court_display} | {case_domain.title()} | {statutes_summary} | headnote]"
+                full_text = f"{header}\n\n{sub_b}".strip()
+
+                raw_chunks.append({
+                    "chunk_id": chunk_id,
+                    "section": "headnote",
+                    "clean_body": sub_b,
+                    "text": full_text,
+                    "statutes": statutes_merged,
+                })
 
     # 2. Segment Judgment Body
     if judgment_text:
