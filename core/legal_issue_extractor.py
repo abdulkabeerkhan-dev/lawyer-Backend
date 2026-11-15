@@ -91,6 +91,9 @@ def extract_named_statute_canonical_ids(query_text: str) -> List[str]:
         ("copyright ordinance 1962", "copyright ordinance"): [
             "COPYRIGHT_1962_SEC_56", "COPYRIGHT_1962_SEC_60"
         ],
+        ("companies act 2017", "companies act", "companies"): [
+            "COMPANIES_2017_SEC_286", "COMPANIES_2017_SEC_287", "COMPANIES_2017_SEC_118", "COMPANIES_2017_SEC_119", "COMPANIES_2017_SEC_301"
+        ],
     }
 
     for keys, cids in statute_canonical_map.items():
@@ -113,11 +116,12 @@ def extract_named_statute_canonical_ids(query_text: str) -> List[str]:
         "contract": "CONTRACT_1872", "contract act": "CONTRACT_1872",
         "limitation": "LIMITATION_1908", "limitation act": "LIMITATION_1908",
         "qso": "QSO_1984", "qanun-e-shahadat": "QSO_1984",
+        "companies": "COMPANIES_2017", "companies act": "COMPANIES_2017",
     }
 
     # Matches "Section 20 of PECA", "Section 498 of CrPC", "Section 10 of the FIO 2001", "Article 199 of the Constitution"
     sec_of_matches = re.finditer(
-        r'(?:section|sec\.?|s\.|article|art\.?|order|ord\.?)\s*([0-9IVXLCDM]+[A-Za-z]?(?:\s*\([0-9]+\))?)\s*(?:of\s+(?:the\s+)?)?([A-Za-z0-9\s,\-]+?(?:Act|Ordinance|Code|Order|Constitution|PPC|CrPC|CPC|PECA|FIO|PRPA|SRPO|MFLO|QSO|SRA|GWA|ATA|CNSA|BCO|FIA))',
+        r'(?:section|sec\.?|s\.|article|art\.?|order|ord\.?)\s*([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z0-9]+)?(?:\s*\([0-9]+\))?)\s*(?:of\s+(?:the\s+)?)?([A-Za-z0-9\s,\-]+?(?:Act|Ordinance|Code|Order|Constitution|PPC|CrPC|CPC|PECA|FIO|PRPA|SRPO|MFLO|QSO|SRA|GWA|ATA|CNSA|BCO|FIA|Companies\b))',
         query_text,
         re.IGNORECASE
     )
@@ -130,7 +134,7 @@ def extract_named_statute_canonical_ids(query_text: str) -> List[str]:
                 matched_act = code
                 break
         if matched_act:
-            sec_num = re.sub(r'[\(\)\s]', '', sec_raw).upper()
+            sec_num = re.sub(r'[\(\)\s\-]', '', sec_raw).upper()
             unit = "ART" if "art" in m.group(0).lower() or "CONST" in matched_act else "SEC"
             cid = f"{matched_act}_{unit}_{sec_num}"
             if cid not in admitted:
@@ -138,7 +142,7 @@ def extract_named_statute_canonical_ids(query_text: str) -> List[str]:
 
     # Pattern: "Section 498 CrPC", "Section 20 PECA", "Section 489-F PPC"
     sec_prefix_matches = re.finditer(
-        r'(?:section|sec\.?|s\.|article|art\.?)\s*([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z0-9]+)?)\s+([A-Za-z]{2,8})',
+        r'(?:section|sec\.?|s\.|article|art\.?)\s*([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z0-9]+)?)\s+([A-Za-z]{2,12})\b',
         query_text,
         re.IGNORECASE
     )
@@ -192,11 +196,15 @@ def extract_legal_issues_from_fact_pattern(
         (any(k in q_low for k in ["tenant", "landlord", "ejectment", "eviction", "subletting", "tentative rent"]) and "rent" in q_low)
     )
 
-    is_banking_signal = any(k in q_low for k in [
-        "banking court", "financial institutions (recovery", "fio 2001", "fio",
-        "recovery of finance", "leave to defend", "compound mark-up", "finance agreement",
-        "section 9 fio", "section 10 fio", "statement of account", "penal mark-up"
-    ])
+    is_banking_signal = (
+        any(k in q_low for k in [
+            "banking court", "financial institutions (recovery", "fio 2001", "fio",
+            "recovery of finance", "leave to defend", "compound mark-up", "finance agreement",
+            "section 9 fio", "section 10 fio", "statement of account", "penal mark-up",
+            "personal guarantee", "guarantor", "surety", "section 128"
+        ]) or
+        (any(k in q_low for k in ["guarantee", "guarantor", "surety"]) and any(k in q_low for k in ["bank", "fio", "loan", "finance", "credit", "borrower"]))
+    )
 
     is_service_signal = any(k in q_low for k in [
         "civil servant", "service tribunal", "seniority list", "superseded in promotion",
@@ -257,7 +265,7 @@ def extract_legal_issues_from_fact_pattern(
         "dishonored cheque", "bounced cheque", "return memo", "section 489-f",
         "489f ppc", "cheque was dishonoured", "cheque dishonour", "dishonoured on presentation",
         "cheque of rs", "deposited a cheque"
-    ]) and not (is_family_signal or is_inheritance_signal or is_service_signal or is_rent_signal or is_corporate_signal or is_civil_execution)
+    ]) and not (is_family_signal or is_inheritance_signal or is_service_signal or is_rent_signal or is_civil_execution)
 
     is_criminal_signal = (
         (
@@ -265,12 +273,13 @@ def extract_legal_issues_from_fact_pattern(
             is_quashment_signal or
             any(k in q_low for k in [
                 "fir", "police", "pre-arrest", "post-arrest", "theft", "379", "378",
-                "cheating", "420", "415", "criminal breach of trust", "406", "405",
-                "302", "murder", "qatl", "stolen"
+                "cheating", "420", "415", "criminal breach of trust", "406", "405", "409",
+                "302", "murder", "qatl", "stolen", "falsification of accounts", "477-a", "477a",
+                "falsification", "cbt"
             ]) or
             (any(k in q_low for k in ["arrest", "arrested", "custody", "remand", "bail"]) and not (is_civil_execution or is_family_signal))
         )
-        and not (is_civil_execution or is_land_revenue_signal or is_corporate_signal)
+        and not (is_civil_execution or is_land_revenue_signal)
     )
 
     is_sale_specific_perf = (
@@ -323,10 +332,31 @@ def extract_legal_issues_from_fact_pattern(
     else:
         primary_domain = "civil"
 
+    secondary_domains: List[str] = []
+    if is_corporate_signal and primary_domain != "corporate":
+        secondary_domains.append("corporate")
+    if is_criminal_signal and primary_domain != "criminal":
+        secondary_domains.append("criminal")
+    if is_banking_signal and primary_domain != "banking":
+        secondary_domains.append("banking")
+    if is_constitutional_signal and primary_domain != "constitutional":
+        secondary_domains.append("constitutional")
+    if is_family_signal and primary_domain != "family":
+        secondary_domains.append("family")
+    if is_rent_signal and primary_domain != "rent":
+        secondary_domains.append("rent")
+    if is_service_signal and primary_domain != "service":
+        secondary_domains.append("service")
+
     # Mutual exclusion: Never allow false cheque/criminal triggers to contaminate isolated domains
-    if primary_domain in ("family", "rent", "banking", "service", "constitutional"):
+    if primary_domain in ("family", "rent"):
         is_cheque_signal = False
         is_sale_specific_perf = False
+        secondary_domains = [d for d in secondary_domains if d not in ("criminal", "corporate", "banking")]
+    elif primary_domain in ("banking", "service", "constitutional"):
+        is_sale_specific_perf = False
+
+    active_domains = {primary_domain} | set(secondary_domains)
 
     # -------------------------------------------------------------------------
     # 2. Domain-Specific Decompositions (10 Priority Domains)
@@ -335,7 +365,7 @@ def extract_legal_issues_from_fact_pattern(
     # =========================================================================
     # 1. FAMILY LAW DECOMPOSITION
     # =========================================================================
-    if primary_domain == "family":
+    if "family" in active_domains:
         # Khula / Dissolution
         if any(k in q_low for k in ["khula", "dissolution", "deserted", "desertion", "divorce"]):
             issues.append(LegalSubIssue(
@@ -413,7 +443,7 @@ def extract_legal_issues_from_fact_pattern(
     # =========================================================================
     # 2. RENT & EVICTION DECOMPOSITION
     # =========================================================================
-    elif primary_domain == "rent":
+    if "rent" in active_domains:
         if "sindh" in q_low or "srpo" in q_low or "karachi" in q_low:
             issues.append(LegalSubIssue(
                 issue_id="issue_rent_srpo_eviction",
@@ -461,26 +491,42 @@ def extract_legal_issues_from_fact_pattern(
     # =========================================================================
     # 3. BANKING RECOVERY DECOMPOSITION
     # =========================================================================
-    elif primary_domain == "banking":
-        issues.append(LegalSubIssue(
-            issue_id="issue_banking_recovery_suit",
-            heading="Banking Recovery Suit under Special Law (Sections 2, 9, 22 FIO 2001)",
-            description="Statutory recovery suit by financial institution under Section 9 FIO 2001 and requirement of valid statement of account.",
-            controlling_statutes=["Financial Institutions (Recovery of Finances) Ordinance, 2001"],
-            controlling_provisions=["FIO_2001_SEC_9", "FIO_2001_SEC_2", "FIO_2001_SEC_22"],
-            search_queries=["Section 9 FIO 2001 recovery suit statement of account financial institution", "Section 22 FIO 2001 appeal"],
-            factual_anchors=["Section 9", "Financial Institutions (Recovery of Finances) Ordinance, 2001", "FIO 2001"]
-        ))
+    if "banking" in active_domains:
+        has_guarantee = any(k in q_low for k in ["guarantee", "guarantor", "surety", "section 128", "personal guarantee", "contract act section 128"])
+        if has_guarantee or any(k in q_low for k in ["director guarantee", "personal liability of director"]):
+            issues.append(LegalSubIssue(
+                issue_id="issue_banking_personal_guarantee_liability",
+                heading="Enforcement of Personal Guarantee of Director (FIO 2001 & Section 128 Contract Act 1872)",
+                description="Joint, several, and co-extensive liability of guarantor/surety under Section 128 Contract Act and recovery through Banking Court under FIO 2001.",
+                controlling_statutes=["Financial Institutions (Recovery of Finances) Ordinance, 2001", "Contract Act, 1872"],
+                controlling_provisions=["FIO_2001_SEC_2", "FIO_2001_SEC_9", "CONTRACT_1872_SEC_128"],
+                search_queries=[
+                    "Section 128 Contract Act co-extensive liability surety guarantor personal guarantee director loan",
+                    "FIO 2001 personal guarantee director financial institution recovery suit leave to defend"
+                ],
+                factual_anchors=["personal guarantee", "guarantor", "Section 128 Contract Act", "FIO 2001"]
+            ))
 
-        issues.append(LegalSubIssue(
-            issue_id="issue_banking_leave_to_defend",
-            heading="Mandatory Leave to Defend & 30-Day Limitation (Section 10 FIO 2001)",
-            description="Mandatory requirement under Section 10 FIO 2001 to file leave to defend within 30 days of service of summons.",
-            controlling_statutes=["Financial Institutions (Recovery of Finances) Ordinance, 2001"],
-            controlling_provisions=["FIO_2001_SEC_10"],
-            search_queries=["Section 10 FIO 2001 leave to defend 30 days mandatory limitation affidavit", "substantial question of law"],
-            factual_anchors=["Section 10", "leave to defend", "30 days"]
-        ))
+        if primary_domain == "banking" or any(k in q_low for k in ["recovery of finance", "fio 2001", "banking court", "statement of account", "section 9", "finance agreement"]):
+            issues.append(LegalSubIssue(
+                issue_id="issue_banking_recovery_suit",
+                heading="Banking Recovery Suit under Special Law (Sections 2, 9, 22 FIO 2001)",
+                description="Statutory recovery suit by financial institution under Section 9 FIO 2001 and requirement of valid statement of account.",
+                controlling_statutes=["Financial Institutions (Recovery of Finances) Ordinance, 2001"],
+                controlling_provisions=["FIO_2001_SEC_9", "FIO_2001_SEC_2", "FIO_2001_SEC_22"],
+                search_queries=["Section 9 FIO 2001 recovery suit statement of account financial institution", "Section 22 FIO 2001 appeal"],
+                factual_anchors=["Section 9", "Financial Institutions (Recovery of Finances) Ordinance, 2001", "FIO 2001"]
+            ))
+
+            issues.append(LegalSubIssue(
+                issue_id="issue_banking_leave_to_defend",
+                heading="Mandatory Leave to Defend & 30-Day Limitation (Section 10 FIO 2001)",
+                description="Mandatory requirement under Section 10 FIO 2001 to file leave to defend within 30 days of service of summons.",
+                controlling_statutes=["Financial Institutions (Recovery of Finances) Ordinance, 2001"],
+                controlling_provisions=["FIO_2001_SEC_10"],
+                search_queries=["Section 10 FIO 2001 leave to defend 30 days mandatory limitation affidavit", "substantial question of law"],
+                factual_anchors=["Section 10", "leave to defend", "30 days"]
+            ))
 
         if any(k in q_low for k in ["compound", "mark-up", "markup", "penal", "interest", "excessive"]):
             issues.append(LegalSubIssue(
@@ -509,7 +555,7 @@ def extract_legal_issues_from_fact_pattern(
     # =========================================================================
     # 4. CONSTITUTIONAL WRITS DECOMPOSITION
     # =========================================================================
-    elif primary_domain == "constitutional":
+    if "constitutional" in active_domains:
         # Certiorari / Ultra Vires
         if any(k in q_low for k in ["certiorari", "quash", "cancellation", "without lawful authority", "license", "order", "arbitrary"]):
             issues.append(LegalSubIssue(
@@ -574,7 +620,7 @@ def extract_legal_issues_from_fact_pattern(
     # =========================================================================
     # 5. SERVICE TRIBUNAL & CIVIL SERVANTS DECOMPOSITION
     # =========================================================================
-    elif primary_domain == "service":
+    if "service" in active_domains:
         if any(k in q_low for k in ["seniority", "seniority list"]):
             issues.append(LegalSubIssue(
                 issue_id="issue_service_seniority_dispute",
@@ -624,7 +670,7 @@ def extract_legal_issues_from_fact_pattern(
     # =========================================================================
     # 7. LAND & PROPERTY REVENUE DECOMPOSITION
     # =========================================================================
-    elif is_land_revenue_signal or "land_revenue" in q_low:
+    if ("land_revenue" in active_domains or is_land_revenue_signal or "land_revenue" in q_low) and primary_domain not in ("family", "rent"):
         if any(k in q_low for k in ["mutation", "intiqal", "patwari", "section 42"]):
             issues.append(LegalSubIssue(
                 issue_id="issue_revenue_mutation_challenge",
@@ -685,7 +731,7 @@ def extract_legal_issues_from_fact_pattern(
     # =========================================================================
     # 8. PECA CYBERCRIME DETERMINISTIC BRANCH & IP DECOMPOSITION
     # =========================================================================
-    elif is_peca_signal or primary_domain == "cybercrime":
+    if (is_peca_signal or "cybercrime" in active_domains) and primary_domain not in ("family", "rent"):
         # Sub-issue 1: Specific PECA Section Alleged (Dignity, Modesty, Fraud)
         issues.append(LegalSubIssue(
             issue_id="issue_peca_specific_section_alleged",
@@ -745,7 +791,7 @@ def extract_legal_issues_from_fact_pattern(
         open_questions.append("Whether an FIR has been registered by the FIA Cyber Crime Wing or only a call-up notice / inquiry is pending.")
         open_questions.append("Whether the alleged digital material was publicly exhibited on an information system as required under Section 20 of PECA 2016.")
 
-    elif is_cyber_ip_signal or primary_domain == "intellectual_property":
+    if ("intellectual_property" in active_domains or (is_cyber_ip_signal and not is_peca_signal)) and primary_domain not in ("family", "rent"):
         if any(k in q_low for k in ["peca", "hacking", "unauthorized access", "cybercrime"]):
             issues.append(LegalSubIssue(
                 issue_id="issue_cyber_unauthorized_access",
@@ -806,7 +852,7 @@ def extract_legal_issues_from_fact_pattern(
     # =========================================================================
     # 9. FAMILY PROPERTY & INHERITANCE DECOMPOSITION
     # =========================================================================
-    elif is_inheritance_signal:
+    if ("inheritance" in active_domains or is_inheritance_signal) and primary_domain not in ("rent", "banking"):
         issues.append(LegalSubIssue(
             issue_id="issue_inheritance_shariat_shares",
             heading="Muslim Personal Law Shariat Distribution of Inheritance (Sections 2 & 3 Shariat Act 1962)",
@@ -855,7 +901,7 @@ def extract_legal_issues_from_fact_pattern(
     # =========================================================================
     # CRIMINAL LAW (THEFT, CBT, CHEATING, MURDER, BAIL, QUASHMENT)
     # =========================================================================
-    elif primary_domain == "criminal":
+    if "criminal" in active_domains:
         if is_cheque_signal:
             issues.append(LegalSubIssue(
                 issue_id="issue_cheque_dishonour_489f",
@@ -902,6 +948,21 @@ def extract_legal_issues_from_fact_pattern(
                 controlling_provisions=["PPC_1860_SEC_405", "PPC_1860_SEC_406"],
                 search_queries=["Section 405 Section 406 PPC criminal breach of trust entrustment dishonest misappropriation", "commercial dispute civil liability"],
                 factual_anchors=["criminal breach of trust", "Section 406 PPC"]
+            ))
+
+        has_falsification = any(k in q_low for k in ["477-a", "477a", "falsification", "falsification of accounts", "false entry in books", "falsifying accounts"])
+        if has_falsification:
+            issues.append(LegalSubIssue(
+                issue_id="issue_falsification_accounts_477a_ppc",
+                heading="Falsification of Accounts by Director, Officer or Clerk (Section 477-A Pakistan Penal Code, 1860)",
+                description="Statutory offence under Section 477-A PPC for willful destruction, alteration, mutilation, or falsification of books, papers, or accounts with intent to defraud.",
+                controlling_statutes=["Pakistan Penal Code, 1860"],
+                controlling_provisions=["PPC_1860_SEC_477A"],
+                search_queries=[
+                    "Section 477-A PPC falsification of accounts director clerk officer books of account intent to defraud",
+                    "Section 477A PPC company accounts fabricated balance sheet"
+                ],
+                factual_anchors=["falsification of accounts", "Section 477-A PPC", "books of account"]
             ))
 
         if any(k in q_low for k in ["302", "murder", "qatl"]):
@@ -971,7 +1032,12 @@ def extract_legal_issues_from_fact_pattern(
                 factual_anchors=["Section 265-K CrPC", "Sessions Court", "early acquittal"]
             ))
 
-        if not issues:
+        has_crim_issue = any(
+            iss.issue_id.startswith("issue_") and any(tag in iss.issue_id for tag in [
+                "criminal", "cbt", "cheque", "theft", "murder", "quashment", "bail", "falsification", "cheating"
+            ]) for iss in issues
+        )
+        if not has_crim_issue and primary_domain == "criminal":
             issues.append(LegalSubIssue(
                 issue_id="issue_criminal_fir_investigation",
                 heading="Criminal FIR & Statutory Investigation (Sections 154, 156, 173 CrPC 1898)",
@@ -987,7 +1053,7 @@ def extract_legal_issues_from_fact_pattern(
     # =========================================================================
     # 10A. CORPORATE OPPRESSION & MISMANAGEMENT
     # =========================================================================
-    elif primary_domain == "corporate":
+    if "corporate" in active_domains:
         issues.append(LegalSubIssue(
             issue_id="issue_corporate_oppression_mismanagement",
             heading="Oppression and Mismanagement by Majority Directors (Sections 286-288 Companies Act 2017)",
@@ -1031,7 +1097,7 @@ def extract_legal_issues_from_fact_pattern(
     # =========================================================================
     # 11. CIVIL SPECIFIC PERFORMANCE
     # =========================================================================
-    elif is_sale_specific_perf:
+    if is_sale_specific_perf and primary_domain in ("civil", "general_legal"):
         issues.append(LegalSubIssue(
             issue_id="issue_specific_performance_immovable_property",
             heading="Specific Performance of Agreement to Sell Immovable Property (Sections 12, 19, 21, 22 SRA 1877)",
@@ -1060,6 +1126,7 @@ def extract_legal_issues_from_fact_pattern(
     named_cids = extract_named_statute_canonical_ids(query_text)
     return FactPatternDecomposition(
         primary_domain=primary_domain,
+        secondary_domains=secondary_domains,
         issues=issues,
         open_questions=open_questions,
         named_statute_canonical_ids=named_cids

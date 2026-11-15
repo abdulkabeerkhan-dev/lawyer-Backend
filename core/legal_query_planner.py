@@ -922,15 +922,29 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         subdomains = ["oppression_and_mismanagement", "minority_shareholders", "section_286"]
         legacy_domains.append("oppression & mismanagement")
         legacy_matter_type.append("corporate")
-        if any(k in q_low for k in ["409", "misappropriat", "funds", "ppc", "crime", "siphon", "breach of trust", "embezzle", "forgery"]):
-            secondary_domains = ["criminal", "civil"]
+        secondary_domains = ["civil"]
+        allowed_domains_filter = ["corporate", "civil"]
+        is_cross_domain_relevant = False
+
+        has_crim = any(k in q_low for k in ["409", "406", "477", "477-a", "477a", "misappropriat", "funds", "ppc", "crime", "siphon", "breach of trust", "embezzle", "forgery", "falsification"])
+        has_bank = any(k in q_low for k in ["banking", "fio", "financial institution", "guarantee", "guarantor", "surety", "section 128", "finance", "loan"])
+
+        if has_crim:
+            secondary_domains.append("criminal")
+            allowed_domains_filter.append("criminal")
             is_cross_domain_relevant = True
-            cross_domain_reason = "Oppression under Companies Act involving misappropriation of corporate funds/shares and criminal breach of trust under Section 409 PPC."
-            allowed_domains_filter = ["corporate", "criminal", "civil"]
-        else:
-            secondary_domains = ["civil"]
-            is_cross_domain_relevant = False
-            allowed_domains_filter = ["corporate", "civil"]
+        if has_bank:
+            secondary_domains.append("banking")
+            allowed_domains_filter.append("banking")
+            is_cross_domain_relevant = True
+
+        if has_crim and has_bank:
+            cross_domain_reason = "Oppression under Companies Act combined with criminal offences (PPC) and banking liability / personal guarantee (FIO 2001, Contract Act)."
+        elif has_crim:
+            cross_domain_reason = "Oppression under Companies Act involving misappropriation of corporate funds/shares and criminal breach of trust under Section 409/406 PPC or falsification under 477-A PPC."
+        elif has_bank:
+            cross_domain_reason = "Oppression under Companies Act combined with banking recovery / personal guarantee under FIO 2001 and Section 128 Contract Act."
+
         procedural_remedy = "Company Petition under Section 286 Companies Act 2017"
         competent_forum = "Special Court / High Court Company Bench"
 
@@ -1884,12 +1898,26 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
                 for sq in issue.search_queries:
                     if not any(l.get("query") == sq for l in raw_lanes):
                         raw_lanes.append({"lane": issue.issue_id, "query": sq})
+                        search_lanes.append(SearchLane(
+                            lane_id=issue.issue_id,
+                            purpose=issue.heading,
+                            query=sq,
+                            target_engine="all"
+                        ))
                 if issue.heading not in questions:
                     questions.append(issue.heading)
             if hasattr(decomp, "open_questions") and decomp.open_questions:
                 for oq in decomp.open_questions:
                     if oq not in questions:
                         questions.append(oq)
+            if hasattr(decomp, "secondary_domains") and decomp.secondary_domains:
+                for sd in decomp.secondary_domains:
+                    if sd not in secondary_domains:
+                        secondary_domains.append(sd)
+                    if sd not in allowed_domains_filter:
+                        allowed_domains_filter.append(sd)
+                if len(decomp.secondary_domains) > 0:
+                    is_cross_domain_relevant = True
     except Exception as e:
         logger.warning(f"Fact pattern decomposition error in planner: {e}")
 
