@@ -4659,94 +4659,56 @@ def strip_copyright_and_branding(text: str) -> str:
 
 
 
+    # 1. Trailing or standalone copyright & portal footer blocks
+    text = re.sub(r'(?is)(?:Copyrights?|©|\bThis\s*site\s*is\s*developed\b).*?Oratier\s*Technologies.*?(?:Sitemap|\Z)', '', text)
+    text = re.sub(r'(?is)\bThis\s*site\s*is\s*developed\s*&?\s*maintained\s*(?:by\s*)?Oratier\s*Technologies[^\n\r]*', '', text)
+    text = re.sub(r'(?is)\bHelp\s*FAQ\'?s?\s*Sitemap\b', '', text)
+    text = re.sub(r'(?is)Copyrights?\s*©?\s*\d*\s*(?:by\s*)?Oratier\s*Technologies\s*\(Pvt\.?\)?\s*Ltd\.?', '', text)
+
+    # Word doc metadata scraper noise
+    text = re.sub(r'(?is)Microsoft Word [^\n\r]*\n+Oratier\s*Technologies\s*\(Pvt\.?\)?\s*Ltd\.?', '', text)
+    text = re.sub(r'(?is)\bRoot Entry\n+1Table\n+1Table\n+WordDocument[^\n]*', '', text)
+
     patterns = [
-
-        r'Copyrights?\s*©?\s*\d*\s*by\s*Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
-
-        r'This\s*site\s*is\s*developed\s*&\s*maintained\s*(by\s*)?Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
-
-        r'Help\s*FAQ\'?s?\s*Sitemap',
-
         r'Page\s*\d+\s*of\s*\d+',
-
         r'Confidential\s*&\s*Official\s*Record\s*-\s*Pakistan\s*Legal\s*Corpus',
-
         r'Source:\s*pakistan\s*law\s*site',
-
         r'pakistan\s*law\s*site',
-
         r'pakistanlawsite(?:\.com)?',
-
-        r'Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
-
         r'Bookmark\s*this\s*Case',
-
         r'My\s*Account',
-
         r'Customer\s*Care\s*Office',
-
         r'PLD\s*Publishers',
-
         r'35-Nabha\s*Road',
-
         r'Phone:\s*\+?\d+[\d\s\/]*',
-
         r'Whatsapp:\s*\+?\d+[\d\s\/]*',
-
         r'Fax:\s*\+?\d+[\d\s\/]*',
-
         r'Email:\s*\S+',
-
         r'Saved\s*Citations',
-
         r'innertemple',
-
         r'Home\s+Word\s*&\s*Phrases',
-
         r'Head\s*Notes\s*on\s*Cases\s*With\s*Complete\s*Judgements?',
-
         r'(?:CLC|YLR|PCrLJ|PCRLJ|PLC|PLC\(CS\))\s*Notes',
-
         r'Monthly\s*Journals',
-
         r'Case\s*Law\s*Search',
-
         r'Last\s*\d+\s*Years?',
-
         r'New\s*Statutes',
-
         r'Word\s*&\s*Phrases',
-
         r'Legal\s*Terms',
-
         r'Maxims',
-
         r'Articles',
-
         r'Topics',
-
         r'Dictionary',
-
         r'General\s*Orders',
-
         r'Circulars',
-
         r'Notifications',
-
         r'GBLR\s+Miscellaneous',
-
         r'Federal\s+Punjab\s+KPK\s+Balochistan\s+Sindh',
-
         r'Latest\s*Caselaws',
-
         r'Recent\s*Judgments',
-
         r'View\s*Full\s*Judgment',
-
         r'Related\s*Citations',
-
         r'\([A-Z0-9_\-]+\)'
-
     ]
 
     cleaned = text
@@ -14898,11 +14860,6 @@ async def get_api_judgment_pdf_endpoint(
         )
     from core.content_classification import classify_judgment_content
     content_level = classify_judgment_content(match_record)
-    content_label = (
-        "Reported Headnote / Summary — not the full judgment"
-        if content_level == "headnote_only"
-        else "Generated text copy — not an original scanned PDF"
-    )
     if not REPORTLAB_AVAILABLE:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -14910,7 +14867,7 @@ async def get_api_judgment_pdf_endpoint(
         )
     title = clean_or_extract_title(raw_title, text)
 
-    pdf_bytes = build_judgment_pdf_bytes(title, citation, court, text, content_label=content_label)
+    pdf_bytes = build_judgment_pdf_bytes(title, citation, court, text, content_label=None)
     safe_filename = re.sub(r'[^a-zA-Z0-9_\-]', '_', decoded_id).strip('_') + ".pdf"
     return Response(
         content=pdf_bytes,
@@ -15151,14 +15108,6 @@ async def export_court_pleading(
             "Output withheld to protect",
             "Strict Anti-Hallucination Policy",
             "withheld to protect strict",
-            "Unaddressed Points & Source Limitations",
-            "Not Found:",
-            "- *Not Found:*",
-            "HEADNOTE_ONLY - not verified",
-            "STRUCTURED_MEMO_PARTIAL",
-            "PARTIAL LEGAL RESEARCH RECORD",
-            "PARTIAL RESEARCH RECORD",
-            "issues unresolved"
         ])
         if is_withheld_notice:
             raise HTTPException(

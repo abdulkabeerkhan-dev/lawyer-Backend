@@ -61,21 +61,31 @@ def strip_copyright_and_branding(text: str) -> str:
     ]):
         text = cit_match.group(1)
 
+    # 1. Trailing or standalone copyright & portal footer blocks
+    text = re.sub(r'(?is)(?:Copyrights?|©|\bThis\s*site\s*is\s*developed\b).*?Oratier\s*Technologies.*?(?:Sitemap|\Z)', '', text)
+    text = re.sub(r'(?is)\bThis\s*site\s*is\s*developed\s*&?\s*maintained\s*(?:by\s*)?Oratier\s*Technologies[^\n\r]*', '', text)
+    text = re.sub(r'(?is)\bHelp\s*FAQ\'?s?\s*Sitemap\b', '', text)
+    text = re.sub(r'(?is)Copyrights?\s*©?\s*\d*\s*(?:by\s*)?Oratier\s*Technologies\s*\(Pvt\.?\)?\s*Ltd\.?', '', text)
+
+    # Word doc metadata scraper noise
+    text = re.sub(r'(?is)Microsoft Word [^\n\r]*\n+Oratier\s*Technologies\s*\(Pvt\.?\)?\s*Ltd\.?', '', text)
+    text = re.sub(r'(?is)\bRoot Entry\n+1Table\n+1Table\n+WordDocument[^\n]*', '', text)
+
     patterns = [
-        r'Copyrights?\s*©?\s*\d*\s*by\s*Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
-        r'This\s*site\s*is\s*developed\s*&\s*maintained\s*(by\s*)?Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
-        r'Help\s*FAQ\'?s?\s*Sitemap',
         r'Page\s*\d+\s*of\s*\d+',
         r'Confidential\s*&\s*Official\s*Record\s*-\s*Pakistan\s*Legal\s*Corpus',
         r'Source:\s*pakistan\s*law\s*site',
         r'pakistan\s*law\s*site',
         r'pakistanlawsite(?:\.com)?',
-        r'Oratier\s*Technologies\s*\(Pvt\.\)?\s*Ltd\.?',
         r'Bookmark\s*this\s*Case',
         r'My\s*Account',
         r'Customer\s*Care\s*Office',
         r'PLD\s*Publishers',
         r'35-Nabha\s*Road',
+        r'Phone:\s*\+?\d+[\d\s\/]*',
+        r'Whatsapp:\s*\+?\d+[\d\s\/]*',
+        r'Fax:\s*\+?\d+[\d\s\/]*',
+        r'Email:\s*\S+',
         r'Saved\s*Citations',
         r'innertemple',
         r'Home\s+Word\s*&\s*Phrases',
@@ -83,10 +93,30 @@ def strip_copyright_and_branding(text: str) -> str:
         r'(?:CLC|YLR|PCrLJ|PCRLJ|PLC|PLC\(CS\))\s*Notes',
         r'Monthly\s*Journals',
         r'Case\s*Law\s*Search',
+        r'Last\s*\d+\s*Years?',
+        r'New\s*Statutes',
+        r'Word\s*&\s*Phrases',
+        r'Legal\s*Terms',
+        r'Maxims',
+        r'Articles',
+        r'Topics',
+        r'Dictionary',
+        r'General\s*Orders',
+        r'Circulars',
+        r'Notifications',
+        r'GBLR\s+Miscellaneous',
+        r'Federal\s+Punjab\s+KPK\s+Balochistan\s+Sindh',
+        r'Latest\s*Caselaws',
+        r'Recent\s*Judgments',
+        r'View\s*Full\s*Judgment',
+        r'Related\s*Citations',
+        r'\([A-Z0-9_\-]+\)'
     ]
     for pat in patterns:
         text = re.sub(pat, '', text, flags=re.IGNORECASE)
 
+    text = re.sub(r'^\s*Source:\s*$', '', text, flags=re.MULTILINE | re.IGNORECASE)
+    text = re.sub(r'\n{3,}', '\n\n', text)
     return text.strip()
 
 
