@@ -212,82 +212,178 @@ class StructuralJudgmentSegmenter:
             "ratio_decidendi_segment": ratio_text,
             "facts_and_order_segment": facts_text,
             "pinecone_segments": pinecone_segments,
-            "has_full_text": bool(order_text and len(order_text.split()) >= 150),
+            "has_full_text": bool(detected_type == "full_judgment" and order_text and len(order_text.split()) > 200),
+            "content_level": "full_judgment" if detected_type == "full_judgment" else "headnote",
+            "full_text": order_text if detected_type == "full_judgment" else None,
             "parsed_outcome": split_res.get("parsed_outcome")
         }
 
     @classmethod
     def _clean_portal_debris(cls, text: str) -> str:
-        """Strips HTML tags, portal navigation, and scraping headers."""
+        """Strips HTML tags, portal navigation, and scraping headers/footers."""
         t = re.sub(r'<[^>]+>', ' ', text)
-        t = re.sub(r'(?i)(?:Citation Name:\s*[^\n]+|Bookmark this Case|Copyrights?\s*©?[^\n]+|Help\s+FAQ\'?s\s+Sitemap)', '', t)
+        # Multi-line Oratier / PLD copyright and footer blocks
+        t = re.sub(r'(?is)(?:Copyrights?|©|\(c\)).*?(?:Oratier\s*Technologies|Help\s*FAQ\'?s\s*Sitemap|All\s*Rights\s*Reserved).*?(?:\n\s*\n|\Z)', '', t)
+        t = re.sub(r'(?is)\bThis\s*site\s*is\s*developed\s*&?\s*maintained\s*(?:by\s*)?Oratier\s*Technologies[^\n\r]*', '', t)
+        t = re.sub(r'(?is)\bHelp\s*FAQ\'?s?\s*Sitemap\b', '', t)
+        t = re.sub(r'(?i)(?:Citation Name:\s*[^\n]+|Bookmark this Case)', '', t)
         t = re.sub(r'(?i)(?:page \d+ of \d+|all rights reserved)', '', t)
         t = re.sub(r'[\r\t]+', ' ', t)
         t = re.sub(r'\n{3,}', '\n\n', t)
         return t.strip()
 
     @classmethod
+    def parse_pakistan_law_site_document(cls, text: str) -> Dict[str, Any]:
+        """
+        Parses Pakistan Law Site documents with authoritative judicial order extraction:
+        Type A: Headnote (editorial summary) on pp. 1-2, followed by ORDER section
+                starting with judge name and 'J.---'. Strips misleading repeated
+                headnote under 'FULL JUDGMENT TEXT' label at the tail and copyright footers.
+                Set content_level='full_judgment' only when ORDER exceeds 200 words.
+        Type B: Contains only headnote, no ORDER section (e.g. 2023 CLD 1249, 2023 CLD 33).
+                Sets full_text=None, content_level='headnote'.
+        """
+        if not text or not isinstance(text, str):
+            return {
+                "detected_type": "headnote_only",
+                "content_level": "headnote",
+                "headnote_text": "",
+                "order_text": "",
+                "full_text": None,
+                "split_offset": None,
+                "is_type_a": False,
+                "is_type_b": True
+            }
+
+        clean = cls._clean_portal_debris(text)
+
+        # Regex to detect judge byline with J.--- delimiter (single line byline, non-greedy name)
+        # Matches e.g. "MUHAMMAD SAJID MEHMOOD SETHI, J.---", "IJAZ AHMAD CHAUDHRY, J.---",
+        # "QAZI FAEZ ISA, C.J.---", "PER C.A. RAHMAN, J.---", "JUSTICE ALI BAQAR NAJAFI, J. ---",
+        # "MUHAMMAD ALI MAZHAR AND SYED HASAN AZHAR RIZVI, JJ.---"
+        byline_pattern = re.compile(
+            r'(?:(?<=\n)|(?<=^))[ \t]*'
+            r'([A-Z][A-Za-z0-9 \t\.,\(\)\'\-]{2,90}?'
+            r'(?:,?[ \t]*(?:C\.?[ \t]*J\.?|J\.?|JJ\.?|CHIEF\s+JUSTICE|JUSTICE))\s*(?:---|:---))[ \t]*'
+        )
+
+        m = byline_pattern.search(clean)
+
+        if m:
+            split_offset = m.start()
+            headnote_part = clean[:split_offset].strip()
+            # Clean trailing ORDER / JUDGMENT label from headnote if present immediately before judge byline
+            headnote_part = re.sub(r'(?i)\n\s*(?:ORDER|JUDGMENT|SHORT ORDER)\.?\s*$', '', headnote_part).strip()
+
+            order_part = clean[split_offset:].strip()
+
+            # Misleading tail removal:
+            # 1. Search for "FULL JUDGMENT TEXT" label at the tail (merely repeats headnote in PLS)
+            m_full = re.search(
+                r'(?i)\n\s*(?:\[|\(|\-{2,}|\={2,}|\*{2,})?\s*FULL\s+JUDGM?ENT(?:\s+TEXT)?\s*(?:\]|\)|\-{2,}|\={2,}|\*{2,})?\s*(?:\n|\Z)',
+                order_part
+            )
+            if m_full:
+                order_part = order_part[:m_full.start()].strip()
+
+            # 2. Check if repeated headnote catchwords occur at the tail of order_part
+            if headnote_part:
+                hn_lines = [
+                    l.strip() for l in headnote_part.splitlines()
+                    if len(l.strip()) > 30 and not l.strip().lower().startswith(
+                        ('citation', 'bookmark', 'side', 'before', 'court')
+                    )
+                ]
+                if hn_lines:
+                    key_phrase = hn_lines[0][:60]
+                    pos = order_part.find(key_phrase)
+                    if pos > 200:
+                        order_part = order_part[:pos].strip()
+
+            # 3. Strip any trailing copyright notices from order_part
+            order_part = re.sub(
+                r'(?is)(?:Copyrights?|©|\(c\)).*?(?:Oratier\s*Technologies|Help\s*FAQ\'?s\s*Sitemap|All\s*Rights\s*Reserved).*?(?:\n\s*\n|\Z)',
+                '', order_part
+            ).strip()
+
+            order_words = len(order_part.split())
+            if order_words > 200:
+                # Type A: Authentic full judgment with extracted ORDER section > 200 words
+                return {
+                    "detected_type": "full_judgment",
+                    "content_level": "full_judgment",
+                    "headnote_text": headnote_part,
+                    "order_text": order_part,
+                    "full_text": order_part,
+                    "split_offset": split_offset,
+                    "is_type_a": True,
+                    "is_type_b": False
+                }
+            else:
+                # ORDER section is too short (<= 200 words) -> treat as headnote only
+                return {
+                    "detected_type": "headnote_only",
+                    "content_level": "headnote",
+                    "headnote_text": clean,
+                    "order_text": "",
+                    "full_text": None,
+                    "split_offset": None,
+                    "is_type_a": False,
+                    "is_type_b": True
+                }
+
+        # No judge byline with J.--- found:
+        # Check if the text is an unheaded order/judgment from an official court portal
+        # (must start with ORDER/JUDGMENT, have > 200 words, and have zero editorial catchwords)
+        has_editorial_catchwords = bool(
+            re.search(r'(?:---Ss?\.\s*\d+|---O\.\s*[IVXLCDM\d]+|---Arts?\.\s*\d+|---Held:|---Validity|\bBookmark\b)', clean)
+        )
+        has_formal_order_start = bool(re.match(r'^\s*(?:ORDER|JUDGMENT|SHORT ORDER)\b', clean, re.IGNORECASE))
+        clean_words = len(clean.split())
+
+        if has_formal_order_start and not has_editorial_catchwords and clean_words > 200:
+            return {
+                "detected_type": "full_judgment",
+                "content_level": "full_judgment",
+                "headnote_text": "",
+                "order_text": clean,
+                "full_text": clean,
+                "split_offset": 0,
+                "is_type_a": True,
+                "is_type_b": False
+            }
+
+        # Type B: Only headnote editorial summary found (e.g. 2023 CLD 1249, 2023 CLD 33)
+        return {
+            "detected_type": "headnote_only",
+            "content_level": "headnote",
+            "headnote_text": clean,
+            "order_text": "",
+            "full_text": None,
+            "split_offset": None,
+            "is_type_a": False,
+            "is_type_b": True
+        }
+
+    @classmethod
     def _split_headnote_and_order(cls, text: str) -> Dict[str, Any]:
         """
         Splits text into editorial headnote and judicial order based on Pakistani reporting conventions.
         """
-        t = text.strip()
-        words = len(t.split())
+        parsed = cls.parse_pakistan_law_site_document(text)
+        headnote_text = parsed["headnote_text"]
+        order_text = parsed["order_text"]
+        detected_type = parsed["detected_type"]
 
-        # Split markers
-        split_offset = None
-        order_match = re.search(r'\n{2,}\s*(?:JUDGMENT|ORDER|SHORT ORDER)\s*\n+', t, re.IGNORECASE)
-        byline_match = re.search(r'\n{2,}\s*(?:[A-Z\s\.]+(?:,?\s*J\.|,?\s*CJ\.|,?\s*JJ\.)---|Before\s+[A-Za-z\s\.]+,?\s*(?:J|CJ|JJ))', t)
-
-        candidate_offsets = []
-        if order_match and order_match.start() > 100:
-            candidate_offsets.append(order_match.start())
-        if byline_match and byline_match.start() > 100:
-            candidate_offsets.append(byline_match.start())
-
-        if candidate_offsets:
-            split_offset = min(candidate_offsets)
-
-        head_500 = t[:500]
-        has_catchwords = bool(re.search(r'(?:---Ss?\.\s*\d+|---O\.\s*[IVXLCDM\d]+|---Arts?\.\s*\d+|---Held:|---Validity)', t))
-        has_dash_markers = len(re.findall(r'-{3,}', t[:1500])) >= 2
-        has_held_marker = bool(re.search(r'\b(?:Held|Validity)\s*[:\-]', t, re.IGNORECASE))
-        has_order_start = bool(re.match(r'^\s*(?:ORDER|JUDGMENT|SHORT ORDER)\b', head_500, re.IGNORECASE))
-
-        is_headnote_dominant = has_catchwords or has_dash_markers or has_held_marker
-
-        headnote_text = None
-        order_text = None
-
-        if split_offset and is_headnote_dominant:
-            detected_type = "mixed"
-            headnote_text = t[:split_offset].strip()
-            order_text = t[split_offset:].strip()
-        elif is_headnote_dominant and not has_order_start and words < 1200:
-            detected_type = "headnote_only"
-            headnote_text = t
-            order_text = ""
-        elif has_order_start or not is_headnote_dominant:
-            detected_type = "full_judgment" if words >= 800 else "order_text"
-            headnote_text = ""
-            order_text = t
-        else:
-            detected_type = "mixed" if split_offset else "full_judgment"
-            if split_offset:
-                headnote_text = t[:split_offset].strip()
-                order_text = t[split_offset:].strip()
-            else:
-                headnote_text = ""
-                order_text = t
-
-        # Outcome detection from order tail
         parsed_outcome = cls._parse_outcome(order_text if order_text else headnote_text)
 
         return {
             "detected_type": detected_type,
-            "split_offset": split_offset,
+            "content_level": parsed["content_level"],
+            "split_offset": parsed["split_offset"],
             "headnote_text": headnote_text or "",
             "order_text": order_text or "",
+            "full_text": parsed["full_text"],
             "parsed_outcome": parsed_outcome
         }
 
@@ -582,3 +678,8 @@ class StructuralJudgmentSegmenter:
             "has_full_text": False,
             "parsed_outcome": "unknown"
         }
+
+
+# Module-level alias for convenient external invocation
+parse_pakistan_law_site_document = StructuralJudgmentSegmenter.parse_pakistan_law_site_document
+

@@ -2619,11 +2619,12 @@ async def process_query_job_legal_ai(
                     # If Turso text_type or content_level is headnote, downgrade badge
                     if t_type in ("headnote", "headnote_only", "editorial_summary", "summary") or (match.get("headnote") and not match.get("full_text")):
                         c["is_headnote_only"] = True
+                        c["is_headnote"] = True
                         c["is_verified"] = False
                         c["verified"] = False
                         c["verified_source"] = False
                         c["verification_status"] = "HEADNOTE_ONLY - not verified"
-                        c["source_badge"] = "Headnote Only - Not Verified" 
+                        c["source_badge"] = "Headnote Only - Full judgment not available" 
     except Exception as e:
         logger.warning(f"Turso precedent hydration error: {e}")
 

@@ -33,14 +33,27 @@ def classify_judgment_content(record: Dict[str, Any]) -> str:
         or ""
     ).strip().lower().replace("-", "_")
 
+    if declared in ("headnote", "headnote_only"):
+        return declared
     if declared in _HEADNOTE_LEVELS:
         return "headnote_only"
     if text and len(text) < 4000 and _PUBLISHER_METADATA_RE.search(text):
         return "headnote_only"
     if not text and headnote:
-        return "headnote_only"
-    if declared in _FULL_TEXT_LEVELS:
-        return "full_judgment"
-    if len(text) >= 4000:
-        return "full_judgment"
-    return "unknown"
+        return "headnote"
+    if not text:
+        return "unknown"
+
+    # Use structural judge byline & order parsing to differentiate Type A vs Type B
+    try:
+        from core.structural_judgment_segmenter import parse_pakistan_law_site_document
+        parsed = parse_pakistan_law_site_document(text)
+        if parsed.get("content_level") == "full_judgment":
+            return "full_judgment"
+        else:
+            return "headnote"
+    except Exception:
+        if declared in _FULL_TEXT_LEVELS and len(text.split()) > 200:
+            return "full_judgment"
+        return "headnote"
+

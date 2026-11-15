@@ -6671,7 +6671,15 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
             raw_txt = r_cand
     words = len(raw_txt.split()) if raw_txt else 0
 
-    if c_type in ("full_text", "fresh_court_fetch") and words >= 150:
+    c_lvl = str(c.get("content_level") or meta_dict.get("content_level") or "").strip().lower()
+    is_headnote_rec = (
+        c_lvl in ("headnote", "headnote_only", "editorial_summary", "summary")
+        or c_type in ("headnote", "headnote_only")
+        or c.get("is_headnote_only") is True
+        or c.get("is_headnote") is True
+    )
+
+    if not is_headnote_rec and c_type in ("full_text", "fresh_court_fetch") and words >= 150:
         c["verification_status"] = "Full Judgment (unreviewed)"
         c["verified_source"] = True
         c["is_verified"] = True
@@ -6681,6 +6689,9 @@ def sanitize_precedent_card(card: Dict[str, Any]) -> Dict[str, Any]:
         c["verified_source"] = False
         c["is_verified"] = False
         c["verified"] = False
+        c["is_headnote"] = True
+        c["is_headnote_only"] = True
+        c["source_badge"] = "Headnote Only - Full judgment not available"
 
     # Score handling: never display synthetic 0.99 score as similarity
     if c.get("is_boosted") or c.get("direct_citation_match") or c.get("score") == 0.99:
@@ -14503,12 +14514,17 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                 "content_level": content_level,
                 "content_type": (
                     "headnote_only"
-                    if content_level == "headnote_only"
+                    if content_level in ("headnote", "headnote_only")
                     else "full_text"
                     if content_level == "full_judgment"
                     else "unknown"
                 ),
-                "is_headnote": content_level == "headnote_only",
+                "is_headnote": content_level in ("headnote", "headnote_only"),
+                "is_headnote_only": content_level in ("headnote", "headnote_only"),
+                "verified": content_level == "full_judgment",
+                "is_verified": content_level == "full_judgment",
+                "verified_source": content_level == "full_judgment",
+                "verification_status": "Full Judgment (unreviewed)" if content_level == "full_judgment" else "HEADNOTE_ONLY - not verified",
                 "content_status": "available",
                 "source_type": "Turso",
                 "holding": holding_val,

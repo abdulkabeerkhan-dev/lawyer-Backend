@@ -136,6 +136,31 @@ def execute_turso_pipeline(stmts: List[Dict[str, Any]], timeout: int = 5, max_re
                 time.sleep(0.2)
     return []
 
+def _normalize_case_record(row: Dict[str, Any]) -> Dict[str, Any]:
+    """Applies rigorous Pakistani legal taxonomy and Type A/Type B structural division."""
+    if not row:
+        return row
+    from core.content_classification import classify_judgment_content
+    c_lvl = classify_judgment_content(row)
+    row["content_level"] = c_lvl
+    row["text_type"] = c_lvl
+    if c_lvl in ("headnote", "headnote_only"):
+        # Type B: Only headnote summary available -> store headnote as headnote, full_text = None
+        raw_ft = row.get("full_text") or ""
+        raw_hn = row.get("headnote") or ""
+        if len(raw_ft) > len(raw_hn):
+            row["headnote"] = raw_ft
+        row["full_text"] = None
+    elif c_lvl == "full_judgment" and row.get("full_text"):
+        # Type A: Ensure repeated headnote at tail and copyright footers are stripped from full_text
+        from core.structural_judgment_segmenter import parse_pakistan_law_site_document
+        p = parse_pakistan_law_site_document(row["full_text"])
+        if p.get("full_text"):
+            row["full_text"] = p["full_text"]
+            if not row.get("headnote") and p.get("headnote_text"):
+                row["headnote"] = p.get("headnote_text")
+    return row
+
 def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     """
     Looks up a single case by case_id (e.g. '2021_SCMR_1463') or neutral citation ('2021 SCMR 1463').
@@ -162,10 +187,7 @@ def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     """
     res = execute_turso_pipeline([{"sql": sql_id, "args": [{"type": "text", "value": norm_id}]}], timeout=3, max_retries=1)
     if res and "rows" in res[0] and res[0]["rows"]:
-        case_data = res[0]["rows"][0]
-        from core.content_classification import classify_judgment_content
-        case_data["content_level"] = classify_judgment_content(case_data)
-        case_data["text_type"] = case_data["content_level"]
+        case_data = _normalize_case_record(res[0]["rows"][0])
         _CASE_CACHE[norm_id] = case_data
         _CASE_CACHE[norm_cit] = case_data
         return case_data
@@ -183,10 +205,7 @@ def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     ]
     res2 = execute_turso_pipeline([{"sql": sql_cit, "args": args_cit}], timeout=3, max_retries=1)
     if res2 and "rows" in res2[0] and res2[0]["rows"]:
-        case_data = res2[0]["rows"][0]
-        from core.content_classification import classify_judgment_content
-        case_data["content_level"] = classify_judgment_content(case_data)
-        case_data["text_type"] = case_data["content_level"]
+        case_data = _normalize_case_record(res2[0]["rows"][0])
         _CASE_CACHE[norm_id] = case_data
         _CASE_CACHE[norm_cit] = case_data
         return case_data
@@ -222,12 +241,10 @@ def get_cases_batch(identifiers: List[str]) -> List[Dict[str, Any]]:
     res = execute_turso_pipeline([{"sql": sql, "args": args}], timeout=3, max_retries=1)
     if res and "rows" in res[0]:
         for row in res[0]["rows"]:
-            from core.content_classification import classify_judgment_content
-            row["content_level"] = classify_judgment_content(row)
-            row["text_type"] = row["content_level"]
-            c_norm = row.get("case_id", "").upper()
-            _CASE_CACHE[c_norm] = row
-            found.append(row)
+            norm_row = _normalize_case_record(row)
+            c_norm = norm_row.get("case_id", "").upper()
+            _CASE_CACHE[c_norm] = norm_row
+            found.append(norm_row)
 
     return found
 

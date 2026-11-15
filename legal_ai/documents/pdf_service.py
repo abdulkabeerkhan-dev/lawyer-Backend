@@ -251,6 +251,13 @@ def build_judgment_pdf_bytes(title: str, citation: str, court: str, text: str) -
     clean_court = sanitize_black_box_characters(court or "")
     clean_text = sanitize_black_box_characters(text or "")
     clean_text = strip_copyright_and_branding(clean_text)
+    # Strip misleading repeated headnote section under FULL JUDGMENT TEXT
+    m_full = re.search(
+        r'(?i)\n\s*(?:\[|\(|\-{2,}|\={2,}|\*{2,})?\s*FULL\s+JUDGM?ENT(?:\s+TEXT)?\s*(?:\]|\)|\-{2,}|\={2,}|\*{2,})?\s*(?:\n|\Z)',
+        clean_text
+    )
+    if m_full:
+        clean_text = clean_text[:m_full.start()].strip()
     clean_text = re.sub(r'^\s*\[\d+\]\s*', '', clean_text, flags=re.MULTILINE)
 
     paragraphs_list = [p.strip() for p in re.split(r'\n\s*\n+', clean_text) if p.strip()]
