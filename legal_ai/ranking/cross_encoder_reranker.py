@@ -105,6 +105,15 @@ def _heuristic_legal_cross_score(
     elif "high court" in court:
         court_boost = 0.08
 
+    # 4. Domain mismatch penalty
+    if query_plan:
+        prim_dom = str(getattr(query_plan, "primary_domain", "") or "").lower()
+        if prim_dom == "corporate":
+            # Penalize civic / development authority plot allotment appearing in corporate query
+            if any(k in text for k in ["development authority", "lda", "cda", "kda", "rda", "plot allotment", "residential plot", "exemption policy", "faisal masud"]):
+                if not any(k in text for k in ["companies act", "director", "shareholder", "company bench", "secp", "siphoning"]):
+                    return 0.05
+
     final_score = min(0.99, base_score + statute_boost + court_boost)
     return round(final_score, 4)
 

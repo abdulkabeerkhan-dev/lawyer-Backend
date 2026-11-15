@@ -128,10 +128,24 @@ def is_irrelevant_subject(candidate: Dict[str, Any], query_plan: LegalQueryPlan)
         if any(k in haystack for k in ["section 302 ppc", "cnsa", "murder trial"]):
             return True
 
-    is_corporate = any(k in domains or k in questions_str for k in ["companies act", "oppression", "mismanagement", "company bench", "provisional manager"])
+    is_corporate = (
+        any(k in domains or k in questions_str for k in ["companies act", "oppression", "mismanagement", "company bench", "provisional manager", "corporate", "shareholder", "director"])
+        or getattr(query_plan, "primary_domain", "") == "corporate"
+    )
     if is_corporate:
+        # Civic development authority / plot allotment filter (e.g. LDA, CDA, KDA, RDA, Dr. Faisal Masud)
+        if any(k in haystack for k in [
+            "development authority", "lda", "cda", "kda", "rda", "faisal masud",
+            "plot allotment", "cancellation of plot", "residential plot", "commercial plot",
+            "allotment of plot", "civic property", "exemption of plot", "allottee of plot", "housing society"
+        ]):
+            if not any(k in haystack for k in ["companies act", "director", "shareholder", "company bench", "secp", "siphoning"]):
+                return True
         if any(k in haystack for k in ["election tribunal", "elections act", "reserved seats", "election petition", "service tribunal", "service appeal", "plc(cs)", "civil servants"]):
             return True
+        if any(k in haystack for k in ["punjab rented premises", "prpa", "srpo", "ejectment of tenant", "fair rent", "bona fide personal need"]):
+            if not any(k in haystack for k in ["companies act", "director", "shareholder"]):
+                return True
         if any(k in haystack for k in ["section 302 ppc", "cnsa", "murder trial"]):
             return True
         if any(k in haystack for k in ["khula", "dower", "family court"]):

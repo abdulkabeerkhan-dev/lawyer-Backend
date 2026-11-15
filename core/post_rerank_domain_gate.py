@@ -78,6 +78,13 @@ DISALLOWED_STATUTES_BY_DOMAIN: Dict[str, List[str]] = {
         "family courts act", "guardian and wards act", "west pakistan muslim personal law",
         "juvenile justice", "anti-terrorism act", "defamation ordinance"
     ],
+    "corporate": [
+        "lahore development authority", "lda act", "capital development authority", "cda",
+        "karachi development authority", "kda", "rawalpindi development authority", "rda",
+        "family courts act", "mflo", "guardian and wards", "punjab rented premises",
+        "sindh rented premises", "control of narcotic substances act", "cnsa",
+        "illegal dispossession act", "land revenue act", "colonization of government lands"
+    ],
     "constitutional": []
 }
 
@@ -358,6 +365,18 @@ def partition_candidates_into_ranking_buckets(
         # Step 5: Verified Neutral Procedural Statute Check
         is_procedural_statute = any(p in combined_text for p in PROCEDURAL_STATUTE_PATTERNS)
         if (cand_domain == "general_legal" or is_procedural_statute) and conf >= 0.60:
+            # Guard against off-domain civic / plot allotment cases masquerading as neutral procedural
+            if primary_domain == "corporate" and any(k in combined_text for k in [
+                "development authority", "lda", "cda", "kda", "rda", "plot allotment", "allotment of plot",
+                "residential plot", "commercial plot", "exemption policy", "katchi abadi"
+            ]) and not any(k in combined_text for k in ["companies act", "shareholder", "director", "company bench", "secp", "corporate"]):
+                cand["ranking_bucket"] = 3
+                cand["validation_status"] = "DEMOTED_OFF_DOMAIN"
+                cand["validation_reason"] = "Plot allotment by development authority is irrelevant to corporate domain"
+                bucket_3.append(cand)
+                telemetry["bucket_3_count"] += 1
+                continue
+
             cand["ranking_bucket"] = 2
             cand["validation_status"] = "APPROVED_PROCEDURAL"
             cand["validation_reason"] = f"Verified neutral procedural authority with conf >= 0.60 ({conf:.2f})"
