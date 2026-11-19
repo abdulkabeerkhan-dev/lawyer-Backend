@@ -47,6 +47,48 @@ ProvinceType = Literal[
     "Punjab", "Sindh", "Khyber Pakhtunkhwa", "Balochistan", "Islamabad", "Federal"
 ]
 
+DOMAIN_ALIAS_MAP: Dict[str, LegalDomainType] = {
+    "property": "civil",
+    "contract": "civil",
+    "contracts": "civil",
+    "tort": "civil",
+    "torts": "civil",
+    "real_estate": "civil",
+    "revenue": "civil",
+    "land_revenue": "civil",
+    "inheritance": "civil",
+    "matrimonial": "family",
+    "marriage": "family",
+    "divorce": "family",
+    "custody": "family",
+    "guardianship": "family",
+    "commercial": "corporate",
+    "company": "corporate",
+    "finance": "banking",
+    "financial": "banking",
+    "employment": "service",
+    "labor": "labour",
+    "white_collar": "criminal",
+    "penal": "criminal",
+    "ip": "intellectual_property",
+    "copyright": "intellectual_property",
+    "trademark": "intellectual_property",
+    "patent": "intellectual_property",
+    "environment": "environmental",
+    "tax": "taxation",
+    "customs": "taxation",
+}
+
+
+def normalize_domain(domain_val: Any) -> Optional[LegalDomainType]:
+    """Safely normalizes arbitrary domain strings or aliases to valid LegalDomainType."""
+    if not domain_val or not isinstance(domain_val, str):
+        return None
+    d = domain_val.strip().lower().replace("-", "_").replace(" ", "_")
+    if d in ALL_LEGAL_DOMAINS:
+        return d  # type: ignore
+    return DOMAIN_ALIAS_MAP.get(d)
+
 
 class SearchLane(BaseModel):
     lane_id: str
@@ -256,32 +298,44 @@ class StructuredLegalQueryPlan(BaseModel):
         data["competent_forum"] = frm
         data["forum"] = frm
 
-        # 6. Resolve primary_domain if missing
+        # 6. Resolve and normalize primary_domain
         prim = data.get("primary_domain")
-        if not prim:
+        norm_prim = normalize_domain(prim)
+        if not norm_prim:
             m_type = data.get("matter_type", [])
             l_dom = data.get("legal_domain", [])
             all_str = [str(x).lower() for x in m_type + l_dom]
             if any("criminal" in x for x in all_str):
-                prim = "criminal"
+                norm_prim = "criminal"
             elif any("family" in x for x in all_str):
-                prim = "family"
+                norm_prim = "family"
             elif any("rent" in x for x in all_str):
-                prim = "rent"
+                norm_prim = "rent"
             elif any("corporate" in x for x in all_str):
-                prim = "corporate"
+                norm_prim = "corporate"
             elif any("service" in x for x in all_str):
-                prim = "service"
+                norm_prim = "service"
             elif any("constitutional" in x for x in all_str):
-                prim = "constitutional"
+                norm_prim = "constitutional"
             elif any("banking" in x for x in all_str):
-                prim = "banking"
+                norm_prim = "banking"
             else:
-                prim = "civil"
-            data["primary_domain"] = prim
+                norm_prim = "civil"
+        data["primary_domain"] = norm_prim
+        prim = norm_prim
+
+        # 6b. Normalize secondary_domains to strictly valid LegalDomainType
+        raw_sec = data.get("secondary_domains") or []
+        clean_sec: List[str] = []
+        if isinstance(raw_sec, list):
+            for s in raw_sec:
+                ns = normalize_domain(s)
+                if ns and ns != prim and ns not in clean_sec:
+                    clean_sec.append(ns)
+        data["secondary_domains"] = clean_sec
+        sec = clean_sec
 
         # 7. Sync matter_type & legal_domain
-        sec = data.get("secondary_domains", [])
         if not data.get("matter_type"):
             data["matter_type"] = [prim] + [s for s in sec if s != prim]
         if not data.get("legal_domain"):
@@ -742,7 +796,13 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     is_service = any(k in q_low for k in ["civil servant", "service tribunal", "seniority list", "superseded in promotion", "promotion eligibility", "reversion", "civil servants act", "peeda", "removal from service", "dismissal from service", "article 212", "service tribunals act"])
     is_constitutional_general = any(k in q_low for k in ["article 199", "article 184", "article 189", "article 201", "writ petition", "writ of", "fundamental right", "mandamus", "certiorari", "public interest litigation"])
     is_family = (
-        any(k in q_low for k in ["khula", "dower", "maintenance", "guardian", "custody of minor", "talaq", "mflo", "zar-i-khula", "family court", "hizanat", "guardians and wards"])
+        any(k in q_low for k in [
+            "khula", "dower", "maintenance", "guardian", "custody of minor", "talaq", "mflo",
+            "zar-i-khula", "family court", "hizanat", "guardians and wards",
+            "divorce", "dowry", "nikkah", "nikah", "nikahnama", "jahez", "jehez", "bridal gift",
+            "bridal gifts", "dissolution of marriage", "restitution of conjugal", "interim maintenance",
+            "minor custody", "child custody", "visitation schedule", "child maintenance", "unregistered dower"
+        ])
         or ("family" in q_low and not any(k in q_low for k in ["land", "property", "partition", "estate", "ancestral", "share", "heir"]))
     )
     is_female_inheritance = any(k in q_low for k in ["female heir", "female legal heir", "female co-heir", "sister", "daughter", "mother", "sister's share", "refusing sister"]) and any(k in q_low for k in ["inheritance", "tamleek", "relinquishment", "mutation", "shari share", "depriv", "estate", "women's property", "498-a", "498a"])
@@ -1065,12 +1125,17 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     elif is_family:
         primary_domain = "family"
         subdomains = ["dissolution_of_marriage", "khula", "dower", "custody", "maintenance"]
+        if any(k in q_low for k in ["dowry", "dower", "gold", "jahez", "nikkah", "nikah", "nikahnama", "belonging", "bridal"]):
+            subdomains.extend(["dowry_articles", "unregistered_dowry", "dower_recovery"])
+            procedural_remedy = "Suit for Recovery of Dowry Articles / Personal Property / Dower under Section 5 Family Courts Act 1964"
+            competent_forum = "Judge Family Court / Family Court"
+        else:
+            procedural_remedy = "Suit for Dissolution of Marriage (Khula) / Maintenance / Custody Petition"
+            competent_forum = "Family Court / Guardian Judge"
         legacy_domains.append("family law")
         legacy_matter_type.append("family")
         is_cross_domain_relevant = False
         allowed_domains_filter = ["family"]
-        procedural_remedy = "Suit for Dissolution of Marriage (Khula) / Maintenance / Custody Petition"
-        competent_forum = "Family Court / Guardian Judge"
 
     elif is_rent:
         primary_domain = "rent"
@@ -1646,6 +1711,17 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         questions.append("grounds for eviction for default in rent payment under Section 15 PRPA 2009")
     if is_cheque_dishonour:
         questions.append("criminal prosecution under Section 489-F PPC for dishonour of cheque")
+    if is_family:
+        if any(k in q_low for k in ["dowry", "dower", "gold", "jahez", "nikkah", "nikah", "nikahnama", "belonging", "bridal"]):
+            questions.append("recovery of dowry articles and gold given in marriage not entered in nikahnama under Section 5 Family Courts Act 1964")
+            questions.append("standard and burden of oral and documentary proof regarding unregistered dowry articles and bridal gifts")
+        elif any(k in q_low for k in ["khula", "dissolution", "divorce", "talaq"]):
+            questions.append("right of wife to obtain dissolution of marriage on ground of Khula under Section 10 Family Courts Act 1964")
+            questions.append("effect of non-return of zar-i-khula or dower on validity of dissolution decree")
+        elif any(k in q_low for k in ["custody", "guardian", "hizanat"]):
+            questions.append("welfare of minor as paramount consideration in custody matters under Guardians and Wards Act 1890")
+        elif any(k in q_low for k in ["maintenance", "support"]):
+            questions.append("statutory obligation of father to maintain minor children under Muslim Family Laws Ordinance 1961 and Family Courts Act 1964")
 
     if not questions:
         questions = [query[:200]]
@@ -1818,6 +1894,12 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
                 raw_lanes.append({
                     "lane": "custody_welfare_of_minor",
                     "query": "welfare of minor paramount consideration Section 17 Section 25 Guardians and Wards Act 1890 hizanat mother preferential right"
+                })
+        if any(k in q_low for k in ["dowry", "dower", "gold", "jahez", "nikkah", "nikah", "nikahnama", "personal property", "belongings", "bridal"]):
+            if not any(l["lane"] == "dowry_articles_gold_recovery" for l in raw_lanes):
+                raw_lanes.append({
+                    "lane": "dowry_articles_gold_recovery",
+                    "query": "recovery of dowry articles gold given in marriage not mentioned in nikahnama Family Courts Act Section 5 oral evidence proof"
                 })
 
     if is_rent:
