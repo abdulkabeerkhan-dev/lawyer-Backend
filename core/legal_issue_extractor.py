@@ -52,8 +52,8 @@ def extract_named_statute_canonical_ids(query_text: str) -> List[str]:
         ("peca 2016", "peca", "prevention of electronic crimes act"): [
             "PECA_2016_SEC_20", "PECA_2016_SEC_21", "PECA_2016_SEC_10", "PECA_2016_SEC_3", "PECA_2016_SEC_16"
         ],
-        ("fio 2001", "fio", "financial institutions ordinance", "financial institutions (recovery"): [
-            "FIO_2001_SEC_9", "FIO_2001_SEC_10", "FIO_2001_SEC_22", "FIO_2001_SEC_2"
+        ("fio 2001", "fio", "financial institutions ordinance", "financial institutions (recovery", "willful default", "wilful default", "willful defaulter", "wilful defaulter"): [
+            "FIO_2001_SEC_2", "FIO_2001_SEC_20", "FIO_2001_SEC_9", "FIO_2001_SEC_10", "FIO_2001_SEC_22"
         ],
         ("fia act", "fia 1974", "federal investigation agency act"): [
             "FIA_1974_SEC_5", "FIA_1974_SEC_3"
@@ -105,7 +105,7 @@ def extract_named_statute_canonical_ids(query_text: str) -> List[str]:
     # 2. Section X of [the] Y Act patterns
     statute_code_map = {
         "peca": "PECA_2016", "peca 2016": "PECA_2016",
-        "fio": "FIO_2001", "fio 2001": "FIO_2001",
+        "fio": "FIO_2001", "fio 2001": "FIO_2001", "financial institutions": "FIO_2001", "recovery of finances": "FIO_2001",
         "crpc": "CRPC_1898", "cr.p.c": "CRPC_1898", "cr.p.c.": "CRPC_1898",
         "ppc": "PPC_1860", "p.p.c": "PPC_1860", "p.p.c.": "PPC_1860",
         "cpc": "CPC_1908", "c.p.c": "CPC_1908", "c.p.c.": "CPC_1908",
@@ -200,8 +200,9 @@ def extract_legal_issues_from_fact_pattern(
         any(k in q_low for k in [
             "banking court", "financial institutions (recovery", "fio 2001", "fio",
             "recovery of finance", "leave to defend", "compound mark-up", "finance agreement",
-            "section 9 fio", "section 10 fio", "statement of account", "penal mark-up",
-            "personal guarantee", "guarantor", "surety", "section 128"
+            "section 9 fio", "section 10 fio", "section 20 fio", "statement of account", "penal mark-up",
+            "personal guarantee", "guarantor", "surety", "section 128", "financial institutions ordinance",
+            "willful default", "wilful default", "willful defaulter", "wilful defaulter", "defaulter"
         ]) or
         (any(k in q_low for k in ["guarantee", "guarantor", "surety"]) and any(k in q_low for k in ["bank", "fio", "loan", "finance", "credit", "borrower"]))
     )
@@ -507,6 +508,20 @@ def extract_legal_issues_from_fact_pattern(
                 factual_anchors=["personal guarantee", "guarantor", "Section 128 Contract Act", "FIO 2001"]
             ))
 
+        if any(k in q_low for k in ["willful", "wilful", "default", "defaulter", "section 20", "criminal"]):
+            issues.append(LegalSubIssue(
+                issue_id="issue_banking_willful_default",
+                heading="Willful Default & Criminal Liability under Special Banking Law (Sections 2(g) & 20 FIO 2001)",
+                description="Statutory offence of willful default under Section 2(g) and Section 20 FIO 2001, mandatory 30-day demand notice, cognizable non-bailable prosecution, and parallel recovery before Banking Court.",
+                controlling_statutes=["Financial Institutions (Recovery of Finances) Ordinance, 2001", "Code of Criminal Procedure, 1898"],
+                controlling_provisions=["FIO_2001_SEC_2", "FIO_2001_SEC_20", "FIO_2001_SEC_9"],
+                search_queries=[
+                    "Section 2(g) Section 20 FIO 2001 willful default 30 days notice cognizable non-bailable Banking Court",
+                    "willful default definition financial institutions recovery of finances ordinance 2001"
+                ],
+                factual_anchors=["willful default", "Section 2(g) FIO 2001", "Section 20 FIO 2001", "30-day notice"]
+            ))
+
         if primary_domain == "banking" or any(k in q_low for k in ["recovery of finance", "fio 2001", "banking court", "statement of account", "section 9", "finance agreement"]):
             issues.append(LegalSubIssue(
                 issue_id="issue_banking_recovery_suit",
@@ -550,6 +565,9 @@ def extract_legal_issues_from_fact_pattern(
                 factual_anchors=["Section 15 FIO 2001", "mortgaged property", "sale without intervention"]
             ))
 
+        if any(k in q_low for k in ["willful", "wilful", "default", "defaulter", "section 20"]):
+            open_questions.append("Whether the financial institution served a formal 30-day statutory demand notice as required under Section 20(2) FIO 2001 prior to alleging willful default.")
+            open_questions.append("Whether the borrower had the capacity to pay or if default was occasioned by involuntary business/market distress under Section 2(g) FIO 2001.")
         open_questions.append("Whether the borrower has an independent ledger reconciliation showing agreed finance vs charged penal interest.")
 
     # =========================================================================

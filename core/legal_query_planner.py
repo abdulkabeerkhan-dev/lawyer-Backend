@@ -950,7 +950,6 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         and not (is_land_revenue or is_corporate or is_civil_execution)
     )
     is_rent = bool(re.search(r'\b(?:rent|rented|tenan[ct]|landlord|evict|ejectment|tenancy|commercial shop|rent tribunal)\b', q_low) or any(k in q_low for k in ["prpa", "srpo"]))
-    is_banking = any(k in q_low for k in ["banking court", "bank", "financial institution", "recovery of finance", "fio", "firo"]) and any(k in q_low for k in ["decree", "appeal", "loan", "finance", "stay", "deposit", "leave to defend", "banking", "section 22", "section 10"])
     is_habeas_corpus = any(k in q_low for k in ["habeas corpus", "unlawful detention", "illegal detention", "detenue", "without production"])
     is_cybercrime = any(k in q_low for k in [
         "peca", "cybercrime", "cyber crime", "hacking", "cyberstalking", "cyber stalking",
@@ -1014,6 +1013,28 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         ])
         or ("family" in q_low and not any(k in q_low for k in ["land", "property", "partition", "estate", "ancestral", "share", "heir"]))
     )
+    is_banking = (
+        any(k in q_low for k in [
+            "banking court", "financial institution", "recovery of finance",
+            "fio", "firo", "financial institutions ordinance", "banking company",
+            "willful default", "wilful default", "willful defaulter", "wilful defaulter",
+            "defaulter", "credit facility", "finance facility", "customer of bank",
+            "loan default", "default of finance"
+        ])
+        or (
+            any(k in q_low for k in ["bank", "banking"])
+            and any(k in q_low for k in ["decree", "appeal", "loan", "finance", "stay", "deposit", "leave to defend", "banking", "section 22", "section 10", "section 9", "section 20", "default"])
+        )
+        or (
+            any(k in q_low for k in ["default", "defaulter", "non-payment"])
+            and any(k in q_low for k in ["loan", "finance", "bank", "credit", "borrower", "financial", "guarantee"])
+        )
+        or any(k in q_low for k in [
+            "willful default", "wilful default", "willful defaulter", "wilful defaulter",
+            "fio 2001", "section 9 fio", "section 10 fio", "section 20 fio", "section 22 fio",
+            "recovery of finances ordinance", "financial institutions (recovery of finances)"
+        ])
+    ) and not (is_rent or is_family or is_labour or is_service)
     is_female_inheritance = any(k in q_low for k in ["female heir", "female legal heir", "female co-heir", "sister", "daughter", "mother", "sister's share", "refusing sister"]) and any(k in q_low for k in ["inheritance", "tamleek", "relinquishment", "mutation", "shari share", "depriv", "estate", "women's property", "498-a", "498a"])
     is_cheque_dishonour = (
         (
@@ -1286,6 +1307,50 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
 
         procedural_remedy = "Company Petition under Section 286 Companies Act 2017"
         competent_forum = "Special Court / High Court Company Bench"
+
+    elif is_banking:
+        primary_domain = "banking"
+        subdomains = ["recovery_of_finance", "banking_court", "fio_2001", "leave_to_defend"]
+        legacy_domains.append("banking law")
+        legacy_matter_type.append("banking")
+        if any(k in q_low for k in ["willful", "wilful", "offence", "offense", "arrest", "cognizable", "punishment", "imprisonment", "prosecution", "crime"]):
+            subdomains.extend(["willful_default", "criminal_liability"])
+            secondary_domains = ["criminal", "civil"]
+            legacy_matter_type.append("criminal")
+            is_cross_domain_relevant = True
+            cross_domain_reason = (
+                "Willful default under Section 2(g) and Section 20 of FIO 2001 constitutes a cognizable, "
+                "non-bailable criminal offence punishable with up to 7 years imprisonment, operating alongside "
+                "statutory civil recovery proceedings before Banking Courts under Section 9."
+            )
+            cross_domain_controlling_doctrines = [
+                "statutory_30_day_demand_notice",
+                "mens_rea_willful_vs_involuntary_default",
+                "cognizable_offence_under_special_law"
+            ]
+            allowed_domains_filter = ["banking", "criminal", "civil"]
+            procedural_remedy = "Criminal Trial / Investigation under Section 20 FIO 2001 & Civil Suit under Section 9 FIO 2001"
+            competent_forum = "Banking Court / Special Investigating Agency"
+        elif any(k in q_low for k in ["appeal", "section 22"]):
+            subdomains.append("banking_appeal")
+            secondary_domains = ["civil"]
+            is_cross_domain_relevant = False
+            allowed_domains_filter = ["banking", "civil"]
+            procedural_remedy = "First Appeal against Banking Court Decree under Section 22 FIO 2001"
+            competent_forum = "High Court (Appellate Division of at least two Judges)"
+        elif any(k in q_low for k in ["leave to defend", "section 10"]):
+            subdomains.append("leave_to_defend")
+            secondary_domains = ["civil"]
+            is_cross_domain_relevant = False
+            allowed_domains_filter = ["banking", "civil"]
+            procedural_remedy = "Petition for Leave to Defend under Section 10 FIO 2001"
+            competent_forum = "Banking Court"
+        else:
+            secondary_domains = ["civil"]
+            is_cross_domain_relevant = False
+            allowed_domains_filter = ["banking", "civil"]
+            procedural_remedy = "Suit for Recovery of Finance under Section 9 FIO 2001"
+            competent_forum = "Banking Court"
 
     elif is_rent:
         primary_domain = "rent"
@@ -1682,8 +1747,9 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             statutes.append("Pakistan Penal Code, 1860")
         if "Code of Criminal Procedure, 1898" not in statutes:
             statutes.append("Code of Criminal Procedure, 1898")
-    if is_banking or any(k in q_low for k in ["banking court", "financial institution", "recovery of finance", "fio", "firo"]):
-        statutes.append("Financial Institutions (Recovery of Finances) Ordinance, 2001")
+    if is_banking or primary_domain == "banking" or any(k in q_low for k in ["banking court", "financial institution", "recovery of finance", "fio", "firo", "willful default", "wilful default", "willful defaulter", "wilful defaulter"]):
+        if "Financial Institutions (Recovery of Finances) Ordinance, 2001" not in statutes:
+            statutes.append("Financial Institutions (Recovery of Finances) Ordinance, 2001")
     if is_partition or is_benami:
         for part_s in ["Partition Act, 1893", "Code of Civil Procedure, 1908", "Specific Relief Act, 1877", "Benami Transactions (Prohibition) Act, 2017", "Transfer of Property Act, 1882", "Limitation Act, 1908"]:
             if part_s not in statutes:
@@ -1793,12 +1859,25 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
 
     # Doctrinal provision detection
     if is_banking:
-        if any(k in q_low for k in ["appeal", "stay", "deposit", "execution"]):
+        if any(k in q_low for k in ["willful", "wilful", "default", "defaulter", "offence", "offense", "arrest"]):
+            for p_lbl in [
+                "Section 2 Financial Institutions (Recovery of Finances) Ordinance 2001",
+                "Section 20 Financial Institutions (Recovery of Finances) Ordinance 2001",
+                "Section 9 Financial Institutions (Recovery of Finances) Ordinance 2001",
+                "Section 10 Financial Institutions (Recovery of Finances) Ordinance 2001"
+            ]:
+                if p_lbl not in provisions:
+                    provisions.append(p_lbl)
+        elif any(k in q_low for k in ["appeal", "stay", "deposit", "execution"]):
             p_label = "Section 22 Financial Institutions (Recovery of Finances) Ordinance 2001"
             if p_label not in provisions:
                 provisions.append(p_label)
         elif any(k in q_low for k in ["leave to defend", "leave to appear"]):
             p_label = "Section 10 Financial Institutions (Recovery of Finances) Ordinance 2001"
+            if p_label not in provisions:
+                provisions.append(p_label)
+        else:
+            p_label = "Section 9 Financial Institutions (Recovery of Finances) Ordinance 2001"
             if p_label not in provisions:
                 provisions.append(p_label)
 
@@ -2105,6 +2184,20 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             questions.append("welfare of minor as paramount consideration in custody matters under Guardians and Wards Act 1890")
         elif any(k in q_low for k in ["maintenance", "support"]):
             questions.append("statutory obligation of father to maintain minor children under Muslim Family Laws Ordinance 1961 and Family Courts Act 1964")
+    if is_banking:
+        if any(k in q_low for k in ["willful", "wilful", "offence", "offense", "arrest", "cognizable", "punishment", "imprisonment"]):
+            questions.append("statutory definition and ingredients of willful default under Section 2(g) and Section 20 Financial Institutions (Recovery of Finances) Ordinance 2001")
+            questions.append("mandatory requirement of 30 days statutory demand notice before initiating criminal prosecution for willful default under Section 20(2) FIO 2001")
+            questions.append("cognizance and non-bailable nature of offence of willful default and powers of Banking Court / Special Agency under Section 20 FIO 2001")
+        elif any(k in q_low for k in ["leave to defend", "leave to appear", "section 10"]):
+            questions.append("mandatory period of 30 days for filing petition for leave to defend under Section 10 Financial Institutions (Recovery of Finances) Ordinance 2001")
+            questions.append("requirement of disclosing substantial questions of law and fact supported by summary of accounts under Section 10(4) FIO 2001")
+        elif any(k in q_low for k in ["appeal", "section 22", "deposit"]):
+            questions.append("appellate remedy before Division Bench of High Court under Section 22 Financial Institutions (Recovery of Finances) Ordinance 2001")
+            questions.append("statutory requirement of depositing 50 percent of decreetal amount or furnish security under Section 22 FIO 2001")
+        else:
+            questions.append("procedure and requisites for filing suit for recovery of finance under Section 9 Financial Institutions (Recovery of Finances) Ordinance 2001")
+            questions.append("evidentiary value and certification of statement of account under Bankers Books Evidence Act 1891 in banking recovery suits")
     if is_taxation or primary_domain == "taxation":
         questions.append("legality and procedural requirements of tax assessment under Section 122 / 111 Income Tax Ordinance 2001")
         questions.append("appellate remedy before Commissioner Inland Revenue (Appeals) and Appellate Tribunal Inland Revenue under Sections 127 and 131 ITO 2001")
@@ -2334,6 +2427,17 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             })
 
     if is_banking:
+        if any(k in q_low for k in ["willful", "wilful", "default", "defaulter", "section 20", "section 2"]):
+            if not any(l["lane"] == "fio_willful_default_s2_s20" for l in raw_lanes):
+                raw_lanes.insert(0, {
+                    "lane": "fio_willful_default_s2_s20",
+                    "query": "Section 2(g) Section 20 Financial Institutions Recovery of Finances Ordinance 2001 willful default 30 days notice cognizable non-bailable"
+                })
+            if not any(l["lane"] == "fio_recovery_suit_s9" for l in raw_lanes):
+                raw_lanes.append({
+                    "lane": "fio_recovery_suit_s9",
+                    "query": "Section 9 Financial Institutions Recovery of Finances Ordinance 2001 banking court recovery suit statement of account"
+                })
         if any(k in q_low for k in ["leave to defend", "leave to appear", "condonation", "delay", "time barred"]):
             if not any(l["lane"] == "fio_leave_to_defend_s10" for l in raw_lanes):
                 raw_lanes.insert(0, {
