@@ -55,7 +55,48 @@ def test_all_domain_fallback_classifications():
     ip_plan = create_deterministic_fallback_plan(ip_q)
     assert ip_plan.primary_domain == "intellectual_property", f"Expected intellectual_property, got {ip_plan.primary_domain}"
 
-    print("✓ Test 3: All domains correctly classified")
+    # 7. Pre-emption (Shufa)
+    preempt_q = "suit for pre-emption Punjab Pre-emption Act 1991 failure to make Talb-i-Muwathabat jumping demand"
+    preempt_plan = create_deterministic_fallback_plan(preempt_q)
+    assert preempt_plan.primary_domain == "civil"
+    assert "pre_emption" in preempt_plan.subdomains
+
+    # 8. Illegal Dispossession (IDA 2005)
+    ida_q = "complaint under Illegal Dispossession Act 2005 against land grabbers qabza mafia"
+    ida_plan = create_deterministic_fallback_plan(ida_q)
+    assert ida_plan.primary_domain == "criminal"
+    assert "Court of Session" in ida_plan.competent_forum
+
+    # 9. Succession Certificate
+    succ_q = "petition for grant of succession certificate under Succession Act 1925 for deceased bank account"
+    succ_plan = create_deterministic_fallback_plan(succ_q)
+    assert succ_plan.primary_domain == "civil"
+    assert "succession_certificate" in succ_plan.subdomains
+
+    # 10. Cancellation of Document / Power of Attorney
+    canc_q = "suit for cancellation of fraudulent sale deed executed through forged power of attorney section 39 SRA"
+    canc_plan = create_deterministic_fallback_plan(canc_q)
+    assert canc_plan.primary_domain == "civil"
+    assert "cancellation_of_instrument" in canc_plan.subdomains
+
+    # 11. Narcotics / CNSA
+    narc_q = "post-arrest bail under section 497 CrPC for recovery of 1200 grams charas under section 9-C CNSA 1997"
+    narc_plan = create_deterministic_fallback_plan(narc_q)
+    assert narc_plan.primary_domain == "criminal"
+    assert "cnsa_1997" in narc_plan.subdomains or "bail" in narc_plan.subdomains
+
+    # 12. Family Law - Haq Mehr and Kharcha
+    haq_q = "suit for recovery of unpaid haq mehr and monthly kharcha nafqah of minor child"
+    haq_plan = create_deterministic_fallback_plan(haq_q)
+    assert haq_plan.primary_domain == "family"
+
+    # 13. Specific Performance with Bayana / Iqrarnama
+    sp_q = "suit for specific performance of agreement to sell immovable property after paying bayana advance money"
+    sp_plan = create_deterministic_fallback_plan(sp_q)
+    assert sp_plan.primary_domain == "civil"
+    assert "specific_performance" in sp_plan.subdomains
+
+    print("✓ Test 3: All domains and specialized topics correctly classified")
 
 if __name__ == "__main__":
     test_secondary_domain_normalization()

@@ -70,28 +70,58 @@ DOMAIN_ALIAS_MAP: Dict[str, LegalDomainType] = {
     "money_recovery": "civil",
     "execution": "civil",
     "limitation": "civil",
+    "limitation_act": "civil",
+    "preemption": "civil",
+    "pre_emption": "civil",
+    "shufa": "civil",
+    "dispossession": "civil",
+    "benami": "civil",
+    "cpc": "civil",
     "civil_litigation": "civil",
     "general_civil": "civil",
 
     # Criminal
     "penal": "criminal",
     "crime": "criminal",
+    "crimes": "criminal",
+    "criminal_law": "criminal",
+    "crpc": "criminal",
+    "ppc": "criminal",
     "white_collar": "criminal",
     "bail": "criminal",
     "quashment": "criminal",
     "fir": "criminal",
     "narcotics": "criminal",
+    "drugs": "criminal",
     "cnsa": "criminal",
     "anti_corruption": "criminal",
     "nab": "criminal",
+    "murder": "criminal",
+    "theft": "criminal",
+    "robbery": "criminal",
+    "cheating": "criminal",
+    "fraud": "criminal",
+    "cbt": "criminal",
+    "breach_of_trust": "criminal",
+    "cheque": "criminal",
+    "cheque_dishonour": "criminal",
+    "dishonour_of_cheque": "criminal",
+    "bounced_cheque": "criminal",
+    "489f": "criminal",
 
     # Constitutional
     "constitution": "constitutional",
+    "constitutional_law": "constitutional",
     "writ": "constitutional",
+    "writs": "constitutional",
     "fundamental_rights": "constitutional",
     "judicial_review": "constitutional",
     "human_rights": "constitutional",
     "public_law": "constitutional",
+    "habeas_corpus": "constitutional",
+    "mandamus": "constitutional",
+    "certiorari": "constitutional",
+    "quo_warranto": "constitutional",
 
     # Family
     "matrimonial": "family",
@@ -105,6 +135,16 @@ DOMAIN_ALIAS_MAP: Dict[str, LegalDomainType] = {
     "dower": "family",
     "dowry": "family",
     "child_support": "family",
+    "mehr": "family",
+    "mahr": "family",
+    "haq_mehr": "family",
+    "nikah": "family",
+    "nikkahnama": "family",
+    "nikahnama": "family",
+    "jahez": "family",
+    "jehez": "family",
+    "hizanat": "family",
+    "kharcha": "family",
 
     # Corporate & Commercial
     "commercial": "corporate",
@@ -864,12 +904,29 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         any(k in q_low for k in ["judgment debtor", "execution of decree", "money decree", "order xxi", "section 55", "warrant of arrest against judgment debtor", "civil prison", "executing court"])
         and not any(k in q_low for k in ["fir", "police station", "remand", "challan", "post-arrest bail", "pre-arrest bail"])
     )
-    is_land_revenue = any(k in q_low for k in [
-        "land revenue", "mutation", "intiqal", "record of rights", "jamabandi",
-        "revenue officer", "patwari", "revenue court", "partition of agricultural",
-        "section 42 land revenue", "section 135 land revenue", "section 172 land revenue",
-        "illegal dispossession act", "land grabber", "illegal dispossession"
+    is_preemption = any(k in q_low for k in [
+        "pre-emption", "preemption", "shufa", "haq-e-shufa", "haq-i-shufa", "haq shufa",
+        "talb-i-muwathabat", "talb-i-ishhad", "talb-i-khusumat", "talb muwathabat",
+        "jumping demand", "punjab pre-emption", "pre-emption act", "zar-e-soom"
     ])
+    is_illegal_dispossession = any(k in q_low for k in [
+        "illegal dispossession act", "illegal dispossession", "land grabber", "land grabbers",
+        "qabza mafia", "qabza", "dispossessed illegally", "dispossessed without due course"
+    ])
+    is_succession = any(k in q_low for k in [
+        "succession certificate", "letter of administration", "letters of administration",
+        "succession act", "succession act 1925", "deceased bank account", "movable assets of deceased",
+        "probate of will", "nadra succession"
+    ])
+    is_land_revenue = (
+        any(k in q_low for k in [
+            "land revenue", "mutation", "intiqal", "record of rights", "jamabandi",
+            "revenue officer", "patwari", "tehsildar", "revenue court", "partition of agricultural",
+            "section 42 land revenue", "section 135 land revenue", "section 172 land revenue",
+            "fard", "khasra", "girdawari", "aks shajra", "board of revenue"
+        ])
+        and not is_illegal_dispossession
+    )
     is_partition = any(k in q_low for k in ["partition", "co-sharer", "co-owner", "hotchpot", "joint property", "joint ancestral", "order xx rule 18", "partition act", "order viii rule 6", "metes and bounds"])
     is_benami = any(k in q_low for k in ["benami", "ostensible owner", "benamidar", "advancement"])
     is_quashment = (
@@ -881,7 +938,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         and not is_civil_execution
     )
     is_corporate = (
-        any(k in q_low for k in ["companies act", "company law", "section 286", "section 288", "oppression", "mismanagement", "minority shareholder", "company bench", "secp"])
+        any(k in q_low for k in ["companies act", "company law", "section 286", "section 288", "oppression", "mismanagement", "minority shareholder", "company bench", "secp", "winding up"])
         or (
             any(k in q_low for k in ["director", "board of directors", "majority director", "managing director", "shareholder"])
             and any(k in q_low for k in ["siphoning", "siphon", "allotment of shares", "issuing shares", "agm", "eogm", "company assets", "corporate assets"])
@@ -949,7 +1006,11 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             "zar-i-khula", "family court", "hizanat", "guardians and wards",
             "divorce", "dowry", "nikkah", "nikah", "nikahnama", "jahez", "jehez", "bridal gift",
             "bridal gifts", "dissolution of marriage", "restitution of conjugal", "interim maintenance",
-            "minor custody", "child custody", "visitation schedule", "child maintenance", "unregistered dower"
+            "minor custody", "child custody", "visitation schedule", "child maintenance", "unregistered dower",
+            "mehr", "mahr", "haq mehr", "haq mehar", "haq-e-mehr", "haq-i-mehr", "prompt dower", "deferred dower",
+            "kharcha", "nafqah", "nafqa", "talaaq", "mubarat", "second marriage", "polygamy",
+            "visitation right", "visitation rights", "meeting with child", "custody of child", "paternity",
+            "legitimacy", "conjugal rights", "bari", "jahez list", "dowry list", "recovery of dowry"
         ])
         or ("family" in q_low and not any(k in q_low for k in ["land", "property", "partition", "estate", "ancestral", "share", "heir"]))
     )
@@ -969,13 +1030,25 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             and not (is_civil_execution or is_land_revenue or is_corporate)
         )
     )
+    is_cancellation_document = (
+        any(k in q_low for k in [
+            "cancellation of sale deed", "cancellation of deed", "cancellation of document",
+            "cancellation of instrument", "fraudulent sale deed", "fake sale deed", "forged sale deed",
+            "revocation of power of attorney", "fraudulent power of attorney", "fake power of attorney",
+            "section 39 sra", "section 39 specific relief", "cancellation of registered deed"
+        ])
+        and not is_female_inheritance
+    )
     is_execution = any(k in q_low for k in ["order xxi", "execution of decree", "objection petition", "rule 97", "rule 103"]) or is_civil_execution
     is_specific_perf = (
         (
-            any(k in q_low for k in ["sale deed", "agreement to sell", "specific performance", "advance money", "earnest money", "token money"])
+            any(k in q_low for k in [
+                "sale deed", "agreement to sell", "specific performance", "advance money", "earnest money",
+                "token money", "iqrarnama", "iqraarnama", "bayana", "biana", "beyana", "readiness and willingness"
+            ])
             or (any(k in q_low for k in ["seller", "buyer", "vendor", "vendee"]) and any(k in q_low for k in ["sale", "deed", "refused", "money", "property"]))
         )
-        and not (is_rent or is_banking or is_family or is_service or is_corporate or is_land_revenue or is_civil_execution)
+        and not (is_rent or is_banking or is_family or is_service or is_corporate or is_civil_execution or is_cancellation_document)
     )
     is_adverse_possession = (
         any(k in q_low for k in ["adverse possession", "hostile possession", "extinguishment of title"])
@@ -987,6 +1060,32 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         or ("article 144" in q_low and "limitation" in q_low)
         or ("article 149" in q_low and "limitation" in q_low)
     )
+    is_injunction_matter = (
+        any(k in q_low for k in [
+            "temporary injunction", "interim injunction", "stay order", "status quo",
+            "order 39 rule 1", "order xxxix rule 1", "order 39 rule 2", "order xxxix rule 2",
+            "disobedience of injunction", "breach of injunction", "order 39 rule 2(3)", "order xxxix rule 2-a"
+        ])
+        and not (is_partition or is_benami or is_corporate or is_rent or is_banking or is_specific_perf)
+    )
+    is_declaration_matter = (
+        any(k in q_low for k in [
+            "suit for declaration", "declaration of title", "declaration of ownership",
+            "section 42 sra", "section 42 specific relief", "cloud upon title"
+        ])
+        and not (is_partition or is_benami or is_female_inheritance or is_specific_perf)
+    )
+    is_narcotics = (
+        any(k in q_low for k in [
+            "cnsa", "narcotic", "narcotics", "charas", "heroin", "hashish", "opium", "ice",
+            "crystal meth", "9c cnsa", "9-c cnsa", "control of narcotic", "anf", "anti narcotics force"
+        ])
+        or bool(re.search(r'\b(?:cnsa|anf)\b', q_low))
+    )
+    is_anti_corruption = any(k in q_low for k in [
+        "nab", "national accountability", "nao 1999", "anti corruption establishment",
+        "assets beyond means", "assets disproportionate", "corrupt practice", "plea bargain"
+    ])
     is_money_recovery = (
         any(k in q_low for k in ["recovery of money", "money suit", "suit for money", "debt", "loan", "price of goods", "suit for recovery"])
         and not is_rent
@@ -1395,6 +1494,16 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         procedural_remedy = "Objection Petition under Order XXI Rule 97/99 CPC"
         competent_forum = "Executing Court / Civil Court"
 
+    elif is_cancellation_document:
+        primary_domain = "civil"
+        subdomains = ["cancellation_of_instrument", "fraudulent_deed", "power_of_attorney_abuse", "section_39_sra"]
+        legacy_domains.append("general civil law / specific relief")
+        legacy_matter_type.append("civil")
+        is_cross_domain_relevant = False
+        allowed_domains_filter = ["civil"]
+        procedural_remedy = "Suit for Cancellation of Document under Section 39 Specific Relief Act 1877"
+        competent_forum = "Civil Court / Senior Civil Judge"
+
     elif is_specific_perf:
         primary_domain = "civil"
         subdomains = ["contract", "specific_performance", "sale_deed", "property"]
@@ -1414,6 +1523,88 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         allowed_domains_filter = ["civil"]
         procedural_remedy = "Suit for Declaration of Title based on Adverse Possession"
         competent_forum = "Civil Court / District Judge"
+
+    elif is_preemption:
+        primary_domain = "civil"
+        subdomains = ["pre_emption", "shufa", "talb_i_muwathabat", "talb_i_ishhad"]
+        legacy_domains.append("pre-emption / shufa")
+        legacy_matter_type.append("civil")
+        is_cross_domain_relevant = False
+        allowed_domains_filter = ["civil"]
+        procedural_remedy = "Suit for Possession through Pre-emption under Punjab Pre-emption Act 1991"
+        competent_forum = "Civil Court / Senior Civil Judge"
+
+    elif is_illegal_dispossession:
+        primary_domain = "criminal"
+        secondary_domains = ["civil"]
+        subdomains = ["illegal_dispossession", "ida_2005", "land_grabbing", "restoration_of_possession"]
+        legacy_domains.extend(["criminal law", "property possession"])
+        legacy_matter_type.extend(["criminal", "civil"])
+        is_cross_domain_relevant = True
+        cross_domain_reason = "Illegal Dispossession Act 2005 provides a special criminal forum before Court of Session for recovery of property from land grabbers."
+        allowed_domains_filter = ["criminal", "civil"]
+        procedural_remedy = "Complaint under Section 3 & 4 Illegal Dispossession Act 2005"
+        competent_forum = "Court of Session / Sessions Judge"
+
+    elif is_succession:
+        primary_domain = "civil"
+        subdomains = ["succession_certificate", "letter_of_administration", "inheritance_movable_assets"]
+        legacy_domains.append("succession & probate")
+        legacy_matter_type.append("civil")
+        is_cross_domain_relevant = False
+        allowed_domains_filter = ["civil"]
+        procedural_remedy = "Petition for Succession Certificate under Section 372 Succession Act 1925"
+        competent_forum = "Civil Court / Senior Civil Judge / NADRA"
+
+    elif is_injunction_matter:
+        primary_domain = "civil"
+        subdomains = ["interim_injunction", "stay_order", "order_xxxix", "temporary_injunction"]
+        legacy_domains.append("general civil law")
+        legacy_matter_type.append("civil")
+        is_cross_domain_relevant = False
+        allowed_domains_filter = ["civil"]
+        procedural_remedy = "Application for Temporary Injunction under Order XXXIX Rules 1 & 2 CPC"
+        competent_forum = "Civil Court / Senior Civil Judge"
+
+    elif is_declaration_matter:
+        primary_domain = "civil"
+        subdomains = ["declaration_of_title", "section_42_sra", "ownership_dispute"]
+        legacy_domains.append("general civil law")
+        legacy_matter_type.append("civil")
+        is_cross_domain_relevant = False
+        allowed_domains_filter = ["civil"]
+        procedural_remedy = "Suit for Declaration under Section 42 Specific Relief Act 1877"
+        competent_forum = "Civil Court / Senior Civil Judge"
+
+    elif is_money_recovery:
+        primary_domain = "civil"
+        subdomains = ["money_recovery", "suit_for_money", "debt", "limitation_art57"]
+        legacy_domains.append("general civil law / recovery")
+        legacy_matter_type.append("civil")
+        is_cross_domain_relevant = False
+        allowed_domains_filter = ["civil"]
+        procedural_remedy = "Suit for Recovery of Money under CPC 1908 / Summary Suit under Order XXXVII CPC"
+        competent_forum = "Civil Court / District Judge"
+
+    elif is_narcotics:
+        primary_domain = "criminal"
+        subdomains = ["cnsa_1997", "narcotics_recovery", "bail_under_cnsa", "safe_custody_sample"]
+        legacy_domains.append("criminal law / narcotics")
+        legacy_matter_type.append("criminal")
+        is_cross_domain_relevant = False
+        allowed_domains_filter = ["criminal"]
+        procedural_remedy = "Bail Application under Section 497 CrPC read with Section 51 CNSA 1997"
+        competent_forum = "Special Court (CNSA) / Sessions Court / High Court"
+
+    elif is_anti_corruption:
+        primary_domain = "criminal"
+        subdomains = ["nab_ordinance", "anti_corruption", "assets_beyond_known_sources"]
+        legacy_domains.append("criminal law / white collar")
+        legacy_matter_type.append("criminal")
+        is_cross_domain_relevant = False
+        allowed_domains_filter = ["criminal"]
+        procedural_remedy = "Constitutional Bail Petition under Article 199 / Trial Defense before Accountability Court"
+        competent_forum = "Accountability Court / High Court (Division Bench)"
 
     else:
         primary_domain = "civil"
@@ -1528,6 +1719,21 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         for ip_stat in ["Trade Marks Ordinance, 2001", "Copyright Ordinance, 1962", "Patents Ordinance, 2000"]:
             if ip_stat not in statutes:
                 statutes.append(ip_stat)
+    if is_preemption:
+        if "Punjab Pre-emption Act, 1991" not in statutes:
+            statutes.append("Punjab Pre-emption Act, 1991")
+    if is_illegal_dispossession:
+        if "Illegal Dispossession Act, 2005" not in statutes:
+            statutes.append("Illegal Dispossession Act, 2005")
+    if is_succession:
+        if "Succession Act, 1925" not in statutes:
+            statutes.append("Succession Act, 1925")
+    if is_narcotics:
+        if "Control of Narcotic Substances Act, 1997" not in statutes:
+            statutes.append("Control of Narcotic Substances Act, 1997")
+    if is_anti_corruption:
+        if "National Accountability Ordinance, 1999" not in statutes:
+            statutes.append("National Accountability Ordinance, 1999")
     if any(k in q_low for k in ["qso", "qanun-e-shahadat", "evidence", "proof", "presumption", "tamleek", "benami"]):
         if "Qanun-e-Shahadat Order, 1984" not in statutes:
             statutes.append("Qanun-e-Shahadat Order, 1984")
@@ -1912,6 +2118,24 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         questions.append("cognizance, investigation, and trial of cyber offences under Prevention of Electronic Crimes Act 2016 (PECA)")
     if is_ip or primary_domain == "intellectual_property":
         questions.append("infringement of registered trademark, deceptive similarity, and passing off remedies under Trade Marks Ordinance 2001")
+    if is_preemption:
+        questions.append("compliance with statutory demands of Talb-i-Muwathabat and Talb-i-Ishhad under Section 13 Punjab Pre-emption Act 1991")
+        questions.append("fatal effect of jumping demand or delay in making talbs on pre-emption suit")
+    if is_illegal_dispossession:
+        questions.append("maintainability of complaint under Section 3 Illegal Dispossession Act 2005 before Court of Session")
+        questions.append("restoration of possession under Section 7 and punishment of illegal occupants / land grabbers")
+    if is_succession:
+        questions.append("procedure and inquiry for grant of succession certificate under Section 373 Succession Act 1925")
+    if is_cancellation_document:
+        questions.append("grounds for cancellation of written instrument under Section 39 Specific Relief Act 1877 (fraud, forgery, unauthorized power of attorney)")
+    if is_injunction_matter:
+        questions.append("three essential ingredients for grant of temporary injunction under Order XXXIX Rules 1 and 2 CPC")
+    if is_declaration_matter:
+        questions.append("entitlement to legal character or right to property under Section 42 Specific Relief Act 1877")
+    if is_narcotics:
+        questions.append("statutory bar on bail under Section 51 CNSA 1997 and safe custody / transmission of narcotic sample to chemical examiner")
+    if is_anti_corruption:
+        questions.append("jurisdiction of Accountability Court under National Accountability Ordinance 1999 and ingredients of offence of corruption")
 
     if not questions:
         questions = [query[:200]]
@@ -2140,6 +2364,54 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             raw_lanes.insert(0, {
                 "lane": "environmental_protection_tribunal",
                 "query": "Pakistan Environmental Protection Act 1997 Section 11 Section 12 Section 21 Environmental Tribunal EIA IEE"
+            })
+    if is_preemption:
+        if not any(l["lane"] == "pre_emption_talb_muwathabat" for l in raw_lanes):
+            raw_lanes.insert(0, {
+                "lane": "pre_emption_talb_muwathabat",
+                "query": "Punjab Pre-emption Act 1991 Section 13 Talb-i-Muwathabat jumping demand Talb-i-Ishhad notice"
+            })
+    if is_illegal_dispossession:
+        if not any(l["lane"] == "illegal_dispossession_s3_s4" for l in raw_lanes):
+            raw_lanes.insert(0, {
+                "lane": "illegal_dispossession_s3_s4",
+                "query": "Illegal Dispossession Act 2005 Section 3 Section 4 complaint Court of Session land grabbers"
+            })
+    if is_succession:
+        if not any(l["lane"] == "succession_certificate_s372" for l in raw_lanes):
+            raw_lanes.insert(0, {
+                "lane": "succession_certificate_s372",
+                "query": "Succession Act 1925 Section 372 petition for grant of succession certificate deceased debts securities"
+            })
+    if is_cancellation_document:
+        if not any(l["lane"] == "cancellation_instrument_s39" for l in raw_lanes):
+            raw_lanes.insert(0, {
+                "lane": "cancellation_instrument_s39",
+                "query": "Section 39 Specific Relief Act 1877 suit for cancellation of fraudulent sale deed power of attorney"
+            })
+    if is_injunction_matter:
+        if not any(l["lane"] == "interim_injunction_oxxxix" for l in raw_lanes):
+            raw_lanes.insert(0, {
+                "lane": "interim_injunction_oxxxix",
+                "query": "Order XXXIX Rules 1 and 2 CPC temporary injunction prima facie case balance of convenience irreparable loss"
+            })
+    if is_declaration_matter:
+        if not any(l["lane"] == "declaration_title_s42" for l in raw_lanes):
+            raw_lanes.insert(0, {
+                "lane": "declaration_title_s42",
+                "query": "Section 42 Specific Relief Act 1877 suit for declaration of title legal character consequential relief"
+            })
+    if is_narcotics:
+        if not any(l["lane"] == "cnsa_narcotics_s9c" for l in raw_lanes):
+            raw_lanes.insert(0, {
+                "lane": "cnsa_narcotics_s9c",
+                "query": "Control of Narcotic Substances Act 1997 Section 9-C Section 51 safe custody sample chemical examiner bail"
+            })
+    if is_anti_corruption:
+        if not any(l["lane"] == "nab_anti_corruption_s9" for l in raw_lanes):
+            raw_lanes.insert(0, {
+                "lane": "nab_anti_corruption_s9",
+                "query": "National Accountability Ordinance 1999 Section 9 Section 10 assets beyond known sources misuse of authority"
             })
 
     # Wrap into SearchLane objects
