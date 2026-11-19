@@ -22,10 +22,21 @@ from typing import Dict, List, Any, Optional
 from core.statute_quote_policy import is_quote_verified
 
 REPO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-UNIFIED_DIR = os.path.join(REPO_DIR, "data", "statutes_v2")
+STATUTES_V3_DIR = os.path.join(REPO_DIR, "data", "statutes_v3_staging")
+STATUTES_V2_DIR = os.path.join(REPO_DIR, "data", "statutes_v2")
+UNIFIED_DIR = STATUTES_V3_DIR if os.path.exists(STATUTES_V3_DIR) else STATUTES_V2_DIR
 TABLES_DIR = os.path.join(REPO_DIR, "data", "statute_tables")
 VERSIONS_DIR = os.path.join(REPO_DIR, "data", "statute_versions")
 REVIEWS_DIR = os.path.join(REPO_DIR, "data", "reviews")
+
+REPORT_PATH = os.path.join(REPO_DIR, "reports", "citation_reconciliation_report.json")
+_CIT_ALIASES: Dict[str, str] = {}
+if os.path.exists(REPORT_PATH):
+    try:
+        with open(REPORT_PATH, "r", encoding="utf-8") as _rf:
+            _CIT_ALIASES = json.load(_rf).get("proposed_aliases", {})
+    except Exception:
+        pass
 
 def review_file_present(canonical_id: str, content_hash: str) -> bool:
     """
@@ -192,7 +203,7 @@ class UnifiedStatuteStore:
                 pass
 
         self._loaded = True
-        if not os.environ.get("SKIP_TURSO_DRIFT_CHECK"):
+        if os.environ.get("ENABLE_TURSO_DRIFT_CHECK", "0").lower() in ("1", "true", "yes"):
             self._verify_turso_drift_sample()
 
     def _verify_turso_drift_sample(self):
@@ -247,6 +258,8 @@ class UnifiedStatuteStore:
         if not canonical_id:
             return None
         cid_clean = canonical_id.strip().upper()
+        if cid_clean in _CIT_ALIASES:
+            cid_clean = _CIT_ALIASES[cid_clean]
 
         # Limitation Act fused footnote normalization (e.g. 257 -> 57, 264 -> 64, 228 -> 28)
         if "LIMITATION" in cid_clean:

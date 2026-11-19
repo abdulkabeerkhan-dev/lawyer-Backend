@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "NATIONAL_REGISTRATION_1973_REPEALED",
+    "act": "NATIONAL_REGISTRATION_1973",
+    "act_code": "NATIONAL_REGISTRATION_1973",
+    "act_name": "National Registration Act,1973(Repealed by Ord.8 of 2000,s.48)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court of competent jurisdiction",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Ord.8 of 2000,s.48"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

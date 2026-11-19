@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "TRADE_MARKS_NO_V_1940_REPEALED",
+    "act": "TRADE_MARKS_NO_V_1940",
+    "act_code": "TRADE_MARKS_NO_V_1940",
+    "act_name": "Trade Marks Act,1940(Act No.V of 1940)(Repealed by Ord.19 of 01 s.134)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Ord.19 of 01 s.134"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

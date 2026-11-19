@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "DANGEROUS_DRUGS_II_1930_REPEALED",
+    "act": "DANGEROUS_DRUGS_II_1930",
+    "act_code": "DANGEROUS_DRUGS_II_1930",
+    "act_name": "Dangerous Drugs(Act II-1930)(Repealed by Act XXV of 1997,s.78)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Act XXV of 1997,s.78"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

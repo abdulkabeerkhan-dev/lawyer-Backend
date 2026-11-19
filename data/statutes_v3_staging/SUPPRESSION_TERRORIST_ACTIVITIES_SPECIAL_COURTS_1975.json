@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "SUPPRESSION_TERRORIST_ACTIVITIES_SPECIAL_COURTS_1975_REPEALED",
+    "act": "SUPPRESSION_TERRORIST_ACTIVITIES_SPECIAL_COURTS_1975",
+    "act_code": "SUPPRESSION_TERRORIST_ACTIVITIES_SPECIAL_COURTS_1975",
+    "act_name": "Suppression of Terrorist Activities(Special Courts Act 1975)(Repealed by Act 27 of 1997 s.39)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Act 27 of 1997 s.39"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

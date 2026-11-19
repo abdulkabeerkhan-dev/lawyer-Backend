@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "INDUSTRIAL_RELATION_ORD_1969_REPEALED",
+    "act": "INDUSTRIAL_RELATION_ORD_1969",
+    "act_code": "INDUSTRIAL_RELATION_ORD_1969",
+    "act_name": "Industrial Relation Ordinance 1969 (Repealed by Ord.9102 s.2 (Also Repealed by Act IV of 2008,s.87))",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Ord.9102 s.2 (Also Repealed by Act IV of 2008,s.87"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "model": "voyage-4-large",
+  "dimension": 1024,
+  "total_provisions": 39745,
+  "repealed_provisions_excluded": 47,
+  "active_provisions_to_embed": 39698,
+  "pakistan_code_provisions": 38392,
+  "legacy_v2_provisions": 1306,
+  "total_exact_tokens": 8844369,
+  "avg_tokens_per_record": 222.8,
+  "rate_per_million_usd": 0.12,
+  "estimated_voyage_cost_usd": 1.0613
+}

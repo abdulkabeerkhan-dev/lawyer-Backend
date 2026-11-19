@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "MONOPOLIES_RESTRICTIVE_TRADE_PRACTICES_CONTROL_ORD_REPEALED",
+    "act": "MONOPOLIES_RESTRICTIVE_TRADE_PRACTICES_CONTROL_ORD",
+    "act_code": "MONOPOLIES_RESTRICTIVE_TRADE_PRACTICES_CONTROL_ORD",
+    "act_name": "Monopolies And Restrictive Trade Practices (Control And Prevention Ordinance, 1970(Repealed by SRO075(1)07 dt 231007 And Rep. by Ord.III of 07, s.59)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by SRO075(1"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "GENERAL_STATISTICS_1975_REPEALED",
+    "act": "GENERAL_STATISTICS_1975",
+    "act_code": "GENERAL_STATISTICS_1975",
+    "act_name": "General Statistics Act 1975 (Repealed by Act XIV of 2011,s.63 w.e.f (31-05-2011))",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court of competent jurisdiction",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Act XIV of 2011,s.63 w.e.f (31-05-2011"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

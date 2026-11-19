@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "OIL_GAS_DEVELOPMENT_CORPORATION_ORD_1961_REPEALED",
+    "act": "OIL_GAS_DEVELOPMENT_CORPORATION_ORD_1961",
+    "act_code": "OIL_GAS_DEVELOPMENT_CORPORATION_ORD_1961",
+    "act_name": "Oil And Gas Development Corporation Ordinance, 1961(Repealed by Ord. 28 of of 2001,s.7)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Ord. 28 of of 2001,s.7"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

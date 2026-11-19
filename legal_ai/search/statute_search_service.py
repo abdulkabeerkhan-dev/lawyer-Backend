@@ -208,7 +208,8 @@ def search_statute_provisions(
     """
     store = get_unified_statute_store()
     q_raw = query.strip()
-    q_lower = q_raw.lower()
+    from legal_ai.retrieval.statute_search import normalize_statute_query_spelling
+    q_lower = normalize_statute_query_spelling(q_raw.lower())
 
     # Remediation Spec Phase 2 (F3 fix):
     # 1. Ignore currency and quantity tokens (PKR, Rs, million, lakh, crore, years, days)

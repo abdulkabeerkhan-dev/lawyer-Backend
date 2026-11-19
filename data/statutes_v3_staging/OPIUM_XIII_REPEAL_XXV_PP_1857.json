@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "OPIUM_XIII_REPEAL_XXV_PP_1857_REPEALED",
+    "act": "OPIUM_XIII_REPEAL_XXV_PP_1857",
+    "act_code": "OPIUM_XIII_REPEAL_XXV_PP_1857",
+    "act_name": "Opium Act(XIII of 1857)(Repeal by XXV of 1997)(pp.38-48)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: THIS LAW HAS BEEN REPEALED"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

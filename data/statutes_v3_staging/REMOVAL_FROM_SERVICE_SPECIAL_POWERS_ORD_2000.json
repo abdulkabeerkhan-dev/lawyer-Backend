@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "REMOVAL_FROM_SERVICE_SPECIAL_POWERS_ORD_2000_REPEALED",
+    "act": "REMOVAL_FROM_SERVICE_SPECIAL_POWERS_ORD_2000",
+    "act_code": "REMOVAL_FROM_SERVICE_SPECIAL_POWERS_ORD_2000",
+    "act_name": "Removal from Service (Special Powers) Ordinance 2000 (Repealed by Act III of 2010)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Act III of 2010"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

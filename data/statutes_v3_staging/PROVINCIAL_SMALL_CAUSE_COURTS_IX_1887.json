@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "PROVINCIAL_SMALL_CAUSE_COURTS_IX_1887_REPEALED",
+    "act": "PROVINCIAL_SMALL_CAUSE_COURTS_IX_1887",
+    "act_code": "PROVINCIAL_SMALL_CAUSE_COURTS_IX_1887",
+    "act_name": "provincial small cause courts(Act,IX-1887)w.e.f 15-07-04(Repeal by ord.26 of 2002 s.42))-)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: THIS LAW HAS BEEN REPEALED"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

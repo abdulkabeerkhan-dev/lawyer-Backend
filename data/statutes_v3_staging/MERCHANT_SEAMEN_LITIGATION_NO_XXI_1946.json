@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "MERCHANT_SEAMEN_LITIGATION_NO_XXI_1946_REPEALED",
+    "act": "MERCHANT_SEAMEN_LITIGATION_NO_XXI_1946",
+    "act_code": "MERCHANT_SEAMEN_LITIGATION_NO_XXI_1946",
+    "act_name": "Merchant Seamen(Litigation) (Act, No. XXI of 1946)(Repealed by Ord.52 of 01, s,610 & sch.)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Ord.52 of 01, s,610 & sch."
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

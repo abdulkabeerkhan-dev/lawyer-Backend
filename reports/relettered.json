@@ -1,0 +1,202 @@
+[
+  {
+    "act": "NAO_1999",
+    "act_name": "National Accountability Ordinance, 1999",
+    "term": "willful default",
+    "old_label": "5(r)",
+    "new_label": "5(u)",
+    "old_canonical_id": "NAO_1999_SEC_5_r",
+    "new_canonical_id": "NAO_1999_SEC_5_u",
+    "reason": "Inserted definition clauses (e.g. assets, associates, Benamidar, Conciliation Committee) shifted willful default from clause (r) to clause (u)"
+  },
+  {
+    "act": "COMPANIES_2017",
+    "act_name": "COMPANIES 2017",
+    "term": "power of court to rectify register",
+    "old_label": "122",
+    "new_label": "126",
+    "old_canonical_id": "COMPANIES_2017_SEC_122",
+    "new_canonical_id": "COMPANIES_2017_SEC_126",
+    "reason": "Heading and text match (similarity 0.65) but section/clause label changed from 122 to 126"
+  },
+  {
+    "act": "COMPANIES_2017",
+    "act_name": "COMPANIES 2017",
+    "term": "trust not to be entered on register",
+    "old_label": "126",
+    "new_label": "121",
+    "old_canonical_id": "COMPANIES_2017_SEC_126",
+    "new_canonical_id": "COMPANIES_2017_SEC_121",
+    "reason": "Heading and text match (similarity 0.83) but section/clause label changed from 126 to 121"
+  },
+  {
+    "act": "COMPANIES_2017",
+    "act_name": "COMPANIES 2017",
+    "term": "removal of directors",
+    "old_label": "180",
+    "new_label": "163",
+    "old_canonical_id": "COMPANIES_2017_SEC_180",
+    "new_canonical_id": "COMPANIES_2017_SEC_163",
+    "reason": "Heading and text match (similarity 0.68) but section/clause label changed from 180 to 163"
+  },
+  {
+    "act": "COMPANIES_ACT_2017",
+    "act_name": "COMPANIES 2017",
+    "term": "power of court to rectify register",
+    "old_label": "122",
+    "new_label": "126",
+    "old_canonical_id": "COMPANIES_2017_SEC_122",
+    "new_canonical_id": "COMPANIES_ACT_2017_SEC_126",
+    "reason": "Heading and text match (similarity 0.65) but section/clause label changed from 122 to 126"
+  },
+  {
+    "act": "COMPANIES_ACT_2017",
+    "act_name": "COMPANIES 2017",
+    "term": "trust not to be entered on register",
+    "old_label": "126",
+    "new_label": "121",
+    "old_canonical_id": "COMPANIES_2017_SEC_126",
+    "new_canonical_id": "COMPANIES_ACT_2017_SEC_121",
+    "reason": "Heading and text match (similarity 0.83) but section/clause label changed from 126 to 121"
+  },
+  {
+    "act": "COMPANIES_ACT_2017",
+    "act_name": "COMPANIES 2017",
+    "term": "removal of directors",
+    "old_label": "180",
+    "new_label": "163",
+    "old_canonical_id": "COMPANIES_2017_SEC_180",
+    "new_canonical_id": "COMPANIES_ACT_2017_SEC_163",
+    "reason": "Heading and text match (similarity 0.68) but section/clause label changed from 180 to 163"
+  },
+  {
+    "act": "CONST_1973",
+    "act_name": "CONST 1973",
+    "term": "advisory jurisdiction",
+    "old_label": "186",
+    "new_label": "175H",
+    "old_canonical_id": "CONST_1973_ART_186",
+    "new_canonical_id": "CONST_1973_ART_175H",
+    "reason": "Heading and text match (similarity 0.73) but section/clause label changed from 186 to 175H"
+  },
+  {
+    "act": "CPC_1908",
+    "act_name": "CPC 1908",
+    "term": "[omitted]",
+    "old_label": "644",
+    "new_label": "5130",
+    "old_canonical_id": "CPC_1908_SEC_644",
+    "new_canonical_id": "CPC_1908_SEC_5130",
+    "reason": "Heading and text match (similarity 0.69) but section/clause label changed from 644 to 5130"
+  },
+  {
+    "act": "CPC_1908",
+    "act_name": "CPC 1908",
+    "term": "1[omitted]",
+    "old_label": "45",
+    "new_label": "154",
+    "old_canonical_id": "CPC_1908_SEC_45",
+    "new_canonical_id": "CPC_1908_SEC_154",
+    "reason": "Heading and text match (similarity 0.81) but section/clause label changed from 45 to 154"
+  },
+  {
+    "act": "CPC_1908",
+    "act_name": "CPC 1908",
+    "term": "[omitted]",
+    "old_label": "4110",
+    "new_label": "5130",
+    "old_canonical_id": "CPC_1908_SEC_4110",
+    "new_canonical_id": "CPC_1908_SEC_5130",
+    "reason": "Heading and text match (similarity 0.80) but section/clause label changed from 4110 to 5130"
+  },
+  {
+    "act": "CPC_1908",
+    "act_name": "CPC 1908",
+    "term": "[omitted]",
+    "old_label": "8111A",
+    "new_label": "5130",
+    "old_canonical_id": "CPC_1908_SEC_8111A",
+    "new_canonical_id": "CPC_1908_SEC_5130",
+    "reason": "Heading and text match (similarity 0.71) but section/clause label changed from 8111A to 5130"
+  },
+  {
+    "act": "CPC_1908",
+    "act_name": "CPC 1908",
+    "term": "[omitted]",
+    "old_label": "8125",
+    "new_label": "5130",
+    "old_canonical_id": "CPC_1908_SEC_8125",
+    "new_canonical_id": "CPC_1908_SEC_5130",
+    "reason": "Heading and text match (similarity 0.73) but section/clause label changed from 8125 to 5130"
+  },
+  {
+    "act": "IRA_2012",
+    "act_name": "IRA 2012",
+    "term": "unfair labour practices on the part of employers",
+    "old_label": "10",
+    "new_label": "31",
+    "old_canonical_id": "IRA_2012_SEC_10",
+    "new_canonical_id": "IRA_2012_SEC_31",
+    "reason": "Heading and text match (similarity 0.61) but section/clause label changed from 10 to 31"
+  },
+  {
+    "act": "NI_ACT_1881",
+    "act_name": "NI ACT 1881",
+    "term": "power to make rules for notaries public",
+    "old_label": "139",
+    "new_label": "7139",
+    "old_canonical_id": "NI_ACT_1881_SEC_139",
+    "new_canonical_id": "NI_ACT_1881_SEC_7139",
+    "reason": "Heading and text match (similarity 0.99) but section/clause label changed from 139 to 7139"
+  },
+  {
+    "act": "PPC_1860",
+    "act_name": "PPC 1860",
+    "term": "intentional omission to apprehend on the part of public servant bound to",
+    "old_label": "221",
+    "new_label": "222",
+    "old_canonical_id": "PPC_1860_SEC_221",
+    "new_canonical_id": "PPC_1860_SEC_222",
+    "reason": "Heading and text match (similarity 0.73) but section/clause label changed from 221 to 222"
+  },
+  {
+    "act": "QSO_1984",
+    "act_name": "QSO 1984",
+    "term": "proof of contents of documents",
+    "old_label": "70",
+    "new_label": "72",
+    "old_canonical_id": "QSO_1984_ART_70",
+    "new_canonical_id": "QSO_1984_ART_72",
+    "reason": "Heading and text match (similarity 0.82) but section/clause label changed from 70 to 72"
+  },
+  {
+    "act": "QSO_1984",
+    "act_name": "QSO 1984",
+    "term": "secondary evidence",
+    "old_label": "72",
+    "new_label": "74",
+    "old_canonical_id": "QSO_1984_ART_72",
+    "new_canonical_id": "QSO_1984_ART_74",
+    "reason": "Heading and text match (similarity 0.83) but section/clause label changed from 72 to 74"
+  },
+  {
+    "act": "SRA_1877",
+    "act_name": "SRA 1877",
+    "term": "suit by person dispossessed of immoveable property",
+    "old_label": "9",
+    "new_label": "39",
+    "old_canonical_id": "SRA_1877_SEC_9",
+    "new_canonical_id": "SRA_1877_SEC_39",
+    "reason": "Heading and text match (similarity 0.72) but section/clause label changed from 9 to 39"
+  },
+  {
+    "act": "TPA_1882",
+    "act_name": "TPA 1882",
+    "term": "renewal of mortgaged lease",
+    "old_label": "64",
+    "new_label": "71",
+    "old_canonical_id": "TPA_1882_SEC_64",
+    "new_canonical_id": "TPA_1882_SEC_71",
+    "reason": "Heading and text match (similarity 0.71) but section/clause label changed from 64 to 71"
+  }
+]

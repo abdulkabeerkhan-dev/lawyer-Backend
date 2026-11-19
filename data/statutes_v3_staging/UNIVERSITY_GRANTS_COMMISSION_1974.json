@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "UNIVERSITY_GRANTS_COMMISSION_1974_REPEALED",
+    "act": "UNIVERSITY_GRANTS_COMMISSION_1974",
+    "act_code": "UNIVERSITY_GRANTS_COMMISSION_1974",
+    "act_name": "University Grants Commission Act, 1974 (Repealed by Ord 53 of 02,s.22)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court of competent jurisdiction",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Ord 53 of 02,s.22"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

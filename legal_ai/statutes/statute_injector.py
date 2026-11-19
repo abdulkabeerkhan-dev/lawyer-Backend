@@ -34,6 +34,13 @@ ACT_PRETTY_NAMES: Dict[str, str] = {
     "CONTRACT_1872": "Contract Act, 1872",
     "BCO_1962": "Banking Companies Ordinance, 1962",
     "STAMP_1899": "Stamp Act, 1899",
+    "NAO_1999": "National Accountability Ordinance, 1999",
+    "COMPANIES_2017": "Companies Act, 2017",
+    "BENAMI_2017": "Benami Transactions (Prohibition) Act, 2017",
+    "CONST_1973": "Constitution of the Islamic Republic of Pakistan, 1973",
+    "QSO_1984": "Qanun-e-Shahadat Order, 1984",
+    "NI_ACT_1881": "Negotiable Instruments Act, 1881",
+    "SRA_1877": "Specific Relief Act, 1877",
 }
 
 
@@ -48,7 +55,8 @@ class StatuteInjector:
         else:
             self.root = Path(__file__).resolve().parent.parent.parent
 
-        self.unified_dir = self.root / "data" / "statutes_v2"
+        v3_staging = self.root / "data" / "statutes_v3_staging"
+        self.unified_dir = v3_staging if v3_staging.exists() else (self.root / "data" / "statutes_v2")
         self.tables_dir = self.root / "data" / "statute_tables"
         self.versions_dir = self.root / "data" / "statute_versions"
         self._unified_cache: Dict[str, Dict[str, Dict[str, Any]]] = {}
@@ -183,10 +191,30 @@ class StatuteInjector:
         # 3. FIO 2001
         if "fio" in p_low or "financial institutions" in p_low or "recovery of finances" in p_low or "banking court" in p_low:
             act_code = "FIO_2001"
+            m_sub = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\s*\(([a-z0-9]+)\)', p_low)
+            if m_sub:
+                sec_num = m_sub.group(1).upper()
+                sub_label = m_sub.group(2).lower()
+                cid_sub = f"{act_code}_SEC_{sec_num}_{sub_label}"
+                return act_code, cid_sub, f"Section {sec_num}({sub_label}), Financial Institutions (Recovery of Finances) Ordinance, 2001"
             m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
             if m_sec:
                 sec_num = m_sec.group(1).upper()
                 return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, Financial Institutions (Recovery of Finances) Ordinance, 2001"
+
+        # NAO 1999
+        if "nao" in p_low or "national accountability" in p_low:
+            act_code = "NAO_1999"
+            m_sub = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\s*\(([a-z0-9]+)\)', p_low)
+            if m_sub:
+                sec_num = m_sub.group(1).upper()
+                sub_label = m_sub.group(2).lower()
+                cid_sub = f"{act_code}_SEC_{sec_num}_{sub_label}"
+                return act_code, cid_sub, f"Section {sec_num}({sub_label}), National Accountability Ordinance, 1999"
+            m_sec = re.search(r'\b(?:sections?|secs?\.?|s\.)\s*(\d+[a-z]?)\b', p_low)
+            if m_sec:
+                sec_num = m_sec.group(1).upper()
+                return act_code, f"{act_code}_SEC_{sec_num}", f"Section {sec_num}, National Accountability Ordinance, 1999"
 
         # 4. ITO 2001
         if "ito" in p_low or "income tax" in p_low:

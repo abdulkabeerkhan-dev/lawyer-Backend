@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "EVIDENCE_I_REPEAL_P_O_1872_REPEALED",
+    "act": "EVIDENCE_I_REPEAL_P_O_1872",
+    "act_code": "EVIDENCE_I_REPEAL_P_O_1872",
+    "act_name": "Evidence(Act I of 1872)(Repeal by P.o.10 of 1984)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: THIS LAW HAS BEEN REPEALED"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

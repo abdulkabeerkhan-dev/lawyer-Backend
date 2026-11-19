@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "PRIVY_PURSES_CHARGED_EXPENDITURE_1968_SEC_1",
+    "act": "PRIVY_PURSES_CHARGED_EXPENDITURE_1968",
+    "act_code": "PRIVY_PURSES_CHARGED_EXPENDITURE_1968",
+    "act_name": "Privy Purses (Charged Expenditure) Act, 1968",
+    "section": "1",
+    "primary_num": "1",
+    "heading": "Short title",
+    "title": "Short title",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "section",
+    "text": "1.  Short title.__ This Act may be called the Privy Purses (Charged Expenditure) Act,",
+    "raw_text": "1.  Short title.__ This Act may be called the Privy Purses (Charged Expenditure) Act,",
+    "amendment_notes": [],
+    "former_labels": [],
+    "supersedes": [],
+    "superseded_by": null,
+    "in_force": true,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "ARBITRATION_PROTOCOL_CONVENTION_REPEAL_ORD_1923_REPEALED",
+    "act": "ARBITRATION_PROTOCOL_CONVENTION_REPEAL_ORD_1923",
+    "act_code": "ARBITRATION_PROTOCOL_CONVENTION_REPEAL_ORD_1923",
+    "act_name": "Arbitration (Protocol And Convention) Act,1923)(Repeal by Ord. XXXIII of 09)(valid 25-03-10)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: THIS LAW HAS BEEN REPEALED"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

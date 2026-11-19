@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "PATENTS_DESIGNS_II_REPEAL_ORD_1911_REPEALED",
+    "act": "PATENTS_DESIGNS_II_REPEAL_ORD_1911",
+    "act_code": "PATENTS_DESIGNS_II_REPEAL_ORD_1911",
+    "act_name": "Patents And Designs (Act II of 1911)(Repeal by Ord. LXI 2000 s.106)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: THIS LAW HAS BEEN REPEALED"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

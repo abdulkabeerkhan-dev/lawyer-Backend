@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "WEALTH_TAX_1963_REPEALED",
+    "act": "WEALTH_TAX_1963",
+    "act_code": "WEALTH_TAX_1963",
+    "act_name": "Wealth-Tax Act,1963 (Repealed by Act I of 2003,s.3)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "tax",
+    "forum": "Appellate Tribunal / High Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Act I of 2003,s.3"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

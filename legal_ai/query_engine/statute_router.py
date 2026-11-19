@@ -276,6 +276,21 @@ CONCEPTUAL_FACTUAL_PATTERNS = [
         "act_codes": ["LIMITATION_1908"],
         "forum": "Civil Court",
         "domain": "Property Law / Limitation"
+    },
+    {
+        "id": "WILLFUL_DEFAULT",
+        "keywords": [
+            "willful default", "wilful default", "wilful defaulter", "willful defaulter",
+            "defaulting borrower", "written off loans", "unpaid finance"
+        ],
+        "primary_provisions": [
+            "Section 2(g) Financial Institutions (Recovery of Finances) Ordinance, 2001",
+            "Section 5(u) National Accountability Ordinance, 1999",
+            "Section 20 Financial Institutions (Recovery of Finances) Ordinance, 2001"
+        ],
+        "act_codes": ["FIO_2001", "NAO_1999"],
+        "forum": "Banking Court / Accountability Court",
+        "domain": "Banking Law / Accountability"
     }
 ]
 
@@ -299,8 +314,10 @@ EXACT_REGEX_PATTERNS = [
     (r'\b(?:Sections?|Sec\.?|s\.)\s*(3|4|53)\s*(?:of\s+the\s+)?(?:Benami\s+Transactions|Benami\s+Act)\b', "Section {0} Benami Transactions (Prohibition) Act, 2017", "BENAMI_2017"),
     # 9. Constitution: Article 199, Article 184(3)
     (r'\b(?:Articles?|Art\.?)\s*(199(?:\([1-5]\))?|184\s*\(\s*3\s*\)|185(?:\([1-3]\))?|212)\s*(?:of\s+the\s+)?(?:Constitution)\b', "Article {0} Constitution of Pakistan, 1973", "CONST_1973"),
-    # 10. FIO 2001: Section 22 FIO, Section 10 FIO
-    (r'\b(?:Sections?|Sec\.?|s\.)\s*(22(?:\([1-7]\))?|10(?:\([1-9]\))?|9|15)\s*(?:of\s+the\s+)?(?:FIO|FIFO|Financial\s+Institutions)\b', "Section {0} Financial Institutions (Recovery of Finances) Ordinance, 2001", "FIO_2001")
+    # 10. FIO 2001: Section 2(g), Section 22 FIO, Section 10 FIO, Section 20
+    (r'\b(?:Sections?|Sec\.?|s\.)\s*(2(?:\([a-z]\))?|20|22(?:\([1-7]\))?|10(?:\([1-9]\))?|9|15)\s*(?:of\s+the\s+)?(?:FIO|FIFO|Financial\s+Institutions)\b', "Section {0} Financial Institutions (Recovery of Finances) Ordinance, 2001", "FIO_2001"),
+    # 11. NAO 1999: Section 5(u), Section 9, 10
+    (r'\b(?:Sections?|Sec\.?|s\.)\s*(5(?:\([a-z]\))?|9|10|14|15|24|25)\s*(?:of\s+the\s+)?(?:NAO|National\s+Accountability\s+Ordinance)\b', "Section {0} National Accountability Ordinance, 1999", "NAO_1999")
 ]
 
 
@@ -477,7 +494,8 @@ CANONICAL_ACT_MAP = {
     "PARTNERSHIP_1932": ("partnership-act-1932", "Partnership Act, 1932", "civil"),
     "BENAMI_2017": ("benami-transactions-act-2017", "Benami Transactions (Prohibition) Act, 2017", "civil"),
     "CONST_1973": ("constitution-1973", "Constitution of the Islamic Republic of Pakistan, 1973", "constitutional"),
-    "FIO_2001": ("financial-institutions-ordinance-2001", "Financial Institutions (Recovery of Finances) Ordinance, 2001", "banking")
+    "FIO_2001": ("financial-institutions-ordinance-2001", "Financial Institutions (Recovery of Finances) Ordinance, 2001", "banking"),
+    "NAO_1999": ("national-accountability-ordinance-1999", "National Accountability Ordinance, 1999", "accountability")
 }
 
 
@@ -734,10 +752,16 @@ def retrieve_statute_provisions(
             _fetch_and_add(cid, store, seen_cids, results)
         return results[:max_results]
 
+    # Query: Willful Default (FIO 2001 s.2(g), NAO 1999 s.5(u), FIO 2001 s.20)
+    if any(k in q_low for k in ["willful default", "wilful default", "willful defaulter", "wilful defaulter"]):
+        for cid in ["FIO_2001_SEC_2_g", "NAO_1999_SEC_5_u", "FIO_2001_SEC_20"]:
+            _fetch_and_add(cid, store, seen_cids, results)
+        return results[:max_results]
+
     # Fallback to Named Candidate Lookup
     for cand in intent.named_provisions:
         m_art = re.search(r'Article\s*([0-9]+[A-Za-z]?(?:-[A-Za-z])?)\s+([A-Za-z\s,0-9]+)', cand, re.IGNORECASE)
-        m_sec = re.search(r'Section\s*([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z])?(?:\([0-9]+\))?)\s+([A-Za-z\s,0-9]+)', cand, re.IGNORECASE)
+        m_sec = re.search(r'Section\s*([0-9IVXLCDM]+[A-Za-z]?(?:-[A-Za-z])?(?:\([0-9a-zA-Z]+\))?)\s+([A-Za-z\s,0-9]+)', cand, re.IGNORECASE)
         m_ord = re.search(r'Order\s*([IVXLCDM]+)\s*Rule\s*([0-9]+[A-Za-z]?)', cand, re.IGNORECASE)
 
         act_code = "LIMITATION_1908" if "limitation" in cand.lower() else (
@@ -746,7 +770,11 @@ def retrieve_statute_provisions(
                     "CRPC_1898" if "criminal procedure" in cand.lower() or "crpc" in cand.lower() else (
                         "SRA_1877" if "specific relief" in cand.lower() or "sra" in cand.lower() else (
                             "BENAMI_2017" if "benami" in cand.lower() else (
-                                "CONTRACT_1872" if "contract" in cand.lower() else ""
+                                "CONTRACT_1872" if "contract" in cand.lower() else (
+                                    "FIO_2001" if "fio" in cand.lower() or "financial institutions" in cand.lower() else (
+                                        "NAO_1999" if "nao" in cand.lower() or "national accountability" in cand.lower() else ""
+                                    )
+                                )
                             )
                         )
                     )
@@ -762,12 +790,27 @@ def retrieve_statute_provisions(
             cids_to_try.append(f"{act_code}_ORD_{m_ord.group(1).upper()}_R_{m_ord.group(2).upper()}")
         elif m_sec and act_code:
             raw_s = m_sec.group(1).upper()
+            m_sub = re.search(r'([0-9]+)\s*\(([a-zA-Z0-9]+)\)', raw_s)
+            if m_sub:
+                base_n = m_sub.group(1)
+                sub_l = m_sub.group(2).lower()
+                cids_to_try.extend([f"{act_code}_SEC_{base_n}_{sub_l}", f"{act_code}_SEC_{base_n}"])
             clean_s = re.sub(r'[^A-Z0-9]', '', raw_s)
             cids_to_try.extend([f"{act_code}_SEC_{clean_s}", f"{act_code}_SEC_{raw_s}"])
 
         for cid in cids_to_try:
             if _fetch_and_add(cid, store, seen_cids, results):
                 break
+
+    # Dynamic search fallback across 39k provisions if fewer than max_results found
+    if len(results) < max_results:
+        try:
+            from legal_ai.retrieval.statute_search import search_statutes_local_fallback
+            fb_hits = search_statutes_local_fallback(intent.query_text, top_k=max_results - len(results))
+            for h in fb_hits:
+                _fetch_and_add(h["canonical_id"], store, seen_cids, results)
+        except Exception:
+            pass
 
     return results[:max_results]
 
@@ -874,9 +917,17 @@ def _convert_to_legal_unit_record(rec: Dict[str, Any], canonical_id: str) -> Leg
         parent = rec.get("parent") or "First Schedule"
         heading = rec.get("heading") or rec.get("title") or f"Article {num}"
     else:
-        u_type = rec.get("provision_type") or "section"
-        raw_num = str(rec.get("primary_num") or rec.get("section") or canonical_id.split("_")[-1])
-        num = re.sub(r'^(?:section|sec\.?|s\.)\s*', '', raw_num, flags=re.I).strip()
+        sec_field = rec.get("section")
+        if sec_field:
+            num = str(sec_field).strip()
+            num = re.sub(r'^(?:section|sec\.?|s\.)\s*', '', num, flags=re.I).strip()
+        else:
+            raw_num = str(rec.get("primary_num") or canonical_id.split("_")[-1])
+            num = re.sub(r'^(?:section|sec\.?|s\.)\s*', '', raw_num, flags=re.I).strip()
+        if rec.get("provision_type") == "clause" and "(" in num:
+            u_type = "section"
+        else:
+            u_type = rec.get("provision_type") or "section"
         parent = rec.get("parent")
         heading = rec.get("heading") or rec.get("title") or f"Section {num}"
 

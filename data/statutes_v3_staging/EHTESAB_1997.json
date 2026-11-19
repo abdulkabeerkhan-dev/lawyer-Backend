@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "EHTESAB_1997_REPEALED",
+    "act": "EHTESAB_1997",
+    "act_code": "EHTESAB_1997",
+    "act_name": "Ehtesab Act 1997 (Repealed by ord. 18 of 1999)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "accountability",
+    "forum": "Accountability Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by ord. 18 of 1999"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

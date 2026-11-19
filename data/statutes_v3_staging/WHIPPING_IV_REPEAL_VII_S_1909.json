@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "WHIPPING_IV_REPEAL_VII_S_1909_REPEALED",
+    "act": "WHIPPING_IV_REPEAL_VII_S_1909",
+    "act_code": "WHIPPING_IV_REPEAL_VII_S_1909",
+    "act_name": "Whipping(Act,IV of 1909)(Repeal by Act VII of 1996,s.4)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: THIS LAW HAS BEEN REPEALED"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

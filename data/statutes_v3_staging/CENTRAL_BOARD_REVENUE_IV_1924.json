@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "CENTRAL_BOARD_REVENUE_IV_1924_REPEALED",
+    "act": "CENTRAL_BOARD_REVENUE_IV_1924",
+    "act_code": "CENTRAL_BOARD_REVENUE_IV_1924",
+    "act_name": "Central Board of Revenue Act (Act IV of 1924)(Repealed by F.Act IV of 2007 s.23)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by F.Act IV of 2007 s.23"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

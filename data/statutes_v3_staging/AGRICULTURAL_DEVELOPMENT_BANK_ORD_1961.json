@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "AGRICULTURAL_DEVELOPMENT_BANK_ORD_1961_REPEALED",
+    "act": "AGRICULTURAL_DEVELOPMENT_BANK_ORD_1961",
+    "act_code": "AGRICULTURAL_DEVELOPMENT_BANK_ORD_1961",
+    "act_name": "Agricultural Development Bank Ordinance 1961(Repealed by Ord. 60 of 2002,s.2)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Ord. 60 of 2002,s.2"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

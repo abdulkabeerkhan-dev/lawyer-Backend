@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "ISLAMABAD_CAPITAL_TERRITORY_LOCAL_GOVERNMENT_ORD_2002_REPEALED",
+    "act": "ISLAMABAD_CAPITAL_TERRITORY_LOCAL_GOVERNMENT_ORD_2002",
+    "act_code": "ISLAMABAD_CAPITAL_TERRITORY_LOCAL_GOVERNMENT_ORD_2002",
+    "act_name": "Islamabad Capital Territory Local Government Ordinance 2002(Repealed by Act X of 2015)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Act X of 2015"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

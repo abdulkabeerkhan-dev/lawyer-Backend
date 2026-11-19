@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "CARRIAGE_AIR_SUPPLEMENTARY_CONVENTION_1968_REPEALED",
+    "act": "CARRIAGE_AIR_SUPPLEMENTARY_CONVENTION_1968",
+    "act_code": "CARRIAGE_AIR_SUPPLEMENTARY_CONVENTION_1968",
+    "act_name": "Carriage By Air(Supplementary Convention) Act 1968(Repealed by Act IV of 2012,s.7)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Act IV of 2012,s.7"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

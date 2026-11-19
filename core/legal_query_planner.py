@@ -1861,8 +1861,10 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     if is_banking:
         if any(k in q_low for k in ["willful", "wilful", "default", "defaulter", "offence", "offense", "arrest"]):
             for p_lbl in [
-                "Section 2 Financial Institutions (Recovery of Finances) Ordinance 2001",
+                "Section 2(g) Financial Institutions (Recovery of Finances) Ordinance 2001",
+                "Section 5(u) National Accountability Ordinance 1999",
                 "Section 20 Financial Institutions (Recovery of Finances) Ordinance 2001",
+                "Section 2 Financial Institutions (Recovery of Finances) Ordinance 2001",
                 "Section 9 Financial Institutions (Recovery of Finances) Ordinance 2001",
                 "Section 10 Financial Institutions (Recovery of Finances) Ordinance 2001"
             ]:

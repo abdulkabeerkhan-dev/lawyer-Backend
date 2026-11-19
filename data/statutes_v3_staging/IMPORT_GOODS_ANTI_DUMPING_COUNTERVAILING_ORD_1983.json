@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "IMPORT_GOODS_ANTI_DUMPING_COUNTERVAILING_ORD_1983_REPEALED",
+    "act": "IMPORT_GOODS_ANTI_DUMPING_COUNTERVAILING_ORD_1983",
+    "act_code": "IMPORT_GOODS_ANTI_DUMPING_COUNTERVAILING_ORD_1983",
+    "act_name": "Import Of Goods(Anti-Dumping And Countervailing Duties)(Ordinance No. III of 1983)(Repealed by Ord. LXV of 2000 s.76)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Ord. LXV of 2000 s.76"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]

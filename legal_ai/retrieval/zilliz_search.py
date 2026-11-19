@@ -29,6 +29,7 @@ from legal_ai.config import (
     VOYAGE_API_KEY,
 )
 from legal_ai.ranking.court_weighting import normalize_court_name
+from legal_ai.retrieval.statute_search import resolve_canonical_id_alias
 from core.provider_ledger import ProviderStatus, record_provider_event
 
 logger = logging.getLogger(__name__)
@@ -275,7 +276,8 @@ async def search_zilliz_hybrid(
         court_level = int(ent.get("court_level") or 3)
         cited_by = int(ent.get("cited_by_count") or 0)
         domain = ent.get("domain") or "general"
-        statutes = ent.get("statutes") or []
+        raw_statutes = ent.get("statutes") or []
+        statutes = [resolve_canonical_id_alias(str(s)) for s in raw_statutes if s]
 
         rrf_score = float(h.get("distance", 0.0))
         final_score = calculate_authority_score(rrf_score, court_level, cited_by)

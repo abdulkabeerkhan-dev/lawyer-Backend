@@ -25,6 +25,7 @@ ACT_PRETTY_NAMES = {
     "QSO_1984": "Qanun-e-Shahadat Order, 1984",
     "CONST_1973": "Constitution of the Islamic Republic of Pakistan, 1973",
     "FIO_2001": "Financial Institutions (Recovery of Finances) Ordinance, 2001",
+    "NAO_1999": "National Accountability Ordinance, 1999",
     "COMPANIES_2017": "Companies Act, 2017",
     "LIMITATION_1908": "Limitation Act, 1908",
     "NI_ACT_1881": "Negotiable Instruments Act, 1881",
@@ -141,10 +142,12 @@ def verify_current_law_for_provisions(
             continue
 
         p_low = prov_clean.lower().replace('_', ' ')
+        m_clause = re.search(r'\b([0-9]+)\s*\(([a-z0-9]+)\)', p_low)
         m_num = re.search(r'\b([0-9]+(?:-[a-z])?)\b', p_low)
-        if not m_num:
+        if not m_num and not m_clause:
             continue
-        sec_num = m_num.group(1).upper()
+        sec_num = m_num.group(1).upper() if m_num else ""
+        clause_label = m_clause.group(2).lower() if m_clause else ""
 
         # ORDER 2.1 - ITEM 4: Act binding. Section numbers bind to the Act named in the same sentence/token.
         # A number with no Act named is ignored, never guessed. Drop default CPC_1908.
@@ -153,6 +156,8 @@ def verify_current_law_for_provisions(
             act_code = "COMPANIES_2017"
         elif any(k in p_low for k in ["fio", "financial institution", "recovery of finance", "banking court", "banking judge"]):
             act_code = "FIO_2001"
+        elif any(k in p_low for k in ["nao", "national accountability"]):
+            act_code = "NAO_1999"
         elif any(k in p_low for k in ["ni act", "negotiable", "nia"]):
             act_code = "NI_ACT_1881"
         elif any(k in p_low for k in ["sra", "specific relief"]):
@@ -193,14 +198,19 @@ def verify_current_law_for_provisions(
         if not act_code:
             continue
 
-        canonical_id = f"{act_code}_SEC_{sec_num.replace('-', '')}"
+        if clause_label:
+            canonical_id = f"{act_code}_SEC_{sec_num}_{clause_label}"
+            display_name = f"Section {sec_num}({clause_label}), {ACT_PRETTY_NAMES.get(act_code, act_code.replace('_', ' '))}"
+        else:
+            canonical_id = f"{act_code}_SEC_{sec_num.replace('-', '')}"
+            display_name = f"Section {sec_num}, {ACT_PRETTY_NAMES.get(act_code, act_code.replace('_', ' '))}"
+
         if canonical_id in seen_cids:
             continue
         seen_cids.add(canonical_id)
 
-        record = store.get_provision(act_code, sec_num) or store.get_by_canonical_id(canonical_id)
+        record = store.get_by_canonical_id(canonical_id) or store.get_provision(act_code, sec_num)
         act_pretty = ACT_PRETTY_NAMES.get(act_code, act_code.replace('_', ' '))
-        display_name = f"Section {sec_num}, {act_pretty}"
         status = record.get("status", "in_force") if record else "in_force"
         text_val = (record.get("text") or "").strip() if record else ""
         title_val = record.get("title") or display_name if record else display_name

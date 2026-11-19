@@ -1,0 +1,27 @@
+[
+  {
+    "canonical_id": "FEDERAL_COURT_NO_XXV_1937_REPEALED",
+    "act": "FEDERAL_COURT_NO_XXV_1937",
+    "act_code": "FEDERAL_COURT_NO_XXV_1937",
+    "act_name": "Federal Court (Act No. XXV of 1937) (Repealed by Act II of 2014,s.2)",
+    "section": "repealed",
+    "primary_num": "0",
+    "heading": "Repealed",
+    "title": "Repealed Enactment",
+    "domain": "other",
+    "forum": "Court",
+    "provision_type": "repeal_notice",
+    "text": "THIS LAW HAS BEEN REPEALED",
+    "raw_text": "THIS LAW HAS BEEN REPEALED",
+    "amendment_notes": [
+      "THIS LAW HAS BEEN REPEALED: Repealed by Act II of 2014,s.2"
+    ],
+    "former_labels": [],
+    "in_force": false,
+    "source": "pakistan_code",
+    "source_format": "txt",
+    "jurisdiction": "federal",
+    "tier": "ingested_unreviewed",
+    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+  }
+]
