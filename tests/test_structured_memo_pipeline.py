@@ -108,8 +108,8 @@ def test_structured_memo_pipeline_valid_opinion(sample_limitation_article_57):
     # Layer 8 Invariants: Answer First!
     assert markdown.startswith("### Direct Legal Opinion")
     assert "A suit for the recovery of money lent" in markdown
-    assert "✓ VERIFIED RESEARCH MEMORANDUM" in markdown
-    assert "`✓ Verified` [E1]" in markdown
+    assert "VERIFIED RESEARCH MEMORANDUM" not in markdown
+    assert "PARTIAL RESEARCH RECORD" not in markdown
     assert "Article 57" in markdown
     assert "Section 57" not in markdown
     assert "Section 264" not in markdown
@@ -151,8 +151,9 @@ def test_structured_memo_pipeline_blocks_section_264_and_section_57(sample_limit
     assert report_264.is_memo_verified is False
     assert report_264.unverified_claims_count == 1
     assert any("Section 264" in v or "does not exist" in v for v in report_264.blocking_violations)
-    assert "PARTIAL RESEARCH RECORD" in markdown_264
-    assert "`⚠️ Unverified`" in markdown_264
+    assert "PARTIAL RESEARCH RECORD" not in markdown_264
+    assert "VERIFIED RESEARCH MEMORANDUM" not in markdown_264
+    assert "`⚠️ Unverified`" not in markdown_264
 
     # Case B: Calling Article 57 'Section 57'
     invalid_json_sec57 = """
@@ -247,6 +248,6 @@ def test_structured_memo_pipeline_blocks_verified_banner_on_not_found(sample_lim
     )
 
     assert report.is_memo_verified is False
-    assert "✓ VERIFIED RESEARCH MEMORANDUM" not in markdown
+    assert "VERIFIED RESEARCH MEMORANDUM" not in markdown
     assert "100% of claims deterministically grounded" not in markdown
-    assert "PARTIAL RESEARCH RECORD - 1 issues unresolved." in markdown
+    assert "PARTIAL RESEARCH RECORD" not in markdown

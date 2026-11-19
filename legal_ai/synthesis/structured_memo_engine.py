@@ -240,22 +240,6 @@ def render_layer8_markdown(
         except Exception as e:
             logger.warning(f"Error rendering limitation section: {e}")
 
-    # Verification banner
-    not_found = memo_payload.get("not_found", []) if isinstance(memo_payload, dict) else []
-    is_partial = bool(memo_payload.get("is_partial", False)) if isinstance(memo_payload, dict) else False
-    unverified_claims = getattr(report, "unverified_claims_count", 0)
-    is_memo_verified = getattr(report, "is_memo_verified", True)
-
-    has_unresolved = bool(not_found) or is_partial or (not is_memo_verified) or (unverified_claims > 0)
-
-    if has_unresolved:
-        unresolved_count = len(not_found) + unverified_claims
-        if unresolved_count == 0:
-            unresolved_count = 1
-        lines.append(f"> ⚠️ **PARTIAL RESEARCH RECORD - {unresolved_count} issues unresolved.**\n")
-    else:
-        lines.append("> **✓ VERIFIED RESEARCH MEMORANDUM** - Grounded in authenticated statutory provisions and reported precedents.\n")
-
     # 2. Supporting Legal Units & Claims
     claims = memo_payload.get("claims", [])
     if claims:
@@ -264,16 +248,7 @@ def render_layer8_markdown(
             stmt = str(c.get("statement", "")).strip()
             ev_ids = c.get("evidence_ids", [])
             ev_labels = ", ".join(f"[{eid}]" for eid in ev_ids) if ev_ids else "[Unattributed]"
-
-            badge = ""
-            if not has_unresolved and is_memo_verified:
-                badge = " `✓ Verified`"
-            elif hasattr(report, "claim_statuses") and idx - 1 < len(report.claim_statuses):
-                if not report.claim_statuses[idx - 1].is_verified:
-                    badge = " `⚠️ Unverified`"
-
-            badge_str = f"{badge} " if badge else ""
-            lines.append(f"{idx}. {stmt} {badge_str}{ev_labels}".rstrip())
+            lines.append(f"{idx}. {stmt} {ev_labels}".rstrip())
         lines.append("")
 
     # Admitted Provisions Detail Table / Cards

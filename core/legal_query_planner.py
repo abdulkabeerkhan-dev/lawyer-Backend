@@ -48,35 +48,139 @@ ProvinceType = Literal[
 ]
 
 DOMAIN_ALIAS_MAP: Dict[str, LegalDomainType] = {
+    # Civil & Property
     "property": "civil",
+    "real_estate": "civil",
+    "land": "civil",
+    "land_revenue": "civil",
+    "revenue": "civil",
     "contract": "civil",
     "contracts": "civil",
+    "contractual": "civil",
     "tort": "civil",
     "torts": "civil",
-    "real_estate": "civil",
-    "revenue": "civil",
-    "land_revenue": "civil",
     "inheritance": "civil",
+    "succession": "civil",
+    "partition": "civil",
+    "specific_performance": "civil",
+    "injunction": "civil",
+    "declaration": "civil",
+    "possession": "civil",
+    "damages": "civil",
+    "money_recovery": "civil",
+    "execution": "civil",
+    "limitation": "civil",
+    "civil_litigation": "civil",
+    "general_civil": "civil",
+
+    # Criminal
+    "penal": "criminal",
+    "crime": "criminal",
+    "white_collar": "criminal",
+    "bail": "criminal",
+    "quashment": "criminal",
+    "fir": "criminal",
+    "narcotics": "criminal",
+    "cnsa": "criminal",
+    "anti_corruption": "criminal",
+    "nab": "criminal",
+
+    # Constitutional
+    "constitution": "constitutional",
+    "writ": "constitutional",
+    "fundamental_rights": "constitutional",
+    "judicial_review": "constitutional",
+    "human_rights": "constitutional",
+    "public_law": "constitutional",
+
+    # Family
     "matrimonial": "family",
     "marriage": "family",
     "divorce": "family",
+    "khula": "family",
+    "talaq": "family",
     "custody": "family",
     "guardianship": "family",
+    "maintenance": "family",
+    "dower": "family",
+    "dowry": "family",
+    "child_support": "family",
+
+    # Corporate & Commercial
     "commercial": "corporate",
     "company": "corporate",
+    "companies": "corporate",
+    "corporate_law": "corporate",
+    "mergers": "corporate",
+    "secp": "corporate",
+    "securities": "corporate",
+    "insolvency": "corporate",
+    "winding_up": "corporate",
+
+    # Rent
+    "tenancy": "rent",
+    "landlord_tenant": "rent",
+    "eviction": "rent",
+    "ejectment": "rent",
+    "prpa": "rent",
+
+    # Banking & Finance
+    "banking_law": "banking",
     "finance": "banking",
     "financial": "banking",
-    "employment": "service",
-    "labor": "labour",
-    "white_collar": "criminal",
-    "penal": "criminal",
-    "ip": "intellectual_property",
-    "copyright": "intellectual_property",
-    "trademark": "intellectual_property",
-    "patent": "intellectual_property",
-    "environment": "environmental",
+    "financial_institutions": "banking",
+    "loan": "banking",
+    "fio": "banking",
+    "foreclosure": "banking",
+
+    # Taxation
     "tax": "taxation",
+    "taxes": "taxation",
+    "income_tax": "taxation",
+    "sales_tax": "taxation",
     "customs": "taxation",
+    "fiscal": "taxation",
+    "revenue_tax": "taxation",
+    "fbr": "taxation",
+
+    # Service & Employment
+    "employment": "service",
+    "civil_service": "service",
+    "service_law": "service",
+    "government_servant": "service",
+    "pension": "service",
+    "civil_servant": "service",
+
+    # Labour
+    "labor": "labour",
+    "workman": "labour",
+    "industrial": "labour",
+    "industrial_relations": "labour",
+    "trade_union": "labour",
+
+    # Intellectual Property
+    "ip": "intellectual_property",
+    "intellectual": "intellectual_property",
+    "trademark": "intellectual_property",
+    "trademarks": "intellectual_property",
+    "copyright": "intellectual_property",
+    "copyrights": "intellectual_property",
+    "patent": "intellectual_property",
+    "patents": "intellectual_property",
+    "passing_off": "intellectual_property",
+
+    # Environmental
+    "environment": "environmental",
+    "green": "environmental",
+    "pollution": "environmental",
+    "epa": "environmental",
+
+    # Cybercrime
+    "cyber": "cybercrime",
+    "peca": "cybercrime",
+    "electronic_crimes": "cybercrime",
+    "digital": "cybercrime",
+    "internet": "cybercrime",
 }
 
 
@@ -791,10 +895,54 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     is_rent = bool(re.search(r'\b(?:rent|rented|tenan[ct]|landlord|evict|ejectment|tenancy|commercial shop|rent tribunal)\b', q_low) or any(k in q_low for k in ["prpa", "srpo"]))
     is_banking = any(k in q_low for k in ["banking court", "bank", "financial institution", "recovery of finance", "fio", "firo"]) and any(k in q_low for k in ["decree", "appeal", "loan", "finance", "stay", "deposit", "leave to defend", "banking", "section 22", "section 10"])
     is_habeas_corpus = any(k in q_low for k in ["habeas corpus", "unlawful detention", "illegal detention", "detenue", "without production"])
-    is_cybercrime = any(k in q_low for k in ["peca", "cybercrime", "cyber crime", "hacking", "cyberstalking", "cyber stalking", "online harassment", "identity theft", "electronic crimes", "unauthorized access to secure"])
-    is_ip = any(k in q_low for k in ["trademark", "trade mark", "passing off", "copyright", "software piracy", "pirated software"])
+    is_cybercrime = any(k in q_low for k in [
+        "peca", "cybercrime", "cyber crime", "hacking", "cyberstalking", "cyber stalking",
+        "online harassment", "identity theft", "electronic crimes", "unauthorized access to secure",
+        "online blackmail", "fake account", "social media defamation", "section 20 peca",
+        "section 10 peca", "cyber terrorism", "fia cyber crime"
+    ])
+    is_ip = any(k in q_low for k in [
+        "trademark", "trade mark", "passing off", "copyright", "software piracy", "pirated software",
+        "patent", "design infringement", "registered design", "intellectual property tribunal", "ipo pakistan"
+    ])
     is_service = any(k in q_low for k in ["civil servant", "service tribunal", "seniority list", "superseded in promotion", "promotion eligibility", "reversion", "civil servants act", "peeda", "removal from service", "dismissal from service", "article 212", "service tribunals act"])
-    is_constitutional_general = any(k in q_low for k in ["article 199", "article 184", "article 189", "article 201", "writ petition", "writ of", "fundamental right", "mandamus", "certiorari", "public interest litigation"])
+    is_taxation = (
+        any(k in q_low for k in [
+            "income tax", "sales tax", "federal board of revenue", "inland revenue",
+            "customs act", "customs duty", "customs tribunal", "appellate tribunal inland revenue",
+            "punjab revenue authority", "sindh revenue board", "kpbra",
+            "super tax", "withholding tax", "advance tax", "tax assessment", "audit under section 177",
+            "section 122", "section 111", "ito 2001", "income tax ordinance", "sales tax act"
+        ])
+        or bool(re.search(r'\b(?:fbr|atir|pra|srb)\b', q_low))
+    )
+    is_labour = (
+        any(k in q_low for k in [
+            "workman", "workmen", "industrial relations", "national industrial relations commission",
+            "labour court", "labor court", "labour appellate tribunal", "trade union", "collective bargaining agent",
+            "standing orders", "industrial and commercial employment", "gratuity", "provident fund",
+            "unfair labour practice", "unfair labor practice", "retrenchment", "wrongful termination of workman",
+            "ira 2012", "industrial relations act", "workmen's compensation", "employees old age benefits",
+            "social security court"
+        ])
+        or bool(re.search(r'\b(?:nirc|cba|eobi)\b', q_low))
+    )
+    is_environmental = (
+        any(k in q_low for k in [
+            "environmental protection", "pepa", "pepa 1997", "environmental tribunal",
+            "pollution", "effluent", "environmental impact assessment",
+            "initial environmental examination", "hazardous substance", "hazardous waste",
+            "smog", "air quality", "environmental protection agency", "climate change"
+        ])
+        or bool(re.search(r'\b(?:epa|eia|iee)\b', q_low))
+    )
+    is_constitutional_general = any(k in q_low for k in [
+        "article 199", "article 184", "article 189", "article 201", "writ petition", "writ of",
+        "fundamental right", "fundamental rights", "mandamus", "certiorari", "quo warranto", "prohibition",
+        "public interest litigation", "judicial review", "vires of", "ultra vires", "fair trial",
+        "article 10a", "article 10-a", "article 25", "article 9", "constitutional bench",
+        "twenty-sixth amendment", "26th amendment"
+    ])
     is_family = (
         any(k in q_low for k in [
             "khula", "dower", "maintenance", "guardian", "custody of minor", "talaq", "mflo",
@@ -893,6 +1041,38 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         allowed_domains_filter = ["intellectual_property", "civil"]
         procedural_remedy = "Suit for Infringement & Injunction under Trade Marks Ordinance 2001 / Copyright Ordinance 1962"
         competent_forum = "District Court / Intellectual Property Tribunal"
+
+    elif is_taxation:
+        primary_domain = "taxation"
+        secondary_domains = []
+        subdomains = ["income_tax", "sales_tax", "customs", "tax_assessment", "appellate_tribunal"]
+        legacy_domains = ["taxation", "revenue law"]
+        legacy_matter_type = ["taxation", "revenue"]
+        allowed_domains_filter = ["taxation"]
+        procedural_remedy = "Appeal to Commissioner (Appeals) / Appellate Tribunal Inland Revenue (s.131 ITO 2001) / Reference to High Court (s.133 ITO 2001)"
+        competent_forum = "Commissioner Inland Revenue (Appeals) / Appellate Tribunal Inland Revenue (ATIR) / High Court"
+
+    elif is_labour:
+        primary_domain = "labour"
+        secondary_domains = []
+        subdomains = ["industrial_relations", "unfair_labour_practice", "standing_orders", "workman_grievance", "trade_union"]
+        legacy_domains = ["labour law", "industrial relations"]
+        legacy_matter_type = ["labour", "employment"]
+        allowed_domains_filter = ["labour"]
+        procedural_remedy = "Grievance Notice under s.33 / Grievance Petition under s.25-A Industrial Relations Act 2012 / Petition before NIRC"
+        competent_forum = "Labour Court / National Industrial Relations Commission (NIRC) / Labour Appellate Tribunal"
+
+    elif is_environmental:
+        primary_domain = "environmental"
+        secondary_domains = ["constitutional"]
+        subdomains = ["environmental_protection", "pollution_control", "eia_iee", "environmental_tribunal"]
+        legacy_domains = ["environmental law", "constitutional law"]
+        legacy_matter_type = ["environmental", "constitutional"]
+        is_cross_domain_relevant = True
+        cross_domain_reason = "Environmental protection under PEPA 1997 / EPA intersects with Constitutional right to life and clean environment under Article 9 & 14."
+        allowed_domains_filter = ["environmental", "constitutional"]
+        procedural_remedy = "Complaint / Appeal before Environmental Protection Tribunal under s.21 & s.22 PEPA 1997 / Green Bench Writ"
+        competent_forum = "Environmental Protection Tribunal / High Court (Green Bench)"
 
     elif is_civil_execution:
         primary_domain = "civil"
@@ -1137,74 +1317,53 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         is_cross_domain_relevant = False
         allowed_domains_filter = ["family"]
 
-    elif is_rent:
-        primary_domain = "rent"
-        subdomains = ["eviction", "default_in_rent", "leave_to_defend", "prpa"]
-        legacy_domains.append("rent restriction")
-        legacy_matter_type.append("rent")
-        if any(k in q_low for k in ["cheque", "bounced", "489"]):
-            secondary_domains = ["criminal", "civil"]
-            legacy_matter_type.append("criminal")
-            is_cross_domain_relevant = True
-            cross_domain_reason = "Concurrent civil eviction under PRPA 2009 and criminal prosecution under Section 489-F PPC for bounced rent cheques."
-            allowed_domains_filter = ["rent", "criminal", "civil"]
-        else:
-            secondary_domains = ["civil"]
-            is_cross_domain_relevant = False
-            allowed_domains_filter = ["rent", "civil"]
-        procedural_remedy = "Application for Eviction under Section 15 PRPA 2009"
-        competent_forum = "Special Judge (Rent) / Rent Tribunal"
-        if any(k in q_low for k in ["cheque", "bounced", "489"]):
-            competent_forum += " / Magistrate First Class for Section 489-F PPC"
-
-    elif is_banking:
-        primary_domain = "banking"
-        secondary_domains = ["civil"]
-        subdomains = ["recovery_of_finances", "leave_to_defend", "section_22_appeal"]
-        legacy_domains.append("banking recovery")
-        legacy_matter_type.append("commercial")
-        is_cross_domain_relevant = False
-        allowed_domains_filter = ["banking", "civil"]
-        procedural_remedy = "Suit for Recovery under s.9 FIO 2001 / Appeal under s.22 FIO 2001"
-        competent_forum = "Banking Court / High Court (Appellate Division)"
-
-    elif is_corporate:
-        primary_domain = "corporate"
-        subdomains = ["oppression_and_mismanagement", "minority_shareholders", "section_286"]
-        legacy_domains.append("oppression & mismanagement")
-        legacy_matter_type.append("corporate")
-        if any(k in q_low for k in ["409", "director", "misappropriat", "funds"]):
-            secondary_domains = ["criminal", "civil"]
-            is_cross_domain_relevant = True
-            cross_domain_reason = "Oppression under s.286 Companies Act 2017 involving misappropriation of corporate funds and criminal breach of trust under s.409 PPC."
-            allowed_domains_filter = ["corporate", "criminal", "civil"]
-        else:
-            secondary_domains = ["civil"]
-            is_cross_domain_relevant = False
-            allowed_domains_filter = ["corporate", "civil"]
-        procedural_remedy = "Company Petition under Section 286 Companies Act 2017"
-        competent_forum = "Special Court / High Court Company Bench"
-
     elif not is_civil_execution and (
         is_bail
-        or any(k in q_low for k in ["fir", "arrest", "accused", "police", "custody", "murder", "302", "ppc", "crpc"])
-        or re.search(r"\b(?:indian penal code|i\.?p\.?c\.?)\b", q_low)
+        or any(k in q_low for k in [
+            "fir", "arrest", "accused", "police", "custody", "murder", "qatl", "302", "324",
+            "attempted murder", "hurt", "337", "kidnapping", "abduction", "365", "rape", "376",
+            "theft", "379", "robbery", "dacoity", "392", "395", "cnsa", "narcotics", "charas",
+            "heroin", "opium", "9c cnsa", "challan", "remand", "confession", "164 crpc",
+            "charge framing", "265-k", "249-a", "acquittal", "appeal against acquittal",
+            "appeal against conviction", "criminal revision", "435 crpc", "439 crpc",
+            "justice of peace", "22-a", "22-b", "ppc", "crpc"
+        ])
+        or bool(re.search(r"\b(?:indian penal code|i\.?p\.?c\.?)\b", q_low))
     ):
         primary_domain = "criminal"
         if "pre-arrest" in q_low or "pre arrest" in q_low or "anticipatory bail" in q_low:
             subdomains = ["bail", "pre_arrest_bail"]
             legacy_domains.extend(["criminal law", "pre-arrest bail"])
+            procedural_remedy = "Pre-arrest Bail Application under Section 498 CrPC"
+            competent_forum = "Sessions Court / High Court"
         elif any(k in q_low for k in ["post-arrest", "post arrest", "arrested", "in custody", "in jail", "without a warrant", "without warrant"]):
             subdomains = ["bail", "post_arrest_bail"]
             legacy_domains.extend(["criminal law", "post-arrest bail"])
+            procedural_remedy = "Post-arrest Bail Application under Section 497 CrPC"
+            competent_forum = "Judicial Magistrate / Sessions Court / High Court"
+        elif any(k in q_low for k in ["22-a", "22-b", "22a", "22b", "justice of peace"]):
+            subdomains = ["justice_of_peace", "ex_officio", "registration_of_fir"]
+            legacy_domains.extend(["criminal procedure", "justice of peace"])
+            procedural_remedy = "Petition under Section 22-A & 22-B Cr.P.C. for Registration of FIR"
+            competent_forum = "Ex-Officio Justice of the Peace / Sessions Court"
+        elif any(k in q_low for k in ["acquittal", "249-a", "249a", "265-k", "265k"]):
+            subdomains = ["acquittal_application", "premature_acquittal"]
+            legacy_domains.extend(["criminal trial", "acquittal"])
+            procedural_remedy = "Application for Premature Acquittal under Section 249-A / 265-K Cr.P.C."
+            competent_forum = "Trial Magistrate / Sessions Court"
+        elif any(k in q_low for k in ["appeal against conviction", "appeal against acquittal", "criminal appeal"]):
+            subdomains = ["criminal_appeal", "conviction_challenge"]
+            legacy_domains.extend(["criminal appeal", "appellate procedure"])
+            procedural_remedy = "Criminal Appeal under Section 410 / 417 Cr.P.C."
+            competent_forum = "Sessions Court / High Court"
         else:
-            subdomains = ["bail", "criminal_procedure"]
-            legacy_domains.extend(["criminal law", "bail"])
+            subdomains = ["general_criminal", "criminal_trial", "investigation"]
+            legacy_domains.extend(["criminal law", "substantive penal offences"])
+            procedural_remedy = "Criminal Complaint / Defense in Trial / Section 497/498 CrPC Bail"
+            competent_forum = "Judicial Magistrate 1st Class / Sessions Court / High Court"
         legacy_matter_type.append("criminal")
         is_cross_domain_relevant = False
         allowed_domains_filter = ["criminal"]
-        procedural_remedy = "Bail Application under Section 497/498 CrPC"
-        competent_forum = "Magistrate 1st Class / Sessions Court / High Court"
 
     elif is_constitutional_general:
         primary_domain = "constitutional"
@@ -1351,6 +1510,24 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             statutes.append("Constitution of the Islamic Republic of Pakistan, 1973")
         if is_service and "Service Tribunals Act, 1973" not in statutes:
             statutes.append("Service Tribunals Act, 1973")
+    if is_taxation or primary_domain == "taxation":
+        for tax_stat in ["Income Tax Ordinance, 2001", "Sales Tax Act, 1990", "Customs Act, 1969"]:
+            if tax_stat not in statutes:
+                statutes.append(tax_stat)
+    if is_labour or primary_domain == "labour":
+        for lab_stat in ["Industrial Relations Act, 2012", "Industrial and Commercial Employment (Standing Orders) Ordinance, 1968", "Workmen's Compensation Act, 1923"]:
+            if lab_stat not in statutes:
+                statutes.append(lab_stat)
+    if is_environmental or primary_domain == "environmental":
+        if "Pakistan Environmental Protection Act, 1997" not in statutes:
+            statutes.append("Pakistan Environmental Protection Act, 1997")
+    if is_cybercrime or primary_domain == "cybercrime":
+        if "Prevention of Electronic Crimes Act, 2016" not in statutes:
+            statutes.append("Prevention of Electronic Crimes Act, 2016")
+    if is_ip or primary_domain == "intellectual_property":
+        for ip_stat in ["Trade Marks Ordinance, 2001", "Copyright Ordinance, 1962", "Patents Ordinance, 2000"]:
+            if ip_stat not in statutes:
+                statutes.append(ip_stat)
     if any(k in q_low for k in ["qso", "qanun-e-shahadat", "evidence", "proof", "presumption", "tamleek", "benami"]):
         if "Qanun-e-Shahadat Order, 1984" not in statutes:
             statutes.append("Qanun-e-Shahadat Order, 1984")
@@ -1722,6 +1899,19 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
             questions.append("welfare of minor as paramount consideration in custody matters under Guardians and Wards Act 1890")
         elif any(k in q_low for k in ["maintenance", "support"]):
             questions.append("statutory obligation of father to maintain minor children under Muslim Family Laws Ordinance 1961 and Family Courts Act 1964")
+    if is_taxation or primary_domain == "taxation":
+        questions.append("legality and procedural requirements of tax assessment under Section 122 / 111 Income Tax Ordinance 2001")
+        questions.append("appellate remedy before Commissioner Inland Revenue (Appeals) and Appellate Tribunal Inland Revenue under Sections 127 and 131 ITO 2001")
+    if is_labour or primary_domain == "labour":
+        questions.append("definition of workman and locus standi to invoke grievance procedure under Section 33 Industrial Relations Act 2012")
+        questions.append("unfair labour practice by employer and jurisdiction of National Industrial Relations Commission (NIRC)")
+    if is_environmental or primary_domain == "environmental":
+        questions.append("statutory requirement of Environmental Impact Assessment (EIA) / Initial Environmental Examination (IEE) under PEPA 1997")
+        questions.append("exclusive jurisdiction and powers of Environmental Protection Tribunal under Section 21 Pakistan Environmental Protection Act 1997")
+    if is_cybercrime or primary_domain == "cybercrime":
+        questions.append("cognizance, investigation, and trial of cyber offences under Prevention of Electronic Crimes Act 2016 (PECA)")
+    if is_ip or primary_domain == "intellectual_property":
+        questions.append("infringement of registered trademark, deceptive similarity, and passing off remedies under Trade Marks Ordinance 2001")
 
     if not questions:
         questions = [query[:200]]
@@ -1932,6 +2122,25 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
                     "lane": "fio_appeal_deposit_s22",
                     "query": "Section 22 Financial Institutions Recovery of Finances Ordinance 2001 appeal mandatory statutory deposit 50 percent"
                 })
+
+    if is_taxation or primary_domain == "taxation":
+        if not any(l["lane"] == "tax_assessment_appeal" for l in raw_lanes):
+            raw_lanes.insert(0, {
+                "lane": "tax_assessment_appeal",
+                "query": "Income Tax Ordinance 2001 Section 122 Section 111 assessment order Commissioner Appeals ATIR"
+            })
+    if is_labour or primary_domain == "labour":
+        if not any(l["lane"] == "labour_workman_grievance" for l in raw_lanes):
+            raw_lanes.insert(0, {
+                "lane": "labour_workman_grievance",
+                "query": "Section 33 Industrial Relations Act 2012 workman grievance notice petition unfair labour practice NIRC"
+            })
+    if is_environmental or primary_domain == "environmental":
+        if not any(l["lane"] == "environmental_protection_tribunal" for l in raw_lanes):
+            raw_lanes.insert(0, {
+                "lane": "environmental_protection_tribunal",
+                "query": "Pakistan Environmental Protection Act 1997 Section 11 Section 12 Section 21 Environmental Tribunal EIA IEE"
+            })
 
     # Wrap into SearchLane objects
     search_lanes: List[Union[SearchLane, Dict[str, Any]]] = []

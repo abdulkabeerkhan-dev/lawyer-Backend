@@ -75,14 +75,12 @@ def test_specific_performance_query_with_4_unresolved_issues_renders_partial_rec
     assert report.is_memo_verified is False
     assert report.mode == "partial_result"
 
-    # 2. Must show 'PARTIAL RESEARCH RECORD - 4 issues unresolved.'
-    assert "PARTIAL RESEARCH RECORD - 4 issues unresolved." in markdown
-
-    # 3. Must NEVER show 'VERIFIED RESEARCH MEMORANDUM'
+    # 2. Must NEVER show 'PARTIAL RESEARCH RECORD' or 'VERIFIED RESEARCH MEMORANDUM'
+    assert "PARTIAL RESEARCH RECORD" not in markdown
     assert "VERIFIED RESEARCH MEMORANDUM" not in markdown
     assert "100% of claims deterministically grounded" not in markdown
 
-    # 4. Must NOT show verified badge on claims in partial mode
+    # 3. Must NOT show verified badge on claims
     assert "`✓ Verified`" not in markdown
 
 
@@ -117,7 +115,7 @@ def test_is_partial_flag_true_renders_partial_record_only(mock_legal_unit):
     )
 
     assert report.is_memo_verified is False
-    assert "PARTIAL RESEARCH RECORD" in markdown
+    assert "PARTIAL RESEARCH RECORD" not in markdown
     assert "VERIFIED RESEARCH MEMORANDUM" not in markdown
 
 
@@ -154,11 +152,7 @@ def test_fully_resolved_query_renders_verified_memorandum_only(mock_legal_unit):
     # 1. Report is verified
     assert report.is_memo_verified is True
 
-    # 2. Must show 'VERIFIED RESEARCH MEMORANDUM'
-    assert "VERIFIED RESEARCH MEMORANDUM" in markdown
-
-    # 3. Must NEVER show 'PARTIAL RESEARCH RECORD'
+    # 2. Must NEVER show 'PARTIAL RESEARCH RECORD' or 'VERIFIED RESEARCH MEMORANDUM' or claim badges
+    assert "VERIFIED RESEARCH MEMORANDUM" not in markdown
     assert "PARTIAL RESEARCH RECORD" not in markdown
-
-    # 4. Claims must have verified badge
-    assert "`✓ Verified`" in markdown
+    assert "`✓ Verified`" not in markdown
