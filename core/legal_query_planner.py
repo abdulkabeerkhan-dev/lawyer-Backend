@@ -21,7 +21,10 @@ Before any retrieval is executed, every user query is analyzed to extract:
 import os
 import re
 import json
+import logging
 import asyncio
+
+logger = logging.getLogger(__name__)
 from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional, Tuple, Literal, Set, Union
 from pydantic import BaseModel, Field, model_validator

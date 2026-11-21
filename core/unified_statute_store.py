@@ -17,7 +17,10 @@ Every provision returns:
 import os
 import json
 import re
+import logging
 from typing import Dict, List, Any, Optional
+
+logger = logging.getLogger(__name__)
 
 from core.statute_quote_policy import is_quote_verified
 
