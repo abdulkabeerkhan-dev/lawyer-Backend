@@ -11,15 +11,18 @@
     "domain": "civil",
     "forum": "High Court",
     "provision_type": "section",
-    "text": "1.  Short title, extent, application and commencement.⸻(1) This Act may be  called  the Recognition and Enforcement (Arbitration Agreements and Foreign Arbitral Awards) Act, 2011.\n\n(2)   It extends to the whole of Pakistan.\n\n(3)   It shall apply to arbitration agreements made before, on or after the date of commencement of this Act.\n\n(4)   It shall not apply to foreign arbitral awards made before the 14th day of July, 2005.\n\n(5)  It shall come into force at once.",
+    "text": "1. Short title, extent, application and commencement.⸻(1) This Act may be called the Recognition and Enforcement (Arbitration Agreements and Foreign Arbitral Awards) Act, 2011.\n\n(2) It extends to the whole of Pakistan.\n\n(3) It shall apply to arbitration agreements made before, on or after the date of commencement of this Act.\n\n(4) It shall not apply to foreign arbitral awards made before the 14th day of July, 2005.\n\n(5) It shall come into force at once.",
     "raw_text": "1.  Short title, extent, application and commencement.⸻(1) This Act may be  called  the \nRecognition and Enforcement (Arbitration Agreements and Foreign Arbitral Awards) Act, 2011. \n \n(2)   It extends to the whole of Pakistan. \n \n(3)   It shall apply to arbitration agreements made before, on or after the date of commencement \nof this Act. \n \n(4)   It shall not apply to foreign arbitral awards made before the 14th day of July, 2005.  \n \n(5)  It shall come into force at once.",
     "amendment_notes": [],
     "former_labels": [],
     "supersedes": [
-      "ARBITRATION_1923"
+      "Arbitration (Protocol and Convention) Act, 1937 (s.11(1))",
+      "Recognition and Enforcement Ordinance, 1948 (s.11(1))"
     ],
     "superseded_by": null,
     "in_force": true,
+    "omitted": false,
+    "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
@@ -38,15 +41,18 @@
     "domain": "civil",
     "forum": "High Court",
     "provision_type": "section",
-    "text": "2. Definitions.⸻ In this Act, unless there is anything repugnant in the subject or context,⸻\n\n(a) “Article” means an Article of Convention;\n\n(b) “Contracting State” means a State which is a Party to the Convention;\n\n(c) “Convention” means the United Nations Convention on the Recognition and Enforcement of Foreign Arbitral Awards, done at New York on 10th June,",
-    "raw_text": "2. Definitions.⸻ In this Act, unless there is anything repugnant in the subject or context,⸻ \n \n \n(a) \n“Article” means an Article of Convention; \n \n \n \n(b) \n“Contracting State” means a State which is a Party to the Convention; \n \n(c) \n“Convention” means the United Nations Convention on the Recognition and \nEnforcement of Foreign Arbitral Awards, done at New York on 10th June,",
+    "text": "2. Definitions.⸻ In this Act, unless there is anything repugnant in the subject or context,⸻\n\n(a) “Article” means an Article of Convention;\n\n(b) “Contracting State” means a State which is a Party to the Convention;\n\n(c) “Convention” means the United Nations Convention on the Recognition and Enforcement of Foreign Arbitral Awards, done at New York on 10th June, 1958, set forth in the Schedule to this Act;\n\n(d) “Court” means a High Court and such other superior court in Pakistan as may be notified by the Federal Government in the official Gazette; and\n\n(e) “foreign arbitral award” means a foreign arbitral award made in a Contracting State and such other State as may be notified by the Federal Government, in the official Gazette.",
+    "raw_text": "2. Definitions.⸻ In this Act, unless there is anything repugnant in the subject or context,⸻ \n \n \n(a) \n“Article” means an Article of Convention; \n \n \n \n(b) \n“Contracting State” means a State which is a Party to the Convention; \n \n(c) \n“Convention” means the United Nations Convention on the Recognition and \nEnforcement of Foreign Arbitral Awards, done at New York on 10th June, \n1958, set forth in the Schedule to this Act; \n \n(d) \n“Court” means a High Court and such other superior court in Pakistan as may \nbe notified by the Federal Government in the official Gazette; and \n \n(e) \n“foreign arbitral award” means a foreign arbitral award made in a Contracting \nState and such other State as may be notified by the Federal Government, in the \nofficial Gazette.",
     "amendment_notes": [],
     "former_labels": [],
     "supersedes": [
-      "ARBITRATION_1923"
+      "Arbitration (Protocol and Convention) Act, 1937 (s.11(1))",
+      "Recognition and Enforcement Ordinance, 1948 (s.11(1))"
     ],
     "superseded_by": null,
     "in_force": true,
+    "omitted": false,
+    "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
@@ -70,10 +76,13 @@
     "amendment_notes": [],
     "former_labels": [],
     "supersedes": [
-      "ARBITRATION_1923"
+      "Arbitration (Protocol and Convention) Act, 1937 (s.11(1))",
+      "Recognition and Enforcement Ordinance, 1948 (s.11(1))"
     ],
     "superseded_by": null,
     "in_force": true,
+    "omitted": false,
+    "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
@@ -97,10 +106,13 @@
     "amendment_notes": [],
     "former_labels": [],
     "supersedes": [
-      "ARBITRATION_1923"
+      "Arbitration (Protocol and Convention) Act, 1937 (s.11(1))",
+      "Recognition and Enforcement Ordinance, 1948 (s.11(1))"
     ],
     "superseded_by": null,
     "in_force": true,
+    "omitted": false,
+    "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
@@ -124,10 +136,13 @@
     "amendment_notes": [],
     "former_labels": [],
     "supersedes": [
-      "ARBITRATION_1923"
+      "Arbitration (Protocol and Convention) Act, 1937 (s.11(1))",
+      "Recognition and Enforcement Ordinance, 1948 (s.11(1))"
     ],
     "superseded_by": null,
     "in_force": true,
+    "omitted": false,
+    "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
@@ -151,10 +166,13 @@
     "amendment_notes": [],
     "former_labels": [],
     "supersedes": [
-      "ARBITRATION_1923"
+      "Arbitration (Protocol and Convention) Act, 1937 (s.11(1))",
+      "Recognition and Enforcement Ordinance, 1948 (s.11(1))"
     ],
     "superseded_by": null,
     "in_force": true,
+    "omitted": false,
+    "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
@@ -178,10 +196,13 @@
     "amendment_notes": [],
     "former_labels": [],
     "supersedes": [
-      "ARBITRATION_1923"
+      "Arbitration (Protocol and Convention) Act, 1937 (s.11(1))",
+      "Recognition and Enforcement Ordinance, 1948 (s.11(1))"
     ],
     "superseded_by": null,
     "in_force": true,
+    "omitted": false,
+    "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
@@ -205,10 +226,13 @@
     "amendment_notes": [],
     "former_labels": [],
     "supersedes": [
-      "ARBITRATION_1923"
+      "Arbitration (Protocol and Convention) Act, 1937 (s.11(1))",
+      "Recognition and Enforcement Ordinance, 1948 (s.11(1))"
     ],
     "superseded_by": null,
     "in_force": true,
+    "omitted": false,
+    "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
@@ -227,15 +251,18 @@
     "domain": "civil",
     "forum": "High Court",
     "provision_type": "section",
-    "text": "9. Powers to make Rules.  The Federal Government may, by notification in the official Gazette, make rules to carry out the purposes of this Act.",
+    "text": "9. Powers to make Rules. The Federal Government may, by notification in the official Gazette, make rules to carry out the purposes of this Act.",
     "raw_text": "9. Powers to make Rules.  The Federal Government may, by notification in the official \nGazette, make rules to carry out the purposes of this Act.",
     "amendment_notes": [],
     "former_labels": [],
     "supersedes": [
-      "ARBITRATION_1923"
+      "Arbitration (Protocol and Convention) Act, 1937 (s.11(1))",
+      "Recognition and Enforcement Ordinance, 1948 (s.11(1))"
     ],
     "superseded_by": null,
     "in_force": true,
+    "omitted": false,
+    "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
@@ -259,10 +286,13 @@
     "amendment_notes": [],
     "former_labels": [],
     "supersedes": [
-      "ARBITRATION_1923"
+      "Arbitration (Protocol and Convention) Act, 1937 (s.11(1))",
+      "Recognition and Enforcement Ordinance, 1948 (s.11(1))"
     ],
     "superseded_by": null,
     "in_force": true,
+    "omitted": false,
+    "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",

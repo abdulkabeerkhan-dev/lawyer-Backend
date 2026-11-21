@@ -1,0 +1,132 @@
+{
+  "timestamp": "2026-11-20 19:37:48",
+  "checks": {
+    "Environment & Credentials": {
+      "status": "PASS",
+      "details": {
+        "USE_ZILLIZ_STATUTES": "true",
+        "ZILLIZ_STATUTES_COLLECTION": "statutes_v3",
+        "VECTOR_BACKEND": "zilliz",
+        "ZILLIZ_URI": true,
+        "ZILLIZ_TOKEN": true,
+        "VOYAGE_API_KEY": true,
+        "TURSO_URL": true,
+        "TURSO_TOKEN": true
+      }
+    },
+    "Zilliz Cloud Clusters": {
+      "status": "PASS",
+      "details": {
+        "has_statutes_v3": true,
+        "statutes_v3_row_count": 38607,
+        "has_judgments_v1": true
+      }
+    },
+    "Voyage AI 1024-d Embeddings": {
+      "status": "PASS",
+      "details": {
+        "model": "voyage-4-large",
+        "dimensions": 1024,
+        "latency_seconds": 3.088
+      }
+    },
+    "Turso Case Law Store": {
+      "status": "PASS",
+      "details": {
+        "case_texts_count": 141481,
+        "circuit_breaker_open": false,
+        "latency_seconds": 1.173
+      }
+    },
+    "BM25 Inverted Lexical Index": {
+      "status": "PASS",
+      "details": {
+        "hits_returned": 5,
+        "top_citation": "2017 PLD 165",
+        "latency_seconds": 4.158
+      }
+    },
+    "Definitions & Ambiguity Index": {
+      "status": "PASS",
+      "details": {
+        "total_defined_terms": 4025,
+        "ambiguous_terms_count": 1030,
+        "willful_default_linked_acts": [
+          "FIO_2001",
+          "FIO_2001",
+          "NAO_1999",
+          "NAO_1999"
+        ]
+      }
+    },
+    "Exact Section Resolver": {
+      "status": "PASS",
+      "details": {
+        "verified_count": "7/7",
+        "failures": []
+      }
+    },
+    "Multi-Lane Retrieval Orchestrator": {
+      "status": "PASS",
+      "details": {
+        "Rent Eviction": {
+          "total_candidates": 40,
+          "case_precedents_count": 26,
+          "top_case_citations": [
+            "2019 MLD 2095",
+            "1997 SCMR 1781",
+            "2010 YLR 1374"
+          ],
+          "statute_provisions_count": 14,
+          "top_statutes": [
+            "PRPA_2009_SEC_10",
+            "RULES_BUSINESS_SEC_15",
+            "SECURITIES_1920_SEC_22"
+          ],
+          "latency_seconds": 11.602
+        },
+        "Criminal Bail": {
+          "total_candidates": 39,
+          "case_precedents_count": 25,
+          "top_case_citations": [
+            "2007 YLR 3119",
+            "2020 PLD 788",
+            "2008 MLD 1030"
+          ],
+          "statute_provisions_count": 14,
+          "top_statutes": [
+            "CRPC_1898_SEC_156",
+            "CRPC_1898_SEC_498A",
+            "PPC_1860_SEC_302"
+          ],
+          "latency_seconds": 9.806
+        },
+        "Banking Default": {
+          "total_candidates": 33,
+          "case_precedents_count": 21,
+          "top_case_citations": [
+            "2019 PLD 310",
+            "2020 MLD 2078",
+            "2019 PLD 310"
+          ],
+          "statute_provisions_count": 12,
+          "top_statutes": [
+            "ITO_2001_SCH_ENTRY_20_619",
+            "FIO_2001_SEC_2_g",
+            "ITO_2001_SCH_ENTRY_9_1604"
+          ],
+          "latency_seconds": 9.012
+        }
+      }
+    },
+    "FastAPI Statute Search Service": {
+      "status": "PASS",
+      "details": {
+        "matches_for_eviction": 36,
+        "top_match": "CANTONMENT_RENT_1963_SEC_17",
+        "verified_verbatim_text_loaded": true
+      }
+    }
+  },
+  "status": "ALL_SYSTEMS_OPERATIONAL"
+}

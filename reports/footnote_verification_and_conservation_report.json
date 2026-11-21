@@ -1,0 +1,442 @@
+{
+  "footnote_splits": {
+    "total_verified": 11,
+    "total_unverifiable": 2,
+    "by_act": {
+      "AMLA_2010": {
+        "verified": 2,
+        "unverifiable": 0
+      },
+      "CONST_1973": {
+        "verified": 0,
+        "unverifiable": 1
+      },
+      "CPC_1908": {
+        "verified": 0,
+        "unverifiable": 1
+      },
+      "CRPC_1898": {
+        "verified": 1,
+        "unverifiable": 0
+      },
+      "CUSTOMS_1969": {
+        "verified": 1,
+        "unverifiable": 0
+      },
+      "ITO_2001": {
+        "verified": 4,
+        "unverifiable": 0
+      },
+      "PAKISTAN_AIR_FORCE_PAF_1953": {
+        "verified": 1,
+        "unverifiable": 0
+      },
+      "SALES_TAX_1990": {
+        "verified": 2,
+        "unverifiable": 0
+      }
+    },
+    "unverifiable_top_30": [
+      {
+        "canonical_id": "CONST_1973_ART_105",
+        "act_code": "CONST_1973",
+        "raw_match": "clause 10[",
+        "sec_num": "1",
+        "fn_num": 0,
+        "known_fns_sample": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "status": "unverifiable"
+      },
+      {
+        "canonical_id": "CPC_1908_SEC_112",
+        "act_code": "CPC_1908",
+        "raw_match": "Article 10[",
+        "sec_num": "1",
+        "fn_num": 0,
+        "known_fns_sample": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "status": "unverifiable"
+      }
+    ]
+  },
+  "digit_conservation": {
+    "total_scanned": 37447,
+    "mismatches_count": 8,
+    "top_mismatches": [
+      {
+        "canonical_id": "ITO_2001_SEC_61",
+        "act_code": "ITO_2001",
+        "missing_digits_count": 3,
+        "details": {
+          "1": 1,
+          "3": 2
+        }
+      },
+      {
+        "canonical_id": "ITO_2001_SEC_65E",
+        "act_code": "ITO_2001",
+        "missing_digits_count": 3,
+        "details": {
+          "6": 3
+        }
+      },
+      {
+        "canonical_id": "ITO_2001_SEC_114",
+        "act_code": "ITO_2001",
+        "missing_digits_count": 6,
+        "details": {
+          "0": 2,
+          "1": 2,
+          "3": 1,
+          "4": 1
+        }
+      },
+      {
+        "canonical_id": "ITO_2001_SEC_116",
+        "act_code": "ITO_2001",
+        "missing_digits_count": 4,
+        "details": {
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1
+        }
+      },
+      {
+        "canonical_id": "ITO_2001_SEC_236",
+        "act_code": "ITO_2001",
+        "missing_digits_count": 3,
+        "details": {
+          "0": 1,
+          "1": 1,
+          "9": 1
+        }
+      },
+      {
+        "canonical_id": "ITO_2001_SCH_ENTRY_1985",
+        "act_code": "ITO_2001",
+        "missing_digits_count": 4,
+        "details": {
+          "2": 2,
+          "3": 1,
+          "7": 1
+        }
+      },
+      {
+        "canonical_id": "PAKISTAN_AIR_FORCE_PAF_1953_SEC_202",
+        "act_code": "PAKISTAN_AIR_FORCE_PAF_1953",
+        "missing_digits_count": 7,
+        "details": {
+          "1": 1,
+          "3": 1,
+          "4": 2,
+          "6": 3
+        }
+      },
+      {
+        "canonical_id": "SALES_TAX_1990_SEC_11",
+        "act_code": "SALES_TAX_1990",
+        "missing_digits_count": 5,
+        "details": {
+          "5": 1,
+          "9": 4
+        }
+      }
+    ]
+  },
+  "thirty_random_samples": [
+    {
+      "canonical_id": "COUNTERVAILING_DUTIES_ORD_2001_SCH_ENTRY_15",
+      "act_name": "Countervailing Duties Ordinance, 2001(Repealed by Act XIII of 2015)",
+      "section_number": null,
+      "heading": "For the purposes of paras 3 and 4, the provision of foodstuffs at subsidised prices with the",
+      "raw_text_snippet": "15. For the purposes of paras 3 and 4, the provision of foodstuffs at subsidised prices with the\nobjective of meeting food requirements of urban and rural poor in developing countries on a regular\nbasis at reasonable prices shall be considered to be in conformity with the provisions of this para.\n_____\nFIFTH SCHEDULE\n[See section 15(3)(b)]\nThe developing countries referred to in clause (b) of sub­",
+      "clean_text_snippet": "15. For the purposes of paras 3 and 4, the provision of foodstuffs at subsidised prices with the objective of meeting food requirements of urban and rural poor in developing countries on a regular basis at reasonable prices shall be considered to be in conformity with the provisions of this para.\n_____ FIFTH SCHEDULE See section 15(3)(b) The developing countries referred to in clause (b) of sub­se",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "BCO_1962_SCH_ENTRY_7_13",
+      "act_name": "Banking Companies Ordinance, 1962",
+      "section_number": null,
+      "heading": "CONSTITUENTS'",
+      "raw_text_snippet": "7. \nCONSTITUENTS' \nLIABILITIES \nFOR \nACCEPTANCES, ENDORSEMENTS AND \nOTHER OBLIGATIONS PER CONTRA: \n \n——",
+      "clean_text_snippet": "7.\nCONSTITUENTS' LIABILITIES FOR ACCEPTANCES, ENDORSEMENTS AND OTHER OBLIGATIONS PER CONTRA:\n\n——",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "ITO_2001_SCH_ENTRY_72_1445",
+      "act_name": "Income Tax Ordinance, 2001 (Same as on the official website of FBR dated 31-06-2026)",
+      "section_number": null,
+      "heading": "04",
+      "raw_text_snippet": "2[72.04 \nFerrous waste and scrap; remelting scrap ingots of iron or steel.]",
+      "clean_text_snippet": "72.04 Ferrous waste and scrap; remelting scrap ingots of iron or steel.",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "ISLAMABAD_NATURE_CONSERVATION_WILDLIFE_MANAGEMENT_2024_SCH_ENTRY_15",
+      "act_name": "Islamabad Nature Conservation and Wildlife Management Act, 2024",
+      "section_number": null,
+      "heading": "12(4)(o)",
+      "raw_text_snippet": "15. \n12(4)(o) \nRs 5,000 \n\n \nPage 23 of 23",
+      "clean_text_snippet": "15.\n12(4)(o) Rs 5,000",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "INTERNATIONAL_ISLAMIC_UNIVERSITY_ORD_1985_SEC_11",
+      "act_name": "International Islamic University Ordinance, 1985",
+      "section_number": null,
+      "heading": "Pro",
+      "raw_text_snippet": "11. \nPro-Chancellor.—(1) The Chancellor shall appoint a scholar of international repute or \nan educationist of distinction as Pro-Chancellor for such period and on such terms and conditions as \nhe may determine. \n(2) \nThe Pro-Chancellor shall, in the absence of the Chancellor, preside at the convocation \nof the University and at any meeting where business of the University is being considered. \n(3",
+      "clean_text_snippet": "11.\nPro-Chancellor.—(1) The Chancellor shall appoint a scholar of international repute or an educationist of distinction as Pro-Chancellor for such period and on such terms and conditions as he may determine.\n(2) The Pro-Chancellor shall, in the absence of the Chancellor, preside at the convocation of the University and at any meeting where business of the University is being considered.\n(3) The P",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "DEKKHAN_AGRICULTURISTS_RELIEF_1879_SEC_29",
+      "act_name": "Dekkhan Agriculturists Relief Act, 1879",
+      "section_number": null,
+      "heading": "Immoveable property not to vest in receiver, but may be managed for benefit of",
+      "raw_text_snippet": "29. Immoveable property not to vest in receiver, but may be managed for benefit of \ncreditors. No immoveable property of the insolvent shall vest in the receiver; but the Court, 2[on \napplication or of its own motion,] may direct the Collector to take into his possession, for any period \nnot exceeding seven years from the date on which the receiver has been appointed, any immoveable \nproperty to t",
+      "clean_text_snippet": "29. Immoveable property not to vest in receiver, but may be managed for benefit of creditors. No immoveable property of the insolvent shall vest in the receiver; but the Court, on application or of its own motion, may direct the Collector to take into his possession, for any period not exceeding seven years from the date on which the receiver has been appointed, any immoveable property to the poss",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "CONTROL_EMPLOYMENT_ORD_1965_SEC_4",
+      "act_name": "Control of Employment Ordinance, 1965",
+      "section_number": null,
+      "heading": "Manpower Board",
+      "raw_text_snippet": "4. Manpower Board.___ 3[(1) The Provincial Government shall constitute a Manpower Board \nconsisting of___ \n \n(i) \nthe Secretary of the Labour Department of the Provincial Government, who \nshall be the Chairman of the Board; \n \n(ii) \none member to represent the Industries Department of the Provincial \nGovernment, to be nominated by the Department; \n \n(iii) \na Deputy Secretary in the Finance Departm",
+      "clean_text_snippet": "4. Manpower Board.___ (1) The Provincial Government shall constitute a Manpower Board consisting of___\n\n(i) the Secretary of the Labour Department of the Provincial Government, who shall be the Chairman of the Board;\n\n(ii) one member to represent the Industries Department of the Provincial Government, to be nominated by the Department;\n\n(iii) a Deputy Secretary in the Finance Department of the Pro",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "TRANSFER_OFFENDERS_ORD_2002_SEC_13",
+      "act_name": "Transfer of Offenders Ordinance, 2002",
+      "section_number": null,
+      "heading": "No appeal or revision of a sentence of imprisonment imposed upon an offender who",
+      "raw_text_snippet": "13. No appeal or revision of a sentence of imprisonment imposed upon an offender who \nis a citizen of Pakistan:___ The sentence of imprisonment imposed on any offender who is a citizen of \nPakistan in any specified country shall not be subject to any appeal or revision in any court in Pakistan, \n\n \nPage 6 of 6 \n \nnotwithstanding the fact that the order, decision or judgment imposing such sentence ",
+      "clean_text_snippet": "13. No appeal or revision of a sentence of imprisonment imposed upon an offender who is a citizen of Pakistan:___ The sentence of imprisonment imposed on any offender who is a citizen of Pakistan in any specified country shall not be subject to any appeal or revision in any court in Pakistan,\n\nnotwithstanding the fact that the order, decision or judgment imposing such sentence is deemed to be an o",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "COMPANIES_2017_SCH_ENTRY_49_237",
+      "act_name": "Companies Act, 2017",
+      "section_number": null,
+      "heading": "A committee may elect a chairman of its meetings, but, if no such chairman is elected,",
+      "raw_text_snippet": "49.  \nA committee may elect a chairman of its meetings, but, if no such chairman is elected, \nor if at any meeting the chairman is not present within fifteen (15) minutes after the time appointed for \nholding the same or is unwilling to act as chairman, the members present may choose one of them to be \nthe chairman of the meeting. \n \nPROCEEDINGS OF COMMITTEE MEMBERS",
+      "clean_text_snippet": "49.\nA committee may elect a chairman of its meetings, but, if no such chairman is elected, or if at any meeting the chairman is not present within fifteen (15) minutes after the time appointed for holding the same or is unwilling to act as chairman, the members present may choose one of them to be the chairman of the meeting.\n\nPROCEEDINGS OF COMMITTEE MEMBERS",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "PECA_2016_SEC_3",
+      "act_name": "Prevention of Electronic Crimes Act, 2016",
+      "section_number": null,
+      "heading": "Unauthorized access to information system or data",
+      "raw_text_snippet": "3.  Unauthorized access to information system or data.— Whoever with dishonest intention \ngains unauthorized access to any information system or data shall be punished with imprisonment for \na term which may extend to three months or with fine which may extend to fifty thousand rupees or \nwith both.",
+      "clean_text_snippet": "3. Unauthorized access to information system or data.— Whoever with dishonest intention gains unauthorized access to any information system or data shall be punished with imprisonment for a term which may extend to three months or with fine which may extend to fifty thousand rupees or with both.",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "CANTONMENTS_1924_SEC_19I",
+      "act_name": "Cantonments Act, 1924",
+      "section_number": null,
+      "heading": "Term of office",
+      "raw_text_snippet": "19I. Term of office.―(1) Subject to the provisions of this Act, a  member of a Board shall hold \noffice for a term of four years from the date of oath. \n(2) On expiry of term of a Board, the Federal Government shall, by notification in the official \nGazette, appoint till the holding of the elections a caretaker Board comprising officer commanding the \nstation and two nominated members, one civil a",
+      "clean_text_snippet": "19I. Term of office.―(1) Subject to the provisions of this Act, a member of a Board shall hold office for a term of four years from the date of oath.\n(2) On expiry of term of a Board, the Federal Government shall, by notification in the official Gazette, appoint till the holding of the elections a caretaker Board comprising officer commanding the station and two nominated members, one civil and on",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "CANAL_DRAINAGE_1873_SEC_8",
+      "act_name": "Canal and Drainage Act,1873",
+      "section_number": null,
+      "heading": "Damage for which compensation shall not be awarded",
+      "raw_text_snippet": "8. Damage for which compensation shall not be awarded.—No compensation shall be \nawarded for any damage caused by— \n \n(a)  \nstoppage or diminution of percolation or floods ; \n \n(b)  \ndeterioration of climate or soil ; \n \n(c)  \nstoppage of navigation, or of the means of drifting timber or watering cattle ; \n \n(d)  \ndisplacement of labour. \n \n \nMatters in respect of which compensation may be awarded",
+      "clean_text_snippet": "8. Damage for which compensation shall not be awarded.—No compensation shall be awarded for any damage caused by—\n\n(a) stoppage or diminution of percolation or floods ;\n\n(b) deterioration of climate or soil ;\n\n(c) stoppage of navigation, or of the means of drifting timber or watering cattle ;\n\n(d) displacement of labour.\n\nMatters in respect of which compensation may be awarded.—But compensation ma",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "CONST_1973_ART_82",
+      "act_name": "Constitution of the Islamic Republic of Pakistan",
+      "section_number": null,
+      "heading": "Procedure relating to Annual Budget Statement",
+      "raw_text_snippet": "82. Procedure relating to Annual Budget Statement.__ (1) So much of the Annual Budget \nStatement as relates to expenditure charged upon the Federal Consolidated Fund may be discussed in, \nbut shall not be submitted to the vote of, the National Assembly. \n \n \n \n(2) So much of the Annual Budget Statement as relates to other expenditure shall be submitted \nto the National Assembly in the form of dema",
+      "clean_text_snippet": "82. Procedure relating to Annual Budget Statement.__ (1) So much of the Annual Budget Statement as relates to expenditure charged upon the Federal Consolidated Fund may be discussed in, but shall not be submitted to the vote of, the National Assembly.\n\n(2) So much of the Annual Budget Statement as relates to other expenditure shall be submitted to the National Assembly in the form of demands for g",
+      "amendment_notes": [
+        "2Added and subs. by the Constitution (Nineteenth Amendment) Act, 2011 (Act No. I of 2011) s. 2. 3Subs. by the Constitution (Twenty-second Amendment) Act, 2016 (Act No. XXV of 2016), s. 2. 4Subs., omitted and ins. by the Constitution (Twenty-six Amendment) Act, 2024 (Act No. XXVI of 2024, s. 5. 5Subs. by the Revival of the Constitution of 1973 Order, 1985 (P.O. No.14 of 1985), Art.2 and Sch."
+      ]
+    },
+    {
+      "canonical_id": "INSTITUTE_ART_CULTURE_2018_SEC_17",
+      "act_name": "Institute For Art and Culture Act, 2018",
+      "section_number": null,
+      "heading": "Authorities",
+      "raw_text_snippet": "17. Authorities.___(1) The following shall be the Authorities of the Institute, namely:___ \n \n(a)  \nAuthorities established by this Act___ \n \n(i)  \nthe Senate: \n \n(ii)  \nthe Syndicate: and \n \n(iii)  \nthe Academic Council; \n \n(b)  \nAuthorities to be established by the Statutes,___ \n \n(i)  \nBoard of Advanced Studies and Research; \n \n(ii)  \nBoard of Studies; \n \n(iii)  \nSelection Board; \n \n(iv)  \nFina",
+      "clean_text_snippet": "17. Authorities.___(1) The following shall be the Authorities of the Institute, namely:___\n\n(a) Authorities established by this Act___\n\n(i) the Senate:\n\n(ii) the Syndicate: and\n\n(iii) the Academic Council;\n\n(b) Authorities to be established by the Statutes,___\n\n(i) Board of Advanced Studies and Research;\n\n(ii) Board of Studies;\n\n(iii) Selection Board;\n\n(iv) Finance and Planning Committee;\n\n(v) Sea",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "ISLAMABAD_CAPITAL_TERRITORY_LOCAL_GOVERNMENT_2015_SEC_2_hh",
+      "act_name": "Islamabad Capital Territory Local Government Act, 2015",
+      "section_number": null,
+      "heading": "occupier",
+      "raw_text_snippet": "(hh)  \n“occupier” means any person, for the time being, in actual lawful \noccupation of the land or building and includes an owner in actual \noccupation of the land or building;",
+      "clean_text_snippet": "(hh) “occupier” means any person, for the time being, in actual lawful occupation of the land or building and includes an owner in actual occupation of the land or building;",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "SECURITIES_EXCHANGE_ORD_1969_SEC_4",
+      "act_name": "Securities and Exchange Ordinance, 1969 (Repealed by Act XIV of 2016)",
+      "section_number": null,
+      "heading": "Eligibility for registration",
+      "raw_text_snippet": "4.     Eligibility for registration.- (1) Any [ ]35 Exchange which fulfill such conditions \nor  complies with such requirements as may be prescribed to ensure fair dealings [, \nprotection of investors and its sustainable economic viability]36 shall be eligible for \nregistration under this Ordinance.  \n (2)    The conditions or requirements which may be prescribed for the purposes of sub-\nsection (",
+      "clean_text_snippet": "4. Eligibility for registration.- (1) Any 35 Exchange which fulfill such conditions or complies with such requirements as may be prescribed to ensure fair dealings , protection of investors and its sustainable economic viability36 shall be eligible for registration under this Ordinance.\n(2) The conditions or requirements which may be prescribed for the purposes of subsection (1) may, among other m",
+      "amendment_notes": [
+        "30 Section 3 re-numbered as sub-section (1) through Finance, Act, 1995. 31 The word “Stock” omitted through Finance Act, 2007. 32 Substituted for “a stock” through Finance Act, 2006. 33 The word “Stock” omitted through Finance Act, 2007. 34 The word “Stock” omitted through Finance Act, 2007. 35 The word “Stock” omitted through Finance Act, 2007. 36 Substituted for “and to protect investors” through Finance Act, 1995. 37 Substituted for “of the Federal Government” through Finance Act, 1995. 38 Substituted for “a stock” through Finance Act, 2006."
+      ]
+    },
+    {
+      "canonical_id": "BENAZIR_INCOME_SUPPORT_PROGRAMME_2010_SEC_9",
+      "act_name": "Benazir Income Support Programme Act, 2010",
+      "section_number": null,
+      "heading": "Powers and functions of the Council",
+      "raw_text_snippet": "9. \nPowers and functions of the Council.—(l) The powers and functions of the Council \nshall be— \n(a) \nto mobilize financial resources for the Programme; and \n(b) \nto advise the Board on the following matters, namely:— \n(i) \npolicies on poverty reduction; \n(ii) \nenhancement of the Programme; \n(iii) \nreach out to the donors through the Chairperson of the Programme; and \n(iv) \nthe Board affairs and p",
+      "clean_text_snippet": "9.\nPowers and functions of the Council.—(l) The powers and functions of the Council shall be—\n(a) to mobilize financial resources for the Programme; and\n(b) to advise the Board on the following matters, namely:—\n(i) policies on poverty reduction;\n(ii) enhancement of the Programme;\n(iii) reach out to the donors through the Chairperson of the Programme; and\n(iv) the Board affairs and performance of ",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "WEST_PAKISTAN_MOTOR_VEHICLES_TAXATION_1958_SEC_11",
+      "act_name": "West Pakistan Motor Vehicles Taxation Act, 1958",
+      "section_number": null,
+      "heading": "Recovery of arrear of tax",
+      "raw_text_snippet": "11. Recovery of arrear of tax. (1) If any tax payable under this Act is not paid within the fixed \nperiod, and the defaulter does not show cause to the satisfaction of the Deputy Director or any officer \nauthorised by him in this behalf, for his failing to do so, such tax (including the cost of recovery \nthereof) may be recovered under a warrant in the prescribed form signed by the Deputy Director",
+      "clean_text_snippet": "11. Recovery of arrear of tax. (1) If any tax payable under this Act is not paid within the fixed period, and the defaulter does not show cause to the satisfaction of the Deputy Director or any officer authorised by him in this behalf, for his failing to do so, such tax (including the cost of recovery thereof) may be recovered under a warrant in the prescribed form signed by the Deputy Director, b",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "GWADAR_PORT_AUTHORITY_ORD_2002_SEC_33",
+      "act_name": "Gwadar Port Authority Ordinance, 2002",
+      "section_number": null,
+      "heading": "Utilization of building material",
+      "raw_text_snippet": "33. Utilization of building material.  Notwithstanding anything contained in any other law \nfor the time being in force or in any contract or agreement, no person shall, without the prior \nconcurrence of the Authority, allocate, exploit or in any manner utilize, except for the purpose of his \nown personal use, such natural resources used as building material as the Authority may, by \nnotification ",
+      "clean_text_snippet": "33. Utilization of building material. Notwithstanding anything contained in any other law for the time being in force or in any contract or agreement, no person shall, without the prior concurrence of the Authority, allocate, exploit or in any manner utilize, except for the purpose of his own personal use, such natural resources used as building material as the Authority may, by notification in th",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "TRANSFER_EVACUEE_DEPOSITS_1956_SEC_13",
+      "act_name": "Transfer of Evacuee Deposits Act, 1956",
+      "section_number": null,
+      "heading": "Power to make rules",
+      "raw_text_snippet": "13. Power to make rules.___ (1) The 1[Federal Government] may, by notification in the \nofficial Gazette, make rules to carry out the purposes of this Act. \n \n(2) In particular, and without prejudice to the generality of the foregoing power, such rules \nmay___  \n \n1Subs. by the Federal Adaptation of Laws Order, 1975 (P. O. No. 4 of 1975), Art. 2 and Sch. \n\n \nPage 7 of 7 \n \n (a)  \ndefine the terms a",
+      "clean_text_snippet": "13. Power to make rules.___ (1) The Federal Government may, by notification in the official Gazette, make rules to carry out the purposes of this Act.\n\n(2) In particular, and without prejudice to the generality of the foregoing power, such rules may___\n\n1Subs. by the Federal Adaptation of Laws Order, 1975 (P. O. No. 4 of 1975), Art. 2 and Sch.\n\n(a) define the terms and conditions of service of Cus",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "PATENTS_2000_SEC_91",
+      "act_name": "Patents Ordinance, 2000",
+      "section_number": null,
+      "heading": "Reports of examiners to be confidential",
+      "raw_text_snippet": "91. Reports of examiners to be confidential. The reports of examiners to the Controller \nunder this Ordinance shall not be open to public inspection or be published by the Controller, and \nsuch reports shall not be liable to production or inspection in any legal proceedings unless the Court \ncertifies that the production or inspection is desirable in the interests of justice, and ought to be \nallo",
+      "clean_text_snippet": "91. Reports of examiners to be confidential. The reports of examiners to the Controller under this Ordinance shall not be open to public inspection or be published by the Controller, and such reports shall not be liable to production or inspection in any legal proceedings unless the Court certifies that the production or inspection is desirable in the interests of justice, and ought to be allowed.",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "INSTITUTE_SPACE_TECHNOLOGY_2010_SEC_6",
+      "act_name": "Institute of Space Technology Act, 2010",
+      "section_number": null,
+      "heading": "Teaching at the Institute",
+      "raw_text_snippet": "6. \nTeaching at the Institute.__ (1) All recognized teaching in various courses shall be \nconducted by the institute or a college in the prescribed manner and may include lectures, tutorials, \ndiscussions, seminars, demonstrations, distance learning and other methods of instruction as well as \npractical work in the laboratories, hospitals, workshops and other governmental or private \norganizations",
+      "clean_text_snippet": "6.\nTeaching at the Institute.__ (1) All recognized teaching in various courses shall be conducted by the institute or a college in the prescribed manner and may include lectures, tutorials, discussions, seminars, demonstrations, distance learning and other methods of instruction as well as practical work in the laboratories, hospitals, workshops and other governmental or private organizations.\n\n(2",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "PRISONERS_1900_SEC_53",
+      "act_name": "Prisoners Act, 1900",
+      "section_number": null,
+      "heading": "[Repeals]",
+      "raw_text_snippet": "53. [Repeals]. Rep. by the Repealing and Amending Act, 1914 (X of 1914), s. 3 and \nSchedule II.  \n______",
+      "clean_text_snippet": "53. Repeals. Rep. by the Repealing and Amending Act, 1914 (X of 1914), s. 3 and Schedule II.\n______",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "JUVENILE_JUSTICE_2018_SEC_2",
+      "act_name": "Juvenile Justice System Act, 2018",
+      "section_number": null,
+      "heading": "Definitions",
+      "raw_text_snippet": "2. Definitions.⸻In this Act, unless there is anything repugnant in the subject or context,⸻ \n \n(a) \n“best interest of the child”  means the basis for any decision taken regarding the child \nto ensure fulfillment of his basic rights and needs, identity, social well-being, \nphysical, emotional and psychological development; \n \n(b) \n“child” means for the purposes of this Act a person who has not atta",
+      "clean_text_snippet": "2. Definitions.⸻In this Act, unless there is anything repugnant in the subject or context,⸻\n\n(a) “best interest of the child” means the basis for any decision taken regarding the child to ensure fulfillment of his basic rights and needs, identity, social well-being, physical, emotional and psychological development;\n\n(b) “child” means for the purposes of this Act a person who has not attained the ",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "ALLIED_HEALTH_PROFESSIONALS_COUNCIL_2022_SEC_23",
+      "act_name": "Allied Health Professionals Council Act, 2022",
+      "section_number": null,
+      "heading": "Disqualification for registration",
+      "raw_text_snippet": "23. Disqualification for registration.— (1) A person shall be qualified for registration in the \nregister, if he: \n \n(a) \nhas been convicted of any offense under this Act or any other offense which in \nthe opinion of Council implies a defect of character; or \n(b) \nhas pursuant to an inquiry held by the Council in which the person was given a \nreasonable opportunity of being heard, been found guilt",
+      "clean_text_snippet": "23. Disqualification for registration.— (1) A person shall be qualified for registration in the register, if he:\n\n(a) has been convicted of any offense under this Act or any other offense which in the opinion of Council implies a defect of character; or\n(b) has pursuant to an inquiry held by the Council in which the person was given a reasonable opportunity of being heard, been found guilty of suc",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "ENFORCEMENT_SHARI_AH_1991_SEC_9",
+      "act_name": "Enforcement of Shari'ah Act, 1991",
+      "section_number": null,
+      "heading": "Mass media to promote Islamic values",
+      "raw_text_snippet": "9. Mass media to promote Islamic values.— (1) The State shall take steps to promote Islamic \nvalues through the mass media.  \n\n \nPage 6 of 7 \n \n(2) The publication and promotion of programmes against or in derogation to the Shari’ah, \nincluding obscene material shall be forbidden.",
+      "clean_text_snippet": "9. Mass media to promote Islamic values.— (1) The State shall take steps to promote Islamic values through the mass media.\n\n(2) The publication and promotion of programmes against or in derogation to the Shari’ah, including obscene material shall be forbidden.",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "PECA_2016_SEC_40",
+      "act_name": "Prevention of Electronic Crimes Act, 2016",
+      "section_number": null,
+      "heading": "Forensic laboratory",
+      "raw_text_snippet": "40.  Forensic laboratory.—The Federal Government shall establish or designate a forensic \nlaboratory, independent of the investigation agency, to provide expert opinion before the Court or for \nthe benefit of the investigation agency in relation to electronic evidence collected for purposes of \ninvestigation and prosecution of offences under this Act.",
+      "clean_text_snippet": "40. Forensic laboratory.—The Federal Government shall establish or designate a forensic laboratory, independent of the investigation agency, to provide expert opinion before the Court or for the benefit of the investigation agency in relation to electronic evidence collected for purposes of investigation and prosecution of offences under this Act.",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "NATIONAL_SKILLS_UNIVERSITY_ISLAMABAD_2018_SEC_32",
+      "act_name": "National Skills University Islamabad Act, 2018",
+      "section_number": null,
+      "heading": "Appeal to the Syndicate and the Senate",
+      "raw_text_snippet": "32. Appeal to the Syndicate and the Senate.⸺Where an order is passed punishing any officer \nother than the Vice-Chancellor, teacher or other employee of the University or altering or interpreting \nto his dis-advantage the prescribed terms or conditions of his service, he shall, where the order is \npassed by any officer or teacher of the University other than the Vice-Chancellor, have the right to ",
+      "clean_text_snippet": "32. Appeal to the Syndicate and the Senate.⸺Where an order is passed punishing any officer other than the Vice-Chancellor, teacher or other employee of the University or altering or interpreting to his dis-advantage the prescribed terms or conditions of his service, he shall, where the order is passed by any officer or teacher of the University other than the Vice-Chancellor, have the right to app",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "ITO_2001_SCH_ENTRY_1_1677",
+      "act_name": "Income Tax Ordinance, 2001 (Same as on the official website of FBR dated 31-06-2026)",
+      "section_number": null,
+      "heading": "114C(1)(a)",
+      "raw_text_snippet": "1. \n114C(1)(a) \nIn relation to an application \nfor booking, purchase or \nregistration \nof \nmotor \nvehicle. \nThe \ninvoice \nvalue for locally \nmanufactured \nvehicle; or the \nimport value as \nassessed by the \nCustoms \nAuthority \ninclusive of all \napplicable taxes, \nduties, \nlevies \nand charge. \nExceeding \nseven \nmillion \nrupees.",
+      "clean_text_snippet": "1.\n114C(1)(a) In relation to an application for booking, purchase or registration of motor vehicle.\nThe invoice value for locally manufactured vehicle; or the import value as assessed by the Customs Authority inclusive of all applicable taxes, duties, levies and charge.\nExceeding seven million rupees.",
+      "amendment_notes": []
+    },
+    {
+      "canonical_id": "EMPLOYEES_COST_LIVING_RELIEF_1974_SEC_7",
+      "act_name": "Employees Cost of Living (Relief) Act, 1974",
+      "section_number": null,
+      "heading": "Cost of living allowance to form part of Wages",
+      "raw_text_snippet": "7. Cost of living allowance to form part of Wages. Notwithstanding anything contained in \nthis Act or any other law for the time being in force, the cost of living allowance shall 1* form part of \nwages of a worker for the purposes of any other law, including the purposes of contribution to \nprovident fund, gratuity, bonus, social security scheme 2 [, indexation of wages] and calculating wages \nfo",
+      "clean_text_snippet": "7. Cost of living allowance to form part of Wages. Notwithstanding anything contained in this Act or any other law for the time being in force, the cost of living allowance shall 1* form part of wages of a worker for the purposes of any other law, including the purposes of contribution to provident fund, gratuity, bonus, social security scheme 2 , indexation of wages and calculating wages for over",
+      "amendment_notes": []
+    }
+  ]
+}

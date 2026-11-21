@@ -144,11 +144,11 @@
   "AL_KARAM_INTERNATIONAL_INSTITUTE_2021": {
     "act_name": "Al-Karam International Institute Act, 2021",
     "toc_count": 52,
-    "parsed_count": 55,
+    "parsed_count": 43,
     "matched_count": 41,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 14
+    "extra_sections_count": 2
   },
   "ALLAMA_IQBAL_OPEN_UNIVERSITY_1974": {
     "act_name": "Allama Iqbal Open University Act, 1974",
@@ -162,11 +162,11 @@
   "ALLIED_HEALTH_PROFESSIONALS_COUNCIL_2022": {
     "act_name": "Allied Health Professionals Council Act, 2022",
     "toc_count": 40,
-    "parsed_count": 42,
+    "parsed_count": 41,
     "matched_count": 40,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 1
   },
   "ALLOPATHIC_SYSTEM_PREVENTION_MISUSE_ORD_1962": {
     "act_name": "Allopathic System (Prevention of Misuse) Ordinance, 1962",
@@ -180,13 +180,13 @@
   "ALTERNATIVE_DISPUTE_RESOLUTION_2017": {
     "act_name": "Alternative Dispute Resolution Act, 2017",
     "toc_count": 26,
-    "parsed_count": 29,
+    "parsed_count": 26,
     "matched_count": 25,
     "missing_count": 1,
     "missing_sections": [
       "12"
     ],
-    "extra_sections_count": 4
+    "extra_sections_count": 1
   },
   "ANAND_MARRIAGE_1909": {
     "act_name": "Anand Marriage Act, 1909",
@@ -200,37 +200,37 @@
   "ANTI_NARCOTICS_FORCE_ANF_1997": {
     "act_name": "Anti Narcotics Force Act (ANF 1997)",
     "toc_count": 17,
-    "parsed_count": 26,
+    "parsed_count": 17,
     "matched_count": 17,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 9
+    "extra_sections_count": 0
   },
   "ATA_1997": {
     "act_name": "Anti Terrorism Act (ATA),1997",
     "toc_count": 91,
-    "parsed_count": 93,
+    "parsed_count": 94,
     "matched_count": 89,
     "missing_count": 2,
     "missing_sections": [
       "11I",
       "21F"
     ],
-    "extra_sections_count": 4
+    "extra_sections_count": 5
   },
   "ANTI_DUMPING_DUTIES_2015": {
     "act_name": "Anti-Dumping Duties Act, 2015",
     "toc_count": 79,
-    "parsed_count": 87,
+    "parsed_count": 80,
     "matched_count": 79,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 8
+    "extra_sections_count": 1
   },
   "AMLA_2010": {
     "act_name": "Anti-Money Laundering (AML) Act, 2010",
     "toc_count": 59,
-    "parsed_count": 170,
+    "parsed_count": 169,
     "matched_count": 58,
     "missing_count": 1,
     "missing_sections": [
@@ -241,11 +241,11 @@
   "ANTI_RAPE_INVESTIGATION_TRIAL_2021": {
     "act_name": "Anti-Rape (Investigation and Trial) Act, 2021",
     "toc_count": 33,
-    "parsed_count": 41,
+    "parsed_count": 31,
     "matched_count": 31,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 8
+    "extra_sections_count": 0
   },
   "ANTIQUITIES_1975": {
     "act_name": "Antiquities Act, 1975.",
@@ -279,20 +279,20 @@
   "ARBITRATION_INTERNATIONAL_INVESTMENT_DISPUTES_2011": {
     "act_name": "Arbitration (International Investment Disputes) Act, 2011",
     "toc_count": 10,
-    "parsed_count": 12,
+    "parsed_count": 10,
     "matched_count": 10,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 0
   },
   "ARBITRATION_1940": {
     "act_name": "Arbitration Act, 1940",
     "toc_count": 41,
-    "parsed_count": 50,
+    "parsed_count": 60,
     "matched_count": 41,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 9
+    "extra_sections_count": 17
   },
   "ARCHIVAL_MATERIAL_PRESERVATION_EXPORT_CONTROL_1975": {
     "act_name": "Archival Material (Preservation and Export Control) Act, 1975",
@@ -373,13 +373,13 @@
   "ASSETS_DECLARATION_2019": {
     "act_name": "Assets Declaration Act, 2019",
     "toc_count": 19,
-    "parsed_count": 26,
+    "parsed_count": 18,
     "matched_count": 18,
     "missing_count": 1,
     "missing_sections": [
       "14"
     ],
-    "extra_sections_count": 5
+    "extra_sections_count": 0
   },
   "ASSOCIATED_CEMENT_VESTING_1974": {
     "act_name": "Associated Cement (Vesting) Act, 1974",
@@ -420,41 +420,22 @@
   "BANKERS_BOOKS_EVIDENCE_1891": {
     "act_name": "Bankers' Books Evidence Act, 1891",
     "toc_count": 7,
-    "parsed_count": 9,
+    "parsed_count": 8,
     "matched_count": 7,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 1
   },
   "BCO_1962": {
     "act_name": "Banking Companies Ordinance, 1962",
     "toc_count": 150,
-    "parsed_count": 206,
-    "matched_count": 129,
-    "missing_count": 20,
+    "parsed_count": 201,
+    "matched_count": 148,
+    "missing_count": 1,
     "missing_sections": [
-      "84",
-      "85",
-      "86",
-      "87",
-      "88",
-      "89",
-      "90",
-      "91",
-      "92",
-      "93",
-      "94",
-      "95",
-      "83A",
-      "91A",
-      "91B",
-      "93A",
-      "93B",
-      "93C",
-      "93D",
       "43AA"
     ],
-    "extra_sections_count": 47
+    "extra_sections_count": 24
   },
   "BANKING_TRIBUNALS_VALIDATION_ORDERS_1994": {
     "act_name": "Banking Tribunals (Validation of Orders) Act, 1994",
@@ -477,13 +458,11 @@
   "BANKS_TRANSFER_ASSETS_LIABILITIES_1974": {
     "act_name": "Banks (Transfer of Assets and Liabilities) Act, 1974",
     "toc_count": 18,
-    "parsed_count": 19,
-    "matched_count": 17,
-    "missing_count": 1,
-    "missing_sections": [
-      "18"
-    ],
-    "extra_sections_count": 2
+    "parsed_count": 18,
+    "matched_count": 18,
+    "missing_count": 0,
+    "missing_sections": [],
+    "extra_sections_count": 0
   },
   "BENAMI_2017": {
     "act_name": "Benami Transactions (Prohibition) Act, 2017",
@@ -571,7 +550,7 @@
   "CANAL_DRAINAGE_1873": {
     "act_name": "Canal and Drainage Act,1873",
     "toc_count": 75,
-    "parsed_count": 80,
+    "parsed_count": 79,
     "matched_count": 71,
     "missing_count": 4,
     "missing_sections": [
@@ -580,7 +559,7 @@
       "42",
       "43"
     ],
-    "extra_sections_count": 9
+    "extra_sections_count": 8
   },
   "CANNABIS_CONTROL_REGULATORY_AUTHORITY_2024": {
     "act_name": "Cannabis Control and Regulatory Authority Act, 2024",
@@ -612,20 +591,18 @@
   "CANTONMENTS_1924": {
     "act_name": "Cantonments Act, 1924",
     "toc_count": 335,
-    "parsed_count": 323,
-    "matched_count": 268,
-    "missing_count": 67,
+    "parsed_count": 321,
+    "matched_count": 314,
+    "missing_count": 21,
     "missing_sections": [
       "16",
       "17",
       "18",
-      "19",
       "26",
       "27",
       "28",
       "29",
       "30",
-      "31",
       "34",
       "19A",
       "19J",
@@ -635,9 +612,11 @@
       "19P",
       "19R",
       "19U",
-      "251"
+      "292",
+      "179A",
+      "185A"
     ],
-    "extra_sections_count": 52
+    "extra_sections_count": 7
   },
   "CANTONMENTS_LOCAL_GOVERNMENT_ELECTIONS_LXXIX_ORD_2002": {
     "act_name": "Cantonments Local Government (Elections) Ordinance, 2002 (LXXIX of 2002) (Repealed by Act No. XLVII of 2023)",
@@ -707,11 +686,11 @@
   "CARRIAGE_AIR_2012": {
     "act_name": "Carriage by Air Act, 2012",
     "toc_count": 9,
-    "parsed_count": 119,
+    "parsed_count": 118,
     "matched_count": 9,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 92
+    "extra_sections_count": 100
   },
   "CARRIAGE_GOODS_SEA_1925": {
     "act_name": "Carriage of Goods by Sea Act, 1925",
@@ -851,7 +830,7 @@
   "CHEMICAL_WEAPONS_CONVENTION_IMPLEMENTATION_ORD_2000": {
     "act_name": "Chemical Weapons Convention Implementation Ordinance, 2000.",
     "toc_count": 25,
-    "parsed_count": 69,
+    "parsed_count": 67,
     "matched_count": 25,
     "missing_count": 0,
     "missing_sections": [],
@@ -869,13 +848,10 @@
   "CHILD_MARRIAGE_1929": {
     "act_name": "Child Marriage Restraint Act, 1929",
     "toc_count": 11,
-    "parsed_count": 10,
-    "matched_count": 9,
-    "missing_count": 2,
-    "missing_sections": [
-      "3",
-      "11"
-    ],
+    "parsed_count": 12,
+    "matched_count": 11,
+    "missing_count": 0,
+    "missing_sections": [],
     "extra_sections_count": 1
   },
   "CHILDREN_PLEDGING_LABOUR_1933": {
@@ -899,14 +875,14 @@
   "CHRISTIAN_MARRIAGE_1872": {
     "act_name": "Christian Marriage Act, 1872",
     "toc_count": 83,
-    "parsed_count": 91,
+    "parsed_count": 87,
     "matched_count": 81,
     "missing_count": 2,
     "missing_sections": [
       "41",
       "47"
     ],
-    "extra_sections_count": 8
+    "extra_sections_count": 6
   },
   "CHURCH_SCOTLAND_KIRK_SESSIONS_1899": {
     "act_name": "Church of Scotland Kirk Sessions Act, 1899",
@@ -1023,9 +999,9 @@
   "COCONUT_COMMITTEE_1944": {
     "act_name": "Coconut Committee Act, 1944",
     "toc_count": 21,
-    "parsed_count": 15,
-    "matched_count": 12,
-    "missing_count": 9,
+    "parsed_count": 16,
+    "matched_count": 13,
+    "missing_count": 8,
     "missing_sections": [
       "4",
       "5",
@@ -1034,56 +1010,47 @@
       "8",
       "9",
       "16",
-      "17",
-      "19"
+      "17"
     ],
     "extra_sections_count": 3
   },
   "CPC_1908": {
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "toc_count": 165,
-    "parsed_count": 624,
-    "matched_count": 159,
-    "missing_count": 6,
+    "parsed_count": 384,
+    "matched_count": 163,
+    "missing_count": 2,
     "missing_sections": [
-      "110",
-      "130",
-      "154",
-      "155",
       "156",
       "135A"
     ],
-    "extra_sections_count": 49
+    "extra_sections_count": 53
   },
   "CRPC_1898": {
     "act_name": "Code of Criminal Procedure (CrPC), 1898 (Under Review)",
     "toc_count": 512,
-    "parsed_count": 575,
-    "matched_count": 415,
-    "missing_count": 97,
+    "parsed_count": 531,
+    "matched_count": 496,
+    "missing_count": 16,
     "missing_sections": [
       "55",
+      "112",
       "113",
       "115",
       "117",
       "198",
-      "491",
-      "492",
-      "493",
-      "494",
-      "495",
-      "496",
-      "497",
-      "498",
-      "499",
-      "500",
-      "501",
-      "502",
-      "503",
-      "504",
-      "506"
+      "380",
+      "199A",
+      "199B",
+      "245A",
+      "382A",
+      "382B",
+      "382C",
+      "414A",
+      "514A",
+      "522A"
     ],
-    "extra_sections_count": 132
+    "extra_sections_count": 35
   },
   "COMMERCIAL_DOCUMENTS_EVIDENCE_1939": {
     "act_name": "Commercial Documents Evidence Act, 1939",
@@ -1115,18 +1082,18 @@
   "COMPANIES_2017": {
     "act_name": "Companies Act, 2017",
     "toc_count": 506,
-    "parsed_count": 673,
+    "parsed_count": 857,
     "matched_count": 506,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 62
+    "extra_sections_count": 111
   },
   "COMPANIES_1984": {
     "act_name": "Companies Ordinance, 1984 (Repealed by Act XIX of 2017)",
     "toc_count": 512,
-    "parsed_count": 810,
-    "matched_count": 452,
-    "missing_count": 60,
+    "parsed_count": 753,
+    "matched_count": 495,
+    "missing_count": 17,
     "missing_sections": [
       "2",
       "12",
@@ -1135,21 +1102,18 @@
       "208",
       "237",
       "274",
-      "471",
-      "472",
-      "473",
-      "474",
-      "475",
-      "476",
-      "477",
-      "478",
-      "479",
-      "480",
-      "481",
-      "482",
-      "483"
+      "492",
+      "282B",
+      "282D",
+      "282E",
+      "282G",
+      "282H",
+      "282J",
+      "282L",
+      "282M",
+      "282N"
     ],
-    "extra_sections_count": 151
+    "extra_sections_count": 104
   },
   "COMPANIES_PROFITS_WORKERS_PARTICIPATION_1968": {
     "act_name": "Companies Profits (Workers Participation) Act, 1968",
@@ -1199,38 +1163,25 @@
   "CONCILIATION_COURTS_ORD_1961": {
     "act_name": "Conciliation Courts Ordinance, 1961",
     "toc_count": 21,
-    "parsed_count": 29,
-    "matched_count": 8,
-    "missing_count": 13,
-    "missing_sections": [
-      "9",
-      "10",
-      "11",
-      "12",
-      "13",
-      "14",
-      "15",
-      "16",
-      "17",
-      "18",
-      "19",
-      "20",
-      "21"
-    ],
-    "extra_sections_count": 19
+    "parsed_count": 22,
+    "matched_count": 21,
+    "missing_count": 0,
+    "missing_sections": [],
+    "extra_sections_count": 1
   },
   "CONST_1973": {
     "act_name": "Constitution of the Islamic Republic of Pakistan",
     "toc_count": 322,
-    "parsed_count": 326,
-    "matched_count": 319,
-    "missing_count": 3,
+    "parsed_count": 432,
+    "matched_count": 318,
+    "missing_count": 4,
     "missing_sections": [
       "54",
       "71",
-      "96"
+      "96",
+      "185"
     ],
-    "extra_sections_count": 7
+    "extra_sections_count": 51
   },
   "CONTEMPT_COURT_ORD_2003": {
     "act_name": "Contempt of Court Ordinance, 2003",
@@ -1262,11 +1213,11 @@
   "CNSA_1997": {
     "act_name": "Control of Narcotic Substances Act (CNSA), 1997",
     "toc_count": 80,
-    "parsed_count": 183,
+    "parsed_count": 90,
     "matched_count": 80,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 84
+    "extra_sections_count": 10
   },
   "CONTROLLER_GENERAL_ACCOUNTS_APPOINTMENT_FUNCTIONS_ORD_2001": {
     "act_name": "Controller General of Accounts (Appointment Functions and Powers) Ordinance, 2001",
@@ -1300,20 +1251,22 @@
   "COPYRIGHT_1962": {
     "act_name": "Copyright Ordinance, 1962",
     "toc_count": 92,
-    "parsed_count": 99,
-    "matched_count": 92,
-    "missing_count": 0,
-    "missing_sections": [],
+    "parsed_count": 98,
+    "matched_count": 91,
+    "missing_count": 1,
+    "missing_sections": [
+      "83"
+    ],
     "extra_sections_count": 7
   },
   "CORPORATE_INDUSTRIAL_RESTRUCTURING_CORPORATION_ORD_2000": {
     "act_name": "Corporate Industrial Restructuring Corporation Ordinance, 2000",
     "toc_count": 39,
-    "parsed_count": 45,
+    "parsed_count": 40,
     "matched_count": 39,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 6
+    "extra_sections_count": 1
   },
   "CORPORATE_REHABILITATION_2018": {
     "act_name": "Corporate Rehabilitation Act, 2018",
@@ -1444,20 +1397,20 @@
   "COUNTERVAILING_DUTIES_2015": {
     "act_name": "Countervailing Duties Act, 2015",
     "toc_count": 39,
-    "parsed_count": 40,
+    "parsed_count": 49,
     "matched_count": 39,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 1
+    "extra_sections_count": 5
   },
   "COURT_FEES_1870": {
     "act_name": "Court-Fees Act, 1870",
     "toc_count": 50,
-    "parsed_count": 179,
+    "parsed_count": 84,
     "matched_count": 49,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 36
+    "extra_sections_count": 23
   },
   "COVID_19_PREVENTION_HOARDING_2021": {
     "act_name": "COVID-19 (Prevention of Hoarding), 2021",
@@ -1473,20 +1426,20 @@
   "CREDIT_BUREAUS_2015": {
     "act_name": "Credit Bureaus Act, 2015",
     "toc_count": 43,
-    "parsed_count": 51,
+    "parsed_count": 43,
     "matched_count": 43,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 8
+    "extra_sections_count": 0
   },
   "CRIMINAL_LAW_AMENDMENT_SPECIAL_COURT_1976": {
     "act_name": "Criminal Law Amendment (Special Court) Act, 1976",
     "toc_count": 14,
-    "parsed_count": 15,
+    "parsed_count": 14,
     "matched_count": 14,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 1
+    "extra_sections_count": 0
   },
   "CRIMINAL_LAW_AMENDMENT_1908": {
     "act_name": "Criminal Law Amendment Act, 1908",
@@ -1499,14 +1452,33 @@
   },
   "CUSTOMS_1969": {
     "act_name": "Customs Act, 1969 (Same as on the official website of FBR dated 30-06-2025)",
-    "toc_count": 16,
-    "parsed_count": 361,
-    "matched_count": 15,
-    "missing_count": 1,
+    "toc_count": 325,
+    "parsed_count": 388,
+    "matched_count": 276,
+    "missing_count": 36,
     "missing_sections": [
-      "82A"
+      "18D",
+      "193",
+      "19C",
+      "21A",
+      "220",
+      "234",
+      "238",
+      "239",
+      "254",
+      "255",
+      "25D",
+      "79A",
+      "80A",
+      "81A",
+      "82A",
+      "83A",
+      "83C",
+      "131A",
+      "155I",
+      "179A"
     ],
-    "extra_sections_count": 346
+    "extra_sections_count": 109
   },
   "CUTCHI_MEMONS_1938": {
     "act_name": "Cutchi Memons Act, 1938",
@@ -1538,11 +1510,11 @@
   "DAANISH_UNIVERSITY_ISLAMABAD_2026": {
     "act_name": "Daanish University Islamabad Act, 2026",
     "toc_count": 44,
-    "parsed_count": 53,
+    "parsed_count": 44,
     "matched_count": 44,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 9
+    "extra_sections_count": 0
   },
   "DANGEROUS_CARGOES_1953": {
     "act_name": "Dangerous Cargoes Act, 1953",
@@ -1640,10 +1612,12 @@
   "DELIMITATION_CONSTITUENCIES_1974": {
     "act_name": "Delimitation of Constituencies Act, 1974",
     "toc_count": 11,
-    "parsed_count": 13,
-    "matched_count": 11,
-    "missing_count": 0,
-    "missing_sections": [],
+    "parsed_count": 12,
+    "matched_count": 10,
+    "missing_count": 1,
+    "missing_sections": [
+      "5"
+    ],
     "extra_sections_count": 2
   },
   "DEPOSIT_PROTECTION_CORPORATION_2016": {
@@ -1703,11 +1677,11 @@
   "DIGITAL_PRESENCE_PROCEEDS_TAX_2025": {
     "act_name": "Digital Presence Proceeds Tax Act, 2025",
     "toc_count": 15,
-    "parsed_count": 17,
+    "parsed_count": 15,
     "matched_count": 15,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 0
   },
   "DIPLOMATIC_CONSULAR_OFFICERS_OATHS_FEES_1948": {
     "act_name": "Diplomatic and Consular Officers (Oaths and Fees) Act, 1948",
@@ -1721,11 +1695,11 @@
   "DIPLOMATIC_CONSULAR_PRIVILEGES_1972": {
     "act_name": "Diplomatic and Consular Privileges Act, 1972",
     "toc_count": 6,
-    "parsed_count": 9,
+    "parsed_count": 7,
     "matched_count": 6,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 3
+    "extra_sections_count": 1
   },
   "DIPLOMATIC_IMMUNITIES_COMMON_WEALTH_COUNTRIES_1957": {
     "act_name": "Diplomatic Immunities (Common wealth Countries Representatives), Act, 1957",
@@ -1775,11 +1749,11 @@
   "DIVORCE_1869": {
     "act_name": "Divorce Act,1869",
     "toc_count": 62,
-    "parsed_count": 108,
+    "parsed_count": 64,
     "matched_count": 62,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 10
+    "extra_sections_count": 2
   },
   "DOCK_LABOURERS_1934": {
     "act_name": "Dock Labourers Act, 1934",
@@ -1813,11 +1787,11 @@
   "DORMANT_FUNDS_ADMINISTRATION_1966": {
     "act_name": "Dormant Funds (Administration) Act, 1966",
     "toc_count": 2,
-    "parsed_count": 7,
+    "parsed_count": 2,
     "matched_count": 2,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 4
+    "extra_sections_count": 0
   },
   "DOURINE_1910": {
     "act_name": "Dourine Act, 1910",
@@ -1927,20 +1901,20 @@
   "ELECTORAL_ROLLS_REPEAL_NO_F_1974": {
     "act_name": "Electoral Rolls Act, 1974(Repeal by No.F.8(9)2017 dated 23-10-2017)",
     "toc_count": 30,
-    "parsed_count": 35,
+    "parsed_count": 34,
     "matched_count": 30,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 5
+    "extra_sections_count": 4
   },
   "ELECTRICITY_1910": {
     "act_name": "Electricity Act, 1910",
     "toc_count": 67,
-    "parsed_count": 70,
+    "parsed_count": 68,
     "matched_count": 67,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 3
+    "extra_sections_count": 1
   },
   "ELECTRICITY_CONTROL_ORD_1965": {
     "act_name": "Electricity Control Ordinance, 1965",
@@ -1954,11 +1928,11 @@
   "ETO_2002": {
     "act_name": "Electronic Transactions Ordinance, 2002",
     "toc_count": 45,
-    "parsed_count": 52,
+    "parsed_count": 45,
     "matched_count": 45,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 7
+    "extra_sections_count": 0
   },
   "EMIGRATION_ORD_1979": {
     "act_name": "Emigration Ordinance, 1979",
@@ -1972,50 +1946,31 @@
   "EMPLOYEES_COST_LIVING_RELIEF_1974": {
     "act_name": "Employees Cost of Living (Relief) Act, 1974",
     "toc_count": 11,
-    "parsed_count": 14,
+    "parsed_count": 12,
     "matched_count": 11,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 3
+    "extra_sections_count": 1
   },
   "EMPLOYEES_OLD_AGE_BENEFITS_1976": {
     "act_name": "Employees' Old-Age Benefits Act, 1976",
     "toc_count": 55,
-    "parsed_count": 56,
-    "matched_count": 29,
-    "missing_count": 26,
+    "parsed_count": 54,
+    "matched_count": 54,
+    "missing_count": 1,
     "missing_sections": [
-      "23",
-      "24",
-      "25",
-      "26",
-      "27",
-      "28",
-      "29",
-      "30",
-      "31",
-      "32",
-      "33",
-      "34",
-      "35",
-      "36",
-      "37",
-      "38",
-      "39",
-      "40",
-      "41",
-      "42"
+      "48"
     ],
-    "extra_sections_count": 27
+    "extra_sections_count": 0
   },
   "EMPLOYEES_SOCIAL_INSURANCE_ORD_1962": {
     "act_name": "Employees' Social Insurance Ordinance, 1962",
     "toc_count": 79,
-    "parsed_count": 89,
+    "parsed_count": 80,
     "matched_count": 79,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 10
+    "extra_sections_count": 1
   },
   "EMPLOYER_S_LIABILITY_1938": {
     "act_name": "Employer's Liability Act, 1938",
@@ -2056,16 +2011,16 @@
   "ENEMY_PROPERTY_CONTINUANCE_EMERGENCY_PROVISIONS_ORD_1969": {
     "act_name": "Enemy Property (Continuance of Emergency Provisions) Ordinance, 1969",
     "toc_count": 6,
-    "parsed_count": 40,
+    "parsed_count": 37,
     "matched_count": 6,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 34
+    "extra_sections_count": 31
   },
   "ENEMY_PROPERTY_CONTINUANCE_EMERGENCY_PROVISIONS_ORD_1977": {
     "act_name": "Enemy Property (Continuance of Emergency Provisions) Ordinance, 1977",
     "toc_count": 11,
-    "parsed_count": 34,
+    "parsed_count": 33,
     "matched_count": 3,
     "missing_count": 3,
     "missing_sections": [
@@ -2073,7 +2028,7 @@
       "4",
       "6"
     ],
-    "extra_sections_count": 31
+    "extra_sections_count": 30
   },
   "ENFORCEMENT_SHARI_AH_1991": {
     "act_name": "Enforcement of Shari'ah Act, 1991",
@@ -2116,11 +2071,11 @@
   "ESSENTIAL_PERSONNEL_REGISTRATION_ORD_1948": {
     "act_name": "Essential Personnel (Registration) Ordinance, 1948",
     "toc_count": 7,
-    "parsed_count": 63,
+    "parsed_count": 55,
     "matched_count": 7,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 54
+    "extra_sections_count": 46
   },
   "ESSO_UNDERTAKINGS_VESTING_1976": {
     "act_name": "Esso Undertakings (Vesting) Act, 1976",
@@ -2182,13 +2137,13 @@
   "ESTACODE": {
     "act_name": "Estacode",
     "toc_count": 246,
-    "parsed_count": 1619,
+    "parsed_count": 153,
     "matched_count": 20,
     "missing_count": 1,
     "missing_sections": [
       "1990"
     ],
-    "extra_sections_count": 236
+    "extra_sections_count": 133
   },
   "EVACUEE_PROPERTY_1957": {
     "act_name": "Evacuee Property and Displaced Persons Laws (Repeal) Act, 1975",
@@ -2328,13 +2283,11 @@
   "EXTRADITION_1972": {
     "act_name": "Extradition Act, 1972",
     "toc_count": 24,
-    "parsed_count": 29,
-    "matched_count": 23,
-    "missing_count": 1,
-    "missing_sections": [
-      "24"
-    ],
-    "extra_sections_count": 6
+    "parsed_count": 25,
+    "matched_count": 24,
+    "missing_count": 0,
+    "missing_sections": [],
+    "extra_sections_count": 1
   },
   "EYE_SURGERY_RESTRICTION_ORD_1960": {
     "act_name": "Eye Surgery (Restriction) ordinance, 1960",
@@ -2388,22 +2341,12 @@
     "act_name": "Federal Constitutional Court Judges (Leave, Pension and Privileges) Order, 2025",
     "toc_count": 26,
     "parsed_count": 26,
-    "matched_count": 15,
-    "missing_count": 11,
+    "matched_count": 25,
+    "missing_count": 1,
     "missing_sections": [
-      "9",
-      "17",
-      "18",
-      "19",
-      "20",
-      "22",
-      "24",
-      "25",
-      "16A",
-      "20A",
-      "20B"
+      "9"
     ],
-    "extra_sections_count": 11
+    "extra_sections_count": 1
   },
   "FEDERAL_COURT_REPEAL_2014": {
     "act_name": "Federal Court (Repeal) Act, 2014",
@@ -2417,11 +2360,11 @@
   "FEDERAL_EMPLOYEES_BENEVOLENT_FUND_GROUP_1969": {
     "act_name": "Federal Employees Benevolent Fund and Group Insurance Act,1969",
     "toc_count": 25,
-    "parsed_count": 47,
+    "parsed_count": 26,
     "matched_count": 25,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 22
+    "extra_sections_count": 1
   },
   "FEDERAL_GOVERNMENT_EMPLOYEES_HOUSING_AUTHORITY_2020": {
     "act_name": "Federal Government Employees Housing Authority Act, 2020.",
@@ -2444,11 +2387,11 @@
   "FIA_1974": {
     "act_name": "Federal Investigation Agency Act (FIA), 1974",
     "toc_count": 11,
-    "parsed_count": 13,
+    "parsed_count": 11,
     "matched_count": 11,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 0
   },
   "FEDERAL_JUDICIAL_ACADEMY_1997": {
     "act_name": "Federal Judicial Academy Act, 1997",
@@ -2462,20 +2405,20 @@
   "FEDERAL_MEDICAL_TEACHING_INSTITUTES_2021": {
     "act_name": "Federal Medical Teaching Institutes Act, 2021 (Repealed by Act No.I of 2023)",
     "toc_count": 27,
-    "parsed_count": 29,
+    "parsed_count": 27,
     "matched_count": 27,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 0
   },
   "FEDERAL_MINISTERS_MINISTERS_STATE_SALARIES_1975": {
     "act_name": "Federal Ministers and Ministers of State (Salaries, Allowances and Privileges) Act, 1975",
     "toc_count": 23,
-    "parsed_count": 27,
+    "parsed_count": 26,
     "matched_count": 23,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 4
+    "extra_sections_count": 3
   },
   "FEDERAL_OMBUDSMEN_INSTITUTIONAL_REFORM_2013": {
     "act_name": "Federal Ombudsmen Institutional Reform Act, 2013",
@@ -2536,11 +2479,11 @@
   "FEDERAL_ZIAUDDIN_UNIVERSITY_2024": {
     "act_name": "Federal Ziauddin University Act, 2024",
     "toc_count": 40,
-    "parsed_count": 41,
+    "parsed_count": 38,
     "matched_count": 38,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 3
+    "extra_sections_count": 0
   },
   "FEE_CHARGING_EMPLOYMENT_AGENCIES_REGULATION_1976": {
     "act_name": "Fee-Charging Employment Agencies (Regulation) Act, 1976",
@@ -2572,20 +2515,20 @@
   "FINANCIAL_INSTITUTIONS_SECURED_TRANSACTIONS_2016": {
     "act_name": "Financial Institutions (Secured Transactions) Act, 2016",
     "toc_count": 72,
-    "parsed_count": 77,
+    "parsed_count": 76,
     "matched_count": 72,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 5
+    "extra_sections_count": 4
   },
   "FISCAL_RESPONSIBILITY_DEBT_LIMITATION_2005": {
     "act_name": "Fiscal Responsibility and Debt Limitation Act, 2005",
     "toc_count": 19,
-    "parsed_count": 20,
+    "parsed_count": 19,
     "matched_count": 19,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 1
+    "extra_sections_count": 0
   },
   "FISHERIES_1897": {
     "act_name": "Fisheries Act, 1897",
@@ -2617,11 +2560,11 @@
   "FOREIGN_ASSETS_DECLARATION_REPATRIATION_2018": {
     "act_name": "Foreign Assets (Declaration and Repatriation) Act, 2018",
     "toc_count": 16,
-    "parsed_count": 23,
+    "parsed_count": 16,
     "matched_count": 16,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 5
+    "extra_sections_count": 0
   },
   "FOREIGN_CULTURAL_ASSOCIATIONS_REGULATION_FUNCTIONING_1975": {
     "act_name": "Foreign Cultural Associations (Regulation of Functioning) Act, 1975",
@@ -2673,11 +2616,11 @@
   "FOREIGN_INVESTMENT_PROMOTION_PROTECTION_2022": {
     "act_name": "Foreign Investment (Promotion and Protection) Act, 2022",
     "toc_count": 16,
-    "parsed_count": 18,
+    "parsed_count": 23,
     "matched_count": 16,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 5
   },
   "FOREIGN_PRIVATE_INVESTMENT_PROMOTION_PROTECTION_1976": {
     "act_name": "Foreign Private Investment (Promotion and Protection) Act, 1976",
@@ -2702,25 +2645,24 @@
   "FOREST_1927": {
     "act_name": "Forest Act, 1927",
     "toc_count": 87,
-    "parsed_count": 88,
-    "matched_count": 83,
-    "missing_count": 4,
+    "parsed_count": 89,
+    "matched_count": 84,
+    "missing_count": 3,
     "missing_sections": [
       "52",
       "53",
-      "55",
-      "86"
+      "55"
     ],
     "extra_sections_count": 5
   },
   "FOUNDATION_UNIVERSITY_ORD_2002": {
     "act_name": "Foundation University Ordinance, 2002",
     "toc_count": 42,
-    "parsed_count": 43,
+    "parsed_count": 30,
     "matched_count": 30,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 13
+    "extra_sections_count": 0
   },
   "FRONTIER_CORPS_ORD_1959": {
     "act_name": "Frontier Corps Ordinance, 1959",
@@ -2761,16 +2703,16 @@
   "GAS_INFRASTRUCTURE_DEVELOPMENT_CESS_2015": {
     "act_name": "Gas Infrastructure Development Cess Act, 2015",
     "toc_count": 10,
-    "parsed_count": 10,
+    "parsed_count": 16,
     "matched_count": 10,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 0
+    "extra_sections_count": 6
   },
   "GENERAL_CLAUSES_1897": {
     "act_name": "General Clauses Act, 1897",
     "toc_count": 37,
-    "parsed_count": 64,
+    "parsed_count": 61,
     "matched_count": 28,
     "missing_count": 9,
     "missing_sections": [
@@ -2784,7 +2726,7 @@
       "29",
       "5A"
     ],
-    "extra_sections_count": 36
+    "extra_sections_count": 33
   },
   "GENERAL_STATISTICS_RECORGANIZATION_2011": {
     "act_name": "General Statistics (Recorganization) Act, 2011",
@@ -3008,11 +2950,11 @@
   "HINDU_MARRIAGE_2017": {
     "act_name": "Hindu Marriage Act, 2017",
     "toc_count": 25,
-    "parsed_count": 33,
+    "parsed_count": 25,
     "matched_count": 25,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 8
+    "extra_sections_count": 0
   },
   "HINDU_MARRIAGE_DISABILITIES_REMOVAL_1946": {
     "act_name": "Hindu Marriage Disabilities Removal Act, 1946",
@@ -3062,20 +3004,22 @@
   "HOUSE_BUILDING_FINANCE_CORPORATION_REPEAL_1952": {
     "act_name": "House Building Finance Corporation Act, 1952(Repeal by act XXV of 2018,s.2)",
     "toc_count": 42,
-    "parsed_count": 46,
-    "matched_count": 42,
-    "missing_count": 0,
-    "missing_sections": [],
+    "parsed_count": 45,
+    "matched_count": 41,
+    "missing_count": 1,
+    "missing_sections": [
+      "22"
+    ],
     "extra_sections_count": 4
   },
   "HYDERABAD_INSTITUTE_TECHNOLOGY_MANAGEMENT_SCIENCES_2021": {
     "act_name": "Hyderabad Institute for Technology and Management Sciences Act, 2021",
     "toc_count": 46,
-    "parsed_count": 49,
+    "parsed_count": 40,
     "matched_count": 38,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 11
+    "extra_sections_count": 2
   },
   "HYDROCARBON_DEVELOPMENT_INSTITUTE_PAKISTAN_2006": {
     "act_name": "Hydrocarbon Development Institute of Pakistan Act,2006",
@@ -3089,11 +3033,11 @@
   "HYDROGENATED_VEGETABLE_OIL_INDUSTRY_CONTROL_1973": {
     "act_name": "Hydrogenated Vegetable Oil Industry (Control and Development) Act, 1973",
     "toc_count": 35,
-    "parsed_count": 40,
+    "parsed_count": 36,
     "matched_count": 35,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 5
+    "extra_sections_count": 1
   },
   "IBADAT_INTERNATIONAL_UNIVERSITY_ISLAMABAD_2021": {
     "act_name": "Ibadat International University, Islamabad Act, 2021",
@@ -3107,11 +3051,11 @@
   "ICT_TAX_SERVICES_ORD_2001": {
     "act_name": "ICT (Tax on Services) Ordinance, 2001 (Same as on the official website of FBR dated 30-06-2025)",
     "toc_count": 3,
-    "parsed_count": 52,
+    "parsed_count": 51,
     "matched_count": 3,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 49
+    "extra_sections_count": 48
   },
   "ICT_RIGHTS_PERSONS_DISABILITY_2020": {
     "act_name": "ICT Rights of Persons with Disability Act, 2020",
@@ -3174,9 +3118,9 @@
   "ITO_2001": {
     "act_name": "Income Tax Ordinance, 2001 (Same as on the official website of FBR dated 31-06-2026)",
     "toc_count": 436,
-    "parsed_count": 1811,
-    "matched_count": 372,
-    "missing_count": 64,
+    "parsed_count": 1886,
+    "matched_count": 370,
+    "missing_count": 66,
     "missing_sections": [
       "4A",
       "52",
@@ -3196,10 +3140,10 @@
       "190",
       "231",
       "232",
-      "4AB",
-      "60C"
+      "23A",
+      "4AB"
     ],
-    "extra_sections_count": 324
+    "extra_sections_count": 310
   },
   "INDECENT_ADVERTISEMENTS_PROHIBITION_1963": {
     "act_name": "Indecent Advertisements prohibition Act, 1963",
@@ -3244,11 +3188,11 @@
   "IRA_2012": {
     "act_name": "Industrial Relations Act, 2012",
     "toc_count": 87,
-    "parsed_count": 94,
+    "parsed_count": 91,
     "matched_count": 87,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 7
+    "extra_sections_count": 4
   },
   "INDUSTRIAL_STATISTICS_1942": {
     "act_name": "Industrial Statistics Act, 1942",
@@ -3271,19 +3215,18 @@
   "INLAND_MECHANICALLY_PROPELLED_VESSELS_1917": {
     "act_name": "Inland Mechanically Propelled Vessels Act, 1917",
     "toc_count": 86,
-    "parsed_count": 104,
-    "matched_count": 84,
-    "missing_count": 2,
+    "parsed_count": 105,
+    "matched_count": 85,
+    "missing_count": 1,
     "missing_sections": [
-      "69",
-      "73"
+      "69"
     ],
     "extra_sections_count": 20
   },
   "INSOLVANCY_KARACHI_DIVISION_1909": {
     "act_name": "Insolvancy (Karachi Division) Act,1909",
     "toc_count": 124,
-    "parsed_count": 132,
+    "parsed_count": 181,
     "matched_count": 119,
     "missing_count": 5,
     "missing_sections": [
@@ -3293,7 +3236,7 @@
       "83",
       "84"
     ],
-    "extra_sections_count": 13
+    "extra_sections_count": 40
   },
   "INSPECTION_AGENCIES_REGISTRATION_REGULATION_ORD_1981": {
     "act_name": "Inspection Agencies (Registration and Regulation) Ordinance, 1981",
@@ -3325,13 +3268,11 @@
   "INSTITUTE_SCIENCE_TECHNOLOGY_BAHAWALPUR_2018": {
     "act_name": "Institute Of Science And Technology Bahawalpur Act, 2018",
     "toc_count": 48,
-    "parsed_count": 49,
-    "matched_count": 40,
-    "missing_count": 1,
-    "missing_sections": [
-      "1"
-    ],
-    "extra_sections_count": 9
+    "parsed_count": 41,
+    "matched_count": 41,
+    "missing_count": 0,
+    "missing_sections": [],
+    "extra_sections_count": 0
   },
   "INSTITUTE_SPACE_TECHNOLOGY_2010": {
     "act_name": "Institute of Space Technology Act, 2010",
@@ -3419,11 +3360,11 @@
   "INTERNATIONAL_ISLAMIC_UNIVERSITY_ORD_1985": {
     "act_name": "International Islamic University Ordinance, 1985",
     "toc_count": 50,
-    "parsed_count": 88,
+    "parsed_count": 51,
     "matched_count": 50,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 9
+    "extra_sections_count": 1
   },
   "INTERNATIONAL_MONETARY_FUND_IMF_BANK_1950": {
     "act_name": "International Monetary Fund (IMF) and Bank Act , 1950",
@@ -3437,7 +3378,7 @@
   "INVESTIGATION_FAIR_TRIAL_2013": {
     "act_name": "Investigation for fair Trial Act, 2013",
     "toc_count": 39,
-    "parsed_count": 49,
+    "parsed_count": 47,
     "matched_count": 39,
     "missing_count": 0,
     "missing_sections": [],
@@ -3483,23 +3424,19 @@
     "act_name": "Islamabad Capital Territory Agricultural Produce Markets Ordinance, 2002",
     "toc_count": 41,
     "parsed_count": 63,
-    "matched_count": 38,
-    "missing_count": 3,
-    "missing_sections": [
-      "39",
-      "40",
-      "41"
-    ],
-    "extra_sections_count": 25
+    "matched_count": 41,
+    "missing_count": 0,
+    "missing_sections": [],
+    "extra_sections_count": 22
   },
   "ISLAMABAD_CAPITAL_TERRITORY_CHARITIES_REGISTRATION_2021": {
     "act_name": "Islamabad Capital Territory Charities Registration, regulation and Facilitation Act, 2021",
     "toc_count": 27,
-    "parsed_count": 56,
+    "parsed_count": 43,
     "matched_count": 27,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 26
+    "extra_sections_count": 16
   },
   "ISLAMABAD_CAPITAL_TERRITORY_CHILD_MARRIAGE_2025": {
     "act_name": "Islamabad Capital Territory Child Marriage Restraint Act, 2025",
@@ -3540,13 +3477,32 @@
   "ISLAMABAD_CAPITAL_TERRITORY_LOCAL_GOVERNMENT_2015": {
     "act_name": "Islamabad Capital Territory Local Government Act, 2015",
     "toc_count": 131,
-    "parsed_count": 335,
-    "matched_count": 130,
-    "missing_count": 1,
+    "parsed_count": 347,
+    "matched_count": 103,
+    "missing_count": 28,
     "missing_sections": [
-      "109"
+      "106",
+      "107",
+      "108",
+      "109",
+      "110",
+      "111",
+      "112",
+      "113",
+      "114",
+      "115",
+      "116",
+      "117",
+      "118",
+      "119",
+      "120",
+      "121",
+      "122",
+      "123",
+      "124",
+      "125"
     ],
-    "extra_sections_count": 128
+    "extra_sections_count": 156
   },
   "ISLAMABAD_CAPITAL_TERRITORY_PRIVATE_EDUCATION_2013": {
     "act_name": "Islamabad Capital Territory Private Education Institution (Registration and Regulation) Act, 2013",
@@ -3652,11 +3608,11 @@
   "ISLAMABAD_NATURE_CONSERVATION_WILDLIFE_MANAGEMENT_2024": {
     "act_name": "Islamabad Nature Conservation and Wildlife Management Act, 2024",
     "toc_count": 39,
-    "parsed_count": 70,
+    "parsed_count": 69,
     "matched_count": 39,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 31
+    "extra_sections_count": 30
   },
   "ISLAMABAD_REAL_ESTATE_REGULATION_DEVELOPMENT_2020": {
     "act_name": "Islamabad Real Estate (Regulation and Development) Act, 2020.",
@@ -3708,20 +3664,20 @@
   "ISLAMABAD_UNIVERSITY_HEALTH_SCIENCES_EMERGING_2024": {
     "act_name": "Islamabad University of Health Sciences and Emerging Technologies, Islamabad Act, 2024",
     "toc_count": 40,
-    "parsed_count": 51,
+    "parsed_count": 40,
     "matched_count": 40,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 11
+    "extra_sections_count": 0
   },
   "ISLAMABAD_WILDLIFE_PROTECTION_PRESERVATION_CONSERVATION_ORD_1979": {
     "act_name": "Islamabad Wildlife (Protection, Preservation, Conservation and Management) Ordinance, 1979 (Repealed by Act no. XVI of 2024 section 41 (w.e.f 27-08-2024))",
     "toc_count": 41,
-    "parsed_count": 41,
+    "parsed_count": 47,
     "matched_count": 41,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 0
+    "extra_sections_count": 5
   },
   "ISLAMIC_DEVELOPMENT_BANK_ORD_1978": {
     "act_name": "Islamic Development Bank Ordinance, 1978",
@@ -3827,13 +3783,13 @@
   "KARACHI_PORT_TRUST_1886": {
     "act_name": "Karachi Port Trust Act, 1886",
     "toc_count": 110,
-    "parsed_count": 163,
+    "parsed_count": 138,
     "matched_count": 108,
     "missing_count": 1,
     "missing_sections": [
       "15"
     ],
-    "extra_sections_count": 39
+    "extra_sections_count": 30
   },
   "KARACHI_RENT_RESTRICTION_1953": {
     "act_name": "Karachi Rent Restriction Act, 1953",
@@ -3859,11 +3815,11 @@
   "KING_HAMAD_UNIVERSITY_NURSING_ASSOCIATED_2025": {
     "act_name": "King Hamad University of Nursing and Associated Medical Sciences Act, 2025",
     "toc_count": 54,
-    "parsed_count": 65,
+    "parsed_count": 55,
     "matched_count": 54,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 11
+    "extra_sections_count": 1
   },
   "KORANGI_FISHERIES_HARBOUR_AUTHORITY_ORD_1982": {
     "act_name": "Korangi Fisheries Harbour Authority Ordinance, 1982",
@@ -3932,11 +3888,11 @@
   "LAND_REFORMS_1977": {
     "act_name": "Land Reforms Act, 1977",
     "toc_count": 34,
-    "parsed_count": 36,
+    "parsed_count": 35,
     "matched_count": 34,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 1
   },
   "LAND_REFORMS_REGULATION_VALIDATION_ORDERS_ORD_1978": {
     "act_name": "Land Reforms Regulation (Validation of Orders) Ordinance, 1978",
@@ -4083,14 +4039,14 @@
   "LIFE_INSURANCE_NATIONALISATION_1972": {
     "act_name": "Life Insurance (Nationalisation) Order, 1972",
     "toc_count": 52,
-    "parsed_count": 57,
+    "parsed_count": 50,
     "matched_count": 50,
     "missing_count": 2,
     "missing_sections": [
       "50",
       "40B"
     ],
-    "extra_sections_count": 7
+    "extra_sections_count": 0
   },
   "LIGHTHOUSE_1927": {
     "act_name": "Lighthouse Act, 1927",
@@ -4122,7 +4078,7 @@
   "LIMITED_LIABILITY_PARTNERSHIP_2017": {
     "act_name": "Limited Liability Partnership Act, 2017",
     "toc_count": 35,
-    "parsed_count": 94,
+    "parsed_count": 95,
     "matched_count": 35,
     "missing_count": 0,
     "missing_sections": [],
@@ -4159,21 +4115,19 @@
     "act_name": "Local Authorities Loans Act, 1914",
     "toc_count": 9,
     "parsed_count": 9,
-    "matched_count": 8,
-    "missing_count": 1,
-    "missing_sections": [
-      "9"
-    ],
-    "extra_sections_count": 1
+    "matched_count": 9,
+    "missing_count": 0,
+    "missing_sections": [],
+    "extra_sections_count": 0
   },
   "LOCAL_AUTHORITIES_PENSIONS_GRATUITIES_1919": {
     "act_name": "Local Authorities Pensions and Gratuities Act, 1919",
     "toc_count": 5,
-    "parsed_count": 6,
+    "parsed_count": 5,
     "matched_count": 5,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 1
+    "extra_sections_count": 0
   },
   "MAINTENANCE_ORDERS_ENFORCEMENT_1921": {
     "act_name": "Maintenance Orders Enforcement Act, 1921",
@@ -4187,10 +4141,12 @@
   "MAJORITY_1875": {
     "act_name": "Majority Act, 1875",
     "toc_count": 4,
-    "parsed_count": 4,
-    "matched_count": 4,
-    "missing_count": 0,
-    "missing_sections": [],
+    "parsed_count": 3,
+    "matched_count": 3,
+    "missing_count": 1,
+    "missing_sections": [
+      "3"
+    ],
     "extra_sections_count": 0
   },
   "MALARIA_ERADICATION_BOARD_REPEAL_1975": {
@@ -4214,11 +4170,11 @@
   "MARINE_INSURANCE_2018": {
     "act_name": "Marine Insurance Act, 2018",
     "toc_count": 87,
-    "parsed_count": 113,
+    "parsed_count": 96,
     "matched_count": 87,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 26
+    "extra_sections_count": 9
   },
   "MARITIME_SECURITY_AGENCY_1994": {
     "act_name": "Maritime Security Agency, Act, 1994",
@@ -4469,16 +4425,10 @@
     "act_name": "Minimum Wages for Unskilled Workers Ordinance, 1969.",
     "toc_count": 8,
     "parsed_count": 8,
-    "matched_count": 3,
-    "missing_count": 5,
-    "missing_sections": [
-      "4",
-      "5",
-      "6",
-      "7",
-      "8"
-    ],
-    "extra_sections_count": 5
+    "matched_count": 8,
+    "missing_count": 0,
+    "missing_sections": [],
+    "extra_sections_count": 0
   },
   "MODARABA_COMPANIES_MODARABA_FLOATATION_CONTROL_ORD_1980": {
     "act_name": "Modaraba Companies and Modaraba (Floatation and Control) Ordinance, 1980",
@@ -4660,20 +4610,20 @@
   "NATIONAL_COLLEGE_ARTS_ORD_1985": {
     "act_name": "National College of Arts Ordinance, 1985",
     "toc_count": 20,
-    "parsed_count": 28,
+    "parsed_count": 20,
     "matched_count": 20,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 8
+    "extra_sections_count": 0
   },
   "NATIONAL_COMMAND_AUTHORITY_NCA_2010": {
     "act_name": "National Command Authority (NCA) Act, 2010",
     "toc_count": 23,
-    "parsed_count": 29,
+    "parsed_count": 23,
     "matched_count": 23,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 6
+    "extra_sections_count": 0
   },
   "NATIONAL_COMMISSION_HUMAN_DEVELOPMENT_ORD_2002": {
     "act_name": "National Commission For Human Development Ordinance, 2002",
@@ -4840,11 +4790,11 @@
   "NATIONAL_HIGHWAYS_SAFETY_ORD_2000": {
     "act_name": "National Highways Safety Ordinance, 2000",
     "toc_count": 96,
-    "parsed_count": 137,
+    "parsed_count": 304,
     "matched_count": 96,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 41
+    "extra_sections_count": 91
   },
   "NATIONAL_INFORMATION_TECHNOLOGY_BOARD_NITB_2022": {
     "act_name": "National Information Technology Board (NITB) Act, 2022",
@@ -4894,11 +4844,11 @@
   "NATIONAL_INSTITUTE_TECHNOLOGY_2025": {
     "act_name": "National Institute of Technology Act, 2025",
     "toc_count": 48,
-    "parsed_count": 59,
+    "parsed_count": 48,
     "matched_count": 48,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 11
+    "extra_sections_count": 0
   },
   "NATIONAL_INSURANCE_CORPORATION_REORGANIZATION_ORD_2000": {
     "act_name": "National Insurance Corporation (Reorganization) Ordinance, 2000",
@@ -4987,11 +4937,11 @@
   "NATIONAL_SKILLS_UNIVERSITY_ISLAMABAD_2018": {
     "act_name": "National Skills University Islamabad Act, 2018",
     "toc_count": 43,
-    "parsed_count": 55,
+    "parsed_count": 43,
     "matched_count": 43,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 12
+    "extra_sections_count": 0
   },
   "NATIONAL_SPORTS_TRUST_REPEAL_ORD_1980": {
     "act_name": "National Sports Trust (Repeal) Ordinance, 1980",
@@ -5032,11 +4982,11 @@
   "NATIONAL_UNIVERSITY_COMPUTER_EMERGING_SCIENCES_ORD_2000": {
     "act_name": "National University of Computer and Emerging Sciences Ordinance, 2000",
     "toc_count": 35,
-    "parsed_count": 36,
+    "parsed_count": 25,
     "matched_count": 25,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 11
+    "extra_sections_count": 0
   },
   "NATIONAL_UNIVERSITY_MEDICAL_SCIENCES_2015": {
     "act_name": "National University of Medical Sciences Act, 2015",
@@ -5050,13 +5000,11 @@
   "NATIONAL_UNIVERSITY_PAKISTAN_2023": {
     "act_name": "National University of Pakistan Act, 2023",
     "toc_count": 58,
-    "parsed_count": 58,
-    "matched_count": 47,
-    "missing_count": 1,
-    "missing_sections": [
-      "1"
-    ],
-    "extra_sections_count": 11
+    "parsed_count": 48,
+    "matched_count": 48,
+    "missing_count": 0,
+    "missing_sections": [],
+    "extra_sections_count": 0
   },
   "NATIONAL_UNIVERSITY_SCIENCE_TECHNOLOGY_NUST_1997": {
     "act_name": "National University of Science and Technology Act (NUST) , 1997",
@@ -5097,11 +5045,11 @@
   "NATURAL_GAS_DEVELOPMENT_SURCHARGE_ORD_1967": {
     "act_name": "Natural Gas (Development Surcharge) Ordinance, 1967",
     "toc_count": 8,
-    "parsed_count": 9,
+    "parsed_count": 10,
     "matched_count": 8,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 1
+    "extra_sections_count": 2
   },
   "NATURALIZATION_1926": {
     "act_name": "Naturalization Act, 1926",
@@ -5187,11 +5135,11 @@
   "NIPPON_INSTITUTE_ADVANCED_SCIENCES_2026": {
     "act_name": "Nippon Institute of Advanced Sciences Act, 2026",
     "toc_count": 45,
-    "parsed_count": 47,
+    "parsed_count": 44,
     "matched_count": 44,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 3
+    "extra_sections_count": 0
   },
   "NON_PERFORMING_ASSETS_REHABILITATION_INDUSTRIAL_ORD_2000": {
     "act_name": "Non-Performing Assets and Rehabilitation of Industrial Undertaking (Legal Proceedings) Ordinance, 2000",
@@ -5205,13 +5153,13 @@
   "NORTH_WEST_FRONTIER_CONSTABULARY_1915": {
     "act_name": "North-West Frontier Constabulary Act, 1915",
     "toc_count": 23,
-    "parsed_count": 24,
+    "parsed_count": 23,
     "matched_count": 22,
     "missing_count": 1,
     "missing_sections": [
       "17A"
     ],
-    "extra_sections_count": 2
+    "extra_sections_count": 1
   },
   "NOTARIES_ORD_1961": {
     "act_name": "Notaries Ordinance, 1961",
@@ -5236,22 +5184,22 @@
   "OBSTRUCTIONS_FAIRWAYS_1881": {
     "act_name": "Obstructions in Fairways Act, 1881",
     "toc_count": 13,
-    "parsed_count": 15,
+    "parsed_count": 14,
     "matched_count": 13,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 1
   },
   "OFF_GRID_CAPTIVE_POWER_PLANTS_2025": {
     "act_name": "Off the Grid (Captive Power Plants) Levy Act, 2025",
     "toc_count": 10,
-    "parsed_count": 10,
+    "parsed_count": 9,
     "matched_count": 9,
     "missing_count": 1,
     "missing_sections": [
       "5"
     ],
-    "extra_sections_count": 1
+    "extra_sections_count": 0
   },
   "HUDOOD_QAZF_1979": {
     "act_name": "Offence of Qazf (Enforcement of Hadd) Ordinance, 1979",
@@ -5298,11 +5246,11 @@
   "OFFENCES_RESPECT_BANKS_SPECIAL_COURTS_ORD_1984": {
     "act_name": "Offences in Respect of Banks (Special Courts) Ordinance, 1984",
     "toc_count": 12,
-    "parsed_count": 14,
+    "parsed_count": 21,
     "matched_count": 12,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 9
   },
   "OFFICIAL_SECRETS_1923": {
     "act_name": "Official Secrets Act, 1923",
@@ -5345,19 +5293,17 @@
   "OIL_SEEDS_COMMITTEE_1946": {
     "act_name": "Oil Seeds Committee Act, 1946",
     "toc_count": 19,
-    "parsed_count": 11,
-    "matched_count": 10,
-    "missing_count": 9,
+    "parsed_count": 13,
+    "matched_count": 12,
+    "missing_count": 7,
     "missing_sections": [
       "4",
       "5",
       "6",
       "7",
       "8",
-      "9",
       "15",
-      "16",
-      "18"
+      "16"
     ],
     "extra_sections_count": 1
   },
@@ -5450,11 +5396,11 @@
   "PAKISTAN_AIRPORTS_AUTHORITY_2023": {
     "act_name": "Pakistan Airports Authority Act, 2023",
     "toc_count": 71,
-    "parsed_count": 82,
+    "parsed_count": 73,
     "matched_count": 71,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 11
+    "extra_sections_count": 2
   },
   "PAKISTAN_ANIMAL_QUARANTINE_IMPORT_EXPORT_ORD_1979": {
     "act_name": "Pakistan Animal Quarantine (Import and Export of Animals and Animal Products) Ordinance, 1979",
@@ -5528,11 +5474,11 @@
   "PAKISTAN_BANKING_FINANCE_SERVICES_COMMISSION_1992": {
     "act_name": "Pakistan Banking and Finance Services Commission Act, 1992",
     "toc_count": 14,
-    "parsed_count": 22,
+    "parsed_count": 18,
     "matched_count": 14,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 8
+    "extra_sections_count": 4
   },
   "PAKISTAN_BOY_SCOUTS_ASSOCIATION_ORD_1959": {
     "act_name": "Pakistan Boy Scouts Association Ordinance, 1959",
@@ -5586,28 +5532,31 @@
   "PAKISTAN_CLIMATE_CHANGE_2017": {
     "act_name": "Pakistan Climate Change Act, 2017",
     "toc_count": 19,
-    "parsed_count": 21,
-    "matched_count": 19,
-    "missing_count": 0,
-    "missing_sections": [],
-    "extra_sections_count": 2
-  },
-  "PAKISTAN_COAST_GUARDS_1973": {
-    "act_name": "Pakistan Coast Guards Act, 1973",
-    "toc_count": 19,
     "parsed_count": 19,
     "matched_count": 19,
     "missing_count": 0,
     "missing_sections": [],
     "extra_sections_count": 0
   },
+  "PAKISTAN_COAST_GUARDS_1973": {
+    "act_name": "Pakistan Coast Guards Act, 1973",
+    "toc_count": 19,
+    "parsed_count": 18,
+    "matched_count": 18,
+    "missing_count": 1,
+    "missing_sections": [
+      "19"
+    ],
+    "extra_sections_count": 0
+  },
   "PAKISTAN_COINAGE_1906": {
     "act_name": "Pakistan Coinage Act,1906",
     "toc_count": 22,
-    "parsed_count": 22,
-    "matched_count": 19,
-    "missing_count": 3,
+    "parsed_count": 21,
+    "matched_count": 18,
+    "missing_count": 4,
     "missing_sections": [
+      "5",
       "6",
       "14",
       "15B"
@@ -5635,11 +5584,11 @@
   "PAKISTAN_COMMISSIONS_INQUIRY_2017": {
     "act_name": "Pakistan Commissions of Inquiry Act, 2017",
     "toc_count": 19,
-    "parsed_count": 20,
+    "parsed_count": 19,
     "matched_count": 19,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 1
+    "extra_sections_count": 0
   },
   "PAKISTAN_COUNCIL_SCIENCE_TECHNOLOGY_2017": {
     "act_name": "Pakistan Council for Science and Technology Act, 2017",
@@ -5653,11 +5602,11 @@
   "PAKISTAN_COUNCIL_ARCHITECTS_TOWN_PLANNERS_ORD_1983": {
     "act_name": "Pakistan Council of Architects and Town Planners Ordinance, 1983",
     "toc_count": 32,
-    "parsed_count": 41,
+    "parsed_count": 91,
     "matched_count": 32,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 9
+    "extra_sections_count": 41
   },
   "PAKISTAN_COUNCIL_RESEARCH_WATER_RESOURCES_2007": {
     "act_name": "Pakistan Council of Research in Water Resources Act, 2007",
@@ -5680,22 +5629,20 @@
   "PAKISTAN_CRIMINAL_LAW_AMENDMENT_1958": {
     "act_name": "Pakistan Criminal Law Amendment Act, 1958",
     "toc_count": 14,
-    "parsed_count": 13,
-    "matched_count": 13,
-    "missing_count": 1,
-    "missing_sections": [
-      "14"
-    ],
+    "parsed_count": 14,
+    "matched_count": 14,
+    "missing_count": 0,
+    "missing_sections": [],
     "extra_sections_count": 0
   },
   "PAKISTAN_CURRENCY_1950": {
     "act_name": "Pakistan Currency Act, 1950",
     "toc_count": 5,
-    "parsed_count": 6,
+    "parsed_count": 5,
     "matched_count": 5,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 1
+    "extra_sections_count": 0
   },
   "PAKISTAN_ELECTRONIC_MEDIA_REGULATORY_AUTHORITY_ORD_2002": {
     "act_name": "Pakistan Electronic Media Regulatory Authority Ordinance (PEMRA), 2002",
@@ -5792,12 +5739,10 @@
   "PAKISTAN_INDUSTRIAL_DEVELOPMENT_CORPORATION_TRANSFER_1974": {
     "act_name": "Pakistan Industrial Development Corporation (Transfer of Projects and Companies) Act, 1974",
     "toc_count": 14,
-    "parsed_count": 13,
-    "matched_count": 13,
-    "missing_count": 1,
-    "missing_sections": [
-      "14"
-    ],
+    "parsed_count": 14,
+    "matched_count": 14,
+    "missing_count": 0,
+    "missing_sections": [],
     "extra_sections_count": 0
   },
   "PAKISTAN_INSTITUTE_PARLIAMENTARY_SERVICES_2008": {
@@ -5852,11 +5797,11 @@
   "PAKISTAN_INSTITUTE_MEDICAL_SCIENCES_PIMS_2023": {
     "act_name": "Pakistan Institute of Medical Sciences (PIMS) Act, 2023",
     "toc_count": 6,
-    "parsed_count": 8,
+    "parsed_count": 6,
     "matched_count": 6,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 0
   },
   "PAKISTAN_INSTITUTE_RESEARCH_REGISTRATION_QUALITY_2023": {
     "act_name": "Pakistan Institute of Research and Registration of Quality Assurance Act, 2023",
@@ -5953,11 +5898,11 @@
   "PAKISTAN_MARITIME_SHIPPING_TRANSFER_MANAGED_ORD_1980": {
     "act_name": "Pakistan Maritime Shipping (Transfer of Managed Establishments) Ordinance, 1980",
     "toc_count": 14,
-    "parsed_count": 17,
+    "parsed_count": 14,
     "matched_count": 14,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 3
+    "extra_sections_count": 0
   },
   "PAKISTAN_MARITIME_ZONES_2023": {
     "act_name": "Pakistan Maritime Zones Act, 2023",
@@ -6011,22 +5956,22 @@
   "PAKISTAN_MERCHANT_SHIPPING_ORD_2001": {
     "act_name": "Pakistan Merchant Shipping Ordinance, 2001",
     "toc_count": 583,
-    "parsed_count": 631,
+    "parsed_count": 610,
     "matched_count": 582,
     "missing_count": 1,
     "missing_sections": [
       "280"
     ],
-    "extra_sections_count": 48
+    "extra_sections_count": 28
   },
   "PAKISTAN_MILITARY_ACADEMY_DEGREES_CERTIFICATES_ORD_1959": {
     "act_name": "Pakistan Military Academy (Degrees and Certificates) Ordinance, 1959",
     "toc_count": 4,
-    "parsed_count": 8,
+    "parsed_count": 4,
     "matched_count": 4,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 0
   },
   "PAKISTAN_NAMES_EMBLEMS_PREVENTION_UNAUTHORIZED_1957": {
     "act_name": "Pakistan Names and Emblems (Prevention of Unauthorized Use) Act, 1957",
@@ -6067,11 +6012,11 @@
   "PAKISTAN_NATIONAL_SHIPPING_CORPORATION_PNSC_ORD_1979": {
     "act_name": "Pakistan National Shipping Corporation (PNSC) Ordinance, 1979",
     "toc_count": 41,
-    "parsed_count": 41,
+    "parsed_count": 47,
     "matched_count": 41,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 0
+    "extra_sections_count": 3
   },
   "PAKISTAN_NAVAL_ACADEMY_AWARD_DEGREES_ORD_1965": {
     "act_name": "Pakistan Naval Academy (Award of Degrees) Ordinance, 1965",
@@ -6106,31 +6051,11 @@
   "PAKISTAN_NURSING_MIDWIFERY_COUNCIL_2026": {
     "act_name": "Pakistan Nursing and Midwifery Council Act, 2026",
     "toc_count": 53,
-    "parsed_count": 54,
-    "matched_count": 34,
-    "missing_count": 19,
-    "missing_sections": [
-      "35",
-      "36",
-      "37",
-      "38",
-      "39",
-      "40",
-      "41",
-      "42",
-      "43",
-      "44",
-      "45",
-      "46",
-      "47",
-      "48",
-      "49",
-      "50",
-      "51",
-      "52",
-      "53"
-    ],
-    "extra_sections_count": 20
+    "parsed_count": 53,
+    "matched_count": 53,
+    "missing_count": 0,
+    "missing_sections": [],
+    "extra_sections_count": 0
   },
   "PAKISTAN_NURSING_COUNCIL_PNC_1973": {
     "act_name": "Pakistan Nursing Council Act (PNC), 1973 (Repealed by Act No. XXXVII of 2026, s. 53 (w.e.f 04-06-2026))",
@@ -6180,12 +6105,10 @@
   "PAKISTAN_POSTAL_SERVICES_MANAGEMENT_BOARD_ORD_2002": {
     "act_name": "Pakistan Postal Services Management Board Ordinance, 2002",
     "toc_count": 31,
-    "parsed_count": 28,
-    "matched_count": 28,
-    "missing_count": 3,
+    "parsed_count": 30,
+    "matched_count": 30,
+    "missing_count": 1,
     "missing_sections": [
-      "6",
-      "8",
       "13"
     ],
     "extra_sections_count": 0
@@ -6247,11 +6170,11 @@
   "PAKISTAN_SOVEREIGN_WEALTH_FUND_2023": {
     "act_name": "Pakistan Sovereign Wealth Fund Act, 2023",
     "toc_count": 51,
-    "parsed_count": 56,
+    "parsed_count": 52,
     "matched_count": 51,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 4
+    "extra_sections_count": 1
   },
   "PAKISTAN_SPACE_UPPER_ATMOSPHERE_RESEARCH_ORD_1981": {
     "act_name": "Pakistan Space and Upper Atmosphere Research Commission Ordinance, 1981",
@@ -6317,13 +6240,13 @@
   "PAKISTAN_VETERINARY_MEDICAL_COUNCIL_1996": {
     "act_name": "Pakistan Veterinary Medical Council Act, 1996",
     "toc_count": 25,
-    "parsed_count": 24,
+    "parsed_count": 29,
     "matched_count": 24,
     "missing_count": 1,
     "missing_sections": [
       "21"
     ],
-    "extra_sections_count": 0
+    "extra_sections_count": 5
   },
   "PAKISTAN_WATER_POWER_DEVELOPMENT_AUTHORITY_1958": {
     "act_name": "Pakistan Water and Power Development Authority Act, 1958",
@@ -6445,11 +6368,11 @@
   "PETROLEUM_PRODUCTS_PETROLEUM_LEVY_CLIMATE_ORD_1961": {
     "act_name": "Petroleum Products (Petroleum Levy) and Climate Support Levy Ordinance, 1961",
     "toc_count": 9,
-    "parsed_count": 20,
+    "parsed_count": 44,
     "matched_count": 9,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 11
+    "extra_sections_count": 20
   },
   "PHARMACY_1967": {
     "act_name": "Pharmacy Act, 1967",
@@ -6463,11 +6386,11 @@
   "PIR_ROSHAAN_INSTITUTE_PROGRESSIVE_SCIENCES_2023": {
     "act_name": "Pir Roshaan Institute of Progressive Sciences and Technologies, Miranshah Act, 2023",
     "toc_count": 49,
-    "parsed_count": 60,
+    "parsed_count": 50,
     "matched_count": 49,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 11
+    "extra_sections_count": 1
   },
   "PLANT_BREEDERS_RIGHTS_2016": {
     "act_name": "Plant Breeders´ Rights Act, 2016",
@@ -6508,14 +6431,14 @@
   "POLICE_ORDER_2002": {
     "act_name": "Police Order, 2002",
     "toc_count": 187,
-    "parsed_count": 185,
+    "parsed_count": 187,
     "matched_count": 185,
     "missing_count": 2,
     "missing_sections": [
       "12",
       "18"
     ],
-    "extra_sections_count": 0
+    "extra_sections_count": 2
   },
   "POPULATION_WELFARE_PLANNING_PROGRAMME_APPOINTMENT_ORD_1981": {
     "act_name": "Population Welfare Planning Programme (Appointment and Temination of Service) Ordinance, 1981",
@@ -6630,13 +6553,13 @@
   "PRESS_NEWSPAPERS_NEWS_AGENCIES_BOOKS_ORD_2002": {
     "act_name": "Press Newspapers, News Agencies and Books Registration Ordinance, 2002",
     "toc_count": 44,
-    "parsed_count": 46,
+    "parsed_count": 44,
     "matched_count": 43,
     "missing_count": 1,
     "missing_sections": [
       "26"
     ],
-    "extra_sections_count": 3
+    "extra_sections_count": 1
   },
   "PREVENTION_ANTI_NATIONAL_ACTIVITIES_1974": {
     "act_name": "Prevention of Anti-National Activities Act, 1974",
@@ -6675,9 +6598,9 @@
   "PECA_2016": {
     "act_name": "Prevention of Electronic Crimes Act, 2016",
     "toc_count": 91,
-    "parsed_count": 82,
-    "matched_count": 81,
-    "missing_count": 10,
+    "parsed_count": 81,
+    "matched_count": 80,
+    "missing_count": 11,
     "missing_sections": [
       "2E",
       "2F",
@@ -6688,7 +6611,8 @@
       "2K",
       "2S",
       "2T",
-      "2W"
+      "2W",
+      "26A"
     ],
     "extra_sections_count": 1
   },
@@ -6742,11 +6666,11 @@
   "PRICE_CONTROL_PREVENTION_PROFITEERING_HOARDING_1977": {
     "act_name": "Price Control and Prevention of Profiteering and Hoarding Act, 1977",
     "toc_count": 17,
-    "parsed_count": 22,
+    "parsed_count": 17,
     "matched_count": 17,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 5
+    "extra_sections_count": 0
   },
   "PRIME_MINISTER_S_SALARY_ALLOWANCES_1975": {
     "act_name": "Prime Minister's Salary, Allowances and Privileges Act,1975",
@@ -6771,11 +6695,12 @@
   "PRISONS_1894": {
     "act_name": "Prisons Act, 1894",
     "toc_count": 62,
-    "parsed_count": 62,
-    "matched_count": 60,
-    "missing_count": 2,
+    "parsed_count": 61,
+    "matched_count": 59,
+    "missing_count": 3,
     "missing_sections": [
       "6",
+      "46",
       "60"
     ],
     "extra_sections_count": 2
@@ -6812,29 +6737,29 @@
   "PRIVATIZATION_COMMISSION_ORD_2000": {
     "act_name": "Privatization Commission Ordinance, 2000",
     "toc_count": 48,
-    "parsed_count": 49,
+    "parsed_count": 48,
     "matched_count": 48,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 1
+    "extra_sections_count": 0
   },
   "PROBATION_OFFENDERS_ORD_1960": {
     "act_name": "Probation of Offenders Ordinance, 1960",
     "toc_count": 17,
-    "parsed_count": 19,
+    "parsed_count": 17,
     "matched_count": 17,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 0
   },
   "PROFESSIONS_TAX_LIMITATION_1941": {
     "act_name": "Professions Tax Limitation Act, 1941",
     "toc_count": 3,
-    "parsed_count": 4,
+    "parsed_count": 3,
     "matched_count": 3,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 1
+    "extra_sections_count": 0
   },
   "PROHIBITATION_SMOKING_PROTECTION_NON_SMOKERS_ORD_2002": {
     "act_name": "Prohibitation of Smoking and Protection of Non-Smokers Health Ordinance, 2002",
@@ -6848,11 +6773,11 @@
   "PROHIBITION_HADD_1979": {
     "act_name": "Prohibition (Enforcement of Hadd) Order, 1979",
     "toc_count": 33,
-    "parsed_count": 37,
+    "parsed_count": 33,
     "matched_count": 33,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 4
+    "extra_sections_count": 0
   },
   "PROTECTION_AGAINST_HARASSMENT_WOMEN_AT_2010": {
     "act_name": "Protection Against Harassment of Women at the Work Place Act, 2010",
@@ -6884,11 +6809,11 @@
   "PROTECTION_ECONOMIC_REFORMS_1992": {
     "act_name": "Protection of Economic Reforms Act, 1992",
     "toc_count": 11,
-    "parsed_count": 13,
+    "parsed_count": 11,
     "matched_count": 11,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 0
   },
   "PROTECTION_JOURNALISTS_MEDIA_PROFESSIONALS_2021": {
     "act_name": "Protection of Journalists and Media Professionals Act, 2021",
@@ -6902,11 +6827,11 @@
   "PROTECTION_PAKISTAN_2014": {
     "act_name": "Protection of Pakistan Act, 2014",
     "toc_count": 26,
-    "parsed_count": 28,
+    "parsed_count": 26,
     "matched_count": 26,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 0
   },
   "PROTECTION_PORTS_SPECIAL_MEASURES_1948": {
     "act_name": "Protection of Ports (Special Measures) Act, 1948",
@@ -6920,11 +6845,11 @@
   "PROVIDENT_FUNDS_1925": {
     "act_name": "Provident Funds Act, 1925",
     "toc_count": 10,
-    "parsed_count": 15,
+    "parsed_count": 14,
     "matched_count": 10,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 5
+    "extra_sections_count": 4
   },
   "PROVINCIAL_EMPLOYEES_SOCIAL_SECURITY_ORD_1965": {
     "act_name": "Provincial Employees' Social Security Ordinance, 1965",
@@ -6951,20 +6876,41 @@
   "PROVINCIAL_INSOLVENCY_1920": {
     "act_name": "Provincial Insolvency Act, 1920",
     "toc_count": 86,
-    "parsed_count": 93,
+    "parsed_count": 91,
     "matched_count": 86,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 7
+    "extra_sections_count": 5
   },
   "PROVINCIAL_MOTOR_VEHICLES_ORD_1965": {
     "act_name": "Provincial Motor Vehicles Ordinance, 1965",
     "toc_count": 126,
-    "parsed_count": 143,
-    "matched_count": 126,
-    "missing_count": 0,
-    "missing_sections": [],
-    "extra_sections_count": 17
+    "parsed_count": 313,
+    "matched_count": 82,
+    "missing_count": 44,
+    "missing_sections": [
+      "83",
+      "84",
+      "85",
+      "86",
+      "87",
+      "88",
+      "89",
+      "90",
+      "91",
+      "92",
+      "93",
+      "94",
+      "95",
+      "96",
+      "97",
+      "98",
+      "99",
+      "100",
+      "101",
+      "102"
+    ],
+    "extra_sections_count": 135
   },
   "PROVINCIAL_SERVICE_TRIBUNALS_EXTENSION_PROVISIONS_1974": {
     "act_name": "Provincial Service Tribunals (Extension of Provisions of the Constitution) Act, 1974",
@@ -7090,10 +7036,11 @@
   "PUBLICATION_LAWS_PAKISTAN_2016": {
     "act_name": "Publication of Laws of Pakistan Act, 2016",
     "toc_count": 28,
-    "parsed_count": 25,
-    "matched_count": 25,
-    "missing_count": 3,
+    "parsed_count": 24,
+    "matched_count": 24,
+    "missing_count": 4,
     "missing_sections": [
+      "9",
       "10",
       "12",
       "22"
@@ -7112,14 +7059,15 @@
   "PUNJAB_LAWS_1872": {
     "act_name": "Punjab Laws Act, 1872",
     "toc_count": 32,
-    "parsed_count": 37,
-    "matched_count": 30,
-    "missing_count": 2,
+    "parsed_count": 34,
+    "matched_count": 29,
+    "missing_count": 3,
     "missing_sections": [
       "8",
-      "39"
+      "39",
+      "39C"
     ],
-    "extra_sections_count": 7
+    "extra_sections_count": 5
   },
   "QSO_1984": {
     "act_name": "Qanun-e-Shahadat Order, 1984 (QSO)",
@@ -7136,11 +7084,11 @@
   "QUAID_E_AZAM_UNIVERSITY_1973": {
     "act_name": "Quaid-e-Azam University Act, 1973",
     "toc_count": 44,
-    "parsed_count": 68,
+    "parsed_count": 58,
     "matched_count": 44,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 24
+    "extra_sections_count": 14
   },
   "QUAID_E_AZAM_S_MAZAR_ORD_1971": {
     "act_name": "Quaid-e-Azam's Mazar (Protection and Maintenance) Ordinance, 1971",
@@ -7251,11 +7199,11 @@
   "REGISTERED_DESIGNS_ORD_2000": {
     "act_name": "Registered Designs Ordinance, 2000",
     "toc_count": 36,
-    "parsed_count": 37,
+    "parsed_count": 36,
     "matched_count": 36,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 1
+    "extra_sections_count": 0
   },
   "REGISTERED_LAYOUT_DESIGNS_INTEGRATED_CIRCUITS_ORD_2000": {
     "act_name": "Registered Layout-Designs of Integrated Circuits Ordinance, 2000",
@@ -7413,11 +7361,11 @@
   "RIPHAH_INTERNATIONAL_UNIVERSITY_ORD_2002": {
     "act_name": "Riphah International University Ordinance, 2002",
     "toc_count": 38,
-    "parsed_count": 39,
+    "parsed_count": 28,
     "matched_count": 28,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 11
+    "extra_sections_count": 0
   },
   "ROAD_TRANSPORT_WORKERS_ORD_1961": {
     "act_name": "Road Transport Workers Ordinance, 1961",
@@ -7469,11 +7417,17 @@
   "SALES_TAX_1990": {
     "act_name": "Sales Tax Act, 1990 (Same as on the official website of FBR dated 30-06-2026)",
     "toc_count": 160,
-    "parsed_count": 220,
-    "matched_count": 148,
-    "missing_count": 12,
+    "parsed_count": 695,
+    "matched_count": 142,
+    "missing_count": 18,
     "missing_sections": [
+      "20",
+      "35",
+      "36",
       "3A",
+      "41",
+      "44",
+      "45",
       "14A",
       "26A",
       "32B",
@@ -7486,7 +7440,7 @@
       "14AC",
       "26AA"
     ],
-    "extra_sections_count": 72
+    "extra_sections_count": 275
   },
   "SARAIS_1867": {
     "act_name": "Sarais Act, 1867",
@@ -7518,27 +7472,27 @@
   "SECURITIES_2015": {
     "act_name": "Securities Act, 2015",
     "toc_count": 171,
-    "parsed_count": 178,
+    "parsed_count": 177,
     "matched_count": 170,
     "missing_count": 1,
     "missing_sections": [
       "83"
     ],
-    "extra_sections_count": 8
+    "extra_sections_count": 7
   },
   "SECP_1997": {
     "act_name": "Securities and Exchange Commission of Pakistan Act, 1997",
     "toc_count": 90,
-    "parsed_count": 115,
+    "parsed_count": 94,
     "matched_count": 90,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 24
+    "extra_sections_count": 4
   },
   "SECURITY_PAKISTAN_1952": {
     "act_name": "Security of Pakistan Act, 1952",
     "toc_count": 27,
-    "parsed_count": 25,
+    "parsed_count": 24,
     "matched_count": 24,
     "missing_count": 3,
     "missing_sections": [
@@ -7546,15 +7500,17 @@
       "8",
       "18"
     ],
-    "extra_sections_count": 1
+    "extra_sections_count": 0
   },
   "SEED_1976": {
     "act_name": "Seed Act, 1976",
     "toc_count": 49,
-    "parsed_count": 50,
-    "matched_count": 48,
-    "missing_count": 1,
+    "parsed_count": 48,
+    "matched_count": 46,
+    "missing_count": 3,
     "missing_sections": [
+      "7",
+      "8",
       "22I"
     ],
     "extra_sections_count": 2
@@ -7653,13 +7609,13 @@
   "SINDH_INCUMBERED_ESTATES_1896": {
     "act_name": "Sindh Incumbered Estates Act, 1896",
     "toc_count": 37,
-    "parsed_count": 40,
+    "parsed_count": 39,
     "matched_count": 36,
     "missing_count": 1,
     "missing_sections": [
       "24"
     ],
-    "extra_sections_count": 4
+    "extra_sections_count": 3
   },
   "SINDH_REVENUE_JURISDICTION_1876": {
     "act_name": "Sindh Revenue Jurisdiction Act, 1876",
@@ -7682,11 +7638,11 @@
   "SMALL_CLAIMS_MINOR_OFFENCES_COURTS_ORD_2002": {
     "act_name": "Small Claims and Minor Offences Courts Ordinance, 2002",
     "toc_count": 39,
-    "parsed_count": 43,
+    "parsed_count": 42,
     "matched_count": 39,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 4
+    "extra_sections_count": 3
   },
   "SMART_INSTITUTE_SCIENCE_TECHNOLOGY_2022": {
     "act_name": "Smart Institute of Science and Technology Act, 2022",
@@ -7794,7 +7750,7 @@
   "STAMP_1899": {
     "act_name": "Stamp Act, 1899",
     "toc_count": 81,
-    "parsed_count": 155,
+    "parsed_count": 150,
     "matched_count": 77,
     "missing_count": 4,
     "missing_sections": [
@@ -7803,7 +7759,7 @@
       "62",
       "27A"
     ],
-    "extra_sections_count": 72
+    "extra_sections_count": 71
   },
   "STANDARD_TIME_INTERPRETATION_REFERENCES_ORD_1943": {
     "act_name": "Standard Time (Interpretation of References) Ordinance, 1943",
@@ -7868,11 +7824,11 @@
   "STATE_OWNED_ENTERPRISES_GOVERNANCE_OPERATIONS_2023": {
     "act_name": "State-owned Enterprises (Governance and Operations) Act, 2023",
     "toc_count": 36,
-    "parsed_count": 76,
+    "parsed_count": 37,
     "matched_count": 36,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 15
+    "extra_sections_count": 1
   },
   "STOCK_EXCHANGE_CORPORATISATION_DEMUTUALIZATION_INTEGRATION_2012": {
     "act_name": "Stock Exchange (Corporatisation, Demutualization and Integration) Act, 2012",
@@ -7886,13 +7842,13 @@
   "SUCCESSION_1925": {
     "act_name": "Succession Act, 1925",
     "toc_count": 356,
-    "parsed_count": 397,
+    "parsed_count": 396,
     "matched_count": 355,
     "missing_count": 1,
     "missing_sections": [
       "57"
     ],
-    "extra_sections_count": 42
+    "extra_sections_count": 41
   },
   "SUGAR_EXPORT_SUBSIDY_FUND_ORD_1970": {
     "act_name": "Sugar Export Subsidy Fund Ordinance, 1970",
@@ -8059,35 +8015,29 @@
   "TERRORIST_AFFECTED_AREAS_SPECIAL_COURTS_1992": {
     "act_name": "Terrorist Affected Areas (Special Courts) Act, 1992",
     "toc_count": 27,
-    "parsed_count": 32,
-    "matched_count": 22,
-    "missing_count": 5,
-    "missing_sections": [
-      "23",
-      "24",
-      "25",
-      "26",
-      "27"
-    ],
-    "extra_sections_count": 10
+    "parsed_count": 27,
+    "matched_count": 27,
+    "missing_count": 0,
+    "missing_sections": [],
+    "extra_sections_count": 0
   },
   "FAMILY_COURTS_1964": {
     "act_name": "The Family Courts Act, 1964",
     "toc_count": 29,
-    "parsed_count": 35,
+    "parsed_count": 33,
     "matched_count": 29,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 6
+    "extra_sections_count": 4
   },
   "INTERNATIONAL_ISLAMIC_INSTITUTE_PEACE_IIIP_2024": {
     "act_name": "The International Islamic Institute for Peace (IIIP) Act, 2024",
     "toc_count": 32,
-    "parsed_count": 43,
+    "parsed_count": 32,
     "matched_count": 32,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 11
+    "extra_sections_count": 0
   },
   "TOLLS_ARMY_AIR_FORCE_1901": {
     "act_name": "Tolls (Army and Air Force) Act, 1901",
@@ -8150,11 +8100,11 @@
   "TRADEMARKS_2001": {
     "act_name": "Trade Marks Ordinance, 2001",
     "toc_count": 140,
-    "parsed_count": 142,
+    "parsed_count": 198,
     "matched_count": 140,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 2
+    "extra_sections_count": 20
   },
   "TRADE_ORGANIZATIONS_2013": {
     "act_name": "Trade Organizations Act, 2013",
@@ -8235,13 +8185,13 @@
   "TPA_1882": {
     "act_name": "Transfer of Property Act, 1882",
     "toc_count": 131,
-    "parsed_count": 143,
+    "parsed_count": 142,
     "matched_count": 130,
     "missing_count": 1,
     "missing_sections": [
       "130A"
     ],
-    "extra_sections_count": 13
+    "extra_sections_count": 12
   },
   "TRANSGENDER_PERSONS_PROTECTION_RIGHTS_NO_2018": {
     "act_name": "Transgender Persons (Protection and Rights) Act, 2018 (Act No_ XIII of 2018)",
@@ -8364,11 +8314,11 @@
   "VACCINATION_1880": {
     "act_name": "Vaccination Act, 1880",
     "toc_count": 23,
-    "parsed_count": 26,
+    "parsed_count": 24,
     "matched_count": 23,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 3
+    "extra_sections_count": 1
   },
   "VALIDATION_LAWS_1975": {
     "act_name": "Validation of Laws Act, 1975",
@@ -8382,29 +8332,29 @@
   "VIRTUAL_ASSETS_2026": {
     "act_name": "Virtual Assets Act, 2026",
     "toc_count": 74,
-    "parsed_count": 84,
+    "parsed_count": 74,
     "matched_count": 74,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 10
+    "extra_sections_count": 0
   },
   "VIRTUAL_UNIVERSITY_ORD_2002": {
     "act_name": "Virtual University Ordinance, 2002",
     "toc_count": 46,
-    "parsed_count": 49,
+    "parsed_count": 36,
     "matched_count": 34,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 15
+    "extra_sections_count": 2
   },
   "VOLUNTARY_DECLARATION_DOMESTIC_ASSETS_2018": {
     "act_name": "Voluntary Declaration of Domestic Assets Act, 2018",
     "toc_count": 14,
-    "parsed_count": 23,
+    "parsed_count": 18,
     "matched_count": 14,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 9
+    "extra_sections_count": 4
   },
   "VOLUNTARY_SOCIAL_WELFARE_AGENCIES_REGISTRATION_ORD_1961": {
     "act_name": "Voluntary Social Welfare Agencies (Registration and Control) Ordinance, 1961",
@@ -8454,11 +8404,11 @@
   "WEIGHTS_MEASURES_INTERNATIONAL_SYSTEM_1967": {
     "act_name": "Weights and Measures (International System) Act, 1967",
     "toc_count": 42,
-    "parsed_count": 45,
+    "parsed_count": 57,
     "matched_count": 42,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 3
+    "extra_sections_count": 8
   },
   "WEST_PAKISTAN_AGRICULTURAL_BANK_RECOVERY_ORD_1959": {
     "act_name": "West Pakistan Agricultural Bank (Recovery of Dues) Ordinance, 1959",
@@ -8546,11 +8496,11 @@
   "WEST_PAKISTAN_CONTROL_GOONDAS_ORD_1959": {
     "act_name": "West Pakistan Control of Goondas Ordinance, 1959",
     "toc_count": 29,
-    "parsed_count": 37,
+    "parsed_count": 63,
     "matched_count": 29,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 8
+    "extra_sections_count": 14
   },
   "WEST_PAKISTAN_DEPARTMENTAL_INQUIRIES_POWERS_1958": {
     "act_name": "West Pakistan Departmental Inquiries (Powers) Act, 1958",
@@ -8582,11 +8532,11 @@
   "WEST_PAKISTAN_FISHERIES_ORD_1961": {
     "act_name": "West Pakistan Fisheries Ordinance, 1961",
     "toc_count": 26,
-    "parsed_count": 27,
+    "parsed_count": 39,
     "matched_count": 26,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 1
+    "extra_sections_count": 10
   },
   "WEST_PAKISTAN_FOODSTUFFS_CONTROL_1958": {
     "act_name": "West Pakistan Foodstuffs (Control) Act, 1958",
@@ -8722,11 +8672,11 @@
   "WEST_PAKISTAN_MOTOR_VEHICLES_TAXATION_1958": {
     "act_name": "West Pakistan Motor Vehicles Taxation Act, 1958",
     "toc_count": 17,
-    "parsed_count": 40,
+    "parsed_count": 18,
     "matched_count": 17,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 10
+    "extra_sections_count": 1
   },
   "SHARIAT_APPLICATION_1962": {
     "act_name": "West Pakistan Muslim Personal Law (Shariat) Application Act, 1962",
@@ -8830,11 +8780,11 @@
   "WEST_PAKISTAN_SHOPS_ESTABLISHMENTS_ORD_1969": {
     "act_name": "West Pakistan Shops and Establishments Ordinance, 1969",
     "toc_count": 33,
-    "parsed_count": 38,
+    "parsed_count": 34,
     "matched_count": 33,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 5
+    "extra_sections_count": 1
   },
   "WEST_PAKISTAN_SMALL_INDUSTRIES_CORPORATION_1972": {
     "act_name": "West Pakistan Small Industries Corporation (Dissolution) Act, 1972",
@@ -8938,11 +8888,11 @@
   "WITNESS_PROTECTION_SECURITY_BENEFIT_2017": {
     "act_name": "Witness Protection, Security and Benefit Act, 2017",
     "toc_count": 12,
-    "parsed_count": 19,
+    "parsed_count": 14,
     "matched_count": 12,
     "missing_count": 0,
     "missing_sections": [],
-    "extra_sections_count": 7
+    "extra_sections_count": 2
   },
   "WOMEN_DISTRESS_DETENTION_FUND_1996": {
     "act_name": "Women in Distress and Detention Fund Act, 1996 (Repealed by Act XVI of 2020)",
@@ -8983,13 +8933,13 @@
   "WORKMEN_S_COMPENSATION_1923": {
     "act_name": "Workmen's Compensation Act, 1923",
     "toc_count": 41,
-    "parsed_count": 100,
+    "parsed_count": 74,
     "matched_count": 40,
     "missing_count": 1,
     "missing_sections": [
       "22A"
     ],
-    "extra_sections_count": 53
+    "extra_sections_count": 34
   },
   "WORKS_DEFENCE_1903": {
     "act_name": "Works of Defence Act, 1903",
@@ -9012,12 +8962,12 @@
   "ZAKAT_USHR_ORD_1980": {
     "act_name": "Zakat and Ushr Ordinance, 1980",
     "toc_count": 32,
-    "parsed_count": 33,
+    "parsed_count": 70,
     "matched_count": 31,
     "missing_count": 1,
     "missing_sections": [
       "19A"
     ],
-    "extra_sections_count": 2
+    "extra_sections_count": 13
   }
 }

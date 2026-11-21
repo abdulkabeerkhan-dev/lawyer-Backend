@@ -1,0 +1,331 @@
+{
+  "total_ids": 118561,
+  "total_occurrences": 13095801,
+  "resolved_count": 8973,
+  "resolved_occurrences": 8114398,
+  "unresolved_count": 109588,
+  "top_40_unresolved_ids": [
+    {
+      "id": "CRPC_1898_SEC_324",
+      "occurrences": 14196
+    },
+    {
+      "id": "PPC_1860_SEC_544A",
+      "occurrences": 14177
+    },
+    {
+      "id": "CRPC_1898_SEC_4972",
+      "occurrences": 13909
+    },
+    {
+      "id": "ATA_1997_SEC_302B",
+      "occurrences": 13770
+    },
+    {
+      "id": "REGISTRATION_1908_SEC_302",
+      "occurrences": 13257
+    },
+    {
+      "id": "CRPC_1898_SEC_3402",
+      "occurrences": 11489
+    },
+    {
+      "id": "PPC_1860_SEC_4972",
+      "occurrences": 11217
+    },
+    {
+      "id": "SRA_1877_SEC_115",
+      "occurrences": 10570
+    },
+    {
+      "id": "ARMS_1965_SEC_342",
+      "occurrences": 9851
+    },
+    {
+      "id": "ATA_1997_SEC_42",
+      "occurrences": 9626
+    },
+    {
+      "id": "ATA_1997_SEC_115",
+      "occurrences": 9532
+    },
+    {
+      "id": "CRPC_1898_SEC_307",
+      "occurrences": 9153
+    },
+    {
+      "id": "REGISTRATION_1908_SEC_342",
+      "occurrences": 9073
+    },
+    {
+      "id": "CNSA_1997_SEC_9C",
+      "occurrences": 9013
+    },
+    {
+      "id": "REGISTRATION_1908_SEC_302B",
+      "occurrences": 8628
+    },
+    {
+      "id": "CRPC_1898_SEC_4971",
+      "occurrences": 8086
+    },
+    {
+      "id": "QSO_1984_SEC_302",
+      "occurrences": 8015
+    },
+    {
+      "id": "PPC_1860_SEC_3402",
+      "occurrences": 7516
+    },
+    {
+      "id": "PPC_1860_SEC_544",
+      "occurrences": 7265
+    },
+    {
+      "id": "CONST_1973_SEC_342",
+      "occurrences": 7064
+    },
+    {
+      "id": "QSO_1984_SEC_302B",
+      "occurrences": 7057
+    },
+    {
+      "id": "ARMS_1965_SEC_3",
+      "occurrences": 6989
+    },
+    {
+      "id": "CRPC_1898_SEC_9C",
+      "occurrences": 6808
+    },
+    {
+      "id": "ATA_1997_SEC_382B",
+      "occurrences": 6761
+    },
+    {
+      "id": "ATA_1997_SEC_151",
+      "occurrences": 6711
+    },
+    {
+      "id": "ATA_1997_SEC_52",
+      "occurrences": 6690
+    },
+    {
+      "id": "ATA_1997_SEC_324",
+      "occurrences": 6679
+    },
+    {
+      "id": "CRPC_1898_SEC_4975",
+      "occurrences": 6646
+    },
+    {
+      "id": "ATA_1997_SEC_41",
+      "occurrences": 6590
+    },
+    {
+      "id": "ARMS_1965_SEC_302B",
+      "occurrences": 6366
+    },
+    {
+      "id": "ATA_1997_SEC_100",
+      "occurrences": 6283
+    },
+    {
+      "id": "SRA_1877_SEC_42SUIT",
+      "occurrences": 6188
+    },
+    {
+      "id": "SRPO_1979_SEC_152",
+      "occurrences": 6186
+    },
+    {
+      "id": "ARMS_1965_SEC_1",
+      "occurrences": 6040
+    },
+    {
+      "id": "REGISTRATION_1908_SEC_161",
+      "occurrences": 6029
+    },
+    {
+      "id": "ATA_1997_SEC_307",
+      "occurrences": 5992
+    },
+    {
+      "id": "CONST_1973_SEC_302B",
+      "occurrences": 5840
+    },
+    {
+      "id": "PPC_1860_SEC_4975",
+      "occurrences": 5712
+    },
+    {
+      "id": "SRA_1877_SEC_302",
+      "occurrences": 5513
+    },
+    {
+      "id": "CPC_1908_SEC_115REVISIONAL",
+      "occurrences": 5431
+    }
+  ],
+  "top_40_unresolved_acts": [
+    {
+      "act": "CONST_1973",
+      "occurrences": 874172
+    },
+    {
+      "act": "ATA_1997",
+      "occurrences": 818082
+    },
+    {
+      "act": "ARMS_1965",
+      "occurrences": 388870
+    },
+    {
+      "act": "CRPC_1898",
+      "occurrences": 375665
+    },
+    {
+      "act": "CPC_1908",
+      "occurrences": 268315
+    },
+    {
+      "act": "REGISTRATION_1908",
+      "occurrences": 268158
+    },
+    {
+      "act": "CONTRACT_1872",
+      "occurrences": 258012
+    },
+    {
+      "act": "PPC_1860",
+      "occurrences": 256024
+    },
+    {
+      "act": "SRA_1877",
+      "occurrences": 251329
+    },
+    {
+      "act": "LIMITATION_1908",
+      "occurrences": 215364
+    },
+    {
+      "act": "QSO_1984",
+      "occurrences": 131795
+    },
+    {
+      "act": "PARTITION_1893",
+      "occurrences": 115863
+    },
+    {
+      "act": "ARBITRATION_1940",
+      "occurrences": 115531
+    },
+    {
+      "act": "COMPANIES_2017",
+      "occurrences": 85672
+    },
+    {
+      "act": "CUSTOMS_1969",
+      "occurrences": 64084
+    },
+    {
+      "act": "STAMP_1899",
+      "occurrences": 63432
+    },
+    {
+      "act": "TPA_1882",
+      "occurrences": 55970
+    },
+    {
+      "act": "SRPO_1979",
+      "occurrences": 51560
+    },
+    {
+      "act": "ITO_2001",
+      "occurrences": 40742
+    },
+    {
+      "act": "CNSA_1997",
+      "occurrences": 39453
+    },
+    {
+      "act": "SALES_TAX_1990",
+      "occurrences": 29969
+    },
+    {
+      "act": "COMPANIES_1984",
+      "occurrences": 23954
+    },
+    {
+      "act": "FAMILY_COURTS_1964",
+      "occurrences": 20799
+    },
+    {
+      "act": "FIO_2001",
+      "occurrences": 19815
+    },
+    {
+      "act": "COURT_FEES_1870",
+      "occurrences": 18169
+    },
+    {
+      "act": "MFLO_1961",
+      "occurrences": 14332
+    },
+    {
+      "act": "BCO_1962",
+      "occurrences": 11667
+    },
+    {
+      "act": "GWA_1890",
+      "occurrences": 11563
+    },
+    {
+      "act": "CPC_1908_O_VII_R_11---REJECTION",
+      "occurrences": 1813
+    },
+    {
+      "act": "PRPA_2009",
+      "occurrences": 1696
+    },
+    {
+      "act": "DMMA_1939",
+      "occurrences": 1470
+    },
+    {
+      "act": "CPC_1908_O_VII_R_11---SUIT",
+      "occurrences": 1303
+    },
+    {
+      "act": "CPC_1908_O_XXVI_R_1---REVIEW",
+      "occurrences": 911
+    },
+    {
+      "act": "CPC_1908_O_XXVI_R_1---CIVIL",
+      "occurrences": 787
+    },
+    {
+      "act": "PECA_2016",
+      "occurrences": 782
+    },
+    {
+      "act": "CPC_1908_O_VII_R_11---SPECIFIC",
+      "occurrences": 752
+    },
+    {
+      "act": "CPC_1908_O_XLVII_R_1---REVIEW",
+      "occurrences": 722
+    },
+    {
+      "act": "CPC_1908_O_VI_R_17---AMENDMENT",
+      "occurrences": 606
+    },
+    {
+      "act": "CPC_1908_O_XLI_R_20",
+      "occurrences": 505
+    },
+    {
+      "act": "CPC_1908_O_VII_R_11---CONSTITUTION",
+      "occurrences": 463
+    }
+  ]
+}

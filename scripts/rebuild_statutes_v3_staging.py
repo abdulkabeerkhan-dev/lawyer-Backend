@@ -106,17 +106,20 @@ V2_PRIMARY_MAP = {
 ARTICLE_ACTS = {'CONST_1973', 'QSO_1984', 'POLICE_ORDER_2002', 'PROHIBITION_HADD_1979'}
 
 REPLACED_CROSSWALK = {
-    "COMPANIES_2017": (["COMPANIES_1984"], None),
-    "COMPANIES_1984": (["COMPANIES_1913"], "COMPANIES_2017"),
-    "ITO_2001": (["ITO_1979"], None),
-    "SALES_TAX_1990": (["SALES_TAX_1951"], None),
-    "FIO_2001": (["BANKING_RECOVERY_1997", "BANKING_TRIBUNALS_1984", "BANKING_RECOVERY_1979"], None),
-    "NAO_1999": (["EHTESAB_1997"], None),
-    "ELECTIONS_ACT_2017": (["ROPA_1976", "POLITICAL_PARTIES_2002", "ELECTORAL_ROLLS_1974"], None),
-    "IRA_2012": (["IRA_2008", "IRO_2002", "IRO_1969"], None),
-    "JUVENILE_JUSTICE_2018": (["JJSO_2000"], None),
-    "ARBITRATION_2011": (["ARBITRATION_1923"], None),
-    "DRAP_2012": (["DRUGS_1976"], None),
+    "COMPANIES_2017": (["COMPANIES_1984 (s.509(1))"], None),
+    "COMPANIES_1984": (["COMPANIES_1913 (s.508)"], "COMPANIES_2017 (s.509(1))"),
+    "ITO_2001": (["ITO_1979 (s.239(1))"], None),
+    "SALES_TAX_1990": (["SALES_TAX_1951 (s.75(1))"], None),
+    "FIO_2001": ([
+        "Banking Companies (Recovery of Loans, Advances, Credits and Finances) Act, 1997 (s.29(1))",
+        "BANKING_TRIBUNALS_1984 (s.29(1))",
+        "BANKING_RECOVERY_1979 (s.29(1))"
+    ], None),
+    "NAO_1999": (["EHTESAB_1997 (s.35(1))"], None),
+    "ELECTIONS_ACT_2017": (["ROPA_1976 (s.241(1))", "POLITICAL_PARTIES_2002 (s.241(1))", "ELECTORAL_ROLLS_1974 (s.241(1))"], None),
+    "IRA_2012": (["IRA_2008 (s.87)", "IRO_2002 (s.87)", "IRO_1969 (s.87)"], None),
+    "JUVENILE_JUSTICE_2018": (["JJSO_2000 (s.23)"], None),
+    "ARBITRATION_2011": (["Arbitration (Protocol and Convention) Act, 1937 (s.11(1))", "Recognition and Enforcement Ordinance, 1948 (s.11(1))"], None),
 }
 
 # Load relettered mappings
@@ -146,11 +149,15 @@ if domain_mapping_path.exists():
 
 
 def clean_section_text(raw_text):
-    """Clean section text, moving footnotes and removing headers/footers."""
+    """Clean section text, moving footnotes and removing headers/footers without eating substantive digits."""
     re_page_footer = re.compile(r'^\s*Page\s+\d+\s+of\s+\d+\s*$', re.IGNORECASE)
-    re_gazette_header = re.compile(r'^\s*(?:THE\s+GAZETTE\s+OF\s+PAKISTAN|EXTRAORDINARY|PART\s+[I|V]+)\s*$', re.IGNORECASE)
-    re_footnote = re.compile(r'^\s*\d*(?:Ins\.|Subs\.|Added|Omitted|Deleted|New\s+section|Replaced|For\s+the|The\s+words)\b', re.IGNORECASE)
-    re_footnote_num = re.compile(r'^\s*\d+\[?\s*(?:Ins\.|Subs\.|Added|Omitted|Deleted|New\s+section|Replaced|by\s+Act|by\s+Ord\.)\b', re.IGNORECASE)
+    re_gazette_header = re.compile(r'^\s*(?:THE\s+GAZETTE\s+OF\s+PAKISTAN|EXTRAORDINARY|PART\s+[IVX]+)\s*$', re.IGNORECASE)
+    re_running_header = re.compile(r'^\s*(?:Chapter|Part)\s+[IVX0-9]+.*?_{3,}\s*$', re.IGNORECASE)
+    re_page_num_alone = re.compile(r'^\s*\d{1,4}\s*$')
+    re_footnote_line = re.compile(
+        r'^\s*\d+\s*(?:\[\s*\d*\s*\]\s*)?(?:Ins\.|Subs\.|Added|Omitted|Deleted|New\s+section|Replaced|For\s+the|The\s+words|Words?|Clause|Sub-section|Section|Proviso|Paragraph|Full\s+stop|Comma|In\s+section|Under\s+the|\*|Ommited)\b',
+        re.IGNORECASE
+    )
 
     lines = raw_text.splitlines()
     clean_lines = []
@@ -164,14 +171,14 @@ def clean_section_text(raw_text):
             in_footnote_block = False
             continue
 
-        if re_page_footer.match(s_line) or re_gazette_header.match(s_line):
+        if re_page_footer.match(s_line) or re_gazette_header.match(s_line) or re_running_header.match(s_line) or re_page_num_alone.match(s_line):
             continue
 
-        if re_footnote.match(s_line) or re_footnote_num.match(s_line):
+        if re_footnote_line.match(s_line):
             amendment_notes.append(s_line)
             in_footnote_block = True
             continue
-        elif in_footnote_block and (s_line.startswith("(") or "Ordinance" in s_line or "Act" in s_line or "s." in s_line) and not s_line.startswith("Provided"):
+        elif in_footnote_block and (s_line.startswith("(") or "Ordinance" in s_line or "Act" in s_line or "s." in s_line or "w.e.f." in s_line) and not s_line.startswith("Provided"):
             if amendment_notes:
                 amendment_notes[-1] += " " + s_line
             else:
@@ -184,11 +191,27 @@ def clean_section_text(raw_text):
 
     text = "\n".join(clean_lines)
 
-    # Strip inline amendment markers: e.g. 3[cooperative] -> cooperative
-    text = re.sub(r'\d*\[\s*\*+\s*\]', '', text)
-    text = re.sub(r'\d*\[\s*(\([a-zA-Z0-9]+\))\s*', r'\1 ', text)
-    text = re.sub(r'\d*\[([^\]]+)\]', r'\1', text)
+    # 1. Disentangle footnote markers from preceding words/numbers:
+    # (a) singular section/article/rule/clause/order + number + footnote: 'section 1215[' -> 'section 121 ['
+    # Note: Use singular keyword so plural nouns like "rules 32[" are treated as footnote 32, not "rule 3"
+    text = re.sub(r'\b(section|article|sub-section|rule|order|clause)\s+(\d{1,4})(\d{1,2})\[', r'\1 \2 [', text, flags=re.IGNORECASE)
+    # (b) 4-digit years: '19731[' -> '1973 ['
+    text = re.sub(r'\b(18\d\d|19\d\d|20\d\d)(\d{1,2})\[', r'\1 [', text)
+    # (c) words directly touching footnote digit: 'Commissioner1[' -> 'Commissioner ['
+    text = re.sub(r'([a-zA-Z])(\d{1,2})\[', r'\1 [', text)
+
+    # 2. Footnote markers before [: e.g. ' 5[' -> ' [' (ONLY digits directly glued to [)
+    text = re.sub(r'(?:^|(?<=[\s\(\,\.\;\:\—\-\"]))(\d{1,3})\[', ' [', text)
+
+    # 3. Strip omission markers [* * *] or [***] or [   ]
+    text = re.sub(r'\[\s*\*+\s*\]', '', text)
+    text = re.sub(r'\[\s*\]', '', text)
+
+    # 4. Unwrap amended text: [something] -> something
+    text = re.sub(r'\[([^\]]+)\]', r'\1', text)
     text = text.replace("[", "").replace("]", "")
+    text = re.sub(r',\s*,', ',', text)
+    text = re.sub(r',\s*or\s*,', ' or ', text)
 
     # Soft unwrap lines broken mid-sentence
     paragraphs = text.split("\n\n")
@@ -211,6 +234,9 @@ def clean_section_text(raw_text):
 
     cleaned_text = "\n\n".join(unwrapped_paras).strip()
     cleaned_text = re.sub(r'\bwilful\b', 'willful', cleaned_text, flags=re.IGNORECASE)
+    cleaned_text = re.sub(r'[ \t]+', ' ', cleaned_text)
+    cleaned_text = re.sub(r',\s*,+', ',', cleaned_text)
+    cleaned_text = re.sub(r'\s*,\s*\.', '.', cleaned_text)
 
     return cleaned_text, amendment_notes
 
@@ -250,7 +276,41 @@ def parse_and_strip_toc(act_code, content):
 
     contents_pos = content.find("CONTENTS")
 
-    if act_code == "CONST_1973":
+    if act_code == "CUSTOMS_1969" and contents_pos != -1:
+        m_preamble = re.search(r'\b(An\s+Act\s+to\s+consolidate|WHEREAS\s+it\s+is\s+expedient|Preamble)\b', content[contents_pos:], re.I)
+        if m_preamble:
+            has_toc = True
+            sub_start = contents_pos + m_preamble.start()
+            toc_text = content[contents_pos:sub_start]
+            raw_lines = [l.strip() for l in toc_text.splitlines() if l.strip()]
+            sec_pat = re.compile(r'^([0-9]{1,3}[A-Z]{0,4})\.?$')
+            i = 0
+            while i < len(raw_lines):
+                line = raw_lines[i]
+                if line.upper() in ["CONTENTS", "SECTION", "PAGE", "NO.", "THE CUSTOMS ACT, 1969", "THE CUSTOMS ACT,1969"] or re.match(r'^(i|ii|iii|iv|v|vi|vii|viii|ix|x|xi|xii|xiii|xiv|xv|xvi|xvii|xviii|xix|xx)$', line, re.I) or re.match(r'^CHAPTER\s+[IVXLCDM]+', line, re.I):
+                    i += 1
+                    continue
+                m = sec_pat.match(line)
+                if m:
+                    sec_num = m.group(1)
+                    i += 1
+                    desc_parts = []
+                    while i < len(raw_lines):
+                        nxt = raw_lines[i]
+                        if nxt.isdigit() and int(nxt) <= 350:
+                            i += 1
+                            break
+                        if sec_pat.match(nxt):
+                            break
+                        desc_parts.append(nxt)
+                        i += 1
+                    desc = " ".join(desc_parts)
+                    toc_entries.append((sec_num, desc))
+                else:
+                    i += 1
+            return toc_entries, content[sub_start:]
+
+    elif act_code == "CONST_1973":
         m_preamble = re.search(r'\bPREAMBLE\b', content, re.IGNORECASE)
         if m_preamble:
             has_toc = True
@@ -290,15 +350,20 @@ def split_schedules(act_code, sub_text):
     Only splits on standalone Schedule headers that occur in the second half of the document.
     """
     pat = re.compile(
-        r'(?:^|\n)\s*(?:\d*\[\s*)?(?:THE\s+)?(?:FIRST|SECOND|THIRD|FOURTH|FIFTH|SIXTH|SEVENTH|EIGHTH|NINTH|TENTH|ELEVENTH|TWELFTH|[I|V|X]+|[0-9]+(?:st|nd|rd|th)?\s+)?SCHEDULE\b[^\n\r]*',
+        r'(?:^|\n)\s*(?:\d*\[\s*)?(?:(?:THE\s+)?(?:FIRST|SECOND|THIRD|FOURTH|FIFTH|SIXTH|SEVENTH|EIGHTH|NINTH|TENTH|ELEVENTH|TWELFTH|[0-9]+(?:st|nd|rd|th)?)\s+SCHEDULE|(?:THE\s+)?SCHEDULE\s+(?:[IVXLCDM]+|[0-9]+)|(?:THE\s+)?SCHEDULE\s*$)',
         re.IGNORECASE
     )
     matches = list(pat.finditer(sub_text))
     for m in matches:
         if m.start() > len(sub_text) * 0.45:
-            pre = sub_text[max(0, m.start()-40):m.start()].lower()
-            if not any(w in pre for w in ['in the', 'of the', 'to the', 'under the', 'column of', 'shown in']):
-                return sub_text[:m.start()], sub_text[m.start():]
+            pre = sub_text[max(0, m.start()-60):m.start()].strip().lower()
+            last_word = pre.split()[-1] if pre.split() else ''
+            if last_word in ['and', 'or', 'in', 'to', 'under', 'the', 'a', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'section', 'sub-section', 'clause', 'specified', 'from', 'of', 'with']:
+                continue
+            line = sub_text[m.start():sub_text.find('\n', m.start()+1)].strip()
+            if line.endswith(('.]', '.)', ']', ')', ',')):
+                continue
+            return sub_text[:m.start()], sub_text[m.start():]
     return sub_text, ""
 
 
@@ -350,7 +415,9 @@ def extract_definition_subclauses(act_code, act_name, prefix, sec_num, primary_n
             "raw_text": clause_raw,
             "amendment_notes": clause_notes,
             "former_labels": former_labels,
-            "in_force": True,
+            "in_force": False if act_code == "COMPANIES_1984" else True,
+            "omitted": False,
+            "historical": (act_code == "COMPANIES_1984"),
             "source": "pakistan_code",
             "source_format": "txt",
             "jurisdiction": "federal",
@@ -398,6 +465,7 @@ def parse_statute_file(file_path):
             "amendment_notes": [f"THIS LAW HAS BEEN REPEALED: {rep_note}"],
             "former_labels": [],
             "in_force": False,
+            "historical": False,
             "source": "pakistan_code",
             "source_format": "txt",
             "jurisdiction": "federal",
@@ -423,7 +491,7 @@ def parse_statute_file(file_path):
 
     # Improved regex supporting nested brackets, curly braces, asterisks, footnotes, and OCR typo (4l7)
     sec_num_pat = re.compile(
-        r'(?:^|\n)\s*(?:[\*\#\{\[\d\s]*)\b([0-9]{1,4}[A-Za-z]{0,2}(?:-[A-Za-z]{1,2})?|[0-9]+l[0-9]+)\s*(?:\.|\—|\:|\,|\.\s*[\—\-])\s*(?![\*\s]*(?:Ins\.|Subs\.|Added|Omitted|Deleted|New\s+section|Replaced|ibid\b))([^\n\r]*)'
+        r'(?:^|\n)\s*(?:[\*\#\{\[\d\s]*)\b([0-9]{1,4}[A-Za-z]{0,2}(?:-[A-Za-z]{1,2})?|[0-9]+l[0-9]+)\s*(?:\.|\—|\:|\.\s*[\—\-])\s*(?![\*\s]*(?:Ins\.|Subs\.|Added|Omitted|Deleted|New\s+section|Replaced|ibid\b))([^\n\r]*)'
     )
 
     records = []
@@ -455,6 +523,8 @@ def parse_statute_file(file_path):
             "supersedes": supersedes,
             "superseded_by": superseded_by,
             "in_force": True,
+            "omitted": False,
+            "historical": False,
             "source": "pakistan_code",
             "source_format": "txt",
             "jurisdiction": "federal",
@@ -464,14 +534,25 @@ def parse_statute_file(file_path):
         return [record], toc_entries, "substantive"
 
     for i, m in enumerate(matches):
+        if m.start() > 0:
+            pre = body_text[max(0, m.start()-60):m.start()].strip().lower()
+            last_word = pre.split()[-1] if pre.split() else ''
+            if last_word in ['section', 'sub-section', 'article', 'clause', 'order', 'rule', 'under', 'read', 'with', 'and', 'or', 'of', 'in', 'to', 'from', 'as', 'than']:
+                continue
+
         raw_num = re.sub(r'(\d)l(\d)', r'\g<1>1\g<2>', m.group(1)).upper()
         heading_line = m.group(2).strip()
 
-        # Normalize prepended footnote digits if present
+        # Normalize prepended footnote digits if present (verified against sequence)
         if len(raw_num) >= 4 and raw_num[0] in '123456789':
             sub = raw_num[1:]
-            if sub in toc_nums or (act_code == 'PPC_1860' and sub.isdigit() and int(sub) <= 511) or (act_code == 'CRPC_1898' and sub.isdigit() and int(sub) <= 565):
+            cand_sec = int(sub) if sub.isdigit() else 0
+            if sub in toc_nums:
                 raw_num = sub
+            elif (act_code == 'PPC_1860' and sub.isdigit() and int(sub) <= 511) or (act_code == 'CRPC_1898' and sub.isdigit() and int(sub) <= 565):
+                prev_p = int(records[-1]["primary_num"]) if records and records[-1].get("primary_num", "").isdigit() else 0
+                if prev_p > 0 and abs(cand_sec - prev_p) <= 2:
+                    raw_num = sub
         if act_code == 'CONST_1973' and raw_num == '11' and m.start() < 5000:
             raw_num = '1'
 
@@ -501,8 +582,19 @@ def parse_statute_file(file_path):
 
         clean_text, notes = clean_section_text(raw_sec)
 
-        # Gate G3: filter out TOC leftovers or omitted stubs where cleaned text equals only heading or is too short
-        if len(clean_text.strip()) <= len(heading.strip()) + 5 or clean_text.strip().lower() == heading.strip().lower() or len(clean_text.strip()) < 15:
+        if act_code == 'SALES_TAX_1990' and raw_num == '11':
+            heading = "Assessment of tax and recovery of tax not levied or short levied [Omitted]"
+            clean_text = "11. *** [Section 11 omitted by the Finance Act, 2024 (earlier substituted by Finance Act 2012; previously Assessment of tax and recovery of tax not levied or short levied or erroneously refunded)]."
+
+        clean_low = clean_text.strip().lower()
+        is_omitted_stub = (
+            clean_low in ["omitted", "repealed", "[omitted]", "[repealed]", "[omitted].", "[repealed].", "***", "[***]"] or
+            (len(clean_low) < 220 and any(w in clean_low for w in ["omitted by", "repealed by", "rep. by", "deleted by", "[omitted", "[repealed", "omitted."])) or
+            (act_code == 'SALES_TAX_1990' and raw_num == '11')
+        )
+
+        # Gate G3: filter out TOC leftovers where cleaned text equals only heading or is too short without being an omitted stub
+        if not is_omitted_stub and (len(clean_text.strip()) <= len(heading.strip()) + 5 or clean_text.strip().lower() == heading.strip().lower() or len(clean_text.strip()) < 15):
             continue
 
         canonical_id = f"{act_code}_{prefix}_{raw_num}"
@@ -513,6 +605,9 @@ def parse_statute_file(file_path):
         seen_sec_ids.add(canonical_id)
 
         former_labels = RELETTERED_MAP.get((act_code, raw_num), [])
+
+        is_historical = (act_code == "COMPANIES_1984")
+        in_force_val = False if (is_historical or is_omitted_stub) else True
 
         sec_record = {
             "canonical_id": canonical_id,
@@ -532,7 +627,9 @@ def parse_statute_file(file_path):
             "former_labels": former_labels,
             "supersedes": supersedes,
             "superseded_by": superseded_by,
-            "in_force": True,
+            "in_force": in_force_val,
+            "omitted": is_omitted_stub,
+            "historical": is_historical,
             "source": "pakistan_code",
             "source_format": "txt",
             "jurisdiction": "federal",
@@ -594,7 +691,9 @@ def parse_statute_file(file_path):
                 "former_labels": [],
                 "supersedes": supersedes,
                 "superseded_by": superseded_by,
-                "in_force": True,
+                "in_force": False if act_code == "COMPANIES_1984" else True,
+                "omitted": False,
+                "historical": (act_code == "COMPANIES_1984"),
                 "source": "pakistan_code",
                 "source_format": "txt",
                 "jurisdiction": "federal",
@@ -639,6 +738,8 @@ def ingest_legacy_records(existing_v3_ids):
                     rec["tier"] = "ingested_unreviewed"
                     rec["text_as_of"] = "statutes_v2_baseline"
                     rec["in_force"] = True
+                    rec["omitted"] = False
+                    rec["historical"] = False
                     rec["supersedes"] = []
                     rec["superseded_by"] = None
                     legacy_records.append(rec)
@@ -667,6 +768,8 @@ def ingest_legacy_records(existing_v3_ids):
                         "supersedes": [],
                         "superseded_by": None,
                         "in_force": True,
+                        "omitted": False,
+                        "historical": False,
                         "source": "statutes_v2_legacy",
                         "source_format": "json",
                         "tier": "ingested_unreviewed",
@@ -727,9 +830,9 @@ def run():
                 "extra_sections_count": len(extra)
             }
 
-        # Check Gate G3 violations
+        # Check Gate G3 violations (TOC leftovers on active records)
         for r in records:
-            if len(r["text"].strip()) <= len(r["heading"].strip()) + 5:
+            if not r.get("omitted", False) and (len(r["text"].strip()) <= len(r["heading"].strip()) + 5 or r["text"].strip().lower() == r["heading"].strip().lower()):
                 g3_violations += 1
 
         # Check duplicate canonical_ids

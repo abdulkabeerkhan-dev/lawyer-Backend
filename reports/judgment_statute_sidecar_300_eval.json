@@ -1,0 +1,152 @@
+{
+  "sampled_chunks": 300,
+  "total_stored_tags_in_sample": 197,
+  "valid_resolvable_stored_tags": 154,
+  "clean_extracted_from_text": 19,
+  "stored_matching_clean_extracted": 26,
+  "precision_of_stored_tags": 0.132,
+  "recall_of_stored_tags": 1.3684,
+  "sidecar_table_db": "D:\\lawyer-Backend\\data\\judgment_statute_sidecar.db",
+  "wrong_stored_examples_top20": [
+    {
+      "chunk_id": "1962_PLC_OTHER_1002:headnote:001",
+      "case_key": "1962_PLC_OTHER_1002",
+      "invalid_stored_tag": "CONST_1973_ART_10",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1002 | Court (OTHER) | Constitutional | CONST_1973_SEC_10, CONST_1973_SEC_2 | headnote]\n\nVS\n\nIndustrial Dispute--TERM ,\nIndustrial Dispute I"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1002:headnote:001",
+      "case_key": "1962_PLC_OTHER_1002",
+      "invalid_stored_tag": "CONST_1973_ART_2",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1002 | Court (OTHER) | Constitutional | CONST_1973_SEC_10, CONST_1973_SEC_2 | headnote]\n\nVS\n\nIndustrial Dispute--TERM ,\nIndustrial Dispute I"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1002:headnote:002",
+      "case_key": "1962_PLC_OTHER_1002",
+      "invalid_stored_tag": "CONST_1973_ART_10",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1002 | Court (OTHER) | Constitutional | CONST_1973_SEC_10 | headnote]\n\nIndustrial Disputes Ordinance 1959--10 ,\nIndustrial dispute-Dismissed"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1002:headnote:003",
+      "case_key": "1962_PLC_OTHER_1002",
+      "invalid_stored_tag": "CONST_1973_ART_10",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1002 | Court (OTHER) | Constitutional | CONST_1973_SEC_10, CONST_1973_SEC_2 | headnote]\n\nTrade Unions Act 1926--22 ,\nTrade Unions Act 1926 S"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1002:headnote:003",
+      "case_key": "1962_PLC_OTHER_1002",
+      "invalid_stored_tag": "CONST_1973_ART_2",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1002 | Court (OTHER) | Constitutional | CONST_1973_SEC_10, CONST_1973_SEC_2 | headnote]\n\nTrade Unions Act 1926--22 ,\nTrade Unions Act 1926 S"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1091:headnote:001",
+      "case_key": "1962_PLC_OTHER_1091",
+      "invalid_stored_tag": "CONST_1973_ART_170CERTIORARI",
+      "reason": "Unresolvable / malformed syntax / nonexistent section",
+      "text_snippet": "[1962 PLC 1091 | Court (OTHER) | Constitutional | CONST_1973_ART_170CERTIORARI, CONST_1973_ART_224, CONST_1973_ART_233 | headnote]\n\nVS\n\nConstitution o"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1091:headnote:001",
+      "case_key": "1962_PLC_OTHER_1091",
+      "invalid_stored_tag": "CONST_1973_ART_10",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1091 | Court (OTHER) | Constitutional | CONST_1973_ART_170CERTIORARI, CONST_1973_ART_224, CONST_1973_ART_233 | headnote]\n\nVS\n\nConstitution o"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1091:headnote:001",
+      "case_key": "1962_PLC_OTHER_1091",
+      "invalid_stored_tag": "CONST_1973_ART_241",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1091 | Court (OTHER) | Constitutional | CONST_1973_ART_170CERTIORARI, CONST_1973_ART_224, CONST_1973_ART_233 | headnote]\n\nVS\n\nConstitution o"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1091:headnote:002",
+      "case_key": "1962_PLC_OTHER_1091",
+      "invalid_stored_tag": "CONST_1973_ART_170CERTIORARI",
+      "reason": "Unresolvable / malformed syntax / nonexistent section",
+      "text_snippet": "[1962 PLC 1091 | Court (OTHER) | Constitutional | CONST_1973_ART_170CERTIORARI, CONST_1973_ART_224, CONST_1973_ART_233 | headnote]\n\nGovernment Servant"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1091:headnote:002",
+      "case_key": "1962_PLC_OTHER_1091",
+      "invalid_stored_tag": "CONST_1973_ART_10",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1091 | Court (OTHER) | Constitutional | CONST_1973_ART_170CERTIORARI, CONST_1973_ART_224, CONST_1973_ART_233 | headnote]\n\nGovernment Servant"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1091:headnote:002",
+      "case_key": "1962_PLC_OTHER_1091",
+      "invalid_stored_tag": "CONST_1973_ART_241",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1091 | Court (OTHER) | Constitutional | CONST_1973_ART_170CERTIORARI, CONST_1973_ART_224, CONST_1973_ART_233 | headnote]\n\nGovernment Servant"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1098:headnote:001",
+      "case_key": "1962_PLC_OTHER_1098",
+      "invalid_stored_tag": "CONTRACT_1872_SEC_4",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1098 | Court (OTHER) | Civil | CONTRACT_1872_SEC_4 | headnote]\n\nVS\n\nDismissal --TERM ,\nDismissal Dismissal - Summary without enquiry - Manag"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1098:headnote:002",
+      "case_key": "1962_PLC_OTHER_1098",
+      "invalid_stored_tag": "CONTRACT_1872_SEC_4",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1098 | Court (OTHER) | Civil | CONTRACT_1872_SEC_4 | headnote]\n\nFactories Act 1934--4 ,\nFactories Act 1934 S. 4 (1) (2)-Umbrella manufacturi"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1102:headnote:001",
+      "case_key": "1962_PLC_OTHER_1102",
+      "invalid_stored_tag": "CONST_1973_ART_3",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1102 | Court (OTHER) | Constitutional | CONST_1973_ART_170, CONST_1973_SEC_170, CONST_1973_SEC_3 | headnote]\n\nVS\n\nConstitution of Pakistan 1"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1102:headnote:002",
+      "case_key": "1962_PLC_OTHER_1102",
+      "invalid_stored_tag": "CONST_1973_ART_29",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1102 | Court (OTHER) | Constitutional | CONST_1973_ART_170, CONST_1973_SEC_130, CONST_1973_SEC_170 | headnote]\n\nMunicipal Administration Ord"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1102:headnote:002",
+      "case_key": "1962_PLC_OTHER_1102",
+      "invalid_stored_tag": "CONST_1973_ART_130",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1102 | Court (OTHER) | Constitutional | CONST_1973_ART_170, CONST_1973_SEC_130, CONST_1973_SEC_170 | headnote]\n\nMunicipal Administration Ord"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1102:headnote:002",
+      "case_key": "1962_PLC_OTHER_1102",
+      "invalid_stored_tag": "CONST_1973_ART_170",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1102 | Court (OTHER) | Constitutional | CONST_1973_ART_170, CONST_1973_SEC_130, CONST_1973_SEC_170 | headnote]\n\nMunicipal Administration Ord"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1102:headnote:002",
+      "case_key": "1962_PLC_OTHER_1102",
+      "invalid_stored_tag": "CONST_1973_ART_4",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1102 | Court (OTHER) | Constitutional | CONST_1973_ART_170, CONST_1973_SEC_130, CONST_1973_SEC_170 | headnote]\n\nMunicipal Administration Ord"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1102:headnote:002",
+      "case_key": "1962_PLC_OTHER_1102",
+      "invalid_stored_tag": "CONST_1973_ART_3",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1102 | Court (OTHER) | Constitutional | CONST_1973_ART_170, CONST_1973_SEC_130, CONST_1973_SEC_170 | headnote]\n\nMunicipal Administration Ord"
+    },
+    {
+      "chunk_id": "1962_PLC_OTHER_1102:headnote:003",
+      "case_key": "1962_PLC_OTHER_1102",
+      "invalid_stored_tag": "CONST_1973_ART_3",
+      "reason": "Hallucinated / not mentioned in chunk text",
+      "text_snippet": "[1962 PLC 1102 | Court (OTHER) | Constitutional | CONST_1973_ART_170, CONST_1973_SEC_3 | headnote]\n\nMunicipal Administration Ordinance 1960--3 ,\nMunic"
+    }
+  ]
+}

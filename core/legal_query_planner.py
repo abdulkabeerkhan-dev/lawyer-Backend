@@ -949,7 +949,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         and any(k in q_low for k in ["contract", "commercial", "agreement", "loan", "civil dispute", "business", "power of attorney", "pending civil", "civil court", "civil suit", "recovery", "same agreement"])
         and not (is_land_revenue or is_corporate or is_civil_execution)
     )
-    is_rent = bool(re.search(r'\b(?:rent|rented|tenan[ct]|landlord|evict|ejectment|tenancy|commercial shop|rent tribunal)\b', q_low) or any(k in q_low for k in ["prpa", "srpo"]))
+    is_rent = bool(re.search(r'\b(?:rent|rented|tenan[ct]\w*|landlord|evict\w*|ejectment|tenancy|commercial shop|rent tribunal)\b', q_low) or any(k in q_low for k in ["prpa", "srpo", "rented premises"]))
     is_habeas_corpus = any(k in q_low for k in ["habeas corpus", "unlawful detention", "illegal detention", "detenue", "without production"])
     is_cybercrime = any(k in q_low for k in [
         "peca", "cybercrime", "cyber crime", "hacking", "cyberstalking", "cyber stalking",
@@ -1098,10 +1098,10 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     )
     is_narcotics = (
         any(k in q_low for k in [
-            "cnsa", "narcotic", "narcotics", "charas", "heroin", "hashish", "opium", "ice",
+            "cnsa", "narcotic", "narcotics", "charas", "heroin", "hashish", "opium",
             "crystal meth", "9c cnsa", "9-c cnsa", "control of narcotic", "anf", "anti narcotics force"
         ])
-        or bool(re.search(r'\b(?:cnsa|anf)\b', q_low))
+        or bool(re.search(r'\b(?:cnsa|anf|ice|crystal\s+meth|methamphetamine)\b', q_low))
     )
     is_anti_corruption = any(k in q_low for k in [
         "nab", "national accountability", "nao 1999", "anti corruption establishment",
@@ -1962,6 +1962,14 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
     if is_rent:
         if province == "Punjab":
             for default_p in ["Section 4 PRPA 2009", "Section 15 PRPA 2009", "Section 22 PRPA 2009", "Section 34 PRPA 2009"]:
+                if not any(default_p.split()[1] in p for p in provisions):
+                    provisions.append(default_p)
+        elif province == "Sindh":
+            for default_p in ["Section 15 SRPO 1979", "Section 16 SRPO 1979", "Section 21 SRPO 1979"]:
+                if not any(default_p.split()[1] in p for p in provisions):
+                    provisions.append(default_p)
+        else:
+            for default_p in ["Section 15 PRPA 2009", "Section 22 PRPA 2009", "Section 15 SRPO 1979"]:
                 if not any(default_p.split()[1] in p for p in provisions):
                     provisions.append(default_p)
 

@@ -18,6 +18,8 @@
     "supersedes": [],
     "superseded_by": null,
     "in_force": true,
+    "omitted": false,
+    "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",

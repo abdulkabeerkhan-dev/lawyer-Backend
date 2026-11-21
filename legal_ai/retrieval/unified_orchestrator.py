@@ -480,7 +480,8 @@ async def retrieve_candidates_parallel(
         return collapse_chunks_per_case(combined)
 
     # Lane 5: Statutory Retrieval (Exact statutory tokens & precedents)
-    def _lane_statutory() -> List[Dict[str, Any]]:
+    async def _lane_statutory() -> List[Dict[str, Any]]:
+        use_zilliz = os.environ.get("USE_ZILLIZ_STATUTES", "false").lower() in ("true", "1", "yes")
         statute_queries = []
         for p in statutory_provisions:
             anchored = anchor_provision_token(str(p), query_plan=query_plan)
@@ -488,6 +489,44 @@ async def retrieve_candidates_parallel(
                 statute_queries.append(anchored)
         if not statute_queries:
             statute_queries = [str(p) for p in statutory_provisions if str(p)] or [sparse_lexical_query]
+
+        if use_zilliz:
+            from legal_ai.retrieval.statute_search import search_statutes_hybrid
+            statute_hits = []
+            seen_cids = set()
+            for sq in statute_queries[:4]:
+                try:
+                    hits = await search_statutes_hybrid(sq, top_k=top_k_per_engine)
+                    record_provider_event(
+                        "Zilliz_Statutes",
+                        ProviderStatus.SUCCESS if hits else ProviderStatus.EMPTY,
+                        result_count=len(hits),
+                    )
+                    for h in hits:
+                        cid = h.get("canonical_id") or ""
+                        if cid and cid not in seen_cids:
+                            seen_cids.add(cid)
+                            statute_hits.append({
+                                "case_id": cid,
+                                "citation": cid,
+                                "title": h.get("heading") or f"{h.get('act_name', '')} s.{h.get('section', '')}",
+                                "preview": (h.get("text") or "")[:400],
+                                "metadata": {
+                                    "full_text": h.get("text", ""),
+                                    "act_code": h.get("act_code", ""),
+                                    "act_name": h.get("act_name", ""),
+                                    "section": h.get("section", ""),
+                                    "domain": h.get("domain", ""),
+                                    "is_statute": True,
+                                },
+                                "source_lane": "statutory",
+                                "source_issue_id": "statutory_zilliz",
+                                "source_lane_query": sq,
+                                "score": h.get("score", 0.0),
+                            })
+                except Exception as e:
+                    logger.warning(f"[Lane 5: Statutory Zilliz] error querying '{sq}': {e}")
+            return collapse_chunks_per_case(statute_hits)
 
         statute_hits = []
         for sq in statute_queries[:4]:

@@ -22,6 +22,12 @@ from pathlib import Path
 from typing import List, Dict, Any
 from dotenv import load_dotenv
 
+# Ensure unbuffered standard output for real-time background logging
+try:
+    sys.stdout.reconfigure(line_buffering=True)
+except Exception:
+    pass
+
 ROOT_DIR = Path(r"d:\lawyer-Backend")
 load_dotenv(ROOT_DIR / ".env")
 
@@ -125,6 +131,22 @@ def build_statutes_v3_schema() -> CollectionSchema:
             description="Whether the enactment is currently in force"
         ),
         FieldSchema(
+            name="historical",
+            dtype=DataType.BOOL,
+            description="Whether the enactment is a repealed-but-cited historical statute (e.g. Companies Ordinance 1984)"
+        ),
+        FieldSchema(
+            name="omitted",
+            dtype=DataType.BOOL,
+            description="Whether the provision is an omitted/repealed stub"
+        ),
+        FieldSchema(
+            name="status",
+            dtype=DataType.VARCHAR,
+            max_length=32,
+            description="Provision status: in_force, omitted, historical, repealed"
+        ),
+        FieldSchema(
             name="text_as_of",
             dtype=DataType.VARCHAR,
             max_length=128,
@@ -175,10 +197,14 @@ def build_statutes_v3_schema() -> CollectionSchema:
     )
     return schema
 
-def create_collection_if_needed(client: MilvusClient):
+def create_collection_if_needed(client: MilvusClient, recreate: bool = False):
     if client.has_collection(COLLECTION_NAME):
-        print(f"Collection '{COLLECTION_NAME}' already exists.")
-        return
+        if recreate:
+            print(f"Dropping existing collection '{COLLECTION_NAME}' for clean recreate...")
+            client.drop_collection(COLLECTION_NAME)
+        else:
+            print(f"Collection '{COLLECTION_NAME}' already exists.")
+            return
 
     print(f"Creating collection '{COLLECTION_NAME}'...")
     schema = build_statutes_v3_schema()
@@ -202,7 +228,7 @@ def create_collection_if_needed(client: MilvusClient):
     )
     print(f"Collection '{COLLECTION_NAME}' created successfully.")
 
-def run_loader(batch_size: int = 128, max_records: int = None):
+def run_loader(batch_size: int = 128, max_records: int = None, recreate: bool = False):
     print("=" * 70)
     print(f"LOADING STATUTES V3 TO ZILLIZ ({COLLECTION_NAME})")
     print("=" * 70)
@@ -215,12 +241,17 @@ def run_loader(batch_size: int = 128, max_records: int = None):
     zclient = MilvusClient(uri=ZILLIZ_URI, token=ZILLIZ_TOKEN)
     vclient = voyageai.Client(api_key=VOYAGE_API_KEY)
 
-    # 1. Create collection if not exists
-    create_collection_if_needed(zclient)
+    # 1. Create collection if not exists (or recreate if requested)
+    create_collection_if_needed(zclient, recreate=recreate)
 
     # 2. Gather all active records from staging
     print("Gathering active records from staging...")
     active_records = []
+    from collections import Counter
+    source_counts = Counter()
+    level_counts = Counter()
+    status_counts = Counter()
+
     for fpath in sorted(list(V3_STAGING_DIR.glob("*.json"))):
         try:
             with open(fpath, "r", encoding="utf-8") as fp:
@@ -228,8 +259,17 @@ def run_loader(batch_size: int = 128, max_records: int = None):
                 if not isinstance(data, list):
                     continue
                 for r in data:
-                    if not r.get("in_force", True) or r.get("provision_type") == "repeal_notice":
+                    is_hist = bool(r.get("historical", False))
+                    is_omitted = bool(r.get("omitted", False))
+                    in_f = bool(r.get("in_force", True))
+                    prov_type = r.get("provision_type", "section")
+                    src = r.get("source", "pakistan_code")
+
+                    # Skip only standalone repeal notices (whole-act repeal stubs)
+                    if prov_type == "repeal_notice":
                         continue
+
+                    status = "historical" if is_hist else ("omitted" if is_omitted else "in_force")
 
                     # Text formatting
                     act_name = r.get("act_name", "")
@@ -239,6 +279,9 @@ def run_loader(batch_size: int = 128, max_records: int = None):
 
                     formatted_text = f"{act_name}\nSection {sec}: {hdg}\n\n{txt}".strip()
                     formatted_text = re.sub(r'\bwilful\b', 'willful', formatted_text, flags=re.I)
+                    # Truncate text strictly by UTF-8 bytes to fit Milvus 65535 byte limit
+                    txt_bytes = formatted_text.encode('utf-8')[:65500]
+                    formatted_text = txt_bytes.decode('utf-8', errors='ignore')
 
                     # Ensure fields conform to schema
                     row = {
@@ -247,23 +290,33 @@ def run_loader(batch_size: int = 128, max_records: int = None):
                         "act_name": act_name[:255],
                         "section": str(sec)[:63],
                         "heading": str(hdg)[:511],
-                        "text": formatted_text[:65530],
+                        "text": formatted_text,
                         "domain": r.get("domain", "other")[:63],
                         "forum": r.get("forum", "Court")[:127],
-                        "source": r.get("source", "pakistan_code")[:63],
+                        "source": src[:63],
                         "tier": r.get("tier", "ingested_unreviewed")[:63],
-                        "in_force": bool(r.get("in_force", True)),
+                        "in_force": in_f and not is_omitted and not is_hist,
+                        "historical": is_hist,
+                        "omitted": is_omitted,
+                        "status": status,
                         "text_as_of": r.get("text_as_of", "")[:127],
                         "supersedes": [str(x)[:63] for x in r.get("supersedes", [])][:16],
                         "superseded_by": str(r.get("superseded_by") or "")[:63],
                         "former_labels": [str(x)[:63] for x in r.get("former_labels", [])][:16],
-                        "provision_type": r.get("provision_type", "section")[:31],
+                        "provision_type": prov_type[:31],
                     }
                     active_records.append(row)
+                    source_counts[src] += 1
+                    level_counts[prov_type] += 1
+                    status_counts[status] += 1
         except Exception as e:
             print(f"Error reading {fpath.name}: {e}")
 
     print(f"Total active records prepared: {len(active_records):,}")
+    print("\n--- BREAKDOWN BEFORE LOAD ---")
+    print(f"By Source: {dict(source_counts)}")
+    print(f"By Level (Provision Type): {dict(level_counts)}")
+    print(f"By Status: {dict(status_counts)}")
     if max_records:
         active_records = active_records[:max_records]
         print(f"Restricted to first {max_records} records.")
@@ -350,6 +403,9 @@ def run_loader(batch_size: int = 128, max_records: int = None):
         "collection_name": COLLECTION_NAME,
         "total_active_provisions": len(active_records),
         "total_upserted": total_upserted,
+        "by_source": dict(source_counts),
+        "by_level": dict(level_counts),
+        "by_status": dict(status_counts),
         "elapsed_seconds": round(time.time() - t0, 1),
         "status": "completed"
     }
@@ -366,6 +422,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--max-records", type=int, default=None)
+    parser.add_argument("--recreate", action="store_true", help="Recreate collection if it exists")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
@@ -374,4 +431,4 @@ if __name__ == "__main__":
         schema = build_statutes_v3_schema()
         print("Schema built successfully:", schema)
     else:
-        run_loader(batch_size=args.batch_size, max_records=args.max_records)
+        run_loader(batch_size=args.batch_size, max_records=args.max_records, recreate=args.recreate)

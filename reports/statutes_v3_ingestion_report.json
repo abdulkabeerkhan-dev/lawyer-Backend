@@ -2,6 +2,23 @@
   "collection_name": "statutes_v3",
   "total_active_provisions": 128,
   "total_upserted": 128,
-  "elapsed_seconds": 5.3,
+  "by_source": {
+    "pakistan_code": 37400,
+    "statutes_v2_legacy": 1207
+  },
+  "by_level": {
+    "section": 31502,
+    "schedule_entry": 5127,
+    "clause": 419,
+    "article": 906,
+    "rule": 6,
+    "order": 647
+  },
+  "by_status": {
+    "in_force": 37468,
+    "omitted": 386,
+    "historical": 753
+  },
+  "elapsed_seconds": 5.4,
   "status": "completed"
 }
