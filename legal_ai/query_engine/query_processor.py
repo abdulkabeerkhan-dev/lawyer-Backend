@@ -2580,7 +2580,7 @@ async def process_query_job_legal_ai(
 
     # Hydrate top precedent cards with full text and verified court from Turso case_texts
     try:
-        from core.turso_client import get_cases_batch
+        from core.case_store import get_cases_batch
         c_ids = [str(c.get("case_id") or c.get("citation") or "") for c in precedent_cards if (c.get("case_id") or c.get("citation"))]
         if c_ids:
             turso_records = get_cases_batch(c_ids)

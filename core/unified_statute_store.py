@@ -206,54 +206,6 @@ class UnifiedStatuteStore:
                 pass
 
         self._loaded = True
-        if os.environ.get("ENABLE_TURSO_DRIFT_CHECK", "0").lower() in ("1", "true", "yes"):
-            self._verify_turso_drift_sample()
-
-    def _verify_turso_drift_sample(self):
-        """
-        Compares 10 sampled canonical IDs in memory against Turso to alert on drift.
-        Loudly logs an error if local JSON files and Turso have diverged.
-        """
-        sample_cids = [
-            "LIMITATION_1908_ART_150",
-            "PPC_1860_SEC_489F",
-            "PPC_1860_SEC_302",
-            "CRPC_1898_SEC_497",
-            "CRPC_1898_SEC_498",
-            "CRPC_1898_SEC_154",
-            "CPC_1908_SEC_9",
-            "CONTRACT_1872_SEC_73",
-            "QSO_1984_ART_2",
-            "CONST_1973_ART_199",
-            "NI_ACT_1881_SEC_8",
-            "NI_ACT_1881_SEC_31",
-            "PPC_1860_SEC_51",
-        ]
-        try:
-            from core.turso_client import get_statute_provision, is_turso_circuit_open
-            if is_turso_circuit_open():
-                return
-            drifted = []
-            for cid in sample_cids:
-                local_rec = self._by_cid.get(cid)
-                if not local_rec:
-                    continue
-                remote = get_statute_provision(cid)
-                if not remote or not remote.get("verbatim_text"):
-                    continue
-                local_txt = (local_rec.get("text") or local_rec.get("verbatim_text") or "").strip()
-                remote_txt = (remote.get("verbatim_text") or "").strip()
-                if local_txt and remote_txt and local_txt != remote_txt:
-                    drifted.append(cid)
-            if drifted:
-                import logging
-                logger = logging.getLogger(__name__)
-                logger.error(
-                    f"CRITICAL DRIFT DETECTED: JSON files and Turso differ for {drifted}! "
-                    "Run scripts/export_turso_to_json.py to synchronize."
-                )
-        except Exception:
-            pass
 
     def get_by_canonical_id(self, canonical_id: str) -> Optional[Dict[str, Any]]:
         if not self._loaded:
@@ -290,9 +242,9 @@ class UnifiedStatuteStore:
             if res:
                 return res
 
-        # Fallback to Turso statute_provisions
+        # Fallback to the legacy provisions copied from Turso to R2
         try:
-            from core.turso_client import get_statute_provision
+            from core.case_store import get_statute_provision
             t_prov = get_statute_provision(cid_clean)
             if not t_prov and m_base:
                 t_prov = get_statute_provision(m_base.group(1))
@@ -372,9 +324,9 @@ class UnifiedStatuteStore:
             if base_res:
                 return base_res
 
-        # 4. Fallback to Turso statute_provisions
+        # 4. Fallback to the legacy provisions copied from Turso to R2
         try:
-            from core.turso_client import get_statute_provision
+            from core.case_store import get_statute_provision
             t_prov = get_statute_provision(f"{act_upper}_SEC_{clean_num}", act_code=act_upper)
             if not t_prov and m_base_num:
                 t_prov = get_statute_provision(f"{act_upper}_SEC_{m_base_num.group(1)}", act_code=act_upper)

@@ -1797,7 +1797,7 @@ def sanitize_precedent_card(card: Dict[str, Any], backend_base_url: str = "") ->
     t_case = None
     if cit or c.get("case_id"):
         try:
-            from core.turso_client import get_case_by_identifier
+            from core.case_store import get_case_by_identifier
             t_case = get_case_by_identifier(cit) or (get_case_by_identifier(c.get("case_id", "")) if c.get("case_id") else None)
         except Exception:
             pass

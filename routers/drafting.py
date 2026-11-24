@@ -14,7 +14,7 @@ from pydantic import BaseModel, Field
 from legal_ai.drafting.template_orchestrator import TemplateOrchestrator, TEMPLATES_REGISTRY
 from legal_ai.drafting.chronology_generator import extract_dates_and_events_from_text, format_chronology_markdown
 from core.precedent_treatment import check_precedent_treatment
-from core.turso_client import get_cases_batch
+from core.case_store import get_cases_batch
 
 router = APIRouter(prefix="", tags=["drafting"])
 
@@ -44,14 +44,14 @@ async def get_drafting_template_details(template_id: str):
 @router.post("/api/v1/drafting/generate")
 async def generate_drafting_pleading(payload: TemplateFillRequest):
     """
-    Fills a court pleading template, binds verified precedents from Turso,
+    Fills a court pleading template, binds verified precedents from the master corpus,
     and returns either formatted Markdown (for split-screen canvas) or a court-ready .docx file.
     """
     tpl = TemplateOrchestrator.get_template(payload.template_id)
     if not tpl:
         raise HTTPException(status_code=400, detail=f"Invalid template_id '{payload.template_id}'.")
 
-    # Fetch verified authorities from Turso if provided
+    # Fetch verified authorities from the master corpus if provided
     verified_precedents = []
     if payload.selected_case_ids:
         try:

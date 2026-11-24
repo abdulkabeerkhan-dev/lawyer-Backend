@@ -390,7 +390,7 @@ def get_provision_full_text(canonical_id: str) -> Optional[Dict[str, Any]]:
     prov = store.get_by_canonical_id(canonical_id)
     if not prov or not prov.get("text"):
         try:
-            from core.turso_client import get_statute_provision
+            from core.case_store import get_statute_provision
             turso_prov = get_statute_provision(canonical_id)
             if turso_prov:
                 prov = {

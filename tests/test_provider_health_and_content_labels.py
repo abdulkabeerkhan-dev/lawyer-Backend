@@ -5,7 +5,7 @@ from pathlib import Path
 from core.content_classification import classify_judgment_content
 from core.pdf_resolver import fetch_storage_pdf_bytes
 from core.provider_ledger import ProviderHealthLedger, ProviderStatus
-from core import turso_client
+from core import case_store
 from legal_ai.statutes.statute_injector import StatuteInjector
 
 
@@ -57,19 +57,23 @@ def test_article_113_is_structured_and_not_quotable():
     assert "Verbatim Bare-Act Text in Force:" not in article_block
 
 
-def test_turso_pdf_lookup_uses_journal_year_and_page(monkeypatch):
+def test_r2_pdf_lookup_uses_journal_year_and_page(monkeypatch):
+    import io
+    import zipfile
     expected_pdf = b"%PDF-1.7 test"
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_STORED) as zf:
+        zf.writestr("1.pdf", expected_pdf)
     captured = {}
-    monkeypatch.setattr(turso_client, "is_turso_circuit_open", lambda: False)
 
-    def fake_execute(statements, timeout, max_retries):
-        captured["statements"] = statements
-        captured["timeout"] = timeout
-        return [{"rows": [{"pdf_base64": base64.b64encode(expected_pdf).decode("ascii")}]}]
+    def fake_bundle(key):
+        captured["key"] = key
+        return buf.getvalue()
 
-    monkeypatch.setattr(turso_client, "execute_turso_pipeline", fake_execute)
+    monkeypatch.setattr("legal_ai.storage.r2_text_store.r2_configured", lambda: True)
+    monkeypatch.setattr(case_store, "_read_bundle", fake_bundle)
 
-    result = turso_client.get_case_pdf_bytes(
+    result = case_store.get_case_pdf_bytes(
         "PLD 2020 SC 1",
         target_year="2020",
         target_journal="PLD",
@@ -77,13 +81,12 @@ def test_turso_pdf_lookup_uses_journal_year_and_page(monkeypatch):
     )
 
     assert result == expected_pdf
-    sql = captured["statements"][0]["sql"]
-    assert "journal = ? AND year = ? AND page = ?" in sql
-    args = captured["statements"][0]["args"]
-    assert [arg["value"] for arg in args[-3:]] == ["PLD", 2020, 1]
+    assert captured["key"] == "pdfs/v1/PLD/2020/0.zip"
+    # a page without a PDF in its bundle returns None
+    assert case_store.get_case_pdf_bytes("2020_PLD_2") is None
 
 
-def test_pdf_resolver_passes_case_id_as_first_turso_argument(monkeypatch):
+def test_pdf_resolver_passes_case_id_as_first_pdf_store_argument(monkeypatch):
     captured = {}
     monkeypatch.setattr("core.pdf_resolver.os.path.isdir", lambda _: False)
 
@@ -92,7 +95,7 @@ def test_pdf_resolver_passes_case_id_as_first_turso_argument(monkeypatch):
         captured.update(kwargs)
         return b"%PDF-1.7 test"
 
-    monkeypatch.setattr(turso_client, "get_case_pdf_bytes", fake_get_pdf)
+    monkeypatch.setattr(case_store, "get_case_pdf_bytes", fake_get_pdf)
 
     result = fetch_storage_pdf_bytes(None, "PLD", "2020", "1", "2020_PLD_1")
 

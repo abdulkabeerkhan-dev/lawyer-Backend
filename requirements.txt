@@ -3,7 +3,6 @@ uvicorn
 gunicorn
 httpx
 sentry-sdk
-pinecone
 anthropic
 supabase
 python-dotenv

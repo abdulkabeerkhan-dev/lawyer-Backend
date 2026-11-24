@@ -2,7 +2,7 @@
 legal_ai/config.py
 
 Centralized configuration, environment management, and infrastructure client
-singletons (Supabase, Pinecone, Anthropic, Voyage AI) for the Pakistani Legal AI platform.
+singletons (Supabase, Zilliz, Anthropic, Voyage AI) for the Pakistani Legal AI platform.
 Establishes the Single Source of Truth for system credentials, model definitions,
 and robust API wrapper helpers.
 """
@@ -29,21 +29,6 @@ CLAUDE_MODEL: str = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
 ANTHROPIC_FALLBACK_MODEL: str = os.environ.get("ANTHROPIC_FALLBACK_MODEL", "").strip()
 MAX_SYNTHESIS_TOKENS: int = int(os.environ.get("MAX_SYNTHESIS_TOKENS", "8192"))
 
-# --- Pinecone Vector Database Config ---
-PINECONE_API_KEY: Optional[str] = os.environ.get("PINECONE_API_KEY")
-PINECONE_INDEX_NAME: str = (
-    os.environ.get("PINECONE_INDEX_NAME")
-    or os.environ.get("PINECONE_INDEX")
-    or "legal-kb-pk-local"
-)
-PINECONE_NAMESPACE: str = os.environ.get("PINECONE_NAMESPACE", "judgments")
-if not PINECONE_NAMESPACE or PINECONE_NAMESPACE == "default":
-    PINECONE_NAMESPACE = "judgments"
-PINECONE_HOST: str = os.environ.get(
-    "PINECONE_HOST",
-    "https://legal-kb-pk-local-uc3rhld.svc.aped-4627-b74a.pinecone.io"
-)
-
 # --- Supabase Database & Storage Config ---
 SUPABASE_URL: Optional[str] = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY: Optional[str] = os.environ.get("SUPABASE_SERVICE_KEY")
@@ -53,7 +38,8 @@ ANTHROPIC_API_KEY: Optional[str] = (os.environ.get("ANTHROPIC_API_KEY") or "").s
 ANTHROPIC_WORKSPACE_ID: Optional[str] = (os.environ.get("ANTHROPIC_WORKSPACE_ID") or "").strip() or None
 
 # --- Vector Backend Selection & Zilliz Cloud Config ---
-VECTOR_BACKEND: str = os.environ.get("VECTOR_BACKEND", "zilliz" if os.environ.get("ZILLIZ_URI") else "pinecone").lower().strip()
+# Zilliz Cloud is the only vector store (Pinecone was retired).
+VECTOR_BACKEND: str = "zilliz"
 ZILLIZ_URI: Optional[str] = os.environ.get("ZILLIZ_URI")
 ZILLIZ_TOKEN: Optional[str] = os.environ.get("ZILLIZ_TOKEN")
 ZILLIZ_COLLECTION: str = os.environ.get("ZILLIZ_COLLECTION", "judgments_v1")
@@ -61,10 +47,7 @@ ZILLIZ_COLLECTION: str = os.environ.get("ZILLIZ_COLLECTION", "judgments_v1")
 # --- Voyage AI Embedding Config ---
 VOYAGE_API_KEY: Optional[str] = os.environ.get("VOYAGE_API_KEY")
 VOYAGE_API_URL: str = "https://api.voyageai.com/v1/embeddings"
-VOYAGE_MODEL: str = os.environ.get(
-    "VOYAGE_MODEL",
-    "voyage-4-large" if (VECTOR_BACKEND == "zilliz" or os.environ.get("ZILLIZ_URI")) else "voyage-law-2"
-)
+VOYAGE_MODEL: str = os.environ.get("VOYAGE_MODEL", "voyage-4-large")
 
 # --- CORS & Base URL ---
 ALLOWED_ORIGINS: List[str] = [
@@ -73,7 +56,6 @@ ALLOWED_ORIGINS: List[str] = [
 
 # Client singletons (lazy loaded / cached)
 _supabase_client = None
-_pinecone_index = None
 _async_anthropic_client = None
 
 
@@ -182,23 +164,6 @@ async def safe_supabase_query_async(query_fn, retries: int = 1):
     """
     import asyncio
     return await asyncio.to_thread(safe_supabase_query, query_fn, retries)
-
-
-# --- Pinecone Client Management ---
-def get_pinecone_index():
-    """Returns singleton Pinecone index instance."""
-    global _pinecone_index
-    if _pinecone_index is None and PINECONE_API_KEY:
-        try:
-            from pinecone import Pinecone
-            pc = Pinecone(api_key=PINECONE_API_KEY)
-            try:
-                _pinecone_index = pc.Index(PINECONE_INDEX_NAME, host=PINECONE_HOST)
-            except Exception:
-                _pinecone_index = pc.Index(PINECONE_INDEX_NAME)
-        except Exception as launch_err:
-            print(f"⚠️ [legal_ai.config] Pinecone init warning: {launch_err}", file=sys.stderr, flush=True)
-    return _pinecone_index
 
 
 # --- Zilliz Client Management ---
