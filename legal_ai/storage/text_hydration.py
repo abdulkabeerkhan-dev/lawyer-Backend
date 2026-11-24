@@ -211,6 +211,10 @@ def _iter_row_dicts(data: Any) -> Iterable[Dict[str, Any]]:
 
 
 def _missing_fields(row: Dict[str, Any]) -> List[str]:
+    # A row that still carries its full_text was never trimmed: its empty headnote or
+    # ratio is genuinely empty, so don't spend a lookup on it.
+    if (row.get("full_text") or "").strip():
+        return []
     return [f for f in TEXT_FIELDS if f in row and not (row.get(f) or "").strip()]
 
 

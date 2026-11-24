@@ -200,3 +200,10 @@ def test_sigv4_request_shape(monkeypatch):
     assert seen["url"] == "https://acct.r2.cloudflarestorage.com/b/texts/v1/abc.json.gz"
     assert seen["auth"].startswith("AWS4-HMAC-SHA256 Credential=k/")
     assert "/auto/s3/aws4_request" in seen["auth"]
+
+
+def test_untrimmed_row_is_left_alone(monkeypatch):
+    monkeypatch.setattr(zf, "_query_chunks", lambda c, t: pytest.fail("no lookup for untrimmed rows"))
+    row = {"neutral_citation": "2024 SCMR 14", "full_text": "Body.", "headnote": "", "ratio_decidendi": None}
+    zf.hydrate_rows([row])
+    assert row["headnote"] == "" and "text_source" not in row
