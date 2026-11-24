@@ -63,7 +63,6 @@ except ImportError:
 
     FastApiIntegration = None
 
-from pinecone import Pinecone
 
 from anthropic import AsyncAnthropic
 
@@ -467,10 +466,7 @@ def health_check():
     from legal_ai.retrieval.zilliz_search import probe_zilliz
 
     vector_backend = VECTOR_BACKEND
-    if vector_backend == "zilliz":
-        vector_status = probe_zilliz()
-    else:
-        vector_status = probe_pinecone()
+    vector_status = probe_zilliz()
 
     keyword_index = get_global_bm25_index()
 
@@ -485,8 +481,7 @@ def health_check():
         "retrieval": {
             "backend": vector_backend,
             "vector_status": vector_status,
-            "zilliz": probe_zilliz() if vector_backend == "zilliz" else {"status": "inactive"},
-            "pinecone": probe_pinecone() if vector_backend == "pinecone" else {"status": "inactive"},
+            "zilliz": vector_status,
             "keyword_search": type(keyword_index).__name__ if keyword_index is not None else "disabled",
         },
 
@@ -637,7 +632,8 @@ def get_privacy_policy(request: Request):
 
             "supabase": "User profiles, access permissions, and query history are stored in managed PostgreSQL databases governed by Row Level Security.",
 
-            "pinecone": "Indexed vector representations of public court judgments per provider terms, to be confirmed by owner.",
+            "zilliz": "Vector embeddings and passages of public court judgments and statutes are stored in Zilliz Cloud to power search, per provider terms, to be confirmed by owner.",
+            "cloudflare_r2": "Copies of public court judgment texts and original judgment PDFs are stored in Cloudflare R2, per provider terms, to be confirmed by owner.",
 
             "searxng_and_upstream_search": "During corpus-miss fallback, legal keywords (such as statute names or case citations) are submitted to our dedicated SearxNG service, which transmits search terms to external upstream search engines (e.g., Google, Bing) and judicial portals to locate published judgments. Search terms sent during fallback leave private infrastructure.",
 
@@ -679,7 +675,8 @@ def get_privacy_policy(request: Request):
 
 <li><strong>Supabase Inc.:</strong> {content['subprocessors_and_data_flows']['supabase']}</li>
 
-<li><strong>Pinecone Systems:</strong> {content['subprocessors_and_data_flows']['pinecone']}</li>
+<li><strong>Zilliz:</strong> {content['subprocessors_and_data_flows']['zilliz']}</li>
+<li><strong>Cloudflare R2:</strong> {content['subprocessors_and_data_flows']['cloudflare_r2']}</li>
 
 <li><strong>Clerk Inc.:</strong> {content['subprocessors_and_data_flows']['clerk']}</li>
 
@@ -875,19 +872,8 @@ async def dynamic_cors_middleware(request, call_next):
 
 # ENVIRONMENT CONFIGURATION
 
-PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
-
-PINECONE_INDEX_NAME = (
-    os.environ.get("PINECONE_INDEX_NAME")
-    or os.environ.get("PINECONE_INDEX")
-    or "legal-kb-pk-local"
-)
-
-PINECONE_NAMESPACE = os.environ.get("PINECONE_NAMESPACE", "judgments")
-
-if not PINECONE_NAMESPACE or PINECONE_NAMESPACE == "default":
-
-    PINECONE_NAMESPACE = "judgments"
+# Legacy namespace label still read by the old LegalSearchPipeline class (not used for retrieval).
+PINECONE_NAMESPACE = "judgments"
 
 ANTHROPIC_API_KEY = (os.environ.get("ANTHROPIC_API_KEY") or "").strip()
 
@@ -1005,73 +991,8 @@ async def get_voyage_embedding(text: str, input_type: Optional[str] = "query") -
 
 # INITIALIZE INFRASTRUCTURE CLIENTS
 
+# Pinecone is retired: Zilliz serves all vector search. Kept as None for legacy call sites.
 pinecone_index = None
-
-if PINECONE_API_KEY:
-
-    try:
-
-        pc = Pinecone(api_key=PINECONE_API_KEY)
-
-        pinecone_host = os.getenv("PINECONE_HOST", "https://legal-kb-pk-local-uc3rhld.svc.aped-4627-b74a.pinecone.io")
-
-        try:
-
-            pinecone_index = pc.Index(PINECONE_INDEX_NAME, host=pinecone_host)
-
-        except Exception:
-
-            pinecone_index = pc.Index(PINECONE_INDEX_NAME)
-
-    except Exception as launch_err:
-
-        print(f"[WARN] Pinecone startup warning: {launch_err}", file=sys.stderr, flush=True)
-
-
-# Creating the client never validates the key, and retrieval code turns every
-# Pinecone error into an empty result list. Without an explicit probe, an invalid
-# key makes the app look healthy while dense retrieval silently returns nothing.
-_PINECONE_PROBE_CACHE: Dict[str, Any] = {"checked_at": 0.0, "result": None}
-_PINECONE_PROBE_TTL_S = 60.0
-
-
-def probe_pinecone(force: bool = False) -> Dict[str, Any]:
-    now = time.time()
-    cached = _PINECONE_PROBE_CACHE.get("result")
-    if cached is not None and not force and now - _PINECONE_PROBE_CACHE["checked_at"] < _PINECONE_PROBE_TTL_S:
-        return cached
-    if not PINECONE_API_KEY:
-        result = {"ok": False, "error": "PINECONE_API_KEY not set"}
-    elif pinecone_index is None:
-        result = {"ok": False, "error": "Pinecone index client failed to initialise"}
-    else:
-        try:
-            stats = pinecone_index.describe_index_stats()
-            namespaces = getattr(stats, "namespaces", None) or (stats.get("namespaces") if isinstance(stats, dict) else {}) or {}
-            ns = namespaces.get(PINECONE_NAMESPACE) if hasattr(namespaces, "get") else None
-            ns_count = getattr(ns, "vector_count", None) if ns is not None else None
-            if ns_count is None and isinstance(ns, dict):
-                ns_count = ns.get("vector_count")
-            result = {"ok": bool(ns_count), "namespace": PINECONE_NAMESPACE, "namespace_vectors": ns_count}
-            if not ns_count:
-                result["error"] = f"namespace '{PINECONE_NAMESPACE}' is empty or missing"
-        except Exception as probe_err:
-            result = {"ok": False, "error": f"{type(probe_err).__name__}: {str(probe_err)[:300]}"}
-    _PINECONE_PROBE_CACHE.update(checked_at=now, result=result)
-    return result
-
-
-_startup_probe = (
-    {"ok": True, "skipped": True} if "pytest" in sys.modules or os.environ.get("SKIP_PINECONE_STARTUP_PROBE")
-    else probe_pinecone(force=True)
-)
-if _startup_probe.get("skipped"):
-    pass
-elif _startup_probe.get("ok"):
-    print(f"[Pinecone] OK: namespace '{PINECONE_NAMESPACE}' has {_startup_probe.get('namespace_vectors'):,} vectors.", flush=True)
-else:
-    print(f"[ERROR] Pinecone NOT usable, dense retrieval will return nothing: {_startup_probe.get('error')}", file=sys.stderr, flush=True)
-
 
 
 # INITIALIZE HYBRID SEARCH ENGINE & BM25 INDEX
@@ -1084,13 +1005,13 @@ def get_global_bm25_index() -> Optional[BM25Index]:
 
     global global_bm25_index
 
-    from legal_ai.retrieval.turso_fts_index import wrap_keyword_index
+    from legal_ai.retrieval.zilliz_keyword_index import wrap_keyword_index
 
     if os.environ.get("RENDER") or os.environ.get("DISABLE_IN_MEMORY_BM25", "").lower() in ("true", "1", "yes"):
         if global_bm25_index is None:
-            # No in-memory pickle; keyword search still runs on Turso FTS (no RAM cost).
+            # No in-memory pickle; keyword search runs on Zilliz BM25 (no RAM cost).
             global_bm25_index = wrap_keyword_index(None)
-            print("[BM25] Low-memory mode: in-memory BM25 bypassed; keyword search via Turso FTS.", flush=True)
+            print("[BM25] Low-memory mode: in-memory BM25 bypassed; keyword search via Zilliz BM25.", flush=True)
         return global_bm25_index
 
     if global_bm25_index is None:
@@ -4192,10 +4113,10 @@ def extract_and_intercept_citation(user_query: str):
 
 
 
-            # Fast indexed equality on case_id: Turso primary, Supabase fallback
+            # Fast indexed equality on case_id (Supabase via core.case_store)
             res_supa = None
             try:
-                from core.turso_client import get_case_by_identifier
+                from core.case_store import get_case_by_identifier
                 t_cand = (
                     (get_case_by_identifier(f"{yr}_{clean_j}_{req_court}_{pg}".upper()) if req_court else None) or
                     get_case_by_identifier(norm_u) or
@@ -9400,183 +9321,8 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
                 if zilliz_matches:
                     matches_list = (boosted_matches or []) + zilliz_matches
                 else:
-                    try:
-
-                        voyage_model = os.environ.get("VOYAGE_MODEL", "voyage-law-2")
-
-                        if not VOYAGE_API_KEY:
-
-                            return "Search tool unavailable: embedding service is not configured."
-
-
-
-                        lane_queries = [lane["query"] for lane in (legal_query_plan.search_lanes or []) if isinstance(lane, dict) and lane.get("query")]
-
-                        queries_to_embed = [q for q in (lane_queries or decomposed_queries or [embedding_query]) if q and len(q.strip()) > 3][:5]
-
-                        if not queries_to_embed:
-
-                            queries_to_embed = [embedding_query]
-
-
-
-                        async with httpx.AsyncClient(timeout=30.0) as client:
-
-                            voyage_response = await client.post(
-
-                                VOYAGE_API_URL,
-
-                                json={"input": queries_to_embed if len(queries_to_embed) > 1 else queries_to_embed[0], "model": voyage_model, "input_type": "query"},
-
-                                headers={"Authorization": f"Bearer {VOYAGE_API_KEY}", "Content-Type": "application/json"}
-
-                            )
-
-                            if voyage_response.status_code != 200:
-
-                                return f"Search tool error: embedding request failed ({voyage_response.status_code})."
-
-                            data_arr = voyage_response.json()["data"]
-
-                            query_vectors = [item["embedding"] for item in data_arr]
-
-
-
-                        if not pinecone_index:
-
-                            return "Search tool unavailable: the judgment database is not connected."
-
-
-
-                        query_top_k = 60 if target_source else global_retriever_config.default_k
-
-
-
-                        if len(queries_to_embed) == 1:
-
-                            raw_matches = global_search_pipeline.search_precedents(
-
-                                vector_index=pinecone_index,
-
-                                query_vector=query_vectors[0],
-
-                                top_k=query_top_k,
-
-                                namespace=PINECONE_NAMESPACE,
-
-                                clean_query=queries_to_embed[0],
-
-                                is_doctrinally_expanded=is_doctrinally_expanded
-
-                            )
-
-                            dense_cnt = sum(1 for r in raw_matches if float(r.get("dense_score", 0.0) or 0.0) > 0)
-
-                            sparse_cnt = sum(1 for r in raw_matches if float(r.get("sparse_score", 0.0) or 0.0) > 0)
-
-                            trace_logger.log_subquery_results(queries_to_embed[0], dense_cnt, sparse_cnt, raw_matches[:5])
-
-                            matches_list = raw_matches
-
-                        else:
-
-                            sub_score_map = {}
-
-                            for idx, sub_q in enumerate(queries_to_embed):
-
-                                sub_vec = query_vectors[idx]
-
-                                sub_res = global_search_pipeline.search_precedents(
-
-                                    vector_index=pinecone_index,
-
-                                    query_vector=sub_vec,
-
-                                    top_k=30,
-
-                                    namespace=PINECONE_NAMESPACE,
-
-                                    clean_query=sub_q,
-
-                                    is_doctrinally_expanded=is_doctrinally_expanded
-
-                                )
-
-                                dense_cnt = sum(1 for r in sub_res if float(r.get("dense_score", 0.0) or 0.0) > 0)
-
-                                sparse_cnt = sum(1 for r in sub_res if float(r.get("sparse_score", 0.0) or 0.0) > 0)
-
-                                trace_logger.log_subquery_results(sub_q, dense_cnt, sparse_cnt, sub_res[:5])
-
-                                for rank, item in enumerate(sub_res):
-
-                                    doc_id = item.get("id") or (item.get("metadata", {}) if isinstance(item, dict) else {}).get("case_id")
-
-                                    if not doc_id:
-
-                                        continue
-
-                                    rrf_contrib = 1.0 / (60.0 + rank + 1.0)
-
-                                    if doc_id not in sub_score_map:
-
-                                        sub_score_map[doc_id] = {
-
-                                            "item": item,
-
-                                            "rrf_score": rrf_contrib,
-
-                                            "hits": 1
-
-                                        }
-
-                                    else:
-
-                                        sub_score_map[doc_id]["rrf_score"] += rrf_contrib
-
-                                        sub_score_map[doc_id]["hits"] += 1
-
-                                        if float(item.get("score", 0.0)) > float(sub_score_map[doc_id]["item"].get("score", 0.0)):
-
-                                            sub_score_map[doc_id]["item"] = item
-
-
-
-                            pooled_sorted = sorted(
-
-                                sub_score_map.values(),
-
-                                key=lambda x: (x["hits"], x["rrf_score"]),
-
-                                reverse=True
-
-                            )
-
-                            raw_matches = [c["item"] for c in pooled_sorted]
-
-                            for idx, c in enumerate(raw_matches):
-
-                                c["score"] = pooled_sorted[idx]["rrf_score"]
-
-                            matches_list = raw_matches
-
-
-
-                        if boosted_matches:
-
-                            matches_list = boosted_matches + matches_list
-
-                    except Exception as search_err:
-
-                        print(f"⚠️ [JOB {job_id}] case-law search failed: {search_err}", file=sys.stderr)
-
-                        if boosted_matches:
-
-                            matches_list = boosted_matches
-
-                        else:
-
-                            matches_list = []
+                    # Zilliz is the only case-law vector store. With no hits, keep any exact-citation matches.
+                    matches_list = boosted_matches or []
 
 
 
@@ -14531,9 +14277,9 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
 
         return rec_dict
 
-    # 0. Primary Store: Turso Master Corpus (141k+ full judgments, low-latency libSQL pipeline)
+    # 0. Primary store: Supabase full_judgments (text from R2) via core.case_store
     try:
-        from core.turso_client import get_case_by_identifier
+        from core.case_store import get_case_by_identifier
         tc_hit = (
             get_case_by_identifier(decoded_id) or
             get_case_by_identifier(norm_id) or
@@ -14591,7 +14337,7 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                 "verified_source": content_level == "full_judgment",
                 "verification_status": "Full Judgment (unreviewed)" if content_level == "full_judgment" else "HEADNOTE_ONLY - not verified",
                 "content_status": "available",
-                "source_type": "Turso",
+                "source_type": "Supabase",
                 "holding": holding_val,
                 "ratio_decidendi": holding_val,
                 "legal_issue": issue_val,
@@ -14668,113 +14414,6 @@ def find_judgment_by_id_or_canonical(target_id: str) -> Dict[str, Any]:
                 _trip_if_needed(e)
 
 
-
-    # Pinecone multi-namespace lookup (checks segmented-v1 and judgments)
-    if pinecone_index:
-        try:
-            dummy_vector = [0.0] * 1024
-            search_namespaces = ["segmented-v1", PINECONE_NAMESPACE]
-            id_variants = list({decoded_id, norm_id, space_id, clean_uuid})
-
-            for ns in search_namespaces:
-                matches = []
-                for field in ["case_id", "citation", "judgment_id", "canonical_id"]:
-                    try:
-                        res = pinecone_index.query(
-                            namespace=ns,
-                            vector=dummy_vector,
-                            filter={field: {"$in": id_variants}},
-                            top_k=25,
-                            include_metadata=True
-                        )
-                        if res and res.get("matches"):
-                            matches = res["matches"]
-                            break
-                    except Exception:
-                        for cand in id_variants:
-                            try:
-                                res = pinecone_index.query(
-                                    namespace=ns,
-                                    vector=dummy_vector,
-                                    filter={field: {"$eq": cand}},
-                                    top_k=25,
-                                    include_metadata=True
-                                )
-                                if res and res.get("matches"):
-                                    matches = res["matches"]
-                                    break
-                            except Exception:
-                                pass
-                        if matches:
-                            break
-
-                if matches:
-                    def _chunk_sort_key(m):
-                        meta = m.get("metadata", {}) or {}
-                        st = meta.get("segment_type", "")
-                        st_order = {"headnote": 0, "ratio_decidendi": 1, "facts_and_order": 2}
-                        if st in st_order:
-                            return st_order[st]
-                        return meta.get("chunk_index", 0)
-
-                    sorted_chunks = sorted(matches, key=_chunk_sort_key)
-                    seen_texts = set()
-                    full_reconstructed_parts = []
-                    order_parts = []
-                    ratio_parts = []
-
-                    for c in sorted_chunks:
-                        c_meta = c.get("metadata", {}) or {}
-                        c_text = str(c_meta.get("text") or c_meta.get("text_preview") or "").strip()
-                        st = c_meta.get("segment_type", "")
-                        if c_text and c_text not in seen_texts:
-                            seen_texts.add(c_text)
-                            full_reconstructed_parts.append(c_text)
-                        if st == "facts_and_order" or "order" in st:
-                            order_parts.append(c_text)
-                        elif st == "ratio_decidendi" or "ratio" in st:
-                            ratio_parts.append(c_text)
-
-                    first_meta = sorted_chunks[0].get("metadata", {}) or {}
-                    raw_title = first_meta.get("title") or first_meta.get("case_title") or decoded_id
-                    assembled_raw = "\n\n".join(full_reconstructed_parts)
-                    order_text = "\n\n".join(order_parts) if order_parts else assembled_raw
-                    ratio_text = "\n\n".join(ratio_parts) if ratio_parts else ""
-
-                    cleaned_title = clean_or_extract_title(raw_title, assembled_raw)
-                    resolved_court = get_effective_court(first_meta) or clean_court_name(
-                        str(first_meta.get("court") or first_meta.get("court_name") or ""),
-                        title=cleaned_title,
-                        case_id=first_meta.get("case_id") or decoded_id,
-                        text=assembled_raw
-                    )
-
-                    try:
-                        from core.pdf_resolver import create_hmac_pdf_token as _gen_pdf_token
-                        pdf_tok = _gen_pdf_token(str(norm_id))
-                    except Exception:
-                        pdf_tok = "dev_token"
-                    backend_pdf_url = f"{get_backend_base_url()}/judgment-pdf/{urllib.parse.quote(str(norm_id))}?token={pdf_tok}"
-
-                    return _sanitize_record({
-                        "id": first_meta.get("judgment_id") or decoded_id,
-                        "canonical_id": first_meta.get("canonical_id") or decoded_id,
-                        "case_id": first_meta.get("case_id") or norm_id,
-                        "case_title": cleaned_title,
-                        "neutral_citation": first_meta.get("citation") or space_id,
-                        "court_name": resolved_court,
-                        "court": resolved_court,
-                        "decision_date": str(first_meta.get("date") or first_meta.get("year") or ""),
-                        "full_text": assembled_raw,
-                        "order_text": order_text or assembled_raw,
-                        "ratio_decidendi": ratio_text,
-                        "legal_issue": first_meta.get("subdomain") or first_meta.get("domain") or "",
-                        "statutes_invoked": first_meta.get("statutes") or first_meta.get("statutory_provisions") or first_meta.get("provisions") or [],
-                        "pdf_url": backend_pdf_url,
-                        "reassembled_from_chunks": len(sorted_chunks) > 1
-                    })
-        except Exception as e:
-            print(f"Pinecone multi-namespace lookup notice: {e}")
 
     try:
         from core.pdf_resolver import create_hmac_pdf_token as _gen_pdf_token
@@ -17513,9 +17152,7 @@ async def get_indexing_status(admin_id: str = Depends(verify_admin_role)):
 
             "vector_index": {
 
-                "pinecone_namespace": "judgments",
-
-                "pinecone_vectors": 86912,
+                "vector_backend": "zilliz",
 
                 "bm25_documents": 86912,
 
@@ -17541,15 +17178,6 @@ async def get_indexing_status(admin_id: str = Depends(verify_admin_role)):
 
         return {"status": "error", "error": str(e)}
 
-@app.post("/admin/index-statutes-pinecone")
-async def trigger_index_statutes_pinecone(background_tasks: BackgroundTasks):
-    """Asynchronously triggers indexing of all Turso statute_provisions into Pinecone 'statutes' namespace."""
-    from scripts.index_statutes_to_pinecone import index_statutes_to_pinecone
-    background_tasks.add_task(index_statutes_to_pinecone)
-    return {
-        "status": "accepted",
-        "message": "Statutes indexing to Pinecone namespace 'statutes' started in background."
-    }
 
 
 
@@ -17600,11 +17228,11 @@ async def generate_pleading(
 
 
 
-    # 1. Primary: Fetch Verified Law from Turso Master Corpus (low-latency, 141k+ authorities)
+    # 1. Primary: fetch verified law from the master corpus (Supabase via core.case_store)
     try:
         verified_law_data = []
         try:
-            from core.turso_client import get_cases_batch
+            from core.case_store import get_cases_batch
             turso_cases = get_cases_batch(selected_ids)
             for tc in turso_cases:
                 verified_law_data.append({

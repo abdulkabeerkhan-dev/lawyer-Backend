@@ -355,34 +355,3 @@ def test_clean_portal_debris():
     assert "Page 1 of 5" not in cleaned
     assert "Real text." in cleaned
 
-
-def test_batch_vector_indexer_integration():
-    """Verifies that batch_vector_indexer.chunk_judgment_text delegates to hierarchical chunker."""
-    from scripts.batch_vector_indexer import chunk_judgment_text
-
-    chunks = chunk_judgment_text(
-        text=SAMPLE_EXPLICIT_SECTIONS_JUDGMENT,
-        citation="2025 SCMR 100",
-        title="Muhammad Ali v. Federation",
-        court="Supreme Court of Pakistan",
-        year="2025",
-        case_id="2025_SCMR_100",
-        use_hierarchical=True
-    )
-    assert len(chunks) >= 1
-    # Test Gate: Chunks containing the holding are tagged ratio_decidendi
-    ratio_chunks = [c for c in chunks if c.get("section_type") == "ratio_decidendi"]
-    assert len(ratio_chunks) >= 1
-    for rc in ratio_chunks:
-        assert rc["is_holding"] is True
-        assert rc["metadata"]["section_type"] == "ratio_decidendi"
-
-    # Test backward compatibility sliding-window mode
-    legacy_chunks = chunk_judgment_text(
-        text=SAMPLE_EXPLICIT_SECTIONS_JUDGMENT,
-        citation="2025 SCMR 100",
-        title="Muhammad Ali v. Federation",
-        use_hierarchical=False
-    )
-    assert len(legacy_chunks) >= 1
-    assert isinstance(legacy_chunks[0], tuple)

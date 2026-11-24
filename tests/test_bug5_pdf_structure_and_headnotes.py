@@ -20,7 +20,7 @@ from core.structural_judgment_segmenter import (
     parse_pakistan_law_site_document,
 )
 from core.content_classification import classify_judgment_content
-from core.turso_client import get_case_by_identifier
+from core.case_store import get_case_by_identifier
 
 
 TYPE_A_TEXT = """Citation Name: 2022 SCMR 1500
@@ -163,7 +163,7 @@ def test_content_classification_guardrail_against_fake_full_judgments():
     assert classify_judgment_content(rec_type_a) == "full_judgment"
 
 
-def test_turso_client_hydrates_cld_cases_as_headnote_only():
+def test_case_store_hydrates_cld_cases_as_headnote_only():
     c1249 = get_case_by_identifier("2023 CLD 1249")
     assert c1249 is not None
     assert c1249.get("content_level") == "headnote"

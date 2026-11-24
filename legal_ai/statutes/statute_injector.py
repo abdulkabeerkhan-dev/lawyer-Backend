@@ -440,9 +440,9 @@ class StatuteInjector:
                     if str(item.get("canonical_id", "")).upper() == parent_cid:
                         return item
 
-        # 3. Fallback to Turso statute_provisions table
+        # 3. Fallback to the legacy provisions copied from Turso to R2
         try:
-            from core.turso_client import get_statute_provision
+            from core.case_store import get_statute_provision
             turso_prov = get_statute_provision(canonical_id, act_code=act_code)
             if turso_prov:
                 rec = {

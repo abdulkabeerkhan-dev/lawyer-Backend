@@ -18,12 +18,6 @@ from legal_ai.retrieval.bm25_search import (
     set_bm25_index_instance,
     search_bm25_sparse
 )
-from legal_ai.retrieval.pinecone_search import (
-    is_pinecone_circuit_open,
-    trip_pinecone_circuit,
-    execute_pinecone_query_safe,
-    search_pinecone_dense
-)
 from core.legal_query_planner import analyze_legal_query
 
 
@@ -57,43 +51,6 @@ def test_bm25_singleton_thread_safety_and_sharing():
     res = search_bm25_sparse("banking recovery", top_k=5)
     assert len(res) == 1
     assert res[0]["citation"] == "2024 SCMR 1"
-
-
-def test_pinecone_circuit_breaker_on_401():
-    """Verify that 401 / UNAUTHENTICATED trips the circuit breaker and fast-fails."""
-    assert not is_pinecone_circuit_open()
-
-    mock_index = MagicMock()
-    mock_index.query.side_effect = Exception("[401 UNAUTHENTICATED] Wrong API key")
-
-    async def _run():
-        # First query should catch exception and trip breaker
-        res = await execute_pinecone_query_safe(
-            index=mock_index,
-            query_vector=[0.1] * 10,
-            namespace="judgments",
-            top_k=5,
-            filter_dict={"court": "SC"}
-        )
-        assert res == []
-        assert is_pinecone_circuit_open()
-
-        # Subsequent query should fast-fail without even calling mock_index.query
-        mock_index.query.reset_mock()
-        res2 = await execute_pinecone_query_safe(
-            index=mock_index,
-            query_vector=[0.1] * 10,
-            namespace="judgments",
-            top_k=5,
-            filter_dict={"court": "SC"}
-        )
-        assert res2 == []
-        mock_index.query.assert_not_called()
-
-        dense_res = await search_pinecone_dense("test query", top_k=5)
-        assert dense_res == []
-
-    asyncio.run(_run())
 
 
 def test_planner_resilient_json_parsing():

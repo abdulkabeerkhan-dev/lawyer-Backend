@@ -283,17 +283,17 @@ def fetch_storage_pdf_bytes(
             except Exception:
                 pass
 
-    # 2. Remote Turso Database Fallback (high performance, cloud-accessible)
+    # 2. Original PDF from the Cloudflare R2 bundles (copied from Turso case_pdfs)
     try:
-        from core.turso_client import get_case_pdf_bytes
-        turso_data = get_case_pdf_bytes(
+        from core.case_store import get_case_pdf_bytes
+        r2_data = get_case_pdf_bytes(
             case_id or f"{norm_yr}_{norm_jn}_{norm_pg}",
             target_year=norm_yr,
             target_journal=norm_jn,
             target_page=norm_pg,
         )
-        if isinstance(turso_data, bytes) and turso_data.startswith(b"%PDF"):
-            return turso_data
+        if isinstance(r2_data, bytes) and r2_data.startswith(b"%PDF"):
+            return r2_data
     except Exception:
         pass
 

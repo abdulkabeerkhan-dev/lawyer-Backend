@@ -5466,7 +5466,7 @@ def verify_pleading_citations_and_quotes(pleading_text: str, extra_citations: Op
             if norm_span in norm_extras or norm_span.replace(" ", "_") in norm_extras:
                 continue
             try:
-                from core.turso_client import get_case_by_identifier
+                from core.case_store import get_case_by_identifier
                 if get_case_by_identifier(span):
                     continue
             except Exception:

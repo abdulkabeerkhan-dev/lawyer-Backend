@@ -31,10 +31,10 @@ def get_bm25_index_instance() -> Any:
     Reuses main.global_bm25_index if already loaded to eliminate duplicate RAM usage.
     """
     global _GLOBAL_BM25_INSTANCE
-    from legal_ai.retrieval.turso_fts_index import wrap_keyword_index
+    from legal_ai.retrieval.zilliz_keyword_index import wrap_keyword_index
 
     if os.environ.get("RENDER") or os.environ.get("DISABLE_IN_MEMORY_BM25", "").lower() in ("true", "1", "yes"):
-        # No in-memory pickle on low-memory hosts; keyword search runs on Turso FTS.
+        # No in-memory pickle on low-memory hosts; keyword search runs on Zilliz BM25.
         with _BM25_LOCK:
             if _GLOBAL_BM25_INSTANCE is None:
                 _GLOBAL_BM25_INSTANCE = wrap_keyword_index(None)
