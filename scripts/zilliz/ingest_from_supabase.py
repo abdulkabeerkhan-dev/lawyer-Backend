@@ -19,6 +19,7 @@ Usage:
   python scripts/zilliz/ingest_from_supabase.py --missing missing.json --spend-cap 15
 """
 import argparse
+import http.client
 import hashlib
 import json
 import os
@@ -117,7 +118,8 @@ def _post(url: str, payload: Dict[str, Any], token: str, timeout: int = 120, ret
                 time.sleep(2 ** attempt * 3)
                 continue
             raise RuntimeError(f"HTTP {e.code} from {url}: {e.read()[:300]!r}")
-        except (urllib.error.URLError, TimeoutError) as e:
+        except (urllib.error.URLError, OSError, http.client.HTTPException) as e:
+            # URLError, TimeoutError, ConnectionResetError and IncompleteRead all retry.
             if attempt < retries - 1:
                 time.sleep(2 ** attempt * 3)
                 continue
@@ -221,6 +223,43 @@ class Manifest:
         self.db.commit()
 
 
+def process_batch(args, sb, batch_ids, manifest, enricher, stats, voyage_key, z_uri, z_tok) -> None:
+    rows = sb.fetch_rows(batch_ids)
+    pending: List[Tuple[Dict[str, Any], Dict[str, Any], List[Dict[str, Any]]]] = []
+    for row in rows:
+        stats["rows"] += 1
+        case, why = build_case(row)
+        if not case:
+            stats["skipped"][why] = stats["skipped"].get(why, 0) + 1
+            if not args.dry_run:
+                manifest.mark(row["id"], "", why, 0)
+            continue
+        chunks = segment_case(case, enricher)
+        if not chunks:
+            stats["skipped"]["no_chunks"] = stats["skipped"].get("no_chunks", 0) + 1
+            continue
+        stats["cases"] += 1
+        stats["chunks"] += len(chunks)
+        stats["tokens_est"] += sum(count_tokens(c["text"]) for c in chunks)
+        stats["by_journal"][case["journal"]] = stats["by_journal"].get(case["journal"], 0) + 1
+        stats["by_level"][case["content_level"]] = stats["by_level"].get(case["content_level"], 0) + 1
+        pending.append((row, case, chunks))
+
+    if not args.dry_run and pending:
+        now_iso = datetime.utcnow().isoformat()
+        flat = [(row, case, c) for row, case, chunks in pending for c in chunks]
+        records = []
+        for i in range(0, len(flat), 64):
+            part = flat[i:i + 64]
+            vecs, used = voyage_embed([c["text"] for _, _, c in part], voyage_key)
+            stats["tokens_billed"] += used
+            records += [to_record(c, case, v, now_iso) for (_, case, c), v in zip(part, vecs)]
+        for i in range(0, len(records), 100):
+            stats["upserted"] += zilliz_upsert(z_uri, z_tok, records[i:i + 100])
+        for row, case, chunks in pending:
+            manifest.mark(row["id"], case["case_key"], "done", len(chunks))
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--missing", required=True, help="JSON list of {id,...} rows (Supabase full_judgments ids)")
@@ -247,50 +286,24 @@ def main() -> None:
     todo = ids if args.dry_run else [i for i in ids if not manifest.is_done(i)]
     print(f"{len(ids)} missing rows, {len(todo)} to process (dry_run={args.dry_run})", flush=True)
 
+    failed_batches = 0
     for b in range(0, len(todo), args.fetch_batch):
-        rows = sb.fetch_rows(todo[b:b + args.fetch_batch])
-        pending: List[Tuple[Dict[str, Any], Dict[str, Any], List[Dict[str, Any]]]] = []
-        for row in rows:
-            stats["rows"] += 1
-            case, why = build_case(row)
-            if not case:
-                stats["skipped"][why] = stats["skipped"].get(why, 0) + 1
-                if not args.dry_run:
-                    manifest.mark(row["id"], "", why, 0)
-                continue
-            chunks = segment_case(case, enricher)
-            if not chunks:
-                stats["skipped"]["no_chunks"] = stats["skipped"].get("no_chunks", 0) + 1
-                continue
-            stats["cases"] += 1
-            stats["chunks"] += len(chunks)
-            stats["tokens_est"] += sum(count_tokens(c["text"]) for c in chunks)
-            stats["by_journal"][case["journal"]] = stats["by_journal"].get(case["journal"], 0) + 1
-            stats["by_level"][case["content_level"]] = stats["by_level"].get(case["content_level"], 0) + 1
-            pending.append((row, case, chunks))
-
-        if not args.dry_run and pending:
-            now_iso = datetime.utcnow().isoformat()
-            flat = [(row, case, c) for row, case, chunks in pending for c in chunks]
-            records = []
-            for i in range(0, len(flat), 64):
-                part = flat[i:i + 64]
-                vecs, used = voyage_embed([c["text"] for _, _, c in part], voyage_key)
-                stats["tokens_billed"] += used
-                records += [to_record(c, case, v, now_iso) for (_, case, c), v in zip(part, vecs)]
-            for i in range(0, len(records), 100):
-                stats["upserted"] += zilliz_upsert(z_uri, z_tok, records[i:i + 100])
-            for row, case, chunks in pending:
-                manifest.mark(row["id"], case["case_key"], "done", len(chunks))
-
+        try:
+            process_batch(args, sb, todo[b:b + args.fetch_batch], manifest, enricher, stats,
+                          voyage_key, z_uri, z_tok)
+        except RuntimeError as e:
+            # Rows in this batch stay unmarked, so the next run retries them.
+            failed_batches += 1
+            print(f"[{b}] batch failed after retries, will retry on next run: {e}", flush=True)
         spend = stats["tokens_billed"] / 1e6 * PRICE_PER_M_TOKENS
         est = stats["tokens_est"] / 1e6 * PRICE_PER_M_TOKENS
         print(f"[{min(b + args.fetch_batch, len(todo))}/{len(todo)}] cases={stats['cases']} chunks={stats['chunks']} "
-              f"est_cost=${est:.2f} spent=${spend:.2f} upserted={stats['upserted']} skipped={stats['skipped']}",
-              flush=True)
+              f"est_cost=${est:.2f} spent=${spend:.2f} upserted={stats['upserted']} skipped={stats['skipped']} "
+              f"failed_batches={failed_batches}", flush=True)
         if not args.dry_run and spend >= args.spend_cap:
             print(f"Spend cap ${args.spend_cap} reached; stopping. Re-run to resume.", flush=True)
             break
+    stats["failed_batches"] = failed_batches
 
     stats["est_cost_usd"] = round(stats["tokens_est"] / 1e6 * PRICE_PER_M_TOKENS, 2)
     stats["spent_usd"] = round(stats["tokens_billed"] / 1e6 * PRICE_PER_M_TOKENS, 2)
