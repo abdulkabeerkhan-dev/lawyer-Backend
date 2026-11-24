@@ -1,14 +1,16 @@
 """
-Rebuild judgment text from Zilliz chunks and fill it into Supabase rows.
+Fill judgment text into Supabase `full_judgments` rows from outside Supabase.
 
-Supabase free tier caps the database at 500 MB, so `full_judgments.full_text`,
-`headnote` and `ratio_decidendi` are nulled for every case that Zilliz already
-holds. Callers keep reading `full_judgments` exactly as before: the Supabase
-client is wrapped (see `wrap_supabase_client`) so any row that comes back with
-one of those fields empty gets it filled from `judgments_v1` chunks.
+Supabase free tier caps the database at 500 MB, so `full_text`, `headnote` and
+`ratio_decidendi` are moved, verbatim, to Cloudflare R2 (legal_ai.storage.r2_text_store)
+and nulled in Supabase. Callers keep reading `full_judgments` exactly as before:
+the Supabase client is wrapped (see `wrap_supabase_client`) so any row that comes
+back with one of those fields empty gets it filled, by row id, from R2.
 
-Rows whose text still lives in Supabase (new uploads, cases Zilliz lacks) are
-returned untouched.
+Optional fallback (ZILLIZ_FULLTEXT_FALLBACK=true): rebuild text from Zilliz
+`judgments_v1` chunks. Off by default because chunks are not a verbatim copy.
+
+Rows whose text still lives in Supabase (new uploads) are returned untouched.
 """
 from __future__ import annotations
 
@@ -53,10 +55,18 @@ _cache: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
 _cache_lock = threading.Lock()
 
 
+def _flag(name: str, default: str) -> bool:
+    return os.environ.get(name, default).strip().lower() not in ("0", "false", "no", "off", "")
+
+
+def zilliz_fallback_enabled() -> bool:
+    return _flag("ZILLIZ_FULLTEXT_FALLBACK", "false") and bool(
+        os.environ.get("ZILLIZ_URI") and os.environ.get("ZILLIZ_TOKEN"))
+
+
 def hydration_enabled() -> bool:
-    if os.environ.get("ZILLIZ_FULLTEXT_HYDRATE", "true").strip().lower() in ("0", "false", "no", "off"):
-        return False
-    return bool(os.environ.get("ZILLIZ_URI") and os.environ.get("ZILLIZ_TOKEN"))
+    from legal_ai.storage.r2_text_store import r2_configured
+    return _flag("TEXT_HYDRATE", "true") and (r2_configured() or zilliz_fallback_enabled())
 
 
 # ------------------------------------------------------------------ keys
@@ -165,7 +175,7 @@ def fetch_case_texts(wanted: List[Tuple[str, Optional[str]]], timeout_s: float =
     try:
         chunks = _query_chunks(sorted({c for c, _ in todo}), timeout_s)
     except Exception as e:
-        logger.warning(f"[ZillizFullText] chunk fetch failed for {len(todo)} cases: {e}")
+        logger.warning(f"[TextHydration] chunk fetch failed for {len(todo)} cases: {e}")
         return out
 
     by_cit: Dict[str, Dict[str, List[Dict[str, Any]]]] = {}
@@ -182,7 +192,7 @@ def fetch_case_texts(wanted: List[Tuple[str, Optional[str]]], timeout_s: float =
                 _cache.popitem(last=False)
             if texts:
                 out[key] = texts
-    logger.info(f"[ZillizFullText] rebuilt {len(out)}/{len(wanted)} judgments from {len(chunks)} chunks "
+    logger.info(f"[TextHydration] rebuilt {len(out)}/{len(wanted)} judgments from {len(chunks)} chunks "
                 f"in {time.time() - started:.2f}s")
     return out
 
@@ -204,30 +214,46 @@ def _missing_fields(row: Dict[str, Any]) -> List[str]:
     return [f for f in TEXT_FIELDS if f in row and not (row.get(f) or "").strip()]
 
 
+def _fill(row: Dict[str, Any], missing: List[str], texts: Dict[str, Any], source: str) -> None:
+    for f in missing:
+        if (texts.get(f) or "").strip():
+            row[f] = texts[f]
+    row.setdefault("text_source", source)
+
+
 def hydrate_rows(data: Any, timeout_s: float = 5.0) -> Any:
-    """Fill empty full_text/headnote/ratio_decidendi from Zilliz in place. Never raises."""
+    """Fill empty full_text/headnote/ratio_decidendi in place (R2 by id, then optional Zilliz). Never raises."""
     if not hydration_enabled():
         return data
     try:
-        targets = []
-        for row in _iter_row_dicts(data):
-            missing = _missing_fields(row)
-            key = row_citation_key(row) if missing else None
-            if key:
-                targets.append((row, missing, (key, court_code(row.get("court_name") or row.get("canonical_court_name")))))
+        from legal_ai.storage.r2_text_store import get_texts, r2_configured
+
+        targets = [(row, _missing_fields(row)) for row in _iter_row_dicts(data)]
+        targets = [(row, m) for row, m in targets if m]
         if not targets:
             return data
-        texts = fetch_case_texts([t[2] for t in targets], timeout_s=timeout_s)
-        for row, missing, key in targets:
-            t = texts.get(key)
-            if not t:
-                continue
-            for f in missing:
-                if t.get(f):
-                    row[f] = t[f]
-            row.setdefault("text_source", "zilliz")
+
+        if r2_configured():
+            texts = get_texts([row.get("id") for row, _ in targets if row.get("id")], timeout_s=timeout_s)
+            still = []
+            for row, missing in targets:
+                rec = texts.get(str(row.get("id") or ""))
+                if rec:
+                    _fill(row, missing, rec, "r2")  # R2 is the verbatim copy: its empty fields stay empty
+                else:
+                    still.append((row, missing))
+            targets = still
+
+        if targets and zilliz_fallback_enabled():
+            keyed = [(row, m, (row_citation_key(row), court_code(row.get("court_name") or row.get("canonical_court_name"))))
+                     for row, m in targets]
+            keyed = [t for t in keyed if t[2][0]]
+            ztexts = fetch_case_texts([t[2] for t in keyed], timeout_s=timeout_s) if keyed else {}
+            for row, missing, key in keyed:
+                if ztexts.get(key):
+                    _fill(row, missing, ztexts[key], "zilliz")
     except Exception as e:
-        logger.warning(f"[ZillizFullText] hydration skipped: {e}")
+        logger.warning(f"[TextHydration] hydration skipped: {e}")
     return data
 
 
@@ -235,10 +261,11 @@ def hydrate_rows(data: Any, timeout_s: float = 5.0) -> Any:
 class _HydratingBuilder:
     """Proxies a postgrest request builder; hydrates rows when `.execute()` runs."""
 
-    __slots__ = ("_inner",)
+    __slots__ = ("_inner", "_add_id")
 
-    def __init__(self, inner: Any):
+    def __init__(self, inner: Any, add_id: bool = False):
         self._inner = inner
+        self._add_id = add_id
 
     def execute(self, *a, **kw):
         res = self._inner.execute(*a, **kw)
@@ -253,9 +280,21 @@ class _HydratingBuilder:
             return attr
 
         def call(*a, **kw):
+            if name == "select" and self._add_id and a:
+                a = (_with_id(a[0]),) + tuple(a[1:])
             out = attr(*a, **kw)
-            return _HydratingBuilder(out) if hasattr(out, "execute") else out
+            return _HydratingBuilder(out, self._add_id) if hasattr(out, "execute") else out
         return call
+
+
+def _with_id(columns: Any) -> Any:
+    """R2 lookups are by row id, so make sure explicit column lists include it."""
+    if not isinstance(columns, str):
+        return columns
+    top = [c.strip() for c in columns.split(",")]
+    if "*" in top or "id" in top or not any(c in TEXT_FIELDS for c in top):
+        return columns
+    return columns + ", id"
 
 
 class HydratingSupabaseClient:
@@ -266,11 +305,11 @@ class HydratingSupabaseClient:
 
     def table(self, name: str, *a, **kw):
         b = self._inner.table(name, *a, **kw)
-        return _HydratingBuilder(b) if name in HYDRATED_TABLES else b
+        return _HydratingBuilder(b, name == "full_judgments") if name in HYDRATED_TABLES else b
 
     def from_(self, name: str, *a, **kw):
         b = self._inner.from_(name, *a, **kw)
-        return _HydratingBuilder(b) if name in HYDRATED_TABLES else b
+        return _HydratingBuilder(b, name == "full_judgments") if name in HYDRATED_TABLES else b
 
     def __getattr__(self, name: str):
         return getattr(self._inner, name)

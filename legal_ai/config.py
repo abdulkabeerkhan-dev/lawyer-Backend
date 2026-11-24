@@ -128,7 +128,7 @@ def get_supabase_client():
             from supabase.client import ClientOptions
             opts = ClientOptions(postgrest_client_timeout=2.5, storage_client_timeout=2.5)
             _supabase_client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY, options=opts)
-            from legal_ai.retrieval.zilliz_fulltext import wrap_supabase_client
+            from legal_ai.storage.text_hydration import wrap_supabase_client
             _supabase_client = wrap_supabase_client(_supabase_client)
         except Exception as launch_err:
             print(f"⚠️ [legal_ai.config] Supabase init warning: {launch_err}", file=sys.stderr, flush=True)
@@ -167,7 +167,7 @@ def safe_supabase_query(query_fn, retries: int = 1):
                     opts = ClientOptions(postgrest_client_timeout=2.5, storage_client_timeout=2.5)
                     if SUPABASE_URL and SUPABASE_SERVICE_KEY:
                         _supabase_client = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY, options=opts)
-                        from legal_ai.retrieval.zilliz_fulltext import wrap_supabase_client
+                        from legal_ai.storage.text_hydration import wrap_supabase_client
                         _supabase_client = wrap_supabase_client(_supabase_client)
                 except Exception:
                     pass
