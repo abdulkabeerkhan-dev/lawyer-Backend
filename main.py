@@ -2223,6 +2223,9 @@ def init_supabase_client():
         try:
             opts = ClientOptions(postgrest_client_timeout=3.0, storage_client_timeout=3.0)
             supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY, options=opts)
+            # Empty full_text/headnote/ratio on full_judgments rows is filled from Zilliz chunks.
+            from legal_ai.storage.text_hydration import wrap_supabase_client
+            supabase = wrap_supabase_client(supabase)
         except Exception as launch_err:
             print(f"⚠️ Supabase init warning: {launch_err}", file=sys.stderr, flush=True)
     return supabase
