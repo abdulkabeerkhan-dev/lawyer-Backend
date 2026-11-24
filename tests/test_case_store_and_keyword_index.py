@@ -84,6 +84,8 @@ ROWS = [
 def _fresh(monkeypatch):
     case_store._case_cache.clear()
     case_store._bundle_cache.clear()
+    case_store._ct_cache.clear()
+    monkeypatch.setattr(case_store, "get_case_text_record", lambda cid: None)
     fake = FakeSupabase(ROWS)
     monkeypatch.setattr("legal_ai.config.get_supabase_client", lambda: fake)
     monkeypatch.setattr(case_store, "_normalize_case_record", lambda r: r)
@@ -233,3 +235,30 @@ def test_wrap_keyword_index(monkeypatch):
     monkeypatch.setenv("KEYWORD_SEARCH_BACKEND", "pickle")
     sentinel = object()
     assert zki.wrap_keyword_index(sentinel) is sentinel
+
+
+def test_turso_copy_is_preferred_over_supabase(monkeypatch):
+    full = "2021 S C M R 1463 ... Present: three Hon'ble Judges ... Appeal allowed"
+    copy = {"2021_SCMR_1463": {"case_id": "2021_SCMR_1463", "neutral_citation": "2021 SCMR 1463", "year": 2021,
+                               "journal": "SCMR", "page": 1463, "full_text": "portal summary", "headnote": full}}
+    monkeypatch.setattr(case_store, "get_case_text_record", lambda cid: dict(copy[cid]) if cid in copy else None)
+    c = case_store.get_case_by_identifier("2021 SCMR 1463")
+    assert c["headnote"] == full and c["year"] == 2021
+    got = case_store.get_cases_batch(["2021_SCMR_SC_1463", "2020 SCMR 281"])
+    assert [g["case_id"] for g in got] == ["2021_SCMR_1463", "2020_SCMR_281"]  # copy first, Supabase for the rest
+
+
+def test_case_text_record_reads_sharded_copy(monkeypatch):
+    monkeypatch.undo()
+    case_store._ct_cache.clear()
+    key = case_store.case_text_key("2021_scmr_1463")
+    assert key == "2021_SCMR_1463"
+    obj = case_store.case_text_shard_key(key)
+    assert obj.startswith("case_texts/v1/") and obj.endswith(".json.gz")
+    blob = gzip.compress(json.dumps({key: {"case_id": key, "headnote": "h"}}).encode())
+    calls = []
+    monkeypatch.setattr("legal_ai.storage.r2_text_store.r2_configured", lambda: True)
+    monkeypatch.setattr("legal_ai.storage.r2_text_store._signed_get", lambda o, timeout_s: calls.append(o) or blob)
+    assert case_store.get_case_text_record("2021_SCMR_1463")["headnote"] == "h"
+    assert case_store.get_case_text_record("2021_scmr_1463")["headnote"] == "h"
+    assert calls == [obj]

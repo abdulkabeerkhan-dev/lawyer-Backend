@@ -3,7 +3,8 @@ core/case_store.py
 
 Case, PDF and legacy-statute lookups that used to go to Turso (core/turso_client.py).
 
-    cases     -> Supabase full_judgments (text hydrated from R2 by the wrapped client)
+    cases     -> R2 copy of Turso case_texts (case_texts/v1, verbatim), then
+                 Supabase full_judgments (text hydrated from R2 by the wrapped client)
     PDFs      -> Cloudflare R2  pdfs/v1/{JOURNAL}/{YEAR}/{PAGE // 250}.zip  (member "{PAGE}.pdf")
     statutes  -> Cloudflare R2  statutes/legacy_app_provisions.json.gz (the 3,888
                  app-format rows Turso held; the curated store and Zilliz come first)
@@ -31,6 +32,9 @@ _CID_RE = re.compile(r"^((?:19|20)\d\d)_([A-Z()]+)_(\d+)$")
 # Zilliz case_key carries a court code ("2020_PCRLJ_LHC_1445"); most full_judgments.case_id do not.
 _COURT_KEY_RE = re.compile(r"^((?:19|20)\d\d_[A-Z()]+)_(?:SC|FSC|LHC|SHC|PHC|BHC|IHC|AJKHC|AJKSC|GBSAC|GBCC)_(\d+)$")
 
+CASE_TEXT_PREFIX = "case_texts/v1"
+_CT_CACHE_MAX = 64
+_ct_cache: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
 PDF_PREFIX = "pdfs/v1"
 PDF_BUNDLE_PAGES = 250
 _BUNDLE_CACHE_MAX = 8
@@ -85,8 +89,19 @@ def _normalize_case_record(row: Dict[str, Any]) -> Dict[str, Any]:
 
 def _shape(row: Dict[str, Any]) -> Dict[str, Any]:
     out = dict(row)
-    out.update(_split_case_id(str(out.get("case_id") or "").upper()))
+    for k, v in _split_case_id(str(out.get("case_id") or "").upper()).items():
+        if out.get(k) in (None, ""):
+            out[k] = v
     return _normalize_case_record(out)
+
+
+def _from_turso_copy(key: str) -> Optional[Dict[str, Any]]:
+    """The verbatim Turso case_texts row (R2 copy) for any id variant, shaped like before."""
+    for v in _variants(key):
+        rec = get_case_text_record(v)
+        if rec:
+            return _shape(rec)
+    return None
 
 
 def _cache_get(key: str):
@@ -121,6 +136,13 @@ def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     hit, val = _cache_get(key)
     if hit:
         return val
+    # 1. Turso's case_texts (now an R2 copy) was the primary store and often holds the
+    #    full reported judgment where Supabase only has the portal summary.
+    row = _from_turso_copy(key)
+    if row:
+        _cache_put(key, row)
+        return row
+    # 2. Supabase full_judgments (text hydrated from R2)
     sb = _supabase()
     if sb is None:
         return None
@@ -146,8 +168,13 @@ def get_cases_batch(identifiers: List[str]) -> List[Dict[str, Any]]:
     missing: List[str] = []
     for k in keys:
         hit, val = _cache_get(k)
-        if hit:
+        if not hit:
+            val = _from_turso_copy(k)
             if val:
+                _cache_put(k, val)
+                hit = True
+        if hit:
+            if val and all(val is not f for f in found):
                 found.append(val)
         else:
             missing.append(k)
@@ -175,6 +202,46 @@ def get_cases_batch(identifiers: List[str]) -> List[Dict[str, Any]]:
     except Exception as err:
         logger.warning(f"[CaseStore] batch lookup failed: {err}")
     return found
+
+
+# ------------------------------------------------------------------ Turso case_texts copy (R2)
+def case_text_key(case_id: str) -> str:
+    """Key of a case in the R2 copy of Turso case_texts: the case_id, upper-cased, as Turso stored it."""
+    return str(case_id or "").strip().upper()
+
+
+def case_text_shard_key(key: str, prefix: str = CASE_TEXT_PREFIX) -> str:
+    import hashlib
+    shard = hashlib.sha1(key.encode("utf-8")).hexdigest()[:3]
+    return f"{prefix.strip('/')}/{shard}.json.gz" if prefix else f"{shard}.json.gz"
+
+
+def get_case_text_record(case_id: str) -> Optional[Dict[str, Any]]:
+    """Verbatim Turso case_texts row (all columns) from R2, or None."""
+    key = case_text_key(case_id)
+    if not key:
+        return None
+    obj = case_text_shard_key(key)
+    with _cache_lock:
+        shard = _ct_cache.get(obj)
+        if shard is not None:
+            _ct_cache.move_to_end(obj)
+    if shard is None:
+        try:
+            from legal_ai.storage.r2_text_store import r2_configured, _signed_get
+            if not r2_configured():
+                return None
+            raw = _signed_get(obj, timeout_s=6.0)
+            shard = json.loads(gzip.decompress(raw).decode("utf-8")) if raw else {}
+        except Exception as err:
+            logger.warning(f"[CaseStore] case text shard {obj} unavailable: {err}")
+            return None
+        with _cache_lock:
+            _ct_cache[obj] = shard
+            while len(_ct_cache) > _CT_CACHE_MAX:
+                _ct_cache.popitem(last=False)
+    rec = shard.get(key)
+    return dict(rec) if rec else None
 
 
 # ------------------------------------------------------------------ PDFs
