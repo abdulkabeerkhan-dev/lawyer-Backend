@@ -207,3 +207,30 @@ def test_untrimmed_row_is_left_alone(monkeypatch):
     row = {"neutral_citation": "2024 SCMR 14", "full_text": "Body.", "headnote": "", "ratio_decidendi": None}
     zf.hydrate_rows([row])
     assert row["headnote"] == "" and "text_source" not in row
+
+
+def test_rpc_search_results_are_hydrated_from_r2(monkeypatch):
+    from legal_ai.storage import r2_text_store as r2
+    _r2_env(monkeypatch)
+    rid = "abc12345-0000-0000-0000-000000000002"
+    monkeypatch.setattr(r2, "_signed_get", lambda key, timeout_s: _shard_bytes(
+        {rid: {"full_text": "FT", "headnote": "Original headnote.", "ratio_decidendi": "Ratio."}}))
+
+    class Res:
+        def __init__(self, data): self.data = data
+
+    class Rpc:
+        def __init__(self, data): self.data = data
+        def execute(self): return Res(self.data)
+
+    class Client:
+        def rpc(self, fn, params):
+            # the DB function returns headnote/ratio but not full_text; trimmed rows come back empty
+            return Rpc([{"id": rid, "case_id": "2024_SCMR_14", "headnote": None, "ratio_decidendi": None, "rank": 0.4}])
+
+    wc = zf.wrap_supabase_client(Client())
+    got = wc.rpc("search_judgments_structured", {"p_query_terms": "x"}).execute().data
+    assert got[0]["headnote"] == "Original headnote." and got[0]["ratio_decidendi"] == "Ratio."
+    assert "full_text" not in got[0]  # only the columns the function returns are filled
+    other = wc.rpc("some_other_fn", {}).execute().data
+    assert other[0]["headnote"] is None
