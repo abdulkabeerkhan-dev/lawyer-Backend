@@ -150,6 +150,8 @@ def voyage_embed(texts: List[str], token: str) -> Tuple[List[List[float]], int]:
 
 
 def zilliz_upsert(uri: str, token: str, records: List[Dict[str, Any]]) -> int:
+    # Zilliz rejects duplicate primary keys inside one request; keep the last copy.
+    records = list({r["chunk_id"]: r for r in records}.values())
     d = _post(uri.rstrip("/") + "/v2/vectordb/entities/upsert",
               {"collectionName": COLLECTION, "data": records}, token)
     if d.get("code") != 0:
