@@ -2172,6 +2172,30 @@ global_retriever_config = LegalRetrieverConfig(default_k=40, min_similarity_thre
 
 global_search_pipeline = LegalSearchPipeline(vector_client=pinecone_index, config=global_retriever_config)
 
+# --- Zilliz case-law + statute retrieval for /query (docs/ZILLIZ_MIGRATION_PLAN.md §10, §12) ---
+try:
+    from legal_ai.retrieval.zilliz_case_law import (
+        retrieve_case_law as zilliz_retrieve_case_law,
+        retrieve_relevant_statutes as zilliz_retrieve_relevant_statutes,
+        statute_hit_to_verified as zilliz_statute_hit_to_verified,
+    )
+    _ZILLIZ_CASE_LAW_IMPORT_OK = True
+except Exception as _zcl_err:
+    print(f"[WARN] Zilliz case-law module unavailable: {_zcl_err}", file=sys.stderr, flush=True)
+    _ZILLIZ_CASE_LAW_IMPORT_OK = False
+
+
+def _zilliz_case_law_enabled() -> bool:
+    """Zilliz serves /query when VECTOR_BACKEND resolves to zilliz and credentials exist."""
+    if not _ZILLIZ_CASE_LAW_IMPORT_OK:
+        return False
+    try:
+        from legal_ai.config import VECTOR_BACKEND as _vb
+    except Exception:
+        return False
+    return _vb == "zilliz" and bool(os.environ.get("ZILLIZ_URI")) and bool(os.environ.get("ZILLIZ_TOKEN"))
+
+
 
 
 from supabase.client import ClientOptions
@@ -8870,6 +8894,23 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
 
         )
 
+        if _zilliz_case_law_enabled() and os.environ.get("ZILLIZ_STATUTE_AUGMENT", "true").lower() in ("true", "1", "yes"):
+            try:
+                _known_cids = {str(v.get("canonical_id") or "").upper() for v in verified_statutory_provisions}
+                _stat_hits = await asyncio.wait_for(
+                    zilliz_retrieve_relevant_statutes(effective_user_query, legal_query_plan, max_new=3),
+                    timeout=10.0,
+                )
+                for _h in _stat_hits:
+                    _v = zilliz_statute_hit_to_verified(_h)
+                    if _v["canonical_id"] and _v["canonical_id"] not in _known_cids and _v["text"]:
+                        verified_statutory_provisions.append(_v)
+                        _known_cids.add(_v["canonical_id"])
+                        if _v["canonical_id"] not in legal_query_plan.provisions:
+                            legal_query_plan.provisions.append(_v["canonical_id"])
+                print(f"[JOB {job_id}] statutes_v3 semantic augment added: {[h.get('canonical_id') for h in _stat_hits]}", flush=True)
+            except Exception as _stat_err:
+                print(f"⚠️ [JOB {job_id}] statutes_v3 augment skipped: {_stat_err}", file=sys.stderr)
         formatted_current_law_block = format_current_law_context(verified_statutory_provisions)
 
         pipeline_metrics.end_stage("checking_law")
@@ -9335,183 +9376,204 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
 
             else:
 
-                try:
-
-                    voyage_model = os.environ.get("VOYAGE_MODEL", "voyage-law-2")
-
-                    if not VOYAGE_API_KEY:
-
-                        return "Search tool unavailable: embedding service is not configured."
-
-
-
-                    lane_queries = [lane["query"] for lane in (legal_query_plan.search_lanes or []) if isinstance(lane, dict) and lane.get("query")]
-
-                    queries_to_embed = [q for q in (lane_queries or decomposed_queries or [embedding_query]) if q and len(q.strip()) > 3][:5]
-
-                    if not queries_to_embed:
-
-                        queries_to_embed = [embedding_query]
-
-
-
-                    async with httpx.AsyncClient(timeout=30.0) as client:
-
-                        voyage_response = await client.post(
-
-                            VOYAGE_API_URL,
-
-                            json={"input": queries_to_embed if len(queries_to_embed) > 1 else queries_to_embed[0], "model": voyage_model, "input_type": "query"},
-
-                            headers={"Authorization": f"Bearer {VOYAGE_API_KEY}", "Content-Type": "application/json"}
-
+                zilliz_matches = []
+                if _zilliz_case_law_enabled():
+                    try:
+                        _z_lanes = [lane["query"] for lane in (legal_query_plan.search_lanes or []) if isinstance(lane, dict) and lane.get("query")]
+                        _z_queries = [q for q in (_z_lanes or decomposed_queries or [embedding_query]) if q and len(q.strip()) > 3][:5] or [embedding_query]
+                        if embedding_query and embedding_query not in _z_queries:
+                            _z_queries = [embedding_query] + _z_queries[:4]
+                        zilliz_matches = await zilliz_retrieve_case_law(
+                            _z_queries,
+                            legal_query_plan,
+                            top_k=60 if target_source else global_retriever_config.default_k,
                         )
+                        for _zq in _z_queries:
+                            trace_logger.log_subquery_results(_zq, len(zilliz_matches), 0, zilliz_matches[:5])
+                        print(f"[JOB {job_id}] Zilliz case-law retrieval: {len(zilliz_matches)} cases for {len(_z_queries)} queries", flush=True)
+                    except Exception as zilliz_err:
+                        print(f"⚠️ [JOB {job_id}] Zilliz case-law search failed, falling back: {zilliz_err}", file=sys.stderr)
+                        zilliz_matches = []
+                if zilliz_matches:
+                    matches_list = (boosted_matches or []) + zilliz_matches
+                else:
+                    try:
 
-                        if voyage_response.status_code != 200:
+                        voyage_model = os.environ.get("VOYAGE_MODEL", "voyage-law-2")
 
-                            return f"Search tool error: embedding request failed ({voyage_response.status_code})."
+                        if not VOYAGE_API_KEY:
 
-                        data_arr = voyage_response.json()["data"]
-
-                        query_vectors = [item["embedding"] for item in data_arr]
-
-
-
-                    if not pinecone_index:
-
-                        return "Search tool unavailable: the judgment database is not connected."
-
-
-
-                    query_top_k = 60 if target_source else global_retriever_config.default_k
+                            return "Search tool unavailable: embedding service is not configured."
 
 
 
-                    if len(queries_to_embed) == 1:
+                        lane_queries = [lane["query"] for lane in (legal_query_plan.search_lanes or []) if isinstance(lane, dict) and lane.get("query")]
 
-                        raw_matches = global_search_pipeline.search_precedents(
+                        queries_to_embed = [q for q in (lane_queries or decomposed_queries or [embedding_query]) if q and len(q.strip()) > 3][:5]
 
-                            vector_index=pinecone_index,
+                        if not queries_to_embed:
 
-                            query_vector=query_vectors[0],
+                            queries_to_embed = [embedding_query]
 
-                            top_k=query_top_k,
 
-                            namespace=PINECONE_NAMESPACE,
 
-                            clean_query=queries_to_embed[0],
+                        async with httpx.AsyncClient(timeout=30.0) as client:
 
-                            is_doctrinally_expanded=is_doctrinally_expanded
+                            voyage_response = await client.post(
 
-                        )
+                                VOYAGE_API_URL,
 
-                        dense_cnt = sum(1 for r in raw_matches if float(r.get("dense_score", 0.0) or 0.0) > 0)
+                                json={"input": queries_to_embed if len(queries_to_embed) > 1 else queries_to_embed[0], "model": voyage_model, "input_type": "query"},
 
-                        sparse_cnt = sum(1 for r in raw_matches if float(r.get("sparse_score", 0.0) or 0.0) > 0)
+                                headers={"Authorization": f"Bearer {VOYAGE_API_KEY}", "Content-Type": "application/json"}
 
-                        trace_logger.log_subquery_results(queries_to_embed[0], dense_cnt, sparse_cnt, raw_matches[:5])
+                            )
 
-                        matches_list = raw_matches
+                            if voyage_response.status_code != 200:
 
-                    else:
+                                return f"Search tool error: embedding request failed ({voyage_response.status_code})."
 
-                        sub_score_map = {}
+                            data_arr = voyage_response.json()["data"]
 
-                        for idx, sub_q in enumerate(queries_to_embed):
+                            query_vectors = [item["embedding"] for item in data_arr]
 
-                            sub_vec = query_vectors[idx]
 
-                            sub_res = global_search_pipeline.search_precedents(
+
+                        if not pinecone_index:
+
+                            return "Search tool unavailable: the judgment database is not connected."
+
+
+
+                        query_top_k = 60 if target_source else global_retriever_config.default_k
+
+
+
+                        if len(queries_to_embed) == 1:
+
+                            raw_matches = global_search_pipeline.search_precedents(
 
                                 vector_index=pinecone_index,
 
-                                query_vector=sub_vec,
+                                query_vector=query_vectors[0],
 
-                                top_k=30,
+                                top_k=query_top_k,
 
                                 namespace=PINECONE_NAMESPACE,
 
-                                clean_query=sub_q,
+                                clean_query=queries_to_embed[0],
 
                                 is_doctrinally_expanded=is_doctrinally_expanded
 
                             )
 
-                            dense_cnt = sum(1 for r in sub_res if float(r.get("dense_score", 0.0) or 0.0) > 0)
+                            dense_cnt = sum(1 for r in raw_matches if float(r.get("dense_score", 0.0) or 0.0) > 0)
 
-                            sparse_cnt = sum(1 for r in sub_res if float(r.get("sparse_score", 0.0) or 0.0) > 0)
+                            sparse_cnt = sum(1 for r in raw_matches if float(r.get("sparse_score", 0.0) or 0.0) > 0)
 
-                            trace_logger.log_subquery_results(sub_q, dense_cnt, sparse_cnt, sub_res[:5])
+                            trace_logger.log_subquery_results(queries_to_embed[0], dense_cnt, sparse_cnt, raw_matches[:5])
 
-                            for rank, item in enumerate(sub_res):
+                            matches_list = raw_matches
 
-                                doc_id = item.get("id") or (item.get("metadata", {}) if isinstance(item, dict) else {}).get("case_id")
+                        else:
 
-                                if not doc_id:
+                            sub_score_map = {}
 
-                                    continue
+                            for idx, sub_q in enumerate(queries_to_embed):
 
-                                rrf_contrib = 1.0 / (60.0 + rank + 1.0)
+                                sub_vec = query_vectors[idx]
 
-                                if doc_id not in sub_score_map:
+                                sub_res = global_search_pipeline.search_precedents(
 
-                                    sub_score_map[doc_id] = {
+                                    vector_index=pinecone_index,
 
-                                        "item": item,
+                                    query_vector=sub_vec,
 
-                                        "rrf_score": rrf_contrib,
+                                    top_k=30,
 
-                                        "hits": 1
+                                    namespace=PINECONE_NAMESPACE,
 
-                                    }
+                                    clean_query=sub_q,
 
-                                else:
+                                    is_doctrinally_expanded=is_doctrinally_expanded
 
-                                    sub_score_map[doc_id]["rrf_score"] += rrf_contrib
+                                )
 
-                                    sub_score_map[doc_id]["hits"] += 1
+                                dense_cnt = sum(1 for r in sub_res if float(r.get("dense_score", 0.0) or 0.0) > 0)
 
-                                    if float(item.get("score", 0.0)) > float(sub_score_map[doc_id]["item"].get("score", 0.0)):
+                                sparse_cnt = sum(1 for r in sub_res if float(r.get("sparse_score", 0.0) or 0.0) > 0)
 
-                                        sub_score_map[doc_id]["item"] = item
+                                trace_logger.log_subquery_results(sub_q, dense_cnt, sparse_cnt, sub_res[:5])
+
+                                for rank, item in enumerate(sub_res):
+
+                                    doc_id = item.get("id") or (item.get("metadata", {}) if isinstance(item, dict) else {}).get("case_id")
+
+                                    if not doc_id:
+
+                                        continue
+
+                                    rrf_contrib = 1.0 / (60.0 + rank + 1.0)
+
+                                    if doc_id not in sub_score_map:
+
+                                        sub_score_map[doc_id] = {
+
+                                            "item": item,
+
+                                            "rrf_score": rrf_contrib,
+
+                                            "hits": 1
+
+                                        }
+
+                                    else:
+
+                                        sub_score_map[doc_id]["rrf_score"] += rrf_contrib
+
+                                        sub_score_map[doc_id]["hits"] += 1
+
+                                        if float(item.get("score", 0.0)) > float(sub_score_map[doc_id]["item"].get("score", 0.0)):
+
+                                            sub_score_map[doc_id]["item"] = item
 
 
 
-                        pooled_sorted = sorted(
+                            pooled_sorted = sorted(
 
-                            sub_score_map.values(),
+                                sub_score_map.values(),
 
-                            key=lambda x: (x["hits"], x["rrf_score"]),
+                                key=lambda x: (x["hits"], x["rrf_score"]),
 
-                            reverse=True
+                                reverse=True
 
-                        )
+                            )
 
-                        raw_matches = [c["item"] for c in pooled_sorted]
+                            raw_matches = [c["item"] for c in pooled_sorted]
 
-                        for idx, c in enumerate(raw_matches):
+                            for idx, c in enumerate(raw_matches):
 
-                            c["score"] = pooled_sorted[idx]["rrf_score"]
+                                c["score"] = pooled_sorted[idx]["rrf_score"]
 
-                        matches_list = raw_matches
+                            matches_list = raw_matches
 
 
 
-                    if boosted_matches:
+                        if boosted_matches:
 
-                        matches_list = boosted_matches + matches_list
+                            matches_list = boosted_matches + matches_list
 
-                except Exception as search_err:
+                    except Exception as search_err:
 
-                    print(f"⚠️ [JOB {job_id}] case-law search failed: {search_err}", file=sys.stderr)
+                        print(f"⚠️ [JOB {job_id}] case-law search failed: {search_err}", file=sys.stderr)
 
-                    if boosted_matches:
+                        if boosted_matches:
 
-                        matches_list = boosted_matches
+                            matches_list = boosted_matches
 
-                    else:
+                        else:
 
-                        matches_list = []
+                            matches_list = []
 
 
 
