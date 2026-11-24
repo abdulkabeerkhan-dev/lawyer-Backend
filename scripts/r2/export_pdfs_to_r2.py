@@ -155,7 +155,8 @@ def verify_bundle(args, man, key, expected_n):
     if raw is None:
         man.verified(key, "MISSING in R2")
         return False
-    want = {page: md5 for page, md5 in man.db.execute("select page, md5 from bundle_pdfs where key=?", (key,))}
+    with man.lock:  # one sqlite connection is shared across worker threads
+        want = {page: md5 for page, md5 in man.db.execute("select page, md5 from bundle_pdfs where key=?", (key,))}
     bad, seen = [], 0
     with zipfile.ZipFile(io.BytesIO(raw)) as zf:
         for name in zf.namelist():
