@@ -26,6 +26,8 @@ logger = logging.getLogger(__name__)
 
 TEXT_FIELDS = ("full_text", "headnote", "ratio_decidendi")
 HYDRATED_TABLES = {"full_judgments", "citation_crosswalk"}
+# Database functions that return full_judgments rows (with `id`) and text columns.
+HYDRATED_RPCS = {"search_judgments_structured"}
 
 # Reading order used to stitch a judgment back together from its sections.
 SECTION_ORDER = ["preamble", "headnote", "facts", "issues", "arguments", "analysis",
@@ -314,6 +316,10 @@ class HydratingSupabaseClient:
     def from_(self, name: str, *a, **kw):
         b = self._inner.from_(name, *a, **kw)
         return _HydratingBuilder(b, name == "full_judgments") if name in HYDRATED_TABLES else b
+
+    def rpc(self, fn: str, *a, **kw):
+        b = self._inner.rpc(fn, *a, **kw)
+        return _HydratingBuilder(b) if fn in HYDRATED_RPCS else b
 
     def __getattr__(self, name: str):
         return getattr(self._inner, name)
