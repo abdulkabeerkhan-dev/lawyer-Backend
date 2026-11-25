@@ -14718,6 +14718,7 @@ async def get_statute_acts_endpoint():
 
 @app.get("/api/search/statutes")
 async def search_statutes_get_endpoint(
+    authenticated_user_id: str = Depends(verify_clerk_session),
     q: str = Query("", alias="query"),
     act_code: Optional[str] = Query(None),
     limit: int = Query(25)
@@ -14727,7 +14728,7 @@ async def search_statutes_get_endpoint(
     return search_statute_provisions(query=q, act_code=act_code, limit=limit)
 
 @app.post("/api/search/statutes")
-async def search_statutes_post_endpoint(payload: StatuteSearchRequest):
+async def search_statutes_post_endpoint(payload: StatuteSearchRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
     """Searches Pakistani statutory provisions by keyword, section, or act name (POST)."""
     from legal_ai.search.statute_search_service import search_statute_provisions
     return search_statute_provisions(query=payload.query, act_code=payload.act_code, limit=payload.limit or 25)
@@ -14742,7 +14743,7 @@ async def get_statute_provision_endpoint(canonical_id: str):
     return prov
 
 @app.post("/api/search/judgments/citation")
-async def search_judgments_citation_endpoint(payload: JudgmentCitationSearchRequest):
+async def search_judgments_citation_endpoint(payload: JudgmentCitationSearchRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
     """Pinpoint lookup of a superior court judgment by exact citation (Year, Journal, Page)."""
     from legal_ai.search.judgment_search_service import search_judgments_by_citation
     return await search_judgments_by_citation(
@@ -14755,7 +14756,7 @@ async def search_judgments_citation_endpoint(payload: JudgmentCitationSearchRequ
     )
 
 @app.post("/api/search/judgments/keyword")
-async def search_judgments_keyword_endpoint(payload: JudgmentKeywordSearchRequest):
+async def search_judgments_keyword_endpoint(payload: JudgmentKeywordSearchRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
     """Keyword search across Pakistani case law reports (1947 to 2026) with filters."""
     from legal_ai.search.judgment_search_service import search_judgments_by_keyword
     return await search_judgments_by_keyword(
@@ -14769,7 +14770,7 @@ async def search_judgments_keyword_endpoint(payload: JudgmentKeywordSearchReques
     )
 
 @app.post("/api/search/judgments/intelligent")
-async def search_judgments_intelligent_endpoint(payload: JudgmentKeywordSearchRequest):
+async def search_judgments_intelligent_endpoint(payload: JudgmentKeywordSearchRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
     """Intelligent semantic search using dense vector embeddings + BM25 RRF fusion."""
     from legal_ai.search.judgment_search_service import search_judgments_intelligent
     return await search_judgments_intelligent(
@@ -14783,7 +14784,7 @@ async def search_judgments_intelligent_endpoint(payload: JudgmentKeywordSearchRe
     )
 
 @app.post("/api/search/judgments")
-async def unified_judgments_search_endpoint(payload: UnifiedJudgmentSearchRequest):
+async def unified_judgments_search_endpoint(payload: UnifiedJudgmentSearchRequest, authenticated_user_id: str = Depends(verify_clerk_session)):
     """Unified judgment search route supporting citation, keyword, and intelligent modes."""
     mode = (payload.mode or "keyword").lower().strip()
     if mode == "citation" or (payload.year and payload.journal and payload.page):

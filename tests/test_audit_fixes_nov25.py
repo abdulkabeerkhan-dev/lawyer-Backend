@@ -169,3 +169,20 @@ def test_production_cors_accepts_only_listed_origins(monkeypatch):
         assert not main._origin_is_allowed(o), o
     monkeypatch.setenv("ENVIRONMENT", "development")
     assert main._origin_is_allowed("https://preview.up.railway.app")
+
+
+@pytest.mark.parametrize("method,path,body", [
+    ("post", "/api/search/judgments/intelligent", {"query": "bail"}),
+    ("post", "/api/search/judgments/keyword", {"query": "bail"}),
+    ("post", "/api/search/judgments/citation", {"year": 2020, "journal": "SCMR", "page": 1}),
+    ("post", "/api/search/judgments", {"query": "bail"}),
+    ("post", "/api/search/statutes", {"query": "bail"}),
+    ("get", "/api/search/statutes?query=bail", None),
+])
+def test_search_endpoints_require_sign_in(method, path, body):
+    """These drive embedding spend and expose the whole case database, so a session is required."""
+    from fastapi.testclient import TestClient
+    import main
+    c = TestClient(main.app)
+    r = c.post(path, json=body) if method == "post" else c.get(path)
+    assert r.status_code in (401, 403), (path, r.status_code)

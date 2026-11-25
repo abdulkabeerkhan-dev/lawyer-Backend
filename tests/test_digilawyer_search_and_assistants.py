@@ -20,7 +20,11 @@ from main import app, jobs_store
 
 @pytest.fixture(scope="module")
 def client():
-    return TestClient(app)
+    # search endpoints require a signed-in user; stand one in for the whole module
+    from main import verify_clerk_session
+    app.dependency_overrides[verify_clerk_session] = lambda: "test_user"
+    yield TestClient(app)
+    app.dependency_overrides.pop(verify_clerk_session, None)
 
 
 def test_statute_directory(client):
