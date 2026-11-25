@@ -2452,6 +2452,11 @@ class MemoVerifier:
 
 
 
+        # Try the provision the memo cites first and superseded records last, so text that
+        # appears in two records (e.g. a mis-numbered duplicate) is credited to the cited one.
+        exp_u = str(expected_cid or "").upper()
+        provs = sorted(self.provisions, key=lambda p: (str(p.get("canonical_id") or "").upper() != exp_u,
+                                                       str(p.get("status") or "").lower() == "superseded"))
         clean_q = shared_normalize(raw_quote).strip('"\'')
 
 
@@ -2492,7 +2497,7 @@ class MemoVerifier:
 
 
 
-                for prov in self.provisions:
+                for prov in provs:
 
 
 
@@ -2740,7 +2745,7 @@ class MemoVerifier:
 
 
 
-        for prov in self.provisions:
+        for prov in provs:
 
 
 
@@ -2876,7 +2881,7 @@ class MemoVerifier:
 
 
 
-            for prov in self.provisions:
+            for prov in provs:
 
 
 
@@ -2904,7 +2909,7 @@ class MemoVerifier:
 
 
 
-            for prov in self.provisions:
+            for prov in provs:
 
 
 

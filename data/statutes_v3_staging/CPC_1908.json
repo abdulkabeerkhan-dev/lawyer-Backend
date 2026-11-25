@@ -387,7 +387,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "7. [Provincial Small Cause Courts.] [Omitted.]",
     "raw_text": "7. 5[* * \n* \n* \n* \n* \n*]",
     "amendment_notes": [],
     "former_labels": [],
@@ -401,7 +401,7 @@
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
     "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_8",
@@ -3578,7 +3578,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "",
     "raw_text": "4110.[Omitted].",
     "amendment_notes": [],
     "former_labels": [],
@@ -3592,7 +3592,9 @@
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
     "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "restored_from_official_pdf_tables",
+    "text_placeholder": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CPC_1908_SEC_111",
@@ -3633,7 +3635,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "",
     "raw_text": "8111A. [Omitted].",
     "amendment_notes": [],
     "former_labels": [],
@@ -3647,7 +3649,9 @@
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
     "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "restored_from_official_pdf_tables",
+    "text_placeholder": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CPC_1908_SEC_112",
@@ -3718,7 +3722,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "114. Review.__ (1) Subject as aforesaid, any person considering himself aggrieved by a degree or order from which__\n(a) an appeal is allowed by this Code, but from which no appeal has been preferred; or\n(b) no appeal is allowed by this Code, may apply for a review of judgment to the Court which passed the degree or made the order, and the Court may make such order thereon as it think fit.",
+    "text": "114. Review.__ (1) Subject as aforesaid, any person considering himself aggrieved by a decree or order from which__\n(a) an appeal is allowed by this Code, but from which no appeal has been preferred; or\n(b) no appeal is allowed by this Code, may apply for a review of judgment to the Court which passed the decree or made the order, and the Court may make such order thereon as it thinks fit.",
     "raw_text": "1[114. Review.__ (1) Subject as aforesaid, any person considering himself aggrieved by a degree or \norder from which__ \n(a) \nan appeal is allowed by this Code, but from which no appeal has been preferred; or \n(b) \nno appeal is allowed by this Code,  \nmay apply for a review of judgment to the Court which passed the degree or made the order, and the Court \nmay make such order thereon as it think fit.]",
     "amendment_notes": [],
     "former_labels": [],
@@ -4130,7 +4134,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "",
     "raw_text": "5130. [Omitted].",
     "amendment_notes": [],
     "former_labels": [],
@@ -4144,7 +4148,9 @@
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
     "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "restored_from_official_pdf_tables",
+    "text_placeholder": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CPC_1908_SEC_131",
@@ -4787,7 +4793,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "",
     "raw_text": "154. 1[Omitted].",
     "amendment_notes": [],
     "former_labels": [
@@ -4803,7 +4809,9 @@
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
     "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "restored_from_official_pdf_tables",
+    "text_placeholder": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CPC_1908_SEC_155",
@@ -4817,7 +4825,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "",
     "raw_text": "155. 2[Omitted].",
     "amendment_notes": [],
     "former_labels": [],
@@ -4831,7 +4839,9 @@
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
     "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "restored_from_official_pdf_tables",
+    "text_placeholder": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CPC_1908_SEC_157",

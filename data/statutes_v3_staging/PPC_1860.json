@@ -10101,7 +10101,7 @@
     "domain": "criminal",
     "forum": "Court of Session / Judicial Magistrate",
     "provision_type": "section",
-    "text": "Attempt to commit suicide [omitted]. This statutory provision stands enacted as Section 325 of the Pakistan Penal Code, 1860.",
+    "text": "",
     "raw_text": "325. \n2[* \n* \n* \n* \n* \n* \n*]",
     "amendment_notes": [],
     "former_labels": [],
@@ -10115,7 +10115,9 @@
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
     "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "restored_from_official_pdf_tables",
+    "text_placeholder": "Attempt to commit suicide [omitted]. This statutory provision stands enacted as Section 325 of the Pakistan Penal Code, 1860.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PPC_1860_SEC_326",

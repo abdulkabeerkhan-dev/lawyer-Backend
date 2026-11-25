@@ -1980,7 +1980,7 @@
     "primary_num": "93",
     "secondary_num": null,
     "title": "Communication made in good faith",
-    "text": "Communication made in good faith. This statutory provision stands enacted as Section 93 of the Pakistan Penal Code, 1860.",
+    "text": "",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. XLV of 1860; https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
     "source_page": "unspecified",
@@ -1990,7 +1990,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_placeholder": "Communication made in good faith. This statutory provision stands enacted as Section 93 of the Pakistan Penal Code, 1860.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PPC_1860_SEC_94",
@@ -6766,7 +6768,7 @@
     "primary_num": "292B",
     "secondary_num": null,
     "title": "Child pornography [omitted]",
-    "text": "Child pornography [omitted]. This statutory provision stands enacted as Section 292B of the Pakistan Penal Code, 1860.",
+    "text": "",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. XLV of 1860; https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
     "source_page": "unspecified",
@@ -6776,7 +6778,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_placeholder": "Child pornography [omitted]. This statutory provision stands enacted as Section 292B of the Pakistan Penal Code, 1860.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PPC_1860_SEC_292C",
@@ -6786,7 +6790,7 @@
     "primary_num": "292C",
     "secondary_num": null,
     "title": "Punishment for child pornography",
-    "text": "Punishment for child pornography. This statutory provision stands enacted as Section 292C of the Pakistan Penal Code, 1860.",
+    "text": "",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. XLV of 1860; https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
     "source_page": "unspecified",
@@ -6796,7 +6800,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_placeholder": "Punishment for child pornography. This statutory provision stands enacted as Section 292C of the Pakistan Penal Code, 1860.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PPC_1860_SEC_293",
@@ -7665,7 +7671,7 @@
     "primary_num": "325",
     "secondary_num": null,
     "title": "Attempt to commit suicide [omitted]",
-    "text": "Attempt to commit suicide [omitted]. This statutory provision stands enacted as Section 325 of the Pakistan Penal Code, 1860.",
+    "text": "",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. XLV of 1860; https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
     "source_page": "unspecified",
@@ -7675,7 +7681,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_placeholder": "Attempt to commit suicide [omitted]. This statutory provision stands enacted as Section 325 of the Pakistan Penal Code, 1860.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PPC_1860_SEC_326",
@@ -9532,7 +9540,7 @@
     "primary_num": "369A",
     "secondary_num": null,
     "title": "Trafficking of human beings [omitted]",
-    "text": "Trafficking of human beings [omitted]. This statutory provision stands enacted as Section 369A of the Pakistan Penal Code, 1860.",
+    "text": "369A. 6* * * * * * * 1This section was amended by the Indian Penal Code (Arndt.) Act, 1923 (20 of 1923), s. 2.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. XLV of 1860; https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
     "source_page": "unspecified",
@@ -9542,7 +9550,8 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_source": "audit_2026-11-25:staging"
   },
   {
     "canonical_id": "PPC_1860_SEC_370",
@@ -9782,7 +9791,7 @@
     "primary_num": "376B",
     "secondary_num": null,
     "title": "Exceptional first offenders or repeat offenders [omitted]",
-    "text": "Exceptional first offenders or repeat offenders [omitted]. This statutory provision stands enacted as Section 376B of the Pakistan Penal Code, 1860.",
+    "text": "",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. XLV of 1860; https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
     "source_page": "unspecified",
@@ -9792,7 +9801,9 @@
     "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_placeholder": "Exceptional first offenders or repeat offenders [omitted]. This statutory provision stands enacted as Section 376B of the Pakistan Penal Code, 1860.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PPC_1860_SEC_377",
@@ -11898,7 +11909,7 @@
     "primary_num": "462I",
     "secondary_num": null,
     "title": "Abstraction or tampering etc., with distribution or auxiliary",
-    "text": "Abstraction or tampering etc., with distribution or auxiliary. This statutory provision stands enacted as Section 462I of the Pakistan Penal Code, 1860.",
+    "text": "",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. XLV of 1860; https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
     "source_page": "unspecified",
@@ -11908,7 +11919,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_placeholder": "Abstraction or tampering etc., with distribution or auxiliary. This statutory provision stands enacted as Section 462I of the Pakistan Penal Code, 1860.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PPC_1860_SEC_462J",
@@ -12002,7 +12015,7 @@
     "primary_num": "362N",
     "secondary_num": null,
     "title": "Recovery of outstanding amounts from persons involved in section 462H to 462M offences",
-    "text": "Recovery of outstanding amounts from persons involved in section 462H to 462M offences. This statutory provision stands enacted as Section 362N of the Pakistan Penal Code, 1860.",
+    "text": "",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. XLV of 1860; https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
     "source_page": "unspecified",
@@ -12012,7 +12025,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_placeholder": "Recovery of outstanding amounts from persons involved in section 462H to 462M offences. This statutory provision stands enacted as Section 362N of the Pakistan Penal Code, 1860.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PPC_1860_SEC_462O",
@@ -13488,7 +13503,7 @@
     "primary_num": "22A",
     "secondary_num": null,
     "title": "Powers of Justices of the Peace",
-    "text": "Powers of Justices of the Peace. This statutory provision stands enacted as Section 22A of the Pakistan Penal Code, 1860.",
+    "text": "",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. XLV of 1860; https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
     "source_page": "unspecified",
@@ -13498,7 +13513,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_placeholder": "Powers of Justices of the Peace. This statutory provision stands enacted as Section 22A of the Pakistan Penal Code, 1860.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PPC_1860_SEC_22A_6",
@@ -13508,7 +13525,7 @@
     "primary_num": "22A",
     "secondary_num": "6",
     "title": "Ex-officio Justice of Peace complaints against police non-registration of FIR or negligence",
-    "text": "Ex-officio Justice of Peace complaints against police non-registration of FIR or negligence. This statutory provision stands enacted as Section 22A of the Pakistan Penal Code, 1860.",
+    "text": "",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. XLV of 1860; https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
     "source_page": "unspecified",
@@ -13518,7 +13535,9 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_placeholder": "Ex-officio Justice of Peace complaints against police non-registration of FIR or negligence. This statutory provision stands enacted as Section 22A of the Pakistan Penal Code, 1860.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PPC_1860_SEC_22A_6_A",
@@ -13528,7 +13547,7 @@
     "primary_num": "22A",
     "secondary_num": "6(a)",
     "title": "Direction to police authority to register criminal case under Section 154 CrPC",
-    "text": "Direction to police authority to register criminal case under Section 154 CrPC. This statutory provision stands enacted as Section 22A of the Pakistan Penal Code, 1860.",
+    "text": "",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. XLV of 1860; https://pakistancode.gov.pk/pdffiles/administratord5622ea3f15bfa00b17d2cf7770a8434.pdf",
     "source_page": "unspecified",
@@ -13538,6 +13557,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_placeholder": "Direction to police authority to register criminal case under Section 154 CrPC. This statutory provision stands enacted as Section 22A of the Pakistan Penal Code, 1860.",
+    "text_status": "not_available"
   }
 ]

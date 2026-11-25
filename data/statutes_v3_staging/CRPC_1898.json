@@ -10281,7 +10281,7 @@
     "domain": "criminal",
     "forum": "Court of Session / Judicial Magistrate / High Court",
     "provision_type": "section",
-    "text": "[Omitted]. This statutory provision stands enacted as Section 407 of the Code of Criminal Procedure, 1898.",
+    "text": "",
     "raw_text": "407. \n1[* \n* \n* \n* \n* \n* \n*]",
     "amendment_notes": [],
     "former_labels": [],
@@ -10295,7 +10295,9 @@
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
     "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "restored_from_official_pdf_tables",
+    "text_placeholder": "[Omitted]. This statutory provision stands enacted as Section 407 of the Code of Criminal Procedure, 1898.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CRPC_1898_SEC_408",
@@ -11144,7 +11146,7 @@
     "domain": "criminal",
     "forum": "Court of Session / Judicial Magistrate / High Court",
     "provision_type": "section",
-    "text": "[Omitted]. This statutory provision stands enacted as Section 438 of the Code of Criminal Procedure, 1898.",
+    "text": "",
     "raw_text": "438.  \n1[* \n* \n* \n* \n* \n* \n*]",
     "amendment_notes": [],
     "former_labels": [],
@@ -11158,7 +11160,9 @@
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
     "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "restored_from_official_pdf_tables",
+    "text_placeholder": "[Omitted]. This statutory provision stands enacted as Section 438 of the Code of Criminal Procedure, 1898.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CRPC_1898_SEC_439",
