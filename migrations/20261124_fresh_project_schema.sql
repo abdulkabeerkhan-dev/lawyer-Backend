@@ -75,10 +75,13 @@ language sql stable as $$
            fj.subdomain, fj.headnote, fj.ratio_decidendi, fj.statutes_cited,
            ts_rank_cd(fj.fts_headnote, plainto_tsquery('english', p_query_terms)) as rank
     from public.full_judgments fj
-    where (p_domain is null or fj.domain = p_domain)
-      and (p_statute is null or fj.statutes_cited @> array[p_statute])
+    -- Domain labels are classifier output and noisy: the domain boosts ranking but never excludes a row.
+    where (p_statute is null or fj.statutes_cited @> array[p_statute] or fj.statutes_cited is null)
+      and (fj.retrieval_status is null or fj.retrieval_status not in ('rejected', 'quarantined', 'restricted'))
       and (p_query_terms is null or p_query_terms = '' or fj.fts_headnote @@ plainto_tsquery('english', p_query_terms))
-    order by rank desc, fj.decision_date desc nulls last
+    order by ts_rank_cd(fj.fts_headnote, plainto_tsquery('english', p_query_terms))
+             * (case when p_domain is not null and fj.domain = p_domain then 1.5 else 1.0 end) desc,
+             fj.decision_date desc nulls last
     limit p_limit;
 $$;
 

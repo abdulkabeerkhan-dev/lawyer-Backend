@@ -101,7 +101,7 @@ def test_get_case_by_identifier_uses_case_id_and_caches(_fresh):
     c = case_store.get_case_by_identifier("2020 SCMR 281")
     assert c["case_id"] == "2020_SCMR_281"
     assert (c["year"], c["journal"], c["page"]) == (2020, "SCMR", 281)
-    assert ("eq", "case_id", "2020_SCMR_281") in _fresh.log
+    assert any(e[0] == "in" and e[1] == "case_id" and "2020_SCMR_281" in e[2] for e in _fresh.log)
     n = len(_fresh.log)
     assert case_store.get_case_by_identifier("2020_scmr_281")["case_id"] == "2020_SCMR_281"
     assert len(_fresh.log) == n  # served from cache
@@ -262,3 +262,51 @@ def test_case_text_record_reads_sharded_copy(monkeypatch):
     assert case_store.get_case_text_record("2021_SCMR_1463")["headnote"] == "h"
     assert case_store.get_case_text_record("2021_scmr_1463")["headnote"] == "h"
     assert calls == [obj]
+
+
+def test_lookup_matches_real_citation_not_serial_case_id(monkeypatch):
+    # full_judgments rows whose case_id page is a serial number, not the citation page
+    rows = [
+        {"id": "x1", "case_id": "1978_SCMR_31", "neutral_citation": "1978 SCMR 81", "case_title": "MUHAMMAD AKRAM v. STATE",
+         "court_name": "Supreme Court of Pakistan", "full_text": "", "headnote": "hn"},
+        {"id": "x2", "case_id": "1978_SCMR_81", "neutral_citation": "1978 SCMR 402", "case_title": "OTHER CASE",
+         "court_name": "Supreme Court of Pakistan", "full_text": "", "headnote": "hn"},
+        {"id": "x3", "case_id": "2003_PLD_LAH_102", "neutral_citation": "2003 PLD 102", "case_title": "LAHORE CASE",
+         "court_name": "Lahore High Court", "full_text": "", "headnote": "hn"},
+        {"id": "x4", "case_id": "2003_PLD_SC_102", "neutral_citation": "2003 PLD 102", "case_title": "SUPREME CASE",
+         "court_name": "Supreme Court of Pakistan", "full_text": "", "headnote": "hn"},
+    ]
+    fake = FakeSupabase(rows)
+    monkeypatch.setattr("legal_ai.config.get_supabase_client", lambda: fake)
+    case_store._case_cache.clear()
+    assert case_store.get_case_by_identifier("1978 SCMR 81")["case_title"] == "MUHAMMAD AKRAM v. STATE"
+    # the row whose case_id is 1978_SCMR_81 is really 1978 SCMR 402 and must not be returned for 81
+    assert case_store.get_case_by_identifier("1978 SCMR 402")["id"] == "x2"
+    # a Zilliz key's court code picks the right series
+    assert case_store.get_case_by_identifier("2003_PLD_SC_102")["case_title"] == "SUPREME CASE"
+    assert case_store.get_case_by_identifier("2003_PLD_LHC_102")["case_title"] == "LAHORE CASE"
+    got = case_store.get_cases_batch(["1978 SCMR 81", "1978_SCMR_402", "1999 SCMR 1"])
+    assert [g["id"] for g in got] == ["x1", "x2"]
+
+
+def _real_pdf(text):
+    import pymupdf
+    doc = pymupdf.open()
+    doc.new_page().insert_text((72, 72), text)
+    return doc.tobytes()
+
+
+def test_shared_series_pdf_is_checked_against_the_case(monkeypatch):
+    good = _real_pdf("2003 PLD 102 MUHAMMAD AJMAL VS THE STATE - SUPREME-COURT")
+    monkeypatch.setattr("legal_ai.storage.r2_text_store.r2_configured", lambda: True)
+    monkeypatch.setattr("legal_ai.storage.r2_text_store._signed_get", lambda key, timeout_s: _zip({102: good}))
+    monkeypatch.setattr(case_store, "get_case_by_identifier",
+                        lambda cid: {"case_title": "MUHAMMAD AJMAL v. THE STATE"})
+    assert case_store.get_case_pdf_bytes("2003_PLD_SC_102") == good
+    case_store._bundle_cache.clear()
+    monkeypatch.setattr(case_store, "get_case_by_identifier",
+                        lambda cid: {"case_title": "ZAHOOR ELAHI v. FEDERATION OF PAKISTAN"})
+    assert case_store.get_case_pdf_bytes("2003_PLD_LAH_102") is None  # PDF is a different judgment
+    case_store._bundle_cache.clear()
+    monkeypatch.setattr(case_store, "get_case_by_identifier", lambda cid: None)
+    assert case_store.get_case_pdf_bytes("2003_PLD_102") == good  # unknown title: don't block

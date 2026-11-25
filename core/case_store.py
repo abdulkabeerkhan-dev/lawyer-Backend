@@ -128,6 +128,70 @@ def _supabase():
         return None
 
 
+def _court_hint(key: str) -> Optional[str]:
+    """'2020_PCRLJ_LHC_1445' -> 'LHC' (the court code a Zilliz case_key carries)."""
+    m = re.match(r"^(?:18|19|20)\d\d_[A-Z()]+_([A-Z]+)_\d+$", key or "")
+    return m.group(1) if m else None
+
+
+def _pick(key: str, rows: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    """The row that really is `key`. In ~18% of full_judgments rows the case_id page is a
+    serial number, not the citation page (1978_SCMR_31 is really 1978 SCMR 81), so a bare
+    case_id match can be a different judgment. Match on neutral_citation first, use the
+    court as a tie-breaker, and never return a row whose own citation says otherwise."""
+    from legal_ai.verification.citation_keys import citation_key
+    from legal_ai.storage.text_hydration import court_code
+    ck = citation_key(key)
+    if not ck:
+        return next((r for r in rows if str(r.get("case_id") or "").upper() == key), None)
+    same_cit = [r for r in rows if citation_key(str(r.get("neutral_citation") or "")) == ck]
+    if same_cit:
+        hint = _court_hint(key)
+        if hint:
+            by_court = [r for r in same_cit if court_code(r.get("court_name")) == hint]
+            if by_court:
+                return by_court[0]
+        exact = [r for r in same_cit if str(r.get("case_id") or "").upper() in _variants(key)]
+        return (exact or same_cit)[0]
+    # No row carries this citation: accept a case_id match only if the row has no
+    # parseable citation of its own (otherwise it is a different judgment).
+    for r in rows:
+        if str(r.get("case_id") or "").upper() in _variants(key) and not citation_key(str(r.get("neutral_citation") or "")):
+            return r
+    return None
+
+
+def _supabase_rows(keys: List[str]) -> Dict[str, Optional[Dict[str, Any]]]:
+    """key -> shaped row or None, for keys not in the Turso copy. Raises on DB errors."""
+    from legal_ai.verification.citation_keys import citation_key
+    sb = _supabase()
+    if sb is None:
+        raise RuntimeError("Supabase unavailable")
+    out: Dict[str, Optional[Dict[str, Any]]] = {}
+    for i in range(0, len(keys), 40):
+        chunk = keys[i:i + 40]
+        ids = list(dict.fromkeys(v for k in chunk for v in _variants(k)))
+        forms: List[str] = []
+        for k in chunk:
+            ck = citation_key(k)
+            if ck:
+                y, j, p = ck
+                forms += [f"{y} {j} {p}", f"{j} {y} {p}"]
+        rows: Dict[str, Dict[str, Any]] = {}
+        res = sb.table("full_judgments").select(_CASE_COLUMNS).in_("case_id", ids).execute()
+        for r in res.data or []:
+            rows[str(r.get("id"))] = r
+        if forms:
+            res = sb.table("full_judgments").select(_CASE_COLUMNS).in_("neutral_citation", list(dict.fromkeys(forms))).execute()
+            for r in res.data or []:
+                rows[str(r.get("id"))] = r
+        pool = list(rows.values())
+        for k in chunk:
+            hit = _pick(k, pool)
+            out[k] = _shape(dict(hit)) if hit else None
+    return out
+
+
 def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     """One case by case_id ('2021_SCMR_1463') or citation ('2021 SCMR 1463')."""
     key = normalize_case_id(case_id_or_cit)
@@ -142,18 +206,9 @@ def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:
     if row:
         _cache_put(key, row)
         return row
-    # 2. Supabase full_judgments (text hydrated from R2)
-    sb = _supabase()
-    if sb is None:
-        return None
+    # 2. Supabase full_judgments (text hydrated from R2), matched on the real citation
     try:
-        variants = _variants(key)
-        q = sb.table("full_judgments").select(_CASE_COLUMNS)
-        q = q.eq("case_id", key) if len(variants) == 1 else q.in_("case_id", variants)
-        res = q.limit(len(variants)).execute()
-        got = {str(r.get("case_id") or "").upper(): r for r in (res.data or [])}
-        hit = next((got[v] for v in variants if v in got), None)
-        row = _shape(hit) if hit else None
+        row = _supabase_rows([key]).get(key)
     except Exception as err:
         logger.warning(f"[CaseStore] case lookup failed for {key}: {err}")
         return None
@@ -180,27 +235,16 @@ def get_cases_batch(identifiers: List[str]) -> List[Dict[str, Any]]:
             missing.append(k)
     if not missing:
         return found
-    sb = _supabase()
-    if sb is None:
-        return found
     try:
-        for i in range(0, len(missing), 50):
-            chunk = missing[i:i + 50]
-            ask = list(dict.fromkeys(v for k in chunk for v in _variants(k)))
-            res = sb.table("full_judgments").select(_CASE_COLUMNS).in_("case_id", ask).execute()
-            got = {str(r.get("case_id") or "").upper(): r for r in (res.data or [])}
-            shaped: Dict[str, Dict[str, Any]] = {}
-            for k in chunk:
-                v = next((v for v in _variants(k) if v in got), None)
-                row = None
-                if v:
-                    row = shaped.get(v) or _shape(got[v])
-                    shaped[v] = row
-                _cache_put(k, row)
-                if row and all(row is not f for f in found):
-                    found.append(row)
+        got = _supabase_rows(missing)
     except Exception as err:
         logger.warning(f"[CaseStore] batch lookup failed: {err}")
+        return found
+    for k in missing:
+        row = got.get(k)
+        _cache_put(k, row)
+        if row and all(row.get("id") != f.get("id") or row.get("id") is None for f in found):
+            found.append(row)
     return found
 
 
@@ -282,12 +326,12 @@ def get_case_pdf_bytes(
     except (TypeError, ValueError):
         page = None
     if not (journal and year and page) and case_id:
-        m1 = re.search(r'\b(19\d\d|20\d\d)[_\s]+([a-zA-Z\(\)]+)[_\s]+(\d+)\b', case_id)
-        m2 = None if m1 else re.search(r'\b([a-zA-Z\(\)]+)[_\s]+(19\d\d|20\d\d)[_\s]+(\d+)\b', case_id)
-        if m1:
-            year, journal, page = int(m1.group(1)), m1.group(2).upper(), int(m1.group(3))
-        elif m2:
-            journal, year, page = m2.group(1).upper(), int(m2.group(2)), int(m2.group(3))
+        # Handles every citation/key form, including Zilliz keys with a court code
+        # (2003_PLD_SC_102), which the old year_journal_page pattern could not parse.
+        from legal_ai.verification.citation_keys import citation_key
+        ck = citation_key(case_id)
+        if ck:
+            year, journal, page = int(ck[0]), ck[1], int(ck[2])
     if not (journal and year and page):
         return None
     try:
@@ -306,7 +350,40 @@ def get_case_pdf_bytes(
     except Exception as err:
         logger.warning(f"[CaseStore] PDF fetch failed for {journal} {year} {page}: {err}")
         return None
-    return data if data and data.startswith(b"%PDF") else None
+    if not (data and data.startswith(b"%PDF")):
+        return None
+    if journal in _SHARED_SERIES_JOURNALS and not _pdf_matches_case(data, case_id or f"{year}_{journal}_{page}"):
+        logger.warning(f"[CaseStore] PDF {journal} {year} {page} does not match the requested case; not served")
+        return None
+    return data
+
+
+# PLD and YLR number each court's series separately, but the PDF archive is keyed only by
+# journal/year/page, so one PDF can stand for several judgments (4,694 such PDFs).
+_SHARED_SERIES_JOURNALS = {"PLD", "YLR"}
+_TITLE_STOP = {"THE", "AND", "VS", "VERSUS", "STATE", "OTHERS", "OTHER", "THROUGH", "GOVERNMENT", "PAKISTAN",
+               "MST", "MUHAMMAD", "MOHAMMAD", "SECRETARY", "PROVINCE", "FEDERATION", "LTD", "LIMITED", "ANOTHER", "AHMAD",
+               "AHMED", "KHAN", "ALI", "SHAH", "CHAIRMAN", "COMMISSIONER", "PUNJAB", "SINDH"}
+
+
+def _pdf_matches_case(pdf: bytes, case_id: str) -> bool:
+    """True when the PDF's first page names a distinctive party of the requested case.
+    Unknown title or unreadable PDF -> True (do not block on missing information)."""
+    try:
+        rec = get_case_by_identifier(case_id)
+        title = str((rec or {}).get("case_title") or "")
+        words = {w for w in re.findall(r"[A-Z][A-Z]{3,}", title.upper()) if w not in _TITLE_STOP}
+        if not words:
+            return True
+        import pymupdf
+        doc = pymupdf.open(stream=pdf, filetype="pdf")
+        head = doc[0].get_text().upper() if doc.page_count else ""
+        if not head.strip():
+            return True
+        return any(w in head for w in words)
+    except Exception as err:
+        logger.warning(f"[CaseStore] PDF/case match check skipped: {err}")
+        return True
 
 
 # ------------------------------------------------------------------ legacy statutes

@@ -1296,14 +1296,15 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
 
 
 
-    # 1. Try text_search column first (if migration applied with GIN index)
+    # 1. Indexed full-text search over citation + title + headnote (GIN on fts_headnote).
+    #    (This used a 'text_search' column that never existed, so it always fell through.)
 
     try:
         res = (
             supabase.table('full_judgments')
             .select('id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text')
             .limit(limit * 2)
-            .text_search('text_search', ts_query)
+            .text_search('fts_headnote', ts_query, options={"config": "english"})
             .execute()
         )
 
