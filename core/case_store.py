@@ -51,9 +51,29 @@ def normalize_case_id(ident: str) -> str:
     return "_".join(str(ident or "").replace("_", " ").split()).upper()
 
 
+# Zilliz court code -> (full_judgments PLD case_id court, PLD citation court abbreviation)
+_PLD_COURTS = {"SC": ("SC", "SC"), "LHC": ("LAH", "Lah"), "SHC": ("KAR", "Kar"), "PHC": ("PESH", "Pesh"),
+               "BHC": ("QTA", "Quetta"), "IHC": ("ISL", "Isl"), "FSC": ("FSC", "FSC"),
+               "AJKSC": ("SCAJK", "AJ&K SC"), "AJKHC": ("HCAJK", "AJ&K HC")}
+
+
 def _variants(key: str) -> List[str]:
     m = _COURT_KEY_RE.match(key)
-    return [key, f"{m.group(1)}_{m.group(2)}"] if m else [key]
+    if not m:
+        return [key]
+    out = [key, f"{m.group(1)}_{m.group(2)}"]
+    parts = key.split("_")
+    if len(parts) == 4 and parts[1] == "PLD" and parts[2] in _PLD_COURTS:
+        out.append(f"{parts[0]}_PLD_{_PLD_COURTS[parts[2]][0]}_{parts[3]}")
+    return list(dict.fromkeys(out))
+
+
+def _pld_citation_form(key: str) -> Optional[str]:
+    """2024_PLD_LHC_1 -> 'PLD 2024 Lah 1' (how full_judgments writes PLD citations)."""
+    parts = (key or "").split("_")
+    if len(parts) == 4 and parts[1] == "PLD" and parts[2] in _PLD_COURTS:
+        return f"PLD {parts[0]} {_PLD_COURTS[parts[2]][1]} {parts[3]}"
+    return None
 
 
 def _split_case_id(case_id: str) -> Dict[str, Any]:
@@ -161,7 +181,7 @@ def _pick(key: str, rows: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
     return None
 
 
-def _supabase_rows(keys: List[str]) -> Dict[str, Optional[Dict[str, Any]]]:
+def _supabase_rows(keys: List[str], columns: str = _CASE_COLUMNS, shape: bool = True) -> Dict[str, Optional[Dict[str, Any]]]:
     """key -> shaped row or None, for keys not in the Turso copy. Raises on DB errors."""
     from legal_ai.verification.citation_keys import citation_key
     sb = _supabase()
@@ -177,19 +197,32 @@ def _supabase_rows(keys: List[str]) -> Dict[str, Optional[Dict[str, Any]]]:
             if ck:
                 y, j, p = ck
                 forms += [f"{y} {j} {p}", f"{j} {y} {p}"]
+                pf = _pld_citation_form(k)
+                if pf:
+                    forms.append(pf)
         rows: Dict[str, Dict[str, Any]] = {}
-        res = sb.table("full_judgments").select(_CASE_COLUMNS).in_("case_id", ids).execute()
+        res = sb.table("full_judgments").select(columns).in_("case_id", ids).execute()
         for r in res.data or []:
             rows[str(r.get("id"))] = r
         if forms:
-            res = sb.table("full_judgments").select(_CASE_COLUMNS).in_("neutral_citation", list(dict.fromkeys(forms))).execute()
+            res = sb.table("full_judgments").select(columns).in_("neutral_citation", list(dict.fromkeys(forms))).execute()
             for r in res.data or []:
                 rows[str(r.get("id"))] = r
         pool = list(rows.values())
         for k in chunk:
             hit = _pick(k, pool)
-            out[k] = _shape(dict(hit)) if hit else None
+            out[k] = (_shape(dict(hit)) if shape else dict(hit)) if hit else None
     return out
+
+
+def retrieval_statuses(keys: List[str]) -> Dict[str, Optional[str]]:
+    """Zilliz case_key (or any case id) -> full_judgments.retrieval_status ('' when the row
+    has none, None when no row is this case). Zilliz keys carry a court code
+    (2005_CLC_SHC_1241) that full_judgments.case_id does not (2005_CLC_1241), so a plain
+    case_id lookup misses most cases; match on the real citation instead. Raises on DB errors."""
+    keys = [k for k in dict.fromkeys(str(k or "").strip().upper() for k in keys) if k]
+    rows = _supabase_rows(keys, columns="id, case_id, neutral_citation, court_name, retrieval_status", shape=False)
+    return {k: (None if r is None else str(r.get("retrieval_status") or "").lower()) for k, r in rows.items()}
 
 
 def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:

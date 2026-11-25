@@ -387,7 +387,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "7. * * * * * * *",
+    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
     "raw_text": "7. 5[* * \n* \n* \n* \n* \n*]",
     "amendment_notes": [],
     "former_labels": [],
@@ -400,7 +400,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_SEC_8",
@@ -409,7 +410,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "8",
     "primary_num": "8",
-    "heading": "[Presidency Small Cause Courts",
+    "heading": "Presidency Small Cause Courts",
     "title": "[Presidency Small Cause Courts",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -472,7 +473,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "10. Stay of suit. No Court shall proceed with the trial of any suit in which the matter in issue is also directly and substantially in issue in a previously instituted suit between the same parties, or between parties under whom they or any of them claim litigating under the same title where such suit is pending in the same or any other Court in Pakistan having jurisdiction to grant the relief claimed, or in any Court beyond the limits of Pakistan established or continued by the Federal Government 4* * * and having like jurisdiction, or before the Supreme Court.\nExplanation.__ The pendency of a suit in a foreign Court does not preclude the Courts in Pakistan from trying a suit founded on the same cause of action.",
+    "text": "10. Stay of suit. No Court shall proceed with the trial of any suit in which the matter in issue is also directly and substantially in issue in a previously instituted suit between the same parties, or between parties under whom they or any of them claim litigating under the same title where such suit is pending in the same or any other Court in Pakistan having jurisdiction to grant the relief claimed, or in any Court beyond the limits of Pakistan established or continued by the Federal Government [...] and having like jurisdiction, or before the Supreme Court. \nExplanation.__ The pendency of a suit in a foreign Court does not preclude the Courts in Pakistan from trying a suit founded on the same cause of action.",
     "raw_text": "10. Stay of suit. No Court shall proceed with the trial of any suit in which the matter in issue \nis also directly and substantially in issue in a previously instituted suit between the same parties, or \nbetween parties under whom they or any of them claim litigating under the same title where such suit \nis pending in the same or any other Court in 1[Pakistan] having jurisdiction to grant the relief claimed, \nor in any Court beyond the limits of 1[Pakistan] established or continued by 2[the 3[Federal \nGovernment] 4* * *] and having like jurisdiction, or before 5[the Supreme Court]. \nExplanation.__ The pendency of a suit in a foreign Court does not preclude the Courts in \n1[Pakistan] from trying a suit founded on the same cause of action.",
     "amendment_notes": [],
     "former_labels": [],
@@ -485,7 +486,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_11",
@@ -526,7 +528,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "12. Bar to further suit.__ (1) Where a plaintiff is precluded by rules from instituting a further suit in respect of any particular cause of action, he shall not be entitled to institute a suit in respect of such cause of action in any Court to which this Code applies.\n\n1Subs. by the Central laws (Statute Reform) Ordinance, No. XXI of 1960, s. 3 and 2nd Sch. (with effect from the 14th October, 1955).\n2Subs. by Adaptation Order, 1937.\n3Subs. by Federal Adaptation Order, 1975. Art.2 and Table.",
+    "text": "12. Bar to further suit. __ (1) Where a plaintiff is precluded by rules from instituting a further suit in respect of any particular cause of action, he shall not be entitled to institute a suit in respect of such cause of action in any Court to which this Code applies.\n(2) Where a person challenges the validity of a judgment, decree or order on the plea of fraud, misrepresentation or want of jurisdiction, he shall seek his remedy by making an application to the Court which passed the final judgment, decree or order and not by a separate suit.",
     "raw_text": "6[12. Bar to further suit.__ (1)] Where a plaintiff is precluded by rules from instituting a  \nfurther suit in respect of any particular cause of action, he shall not be entitled to institute a suit in \nrespect of such cause of action in any Court to which this Code applies. \n \n1Subs. by the Central laws (Statute Reform) Ordinance, No. XXI of 1960, s. 3 and 2nd Sch. (with effect from the 14th October, 1955). \n2Subs. by Adaptation Order, 1937. \n3Subs. by Federal Adaptation Order, 1975. Art.2 and Table.  \n4The words “or the Crown Representative” omitted by Adaptation Order, 1949. \n5Subs. by Adaptation Order, 1961, Art. 2 and Sch. (with effect from the 23rd March 1956).",
     "amendment_notes": [
       "4The words “or the Crown Representative” omitted by Adaptation Order, 1949. 5Subs. by Adaptation Order, 1961, Art. 2 and Sch. (with effect from the 23rd March 1956)."
@@ -541,7 +543,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:subsections:v2"
   },
   {
     "canonical_id": "CPC_1908_SEC_6S",
@@ -658,7 +661,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "16",
     "primary_num": "16",
-    "heading": "Suits to be instituted where subject",
+    "heading": "Suits to be instituted where subject-matter situate",
     "title": "Suits to be instituted where subject",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -908,7 +911,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "24A. Appreance of parties on transfer of suits, etc.__ (1) Where any suit is transferred under section 22, or any suit, appeal or other proceeding is transferred or withdrawn under sub-section (1) of section 24 on the application of a party, the Court ordering the transfer or withdrawal shall fix a date for the appearance of the parties before itself, if the suit, appeal or other proceeding is to be tried or disposed of by itself, or before the Court to which the case is so transferred.",
+    "text": "24A. Appreance of parties on transfer of suits, etc.__ (1) Where any suit is transferred under section 22, or any suit, appeal or other proceeding is transferred or withdrawn under subsection (1) of section 24 on the application of a party, the Court ordering the transfer or withdrawal shall fix a date for the appearance of the parties before itself, if the suit, appeal or other proceeding is to be tried or disposed of by itself, or before the Court to which the case is so transferred. \n\n(2) Where any suit, appeal or other proceeding is transferred from one Court to another, otherwise than on the application of a party, the parties thereto shall appear before the Court from which the suit, appeal or other proceedings is to be transferred, on t he day already fixed for their appearance before that Court, and such Court shall then communicate the order of transfer to such parties and direct them to appear before the Court to which the suit, appeal or other proceeding is to be transferred, ei ther on the same day, or on such earliest day as may be reasonable having regard to the distance at which the other Court is located.",
     "raw_text": "1[24A. Appreance of parties on transfer of suits, etc.__ (1) Where any suit is transferred under section 22, \nor any suit, appeal or other proceeding is transferred or withdrawn under sub-section (1) of section 24 on the \napplication of a party, the Court ordering the transfer or withdrawal shall fix a date for the appearance of the parties \nbefore itself, if the suit, appeal or other proceeding is to be tried or disposed of by itself, or before the Court to which \nthe case is so transferred.",
     "amendment_notes": [],
     "former_labels": [],
@@ -921,7 +924,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:subsections:v2"
   },
   {
     "canonical_id": "CPC_1908_SEC_1S",
@@ -957,7 +961,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "125",
     "primary_num": "125",
-    "heading": "[Power of Provincial Government to transfer suits",
+    "heading": "Power of Provincial Government to transfer suits",
     "title": "[Power of Provincial Government to transfer suits",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -1178,7 +1182,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "32. Penalty for default. The Court may compel the attendance of any person to whom a summons has been issued under section 30 and for that purpose may___\n(a) issue a warrant for his arrest ;\n(b) attach and sell his property ;\n(c) impose a fine upon him not exceeding two thousand rupees ;\n(d) order him to furnish security for his appearance and in default commit him to * * * prison.\nJUDGMENT AND DECREE",
+    "text": "32. Penalty for default. The Court may compel the attendance of any person to whom a summons has been issued under section 30 and for that purpose may___ \n(a) issue a warrant for his arrest ; \n(b) attach and sell his property ; \n(c) impose a fine upon him not exceeding two thousand rupees ; \n(d) order him to furnish security for his appearance and in default commit him to \n[...] prison.",
     "raw_text": "32. Penalty for default. The Court may compel the attendance of any person to whom a \nsummons has been issued under section 30 and for that purpose may___ \n(a) \nissue a warrant for his arrest ; \n(b) \nattach and sell his property ; \n(c) \nimpose a fine upon him not exceeding 10[two thousand] rupees ; \n(d) \norder him to furnish security for his appearance and in default commit him to \n10[* * *] prison. \nJUDGMENT AND DECREE",
     "amendment_notes": [],
     "former_labels": [],
@@ -1191,7 +1195,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_33",
@@ -1289,7 +1294,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "34B. Interest, etc. on dues of banking company.__ Where and in so far as a decree is for payment of money due to a banking company in repayment of a loan advanced by it, the Court shall, in the decree, provide for interest or return, as the case may be, on the judgment debt from the date of decree till payment__\n(a) in the case of interest-bearing loans, for interest at the contracted rate or at the rate of two per cent above the bank rate, whichever is the higher ;\n(b) in the case of loans given on the basis of mark-up in price, lease, hire-purchase or service charges, for the contracted rate of mark-up, rental, hire or service charges, as the case may be, or at the latest rate of the banking company for similar loans, whichever is the higher ; and\n(c) in the case of loans given on the basis of participation in profit and loss, for return at such rate, not being less than the annual rate of profit for the preceding six months paid by the banking company on term deposits of six months accepted by it on the basis of participation in profit and loss, as the court may consider just and reasonable in the circumstances of the case, keeping in view\n\nthe profit-sharing agreement entered into between the banking company and the judgement debtor when the loan was contracted.\nExplanation.__ In this section in clause (a), “bank rate” has the same meaning as in section",
+    "text": "34B. Interest, etc. on dues of banking company.__ Where and in so far as a decree is for payment of money due to a banking company in repayment of a loan advanced by it, the Court shall, in the decree, provide for interest or return, as the case may be, on the judgment debt from the date of decree till payment__ \n(a) in the case of interestbearing loans, for interest at the contracted rate or at the rate of two per cent above the bank rate, whichever is the higher ; \n(b) in the case of loans given on the basis of markup in price, lease, hirepurchase or service charges, for the contracted rate of markup, rental, hire or service charges, as the case ma y be, or at the latest rate of the banking company for similar loans, whichever is the higher ; and \n(c) in the case of loans given on the basis of participation in profit and loss, for return at such rate, not being less than the annual rate of profit for the preceding six months paid by the banking company on term deposits of six months accepted by it on the basis of participation in profit and loss, as the court may consider just and reasonable in the circumstances of the case, keeping in view \n\nExplanation.__ In this section in clause (a), \"bank rate\" has the same meaning as in section.",
     "raw_text": "2[34B.  Interest, etc. on dues of banking company.__ Where  and  in  so  far  as  a  decree  is  \nfor payment of money due to a banking company in repayment of a loan advanced by it, the Court \nshall, in the decree, provide for interest or return, as the case may be, on the judgment debt from the \ndate of  decree till payment__ \n(a) \nin the case of interest-bearing loans, for interest at the contracted rate or at the \nrate of two per cent above the bank rate, whichever is the higher ; \n(b) \nin the case of loans given on the basis of mark-up in price, lease, hire-purchase \nor service charges, for the contracted rate of mark-up, rental, hire or service \ncharges, as the case may be, or at the latest rate of the banking company for \nsimilar loans, whichever is the higher ;  and \n(c) \nin the case of loans given on the basis of participation in profit and loss, for \nreturn at such  rate, not being less than the annual rate of profit for the preceding \nsix months paid by the banking company on term deposits of six months \naccepted by it  on the basis of  participation in profit and loss,  as the court may \nconsider just and reasonable in  the circumstances of the case, keeping in view \n \n1New section 34A was ins. by the Code of Civil Procedure (Amdt.) Ordinance, No. X of 1980) s.3. \n2Section 34B ins. by the Code of Civil Procedure (Amdt.) Ordinance, No. LXIII of 1980, s. 2. \n\n   \n \nPage 23 of 318 \n \nthe profit-sharing agreement entered  into between the banking company and \nthe judgement debtor when the loan was contracted. \nExplanation.__ In this section in clause (a), “bank rate” has the same meaning as in section",
     "amendment_notes": [
       "1New section 34A was ins. by the Code of Civil Procedure (Amdt.) Ordinance, No. X of 1980) s.3.",
@@ -1305,7 +1310,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_35",
@@ -1454,7 +1460,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "37. Definition of Court which passed a decree. The expression “Court which passed a decree,” or words to that effect, shall, in relation to the execution of decrees, unless there is anything repugnant in the subject or context, be deemed to include,__\n(a) where the decree to be executed has been passed in the exercise of appellate jurisdiction, the Court of first instance, and\n(b) where the Court of first instance has ceased to exist or to have jurisdiction to execute it, the Court which, if the suit wherein the decree was passed was instituted at the time of making the application for the execution of the decree, would have Jurisdiction to try such suit.\nCOURTS BY WHICH DECREES MAY BE EXECUTED",
+    "text": "37. Definition of Court which passed a decree. The expression \"Court which passed a decree,\" or words to that effect, shall, in relation to the execution of decrees, unless there is anything repugnant in the subject or context, be deemed to include,__ \n(a) where the decree to be executed has been passed in the exercise of appellate jurisdiction, the Court of first instance, and \n(b) where the Court of first instance has ceased to exist or to have jurisdiction to execute it, the Court which, if the suit wherein the decree was passed was instituted at the time of making the application for the execution of the decree, would have Jurisdiction to try such suit. COURTS BY WHICH DECREES MAY BE EXECUTED.",
     "raw_text": "37. Definition of Court which passed a decree. The expression “Court which passed a \ndecree,” or words to that effect, shall, in relation to the execution of decrees, unless there is anything \nrepugnant in the subject or context, be deemed to include,__ \n(a)   where the decree to be executed has been passed in the exercise of appellate \njurisdiction, the Court of first instance, and \n(b)   where the Court of first instance has ceased to exist or to have jurisdiction to \nexecute it, the Court which, if the suit wherein the decree was passed was \ninstituted at the time of making the application for the execution of the decree, \nwould have Jurisdiction to try such suit. \nCOURTS BY WHICH DECREES MAY BE EXECUTED",
     "amendment_notes": [],
     "former_labels": [],
@@ -1467,7 +1473,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_38",
@@ -1611,7 +1618,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "43",
     "primary_num": "43",
-    "heading": "Execution of decrees passed by British Courts in places to which this Part does not",
+    "heading": "Execution of decrees passed by British Courts in places to which this Part does not extend or in foreign territory",
     "title": "Execution of decrees passed by British Courts in places to which this Part does not",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -1638,7 +1645,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "44A",
     "primary_num": "44",
-    "heading": "Execution of decrees passed by Courts in the United Kingdom and other",
+    "heading": "Execution of decrees passed by Courts in the United Kingdom and other reciprocating territory",
     "title": "Execution of decrees passed by Courts in the United Kingdom and other",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -1670,7 +1677,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "46. Precepts.__ (1) Upon the application of the decree-holder the Court which passed the decree may, whenever it thinks fit, issue a precept to any other Court which would be competent to execute such decree to attach any property belonging to the judgment-debtor and specified in the precept.\n(2) The Court to which a precept is sent shall proceed to attach the property in the manner prescribed in regard to the attachment of property in execution of a decree :\nProvided that no attachment under a precept shall continue for more than two months unless the period of attachment is extended by an order of the Court which passed the decree or unless before the determination of such attachment the decree has been transferred to the Court by which the attachment has been made and the decree-holder has applied for an order for the sale of such property.\nQUESTIONS TO BE DETERMINED BY COURT EXECUTING DECREE",
+    "text": "46. Precepts.__ (1) Upon the application of the decreeholder the Court which passed the decree may, whenever it thinks fit, issue a precept to any other Court which would be competent to execute such decree to attach any property belonging to the judgmentdebtor and specified in the precept. \n(2) The Court to which a precept is sent shall proceed to attach the property in the manner prescribed in regard to the attachment of property in execution of a decree : \nProvided that no attachment under a precept shall continue for more than two months un less the period of attachment is extended by an order of the Court which passed the decree or unless before the determination of such attachment the decree has been transferred to the Court by which the attachment has been made and the decreeholder has applied for an order for the sale of such property. QUESTIONS TO BE DETERMINED BY COURT EXECUTING DECREE.",
     "raw_text": "46. Precepts.__ (1) Upon the application of the decree-holder the Court which passed the decree \nmay, whenever it thinks fit, issue a precept to any other Court which would be  competent  to execute  \nsuch decree to attach any property belonging to the judgment-debtor and specified in the precept. \n(2) The Court to which a precept is sent shall proceed to attach the property in the manner \nprescribed in regard to the attachment of property in execution of a decree : \nProvided that no attachment under a precept shall continue for more than two months unless \nthe period of attachment is extended by an order of the Court which passed the decree or unless before \nthe determination of such attachment the decree has been transferred to the Court by which the \nattachment has been made and the decree-holder has applied for an order for the sale of such property. \nQUESTIONS TO BE DETERMINED BY COURT EXECUTING DECREE",
     "amendment_notes": [],
     "former_labels": [],
@@ -1683,7 +1690,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_47",
@@ -1692,12 +1700,12 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "47",
     "primary_num": "47",
-    "heading": "Questions  to  be  determined  by  the  Court  executing  decree",
+    "heading": "Questions to be determined by the Court executing decree",
     "title": "Questions  to  be  determined  by  the  Court  executing  decree",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "47. Questions to be determined by the Court executing decree.__ (1) All questions arising between the parties to the suit in which the decree was passed, or their representatives, and relating to the execution, discharge or satisfaction of the decree, shall be determined by the Court executing the decree and not by a separate suit.\n(2) The Court may, subject to any objection as to limitation or jurisdiction, treat a proceeding under this section as a suit or a suit as a proceeding and may, if necessary, order payment of any additional court-fees.\n(3) Where a question arises as to whether any person is or is not the representative of a party, such question shall, for the purposes of this section, be determined by the Court.\nExplanation.__ For the purposes of this section, a plaintiff whose suit has been dismissed and a defendant against whom a suit has been dismissed, are parties to the suit.\nLIMIT OF TIME FOR EXECUTION",
+    "text": "47. Questions to be determined by the Court executing decree. __ (1) All questions arising between the parties to the suit in which the decree w as passed, or their representatives, and relating to the execution, discharge or satisfaction of the decree, shall be determined by the Court executing the decree and not by a separate suit. \n(2) The Court may, subject to any objection as to limitation or j urisdiction, treat a proceeding under this section as a suit or a suit as a proceeding and may, if necessary, order payment of any additional courtfees. \n(3) Where a question arises as to whether any person is or is not the representative of a party, such question shall, for the purposes of this section, be determined by the Court. \nExplanation.__ For the purposes of this section, a plaintiff whose suit has been dismissed and a defendant against whom a suit has been dismissed, are parties to the suit. LIMIT OF TIME FOR EXECUTION.",
     "raw_text": "47. Questions  to  be  determined  by  the  Court  executing  decree.__ (1) All questions \narising between the parties to the suit in which the  decree  was passed, or their representatives, and \nrelating to the execution, discharge or satisfaction of the decree, shall be determined by the Court \nexecuting the decree and not by a separate suit. \n(2) The Court may, subject to any objection as to limitation or jurisdiction, treat a proceeding \nunder this section as a suit or a suit as a proceeding and may, if necessary, order payment of any \nadditional court-fees. \n(3) Where a question arises as to whether any person is or is not the representative of a party, \nsuch question shall, for the purposes of this section, be determined by the Court. \nExplanation.__ For the purposes of this section, a plaintiff whose suit has been dismissed and a \ndefendant against whom a suit has been dismissed, are parties to the suit. \nLIMIT OF TIME FOR EXECUTION",
     "amendment_notes": [],
     "former_labels": [],
@@ -1710,7 +1718,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_248",
@@ -1724,7 +1733,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "248. Execution barred in certain cases.__ (1) Where an application to execute a decree not being a decree granting an injunction has been made, no order for the execution of the same decree shall be made upon any fresh application presented after the expiration of six years from__\n(a) the date of the decree sought to be executed or\n(b) where the decree or any subsequent order directs any payment of money or the delivery of any property to be made at a certain date or at recurring periods, the date of the default in making the payment or delivery in respect of which the applicant seeks to execute the decree.\n(2) Nothing in this section shall be deemed__\n\n(a) to preclude the Court from ordering the execution of a decree upon an application presented after the expiration of the said term of six years, where the judgment-debtor has, by fraud or force, prevented the execution of the decree at some time within six years immediately before the date of the application ;or\n(b) to limit or otherwise affect the operation of article 183 of the First Schedule to the Limitation Act, 1908 (IX of 1908).\nTRANSFEREES AND LEGAL REPRESENTATIVES",
+    "text": "248. Execution barred in certain cases .__ (1) Where an application to execute a decree not being a decree granting an injunction has been made, no order for the execution of the same decree shall be made upon any fresh application presented after the expiration of six years from__ \n(a) the date of the decree sought to be executed, or, \n(b) where the decree or any subsequent order directs any payment of money or the delivery of any property to be made at a certain date or at recurring periods, the date of the default in making the payment or delivery in respect of which the applicant seeks to execute the decree. \n(2) Nothing in this section shall be deemed__ \n\n(a) to preclude the Court from ordering the execution of a decree upon an application presented after the expiration of the said term of six years, where the judgmentdebtor has, by fraud or force, prevented the execution of the decree at some time within six years immediately before the date of the application ;or \n(b) to limit or otherwise affect the operation of article 183 of the First Schedule to the Limitation Act, 1908 (IX of 1908).",
     "raw_text": "248. Execution barred in certain cases.__ (1) Where an application to execute a decree not \nbeing a decree granting an injunction has been made, no order for the execution of the same decree \nshall be made upon any fresh application presented after the expiration of 3[six years] from__ \n(a) \nthe date of the decree sought to be executed, or, \n(b) \nwhere the decree or any subsequent order directs any payment of money or the \ndelivery of any property to be made at a certain date or at recurring periods, the \ndate of the default in making the payment or delivery in respect of which the \napplicant seeks to execute the decree. \n(2) Nothing in this section shall be deemed__ \n \n \n1Omitted by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and Second Schedule. \n2This section has been amended in its application to Sind by the Sind Rural Credit and Land Transfer Act No. XLIX of 1947, s. 18. \n3Subs. by the Law Reforms Ordinance, No. XII of 1972, s. 2 and Sch. \n \n\n   \n \nPage 28 of 318 \n \n(a) \nto preclude the Court from ordering the execution of a decree upon an \napplication presented after the expiration of the said term of 1[six years], \nwhere the judgment-debtor has, by fraud or force, prevented the execution of \nthe decree at some time within 1[six years] immediately before the date of the \napplication ;or \n(b) \nto limit or otherwise affect the operation of article 2[183 of the First Schedule \nto the Limitation Act, 1908 (IX of 1908).] \nTRANSFEREES AND LEGAL REPRESENTATIVES",
     "amendment_notes": [
       "1Omitted by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and Second Schedule. 2This section has been amended in its application to Sind by the Sind Rural Credit and Land Transfer Act No. XLIX of 1947, s. 18. 3Subs. by the Law Reforms Ordinance, No. XII of 1972, s. 2 and Sch."
@@ -1739,7 +1748,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_49",
@@ -2021,12 +2031,12 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "159",
     "primary_num": "159",
-    "heading": "[Release on ground of illness",
+    "heading": "Saving of proceedings",
     "title": "[Release on ground of illness",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "159. Release on ground of illness. Omitted by the Code of Civil Procedure (Amdt.) Ordinance, 1980 (X of 1980), s. 9.\nATTACHMENT",
+    "text": "159. Saving of proceedings.__ All proceedings instituted prior to the commencement of the Code of Civil Procedure (Amendment) Act, 2023 (Act of 2023) shall be deemed to be the proceedings of, and dealt in accordance with , the provisions of th is Code which existed prior to the aforesaid commencement. \nExplanation.__ In this section , the expression \"proceedings\" includes suit, appeal, review, revision, execution applications or any other proceedings and any matter incidental thereto.",
     "raw_text": "159. [Release on ground of illness.] Omitted by the Code of Civil Procedure (Amdt.) Ordinance, \n1980 (X of 1980), s. 9. \nATTACHMENT",
     "amendment_notes": [],
     "former_labels": [],
@@ -2039,7 +2049,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_60",
@@ -2108,7 +2119,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "62",
     "primary_num": "62",
-    "heading": "Seizure of property in dwelling",
+    "heading": "Seizure of property in dwelling-house",
     "title": "Seizure of property in dwelling",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -2216,7 +2227,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "66",
     "primary_num": "66",
-    "heading": "Suit against purchaser not maintainable on ground of purchase being on behalf of",
+    "heading": "Suit against purchaser not maintainable on ground of purchase being on behalf of plaintiff",
     "title": "Suit against purchaser not maintainable on ground of purchase being on behalf of",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -2243,7 +2254,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "67",
     "primary_num": "67",
-    "heading": "Power for Provincial Government to make rules as to sales of land in execution of",
+    "heading": "Power for Provincial Government to make rules as to sales of land in execution of decrees for payment of money",
     "title": "Power for Provincial Government to make rules as to sales of land in execution of",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -2407,12 +2418,12 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "73",
     "primary_num": "73",
-    "heading": "Proceeds of execution sale to be rateably distributed among decree",
+    "heading": "Proceeds of execution sale to be rateably distributed among decreeholders",
     "title": "Proceeds of execution sale to be rateably distributed among decree",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "73. Proceeds of execution sale to be rateably distributed among decree-holders.__ (1) Where assets are held by a Court and more persons than one have, before the receipt of such assets, made application to the Court for the execution of decrees for the payment of money passed against the same judgment-debtor and have not obtained satisfaction thereof, the assets, after deducting the costs of realization, shall be rateably distributed among all such persons :\nProvided as follows:__\n(a) where any property is sold subject to a mortgage or charge, the mortgagee or incumbrancer shall not be entitled to share in any surplus arising from such sale;\n(b) where any property liable to be sold in execution of a decree is subject to a mortgage or charge, the Court may, with the consent of the mortgagee or incumbrancer, order that the property be sold free from the mortgage or charge, giving to the mortgagee or incumbrancer the same interest in the proceeds of the sale as he had in the property sold ;\n(c) where any immoveable property is sold in execution of a decree ordering its sale for the discharge of an incumbrance thereon, the proceeds of sale shall be applied__\n\nfirst, in defraying the expenses of the sale ; secondly, in discharging the amount due under the decree ; thirdly, in discharging the interest and principal monies due on subsequent incumbrances (if any) ; and fourthly, rateably among the holders of decrees for the payment of money against the judgment debtor, who have, prior to the sale of the property, applied to the Court which passed the decree ordering such sale for execution of such decrees, and have not obtained satisfaction thereof.\n(2) Where all or any of the assets liable to be rateably distributed under this section are paid to a person not entitled to receive the same, any person so entitled may sue such person to compel him to refund the assets.\n(3) Nothing in this section affects any right of the Government.\nRESISTANCE TO EXECUTION",
+    "text": "73. Proceeds of execution sale to be rateably distributed among decreeholders.__ (1) Where assets are held by a Court and more persons than one have, before the receipt of such assets, made application to the Court for the execution of decrees for the payment of money passed against the same judgmentdebtor and have not obtained satisfaction thereof, the assets, after deducting the costs of realization, shall be rateably distributed among all such persons : \nProvided as follows:__ \n(a) where any property is sold subject to a mortgage or charge, the mortgagee or incumbrancer shall not be entitled to share in any surplus arising from such sale; \n(b) where any property liable to be sold in execution of a decree is subject to a mortgage or charge, the Court may, with the consent of the mortgagee or incumbrancer, order that the property be sold free from the mortgage or charge, giving to the mortgagee or incumbrancer the same interest in the proceeds of the sa le as he had in the property sold ; \n(c) where any immoveable property is sold in execution of a decree ordering its sale for the discharge of an incumbrance thereon, the proceeds of sale shall be applied__ first, in defraying the expenses of the sale ; secondly, in discharging the amount due under the decree ; thirdly, in discharging the interest and principal monies due on subsequent incumbrances (if any) ; and fourthly, rateably among the holders of decrees for the payment of money against the judgment debtor, who have, prior to the sale of the property, applied to the Court which passed the decree ordering such sale for execution of such decrees, and have not obtained satisfaction thereof. \n(2) Where all or any of the assets liable to be rateably distributed under this section are paid to a person not entitled to receive the same, any person so entitled may sue such person to compel him to refund the assets. \n(3) Nothing in this section affects any right of the Government. RESISTANCE TO EXECUTION.",
     "raw_text": "73. Proceeds of execution sale to be rateably distributed among decree-holders.__ (1) Where \nassets are held by a Court and more persons than one have, before the receipt of such assets, made \napplication to the Court  for the  execution of decrees for the  payment  of money passed against  the  same \njudgment-debtor and have not  obtained satisfaction thereof, the  assets, after deducting the  costs  of \nrealization, shall be rateably distributed among all such persons : \nProvided as follows:__ \n(a) \nwhere any property is sold subject to a mortgage or charge, the mortgagee or \nincumbrancer shall not be entitled to share in any surplus arising from such sale; \n(b) \nwhere any property liable to be sold in execution of a decree is subject to a mortgage \nor charge, the Court may, with the consent of the mortgagee or incumbrancer, order \nthat the property be sold free from the mortgage or charge, giving to the mortgagee \nor incumbrancer the same interest in the proceeds of the sale as he had in the \nproperty sold ; \n(c) \nwhere any immoveable property is sold in execution of a decree ordering its sale \nfor the discharge of an incumbrance thereon, the proceeds of sale shall be applied__ \n \n\n   \n \nPage 37 of 318 \n \nfirst, in defraying the expenses of the sale ; \nsecondly, in discharging the amount due under the decree ; \nthirdly, in discharging the interest and principal monies due on subsequent incumbrances (if \nany) ; and \nfourthly, rateably among the holders of decrees for the payment of money against the judgment \ndebtor, who have, prior to the sale of the property, applied to the Court which passed the \ndecree ordering such sale for execution of such decrees, and have not obtained satisfaction \nthereof. \n(2) Where all or any of the assets liable to be rateably distributed under this section are paid to a person \nnot entitled to receive the same, any person so entitled may sue such person to compel him to refund the assets. \n(3) Nothing in this section affects any right of 1[the Government]. \nRESISTANCE TO EXECUTION",
     "amendment_notes": [],
     "former_labels": [],
@@ -2425,7 +2436,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_74",
@@ -2576,7 +2588,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "78. Commissions issued by foreign Courts. Subject to such conditions and limitations as may be prescribed, the provisions as to the execution and return of commissions for the examination of witnesses shall apply to commissions issued by or at the instance of __\n(a) Courts situate beyond the limits of Pakistan and established or continued by the authority of * * * the Federal Government 6* * *, or * * * * * * *\n(c) Courts of any State or country outside Pakistan..\nSUITS IN PARTICULAR CASES SUITS BY OR AGAINST THE GOVERNMENT OR PUBLIC OFFICERS IN THEIR OFFICIAL CAPACITY",
+    "text": "78. Commissions issued by foreign Courts. Subject to such conditions and limitations as may be prescribed, the provisions as to the execution and return of commis sions for the examination of witnesses shall apply to commissions issued by or at the instance of __ \n(a) Courts situate beyond the limits of Pakistan and established or continued by the authority of [...] the Federal Government [...], or \n[...] \n(c) Courts of any State or country outside Pakistan.]. PART V SUITS IN PARTICULAR CASES SUITS BY OR AGAINST THE GOVERNMENT OR PUBLIC OFFICERS IN THEIR OFFICIAL CAPACITY.",
     "raw_text": "78. Commissions issued by foreign Courts. 2[Subject to such conditions and limitations as may \nbe prescribed,] the provisions as to the execution and return of commissions for the examination of \nwitnesses shall apply to commissions issued by 2[or at the instance of] __ \n(a) \nCourts situate beyond the limits of 1[Pakistan] and established or continued by the \nauthority of 3[* * *] 4[the 5[Federal Government] 6* * *], or \n7[* \n* \n* \n* \n* \n* \n*] \n(c) \nCourts of any State or country outside Pakistan.]. \nPART V \nSUITS IN PARTICULAR CASES \nSUITS BY OR AGAINST 8[THE GOVERNMENT] OR PUBLIC OFFICERS IN THEIR \nOFFICIAL CAPACITY",
     "amendment_notes": [],
     "former_labels": [],
@@ -2589,7 +2601,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_79",
@@ -2792,7 +2805,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "85",
     "primary_num": "85",
-    "heading": "Persons specially appointed by Government to prosecute or defend for Ruler of",
+    "heading": "Persons specially appointed by Government to prosecute or defend for Ruler of foreign State",
     "title": "Persons specially appointed by Government to prosecute or defend for Ruler of",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -2849,7 +2862,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "187",
     "primary_num": "187",
-    "heading": "[Style of Rulers as Parties to suits",
+    "heading": "Style of Rulers as Parties to suits",
     "title": "[Style of Rulers as Parties to suits",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -2876,7 +2889,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "87A",
     "primary_num": "87",
-    "heading": "[Application of sections 85 and 86 to Rulers of Acceding States, etc",
+    "heading": "Application of sections 85 and 86 to Rulers of Acceding States, etc",
     "title": "[Application of sections 85 and 86 to Rulers of Acceding States, etc",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -2957,7 +2970,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "89",
     "primary_num": "89",
-    "heading": "[Arbitration",
+    "heading": "Arbitration",
     "title": "[Arbitration",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -3146,12 +3159,12 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "95",
     "primary_num": "95",
-    "heading": "Compensation, for obtaining arrest, attachment or injunction",
+    "heading": "Compensation, for obtaining arrest, attachment or injunction on in sufficient grounds",
     "title": "Compensation, for obtaining arrest, attachment or injunction",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "95. Compensation, for obtaining arrest, attachment or injunction on in sufficient grounds.__ (1) Where, in any suit in which an arrest or attachment has been effected or a temporary injunction granted under the last preceding section,__\n(a) it appears to the Court that such arrest, attachment or injunction was applied for on insufficient grounds, or\n\n(b) the suit of the plaintiff fails and it appears to the Court that there was no reasonable or probable ground for instituting the same, the defendant may apply to the Court and the Court may, upon such application, award against the plaintiff by its order such amount, not exceeding ten thousand rupees, as it deems a reasonable compensation to the defendant for the expense or injury caused to him :\nProvided that a Court shall not award, under this section, an amount exceeding the limits of its pecuniary jurisdiction.\n(2) An order determining any such application shall bar any suit for compensation in respect of such arrest, attachment or injunction.\n_______ APPEALS APPEALS FROM ORIGINAL DECREES",
+    "text": "95. Compensation, for obtaining arrest, attachment or injunction on in sufficient grounds.__ (1) Where, in any suit in which an arrest or attachment has been effected or a temporary injunction granted under the last preceding section,__ \n(a) it appears to the Court that such arrest, attachment or injunction was applied for on insufficient grounds, or \n\n(b) the suit of the plaintiff fails and it appears to the Court that there was no reasonable or probable ground for instituting the same, the defendant may apply to the Court and the Court may, upon such application, award against the plaintiff by its order such amount, n ot exceeding ten thousand rupees, as it deems a reasonable compensation to the defendant for the expense or injury caused to him : \nProvided that a Court shall not award, under this section, an amount exceeding the limits of its pecuniary jurisdiction. \n(2) An order determining any such application shall bar any suit for compensation in respect of such arrest, attachment or injunction. _______ PART VII APPEALS APPEALS FROM ORIGINAL DECREES.",
     "raw_text": "95. Compensation, for obtaining arrest, attachment or injunction \non \nin \nsufficient \ngrounds.__ (1) Where, in any suit in which an arrest or attachment has been effected or a temporary \ninjunction granted under the  last  preceding section,__ \n(a) \nit appears to the Court that such arrest, attachment or injunction was applied for \non insufficient grounds, or \n \n1Omitted and subs. by Act No. XLVIII of 2016, s.3. \n2The words “outside the Presidency­towns” omitted by A.O., 1949. \n3Subs. by A.O., 1937. \n\n   \n \nPage 44 of 318 \n \n(b) \nthe suit of the plaintiff fails and it appears to the Court that there was no \nreasonable or probable ground for instituting the same, \nthe defendant may apply to the Court and the Court may, upon such application, award against \nthe plaintiff by its order such amount, not exceeding 1[ten] thousand rupees, as it deems a \nreasonable compensation to the defendant for the expense or injury caused to him : \nProvided that a Court shall not award, under this section, an amount exceeding the limits of its \npecuniary jurisdiction. \n(2) An order determining any such application shall bar any suit for compensation in respect \nof such arrest, attachment or injunction. \n_______ \nPART VII \nAPPEALS \nAPPEALS FROM ORIGINAL DECREES",
     "amendment_notes": [
       "1Omitted and subs. by Act No. XLVIII of 2016, s.3.",
@@ -3167,7 +3180,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_96",
@@ -3259,7 +3273,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "99",
     "primary_num": "99",
-    "heading": "No decree to be reversed or modified for error or irregularity not affecting merits or",
+    "heading": "No decree to be reversed or modified for error or irregularity not affecting merits or jurisdiction",
     "title": "No decree to be reversed or modified for error or irregularity not affecting merits or",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -3507,7 +3521,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "108. Procedure in appeals from appellate decrees and orders. The provisions of this Part relating to appeals from original decrees shall, so far as may be, apply to appeals__\n(a) from appellate decrees, and\n(b) from orders made under this Code or under any special or local law in which a different procedure is not provided.\n\n1APPEALS TO THE SUPREME COURT",
+    "text": "108. Procedure in appeals from appellate decrees and orders. The provisions of this Part relating to appeals from original decrees shall, so far as may be, apply to appeals__ \n(a) from appellate decrees, and \n(b) from orders made under this Code or under any special or local law in which a different procedure is not provided.",
     "raw_text": "108. Procedure in appeals from appellate decrees and orders. The provisions of this Part \nrelating to appeals from original decrees shall, so far as may be, apply to appeals__ \n(a) \nfrom appellate decrees, and \n(b) \nfrom orders made under this Code or under any special or local law in which a \ndifferent procedure is not provided. \n \n1Proviso ins. by the Civil Procedure (Amdt.) Act No. IX of 1922, s. 3.  \n2Subs. by the Federal Laws (Revision and Declaration) Ordinance, No. XXVII of 1981, s. 3 and Second Sch.  \n3Subs. by Act No. XIX of 2023, s. 11. \n\n   \n \nPage 47 of 318 \n \n1APPEALS TO THE 2[SUPREME COURT]",
     "amendment_notes": [
       "1Proviso ins. by the Civil Procedure (Amdt.) Act No. IX of 1922, s. 3. 2Subs. by the Federal Laws (Revision and Declaration) Ordinance, No. XXVII of 1981, s. 3 and Second Sch. 3Subs. by Act No. XIX of 2023, s. 11."
@@ -3522,7 +3536,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_109",
@@ -3563,7 +3578,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "4110.Omitted.",
+    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
     "raw_text": "4110.[Omitted].",
     "amendment_notes": [],
     "former_labels": [],
@@ -3576,7 +3591,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_SEC_111",
@@ -3617,7 +3633,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "8111A. Omitted.",
+    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
     "raw_text": "8111A. [Omitted].",
     "amendment_notes": [],
     "former_labels": [],
@@ -3630,7 +3646,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_SEC_112",
@@ -3728,7 +3745,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "115. Revision.__ (1) A High Court may call for the record of any case which has been decided by any Court subordinate to that High Court and in which no appeal lies thereto, and if such subordinate Court appears__\n(a) to have exercised a jurisdiction not vested in it by law; or\n(b) to have failed to exercise a jurisdiction so vested; or\n(c) to have acted in the exercise of its jurisdiction illegally or with material irregularity, the High Court may make such order in the case as it thinks fit:\nProvided that where a person makes an application under this sub-section, he shall, in support of such application, furnish copies of the pleadings, documents and order of the subordinate Court and the High Court shall, except for reasons to be recorded, dispose of such application without calling for the record of the subordinate Court:\nProvided further that such application shall be made within ninety days of the decision of the subordinate Court which shall provide a copy of such decision within three days thereof and the High Court shall dispose of such application within six months.\n(2) A District Court may exercise the powers conferred on the High Court by sub-section (1) in respect of any case decided by a Court subordinate to that District Court in which no appeal lies and the amount or value of the subject-matter whereof does not exceed the limits of the appellate jurisdiction of the District Court.\n(3) If an application under sub-section (1) in respect of a case within the competence of the District Court has been made either to the High Court or the District Court, no further such application shall be made to either of them.\n(4) No proceedings in revision shall be entertained by the High Court against an order made under sub-section (2) by the District Court.\n\n1Subs. by Act No. XIX of 2023, s. 13-14.\n\nSPECIAL PROVISION RELATING TO * * HIGH COURTS",
+    "text": "115. Revision.__ (1) A High Court may call for the record of any case which has been decided by any Court subordinate to that High Court and in which no appeal lies thereto, and if such subordinate Court appears__ \n(a) to have exercised a jurisdiction not vested in it by law; or \n(b) to have failed to exercise a jurisdiction so vested; or \n(c) to have acted in the exercise of its jurisdiction illegally or with material irregularity, the High Court may make such order in the case as it thinks fit: \nProvided that where a person makes an application under this subsection, he shall, in support of such application, furnish copies of the plead ings, documents and order of the subordinate Court and the High Court shall, except for reasons to be recorded, dispose of such application without calling for the record of the subordinate Court: \nProvided further that such application shall be made within ninety days of the decision of the subordinate Court which shall provide a copy of such decision within three days thereof and the High Court shall dispose of such application within six months. \n(2) A District Court may exercise the powers conferred on th e High Court by subsection (1) in respect of any case decided by a Court subordinate to that District Court in which no appeal lies and the amount or value of the subjectmatter whereof does not exceed the limits of the appellate jurisdiction of the District Court. \n(3) If an application under subsection (1) in respect of a case within the competence of the District Court has been made either to the High Court or the District Court, no further such application shall be made to either of them. \n(4) No proceedings in revision shall be entertained by the High Court against an order made under subsection (2) by the District Court. PART IX SPECIAL PROVISION RELATING TO * * HIGH COURTS.",
     "raw_text": "1[115. Revision.__ (1) A High Court may call for the record of any case which has been decided by \nany Court subordinate to that High Court and in which no appeal lies thereto, and if such subordinate Court \nappears__ \n(a) \nto have exercised a jurisdiction not vested in it by law; or \n(b) \nto have failed to exercise a jurisdiction so vested; or \n(c) \nto have acted in the exercise of its jurisdiction illegally or with material irregularity, \nthe High Court may make such order in the case as it thinks fit: \nProvided that where a person makes an application under this sub-section, he shall, in support of \nsuch application, furnish copies of the pleadings, documents and order of the subordinate Court and the \nHigh Court shall, except for reasons to be recorded, dispose of such application without calling for the \nrecord of the subordinate Court: \nProvided further that such application shall be made within ninety days of the decision of the \nsubordinate Court which shall provide a copy of such decision within three days thereof and the High Court \nshall dispose of such application within six months. \n(2) A District Court may exercise the powers conferred on the High Court by sub-section (1) in \nrespect of any case decided by a Court subordinate to that District Court in which no appeal lies and the \namount or value of the subject-matter whereof does not exceed the limits of the appellate jurisdiction of \nthe District Court. \n(3) If an application under sub-section (1) in respect of a case within the competence of the District \nCourt has been made either to the High Court or the District Court, no further such application shall be \nmade to either of them. \n(4) No proceedings in revision shall be entertained by the High Court against an order made under \nsub-section (2) by the District Court.] \n \n1Subs. by Act No. XIX of 2023, s. 13-14. \n\n   \n \nPage 49 of 318 \n \nPART IX \nSPECIAL PROVISION RELATING TO 1[* *] HIGH COURTS",
     "amendment_notes": [],
     "former_labels": [],
@@ -3741,7 +3758,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_116",
@@ -3809,7 +3827,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "118. Execution of decree before ascertainment of costs. Where any 3* High Court considers it necessary that a decree passed in the exercise of its original civil jurisdiction should be executed before the amount of the costs incurred in the suit can be ascertained by taxation, the Court may order that the decree shall be executed forthwith, except as to so much thereof as relates to the costs; and, as to so much thereof as relates to the costs, that the decree may be executed as soon as the amount of the costs shall be ascertained by taxation.",
+    "text": "118. Execution of decree before ascertainment of costs. Where any [...] High Court considers it necessary that a decree passed in the exercise of its original civil jurisdiction should be executed before the amount of the costs incurred in the suit can be ascertained by taxation, the Court may order that the decree shall be executed forthwith, except as to so much thereof as relates to the costs; and, as to so much thereof as relates to the costs, that the decree may be executed as soon as the amount of the costs shall be ascertained by taxation.",
     "raw_text": "118. Execution of decree before ascertainment of costs. Where any 3* High Court considers \nit necessary that a decree passed in the exercise of its original civil jurisdiction should be executed \nbefore the amount of the costs incurred in the suit can be ascertained by taxation, the Court may order \nthat the decree shall be executed forthwith, except as to so much thereof as relates to the costs; \nand, as to so much thereof as relates to the costs, that the decree may be executed as soon as \nthe amount of the costs shall be ascertained by taxation.",
     "amendment_notes": [],
     "former_labels": [],
@@ -3822,7 +3840,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_119",
@@ -3948,7 +3967,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "123. Constitution of Rules Committees in certain Provinces.__ (1) A Committee, to be called the Rule Committee, shall be constituted at the town which is the usual place of sitting of each of the High Courts * * * * * * referred to in section 122.\n(2) Each such Committee shall consist of the following persons, namely:__\n(a) three Judges of the High Court established at the town at which such Committee is constituted, one of whom at least has served as a District Judge or 4* * * a Divisional Judge for three years, * * * * * * *\n(c) two advocates practising in that Court, and\n(d) a Judge of a Civil Court subordinate to the High Court, * * * * * * *\n(3) The members of each such Committee shall be appointed by the Chief Justice * * * who shall also nominate one of their member to be President:\nProvided that, if the Chief Justice * * * elects to be himself a member of a Committee, the number of other Judges appointed to be members shall be two, and the Chief Justice * * * shall be the President of the Committee.\n(4) Each member of any such Committee shall hold office for such period as may be prescribed by the Chief Justice * * * in this behalf; and whenever any member retires, resigns, dies or ceases to reside in the Province in which the Committee was constituted, or becomes incapable of acting as a member of the Committee, the said Chief Justice * * * may appoint another person to be a member in his stead.\n(5) There shall be a Secretary to each such Committee, who shall be appointed by the Chief Justice * * * and shall receive such remuneration as may be provided in this behalf by the Provincial Government.",
+    "text": "123. Constitution of Rules Committees in certain Provinces.__ (1) A Committee, to be called the Rule Committee, shall be constituted at the town which is the usual place of sitting of each of the High Courts [...] [...] referred to in section 122]. \n(2) Each such Committee shall consist of the following persons, namely:__ \n(a) three Judges of the High Court established at the town at which such Committee is constituted, one of whom at least has served as a District Judge or [...] a Divisional Judge for three years, \n[...] 5\n[(c) two advocates practising in that Court, and] \n(d) a Judge of a Civil Court subordinate to the High Court, \n[...] \n(3) The members of each such Committee shall be appointed by the Chief Justice [...] who shall also nominate one of their member to be President: \nProvided that, if the Chief Justice [...] elects to be himself a member of a Committee, the number of other Judges appointed to be members shall be two, and the Chief Justice [...] shall be the President of the Committee. \n(4) Each member of any such Committee shall hold office for such period as may be prescribed by the Chief Justice [...] in this behalf; and whenever any member retires, resigns, dies or ceases to reside in the Province in which the Committee was constituted, or becomes incapable of acting as a member of the Committee, the said Chief Justice [...] may appoint another person to be a member in his stead. \n(5) There shall be a Secretary to each such Committee, who shall be appointed by the Chief Justice [...] and shall receive such remuneration as may be provided in this behalf by the Provincial Government.",
     "raw_text": "123. Constitution of Rules Committees in certain Provinces.__ (1) A Committee, to be called \nthe Rule Committee, shall be constituted at 1[the town which is the usual place of sitting of each of the \nHigh Courts 2[* * *] 3[* * *] referred to in section 122]. \n(2) Each such Committee shall consist of the following persons, namely:__ \n(a) \nthree Judges of the High Court established at the town at which such Committee \nis constituted, one of whom at least has served as a District Judge or 4* * * a \nDivisional Judge for three years, \n5[* \n* \n* \n* \n* \n* \n*] \n5[(c)  \ntwo advocates practising in that Court, and] \n(d)  \na Judge of a Civil Court subordinate to the High Court,  \n5[* \n* \n* \n* \n* \n* \n*] \n(3) The members of each such Committee shall be appointed by the Chief Justice 6[* * *] who \nshall also nominate one of their member to be President: \nProvided that, if the Chief Justice 6[* * *] elects to be  himself  a  member of a  Committee, the  \nnumber of other Judges appointed to be members shall be two, and the Chief Justice 6[* * *] shall be \nthe President of the Committee. \n(4) Each member of any such Committee shall hold office for such period as may be prescribed \nby the Chief Justice 6[* * *] in this behalf;  and whenever any member retires, resigns, dies or ceases \nto reside in the Province in which the Committee was constituted, or becomes incapable of acting as a \nmember of the Committee, the said Chief Justice 6[* * *]   may appoint another person to be a member   \nin his stead. \n(5) There shall be a Secretary to each such Committee, who shall be appointed by the Chief \nJustice 6[* * *] and shall receive such remuneration as may be provided in this behalf 7[by the \nProvincial Government].",
     "amendment_notes": [],
     "former_labels": [],
@@ -3961,7 +3980,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_124",
@@ -4110,7 +4130,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "5130. Omitted.",
+    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
     "raw_text": "5130. [Omitted].",
     "amendment_notes": [],
     "former_labels": [],
@@ -4123,7 +4143,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_SEC_131",
@@ -4249,7 +4270,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "135. Exemption from arrest under civil process.__ (1) No Judge, Magistrate or other judicial officer shall be liable to arrest under civil process while going to, presiding in, or returning from, his Court.\n(2) Where any matter is pending before a tribunal having jurisdiction therein, or believing in good faith that it has such jurisdiction, the parties thereto, their pleaders, mukhtars, revenue-agents and recognized agents, and their witnesses acting in obedience to a summons, shall be exempt from arrest under civil process other than process issued by such tribunal for contempt of Court while going to or attending such tribunal for the purpose of such matter, and while returning from such tribunal.\n(3) Nothing in sub-section (2) shall enable a judgment-debtor to claim exemption from arrest under an order for immediate execution or where such judgment-debtor attends to show cause why he should not be committed to prison in execution of a decree.\nl35A. Exemption of members of Legislative bodies from arrest and detention under civil process.__ (1) No person shall be liable to arrest or detention in prison under civil process__\n(a) if he is member of a Legislature * * * * * * ,during the continuance of any meeting of such Legislature * *;\n(b) if he is a member of any committee of such Legislature 4* * *, during the continuance of any meeting of such committee; * * * * * * *\n\n1Subs. by Adaptation Order, 1937.\n2For such notifications, see the different local Rules and Orders.",
+    "text": "135. Exemption from arrest under civil process.__ (1) No Judge, Magistrate or other judicial officer shall be liable to arrest under civil process while going to, presiding in, or returning from, his Court. \n(2) Where any matter is pending before a tribunal having jurisdiction therein, or believing in good faith that it has such jurisdiction, the parties thereto, their pleaders, mukhtars, revenueagents and recognized agents, and their witnesses acting in obedience to a summons, shall be exempt from arrest under civil process other than process issued by such tribunal for contempt of Court while going to or attending such tribunal for the purpose of such matter, and while returning from such tribunal. \n(3) Nothing in subsection (2) shall enable a judgmentdebtor to claim exemption from arrest under an order for immediate execution or where such judgmentdebtor attends to show cause why he should not be committed to prison in execution of a decree. l35A. Exemption of members of Legislative bodies from arrest and detention under civil process.__ (1) No person shall be liable to arrest or detention in prison under civil process__ \n(a) if he is member of a * Legislature [...] [...] ,during the continuance of any meeting of such Legislature * *;] \n(b) if he is a member of any committee of such Legislature [...], during the continuance of any meeting of such committee; \n[...] \n\n(2) A person released from detention under subsection (1 ) shall, subject to the provisions of the said subsection, be liable to rearrest and to the further detention to which he would have been liable if he had not been released under the provisions of subsection (1).]",
     "raw_text": "135. Exemption from arrest under civil process.__ (1) No Judge, Magistrate or other judicial \nofficer shall be liable to arrest under civil process while going to, presiding in, or returning from, his \nCourt. \n(2) Where any matter is pending before a tribunal having jurisdiction therein,  or  believing in  \ngood faith that it has such jurisdiction, the parties thereto, their pleaders, mukhtars, revenue-agents and \nrecognized agents, and their witnesses acting in obedience to a summons, shall be exempt from arrest \nunder civil process other than process issued by such tribunal for contempt of Court while going to or \nattending such tribunal for the purpose of such matter, and while returning from such tribunal. \n(3) Nothing in sub-section (2) shall enable a judgment-debtor to claim exemption from arrest \nunder an order for immediate execution or where such judgment-debtor attends to show cause why he \nshould not be committed to prison in execution of a decree. \n3[l35A. Exemption of members of Legislative bodies from arrest and detention under civil \nprocess.__ (1) No person shall be liable to arrest or detention in prison under civil process__ \n6[(a)  if he is member of a 4[*] Legislature 4[* *  *] 5[*  *  *] ,during the continuance \nof any meeting  of such Legislature 4[* *];] \n(b)  \nif he is a member of any committee of such 1[Legislature 4* * *], during the \ncontinuance of any meeting of such committee; \n6[* \n* \n* \n* \n* \n* \n*] \n \n \n \n \n \n1Subs. by Adaptation Order, 1937. \n2For such notifications, see the different local Rules and Orders.",
     "amendment_notes": [],
     "former_labels": [],
@@ -4262,7 +4283,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_136",
@@ -4276,7 +4298,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "136. Procedure where person to be arrested or property to be attached is outside district.__\n(1) Where an application is made that any person shall be arrested or that property shall be attached under any provision of this Code not relating to the execution of decrees, and such person resides or such property is situate outside the local limits of the jurisdiction of the Court to which the application is made, the Court may, in its discretion, issue a warrant of arrest or make an order of attachment, and send to the District Court within the local limits of whose jurisdiction such person or property resides or is situate a copy of the warrant or order, together with the probable amount of the costs of the arrest or attachment.\n(2) The district Court shall, on receipt of such copy and amount, cause the arrest or attachment to be made by its own officers, or by a Court subordinate to itself, and shall inform the Court which issued or made such warrant or order of the arrest or attachment\n(3) The Court making an arrest under this section shall send the person arrested to the Court by which the warrant of arrest was issued, unless he shows cause to the satisfaction of the former Court why he should not be sent to the latter Court, or unless he furnishes sufficient security for his appearance before the latter Court or for satisfying any decree that may be passed against him by that Court, in either of which cases the Court making the arrest shall release him.\n* * * * * * *",
+    "text": "136. Procedure where person to be arrested or property to be attached is outside district.__ \n(1) Where an application is made that any person shall be arrested or that property shall be attached under any provision of this Code not relating to the execution of decrees, and such person resides o r such property is situate outside the local limits of the jurisdiction of the Court to which the application is made, the Court may, in its discretion, issue a warrant of arrest or make an order of attachment, and send to the District Court within the local limits of whose jurisdiction such person or property resides or is situate a copy of the warrant or order, together with the probable amount of the costs of the arrest or attachment. \n(2) The district Court shall, on receipt of such copy and amount, cause the arrest or attachment to be made by its own officers, or by a Court subordinate to itself, and shall inform the Court which issued or made such warrant or order of the arrest or attachment \n(3) The Court making an arrest under this section shall send the person arrested to the Court by which the warrant of arrest was issued, unless he shows cause to the satisfaction of the former Court why he should not be sent to the latter Court, or unless he furnishes sufficient security for his appearance before the latter Court or for satisfying any decree that may be passed against him by that Court, in either of which cases the Court making the arrest shall release him. \n[...]",
     "raw_text": "136. Procedure where person to be arrested or property to be attached is outside district.__ \n(1) Where an application is made that any person shall be arrested or that property shall be attached \nunder any provision of this Code not relating to the execution of decrees, and such person resides or  \nsuch property is situate outside the local limits of the jurisdiction of the Court to which the application \nis made, the Court may, in its discretion, issue a warrant of arrest or make an order of attachment, and \nsend to the District Court within the local limits of whose jurisdiction such person or property resides \nor is situate a copy of the warrant or order, together with the probable amount of the costs of the arrest \nor attachment. \n(2) The district Court shall, on receipt of such copy and amount, cause the arrest or attachment to \nbe made by its own officers, or by a Court subordinate to itself, and shall inform the Court which issued or \nmade such warrant or order of the arrest or attachment \n(3) The Court making an arrest under this section shall send the person arrested to the Court by \nwhich the warrant of arrest was issued, unless he shows cause to the satisfaction of the former Court why \nhe should not be sent to the latter Court, or unless he furnishes sufficient security for his appearance before \nthe latter Court or for satisfying any decree that may be passed against him by that Court, in either of which \ncases the Court making the arrest shall release him. \n1[* \n* \n* \n* \n* \n* \n*]",
     "amendment_notes": [],
     "former_labels": [],
@@ -4289,7 +4311,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_SEC_137",
@@ -4624,7 +4647,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "149",
     "primary_num": "149",
-    "heading": "Power to make up deficiency of court",
+    "heading": "Power to make up deficiency of court-fees",
     "title": "Power to make up deficiency of court",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -4764,7 +4787,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "154. Omitted.",
+    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
     "raw_text": "154. 1[Omitted].",
     "amendment_notes": [],
     "former_labels": [
@@ -4779,7 +4802,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_SEC_155",
@@ -4793,7 +4817,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "155. Omitted.",
+    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
     "raw_text": "155. 2[Omitted].",
     "amendment_notes": [],
     "former_labels": [],
@@ -4806,7 +4830,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_SEC_157",
@@ -4952,7 +4977,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "26A",
     "primary_num": "26",
-    "heading": "Service on civil public officer or on servant of railway company or local authority,",
+    "heading": "Service on civil public officer or on servant of railway company or local authority, in India",
     "title": "Service on civil public officer or on servant of railway company or local authority,",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -5141,7 +5166,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "48",
     "primary_num": "48",
-    "heading": "Attachment of salary or allowances of public officer or servant of railway company",
+    "heading": "Attachment of salary or allowances of public officer or servant of railway company or local authority",
     "title": "Attachment of salary or allowances of public officer or servant of railway company",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -5249,7 +5274,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "87",
     "primary_num": "87",
-    "heading": "Notification on re",
+    "heading": "Notification on re-sale",
     "title": "Notification on re",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
@@ -5440,7 +5465,7 @@
     "act_name": "Code of Civil Procedure (CPC) , 1908 (Under Review)",
     "section": "417",
     "primary_num": "417",
-    "heading": "[Appeals to the Federal Court]",
+    "heading": "Appeals to the Federal Court",
     "title": "[Appeals to the Federal Court]",
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",

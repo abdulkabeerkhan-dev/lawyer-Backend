@@ -785,7 +785,9 @@ def _origin_is_allowed(origin: str) -> bool:
         return True
 
     import re
-    if re.match(r"^https://[a-zA-Z0-9_\-.]+\.(up\.railway\.app|railway\.app|vercel\.app|lovable\.app|lovableproject\.com|onrender\.com|netlify\.app)$", origin):
+    # Anyone can host a site on these platforms, so the wildcard is for development only;
+    # production accepts exactly the origins listed in ALLOWED_ORIGINS.
+    if not is_prod and re.match(r"^https://[a-zA-Z0-9_\-.]+\.(up\.railway\.app|railway\.app|vercel\.app|lovable\.app|lovableproject\.com|onrender\.com|netlify\.app)$", origin):
         return True
     if any("lovable.app" in o for o in allowed):
 
@@ -1303,6 +1305,7 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
         res = (
             supabase.table('full_judgments')
             .select('id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text')
+            .or_("retrieval_status.is.null,retrieval_status.not.in.(rejected,quarantined,restricted)")
             .limit(limit * 2)
             .text_search('fts_headnote', ts_query, options={"config": "english"})
             .execute()
@@ -1345,6 +1348,7 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
             res = (
                 supabase.table('full_judgments')
                 .select('id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text')
+                .or_("retrieval_status.is.null,retrieval_status.not.in.(rejected,quarantined,restricted)")
                 .limit(limit * 2)
                 .text_search('case_title', title_query)
                 .execute()
@@ -4424,7 +4428,7 @@ def extract_and_intercept_citation(user_query: str):
 
                 try:
 
-                    res_party = supabase.table("full_judgments").select("id, case_id, case_title, court_name, canonical_court_name").ilike("case_title", f"%{clean_party_name}%").limit(3).execute()
+                    res_party = supabase.table("full_judgments").select("id, case_id, case_title, court_name, canonical_court_name").ilike("case_title", f"%{clean_party_name}%").or_("retrieval_status.is.null,retrieval_status.not.in.(rejected,quarantined,restricted)").limit(3).execute()
 
                     if not res_party or not res_party.data:
 
@@ -4434,7 +4438,7 @@ def extract_and_intercept_citation(user_query: str):
 
                             short_party = " ".join(p_words[-2:])
 
-                            res_party = supabase.table("full_judgments").select("id, case_id, case_title, court_name, canonical_court_name").ilike("case_title", f"%{short_party}%").limit(3).execute()
+                            res_party = supabase.table("full_judgments").select("id, case_id, case_title, court_name, canonical_court_name").ilike("case_title", f"%{short_party}%").or_("retrieval_status.is.null,retrieval_status.not.in.(rejected,quarantined,restricted)").limit(3).execute()
 
                     if res_party and res_party.data:
 
@@ -8326,7 +8330,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if raw_memo:
                     from legal_ai.synthesis.memorandum_generator import sanitize_partner_markdown_presentation
                     clean_draft = str(raw_memo)
-                    clean_draft = re.sub(r'^\s*>\s*["\xe2\x80\x9c][^"\n]+["\xe2\x80\x9d]\s*$', '', clean_draft, flags=re.MULTILINE)
+                    clean_draft = re.sub(r'^\s*>\s*["“][^"”\n]+["”]\s*$', '', clean_draft, flags=re.MULTILINE)
                     clean_draft = sanitize_partner_markdown_presentation(clean_draft)
                     if len(clean_draft.strip()) > 100:
                         memo_body = clean_draft.strip()
@@ -10024,6 +10028,18 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
                             for row in res_t.data:
 
                                 db_status_map[str(row.get("case_id"))] = str(row.get("retrieval_status") or "").lower()
+
+                        # Zilliz keys carry a court code that full_judgments.case_id lacks, so match
+                        # the rest on the real citation; otherwise quarantined cases pass the gate.
+                        unresolved = [c for c in candidate_cids if c not in db_status_map]
+                        if unresolved:
+                            from core.case_store import retrieval_statuses
+                            for _cid, _st in retrieval_statuses(unresolved).items():
+                                if _st is not None:
+                                    db_status_map[_cid] = _st
+                            for _cid in unresolved:
+                                if _cid.upper() in db_status_map and _cid not in db_status_map:
+                                    db_status_map[_cid] = db_status_map[_cid.upper()]
 
                     except Exception as db_err:
 
@@ -15895,7 +15911,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
             raw_memo = job.get("unverified_memo") or job.get("raw_draft")
             if raw_memo:
                 clean_draft = str(raw_memo)
-                clean_draft = re.sub(r'^\s*>\s*["\xe2\x80\x9c][^"\n]+["\xe2\x80\x9d]\s*$', '', clean_draft, flags=re.MULTILINE)
+                clean_draft = re.sub(r'^\s*>\s*["“][^"”\n]+["”]\s*$', '', clean_draft, flags=re.MULTILINE)
                 clean_draft = sanitize_partner_markdown_presentation(clean_draft)
                 if len(clean_draft.strip()) > 100:
                     memo_body = clean_draft.strip()

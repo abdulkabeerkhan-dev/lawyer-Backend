@@ -80,10 +80,30 @@ def filter_candidate_quality_before_ranking(
         "land acquisition", "collector land acquisition", "acquisition of land"
     ])
 
+    # Zilliz candidates carry no retrieval_status: look it up in full_judgments by citation.
+    _blocked: set = set()
+    try:
+        from legal_ai.verification.case_status import blocked as _blocked_keys
+        _need = []
+        for c in raw_candidates:
+            _m = c.get("metadata") if isinstance(c.get("metadata"), dict) else c
+            if not (c.get("retrieval_status") or _m.get("retrieval_status")):
+                _k = str(c.get("case_id") or _m.get("case_id") or c.get("case_key") or _m.get("case_key") or "").strip()
+                if _k:
+                    _need.append(_k)
+        if _need:
+            _blocked = _blocked_keys(_need)
+    except Exception as _e:  # never let the lookup break retrieval
+        logger.warning(f"case status lookup skipped: {_e}")
+
     for c in raw_candidates:
         meta = c.get("metadata") if isinstance(c.get("metadata"), dict) else c
         c_type = str(c.get("content_type") or meta.get("content_type") or "").lower()
         status = str(c.get("retrieval_status") or meta.get("retrieval_status") or "").lower()
+        if not status and _blocked:
+            _k = str(c.get("case_id") or meta.get("case_id") or c.get("case_key") or meta.get("case_key") or "").strip().upper()
+            if _k in _blocked:
+                status = "quarantined"
 
         # 1. Hard Drop: Caption-only / metadata-only / quarantined / restricted
         if c_type in ("caption_only", "metadata_only"):

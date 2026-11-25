@@ -2420,6 +2420,15 @@ async def process_query_job_legal_ai(
 
 
     )
+    # The workspace's era toggle ("modern" = 2018 onward, "apex" = Supreme Court only).
+    try:
+        from legal_ai.ranking.era_filter import apply_request_filters
+        clean_candidates, _era = apply_request_filters(clean_candidates, request)
+        if _era:
+            logger.info(f"era filter {_era}")
+            jobs_store.get(job_id, {}).setdefault("telemetry", {})["era_filter"] = _era
+    except Exception as _era_err:
+        logger.warning(f"era filter skipped: {_era_err}")
 
 
 
