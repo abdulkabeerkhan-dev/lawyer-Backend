@@ -52,6 +52,12 @@ class FakeQuery:
         self.filters.append(lambda r: needle in (r.get(col) or "").lower())
         return self
 
+    def or_(self, expr):
+        # only the blocked-status filter is used: drop rejected/quarantined/restricted rows
+        assert expr == "retrieval_status.is.null,retrieval_status.not.in.(rejected,quarantined,restricted)", expr
+        self.filters.append(lambda r: (r.get("retrieval_status") or "") not in ("rejected", "quarantined", "restricted"))
+        return self
+
     def limit(self, n):
         self.n = n
         return self

@@ -161,7 +161,7 @@ def _pick(key: str, rows: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
     return None
 
 
-def _supabase_rows(keys: List[str]) -> Dict[str, Optional[Dict[str, Any]]]:
+def _supabase_rows(keys: List[str], columns: str = _CASE_COLUMNS, shape: bool = True) -> Dict[str, Optional[Dict[str, Any]]]:
     """key -> shaped row or None, for keys not in the Turso copy. Raises on DB errors."""
     from legal_ai.verification.citation_keys import citation_key
     sb = _supabase()
@@ -178,18 +178,28 @@ def _supabase_rows(keys: List[str]) -> Dict[str, Optional[Dict[str, Any]]]:
                 y, j, p = ck
                 forms += [f"{y} {j} {p}", f"{j} {y} {p}"]
         rows: Dict[str, Dict[str, Any]] = {}
-        res = sb.table("full_judgments").select(_CASE_COLUMNS).in_("case_id", ids).execute()
+        res = sb.table("full_judgments").select(columns).in_("case_id", ids).execute()
         for r in res.data or []:
             rows[str(r.get("id"))] = r
         if forms:
-            res = sb.table("full_judgments").select(_CASE_COLUMNS).in_("neutral_citation", list(dict.fromkeys(forms))).execute()
+            res = sb.table("full_judgments").select(columns).in_("neutral_citation", list(dict.fromkeys(forms))).execute()
             for r in res.data or []:
                 rows[str(r.get("id"))] = r
         pool = list(rows.values())
         for k in chunk:
             hit = _pick(k, pool)
-            out[k] = _shape(dict(hit)) if hit else None
+            out[k] = (_shape(dict(hit)) if shape else dict(hit)) if hit else None
     return out
+
+
+def retrieval_statuses(keys: List[str]) -> Dict[str, Optional[str]]:
+    """Zilliz case_key (or any case id) -> full_judgments.retrieval_status ('' when the row
+    has none, None when no row is this case). Zilliz keys carry a court code
+    (2005_CLC_SHC_1241) that full_judgments.case_id does not (2005_CLC_1241), so a plain
+    case_id lookup misses most cases; match on the real citation instead. Raises on DB errors."""
+    keys = [k for k in dict.fromkeys(str(k or "").strip().upper() for k in keys) if k]
+    rows = _supabase_rows(keys, columns="id, case_id, neutral_citation, court_name, retrieval_status", shape=False)
+    return {k: (None if r is None else str(r.get("retrieval_status") or "").lower()) for k, r in rows.items()}
 
 
 def get_case_by_identifier(case_id_or_cit: str) -> Optional[Dict[str, Any]]:

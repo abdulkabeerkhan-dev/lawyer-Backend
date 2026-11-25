@@ -10027,6 +10027,18 @@ async def _legacy_process_query_job(job_id: str, request: QueryRequest, authenti
 
                                 db_status_map[str(row.get("case_id"))] = str(row.get("retrieval_status") or "").lower()
 
+                        # Zilliz keys carry a court code that full_judgments.case_id lacks, so match
+                        # the rest on the real citation; otherwise quarantined cases pass the gate.
+                        unresolved = [c for c in candidate_cids if c not in db_status_map]
+                        if unresolved:
+                            from core.case_store import retrieval_statuses
+                            for _cid, _st in retrieval_statuses(unresolved).items():
+                                if _st is not None:
+                                    db_status_map[_cid] = _st
+                            for _cid in unresolved:
+                                if _cid.upper() in db_status_map and _cid not in db_status_map:
+                                    db_status_map[_cid] = db_status_map[_cid.upper()]
+
                     except Exception as db_err:
 
                         print(f"⚠️ Batch Supabase trust query notice: {db_err}", flush=True)

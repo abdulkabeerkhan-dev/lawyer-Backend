@@ -142,6 +142,9 @@ def main() -> None:
         items += [dict(x, kind="hn_only") for x in json.load(open(args.hn_only))]
     items = items[: args.limit]
     manifest = Manifest(os.path.join(args.work_dir, "manifest.db"))
+    # workers mark finished cases under a lock, so the connection may cross threads
+    manifest.db.close()
+    manifest.db = __import__("sqlite3").connect(os.path.join(args.work_dir, "manifest.db"), check_same_thread=False)
     todo = items if args.dry_run else [x for x in items if not manifest.is_done(x["id"])]
     print(f"{len(items)} items, {len(todo)} to process (dry_run={args.dry_run})", flush=True)
 

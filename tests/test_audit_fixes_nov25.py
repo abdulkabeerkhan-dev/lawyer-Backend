@@ -59,3 +59,51 @@ def test_limitation_articles_have_period_text():
         art = {r["canonical_id"]: r for r in rows}["LIMITATION_1908_ART_113"]
     assert "Three years" in art["text"]
     assert "notice that performance is refused" in art["text"]
+
+
+class _FakeQuery:
+    def __init__(self, rows, log):
+        self.rows, self.log, self.col, self.vals = rows, log, None, None
+
+    def select(self, cols):
+        return self
+
+    def in_(self, col, vals):
+        self.col, self.vals = col, set(vals)
+        self.log.append((col, len(vals)))
+        return self
+
+    def execute(self):
+        class R:
+            pass
+        r = R()
+        r.data = [x for x in self.rows if x.get(self.col) in self.vals]
+        return r
+
+
+class _FakeSB:
+    def __init__(self, rows):
+        self.rows, self.log = rows, []
+
+    def table(self, name):
+        return _FakeQuery(self.rows, self.log)
+
+
+def test_zilliz_keys_resolve_to_supabase_status(monkeypatch):
+    """Zilliz keys carry a court code (2005_CLC_SHC_1241); full_judgments.case_id does not."""
+    from core import case_store
+    rows = [
+        {"id": "1", "case_id": "2005_CLC_1241", "neutral_citation": "2005 CLC 1241",
+         "court_name": "High Court of Sindh", "retrieval_status": "quarantined"},
+        {"id": "2", "case_id": "2007_PLD_SC_87", "neutral_citation": "PLD 2007 SC 87",
+         "court_name": "Supreme Court of Pakistan", "retrieval_status": None},
+        # serial-number case_id: the row's own citation says it is a different case
+        {"id": "3", "case_id": "1978_SCMR_31", "neutral_citation": "1978 SCMR 81",
+         "court_name": "Supreme Court of Pakistan", "retrieval_status": "rejected"},
+    ]
+    monkeypatch.setattr(case_store, "_supabase", lambda: _FakeSB(rows))
+    got = case_store.retrieval_statuses(["2005_CLC_SHC_1241", "2007_PLD_SC_87", "1978_SCMR_SC_31", "2001_YLR_LHC_9"])
+    assert got["2005_CLC_SHC_1241"] == "quarantined"
+    assert got["2007_PLD_SC_87"] == ""
+    assert got["1978_SCMR_SC_31"] is None  # never borrow another case's status
+    assert got["2001_YLR_LHC_9"] is None
