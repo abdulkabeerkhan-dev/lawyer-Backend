@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 SHARD_CHARS = 3
 DEFAULT_PREFIX = "texts/v1"
-_CACHE_SHARDS = 48
+_CACHE_SHARDS = 6  # each decoded shard is ~1-2 MB of Python objects; the container has 1 GB
 
 _cache: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
 _lock = threading.Lock()
