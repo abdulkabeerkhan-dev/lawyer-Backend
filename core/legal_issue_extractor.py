@@ -462,7 +462,7 @@ def extract_legal_issues_from_fact_pattern(
                 description="Substantive grounds for ejectment under Section 15 of PRPA 2009: willful default and personal bona fide need.",
                 controlling_statutes=["Punjab Rented Premises Act, 2009"],
                 controlling_provisions=["PRPA_2009_SEC_15", "PRPA_2009_SEC_4"],
-                search_queries=["Section 15 PRPA 2009 grounds for eviction default personal bona fide need", "Section 4 PRPA 2009 tenancy agreement"],
+                search_queries=["Section 15 PRPA 2009 grounds for eviction default personal bona fide need", "Section 5 PRPA 2009 written tenancy agreement registration"],
                 factual_anchors=["Section 15", "Punjab Rented Premises Act, 2009", "default in payment of rent"]
             ))
 
@@ -479,11 +479,11 @@ def extract_legal_issues_from_fact_pattern(
         if any(k in q_low for k in ["cash", "receipt", "receipts", "refused"]):
             issues.append(LegalSubIssue(
                 issue_id="issue_rent_payment_receipts",
-                heading="Mode of Rent Payment & Duty to Issue Receipts (Section 4 & 15 PRPA 2009)",
+                heading="Mode of Rent Payment & Duty to Issue Receipts (Sections 7, 15 & 24 PRPA 2009)",
                 description="Statutory defense where tenant paid cash rent but landlord refused receipts.",
                 controlling_statutes=["Punjab Rented Premises Act, 2009"],
-                controlling_provisions=["PRPA_2009_SEC_4", "PRPA_2009_SEC_15"],
-                search_queries=["Section 4 PRPA 2009 landlord duty to issue receipt cash payment defense", "default proof"],
+                controlling_provisions=["PRPA_2009_SEC_7", "PRPA_2009_SEC_24", "PRPA_2009_SEC_15"],
+                search_queries=["Section 7 PRPA 2009 payment of rent by bank deposit cheque or receipt", "default proof"],
                 factual_anchors=["cash rent", "refused to issue receipts"]
             ))
 
@@ -605,7 +605,7 @@ def extract_legal_issues_from_fact_pattern(
                 heading="Writ of Habeas Corpus Against Unlawful Detention (Article 199(1)(b)(i) & Section 61 CrPC)",
                 description="Constitutional remedy to set at liberty any person held in unlawful custody by police or private parties.",
                 controlling_statutes=["Constitution of the Islamic Republic of Pakistan, 1973", "Code of Criminal Procedure, 1898"],
-                controlling_provisions=["CONST_1973_ART_199", "CONST_1973_ART_9", "CRPC_1898_SEC_61"],
+                controlling_provisions=["CONST_1973_ART_199", "CONST_1973_ART_9", "CRPC_1898_SEC_61", "CRPC_1898_SEC_491"],
                 search_queries=["Article 199(1)(b)(i) Constitution 1973 writ of habeas corpus illegal detention police", "Section 61 CrPC detention over 24 hours"],
                 factual_anchors=["habeas corpus", "unlawful detention", "detenue"]
             ))
@@ -838,7 +838,7 @@ def extract_legal_issues_from_fact_pattern(
                 heading="Offence of Unauthorized Access to Information System (Section 3 PECA 2016)",
                 description="Criminal offence under Section 3 PECA 2016 for unauthorized access to data or information system.",
                 controlling_statutes=["Prevention of Electronic Crimes Act, 2016"],
-                controlling_provisions=["PECA_2016_SEC_3", "PECA_2016_SEC_10"],
+                controlling_provisions=["PECA_2016_SEC_3", "PECA_2016_SEC_4"],
                 search_queries=["Section 3 PECA 2016 unauthorized access information system data cybercrime", "FIA cyber crime wing"],
                 factual_anchors=["PECA 2016", "unauthorized access", "hacking"]
             ))
@@ -849,7 +849,7 @@ def extract_legal_issues_from_fact_pattern(
                 heading="Cyber Harassment & Offences Against Modesty (Section 21 PECA 2016)",
                 description="Offence of cyber stalking, blackmailing, and transmitting sexually explicit material or harassment online.",
                 controlling_statutes=["Prevention of Electronic Crimes Act, 2016"],
-                controlling_provisions=["PECA_2016_SEC_21", "PECA_2016_SEC_16"],
+                controlling_provisions=["PECA_2016_SEC_21", "PECA_2016_SEC_24"],
                 search_queries=["Section 21 PECA 2016 cyber harassment offences against modesty natural person minor", "social media blackmail"],
                 factual_anchors=["cyber harassment", "Section 21 PECA", "blackmail"]
             ))
@@ -1083,7 +1083,7 @@ def extract_legal_issues_from_fact_pattern(
                 heading="Criminal FIR & Statutory Investigation (Sections 154, 156, 173 CrPC 1898)",
                 description="Cognizable offence reporting under Section 154 CrPC and police report under Section 173 CrPC.",
                 controlling_statutes=["Code of Criminal Procedure, 1898"],
-                controlling_provisions=["CRPC_1898_SEC_154", "CRPC_1898_SEC_497"],
+                controlling_provisions=["CRPC_1898_SEC_154", "CRPC_1898_SEC_156", "CRPC_1898_SEC_173"],
                 search_queries=["Section 154 Section 173 CrPC cognizable offence FIR investigation challan"],
                 factual_anchors=["FIR", "police investigation"]
             ))

@@ -524,7 +524,7 @@ class StatuteInjector:
         if re.search(r'\b(?:rent|rented|tenan[ct]|landlord|evict|ejectment)\b', q_comb) or 'prpa' in q_comb:
             if "lahore" in q_comb or "punjab" in q_comb or "prpa" in q_comb:
                 mandatory_rent = [
-                    "Section 4 PRPA 2009",
+                    "Section 5 PRPA 2009",
                     "Section 15 PRPA 2009",
                     "Section 34 PRPA 2009"
                 ]
