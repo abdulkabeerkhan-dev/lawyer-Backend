@@ -157,7 +157,7 @@ def _supplement_with_supabase_cases(
             for score, w in zip((0.88, 0.85, 0.85), words[:3]):
                 if len(results) >= limit:
                     break
-                res = sb.table("full_judgments").select(cols).ilike("case_title", f"%{w}%") \
+                res = sb.table("full_judgments").select(cols).ilike("case_title", f"%{w}%").or_("retrieval_status.is.null,retrieval_status.not.in.(rejected,quarantined,restricted)") \
                     .limit(limit - len(results)).execute()
                 for r in res.data or []:
                     if _add(r, score):

@@ -333,7 +333,7 @@ async def search_supabase_judgments(
                     def _query_title():
                         res = sb.table("full_judgments").select(
                             "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
-                        ).ilike("case_title", f"%{tok}%").limit(5).execute()
+                        ).ilike("case_title", f"%{tok}%").or_("retrieval_status.is.null,retrieval_status.not.in.(rejected,quarantined,restricted)").limit(5).execute()
                         return res.data or []
 
                     title_records = safe_supabase_query(_query_title, retries=1)
@@ -354,7 +354,7 @@ async def search_supabase_judgments(
                 def _query_fulltext():
                     res = sb.table("full_judgments").select(
                         "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
-                    ).limit(4).text_search("fts_headnote", ft_ts, options={"config": "english"}).execute()  # full_text lives in R2 now; search the indexed headnote vector
+                    ).or_("retrieval_status.is.null,retrieval_status.not.in.(rejected,quarantined,restricted)").limit(4).text_search("fts_headnote", ft_ts, options={"config": "english"}).execute()  # full_text lives in R2 now; search the indexed headnote vector
                     return res.data or []
 
                 ft_records = safe_supabase_query(_query_fulltext, retries=1)

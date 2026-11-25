@@ -387,7 +387,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "7. * * * * * * *",
+    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
     "raw_text": "7. 5[* * \n* \n* \n* \n* \n*]",
     "amendment_notes": [],
     "former_labels": [],
@@ -400,7 +400,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_SEC_8",
@@ -3563,7 +3564,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "4110.Omitted.",
+    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
     "raw_text": "4110.[Omitted].",
     "amendment_notes": [],
     "former_labels": [],
@@ -3576,7 +3577,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_SEC_111",
@@ -3617,7 +3619,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "8111A. Omitted.",
+    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
     "raw_text": "8111A. [Omitted].",
     "amendment_notes": [],
     "former_labels": [],
@@ -3630,7 +3632,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_SEC_112",
@@ -4110,7 +4113,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "5130. Omitted.",
+    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
     "raw_text": "5130. [Omitted].",
     "amendment_notes": [],
     "former_labels": [],
@@ -4123,7 +4126,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_SEC_131",
@@ -4764,7 +4768,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "154. Omitted.",
+    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
     "raw_text": "154. 1[Omitted].",
     "amendment_notes": [],
     "former_labels": [
@@ -4779,7 +4783,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_SEC_155",
@@ -4793,7 +4798,7 @@
     "domain": "civil",
     "forum": "Civil Court / District Court / High Court",
     "provision_type": "section",
-    "text": "155. Omitted.",
+    "text": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
     "raw_text": "155. 2[Omitted].",
     "amendment_notes": [],
     "former_labels": [],
@@ -4806,7 +4811,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_SEC_157",

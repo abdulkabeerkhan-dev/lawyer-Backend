@@ -1303,6 +1303,7 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
         res = (
             supabase.table('full_judgments')
             .select('id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text')
+            .or_("retrieval_status.is.null,retrieval_status.not.in.(rejected,quarantined,restricted)")
             .limit(limit * 2)
             .text_search('fts_headnote', ts_query, options={"config": "english"})
             .execute()
@@ -1345,6 +1346,7 @@ def fallback_supabase_fulltext(query_terms: str, limit: int = 3) -> List[Dict[st
             res = (
                 supabase.table('full_judgments')
                 .select('id, case_id, neutral_citation, case_title, court_name, canonical_court_name, decision_date, full_text')
+                .or_("retrieval_status.is.null,retrieval_status.not.in.(rejected,quarantined,restricted)")
                 .limit(limit * 2)
                 .text_search('case_title', title_query)
                 .execute()
@@ -4424,7 +4426,7 @@ def extract_and_intercept_citation(user_query: str):
 
                 try:
 
-                    res_party = supabase.table("full_judgments").select("id, case_id, case_title, court_name, canonical_court_name").ilike("case_title", f"%{clean_party_name}%").limit(3).execute()
+                    res_party = supabase.table("full_judgments").select("id, case_id, case_title, court_name, canonical_court_name").ilike("case_title", f"%{clean_party_name}%").or_("retrieval_status.is.null,retrieval_status.not.in.(rejected,quarantined,restricted)").limit(3).execute()
 
                     if not res_party or not res_party.data:
 
@@ -4434,7 +4436,7 @@ def extract_and_intercept_citation(user_query: str):
 
                             short_party = " ".join(p_words[-2:])
 
-                            res_party = supabase.table("full_judgments").select("id, case_id, case_title, court_name, canonical_court_name").ilike("case_title", f"%{short_party}%").limit(3).execute()
+                            res_party = supabase.table("full_judgments").select("id, case_id, case_title, court_name, canonical_court_name").ilike("case_title", f"%{short_party}%").or_("retrieval_status.is.null,retrieval_status.not.in.(rejected,quarantined,restricted)").limit(3).execute()
 
                     if res_party and res_party.data:
 
@@ -8326,7 +8328,7 @@ async def process_query_job(job_id: str, request: QueryRequest, authenticated_us
                 if raw_memo:
                     from legal_ai.synthesis.memorandum_generator import sanitize_partner_markdown_presentation
                     clean_draft = str(raw_memo)
-                    clean_draft = re.sub(r'^\s*>\s*["\xe2\x80\x9c][^"\n]+["\xe2\x80\x9d]\s*$', '', clean_draft, flags=re.MULTILINE)
+                    clean_draft = re.sub(r'^\s*>\s*["“][^"”\n]+["”]\s*$', '', clean_draft, flags=re.MULTILINE)
                     clean_draft = sanitize_partner_markdown_presentation(clean_draft)
                     if len(clean_draft.strip()) > 100:
                         memo_body = clean_draft.strip()
@@ -15895,7 +15897,7 @@ async def get_query_job_status(job_id: str, authenticated_user_id: str = Depends
             raw_memo = job.get("unverified_memo") or job.get("raw_draft")
             if raw_memo:
                 clean_draft = str(raw_memo)
-                clean_draft = re.sub(r'^\s*>\s*["\xe2\x80\x9c][^"\n]+["\xe2\x80\x9d]\s*$', '', clean_draft, flags=re.MULTILINE)
+                clean_draft = re.sub(r'^\s*>\s*["“][^"”\n]+["”]\s*$', '', clean_draft, flags=re.MULTILINE)
                 clean_draft = sanitize_partner_markdown_presentation(clean_draft)
                 if len(clean_draft.strip()) > 100:
                     memo_body = clean_draft.strip()

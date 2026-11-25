@@ -1262,7 +1262,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "156. Repeals. Repealed.",
+    "text": "[Repealed]. Statutory provision under Code of Civil Procedure, 1908.",
     "text_raw": "156. 3[Repeals.]",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -1286,7 +1286,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_1",
@@ -3307,7 +3308,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "22. Service within Presidency towns of summons issued by Courts outside.. Omitted.",
+    "text": "ISSUE AND SERVICE OF SUMMONS: [Service within Presidency towns of summons issued by Courts outside.] Omitted by A. Statutory provision under Code of Civil Procedure, 1908.",
     "text_raw": "22. [Service within Presidency towns of summons issued by Courts outside.] Omitted by A. O.,",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -3334,7 +3335,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_1949",
@@ -3348,7 +3350,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "1949.",
+    "text": "ISSUE AND SERVICE OF SUMMONS: 1Subs and added by Act. XIV of 1994, s. Statutory provision under Code of Civil Procedure, 1908.",
     "text_raw": "1949. \n \n \n1Subs and added by Act. XIV of 1994, s.11.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -3375,7 +3377,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_23",
@@ -12053,7 +12056,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "4. Transfer to Court of Small Causes.. Omitted.",
+    "text": "EXECUTION OF DECREES AND ORDERS: [Transfer to Court of Small Causes.] Omitted by the A. Statutory provision under Code of Civil Procedure, 1908.",
     "text_raw": "4. [Transfer to Court of Small Causes.] Omitted by the A.O., 1949.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -12080,7 +12083,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_5",
@@ -14495,7 +14499,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "63. Saving of suits to establish right to attached property .. Omitted.",
+    "text": "EXECUTION OF DECREES AND ORDERS: [Saving of suits to establish right to attached property. Statutory provision under Code of Civil Procedure, 1908.",
     "text_raw": "63. [Saving of suits to establish right to attached property .] Omitted by the Law Reforms \nOrdinance, 1972 (XII of 1972), s.2 and Sch]. \nSale Generally",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -14522,7 +14526,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_64",
@@ -25179,7 +25184,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "6. Effect of refusal of certificate.. Omitted.",
+    "text": "APPEALS TO THE 1[SUPREME COURT]: [Effect of refusal of certificate.] Omitted by F. Statutory provision under Code of Civil Procedure, 1908.",
     "text_raw": "6. [Effect of refusal of certificate.] Omitted by F.A.O., 1975 Art.2 and Sch.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -25204,7 +25209,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_7",
@@ -28334,7 +28340,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "380. Procedure in cases submitted by Magistrate not empowered to act under section.",
+    "text": "Procedure in cases submitted by Magistrate not empowered to act under section 562. This statutory provision stands enacted as Section 380 of the Code of Criminal Procedure, 1898.",
     "text_raw": "2[380. Procedure in cases submitted by Magistrate not empowered to act under section",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -28361,7 +28367,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "CRPC_1898_SEC_382_A",
@@ -30768,7 +30775,7 @@
     "provision_type": "article",
     "period": "Ninety days",
     "trigger": "Part III.‑Six months. When the act or omission takes place.",
-    "text": "2. — For compensation for doing or for omitting to do an act alleged to be in pursuance of any enactment in force for the time being in Pakistan.",
+    "text": "Article 2: ‑ For compensation for doing or for omitting to do an act alleged to be in pursuance of any enactment in force for the time being in [Pakistan].\nPeriod of limitation: Ninety days\nTime from which period begins to run: Part III.‑Six months. When the act or omission takes place.",
     "text_raw": "2. — For compensation for doing  \nor for omitting to do an act  \nalleged to be in pursuance of \nany enactment  in force for \nthe time being in \n1[Pakistan.]",
     "footnotes": [
       "Subs. by the Central Laws (Statute Reform) Ordinance, 1960\n  (21 of 1960), s. 3 and 2nd Sch. (with effect from the 14th October, 1955),\n  for \"the Provinces and the Capital of the Federation\" which had\n  boon subs. by A. O., 1949, for \"British India\"."
@@ -30801,7 +30808,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_3",
@@ -32119,7 +32127,7 @@
     "provision_type": "article",
     "period": "Two years",
     "trigger": "Two years .. When the perversion first becomes known to the person injured thereby.",
-    "text": "32.—Against one who having a right to use property for specific purposes, perverts it to other purposes.\nTwo years ..",
+    "text": "Article 32: ‑Against one who, having a right to use property for specific purposes, perverts it to other purposes. Part V.‑\nPeriod of limitation: Two years\nTime from which period begins to run: Two years .. When the perversion first becomes known to the person injured thereby.",
     "text_raw": "32.—Against one who having a \nright to use property for \nspecific purposes, perverts it  \nto other purposes. \nTwo years ..",
     "footnotes": [],
     "caveats": [],
@@ -32150,7 +32158,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_33",
@@ -32211,7 +32220,7 @@
     "provision_type": "article",
     "period": "Two years",
     "trigger": "Ditto.",
-    "text": "34.—Under the same Act against an administrator.\nTwo years ..",
+    "text": "Article 34: ‑Under the same Act against an adminis trator.\nPeriod of limitation: Two years\nTime from which period begins to run: Ditto.",
     "text_raw": "34.—Under the same Act against \nan administrator. \n1[Two years] ..",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  a. 2 and First Sch., for \"Ditto\","
@@ -32244,7 +32253,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_35",
@@ -32352,7 +32362,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "Three years .. The date of the obstruction.",
-    "text": "37.—For compensation for obstructing a way or a watercourse.\nThree years ..",
+    "text": "Article 37: ‑For compensation for obstructing a way or a watercourse. Part VI.‑\nPeriod of limitation: Three years\nTime from which period begins to run: Three years .. The date of the obstruction.",
     "text_raw": "37.—For compensation for \nobstructing a way or a \nwatercourse. \nThree years ..",
     "footnotes": [],
     "caveats": [],
@@ -32383,7 +32393,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_38",
@@ -32397,7 +32408,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "The date of the diversion.",
-    "text": "38.—For compensation for diverting a water course.\nThree years",
+    "text": "Article 38: ‑For compensation for diverting a water course.\nPeriod of limitation: Three years\nTime from which period begins to run: The date of the diversion.",
     "text_raw": "38.—For compensation for \ndiverting a water course. \n1[Three years]",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  a. 2 and First Sch., for \"Ditto\","
@@ -32430,7 +32441,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_39",
@@ -32488,7 +32500,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "‑contd. [Three years] The date of the infringe ment.",
-    "text": "40. —For compensation for infringing copyright or any other exclusive privilege.",
+    "text": "Article 40: ‑For compensation for infringing copyright or any other exclusive privilege. Part VI.\nPeriod of limitation: Three years\nTime from which period begins to run: ‑contd. [Three years] The date of the infringe ment.",
     "text_raw": "40. —For compensation for \ninfringing copyright or any  \nother exclusive privilege.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -32521,7 +32533,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_41",
@@ -32535,7 +32548,7 @@
     "provision_type": "article",
     "period": null,
     "trigger": null,
-    "text": "41. —To restrain waste ..",
+    "text": "To restrain waste .. 1[Three years] When the waste begins.. Statutory provision under Limitation Act, 1908.",
     "text_raw": "41. —To restrain waste ..",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -32558,7 +32571,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_42",
@@ -32572,7 +32586,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the injunction ceases.",
-    "text": "42.—For compensation for injury caused by an injunction wrongfully obtained.",
+    "text": "Article 42: ‑For compensation for injury caused by an injunction wrongfully obtained.\nPeriod of limitation: Three years\nTime from which period begins to run: When the injunction ceases.",
     "text_raw": "42.—For compensation for injury \ncaused by an injunction \nwrongfully obtained.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -32605,7 +32619,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_43",
@@ -33028,7 +33043,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the period of the proposed bill elapses.",
-    "text": "54. —For the price of goods sold and delivered to be paid for by a bill of exchange, no such bill being given.",
+    "text": "Article 54: ‑ For the price of goods sold and delivered to be paid for by a bill of exchange, no such bill being given.\nPeriod of limitation: Three years\nTime from which period begins to run: When the period of the proposed bill elapses.",
     "text_raw": "54. —For the price of goods sold \nand delivered to be paid for \nby a bill of exchange, no such \nbill being given.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -33059,7 +33074,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_55",
@@ -33073,7 +33089,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "The date of the sale.",
-    "text": "55. —For the price of trees or growing crops sold by the plaintiff to the defendant where no fixed period of credit is agreed upon.",
+    "text": "Article 55: For the price of trees or growing crops sold by the plaintiff to the defendant where no fixed period of credit is agreed upon.\nPeriod of limitation: Three years\nTime from which period begins to run: The date of the sale.",
     "text_raw": "55. —For the price of trees or \ngrowing crops sold by the \nplaintiff to the defendant \nwhere no fixed period of \ncredit is agreed upon.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -33104,7 +33120,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_56",
@@ -33118,7 +33135,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the work is done",
-    "text": "56. —For the price of work done by the plaintiff for the defendant at his request, where no time has been fixed or payment.",
+    "text": "Article 56: For the price of work done by the plaintiff for the defendant at his request, where no time has been fixed for payment.\nPeriod of limitation: Three years\nTime from which period begins to run: When the work is done",
     "text_raw": "56. —For the price of work done \nby the plaintiff for the \ndefendant at his request, \nwhere no time has   been \nfixed or payment.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -33149,7 +33166,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_257",
@@ -33200,7 +33218,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the cheque is paid.",
-    "text": "58.—Like suit when the lender has given a cheque for the money.",
+    "text": "Article 58: Like suit when the lender has given a cheque for the money.\nPeriod of limitation: Three years\nTime from which period begins to run: When the cheque is paid.",
     "text_raw": "58.—Like suit when the lender \nhas given a cheque for the  \nmoney.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -33233,7 +33251,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_259",
@@ -33287,7 +33306,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the demand is made.",
-    "text": "60.—For money deposited under an agreement that it shall be payable on demand, including money of a customer in the hands of his banker so payable.",
+    "text": "Article 60: For money deposited under an agreement that it shall be payable on demand, including money of a customer in the hands of his banker so payable.\nPeriod of limitation: Three years\nTime from which period begins to run: When the demand is made.",
     "text_raw": "60.—For money deposited under  \nan agreement that it shall be  \npayable on demand, \nincluding money of a \ncustomer in the hands of his  \nbanker so payable.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -33320,7 +33339,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_261",
@@ -33374,7 +33394,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the money is received.",
-    "text": "62.—For money payable by the defendant to the plaintiff for money received by the defendant for the plaintiff’s use.",
+    "text": "Article 62: For money payable by the defendant to the plaintiff for money received by the defen dant for the plaintiff's use.\nPeriod of limitation: Three years\nTime from which period begins to run: When the money is received.",
     "text_raw": "62.—For money payable by the \ndefendant to the plaintiff for  \nmoney received by the \ndefendant for the plaintiff’s  \nuse.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -33407,7 +33427,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_263",
@@ -33498,7 +33519,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the time specified arrives or the contingency happens.",
-    "text": "65.—For compensation for breach of a promise to do anything at a specified time, or upon the happening of a specified contingency.",
+    "text": "Article 65: For compensation for breach of a promise to do anything at a spacified time, or upon the happening of a specified contingency.\nPeriod of limitation: Three years\nTime from which period begins to run: When the time specified arrives or the contingency happens.",
     "text_raw": "65.—For compensation for breach \nof a promise to do anything  \nat a specified time, or upon  \nthe happening of a specified  \ncontingency.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -33531,7 +33552,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_266",
@@ -33785,7 +33807,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the fixed time expires.",
-    "text": "72. —On a bill of exchange or promissory note payable at a fixed time after sight or after demand.",
+    "text": "Article 72: On a bill of exchange or promissory note payable at a fixed time after sight or after demand.\nPeriod of limitation: Three years\nTime from which period begins to run: When the fixed time expires.",
     "text_raw": "72. —On a bill of exchange or \npromissory note payable at a \nfixed time after sight or after \ndemand.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -33818,7 +33840,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_73",
@@ -34214,7 +34237,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the surety pays any thing in excess of his own share.",
-    "text": "82. —By a surety against a cosurety.",
+    "text": "Article 82: By a surety against a co-surety.\nPeriod of limitation: Three years\nTime from which period begins to run: When the surety pays any thing in excess of his own share.",
     "text_raw": "82. —By a surety against a co- \nsurety.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 And First Sch., for \"Ditto\"."
@@ -34247,7 +34270,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_83",
@@ -34261,7 +34285,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the plaintiff is actually damnified.",
-    "text": "83. —Upon any other contract to indemnify.",
+    "text": "Article 83: Upon any other con tract to indemnify.\nPeriod of limitation: Three years\nTime from which period begins to run: When the plaintiff is actually damnified.",
     "text_raw": "83. —Upon any other contract to  \nindemnify.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 And First Sch., for \"Ditto\"."
@@ -34294,7 +34318,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_84",
@@ -34356,7 +34381,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "The close of the year in which the last item admit ted or proved is entered in the account; such year to be computed as in the account.",
-    "text": "85. —For the balance due on a mutual, open and current account, where there have been reciprocal demands between the parties.",
+    "text": "Article 85: For the balance due on a mutual, open and current account, where there have been reciprocal demands between the parties.\nPeriod of limitation: Three years\nTime from which period begins to run: The close of the year in which the last item admit ted or proved is entered in the account; such year to be computed as in the account.",
     "text_raw": "85. —For the balance due on a \nmutual, open and current \naccount, where there have \nbeen reciprocal demands \nbetween the parties.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -34389,7 +34414,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_86",
@@ -34450,7 +34476,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the insurers elect to avoid the policy.",
-    "text": "87. —By the assured to recover premia paid under a policy voidable at the election of the insurers.",
+    "text": "Article 87: By the assured to recover premia paid under a policy void able at the election of the insurers.\nPeriod of limitation: Three years\nTime from which period begins to run: When the insurers elect to avoid the policy.",
     "text_raw": "87. —By the assured to recover \npremia paid under a policy  \nvoidable at the election of \nthe insurers.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -34483,7 +34509,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_88",
@@ -34541,7 +34568,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "Ditto.",
-    "text": "89. —By a principal against his agent for moveable property received by the latter and not accounted for.",
+    "text": "Article 89: By a principal against his agent for moveable property received by the latter and not accounted for.\nPeriod of limitation: Three years\nTime from which period begins to run: Ditto.",
     "text_raw": "89. —By a principal against his \nagent for moveable property  \nreceived by the latter and \nnot accounted for.",
     "footnotes": [
       "Subs. by the Reapling and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -34574,7 +34601,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_90",
@@ -34588,7 +34616,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the neglect or misconduct becomes known to the plaintiff.",
-    "text": "90. —Other suits by principals against agents for neglect or misconduct.",
+    "text": "Article 90: Other suits by princi pals against agents for neglect or misconduct.\nPeriod of limitation: Three years\nTime from which period begins to run: When the neglect or misconduct becomes known to the plaintiff.",
     "text_raw": "90. —Other suits by principals \nagainst agents for neglect or  \nmisconduct.",
     "footnotes": [
       "Subs. by the Reapling and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -34621,7 +34649,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_91",
@@ -34635,7 +34664,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the facts entitling the plaintiff to have the ins trument cancelled or set aside become known to him.",
-    "text": "91. —To cancel or set aside an instrument not otherwise provided for.",
+    "text": "Article 91: To cancel or set aside an instrument not otherwise provided for.\nPeriod of limitation: Three years\nTime from which period begins to run: When the facts entitling the plaintiff to have the ins trument cancelled or set aside become known to him.",
     "text_raw": "91. —To cancel or set aside an \ninstrument not otherwise \nprovided for.",
     "footnotes": [
       "Subs. by the Reapling and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -34668,7 +34697,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_92",
@@ -34682,7 +34712,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the issue or registra tion becomes known to the plaintiff.",
-    "text": "92. —To declare the forgery of an instrument issued or registered.",
+    "text": "Article 92: To declare the forgery of an instrument issued or registered.\nPeriod of limitation: Three years\nTime from which period begins to run: When the issue or registra tion becomes known to the plaintiff.",
     "text_raw": "92. —To declare the forgery of an  \ninstrument issued or \nregistered.",
     "footnotes": [
       "Subs. by the Reapling and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -34715,7 +34745,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_93",
@@ -34729,7 +34760,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "The date of the attempt.",
-    "text": "93. —To declare the forgery of an instrument attempted to be enforced against the plaintiff.",
+    "text": "Article 93: To declare the forgery of an instrument attempted to be en forced against the plaintiff.\nPeriod of limitation: Three years\nTime from which period begins to run: The date of the attempt.",
     "text_raw": "93. —To declare the forgery of an  \ninstrument attempted to be \nenforced against the \nplaintiff.",
     "footnotes": [
       "Subs. by the Reapling and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -34762,7 +34793,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_94",
@@ -34776,7 +34808,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the plaintiff is res tored to sanity, and has knowledge of the con veyance.",
-    "text": "94. —For property which the plaintiff has conveyed while insane.",
+    "text": "Article 94: For property which the plaintiff has con veyed while insane.\nPeriod of limitation: Three years\nTime from which period begins to run: When the plaintiff is res tored to sanity, and has knowledge of the con veyance.",
     "text_raw": "94. —For property which the \nplaintiff has conveyed while  \ninsane.",
     "footnotes": [
       "Subs. by the Reapling and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -34809,7 +34841,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_95",
@@ -34823,7 +34856,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the fraud becomes known to the party wronged.",
-    "text": "95. —To set aside a decree obtained by fraud, or for other relief on the ground of fraud.",
+    "text": "Article 95: To set aside a decree obtained by fraud, or for other relief on the ground of fraud.\nPeriod of limitation: Three years\nTime from which period begins to run: When the fraud becomes known to the party wronged.",
     "text_raw": "95. —To set aside a decree \nobtained by fraud, or for \nother relief on the ground of  \nfraud.",
     "footnotes": [
       "Subs. by the Reapling and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -34856,7 +34889,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_96",
@@ -34870,7 +34904,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the mistake becomes known to the plaintiff.",
-    "text": "96. —For relief on the ground of mistake.",
+    "text": "Article 96: For relief on the ground of mistake.\nPeriod of limitation: Three years\nTime from which period begins to run: When the mistake becomes known to the plaintiff.",
     "text_raw": "96. —For relief on the ground of  \nmistake.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -34903,7 +34937,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_97",
@@ -35242,7 +35277,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the marriage is dis solved by death or divorce.",
-    "text": "104. —By a Muslim for deferred dower (mu’wajjal).",
+    "text": "Article 104: By a Muhammadan for deferred dower .\nPeriod of limitation: Three years\nTime from which period begins to run: When the marriage is dis solved by death or divorce.",
     "text_raw": "104. —By a 1[Muslim] for \ndeferred dower (mu’wajjal).",
     "footnotes": [
       "mu'waijal",
@@ -35276,7 +35311,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_105",
@@ -35290,7 +35326,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the mortgagor re enters on the mortgaged property.",
-    "text": "105. —By a mortgagor after the mortgage has been satisfied, to recover surplus collections received by the mortgagee.",
+    "text": "Article 105: By a mortgagor after the mortgage has been satisfied, to re cover surplus collec tions received by the mortgagee.\nPeriod of limitation: Three years\nTime from which period begins to run: When the mortgagor re enters on the mortgaged property.",
     "text_raw": "105. —By a mortgagor after the \nmortgage has been satisfied,  \nto recover surplus \ncollections received by the \nmortgagee.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s.2 and First Sch., for \"Ditto\"."
@@ -35323,7 +35359,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_106",
@@ -35337,7 +35374,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "The date of the dissolution.",
-    "text": "106. —For an account and a share of the profits of a dissolved partnership.",
+    "text": "Article 106: For an account and a share of the profits of a dissolved partner ship.\nPeriod of limitation: Three years\nTime from which period begins to run: The date of the dissolution.",
     "text_raw": "106. —For an account and a share  \nof the profits of a dissolved  \npartnership.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s.2 and First Sch., for \"Ditto\"."
@@ -35370,7 +35407,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_107",
@@ -35384,7 +35422,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "The date of the payment.",
-    "text": "107. —By the manager of a joint estate of an undivided family for contribution, in respect of a payment made by him on account of the estate.",
+    "text": "Article 107: By the manager of a joint estate of an undivided family for contribution, in res pect of a payment made by him on ac count of the estate.\nPeriod of limitation: Three years\nTime from which period begins to run: The date of the payment.",
     "text_raw": "107. —By the manager of a joint  \nestate of an undivided \nfamily for contribution, in \nrespect of a payment made  \nby him on account of the \nestate.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s.2 and First Sch., for \"Ditto\"."
@@ -35417,7 +35455,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_108",
@@ -35431,7 +35470,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "Part VI.-Three years-contd. When the trees are cut down.",
-    "text": "108. —By a lessor for the value of trees cut down by his lessee contrary to the terms of the lease.",
+    "text": "Article 108: By a lessor for the value of trees cut down by his lessee contrary to the terms of the lease.\nPeriod of limitation: Three years\nTime from which period begins to run: Part VI.-Three years-contd. When the trees are cut down.",
     "text_raw": "108. —By a lessor for the value of  \ntrees cut down by his lessee  \ncontrary to the terms of the  \nlease.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s.2 and First Sch., for \"Ditto\"."
@@ -35464,7 +35503,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_109",
@@ -35478,7 +35518,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the profits are re ceived.",
-    "text": "109. —For the profits of immoveable property belonging to the plaintiff which have been wrongfully received by the defendant.",
+    "text": "Article 109: For the profits of immoveable property belonging to the plaintiff which have been wrongfully received by the defendant.\nPeriod of limitation: Three years\nTime from which period begins to run: When the profits are re ceived.",
     "text_raw": "109. —For the profits of \nimmoveable property \nbelonging to the plaintiff \nwhich have been wrongfully  \nreceived by the defendant.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -35511,7 +35551,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_110",
@@ -35616,7 +35657,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "The date fixed for the performance, or, if no such date is fixed, when the plaintiff has notice that performance is refused.",
-    "text": "",
+    "text": "Article 113: For specific performance of a contract.\nPeriod of limitation: Three years\nTime from which period begins to run: The date fixed for the performance, or, if no such date is fixed, when the plaintiff has notice that performance is refused.",
     "text_raw": "",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -35649,7 +35690,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_114",
@@ -36221,7 +36263,7 @@
     "provision_type": "article",
     "period": "Twelve years",
     "trigger": "When the alienee takes possession of the property.",
-    "text": "126. —By a Hindu governed by the law of the Mitakshara to set aside his father’s alienation of ancestral property.",
+    "text": "Article 126: By a Hindu governed by the law of the Mitakshara to set aside his father's alienation of ancestral property.\nPeriod of limitation: Twelve years\nTime from which period begins to run: When the alienee takes possession of the property.",
     "text_raw": "126. —By a Hindu governed by \nthe law of the Mitakshara to  \nset aside his father’s \nalienation of ancestral \nproperty.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923)\n  s. 2 and First Sch., for \"Ditto\"."
@@ -36254,7 +36296,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_127",
@@ -36268,7 +36311,7 @@
     "provision_type": "article",
     "period": "Twelve years",
     "trigger": "When the exclusion becomes known to the plaintiff.",
-    "text": "127. —By a person excluded from joint family property to enforce a right to share therein.",
+    "text": "Article 127: By a person excluded from joint family pro perty to enforce a right to share therein.\nPeriod of limitation: Twelve years\nTime from which period begins to run: When the exclusion becomes known to the plaintiff.",
     "text_raw": "127. —By a person excluded from  \njoint family property to \nenforce a right to share \ntherein.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923)\n  s. 2 and First Sch., for \"Ditto\"."
@@ -36301,7 +36344,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_128",
@@ -36878,7 +36922,7 @@
     "provision_type": "article",
     "period": "Twelve years",
     "trigger": "When the female dies.",
-    "text": "141. — Like suits by a Hindu or Muslim entitled to the possession of immoveable property on the death of a Hindu or Muslim female.",
+    "text": "Article 141: 141 .-Like suit by a Hindu or Muhammadan enti tled to the possession of immoveable pro perty on the death of a Hindu or Muhamma dan female.\nPeriod of limitation: Twelve years\nTime from which period begins to run: When the female dies.",
     "text_raw": "141. — Like suits by a Hindu or  \n2[Muslim] entitled to the  \npossession of \nimmoveable property on \nthe    death    of    a \nHindu or 2[Muslim] \nfemale.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\ns. 2 and First Sch., for \"Ditto\"."
@@ -36911,7 +36955,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_142",
@@ -36925,7 +36970,7 @@
     "provision_type": "article",
     "period": "Twelve years",
     "trigger": "The date of the disposses sion or discontinuance.",
-    "text": "142. — For possession of immoveable property when the plaintiff while in possession of the property, has been dispossessed or has discontinued the possession.",
+    "text": "Article 142: For possession of immoveable property when the plaintiff, while in possession of the property, has been dispossessed or has discontinued the pos session.\nPeriod of limitation: Twelve years\nTime from which period begins to run: The date of the disposses sion or discontinuance.",
     "text_raw": "142. — For possession of \nimmoveable property \nwhen the plaintiff while  \nin possession of the \nproperty, has been \ndispossessed or has \ndiscontinued the \npossession.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -36958,7 +37003,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_143",
@@ -36972,7 +37018,7 @@
     "provision_type": "article",
     "period": "Twelve years",
     "trigger": "When the forfeiture is incurred or the condition is broken.",
-    "text": "143. —Like suit, when the plaintiff has become entitled by reason of any forfeiture or breach of condition.\n3* * *",
+    "text": "Article 143: Like suit, when the plaintiff has become entitled by reason of any forfeiture or breach of condition.\nPeriod of limitation: Twelve years\nTime from which period begins to run: When the forfeiture is incurred or the condition is broken.",
     "text_raw": "143. —Like suit, when the \nplaintiff has become \nentitled by reason of any  \nforfeiture or breach of \ncondition. \n3* * *",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -37003,7 +37049,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_144",
@@ -37330,7 +37377,7 @@
     "provision_type": "article",
     "period": null,
     "trigger": null,
-    "text": "151.— From a decree or order of a High Court in the exercise of its original jurisdiction.\nTwenty days ..",
+    "text": "Article 151: From a decree or order of [a High Court in the exercise of its ori ginal jurisdiction. twenty days The date of the decree or order.\nPeriod of limitation: Three years\nTime from which period begins to run: When the loan is made",
     "text_raw": "151.— From a decree or order \nof   2[a High Court] in  \nthe exercise of its \noriginal jurisdiction. \nTwenty days ..",
     "footnotes": [
       "The original words \"any of the High\n  Courts of Judicature at Port William, Madras and Bombay or the Chief Court of\n  the Punjab or the Chief Court of Lower Burma\", have successively been\n  amended by the Repealing and Amending Act, 1930 (8 of 1930), A. O., 1937, A.\n  O.,1949 and the Central Laws (Statute Reform) Ordinance, 1960 (21 of 1960),\n  s. 3 and 2nd Sch. (with effect from the 14th October, 1955), to read as\n  above."
@@ -37363,7 +37410,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_152",
@@ -37422,7 +37470,7 @@
     "provision_type": "article",
     "period": "Thirty days",
     "trigger": "The date of the order,",
-    "text": "153.— Under the same Code to a High Court from an order of a Subordinate Court refusing leave to appeal to the Supreme Court.\nThirty days",
+    "text": "Article 153: Under the same Code to a High Court from an order of a Sub ordinate Court refus ing leave to appeal to [the Supreme Court].\nPeriod of limitation: Thirty days\nTime from which period begins to run: The date of the order,",
     "text_raw": "153.— Under the same Code to  \na High Court from an \norder of a   Sub- \nordinate Court refusing \nleave to   appeal   to \n4[the Supreme Court.] \n3[Thirty days]",
     "footnotes": [
       "Subs. by A. O.,\n  1961, Art. 2 and Sch., for \"His Majesty in Council\" (with effect\n  from the 23rd March, 1956).",
@@ -37456,7 +37504,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_154",
@@ -37786,7 +37835,7 @@
     "provision_type": "article",
     "period": null,
     "trigger": null,
-    "text": "161.— For a review of judgment by a 1* Court of Small Causes 2* * * or by a Court invested with the jurisdiction of a 1* Court of Small Causes when exercising that jurisdiction.\nFifteen days The date of the decree or order.",
+    "text": "Article 161: For a review of judg ment by a * Court of Small Causes \" which were ins ibid. , have been omitted by the Federal Laws Act,1951 , s. 3 and Second Sch. * * * or by a Court invested with the jurisdiction of a * Court of Small Causes when exercis ing that jurisdiction. The date of the decree or order.\nPeriod of limitation: Three years\nTime from which period begins to run: When the loan is made",
     "text_raw": "161.— For a review of \njudgment by a   1* \nCourt    of    Small \nCauses 2* * * or by a  \nCourt invested with the  \njurisdiction of a 1* Court \nof Small Causes when \nexercising that \njurisdiction. \n3[Fifteen days] The date of the decree or order.",
     "footnotes": [
       "The word\n  \"Provincial\" omitted by the Berar Laws Act, 1941 (4 of 1941), s. 2\n  and Third Sch. (with effect form the 1st August, 1941).",
@@ -37826,7 +37875,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_162",
@@ -37840,7 +37890,7 @@
     "provision_type": "article",
     "period": null,
     "trigger": null,
-    "text": "162.— For a review of judgment by a High Twenty days The date of the decree or order.\n\n1 The word “provincial” omitted by the Berar Laws Act, 1941 (4 of 1941), s.2 and Third Sch. (with effect from the 1st August, 1941).\n2 The parentheses and words “(other than Presidency Small Cause Court)” which were ins. ibid. ( with effect from the 1 st August, 1941), have been",
+    "text": "Article 162: For a review of judg ment by the 1[High Court of East Bengal, the High Court, at Lahore] and the Chief Court of Sind\". * Ins. by the Repealing and Amending Act, 1927 10 of 1927, s. 2 and First Sch. [The original words ware \"High Courts of Judicature at Fort William, Madras, and Bombay or the Chief Court of the Punjab or the Chief Court of Lower Burma\". The Sind Courts Act, 1926 which was to come into force on the commencement of the Sind Courts Act, 1926 , directed the insertion of the words \"or the Chief Court of Sind\" after the word \"Bombay\". Though this amendment had not come into force the words \"Bombay, Lahore and Rangoon and the Chief Court of Sind\" were subs. for the words \"and Bombay or the Chief Court of Sind or the Chief Court of the Punjab or the Chief Court of Lower Burma\" by Act 10 of 1927, s. 2 and First Sch. For the words \"Lahore and Rangoon\", the words \"Lahore, Rangoon and Nagpur\" were subs. by the C. P. Courts Act, 1935 , s. 2 and Sch., and the word \"Rangoon \" was omitted by A. O.,1937. Lastly A. O., 1949, substituted \"High Courts of Judicature at Fort William, Madras, Bombay, Lahore and Nagpur\" by \"High Court of East Bengal, the High Court at Lahore\". [a High Court] in the exercise of its original jurisdic tion. Twenty days ... The date of the decree or order. * * * * * * * * * * * *\nPeriod of limitation: Three years\nTime from which period begins to run: When the loan is made",
     "text_raw": "162.— For a review of \njudgment  by 4[a High Twenty days The date of the decree or order. \n \n \n1 The word “provincial” omitted by the Berar Laws Act, 1941 (4 of 1941), s.2 and Third Sch. (with effect from the 1st August, 1941). \n2 The parentheses and words “(other than Presidency Small Cause Court)” which were ins. ibid. ( with effect from the 1 st August, 1941), have been",
     "footnotes": [
       "Subs. by the\n  Central Laws (Statute Reform) Ordinance, 1960 (21 of 1960), s. 3 and 2nd Sch.\n  (with effect from the 14th October, 1955), for \"any of The following\n  Courts, namely",
@@ -37878,7 +37928,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_163",
@@ -37892,7 +37943,7 @@
     "provision_type": "article",
     "period": "Thirty days",
     "trigger": "The date of the dismissal,",
-    "text": "163. — By a plaintiff, for an order to set aside a dismissal for default of appearance or for failure to pay costs of service of process or to furnish security for costs.",
+    "text": "Article 163: 163 -By a plaintiff, for an order to set aside a dismissal for default of appearance or for failure to pay costs of service of process or to furnish security for costs.\nPeriod of limitation: Thirty days\nTime from which period begins to run: The date of the dismissal,",
     "text_raw": "163. — By a plaintiff, for an \norder to set aside  \na    dismissal    for \ndefault of appearance or  \nfor failure to pay costs \nof   service of process \nor to furnish security for  \ncosts.",
     "footnotes": [],
     "caveats": [],
@@ -37923,7 +37974,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_164",
@@ -37937,7 +37989,7 @@
     "provision_type": "article",
     "period": "Thirty days",
     "trigger": "The date of the decree or, where the summons was not duly served, when the applicant has knowledge of the decree.",
-    "text": "164. — By a defendant, for an order to set aside a decree passed ex parte.",
+    "text": "Article 164: By a defendant, for an order to set aside a decree passed ex parte.\nPeriod of limitation: Thirty days\nTime from which period begins to run: The date of the decree or, where the summons was not duly served, when the applicant has knowledge of the decree.",
     "text_raw": "164. — By a defendant, for an \norder to set aside a \ndecree passed ex \nparte.",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\"."
@@ -37970,7 +38022,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_165",
@@ -38173,7 +38226,7 @@
     "provision_type": "article",
     "period": null,
     "trigger": null,
-    "text": "169.—",
+    "text": "Article 169: For the re-hearing of an appeal heard ex parte. The date of the decree in appeal, or, where notice of the appeal was not duly served, when the applicant has knowledge of the decree.\nPeriod of limitation: Three years\nTime from which period begins to run: When the loan is made",
     "text_raw": "169.—",
     "footnotes": [
       "Subs. by the Repealing and Amending Act, 1923 (11 of 1923),\n  s. 2 and First Sch., for \"Ditto\".",
@@ -38204,7 +38257,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_170",
@@ -38632,7 +38686,7 @@
     "provision_type": "article",
     "period": "Ninety days",
     "trigger": "The date of the decree appealed from.",
-    "text": "179. — By a person desiring to appeal under the Code of Civil Procedure, 1908 (V of 1908) to the Supreme Court for leave to appeal.",
+    "text": "Article 179: By a person desiring to appeal under the [Code of Civil Pro cedure, 1908] to [the Supreme Court for leave to appeal.\nPeriod of limitation: Ninety days\nTime from which period begins to run: The date of the decree appealed from.",
     "text_raw": "179. — By a person desiring to  \nappeal under the 1[Code \nof Civil Procedure, \n1908 (V of 1908)] to \n2[the Supreme Court] for \nleave to appeal.",
     "footnotes": [
       "Subs. by the Arbitration Act,\n  1940 (10 of 1940), Fourth Sch., for \"same Code\" (with effect from\n  the 1st July, 1940).",
@@ -38667,7 +38721,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_180",
@@ -38681,7 +38736,7 @@
     "provision_type": "article",
     "period": "Three years",
     "trigger": "When the sale becomes absolute.",
-    "text": "180. — By a purchaser of immoveable property at a sale in execution of a decree for delivery of possession.",
+    "text": "Article 180: By a purchaser of immoveable property at a sale in execution of a decree for delivery of possession.\nPeriod of limitation: Three years\nTime from which period begins to run: When the sale becomes absolute.",
     "text_raw": "180. — By a purchaser of \nimmoveable property at  \na     sale   in   execution  \nof a  decree for delivery  \nof possession.",
     "footnotes": [],
     "caveats": [],
@@ -38712,7 +38767,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_181",
@@ -44538,7 +44594,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "127. Receiving property taken by war or depredation mentioned in sections 125 and.",
+    "text": "Receiving property taken by war or depredation mentioned in sections 125 and 126. This statutory provision stands enacted as Section 127 of the Pakistan Penal Code, 1860.",
     "text_raw": "127. Receiving property taken by war or depredation mentioned in sections 125 and",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -44565,7 +44621,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "PPC_1860_SEC_164",
@@ -44579,7 +44636,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "164. Punishment for abetment by public servant of offences defined in section 162 or.",
+    "text": "Punishment for abetment by public servant of offences defined in section 162 or 163. This statutory provision stands enacted as Section 164 of the Pakistan Penal Code, 1860.",
     "text_raw": "164. Punishment for abetment by public servant of offences defined in section 162 or",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -44606,7 +44663,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_source": "restored_from_official_pdf_tables"
   },
   {
     "canonical_id": "PPC_1860_SEC_1366",
