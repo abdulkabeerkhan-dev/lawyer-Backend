@@ -6766,7 +6766,9 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
 
                 # If Clerk JWKS/Issuer is unconfigured in environment, extract user_id gracefully
 
-                if not os.environ.get("CLERK_ISSUER") and not os.environ.get("CLERK_JWKS_URL"):
+                # Unverified decoding is a local-development convenience only: in production a
+                # missing CLERK_ISSUER/CLERK_JWKS_URL must never turn into "trust any token".
+                if not is_prod and not os.environ.get("CLERK_ISSUER") and not os.environ.get("CLERK_JWKS_URL"):
 
                     try:
 
