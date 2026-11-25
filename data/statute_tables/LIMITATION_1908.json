@@ -5922,10 +5922,13 @@
     "content_hash": "3d7f9c96294546189f41c29462657d6375e73db50b17b54df65280f5a1654720",
     "tier": "reviewed",
     "quoting_allowed": true,
-    "in_force": true,
+    "in_force": false,
     "page_verified": true,
     "source_url": "PakistanLawSite",
-    "retrieved_at": "2026-11-07 00:29:13"
+    "retrieved_at": "2026-11-07 00:29:13",
+    "omitted": true,
+    "status": "omitted",
+    "repeal_note": "Omitted by the Law Reforms Ordinance, 1972 (XII of 1972), s.2 and Schedule (official Pakistan Code text, footnote 5). Applications for execution are governed by Article 181."
   },
   {
     "canonical_id": "LIMITATION_1908_ART_183",

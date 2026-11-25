@@ -39,7 +39,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_3",
@@ -207,7 +208,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_11",
@@ -228,7 +230,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_12",
@@ -270,7 +273,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_14",
@@ -522,7 +526,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_29B",
@@ -669,7 +674,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_35",
@@ -753,7 +759,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_39",
@@ -2203,7 +2210,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_99D",
@@ -2539,7 +2547,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_112",
@@ -4280,7 +4289,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_185",
@@ -4994,7 +5004,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_227",
@@ -5478,7 +5489,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_247",
@@ -6633,7 +6645,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_363",
@@ -6801,7 +6814,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_371",
@@ -7750,7 +7764,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "text_placeholder": "[Omitted]. This statutory provision stands enacted as Section 407 of the Code of Criminal Procedure, 1898.",
-    "text_status": "not_available"
+    "text_status": "not_available",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_408",
@@ -7834,7 +7849,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_411A",
@@ -8002,7 +8018,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_417",
@@ -8380,7 +8397,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_438",
@@ -8402,7 +8420,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "text_placeholder": "[Omitted]. This statutory provision stands enacted as Section 438 of the Code of Criminal Procedure, 1898.",
-    "text_status": "not_available"
+    "text_status": "not_available",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_439",
@@ -8486,7 +8505,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_442",
@@ -8696,7 +8716,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_473",
@@ -8822,7 +8843,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_477",
@@ -8843,7 +8865,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_478",
@@ -8864,7 +8887,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_479",
@@ -8885,7 +8909,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_480",
@@ -9095,7 +9120,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_492",
@@ -9386,7 +9412,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_505",
@@ -9974,7 +10001,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_527",
@@ -10100,7 +10128,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_533",
@@ -10142,7 +10171,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_535",
@@ -10184,7 +10214,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_537",
@@ -10373,7 +10404,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_543",
@@ -10646,7 +10678,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_554",
@@ -10814,7 +10847,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CRPC_1898_SEC_561A",

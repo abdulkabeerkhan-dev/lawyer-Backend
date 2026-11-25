@@ -270,7 +270,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_14",
@@ -312,7 +313,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_16",
@@ -333,7 +335,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_17",
@@ -375,7 +378,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_19",
@@ -1214,7 +1218,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_57",
@@ -1256,7 +1261,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_59",
@@ -1277,7 +1283,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_60",
@@ -1319,7 +1326,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_62",
@@ -1340,7 +1348,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_63",
@@ -3104,7 +3113,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_139",
@@ -5078,7 +5088,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_217",
@@ -5330,7 +5341,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_227",
@@ -6758,7 +6770,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_292B",
@@ -6780,7 +6793,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "text_placeholder": "Child pornography [omitted]. This statutory provision stands enacted as Section 292B of the Pakistan Penal Code, 1860.",
-    "text_status": "not_available"
+    "text_status": "not_available",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_292C",
@@ -7683,7 +7697,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "text_placeholder": "Attempt to commit suicide [omitted]. This statutory provision stands enacted as Section 325 of the Pakistan Penal Code, 1860.",
-    "text_status": "not_available"
+    "text_status": "not_available",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_326",
@@ -9404,7 +9419,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_366A",
@@ -9551,7 +9567,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_370",
@@ -9656,7 +9673,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_373",
@@ -9677,7 +9695,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_374",
@@ -9803,7 +9822,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "text_placeholder": "Exceptional first offenders or repeat offenders [omitted]. This statutory provision stands enacted as Section 376B of the Pakistan Penal Code, 1860.",
-    "text_status": "not_available"
+    "text_status": "not_available",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_377",
@@ -12824,7 +12844,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_491",
@@ -12866,7 +12887,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_493",
@@ -12887,7 +12909,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_493A",
@@ -13055,7 +13078,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_498",
@@ -13076,7 +13100,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_498A",

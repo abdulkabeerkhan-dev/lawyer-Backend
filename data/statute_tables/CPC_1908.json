@@ -144,7 +144,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_8",
@@ -165,7 +166,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_9",
@@ -539,7 +541,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_26",
@@ -1043,7 +1046,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_44A",
@@ -1085,7 +1089,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_46",
@@ -1337,7 +1342,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_58",
@@ -1379,7 +1385,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_60",
@@ -1736,7 +1743,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_76",
@@ -1967,7 +1975,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_86A",
@@ -2009,7 +2018,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_87A",
@@ -2030,7 +2040,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "audit_2026-11-25:staging",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_88",
@@ -2072,7 +2083,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_89A",
@@ -2535,7 +2547,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "text_placeholder": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
-    "text_status": "not_available"
+    "text_status": "not_available",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_111",
@@ -2578,7 +2591,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "text_placeholder": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
-    "text_status": "not_available"
+    "text_status": "not_available",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_112",
@@ -2871,7 +2885,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_126",
@@ -2977,7 +2992,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "text_placeholder": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
-    "text_status": "not_available"
+    "text_status": "not_available",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_131",
@@ -3503,7 +3519,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "text_placeholder": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
-    "text_status": "not_available"
+    "text_status": "not_available",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_155",
@@ -3525,7 +3542,8 @@
     "effective_from": "2026-09-23",
     "effective_to": null,
     "text_placeholder": "[Omitted]. Statutory provision under Code of Civil Procedure, 1908.",
-    "text_status": "not_available"
+    "text_status": "not_available",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_156",
@@ -3546,7 +3564,8 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "audit_2026-11-25:archive",
+    "in_force": false
   },
   {
     "canonical_id": "CPC_1908_SEC_157",
