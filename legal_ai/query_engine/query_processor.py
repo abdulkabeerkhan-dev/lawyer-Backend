@@ -1886,7 +1886,7 @@ async def process_query_job_legal_ai(
             opt_lines.append(f"- **{label}**{statute_info}{forum_info}")
         
         clarification_msg = (
-            f"### \xe2\x9a\xa0\xef\xb8\x8f Clarification Required Before Research\n\n"
+            f"### \u26a0\ufe0f Clarification Required Before Research\n\n"
             f"{q_heading}\n\n"
             f"To ensure statutory accuracy and avoid citing inapplicable precedent, please specify the remedy or forum you are pursuing:\n\n"
             + "\n".join(opt_lines)

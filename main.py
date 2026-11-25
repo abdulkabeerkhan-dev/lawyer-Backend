@@ -15464,7 +15464,7 @@ async def get_user_quota_status(authenticated_user_id: str = Depends(verify_cler
         }
 
     except Exception as e:
-        print(f"\xe2\x9a\xa0\xef\xb8\x8f Quota lookup notice: {e}", file=sys.stderr)
+        print(f"\u26a0\ufe0f Quota lookup notice: {e}", file=sys.stderr)
         return {
             "text_queries_used": 0, "text_queries_limit": 100, "text_queries_remaining": 100,
             "vision_queries_used": 0, "vision_queries_limit": 30, "vision_queries_remaining": 30,
