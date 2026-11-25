@@ -213,7 +213,11 @@ def audit_memo(
 
     body, cards, cards_ok = split_cards(memo)
     full_context = query + "\n" + body
-    topics = detect_topics(full_context, query_only_text=query)
+    # The governing-provision and authority checks belong to the topic the advocate ASKED
+    # about. Detecting topics from the memo body or retrieved text made every memo that
+    # mentioned "current" or quoted an unrelated case look like a rent/adverse-possession
+    # matter and marked it Unresolved. Fall back to the body only when there is no query.
+    topics = detect_topics(query, query_only_text=query) if (query or "").strip() else detect_topics(full_context, query_only_text=query)
     inferred_matter = matter_type or (classify_matter_type(query) if query else classify_matter_type(body))
 
     F: List[Finding] = []

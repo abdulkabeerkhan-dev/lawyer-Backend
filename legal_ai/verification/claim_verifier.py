@@ -28,7 +28,9 @@ def verify_and_scrub_memo_claims(
     memo_text: str,
     retrieved_precedents: Optional[List[Dict[str, Any]]] = None,
     statutory_context: str = "",
-    query_text: str = ""
+    query_text: str = "",
+    evidence_text: str = "",
+    check_corpus: bool = True,
 ) -> ClaimVerificationResult:
     """
     Executes claim-to-source verification across:
@@ -284,24 +286,46 @@ def verify_and_scrub_memo_claims(
         if re.search(cart, cleaned):
             cleaned = re.sub(cart, "", cleaned)
 
-    # 10. Check all cited authorities against retrieved_map
-    from legal_ai.verification.statute_matcher import find_citations
-    found_cits = find_citations(cleaned)
-    for raw_cit, start, end in found_cits:
-        norm_raw = re.sub(r'[\s_\-]+', ' ', raw_cit).lower()
-        if retrieved_map:
-            is_in_retrieved = any(norm_raw in r_key or r_key in norm_raw for r_key in retrieved_map)
-            if is_in_retrieved:
-                verified_claims.append({
-                    "citation": raw_cit,
-                    "status": "RETRIEVED_AND_VERIFIED"
-                })
-            else:
-                violations.append({
-                    "type": "UNRETRIEVED_CASE_CITATION",
-                    "citation": raw_cit,
-                    "description": f"Citation '{raw_cit}' was not in the retrieved precedent set."
-                })
+    # 10. Check every cited case: retrieved, quoted inside retrieved evidence, or neither;
+    #     and whether it exists in the judgment corpus at all.
+    from legal_ai.verification.citation_keys import citation_key, keys_in_text, known_in_corpus, format_key, iter_citations
+    retrieved_keys = set()
+    for c in retrieved:
+        for f in ("citation", "case_id", "neutral_citation"):
+            k = citation_key(str(c.get(f) or ""))
+            if k:
+                retrieved_keys.add(k)
+    # Cases quoted inside retrieved judgments (headnotes cite earlier authorities) and
+    # inside the evidence pack are grounded too: the model read them in its sources.
+    evidence_keys = keys_in_text(" ".join(retrieved_map.values()) + "\n" + str(evidence_text or ""))
+    cited_keys = {}
+    for raw_cit, start, end, k in iter_citations(cleaned):
+        cited_keys.setdefault(k, []).append((raw_cit, start, end))
+        if k in retrieved_keys:
+            verified_claims.append({"citation": raw_cit, "status": "RETRIEVED_AND_VERIFIED"})
+        elif k in evidence_keys:
+            verified_claims.append({"citation": raw_cit, "status": "CITED_IN_RETRIEVED_AUTHORITY"})
+        else:
+            violations.append({
+                "type": "UNRETRIEVED_CASE_CITATION",
+                "citation": raw_cit,
+                "description": f"Citation '{raw_cit}' is not in the retrieved precedents or quoted in the evidence."
+            })
+
+    if check_corpus and cited_keys:
+        status = known_in_corpus([k for k in cited_keys if k not in retrieved_keys])
+        unknown = [k for k, ok in status.items() if ok is False]
+        # Annotate the first mention of each unknown citation, working backwards so offsets stay valid.
+        marks = sorted(((cited_keys[k][0][2], k) for k in unknown), reverse=True)
+        for end, k in marks:
+            note = " [citation not found in Section's case database: verify before relying on it]"
+            if cleaned[end:end + len(note)] != note:
+                cleaned = cleaned[:end] + note + cleaned[end:]
+            violations.append({
+                "type": "CITATION_NOT_IN_CORPUS",
+                "citation": format_key(k),
+                "description": f"Citation '{format_key(k)}' does not match any judgment in the corpus; it may be mis-cited or invented."
+            })
 
     # 11. Limitation Article 181 Misapplication on Promissory Notes
     q_low = str(query_text or "").lower()

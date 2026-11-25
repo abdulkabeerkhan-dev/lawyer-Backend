@@ -4972,6 +4972,17 @@ async def process_query_job_legal_ai(
 
 
 
+    # Full evidence text for the claim verifier: a case quoted inside a retrieved
+    # judgment counts as grounded, not as an unretrieved citation.
+    try:
+        _ep = bounded_evidence_pack.to_dict() if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else {}
+        _claim_evidence_text = "\n".join(
+            " ".join(str(v.get(f) or "") for f in ("text", "ratio", "citation"))
+            for v in (_ep.values() if isinstance(_ep, dict) else []) if isinstance(v, dict)
+        )
+    except Exception:
+        _claim_evidence_text = ""
+
     claim_verification = verify_and_scrub_memo_claims(
 
 
@@ -5004,7 +5015,11 @@ async def process_query_job_legal_ai(
 
 
 
-        query_text=effective_user_query
+        query_text=effective_user_query,
+
+
+
+        evidence_text=_claim_evidence_text
 
 
 
@@ -6207,6 +6222,7 @@ async def process_query_job_legal_ai(
             "retrieval_health": retrieval_health,
             "database_freshness": "Database current as of November 2026",
             "is_verified": memo_is_verified if 'memo_is_verified' in locals() else False,
+            "memo_verification": _memo_verification_summary(locals()),
             "verification_report": v_report if 'v_report' in locals() else None,
             "evidence_pack": bounded_evidence_pack.to_dict() if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else (evidence_pack.to_dict() if 'evidence_pack' in locals() else None),
             "cases": precedent_cards or ([{"citation": it.citation, "case_name": it.case_title, "title": it.case_title, "court": it.court, "ratio": it.ratio, "ratio_decidendi": it.ratio, "year": it.year, "statutes_invoked": it.statutes_invoked, "pdf_url": it.pdf_url} for it in bounded_evidence_pack.items.values() if it.item_type == "judicial_precedent"] if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else []),
@@ -6294,6 +6310,7 @@ async def process_query_job_legal_ai(
                 "model_answer": clean_answer,
                 "database_freshness": "Database current as of November 2026",
                 "is_verified": memo_is_verified if 'memo_is_verified' in locals() else False,
+                "memo_verification": _memo_verification_summary(locals()),
                 "verification_report": v_report if 'v_report' in locals() else None,
                 "evidence_pack": bounded_evidence_pack.to_dict() if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else (evidence_pack.to_dict() if 'evidence_pack' in locals() else None),
                 "cases": precedent_cards or ([{"citation": it.citation, "case_name": it.case_title, "title": it.case_title, "court": it.court, "ratio": it.ratio, "ratio_decidendi": it.ratio, "year": it.year, "statutes_invoked": it.statutes_invoked, "pdf_url": it.pdf_url} for it in bounded_evidence_pack.items.values() if it.item_type == "judicial_precedent"] if ('bounded_evidence_pack' in locals() and bounded_evidence_pack) else []),
@@ -6536,3 +6553,28 @@ async def process_query_job_legal_ai(
                 persist_in_flight_job_state(job_id, "failed", "failed", extra={"result": None, "error": "finalization produced no payload"})
             except Exception as _p_err:
                 logger.debug(f"Persistence error: {_p_err}")
+
+
+def _memo_verification_summary(scope: Dict[str, Any]) -> Dict[str, Any]:
+    """Why the memo is or isn't marked verified: claim counts, blocking reasons, gaps.
+    Surfaced in the response so the verified badge can be audited."""
+    try:
+        data = scope.get("v_report_data")
+        if isinstance(data, dict):
+            out = {k: data.get(k) for k in ("is_memo_verified", "is_verified", "total_claims", "verified_claims_count",
+                                            "unverified_claims_count") if k in data}
+            bv = data.get("blocking_violations") or data.get("violations") or []
+            out["blocking_violations"] = [str(x)[:300] for x in (bv if isinstance(bv, list) else [bv])][:25]
+        else:
+            out = {}
+        mj = scope.get("memo_json_payload")
+        if isinstance(mj, dict):
+            out["not_found"] = [str(x)[:200] for x in (mj.get("not_found") or [])][:10]
+            out["is_partial"] = bool(mj.get("is_partial", False))
+        cv = scope.get("claim_verification")
+        if cv is not None and hasattr(cv, "violations"):
+            out["citation_flags"] = [v for v in cv.violations if isinstance(v, dict) and v.get("type") in
+                                     ("CITATION_NOT_IN_CORPUS", "UNRETRIEVED_CASE_CITATION")][:20]
+        return out
+    except Exception as err:  # never break a response over diagnostics
+        return {"error": str(err)[:200]}
