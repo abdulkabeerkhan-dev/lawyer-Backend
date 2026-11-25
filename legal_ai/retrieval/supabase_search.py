@@ -40,6 +40,29 @@ LEGAL_CONVERSATIONAL_STOP_WORDS: Set[str] = {
 }
 
 
+# Domain labels stored on full_judgments (and Zilliz chunks). The planner speaks a
+# looser vocabulary and returns a list, so map its first domain onto a stored label.
+_CORPUS_DOMAINS = {"criminal", "constitutional", "civil", "tax_corporate", "banking_commercial",
+                   "service", "rent", "evidence", "family"}
+_DOMAIN_ALIASES = {"tax": "tax_corporate", "corporate": "tax_corporate", "company": "tax_corporate",
+                   "banking": "banking_commercial", "commercial": "banking_commercial",
+                   "employment": "service", "labour": "service", "tenancy": "rent",
+                   "property": "civil", "constitution": "constitutional"}
+
+
+def _corpus_domain(raw) -> Optional[str]:
+    d = str(raw or "").strip().lower().replace(" ", "_")
+    if d in _CORPUS_DOMAINS:
+        return d
+    for label in _CORPUS_DOMAINS:
+        if label in d:
+            return label
+    for word, label in _DOMAIN_ALIASES.items():
+        if word in d:
+            return label
+    return None
+
+
 def extract_substantive_tokens(query_text: str) -> List[str]:
     """
     Extracts high-salience substantive legal keywords stripped of conversational filler.
@@ -203,12 +226,10 @@ async def search_supabase_judgments(
     # Extract target domain from query_plan if available
     target_domain = None
     if query_plan:
-        if hasattr(query_plan, "legal_domain") and query_plan.legal_domain:
-            target_domain = str(query_plan.legal_domain).strip().lower()
-        elif hasattr(query_plan, "domain") and query_plan.domain:
-            target_domain = str(query_plan.domain).strip().lower()
-        if target_domain in ("unknown", "general", "none"):
-            target_domain = None
+        raw = getattr(query_plan, "legal_domain", None) or getattr(query_plan, "domain", None)
+        if isinstance(raw, (list, tuple)):
+            raw = raw[0] if raw else None
+        target_domain = _corpus_domain(raw)
 
     for term in search_terms[:2]:
         if is_supabase_circuit_open():

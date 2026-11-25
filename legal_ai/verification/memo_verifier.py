@@ -2071,7 +2071,18 @@ class MemoVerifier:
 
 
 
-        if os.path.exists(BM25_PATH):
+        # The citation/title lists the old in-memory BM25 index used to provide, without
+        # loading the 153 MB index (data/bm25_known_citations.json is extracted from it).
+        _known_file = os.path.join(REPO_DIR, "data", "bm25_known_citations.json")
+        if os.path.exists(_known_file):
+            try:
+                with open(_known_file, "r", encoding="utf-8") as _kf:
+                    _known = json.load(_kf)
+                self.citations_set.update(_known.get("citations") or [])
+                self.case_titles_set.update(_known.get("case_titles") or [])
+            except Exception:
+                pass
+        elif os.path.exists(BM25_PATH):
 
 
 
