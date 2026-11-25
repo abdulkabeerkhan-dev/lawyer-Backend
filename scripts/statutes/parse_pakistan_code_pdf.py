@@ -27,7 +27,7 @@ FOOT_RE = re.compile(r"^\s*\d{1,3}\s*(?:Subs|Ins|Omitted|Added|Renumbered|Rep\.|
                      r"Inserted|Substituted|Re-numbered|Deleted|Vide|Ibid|Shall|Notified|Brought)", re.I)
 START_RE = re.compile(
     r"^\s*[\{\[]?(?:\d{1,2}\[)?\{?\s*(?P<num>\d{1,3}[A-Z]{0,3})\s*\.\s*(?:\d{1,2}\[)?\[?"
-    r"(?P<head>[A-Z\"'“(][^\n]{2,220}?)(?:\.\]?\s*(?:_{2}|—|–|-{1,2})|_{2}|—\s)")
+    r"(?P<head>[A-Z\"'“(\[][^\n]{2,220}?)(?:\.\]?\s*(?:_{2}|—|―|–|‑|-{1,2})|_{2}|—\s|―\s|\.\s+(?=[A-Z(\[]))")
 OMIT_RE = re.compile(r"^\s*[\{\[]?(?:\d{1,2}\[)?\s*(?P<num>\d{1,3}[A-Z]{0,3})\s*\.\s*(?:\d{1,2}\[)\s*\*")
 
 
@@ -114,7 +114,7 @@ TOC_NUM = re.compile(r"^\s*(\d{1,3}[A-Z]{0,3})\.\s*(.*)$")
 def parse_toc(lines: List[str]):
     """[(number, heading)] from the CONTENTS block: 'N.' then a heading line, or 'N. Heading'."""
     try:
-        i = next(k for k, ln in enumerate(lines) if ln.strip().upper() in ("CONTENTS", "CONTENT"))
+        i = next(k for k, ln in enumerate(lines) if ln.strip().upper() in ("CONTENTS", "CONTENT", "TABLE OF CONTENTS"))
     except StopIteration:
         return [], 0
     toc, k, last = [], i + 1, None
@@ -128,7 +128,10 @@ def parse_toc(lines: List[str]):
                 while j < len(lines) and not lines[j].strip():
                     j += 1
                 rest = lines[j].strip() if j < len(lines) else ""
-                k = j
+                if TOC_NUM.match(rest) and len(rest) < 12:
+                    rest = ""                           # entry without a heading (usually omitted)
+                else:
+                    k = j
             if last and _key(num) <= _key(last):
                 break                               # numbering restarted: the body has begun
             if len(rest) > 160:
@@ -149,7 +152,10 @@ def _norm(s: str) -> str:
 def parse_with_toc(pdf_path: str) -> List[Dict]:
     lines = clean_lines(pdf_path)
     toc, body_at = parse_toc(lines)
-    if len(toc) < 3:
+    heads = [h for _, h in toc]
+    bogus = bool(heads) and (sum(len(h) for h in heads) / len(heads) > 70 or
+                             sum(1 for h in heads if re.search(r"__|—|―|\bshall\b|\bmay be called\b", h)) > len(heads) / 3)
+    if len(toc) < 3 or bogus:
         return parse(pdf_path)
     body = "\n".join(lines[body_at:])
     body = re.sub(r"(?<![A-Za-z0-9])\d{1,2}\[", "[", body)      # footnote markers: "2[or impeachment]"
