@@ -454,7 +454,7 @@
     "primary_num": "25",
     "secondary_num": null,
     "title": "Act to override other laws",
-    "text": "The provisions of this Ordinance shall have effect notwithstanding anything inconsistent therewith contained in any other law for the time being in force.",
+    "text": "25. Power to make rules.—The Federal Government may, by notification in the official Gazette, make rules for carrying out the purposes of this Ordinance.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Ordinance XLVI of 2001",
     "source_page": "unspecified",
@@ -464,7 +464,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "FIO_2001_SEC_26",

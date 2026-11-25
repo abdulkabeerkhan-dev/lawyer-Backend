@@ -6488,10 +6488,11 @@
     "content_hash": "1203085fadb4c3eeb2a3d5797f1d87e7874229449f7736500f7845730b66f147",
     "tier": "ingested_unreviewed",
     "verification_status": "ingested_unreviewed",
-    "status": "in_force",
+    "status": "omitted",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "in_force": false
   },
   {
     "canonical_id": "PPC_1860_SEC_293",

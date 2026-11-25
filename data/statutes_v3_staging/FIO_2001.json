@@ -533,7 +533,7 @@
     "domain": "banking_commercial",
     "forum": "Banking Court",
     "provision_type": "section",
-    "text": "6. Resignation and removal of Judges. (1) A person, not being a District Judge, appointed as a Judge of a Banking Court under section 5 may, by notice in writing under his hand addressed to the Federal Government, resign from his office.\n\n1Subs. and added by Act No. XXXVIII of 2016, s. 3.\n2Subs. by Ordinance No. LI of 2001, s. 2.\n\n(2) A person appointed as a Judge of a Banking Court under section 5 may be removed from office in consultation with the Chief Justice of the High Court.",
+    "text": "6. Resignation and removal of Judges. (1) A person, not being a District Judge, appointed as a Judge of a Banking Court under section 5 may, by notice in writing under his hand addressed to the Federal Government, resign from his office.\n(2) A person appointed as a Judge of a Banking Court under section 5 may be removed from office in consultation with the Chief Justice of the High Court.",
     "raw_text": "6. Resignation and removal of Judges.  (1) A person, not being a District Judge, appointed \nas a Judge of a Banking Court under section 5 may, by notice in writing under his hand addressed to the \nFederal Government, resign from his office. \n \n \n1Subs. and added by Act No. XXXVIII of 2016, s. 3. \n2Subs. by Ordinance No. LI of 2001, s. 2. \n \n\n \nPage 7 of 25 \n \n(2) A person appointed as a Judge of a Banking Court under section 5 may be removed from \noffice in consultation with the Chief Justice of the High Court.",
     "amendment_notes": [],
     "former_labels": [],
@@ -550,7 +550,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "6. Resignation and removal of Judges. (1) A person, not being a District Judge, appointed as a Judge of a Banking Court under section 5 may, by notice in writing under his hand addressed to the Federal Government, resign from his office.\n\n1Subs. and added by Act No. XXXVIII of 2016, s. 3.\n2Subs. by Ordinance No. LI of 2001, s. 2.\n\n(2) A person appointed as a Judge of a Banking Court under section 5 may be removed from office in consultation with the Chief Justice of the High Court.",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "FIO_2001_SEC_7",
@@ -1154,7 +1156,7 @@
     "domain": "banking_commercial",
     "forum": "Banking Court",
     "provision_type": "section",
-    "text": "25. Power to make rules.—The Federal Government may, by notification in the official Gazette, make rules for carrying out the purposes of this Ordinance.\n1Ins. by Act No. XLVI of 2026, s.4.",
+    "text": "25. Power to make rules.—The Federal Government may, by notification in the official Gazette, make rules for carrying out the purposes of this Ordinance.",
     "raw_text": "25. Power to make rules.—The Federal Government may, by notification in the official \nGazette, make rules for carrying out the purposes of this Ordinance. \n1Ins. by Act No. XLVI of 2026, s.4. \n \n \n\n \nPage 25 of 25",
     "amendment_notes": [],
     "former_labels": [],
@@ -1171,7 +1173,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "25. Power to make rules.—The Federal Government may, by notification in the official Gazette, make rules for carrying out the purposes of this Ordinance.\n1Ins. by Act No. XLVI of 2026, s.4.",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "FIO_2001_SEC_26",
