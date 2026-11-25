@@ -778,13 +778,13 @@ TOPICS_SPEC: Dict[str, Any] = {
     },
     "rent_eviction": {
         "detect": [
-            r"rent",
-            r"tenant",
-            r"landlord",
-            r"eviction",
-            r"ejectment",
-            r"prpa",
-            r"srpo",
+            r"\brent(?:s|al|ed|ing)?\b",  # whole word: never "current", "different", "parent"
+            r"\btenan(?:t|ts|cy)\b",
+            r"\blandlords?\b",
+            r"\bevict(?:ion|ed|ing)?\b",
+            r"\bejectment\b",
+            r"\bprpa\b",
+            r"\bsrpo\b",
         ],
         "mandatory_groups": [
             {
