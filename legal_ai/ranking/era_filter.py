@@ -27,7 +27,8 @@ def requested_filters(request: Any) -> Dict[str, Any]:
             out["min_year"] = int(min_year or 2018)
         except (TypeError, ValueError):
             out["min_year"] = 2018
-    court = _field(request, "court_filter", "court")
+    # a bare "court" can be a drafting forum, so only the toggle or an explicit court_filter counts
+    court = _field(request, "court_filter")
     if era == "apex" or court:
         out["court"] = str(court or "Supreme Court of Pakistan")
     return out

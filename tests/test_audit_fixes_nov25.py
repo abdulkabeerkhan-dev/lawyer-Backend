@@ -141,3 +141,9 @@ def test_relevance_filter_drops_cases_blocked_in_supabase(monkeypatch):
     monkeypatch.setattr(case_status, "_lookup", lambda keys: (_ for _ in ()).throw(RuntimeError("db down")))
     case_status._cache.clear()
     assert case_status.blocked(["2005_CLC_SHC_1241"]) == set()
+
+
+def test_bare_court_field_is_not_a_filter():
+    from legal_ai.ranking.era_filter import requested_filters
+    assert requested_filters({"court": "Lahore High Court"}) == {}
+    assert requested_filters({"era": "apex", "court": "Supreme Court of Pakistan"}) == {"court": "Supreme Court of Pakistan"}
