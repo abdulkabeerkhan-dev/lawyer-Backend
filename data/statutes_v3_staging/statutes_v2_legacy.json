@@ -356,7 +356,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "CONTENTS. Statutory provision under Control of Narcotic Substances Act, 1997.",
+    "text": "",
     "text_raw": "CONTENTS. Statutory provision under Control of Narcotic Substances Act, 1997.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -373,7 +373,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "CONTENTS. Statutory provision under Control of Narcotic Substances Act, 1997.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CNSA_1997_SEC_9_A",
@@ -511,7 +513,7 @@
     "provision_type": "article",
     "period": null,
     "trigger": null,
-    "text": "Article 54 of the Constitution of the Islamic Republic of Pakistan, 1973: Summoning and prorogation of Majlis-e-Shoora (Parliament). In force under Chapter and Part as published in the official Gazette of Pakistan.",
+    "text": "",
     "text_raw": "[Article 54 of the Constitution of the Islamic Republic of Pakistan, 1973: Summoning and prorogation of Majlis-e-Shoora (Parliament). In force under Chapter and Part as published in the official Gazette of Pakistan.]",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -528,7 +530,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Article 54 of the Constitution of the Islamic Republic of Pakistan, 1973: Summoning and prorogation of Majlis-e-Shoora (Parliament). In force under Chapter and Part as published in the official Gazette of Pakistan.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CONST_1973_ART_71",
@@ -542,7 +546,7 @@
     "provision_type": "article",
     "period": null,
     "trigger": null,
-    "text": "Article 71 of the Constitution of the Islamic Republic of Pakistan, 1973: Omitted. In force under Chapter and Part as published in the official Gazette of Pakistan.",
+    "text": "",
     "text_raw": "[Article 71 of the Constitution of the Islamic Republic of Pakistan, 1973: [Omitted]. In force under Chapter and Part as published in the official Gazette of Pakistan.]",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -559,7 +563,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Article 71 of the Constitution of the Islamic Republic of Pakistan, 1973: Omitted. In force under Chapter and Part as published in the official Gazette of Pakistan.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CONST_1973_ART_96",
@@ -573,7 +579,7 @@
     "provision_type": "article",
     "period": null,
     "trigger": null,
-    "text": "Article 96 of the Constitution of the Islamic Republic of Pakistan, 1973: Omitted. In force under Chapter and Part as published in the official Gazette of Pakistan.",
+    "text": "",
     "text_raw": "[Article 96 of the Constitution of the Islamic Republic of Pakistan, 1973: [Omitted]. In force under Chapter and Part as published in the official Gazette of Pakistan.]",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -590,7 +596,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Article 96 of the Constitution of the Islamic Republic of Pakistan, 1973: Omitted. In force under Chapter and Part as published in the official Gazette of Pakistan.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CONST_1973_ART_185",
@@ -666,7 +674,7 @@
     "provision_type": "article",
     "period": null,
     "trigger": null,
-    "text": "Article 58(2)(b) of the Constitution of the Islamic Republic of Pakistan, 1973: Dissolution of National Assembly by President where situation has arisen in which Government cannot be carried on in accordance with Constitution. In force under Chapter and Part as published in the official Gazette of Pakistan.",
+    "text": "",
     "text_raw": "[Article 58(2)(b) of the Constitution of the Islamic Republic of Pakistan, 1973: Dissolution of National Assembly by President where situation has arisen in which Government cannot be carried on in accordance with Constitution. In force under Chapter and Part as published in the official Gazette of Pakistan.]",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -683,7 +691,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Article 58(2)(b) of the Constitution of the Islamic Republic of Pakistan, 1973: Dissolution of National Assembly by President where situation has arisen in which Government cannot be carried on in accordance with Constitution. In force under Chapter and Part as published in the official Gazette of Pakistan.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CONST_1973_ART_199_1",
@@ -1266,7 +1276,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "[Repealed]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "",
     "text_raw": "156. 3[Repeals.]",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -1291,7 +1301,9 @@
     "historical": false,
     "supersedes": [],
     "superseded_by": null,
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "restored_from_official_pdf_tables",
+    "text_placeholder": "[Repealed]. Statutory provision under Code of Civil Procedure, 1908.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CPC_1908_ORD_I_R_1",
@@ -3312,7 +3324,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "ISSUE AND SERVICE OF SUMMONS: [Service within Presidency towns of summons issued by Courts outside.] Omitted by A. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "22. [Service within Presidency towns of summons issued by Courts outside..] [Omitted.]",
     "text_raw": "22. [Service within Presidency towns of summons issued by Courts outside.] Omitted by A. O.,",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -3340,7 +3352,7 @@
     "historical": false,
     "supersedes": [],
     "superseded_by": null,
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "audit_2026-11-25:same_id:v2"
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_1949",
@@ -3354,7 +3366,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "ISSUE AND SERVICE OF SUMMONS: 1Subs and added by Act. XIV of 1994, s. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "",
     "text_raw": "1949. \n \n \n1Subs and added by Act. XIV of 1994, s.11.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -3382,7 +3394,9 @@
     "historical": false,
     "supersedes": [],
     "superseded_by": null,
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "restored_from_official_pdf_tables",
+    "text_placeholder": "ISSUE AND SERVICE OF SUMMONS: 1Subs and added by Act. XIV of 1994, s. Statutory provision under Code of Civil Procedure, 1908.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "CPC_1908_ORD_V_R_23",
@@ -12060,7 +12074,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "EXECUTION OF DECREES AND ORDERS: [Transfer to Court of Small Causes.] Omitted by the A. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "4. [Transfer to Court of Small Causes..] [Omitted.]",
     "text_raw": "4. [Transfer to Court of Small Causes.] Omitted by the A.O., 1949.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -12088,7 +12102,7 @@
     "historical": false,
     "supersedes": [],
     "superseded_by": null,
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "audit_2026-11-25:same_id:v2"
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_5",
@@ -14503,7 +14517,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "EXECUTION OF DECREES AND ORDERS: [Saving of suits to establish right to attached property. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "63. [Saving of suits to establish right to attached property ..] [Omitted.]",
     "text_raw": "63. [Saving of suits to establish right to attached property .] Omitted by the Law Reforms \nOrdinance, 1972 (XII of 1972), s.2 and Sch]. \nSale Generally",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -14531,7 +14545,7 @@
     "historical": false,
     "supersedes": [],
     "superseded_by": null,
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "audit_2026-11-25:same_id:v2"
   },
   {
     "canonical_id": "CPC_1908_ORD_XXI_R_64",
@@ -24820,7 +24834,7 @@
     "text_raw": "13. Notice before presentation of appeal.__ (1) Where an appeal against  an  order  is  preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice  of such  \nappeal to the respondent or his advocate by delivering a copy of the memorandum and  grounds  of \nappeal alongwith a copy of the order appealed against 2[either personally or  through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court.] \n(2) On receipt of notice referred to in sub­rule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
-    "in_force": true,
+    "in_force": false,
     "jurisdiction": "federal",
     "page_verified": true,
     "verbatim_text": "13. Notice before presentation of appeal.__ (1) Where an appeal against an order is preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice of such \nappeal to the respondent or his advocate by delivering a copy of the memorandum and grounds of \nappeal alongwith a copy of the order appealed against either personally or through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court. \n(2) On receipt of notice referred to in subrule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine.",
@@ -24843,7 +24857,8 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": "CPC_1908_ORD_XLIII_R_3",
+    "status": "superseded"
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIII_R_4",
@@ -25188,7 +25203,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "APPEALS TO THE 1[SUPREME COURT]: [Effect of refusal of certificate.] Omitted by F. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "6. [Effect of refusal of certificate..] [Omitted.]",
     "text_raw": "6. [Effect of refusal of certificate.] Omitted by F.A.O., 1975 Art.2 and Sch.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -25214,7 +25229,7 @@
     "historical": false,
     "supersedes": [],
     "superseded_by": null,
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "audit_2026-11-25:same_id:v2"
   },
   {
     "canonical_id": "CPC_1908_ORD_XLV_R_7",
@@ -28344,7 +28359,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Procedure in cases submitted by Magistrate not empowered to act under section 562. This statutory provision stands enacted as Section 380 of the Code of Criminal Procedure, 1898.",
+    "text": "380. Procedure in cases submitted by Magistrate not empowered to act under section.",
     "text_raw": "2[380. Procedure in cases submitted by Magistrate not empowered to act under section",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -28372,7 +28387,7 @@
     "historical": false,
     "supersedes": [],
     "superseded_by": null,
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "audit_2026-11-25:same_id:v2"
   },
   {
     "canonical_id": "CRPC_1898_SEC_382_A",
@@ -30484,7 +30499,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Stay of proceedings. This statutory provision stands enacted as Section 21B of the Family Courts Act, 1964.",
+    "text": "",
     "text_raw": "Stay of proceedings. This statutory provision stands enacted as Section 21B of the Family Courts Act, 1964.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -30501,7 +30516,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Stay of proceedings. This statutory provision stands enacted as Section 21B of the Family Courts Act, 1964.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "FAMILY_COURTS_1964_SEC_25A",
@@ -30515,7 +30532,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Transfer of cases. This statutory provision stands enacted as Section 25A of the Family Courts Act, 1964.",
+    "text": "",
     "text_raw": "Transfer of cases. This statutory provision stands enacted as Section 25A of the Family Courts Act, 1964.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -30532,7 +30549,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Transfer of cases. This statutory provision stands enacted as Section 25A of the Family Courts Act, 1964.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "FAMILY_COURTS_1964_SEC_25B",
@@ -30546,7 +30565,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Stay of proceedings by High Court and District Court. This statutory provision stands enacted as Section 25B of the Family Courts Act, 1964.",
+    "text": "",
     "text_raw": "Stay of proceedings by High Court and District Court. This statutory provision stands enacted as Section 25B of the Family Courts Act, 1964.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -30563,7 +30582,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Stay of proceedings by High Court and District Court. This statutory provision stands enacted as Section 25B of the Family Courts Act, 1964.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "HC_RULES_ORDERS_VOL_I_CH_1",
@@ -32552,7 +32573,7 @@
     "provision_type": "article",
     "period": null,
     "trigger": null,
-    "text": "To restrain waste .. 1[Three years] When the waste begins.. Statutory provision under Limitation Act, 1908.",
+    "text": "",
     "text_raw": "41. —To restrain waste ..",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -32576,7 +32597,9 @@
     "historical": false,
     "supersedes": [],
     "superseded_by": null,
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "restored_from_official_pdf_tables",
+    "text_placeholder": "To restrain waste .. 1[Three years] When the waste begins.. Statutory provision under Limitation Act, 1908.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "LIMITATION_1908_ART_42",
@@ -39071,7 +39094,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Place of trial for offences under the Ordinance. This statutory provision stands enacted as Section 11A of the Muslim Family Laws Ordinance, 1961.",
+    "text": "",
     "text_raw": "Place of trial for offences under the Ordinance. This statutory provision stands enacted as Section 11A of the Muslim Family Laws Ordinance, 1961.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -39088,7 +39111,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Place of trial for offences under the Ordinance. This statutory provision stands enacted as Section 11A of the Muslim Family Laws Ordinance, 1961.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "NI_ACT_1881_SEC_1",
@@ -44598,7 +44623,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Receiving property taken by war or depredation mentioned in sections 125 and 126. This statutory provision stands enacted as Section 127 of the Pakistan Penal Code, 1860.",
+    "text": "127. Receiving property taken by war or depredation mentioned in sections 125 and.",
     "text_raw": "127. Receiving property taken by war or depredation mentioned in sections 125 and",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -44626,7 +44651,7 @@
     "historical": false,
     "supersedes": [],
     "superseded_by": null,
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "audit_2026-11-25:same_id:v2"
   },
   {
     "canonical_id": "PPC_1860_SEC_164",
@@ -44640,7 +44665,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Punishment for abetment by public servant of offences defined in section 162 or 163. This statutory provision stands enacted as Section 164 of the Pakistan Penal Code, 1860.",
+    "text": "164. Punishment for abetment by public servant of offences defined in section 162 or.",
     "text_raw": "164. Punishment for abetment by public servant of offences defined in section 162 or",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -44668,7 +44693,7 @@
     "historical": false,
     "supersedes": [],
     "superseded_by": null,
-    "text_source": "restored_from_official_pdf_tables"
+    "text_source": "audit_2026-11-25:same_id:v2"
   },
   {
     "canonical_id": "PPC_1860_SEC_1366",
@@ -44882,7 +44907,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Short title, extent and commencement. This statutory provision stands enacted as Section 1 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Short title, extent and commencement. This statutory provision stands enacted as Section 1 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -44899,7 +44924,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Short title, extent and commencement. This statutory provision stands enacted as Section 1 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_2",
@@ -44913,7 +44940,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Definitions (immovable property, pre-emptor, right of pre-emption, sale, Shafi Sharik, Shafi Khalit, Shafi Jar). This statutory provision stands enacted as Section 2 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Definitions (immovable property, pre-emptor, right of pre-emption, sale, Shafi Sharik, Shafi Khalit, Shafi Jar). This statutory provision stands enacted as Section 2 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -44930,7 +44957,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Definitions (immovable property, pre-emptor, right of pre-emption, sale, Shafi Sharik, Shafi Khalit, Shafi Jar). This statutory provision stands enacted as Section 2 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_3",
@@ -44944,7 +44973,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Interpretation in conformity with Injunctions of Islam. This statutory provision stands enacted as Section 3 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Interpretation in conformity with Injunctions of Islam. This statutory provision stands enacted as Section 3 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -44961,7 +44990,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Interpretation in conformity with Injunctions of Islam. This statutory provision stands enacted as Section 3 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_4",
@@ -44975,7 +45006,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Act to override other laws. This statutory provision stands enacted as Section 4 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Act to override other laws. This statutory provision stands enacted as Section 4 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -44992,7 +45023,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Act to override other laws. This statutory provision stands enacted as Section 4 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_5",
@@ -45006,7 +45039,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Right of pre-emption arising on sale of immovable property. This statutory provision stands enacted as Section 5 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Right of pre-emption arising on sale of immovable property. This statutory provision stands enacted as Section 5 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45023,7 +45056,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Right of pre-emption arising on sale of immovable property. This statutory provision stands enacted as Section 5 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_6",
@@ -45037,7 +45072,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Persons in whom right of pre-emption vests (Shafi Sharik, Shafi Khalit, Shafi Jar). This statutory provision stands enacted as Section 6 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Persons in whom right of pre-emption vests (Shafi Sharik, Shafi Khalit, Shafi Jar). This statutory provision stands enacted as Section 6 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45054,7 +45089,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Persons in whom right of pre-emption vests (Shafi Sharik, Shafi Khalit, Shafi Jar). This statutory provision stands enacted as Section 6 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_7",
@@ -45068,7 +45105,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Priorities in right of pre-emption. This statutory provision stands enacted as Section 7 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Priorities in right of pre-emption. This statutory provision stands enacted as Section 7 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45085,7 +45122,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Priorities in right of pre-emption. This statutory provision stands enacted as Section 7 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_8",
@@ -45099,7 +45138,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Joint right of pre-emption how exercised. This statutory provision stands enacted as Section 8 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Joint right of pre-emption how exercised. This statutory provision stands enacted as Section 8 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45116,7 +45155,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Joint right of pre-emption how exercised. This statutory provision stands enacted as Section 8 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_9",
@@ -45130,7 +45171,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Method of distribution of property where more than one person is equally entitled. This statutory provision stands enacted as Section 9 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Method of distribution of property where more than one person is equally entitled. This statutory provision stands enacted as Section 9 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45147,7 +45188,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Method of distribution of property where more than one person is equally entitled. This statutory provision stands enacted as Section 9 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_10",
@@ -45161,7 +45204,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Withdrawal of claim by one of several pre-emptors. This statutory provision stands enacted as Section 10 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Withdrawal of claim by one of several pre-emptors. This statutory provision stands enacted as Section 10 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45178,7 +45221,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Withdrawal of claim by one of several pre-emptors. This statutory provision stands enacted as Section 10 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_11",
@@ -45192,7 +45237,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Sale of appurtenances of land. This statutory provision stands enacted as Section 11 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Sale of appurtenances of land. This statutory provision stands enacted as Section 11 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45209,7 +45254,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Sale of appurtenances of land. This statutory provision stands enacted as Section 11 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_12",
@@ -45223,7 +45270,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Right to revoke sale. This statutory provision stands enacted as Section 12 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Right to revoke sale. This statutory provision stands enacted as Section 12 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45240,7 +45287,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Right to revoke sale. This statutory provision stands enacted as Section 12 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_13",
@@ -45285,7 +45334,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Demand by guardian or agent. This statutory provision stands enacted as Section 14 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Demand by guardian or agent. This statutory provision stands enacted as Section 14 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45302,7 +45351,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Demand by guardian or agent. This statutory provision stands enacted as Section 14 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_15",
@@ -45316,7 +45367,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Waiver of right of pre-emption by express consent or acquiescence. This statutory provision stands enacted as Section 15 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Waiver of right of pre-emption by express consent or acquiescence. This statutory provision stands enacted as Section 15 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45333,7 +45384,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Waiver of right of pre-emption by express consent or acquiescence. This statutory provision stands enacted as Section 15 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_16",
@@ -45347,7 +45400,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Death of pre-emptor; transmission of right to legal heirs after making demands. This statutory provision stands enacted as Section 16 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Death of pre-emptor; transmission of right to legal heirs after making demands. This statutory provision stands enacted as Section 16 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45364,7 +45417,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Death of pre-emptor; transmission of right to legal heirs after making demands. This statutory provision stands enacted as Section 16 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_17",
@@ -45378,7 +45433,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Abatement of right of pre-emption. This statutory provision stands enacted as Section 17 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Abatement of right of pre-emption. This statutory provision stands enacted as Section 17 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45395,7 +45450,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Abatement of right of pre-emption. This statutory provision stands enacted as Section 17 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_18",
@@ -45409,7 +45466,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Exercise of right of pre-emption by a Muslim and a non-Muslim against each other. This statutory provision stands enacted as Section 18 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Exercise of right of pre-emption by a Muslim and a non-Muslim against each other. This statutory provision stands enacted as Section 18 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45426,7 +45483,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Exercise of right of pre-emption by a Muslim and a non-Muslim against each other. This statutory provision stands enacted as Section 18 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_19",
@@ -45440,7 +45499,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Right of pre-emption non-transferable and indivisible. This statutory provision stands enacted as Section 19 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Right of pre-emption non-transferable and indivisible. This statutory provision stands enacted as Section 19 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45457,7 +45516,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Right of pre-emption non-transferable and indivisible. This statutory provision stands enacted as Section 19 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_20",
@@ -45471,7 +45532,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Where pre-emptor and vendee are equally entitled. This statutory provision stands enacted as Section 20 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Where pre-emptor and vendee are equally entitled. This statutory provision stands enacted as Section 20 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45488,7 +45549,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Where pre-emptor and vendee are equally entitled. This statutory provision stands enacted as Section 20 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_21",
@@ -45502,7 +45565,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Improvements made by the vendee on pre-empted property. This statutory provision stands enacted as Section 21 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Improvements made by the vendee on pre-empted property. This statutory provision stands enacted as Section 21 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45519,7 +45582,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Improvements made by the vendee on pre-empted property. This statutory provision stands enacted as Section 21 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_22",
@@ -45533,7 +45598,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Improvement made in the status of vendee-defendant after institution of suit. This statutory provision stands enacted as Section 22 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Improvement made in the status of vendee-defendant after institution of suit. This statutory provision stands enacted as Section 22 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45550,7 +45615,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Improvement made in the status of vendee-defendant after institution of suit. This statutory provision stands enacted as Section 22 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_23",
@@ -45564,7 +45631,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "No right of pre-emption in respect of certain properties (dower, waqf, public auction). This statutory provision stands enacted as Section 23 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "No right of pre-emption in respect of certain properties (dower, waqf, public auction). This statutory provision stands enacted as Section 23 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45581,7 +45648,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "No right of pre-emption in respect of certain properties (dower, waqf, public auction). This statutory provision stands enacted as Section 23 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_24",
@@ -45595,7 +45664,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Plaintiff to deposit sale price of property (one-third in cash and two-thirds bank guarantee/security within thirty days). This statutory provision stands enacted as Section 24 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Plaintiff to deposit sale price of property (one-third in cash and two-thirds bank guarantee/security within thirty days). This statutory provision stands enacted as Section 24 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45612,7 +45681,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Plaintiff to deposit sale price of property (one-third in cash and two-thirds bank guarantee/security within thirty days). This statutory provision stands enacted as Section 24 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_25",
@@ -45626,7 +45697,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Deposit or refund of excess price. This statutory provision stands enacted as Section 25 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Deposit or refund of excess price. This statutory provision stands enacted as Section 25 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45643,7 +45714,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Deposit or refund of excess price. This statutory provision stands enacted as Section 25 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_26",
@@ -45657,7 +45730,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Sum deposited by pre-emptor not to be attached in execution of decree against him. This statutory provision stands enacted as Section 26 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Sum deposited by pre-emptor not to be attached in execution of decree against him. This statutory provision stands enacted as Section 26 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45674,7 +45747,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Sum deposited by pre-emptor not to be attached in execution of decree against him. This statutory provision stands enacted as Section 26 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_27",
@@ -45688,7 +45763,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Determination of price by Court where price stated in deed is fictitious or disputed. This statutory provision stands enacted as Section 27 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Determination of price by Court where price stated in deed is fictitious or disputed. This statutory provision stands enacted as Section 27 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45705,7 +45780,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Determination of price by Court where price stated in deed is fictitious or disputed. This statutory provision stands enacted as Section 27 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_28",
@@ -45719,7 +45796,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Market value how to be determined. This statutory provision stands enacted as Section 28 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Market value how to be determined. This statutory provision stands enacted as Section 28 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45736,7 +45813,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Market value how to be determined. This statutory provision stands enacted as Section 28 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_29",
@@ -45750,7 +45829,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Government may exclude areas from pre-emption. This statutory provision stands enacted as Section 29 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Government may exclude areas from pre-emption. This statutory provision stands enacted as Section 29 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45767,7 +45846,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Government may exclude areas from pre-emption. This statutory provision stands enacted as Section 29 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_30",
@@ -45781,7 +45862,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Limitation: four months from date of registration of sale deed, attestation of mutation, or taking physical possession. This statutory provision stands enacted as Section 30 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Limitation: four months from date of registration of sale deed, attestation of mutation, or taking physical possession. This statutory provision stands enacted as Section 30 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45798,7 +45879,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Limitation: four months from date of registration of sale deed, attestation of mutation, or taking physical possession. This statutory provision stands enacted as Section 30 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_31",
@@ -45812,7 +45895,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Notice of intended sale. This statutory provision stands enacted as Section 31 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Notice of intended sale. This statutory provision stands enacted as Section 31 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45829,7 +45912,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Notice of intended sale. This statutory provision stands enacted as Section 31 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_32",
@@ -45843,7 +45928,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Matters ancillary or akin to provisions of this Act. This statutory provision stands enacted as Section 32 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Matters ancillary or akin to provisions of this Act. This statutory provision stands enacted as Section 32 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45860,7 +45945,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Matters ancillary or akin to provisions of this Act. This statutory provision stands enacted as Section 32 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_33",
@@ -45874,7 +45961,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "Application of Civil Procedure Code and Qanun-e-Shahadat Order. This statutory provision stands enacted as Section 33 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Application of Civil Procedure Code and Qanun-e-Shahadat Order. This statutory provision stands enacted as Section 33 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45891,7 +45978,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Application of Civil Procedure Code and Qanun-e-Shahadat Order. This statutory provision stands enacted as Section 33 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_34",
@@ -45905,7 +45994,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Repeal of Punjab Pre-emption Act 1913 (Act I of 1913). This statutory provision stands enacted as Section 34 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Repeal of Punjab Pre-emption Act 1913 (Act I of 1913). This statutory provision stands enacted as Section 34 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45922,7 +46011,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Repeal of Punjab Pre-emption Act 1913 (Act I of 1913). This statutory provision stands enacted as Section 34 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_35",
@@ -45936,7 +46027,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Saving of pending suits instituted under previous laws. This statutory provision stands enacted as Section 35 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Saving of pending suits instituted under previous laws. This statutory provision stands enacted as Section 35 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45953,7 +46044,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Saving of pending suits instituted under previous laws. This statutory provision stands enacted as Section 35 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_36",
@@ -45967,7 +46060,7 @@
     "provision_type": "rule",
     "period": null,
     "trigger": null,
-    "text": "Rules. This statutory provision stands enacted as Section 36 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Rules. This statutory provision stands enacted as Section 36 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -45984,7 +46077,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Rules. This statutory provision stands enacted as Section 36 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PREEMPTION_1991_SEC_37",
@@ -45998,7 +46093,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Repeal of Punjab Pre-emption Ordinance 1991 (IX of 1991). This statutory provision stands enacted as Section 37 of the Punjab Pre-emption Act, 1991.",
+    "text": "",
     "text_raw": "Repeal of Punjab Pre-emption Ordinance 1991 (IX of 1991). This statutory provision stands enacted as Section 37 of the Punjab Pre-emption Act, 1991.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46015,7 +46110,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Repeal of Punjab Pre-emption Ordinance 1991 (IX of 1991). This statutory provision stands enacted as Section 37 of the Punjab Pre-emption Act, 1991.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_1",
@@ -46060,7 +46157,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "Definitions (building, final order, landlord, pagri, premises, prescribed, rent, Rent Registrar, Rent Tribunal, sub-tenant, tenancy agreement, tenant). This statutory provision stands enacted as Section 2 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Definitions (building, final order, landlord, pagri, premises, prescribed, rent, Rent Registrar, Rent Tribunal, sub-tenant, tenancy agreement, tenant). This statutory provision stands enacted as Section 2 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46077,7 +46174,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Definitions (building, final order, landlord, pagri, premises, prescribed, rent, Rent Registrar, Rent Tribunal, sub-tenant, tenancy agreement, tenant). This statutory provision stands enacted as Section 2 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_3",
@@ -46091,7 +46190,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Exemption of premises owned by Federal Government, Provincial Government or local authority. This statutory provision stands enacted as Section 3 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Exemption of premises owned by Federal Government, Provincial Government or local authority. This statutory provision stands enacted as Section 3 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46108,7 +46207,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Exemption of premises owned by Federal Government, Provincial Government or local authority. This statutory provision stands enacted as Section 3 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_4",
@@ -46184,7 +46285,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Contents of tenancy agreement. This statutory provision stands enacted as Section 6 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Contents of tenancy agreement. This statutory provision stands enacted as Section 6 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46201,7 +46302,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Contents of tenancy agreement. This statutory provision stands enacted as Section 6 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_7",
@@ -46246,7 +46349,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Existing tenancy without written agreement to be regularized within two years. This statutory provision stands enacted as Section 8 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Existing tenancy without written agreement to be regularized within two years. This statutory provision stands enacted as Section 8 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46263,7 +46366,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Existing tenancy without written agreement to be regularized within two years. This statutory provision stands enacted as Section 8 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_9",
@@ -46277,7 +46382,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Effect of non-compliance with registration; fine. This statutory provision stands enacted as Section 9 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Effect of non-compliance with registration; fine. This statutory provision stands enacted as Section 9 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46294,7 +46399,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Effect of non-compliance with registration; fine. This statutory provision stands enacted as Section 9 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_10",
@@ -46308,7 +46415,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Effect of other agreements. This statutory provision stands enacted as Section 10 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Effect of other agreements. This statutory provision stands enacted as Section 10 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46325,7 +46432,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Effect of other agreements. This statutory provision stands enacted as Section 10 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_11",
@@ -46370,7 +46479,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Obligations of landlord (maintenance, taxes, essential services). This statutory provision stands enacted as Section 12 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Obligations of landlord (maintenance, taxes, essential services). This statutory provision stands enacted as Section 12 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46387,7 +46496,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Obligations of landlord (maintenance, taxes, essential services). This statutory provision stands enacted as Section 12 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_13",
@@ -46401,7 +46512,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Obligations of tenant (timely payment of rent, reasonable care, surrender of possession). This statutory provision stands enacted as Section 13 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Obligations of tenant (timely payment of rent, reasonable care, surrender of possession). This statutory provision stands enacted as Section 13 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46418,7 +46529,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Obligations of tenant (timely payment of rent, reasonable care, surrender of possession). This statutory provision stands enacted as Section 13 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_14",
@@ -46432,7 +46545,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Reimbursement of expenses incurred on repairs. This statutory provision stands enacted as Section 14 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Reimbursement of expenses incurred on repairs. This statutory provision stands enacted as Section 14 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46449,7 +46562,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Reimbursement of expenses incurred on repairs. This statutory provision stands enacted as Section 14 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_15",
@@ -46494,7 +46609,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Establishment of Rent Tribunal. This statutory provision stands enacted as Section 16 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Establishment of Rent Tribunal. This statutory provision stands enacted as Section 16 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46511,7 +46626,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Establishment of Rent Tribunal. This statutory provision stands enacted as Section 16 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_17",
@@ -46525,7 +46642,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Rent Registrar; appointment and functions. This statutory provision stands enacted as Section 17 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Rent Registrar; appointment and functions. This statutory provision stands enacted as Section 17 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46542,7 +46659,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Rent Registrar; appointment and functions. This statutory provision stands enacted as Section 17 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_18",
@@ -46556,7 +46675,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Staff and establishment of Rent Tribunal. This statutory provision stands enacted as Section 18 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Staff and establishment of Rent Tribunal. This statutory provision stands enacted as Section 18 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46573,7 +46692,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Staff and establishment of Rent Tribunal. This statutory provision stands enacted as Section 18 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_19",
@@ -46618,7 +46739,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Application for deposit of rent. This statutory provision stands enacted as Section 20 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Application for deposit of rent. This statutory provision stands enacted as Section 20 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46635,7 +46756,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Application for deposit of rent. This statutory provision stands enacted as Section 20 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_21",
@@ -46711,7 +46834,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Written reply upon grant of leave to contest. This statutory provision stands enacted as Section 23 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Written reply upon grant of leave to contest. This statutory provision stands enacted as Section 23 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46728,7 +46851,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Written reply upon grant of leave to contest. This statutory provision stands enacted as Section 23 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_24",
@@ -46773,7 +46898,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Recording of evidence by Rent Tribunal. This statutory provision stands enacted as Section 25 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Recording of evidence by Rent Tribunal. This statutory provision stands enacted as Section 25 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46790,7 +46915,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Recording of evidence by Rent Tribunal. This statutory provision stands enacted as Section 25 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_26",
@@ -46804,7 +46931,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Rent Tribunal to exercise powers of Civil Court. This statutory provision stands enacted as Section 26 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Rent Tribunal to exercise powers of Civil Court. This statutory provision stands enacted as Section 26 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46821,7 +46948,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Rent Tribunal to exercise powers of Civil Court. This statutory provision stands enacted as Section 26 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_27",
@@ -46897,7 +47026,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "General power of transfer of cases. This statutory provision stands enacted as Section 29 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "General power of transfer of cases. This statutory provision stands enacted as Section 29 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46914,7 +47043,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "General power of transfer of cases. This statutory provision stands enacted as Section 29 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_30",
@@ -46928,7 +47059,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Transfer of ownership during tenancy. This statutory provision stands enacted as Section 30 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Transfer of ownership during tenancy. This statutory provision stands enacted as Section 30 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46945,7 +47076,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Transfer of ownership during tenancy. This statutory provision stands enacted as Section 30 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_31",
@@ -46959,7 +47092,7 @@
     "provision_type": "order",
     "period": null,
     "trigger": null,
-    "text": "Execution of orders of Rent Tribunal. This statutory provision stands enacted as Section 31 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Execution of orders of Rent Tribunal. This statutory provision stands enacted as Section 31 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -46976,7 +47109,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Execution of orders of Rent Tribunal. This statutory provision stands enacted as Section 31 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_32",
@@ -46990,7 +47125,7 @@
     "provision_type": "section",
     "period": null,
     "trigger": null,
-    "text": "Indemnity for acts done in good faith. This statutory provision stands enacted as Section 32 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Indemnity for acts done in good faith. This statutory provision stands enacted as Section 32 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -47007,7 +47142,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Indemnity for acts done in good faith. This statutory provision stands enacted as Section 32 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_33",
@@ -47021,7 +47158,7 @@
     "provision_type": "rule",
     "period": null,
     "trigger": null,
-    "text": "Power to make rules. This statutory provision stands enacted as Section 33 of the Punjab Rented Premises Act, 2009.",
+    "text": "",
     "text_raw": "Power to make rules. This statutory provision stands enacted as Section 33 of the Punjab Rented Premises Act, 2009.",
     "tier": "ingested_unreviewed",
     "quoting_allowed": true,
@@ -47038,7 +47175,9 @@
     "omitted": false,
     "historical": false,
     "supersedes": [],
-    "superseded_by": null
+    "superseded_by": null,
+    "text_placeholder": "Power to make rules. This statutory provision stands enacted as Section 33 of the Punjab Rented Premises Act, 2009.",
+    "text_status": "not_available"
   },
   {
     "canonical_id": "PRPA_2009_SEC_34",
@@ -48629,5 +48768,49 @@
     "historical": false,
     "supersedes": [],
     "superseded_by": null
+  },
+  {
+    "canonical_id": "CPC_1908_ORD_XLIII_R_3",
+    "act": "CPC_1908",
+    "act_code": "CPC_1908",
+    "act_name": "CPC 1908",
+    "section": "Order XLIII, Rule 3",
+    "primary_num": "XLIII, Rule 13",
+    "heading": "Order XLIII, Rule 13 — Notice before presentation of appeal",
+    "title": "Order XLIII, Rule 13 — Notice before presentation of appeal",
+    "provision_type": "order",
+    "period": null,
+    "trigger": null,
+    "text": "3. Notice before presentation of appeal.__ (1) Where an appeal against an order is preferred during the pendency of a suit, the appellant shall, before presenting the appeal, give notice of such appeal to the respondent or his advocate by delivering a copy of the memorandum and grounds of appeal alongwith a copy of the order appealed against either personally or through registered post acknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal for the record of the appellate Court.\n(2) On receipt of notice referred to in subrule (1), the respondent may, with the permission of the Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal in limine.",
+    "text_raw": "13. Notice before presentation of appeal.__ (1) Where an appeal against  an  order  is  preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice  of such  \nappeal to the respondent or his advocate by delivering a copy of the memorandum and  grounds  of \nappeal alongwith a copy of the order appealed against 2[either personally or  through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court.] \n(2) On receipt of notice referred to in sub­rule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine.",
+    "tier": "ingested_unreviewed",
+    "quoting_allowed": true,
+    "in_force": true,
+    "jurisdiction": "federal",
+    "page_verified": true,
+    "verbatim_text": "13. Notice before presentation of appeal.__ (1) Where an appeal against an order is preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice of such \nappeal to the respondent or his advocate by delivering a copy of the memorandum and grounds of \nappeal alongwith a copy of the order appealed against either personally or through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court. \n(2) On receipt of notice referred to in subrule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine.",
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "cpc_1908.pdf",
+      "source_pdf_sha256": "c51d194bfc14f076769f266db7efabc1901f1de2182da89c8f0ef82d92844b33",
+      "page": 175,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    },
+    "domain": "civil",
+    "forum": "Civil Court / District Court / High Court",
+    "raw_text": "13. Notice before presentation of appeal.__ (1) Where an appeal against an order is preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice of such \nappeal to the respondent or his advocate by delivering a copy of the memorandum and grounds of \nappeal alongwith a copy of the order appealed against either personally or through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court. \n(2) On receipt of notice referred to in subrule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine.",
+    "amendment_notes": [],
+    "source": "statutes_v2_legacy",
+    "source_format": "json",
+    "text_as_of": "statutes_v2_baseline",
+    "omitted": false,
+    "historical": false,
+    "supersedes": [],
+    "superseded_by": null,
+    "former_labels": [
+      "CPC_1908_ORD_XLIII_R_13"
+    ]
   }
 ]

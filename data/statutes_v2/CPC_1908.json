@@ -22486,7 +22486,7 @@
     "text_raw": "13. Notice before presentation of appeal.__ (1) Where an appeal against  an  order  is  preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice  of such  \nappeal to the respondent or his advocate by delivering a copy of the memorandum and  grounds  of \nappeal alongwith a copy of the order appealed against 2[either personally or  through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court.] \n(2) On receipt of notice referred to in sub­rule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine.",
     "tier": "text_layer_extracted",
     "quoting_allowed": true,
-    "in_force": true,
+    "in_force": false,
     "jurisdiction": "federal",
     "page_verified": true,
     "verbatim_text": "13. Notice before presentation of appeal.__ (1) Where an appeal against an order is preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice of such \nappeal to the respondent or his advocate by delivering a copy of the memorandum and grounds of \nappeal alongwith a copy of the order appealed against either personally or through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court. \n(2) On receipt of notice referred to in subrule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine.",
@@ -22498,7 +22498,10 @@
       "source_pdf_sha256": "c51d194bfc14f076769f266db7efabc1901f1de2182da89c8f0ef82d92844b33",
       "page": 175,
       "verified_at": "2026-11-11T13:58:38+00:00"
-    }
+    },
+    "status": "superseded",
+    "superseded_by": "CPC_1908_ORD_XLIII_R_3",
+    "note": "Mis-numbered: a footnote digit fused onto Order XLIII rule 3"
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIII_R_4",
@@ -24339,5 +24342,38 @@
       "page": 318,
       "verified_at": "2026-11-11T13:58:38+00:00"
     }
+  },
+  {
+    "canonical_id": "CPC_1908_ORD_XLIII_R_3",
+    "act": "CPC_1908",
+    "act_code": "CPC_1908",
+    "act_name": "CPC 1908",
+    "section": "Order XLIII, Rule 3",
+    "primary_num": "XLIII, Rule 13",
+    "heading": "Order XLIII, Rule 13 — Notice before presentation of appeal",
+    "title": "Order XLIII, Rule 13 — Notice before presentation of appeal",
+    "provision_type": "order",
+    "period": null,
+    "trigger": null,
+    "text": "3. Notice before presentation of appeal.__ (1) Where an appeal against an order is preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice of such \nappeal to the respondent or his advocate by delivering a copy of the memorandum and grounds of \nappeal alongwith a copy of the order appealed against either personally or through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court. \n(2) On receipt of notice referred to in subrule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine.",
+    "text_raw": "13. Notice before presentation of appeal.__ (1) Where an appeal against  an  order  is  preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice  of such  \nappeal to the respondent or his advocate by delivering a copy of the memorandum and  grounds  of \nappeal alongwith a copy of the order appealed against 2[either personally or  through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court.] \n(2) On receipt of notice referred to in sub­rule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine.",
+    "tier": "text_layer_extracted",
+    "quoting_allowed": true,
+    "in_force": true,
+    "jurisdiction": "federal",
+    "page_verified": true,
+    "verbatim_text": "13. Notice before presentation of appeal.__ (1) Where an appeal against an order is preferred \nduring the pendency of a suit, the appellant shall, before presenting the appeal, give notice of such \nappeal to the respondent or his advocate by delivering a copy of the memorandum and grounds of \nappeal alongwith a copy of the order appealed against either personally or through registered post \nacknowledgement due and the postal or other receipt shall be filed with the memorandum of appeal \nfor the record of the appellate Court. \n(2) On receipt of notice referred to in subrule (1), the respondent may, with the permission of \nthe Court, appear before it and contest the appeal and may be awarded costs on dismissal of the appeal \nin limine.",
+    "verification": {
+      "status": "official_pdf_match",
+      "matched_field": "verbatim_text",
+      "method": "normalised contiguous match against official PDF body text",
+      "source_pdf": "cpc_1908.pdf",
+      "source_pdf_sha256": "c51d194bfc14f076769f266db7efabc1901f1de2182da89c8f0ef82d92844b33",
+      "page": 175,
+      "verified_at": "2026-11-11T13:58:38+00:00"
+    },
+    "former_labels": [
+      "CPC_1908_ORD_XLIII_R_13"
+    ]
   }
 ]

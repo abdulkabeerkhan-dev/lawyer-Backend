@@ -169,3 +169,55 @@ def test_production_cors_accepts_only_listed_origins(monkeypatch):
         assert not main._origin_is_allowed(o), o
     monkeypatch.setenv("ENVIRONMENT", "development")
     assert main._origin_is_allowed("https://preview.up.railway.app")
+
+
+@pytest.mark.parametrize("method,path,body", [
+    ("post", "/api/search/judgments/intelligent", {"query": "bail"}),
+    ("post", "/api/search/judgments/keyword", {"query": "bail"}),
+    ("post", "/api/search/judgments/citation", {"year": 2020, "journal": "SCMR", "page": 1}),
+    ("post", "/api/search/judgments", {"query": "bail"}),
+    ("post", "/api/search/statutes", {"query": "bail"}),
+    ("get", "/api/search/statutes?query=bail", None),
+])
+def test_search_endpoints_require_sign_in(method, path, body):
+    """These drive embedding spend and expose the whole case database, so a session is required."""
+    from fastapi.testclient import TestClient
+    import main
+    c = TestClient(main.app)
+    r = c.post(path, json=body) if method == "post" else c.get(path)
+    assert r.status_code in (401, 403), (path, r.status_code)
+
+
+def test_limitation_article_182_is_omitted():
+    """Official Pakistan Code: 'Article 182 omitted by the Law Reforms Ordinance, 1972'."""
+    rows = json.load(open(os.path.join(ROOT, "data/statute_tables/LIMITATION_1908.json"), encoding="utf-8"))
+    art = {r["canonical_id"]: r for r in rows}["LIMITATION_1908_ART_182"]
+    assert art["in_force"] is False
+
+
+def test_no_omitted_record_claims_to_be_in_force():
+    import glob
+    for sub in ("statute_versions", "statute_tables", "statutes_v3_staging"):
+        for f in glob.glob(os.path.join(ROOT, "data", sub, "*.json")):
+            d = json.load(open(f, encoding="utf-8"))
+            for r in d if isinstance(d, list) else []:
+                st = r.get("status") if isinstance(r, dict) else None
+                if isinstance(st, str) and st.lower() in ("omitted", "repealed"):
+                    assert r.get("in_force") is False, (f, r.get("canonical_id"))
+
+
+@pytest.mark.parametrize("q,want,never", [
+    ("Someone keeps cyberstalking and harassing my sister online", ["PECA_2016_SEC_24"], ["PECA_2016_SEC_10"]),
+    ("A fake account impersonating me was created on Facebook under PECA", ["PECA_2016_SEC_16"], ["PECA_2016_SEC_10"]),
+    ("I was scammed by a phishing link, a cybercrime under PECA", ["PECA_2016_SEC_14"], ["PECA_2016_SEC_10"]),
+    ("Posts threatening to terrorise the public and coerce the government, PECA offence", ["PECA_2016_SEC_10"], []),
+])
+def test_peca_offences_follow_the_facts(q, want, never):
+    from core.legal_issue_extractor import extract_legal_issues_from_fact_pattern
+    r = extract_legal_issues_from_fact_pattern(q, planner_domain="cybercrime")
+    issues = r.issues
+    provs = [p for i in issues for p in (getattr(i, "controlling_provisions", None) or [])]
+    for w in want:
+        assert w in provs, (q, provs)
+    for n in never:
+        assert n not in provs, (q, provs)

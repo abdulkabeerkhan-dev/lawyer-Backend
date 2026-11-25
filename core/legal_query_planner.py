@@ -633,7 +633,7 @@ CRITICAL PAKISTANI JURISDICTIONAL INVARIANTS:
 - BAIL: Pre-arrest bail is Section 498 CrPC (CRPC_1898_SEC_498). Post-arrest bail is Section 497 CrPC (CRPC_1898_SEC_497). Bailable offences is Section 496 CrPC (CRPC_1898_SEC_496). Quashment of FIR or criminal proceedings is Section 561-A CrPC (CRPC_1898_SEC_561A).
 - SPECIFIC PERFORMANCE: Agreement to sell immovable property is governed by Section 12 SRA (SRA_1877_SEC_12), with compensation under Section 19 SRA (SRA_1877_SEC_19) and Section 73 Contract Act (CONTRACT_1872_SEC_73).
 - FAMILY LAW: Khula is under Section 10 FCA (FAMILY_COURTS_1964_SEC_10) and Section 2 DMMA (DMMA_1939_SEC_2). Prompt/deferred dower is under Section 10 MFLO (MFLO_1961_SEC_10) and Section 5 FCA (FAMILY_COURTS_1964_SEC_5). Maintenance is under Section 9 MFLO (MFLO_1961_SEC_9) and Section 17A FCA (FAMILY_COURTS_1964_SEC_17A). Custody/Hizanat is under Section 17 and 25 GWA (GWA_1890_SEC_17, GWA_1890_SEC_25). Never cite criminal or SRA sections in pure family law matters.
-- RENT: Eviction is governed by Section 15 PRPA (PRPA_2009_SEC_15). Leave to contest within 10 days is mandatory under Section 22 PRPA (PRPA_2009_SEC_22). Written tenancy agreement under Section 4 PRPA (PRPA_2009_SEC_4).
+- RENT: Eviction is governed by Section 15 PRPA (PRPA_2009_SEC_15). Leave to contest within 10 days is mandatory under Section 22 PRPA (PRPA_2009_SEC_22). Written tenancy agreement and its registration under Section 5 PRPA (PRPA_2009_SEC_5); payment of rent by bank deposit, cheque or receipt under Section 7 PRPA (PRPA_2009_SEC_7).
 - BANKING: Recovery suits are instituted under Section 9 FIO 2001 (FIO_2001_SEC_9). Mandatory petition for leave to defend within 30 days is under Section 10 FIO 2001 (FIO_2001_SEC_10). Appeals under Section 22 FIO 2001 (FIO_2001_SEC_22).
 
 CANONICAL ID MANDATE:
@@ -1964,7 +1964,7 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
 
     if is_rent:
         if province == "Punjab":
-            for default_p in ["Section 4 PRPA 2009", "Section 15 PRPA 2009", "Section 22 PRPA 2009", "Section 34 PRPA 2009"]:
+            for default_p in ["Section 5 PRPA 2009", "Section 15 PRPA 2009", "Section 22 PRPA 2009", "Section 34 PRPA 2009"]:
                 if not any(default_p.split()[1] in p for p in provisions):
                     provisions.append(default_p)
         elif province == "Sindh":

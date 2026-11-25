@@ -50,7 +50,7 @@ def extract_named_statute_canonical_ids(query_text: str) -> List[str]:
     # 1. Whole-statute direct mappings
     statute_canonical_map = {
         ("peca 2016", "peca", "prevention of electronic crimes act"): [
-            "PECA_2016_SEC_20", "PECA_2016_SEC_21", "PECA_2016_SEC_10", "PECA_2016_SEC_3", "PECA_2016_SEC_16"
+            "PECA_2016_SEC_20", "PECA_2016_SEC_21", "PECA_2016_SEC_24", "PECA_2016_SEC_14", "PECA_2016_SEC_16", "PECA_2016_SEC_3"
         ],
         ("fio 2001", "fio", "financial institutions ordinance", "financial institutions (recovery", "willful default", "wilful default", "willful defaulter", "wilful defaulter"): [
             "FIO_2001_SEC_2", "FIO_2001_SEC_20", "FIO_2001_SEC_9", "FIO_2001_SEC_10", "FIO_2001_SEC_22"
@@ -462,7 +462,7 @@ def extract_legal_issues_from_fact_pattern(
                 description="Substantive grounds for ejectment under Section 15 of PRPA 2009: willful default and personal bona fide need.",
                 controlling_statutes=["Punjab Rented Premises Act, 2009"],
                 controlling_provisions=["PRPA_2009_SEC_15", "PRPA_2009_SEC_4"],
-                search_queries=["Section 15 PRPA 2009 grounds for eviction default personal bona fide need", "Section 4 PRPA 2009 tenancy agreement"],
+                search_queries=["Section 15 PRPA 2009 grounds for eviction default personal bona fide need", "Section 5 PRPA 2009 written tenancy agreement registration"],
                 factual_anchors=["Section 15", "Punjab Rented Premises Act, 2009", "default in payment of rent"]
             ))
 
@@ -479,11 +479,11 @@ def extract_legal_issues_from_fact_pattern(
         if any(k in q_low for k in ["cash", "receipt", "receipts", "refused"]):
             issues.append(LegalSubIssue(
                 issue_id="issue_rent_payment_receipts",
-                heading="Mode of Rent Payment & Duty to Issue Receipts (Section 4 & 15 PRPA 2009)",
+                heading="Mode of Rent Payment & Duty to Issue Receipts (Sections 7, 15 & 24 PRPA 2009)",
                 description="Statutory defense where tenant paid cash rent but landlord refused receipts.",
                 controlling_statutes=["Punjab Rented Premises Act, 2009"],
-                controlling_provisions=["PRPA_2009_SEC_4", "PRPA_2009_SEC_15"],
-                search_queries=["Section 4 PRPA 2009 landlord duty to issue receipt cash payment defense", "default proof"],
+                controlling_provisions=["PRPA_2009_SEC_7", "PRPA_2009_SEC_24", "PRPA_2009_SEC_15"],
+                search_queries=["Section 7 PRPA 2009 payment of rent by bank deposit cheque or receipt", "default proof"],
                 factual_anchors=["cash rent", "refused to issue receipts"]
             ))
 
@@ -605,7 +605,7 @@ def extract_legal_issues_from_fact_pattern(
                 heading="Writ of Habeas Corpus Against Unlawful Detention (Article 199(1)(b)(i) & Section 61 CrPC)",
                 description="Constitutional remedy to set at liberty any person held in unlawful custody by police or private parties.",
                 controlling_statutes=["Constitution of the Islamic Republic of Pakistan, 1973", "Code of Criminal Procedure, 1898"],
-                controlling_provisions=["CONST_1973_ART_199", "CONST_1973_ART_9", "CRPC_1898_SEC_61"],
+                controlling_provisions=["CONST_1973_ART_199", "CONST_1973_ART_9", "CRPC_1898_SEC_61", "CRPC_1898_SEC_491"],
                 search_queries=["Article 199(1)(b)(i) Constitution 1973 writ of habeas corpus illegal detention police", "Section 61 CrPC detention over 24 hours"],
                 factual_anchors=["habeas corpus", "unlawful detention", "detenue"]
             ))
@@ -750,30 +750,52 @@ def extract_legal_issues_from_fact_pattern(
     # 8. PECA CYBERCRIME DETERMINISTIC BRANCH & IP DECOMPOSITION
     # =========================================================================
     if (is_peca_signal or "cybercrime" in active_domains) and primary_domain not in ("family", "rent"):
-        # Sub-issue 1: Specific PECA Section Alleged (Dignity, Modesty, Fraud)
+        # Sub-issue 1: the PECA offences the facts point to. Section numbers follow the
+        # statute: s.10 is cyber terrorism (never a default), s.14 electronic fraud,
+        # s.24 cyber stalking, s.21 modesty, s.16 identity information.
+        _peca_map = [
+            (["dignity", "defam", "false information", "reputation", "intimidat"], "20", "offences against dignity"),
+            (["modesty", "obscen", "sexually explicit", "intimate", "nude", "morph", "blackmail"], "21", "offences against modesty"),
+            (["stalk", "follow", "harass", "repeated", "unwanted contact"], "24", "cyber stalking"),
+            (["bully", "cyberbully"], "24A", "cyberbullying"),
+            (["identity", "fake account", "impersonat", "fake profile", "fake id"], "16", "unauthorized use of identity information"),
+            (["unauthorized access", "unauthorised access", "hack", "account access", "password"], "3", "unauthorized access"),
+            (["fraud", "deceiv", "dishonest", "scam", "phishing", "money transfer"], "14", "electronic fraud"),
+            (["forg", "fabricat", "fake document", "tamper"], "13", "electronic forgery"),
+            (["spoof"], "26", "spoofing"),
+            (["hate speech", "sectarian", "religious hatred"], "11", "hate speech"),
+            (["terror", "coerce the government", "intimidate the public"], "10", "cyber terrorism"),
+        ]
+        _peca_hits = [(sec, label) for kws, sec, label in _peca_map if any(k in q_low for k in kws)]
+        _named = re.findall(r"(?:section|s\.)\s*(\d+[a-z]?)\s*(?:of\s+)?(?:the\s+)?peca", q_low)
+        for _n in _named:
+            if _n.upper() not in [h[0] for h in _peca_hits]:
+                _peca_hits.append((_n.upper(), f"section {_n.upper()}"))
+        if not _peca_hits:
+            _peca_hits = [("20", "offences against dignity"), ("21", "offences against modesty")]
+        _peca_secs = list(dict.fromkeys(h[0] for h in _peca_hits))
         issues.append(LegalSubIssue(
             issue_id="issue_peca_specific_section_alleged",
-            heading="Specific PECA Section Alleged: Dignity, Modesty & Electronic Fraud (Sections 20, 21, 10 PECA 2016)",
-            description="Identification of the specific substantive cybercrime offences alleged under PECA 2016: offences against dignity of natural person (Section 20), cyberstalking and modesty (Section 21), and electronic fraud / cyber-terrorism (Section 10).",
+            heading="Specific PECA Offence Alleged (" + ", ".join(f"Section {x}" for x in _peca_secs) + " PECA 2016)",
+            description="Identification of the substantive cybercrime offences the facts disclose under PECA 2016: "
+                        + "; ".join(f"Section {sec} ({label})" for sec, label in dict((h[0], h[1]) for h in _peca_hits).items()) + ".",
             controlling_statutes=["Prevention of Electronic Crimes Act, 2016"],
-            controlling_provisions=["PECA_2016_SEC_20", "PECA_2016_SEC_21", "PECA_2016_SEC_10"] + (["PECA_2016_SEC_3"] if any(k in q_low for k in ["unauthorized access", "hacking"]) else []),
+            controlling_provisions=[f"PECA_2016_SEC_{x}" for x in _peca_secs],
             search_queries=[
-                "Section 20 Section 21 Section 10 PECA 2016 cybercrime dignity cyberstalking electronic fraud",
-                "Section 20 PECA online defamation false information"
+                " ".join(f"Section {x}" for x in _peca_secs) + " PECA 2016 " + " ".join(dict.fromkeys(h[1] for h in _peca_hits)),
             ],
-            factual_anchors=["PECA 2016", "online defamation", "cyberstalking", "electronic fraud"]
+            factual_anchors=["PECA 2016"] + list(dict.fromkeys(h[1] for h in _peca_hits))
         ))
-
         # Sub-issue 2: Punishment & Prohibitory Clause Applicability
         issues.append(LegalSubIssue(
             issue_id="issue_peca_punishment_prohibitory_clause",
             heading="Punishment & Prohibitory Clause Applicability (Section 497 CrPC & Section 43 PECA 2016)",
             description="Examination of the maximum statutory punishment under the alleged PECA sections, determining whether offences fall outside the prohibitory clause of Section 497 CrPC (punishable with less than 10 years) and are bailable under Section 43 PECA 2016.",
             controlling_statutes=["Code of Criminal Procedure, 1898", "Prevention of Electronic Crimes Act, 2016"],
-            controlling_provisions=["CRPC_1898_SEC_498", "CRPC_1898_SEC_497", "PECA_2016_SEC_20"],
+            controlling_provisions=["CRPC_1898_SEC_498", "CRPC_1898_SEC_497", "PECA_2016_SEC_43"],
             search_queries=[
                 "Section 43 PECA bailable non-bailable offences prohibitory clause Section 497 CrPC",
-                "punishment under Section 20 Section 21 PECA 2016"
+                "punishment under " + " ".join(f"Section {x}" for x in _peca_secs) + " PECA 2016"
             ],
             factual_anchors=["prohibitory clause", "punishment under PECA", "Section 43 PECA"]
         ))
@@ -816,7 +838,7 @@ def extract_legal_issues_from_fact_pattern(
                 heading="Offence of Unauthorized Access to Information System (Section 3 PECA 2016)",
                 description="Criminal offence under Section 3 PECA 2016 for unauthorized access to data or information system.",
                 controlling_statutes=["Prevention of Electronic Crimes Act, 2016"],
-                controlling_provisions=["PECA_2016_SEC_3", "PECA_2016_SEC_10"],
+                controlling_provisions=["PECA_2016_SEC_3", "PECA_2016_SEC_4"],
                 search_queries=["Section 3 PECA 2016 unauthorized access information system data cybercrime", "FIA cyber crime wing"],
                 factual_anchors=["PECA 2016", "unauthorized access", "hacking"]
             ))
@@ -827,7 +849,7 @@ def extract_legal_issues_from_fact_pattern(
                 heading="Cyber Harassment & Offences Against Modesty (Section 21 PECA 2016)",
                 description="Offence of cyber stalking, blackmailing, and transmitting sexually explicit material or harassment online.",
                 controlling_statutes=["Prevention of Electronic Crimes Act, 2016"],
-                controlling_provisions=["PECA_2016_SEC_21", "PECA_2016_SEC_16"],
+                controlling_provisions=["PECA_2016_SEC_21", "PECA_2016_SEC_24"],
                 search_queries=["Section 21 PECA 2016 cyber harassment offences against modesty natural person minor", "social media blackmail"],
                 factual_anchors=["cyber harassment", "Section 21 PECA", "blackmail"]
             ))
@@ -1061,7 +1083,7 @@ def extract_legal_issues_from_fact_pattern(
                 heading="Criminal FIR & Statutory Investigation (Sections 154, 156, 173 CrPC 1898)",
                 description="Cognizable offence reporting under Section 154 CrPC and police report under Section 173 CrPC.",
                 controlling_statutes=["Code of Criminal Procedure, 1898"],
-                controlling_provisions=["CRPC_1898_SEC_154", "CRPC_1898_SEC_497"],
+                controlling_provisions=["CRPC_1898_SEC_154", "CRPC_1898_SEC_156", "CRPC_1898_SEC_173"],
                 search_queries=["Section 154 Section 173 CrPC cognizable offence FIR investigation challan"],
                 factual_anchors=["FIR", "police investigation"]
             ))

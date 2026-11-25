@@ -524,7 +524,7 @@ class StatuteInjector:
         if re.search(r'\b(?:rent|rented|tenan[ct]|landlord|evict|ejectment)\b', q_comb) or 'prpa' in q_comb:
             if "lahore" in q_comb or "punjab" in q_comb or "prpa" in q_comb:
                 mandatory_rent = [
-                    "Section 4 PRPA 2009",
+                    "Section 5 PRPA 2009",
                     "Section 15 PRPA 2009",
                     "Section 34 PRPA 2009"
                 ]
@@ -645,6 +645,9 @@ class StatuteInjector:
                 title = str(rec.get("title") or rec.get("display_name") or "").strip()
                 tier = str(rec.get("tier") or "").lower().strip()
                 in_force = rec.get("in_force", True)
+                # a record whose status says omitted/repealed is not in force, whatever the flag says
+                if str(rec.get("status") or "").lower() in ("omitted", "repealed") or rec.get("omitted") is True:
+                    in_force = False
                 stat_dict = rec.get("status")
                 if isinstance(stat_dict, dict):
                     status = stat_dict.get("punjab") or stat_dict.get("federal") or "in_force"
