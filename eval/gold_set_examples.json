@@ -346,5 +346,307 @@
     "review_date": null,
     "status": "Draft",
     "notes": "Tests the currency layer on a case that predates a constitutional change."
+  },
+  {
+    "forum": "Family Court / civil executing court, Punjab",
+    "date_sensitive": false,
+    "required_authorities": [
+      {
+        "citation": "2012 SCMR 983",
+        "needed_for": "s.52 ingredients; transferee bound even if bona fide",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2014 SCMR 33",
+        "needed_for": "s.41 elements; s.53 totality-of-circumstances test",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2006 YLR 1060",
+        "needed_for": "s.41 elements including consideration; mutation is a record of title",
+        "min_court": "Lahore High Court"
+      }
+    ],
+    "expected_negative_findings": [
+      "No retrieved authority that a maintenance suit alone triggers s.52 over an unrelated house.",
+      "No retrieved authority that an executing court finally decides a stranger's title under s.47."
+    ],
+    "expected_forum_route": "Executing court first; separate suit if title is contested (lawyer to confirm under Family Courts Act and CPC).",
+    "expected_limitation": "LAWYER TO FILL: limitation for the r.63 suit and for a cancellation suit.",
+    "advice_risk": "Must warn that a r.58 order is not final and a separate suit may follow. Must not advise relying on s.52 without first checking what the maintenance suit pleaded.",
+    "currency_check": "S.52, s.41, s.53 TPA and O.XXI r.58 CPC: confirm current text and any provincial amendment.",
+    "sources": "Judgments 2012 SCMR 983, 2014 SCMR 33, 2006 YLR 1060, 2025 PLD 63 as uploaded. Rule numbers: lawyer to confirm against CPC.",
+    "split": "Dev",
+    "difficulty": "Hard",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": "Built from the first two audits. Rule and section numbers marked 'lawyer to confirm' need checking.",
+    "id": "GS-008",
+    "area": "Company law",
+    "anchors": [
+      "S.286 Companies Act 2017"
+    ],
+    "query": "Can minority shareholders petition for relief against oppression and mismanagement under the Companies Act 2017, and what shareholding is needed?",
+    "required_points": [
+      "Members holding not less than 20% of the issued share capital may petition under s.286.",
+      "The court may make any order it thinks fit, not only winding up."
+    ],
+    "forbidden_claims": [
+      "A 10% shareholding threshold under s.286."
+    ]
+  },
+  {
+    "forum": "Family Court / civil executing court, Punjab",
+    "date_sensitive": false,
+    "required_authorities": [
+      {
+        "citation": "2012 SCMR 983",
+        "needed_for": "s.52 ingredients; transferee bound even if bona fide",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2014 SCMR 33",
+        "needed_for": "s.41 elements; s.53 totality-of-circumstances test",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2006 YLR 1060",
+        "needed_for": "s.41 elements including consideration; mutation is a record of title",
+        "min_court": "Lahore High Court"
+      }
+    ],
+    "expected_negative_findings": [
+      "No retrieved authority that a maintenance suit alone triggers s.52 over an unrelated house.",
+      "No retrieved authority that an executing court finally decides a stranger's title under s.47."
+    ],
+    "expected_forum_route": "Executing court first; separate suit if title is contested (lawyer to confirm under Family Courts Act and CPC).",
+    "expected_limitation": "LAWYER TO FILL: limitation for the r.63 suit and for a cancellation suit.",
+    "advice_risk": "Must warn that a r.58 order is not final and a separate suit may follow. Must not advise relying on s.52 without first checking what the maintenance suit pleaded.",
+    "currency_check": "S.52, s.41, s.53 TPA and O.XXI r.58 CPC: confirm current text and any provincial amendment.",
+    "sources": "Judgments 2012 SCMR 983, 2014 SCMR 33, 2006 YLR 1060, 2025 PLD 63 as uploaded. Rule numbers: lawyer to confirm against CPC.",
+    "split": "Dev",
+    "difficulty": "Hard",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": "Built from the first two audits. Rule and section numbers marked 'lawyer to confirm' need checking.",
+    "id": "GS-009",
+    "area": "Muslim personal law",
+    "anchors": [
+      "S.129 TPA",
+      "S.123 TPA"
+    ],
+    "query": "Is an oral gift (hiba) of immovable property by a Muslim valid without a registered deed?",
+    "required_points": [
+      "An oral hiba is valid on declaration, acceptance and delivery of possession.",
+      "S.129 TPA exempts Muslim gifts from the s.123 registration requirement."
+    ],
+    "forbidden_claims": [
+      "A Muslim's hiba must be made by registered deed."
+    ]
+  },
+  {
+    "forum": "Family Court / civil executing court, Punjab",
+    "date_sensitive": false,
+    "required_authorities": [
+      {
+        "citation": "2012 SCMR 983",
+        "needed_for": "s.52 ingredients; transferee bound even if bona fide",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2014 SCMR 33",
+        "needed_for": "s.41 elements; s.53 totality-of-circumstances test",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2006 YLR 1060",
+        "needed_for": "s.41 elements including consideration; mutation is a record of title",
+        "min_court": "Lahore High Court"
+      }
+    ],
+    "expected_negative_findings": [
+      "No retrieved authority that a maintenance suit alone triggers s.52 over an unrelated house.",
+      "No retrieved authority that an executing court finally decides a stranger's title under s.47."
+    ],
+    "expected_forum_route": "Executing court first; separate suit if title is contested (lawyer to confirm under Family Courts Act and CPC).",
+    "expected_limitation": "LAWYER TO FILL: limitation for the r.63 suit and for a cancellation suit.",
+    "advice_risk": "Must warn that a r.58 order is not final and a separate suit may follow. Must not advise relying on s.52 without first checking what the maintenance suit pleaded.",
+    "currency_check": "S.52, s.41, s.53 TPA and O.XXI r.58 CPC: confirm current text and any provincial amendment.",
+    "sources": "Judgments 2012 SCMR 983, 2014 SCMR 33, 2006 YLR 1060, 2025 PLD 63 as uploaded. Rule numbers: lawyer to confirm against CPC.",
+    "split": "Dev",
+    "difficulty": "Hard",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": "Built from the first two audits. Rule and section numbers marked 'lawyer to confirm' need checking.",
+    "id": "GS-010",
+    "area": "Inheritance",
+    "anchors": [
+      "Art. 120 Limitation Act",
+      "Art. 144 Limitation Act"
+    ],
+    "query": "My client's brothers had the inheritance mutation entered only in their names 15 years ago. Is her suit for her share time-barred?",
+    "required_points": [
+      "Limitation does not ordinarily defeat a legal heir's claim to an inherited share; possession of one co-sharer is possession of all.",
+      "A void or fraudulent mutation does not start limitation against the excluded heir."
+    ],
+    "forbidden_claims": [
+      "The claim is barred after six years under Article 120."
+    ]
+  },
+  {
+    "forum": "Family Court / civil executing court, Punjab",
+    "date_sensitive": false,
+    "required_authorities": [
+      {
+        "citation": "2012 SCMR 983",
+        "needed_for": "s.52 ingredients; transferee bound even if bona fide",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2014 SCMR 33",
+        "needed_for": "s.41 elements; s.53 totality-of-circumstances test",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2006 YLR 1060",
+        "needed_for": "s.41 elements including consideration; mutation is a record of title",
+        "min_court": "Lahore High Court"
+      }
+    ],
+    "expected_negative_findings": [
+      "No retrieved authority that a maintenance suit alone triggers s.52 over an unrelated house.",
+      "No retrieved authority that an executing court finally decides a stranger's title under s.47."
+    ],
+    "expected_forum_route": "Executing court first; separate suit if title is contested (lawyer to confirm under Family Courts Act and CPC).",
+    "expected_limitation": "LAWYER TO FILL: limitation for the r.63 suit and for a cancellation suit.",
+    "advice_risk": "Must warn that a r.58 order is not final and a separate suit may follow. Must not advise relying on s.52 without first checking what the maintenance suit pleaded.",
+    "currency_check": "S.52, s.41, s.53 TPA and O.XXI r.58 CPC: confirm current text and any provincial amendment.",
+    "sources": "Judgments 2012 SCMR 983, 2014 SCMR 33, 2006 YLR 1060, 2025 PLD 63 as uploaded. Rule numbers: lawyer to confirm against CPC.",
+    "split": "Dev",
+    "difficulty": "Hard",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": "Built from the first two audits. Rule and section numbers marked 'lawyer to confirm' need checking.",
+    "id": "GS-011",
+    "area": "Family law",
+    "anchors": [
+      "S.6 MFLO 1961"
+    ],
+    "query": "What happens if a husband contracts a second marriage without the permission of the Arbitration Council?",
+    "required_points": [
+      "The second marriage is not void.",
+      "S.6(5) MFLO: immediate payment of the entire dower to existing wife/wives and imprisonment up to one year and/or fine."
+    ],
+    "forbidden_claims": [
+      "The second marriage is void or voidable."
+    ]
+  },
+  {
+    "forum": "Family Court / civil executing court, Punjab",
+    "date_sensitive": false,
+    "required_authorities": [
+      {
+        "citation": "2012 SCMR 983",
+        "needed_for": "s.52 ingredients; transferee bound even if bona fide",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2014 SCMR 33",
+        "needed_for": "s.41 elements; s.53 totality-of-circumstances test",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2006 YLR 1060",
+        "needed_for": "s.41 elements including consideration; mutation is a record of title",
+        "min_court": "Lahore High Court"
+      }
+    ],
+    "expected_negative_findings": [
+      "No retrieved authority that a maintenance suit alone triggers s.52 over an unrelated house.",
+      "No retrieved authority that an executing court finally decides a stranger's title under s.47."
+    ],
+    "expected_forum_route": "Executing court first; separate suit if title is contested (lawyer to confirm under Family Courts Act and CPC).",
+    "expected_limitation": "LAWYER TO FILL: limitation for the r.63 suit and for a cancellation suit.",
+    "advice_risk": "Must warn that a r.58 order is not final and a separate suit may follow. Must not advise relying on s.52 without first checking what the maintenance suit pleaded.",
+    "currency_check": "S.52, s.41, s.53 TPA and O.XXI r.58 CPC: confirm current text and any provincial amendment.",
+    "sources": "Judgments 2012 SCMR 983, 2014 SCMR 33, 2006 YLR 1060, 2025 PLD 63 as uploaded. Rule numbers: lawyer to confirm against CPC.",
+    "split": "Dev",
+    "difficulty": "Hard",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": "Built from the first two audits. Rule and section numbers marked 'lawyer to confirm' need checking.",
+    "id": "GS-012",
+    "area": "Service law",
+    "anchors": [
+      "Art. 199 Constitution"
+    ],
+    "query": "Can a contract employee of a company with no statutory service rules challenge his termination through a writ petition?",
+    "required_points": [
+      "Ordinarily no: without statutory rules the relationship is master and servant and the remedy is a suit for damages.",
+      "Exceptions where a statute or fundamental right is violated."
+    ],
+    "forbidden_claims": [
+      "A writ is maintainable in principle against termination of non-statutory contractual employees."
+    ]
+  },
+  {
+    "forum": "Family Court / civil executing court, Punjab",
+    "date_sensitive": false,
+    "required_authorities": [
+      {
+        "citation": "2012 SCMR 983",
+        "needed_for": "s.52 ingredients; transferee bound even if bona fide",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2014 SCMR 33",
+        "needed_for": "s.41 elements; s.53 totality-of-circumstances test",
+        "min_court": "Supreme Court"
+      },
+      {
+        "citation": "2006 YLR 1060",
+        "needed_for": "s.41 elements including consideration; mutation is a record of title",
+        "min_court": "Lahore High Court"
+      }
+    ],
+    "expected_negative_findings": [
+      "No retrieved authority that a maintenance suit alone triggers s.52 over an unrelated house.",
+      "No retrieved authority that an executing court finally decides a stranger's title under s.47."
+    ],
+    "expected_forum_route": "Executing court first; separate suit if title is contested (lawyer to confirm under Family Courts Act and CPC).",
+    "expected_limitation": "LAWYER TO FILL: limitation for the r.63 suit and for a cancellation suit.",
+    "advice_risk": "Must warn that a r.58 order is not final and a separate suit may follow. Must not advise relying on s.52 without first checking what the maintenance suit pleaded.",
+    "currency_check": "S.52, s.41, s.53 TPA and O.XXI r.58 CPC: confirm current text and any provincial amendment.",
+    "sources": "Judgments 2012 SCMR 983, 2014 SCMR 33, 2006 YLR 1060, 2025 PLD 63 as uploaded. Rule numbers: lawyer to confirm against CPC.",
+    "split": "Dev",
+    "difficulty": "Hard",
+    "author": "Claude (draft)",
+    "reviewer": null,
+    "review_date": null,
+    "status": "Draft",
+    "notes": "Built from the first two audits. Rule and section numbers marked 'lawyer to confirm' need checking.",
+    "id": "GS-013",
+    "area": "Inheritance",
+    "anchors": [
+      "S.4 MFLO 1961"
+    ],
+    "query": "Are the children of a son who died before his father entitled to a share in the grandfather's estate?",
+    "required_points": [
+      "S.4 MFLO 1961: they take the share their parent would have received.",
+      "The FSC's repugnancy finding (Allah Rakha, PLD 2000 FSC 1) is under appeal; s.4 remains in force."
+    ],
+    "forbidden_claims": [
+      "Orphaned grandchildren have no share under Pakistani law."
+    ]
   }
 ]

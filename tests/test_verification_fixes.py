@@ -99,3 +99,33 @@ def test_auditor_topics_come_from_the_question():
     res = audit_memo(memo, query="Can a wife obtain khula without her husband's consent?")
     d = res.to_dict() if hasattr(res, "to_dict") else res
     assert "rent_eviction" not in (d.get("topics") or [])
+
+
+from legal_ai.verification.doctrinal_rules import PATTERN_RULES, rule_matches_sentence
+
+_RULE = {r["id"]: r for r in PATTERN_RULES}
+
+
+@pytest.mark.parametrize("rule_id,wrong,right", [
+    ("COMPANIES_S286_THRESHOLD",
+     "Section 286 lets minority shareholders holding not less than ten percent petition the Court.",
+     "Section 286 requires members holding not less than twenty per cent of the issued share capital."),
+    ("HIBA_REGISTRATION_REQUIRED",
+     "The gift must be executed by registered deed and accompanied by delivery of possession.",
+     "An oral hiba is valid; no registration is required under section 129 TPA."),
+    ("INHERITANCE_LIMITATION_BAR",
+     "The female co-heir's suit is governed by Article 120 which prescribes six years.",
+     "Limitation does not run against a co-heir claiming her inherited share."),
+    ("MFLO_S6_SECOND_MARRIAGE_VOID",
+     "The consequences include nullity or voidability of the second marriage.",
+     "The second marriage is not void, but the husband must pay the whole dower at once."),
+    ("WRIT_NON_STATUTORY_EMPLOYEE",
+     "Constitutional writ petitions against termination of non-statutory contractual employees are maintainable in principle.",
+     "A writ is not maintainable for non-statutory employees unless a statutory provision is violated."),
+    ("MFLO_S4_ORPHANED_GRANDCHILDREN",
+     "Orphaned grandchildren do not have a direct intestate share in their grandfather's property.",
+     "Under section 4 MFLO orphaned grandchildren take their predeceased parent's share."),
+])
+def test_settled_law_rules(rule_id, wrong, right):
+    assert rule_matches_sentence(_RULE[rule_id], wrong, matter_type="civil")
+    assert not rule_matches_sentence(_RULE[rule_id], right, matter_type="civil")
