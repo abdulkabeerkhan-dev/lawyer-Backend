@@ -52,7 +52,7 @@ _COURT_RULES: List[Tuple[str, str]] = [
     (r"azad|ajk", "AJKHC"),
 ]
 
-_CACHE_MAX = 512
+_CACHE_MAX = 64
 _cache: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
 _cache_lock = threading.Lock()
 

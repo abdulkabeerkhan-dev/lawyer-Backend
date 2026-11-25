@@ -25,7 +25,7 @@ from typing import Any, Dict, List, Optional, Union
 logger = logging.getLogger(__name__)
 
 _CASE_COLUMNS = "id, case_id, neutral_citation, case_title, court_name, full_text, headnote"
-_CASE_CACHE_MAX = 2048
+_CASE_CACHE_MAX = 128  # full case texts are large; keep the hot set only (1 GB container)
 _case_cache: "OrderedDict[str, Optional[Dict[str, Any]]]" = OrderedDict()
 _cache_lock = threading.Lock()
 _CID_RE = re.compile(r"^((?:19|20)\d\d)_([A-Z()]+)_(\d+)$")
@@ -33,11 +33,11 @@ _CID_RE = re.compile(r"^((?:19|20)\d\d)_([A-Z()]+)_(\d+)$")
 _COURT_KEY_RE = re.compile(r"^((?:19|20)\d\d_[A-Z()]+)_(?:SC|FSC|LHC|SHC|PHC|BHC|IHC|AJKHC|AJKSC|GBSAC|GBCC)_(\d+)$")
 
 CASE_TEXT_PREFIX = "case_texts/v1"
-_CT_CACHE_MAX = 64
+_CT_CACHE_MAX = 6
 _ct_cache: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
 PDF_PREFIX = "pdfs/v1"
 PDF_BUNDLE_PAGES = 250
-_BUNDLE_CACHE_MAX = 8
+_BUNDLE_CACHE_MAX = 2
 _bundle_cache: "OrderedDict[str, bytes]" = OrderedDict()
 LEGACY_STATUTES_KEY = "statutes/legacy_app_provisions.json.gz"
 _statutes: Optional[Dict[str, Dict[str, Any]]] = None
