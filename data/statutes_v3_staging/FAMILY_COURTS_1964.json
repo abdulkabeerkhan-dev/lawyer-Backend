@@ -256,7 +256,7 @@
     "act_name": "The Family Courts Act, 1964",
     "section": "10",
     "primary_num": "10",
-    "heading": "Pre",
+    "heading": "Pre-trial proceedings",
     "title": "Pre",
     "domain": "family",
     "forum": "Family Court",
@@ -506,7 +506,7 @@
     "domain": "family",
     "forum": "Family Court",
     "provision_type": "section",
-    "text": "17A. Interim order for maintenance.— At any stage of proceedings in a suit for maintenance, the Family Court may pass an interim order for maintenance, whereunder the payment shall be made by the fourteenth of each month, failing which the Court may strike off the defence of the defendant and decree the suit.",
+    "text": "(1) At any stage of proceedings in a suit for maintenance, the Family Court may, on its own motion or on the application of any party, pass an interim order for maintenance of the wife or child, which shall be payable on or before the tenth of each month.\n(2) If the defendant fails to deposit the interim maintenance as directed, the Family Court may strike off his defence and pass an ex-parte decree.",
     "raw_text": "1[17A. Interim order for maintenance.— At any stage of proceedings in a suit for \nmaintenance, the Family Court may pass an interim order for maintenance, whereunder the payment \nshall be made by the fourteenth of each month, failing which the Court may strike off the defence of \nthe defendant and decree the suit.",
     "amendment_notes": [],
     "former_labels": [],
@@ -519,7 +519,8 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "text_source": "audit_2026-11-25:subsections:v2"
   },
   {
     "canonical_id": "FAMILY_COURTS_1964_SEC_17B",

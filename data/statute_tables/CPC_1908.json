@@ -14767,7 +14767,7 @@
     "primary_num": "XLIX",
     "secondary_num": "1",
     "title": "2*HIGH COURTS: Who may serve processes of High Court",
-    "text": "2*HIGH COURTS: Who may serve processes of High Court. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "1. Who may serve processes of High Court. Notice to produce documents, summonses to witnesses, and every other judicial process, issued in the exercise of the original civil jurisdiction of the High Court, and of its matrimonial, testamentary and intestate jurisdictions, except summonses to defendants, writs of execution and notices to respondents may be served by the attorneys in the suits, or by persons employed by them, or by such other persons as the High Court, by any rule or order, directs.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -14777,7 +14777,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIX_R_2",
@@ -14787,7 +14788,7 @@
     "primary_num": "XLIX",
     "secondary_num": "2",
     "title": "2*HIGH COURTS: Saving in respect of High Courts",
-    "text": "2*HIGH COURTS: Saving in respect of High Courts. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "2. Saving in respect of High Courts. Nothing in thi s schedule shall be deemed to limit or otherwise affect any rules in force at the commencement of this Code for the taking of evidence or the recording of judgment and orders by a [...] High Court.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -14797,7 +14798,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_ORD_XLIX_R_3",
@@ -14807,7 +14809,7 @@
     "primary_num": "XLIX",
     "secondary_num": "3",
     "title": "2*HIGH COURTS: Application of rules",
-    "text": "2*HIGH COURTS: Application of rules. Statutory provision under Code of Civil Procedure, 1908.",
+    "text": "3. Application of rules. The following rules shall not apply to any [...] High Court in the exercise of its ordinary or extraordinary original civil jurisdiction, namely:__ \n\n(1) rule 10 and rule 11, clauses (b) and (c), of Order VII; \n(2) rule 3 of Order X; \n(3) rule 2 of Order XVI; \n(4) rules 5,6,8,9,10,11,13,14,15 and 16 (so far as relates to the manner of taking evidence) of Order XVIII; \n(5) rules 1 to 8 of Order XX; and \n(6) rule 7 of Order XXXIII (so far as relates to the making of a memorandum); and rule 35 of Order XLI shall not apply to any such High C ourt in the exercise of its appellate jurisdiction. _______.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -14817,7 +14819,8 @@
     "status": "in_force",
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
-    "effective_to": null
+    "effective_to": null,
+    "text_source": "audit_2026-11-25:archive"
   },
   {
     "canonical_id": "CPC_1908_ORD_L_R_1",
