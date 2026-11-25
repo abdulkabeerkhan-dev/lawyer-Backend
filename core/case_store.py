@@ -51,9 +51,29 @@ def normalize_case_id(ident: str) -> str:
     return "_".join(str(ident or "").replace("_", " ").split()).upper()
 
 
+# Zilliz court code -> (full_judgments PLD case_id court, PLD citation court abbreviation)
+_PLD_COURTS = {"SC": ("SC", "SC"), "LHC": ("LAH", "Lah"), "SHC": ("KAR", "Kar"), "PHC": ("PESH", "Pesh"),
+               "BHC": ("QTA", "Quetta"), "IHC": ("ISL", "Isl"), "FSC": ("FSC", "FSC"),
+               "AJKSC": ("SCAJK", "AJ&K SC"), "AJKHC": ("HCAJK", "AJ&K HC")}
+
+
 def _variants(key: str) -> List[str]:
     m = _COURT_KEY_RE.match(key)
-    return [key, f"{m.group(1)}_{m.group(2)}"] if m else [key]
+    if not m:
+        return [key]
+    out = [key, f"{m.group(1)}_{m.group(2)}"]
+    parts = key.split("_")
+    if len(parts) == 4 and parts[1] == "PLD" and parts[2] in _PLD_COURTS:
+        out.append(f"{parts[0]}_PLD_{_PLD_COURTS[parts[2]][0]}_{parts[3]}")
+    return list(dict.fromkeys(out))
+
+
+def _pld_citation_form(key: str) -> Optional[str]:
+    """2024_PLD_LHC_1 -> 'PLD 2024 Lah 1' (how full_judgments writes PLD citations)."""
+    parts = (key or "").split("_")
+    if len(parts) == 4 and parts[1] == "PLD" and parts[2] in _PLD_COURTS:
+        return f"PLD {parts[0]} {_PLD_COURTS[parts[2]][1]} {parts[3]}"
+    return None
 
 
 def _split_case_id(case_id: str) -> Dict[str, Any]:
@@ -177,6 +197,9 @@ def _supabase_rows(keys: List[str], columns: str = _CASE_COLUMNS, shape: bool = 
             if ck:
                 y, j, p = ck
                 forms += [f"{y} {j} {p}", f"{j} {y} {p}"]
+                pf = _pld_citation_form(k)
+                if pf:
+                    forms.append(pf)
         rows: Dict[str, Dict[str, Any]] = {}
         res = sb.table("full_judgments").select(columns).in_("case_id", ids).execute()
         for r in res.data or []:

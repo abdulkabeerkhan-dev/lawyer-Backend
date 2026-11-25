@@ -147,3 +147,14 @@ def test_bare_court_field_is_not_a_filter():
     from legal_ai.ranking.era_filter import requested_filters
     assert requested_filters({"court": "Lahore High Court"}) == {}
     assert requested_filters({"era": "apex", "court": "Supreme Court of Pakistan"}) == {"court": "Supreme Court of Pakistan"}
+
+
+def test_pld_high_court_key_resolves(monkeypatch):
+    from core import case_store
+    rows = [{"id": "9", "case_id": "2024_PLD_LAH_1", "neutral_citation": "PLD 2024 Lah 1",
+             "court_name": "Lahore High Court", "retrieval_status": "quarantined"},
+            {"id": "8", "case_id": "2024_PLD_SC_1", "neutral_citation": "PLD 2024 SC 1",
+             "court_name": "Supreme Court of Pakistan", "retrieval_status": None}]
+    monkeypatch.setattr(case_store, "_supabase", lambda: _FakeSB(rows))
+    got = case_store.retrieval_statuses(["2024_PLD_LHC_1", "2024_PLD_SC_1"])
+    assert got == {"2024_PLD_LHC_1": "quarantined", "2024_PLD_SC_1": ""}
