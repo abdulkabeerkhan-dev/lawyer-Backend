@@ -87,6 +87,29 @@ def verify_and_scrub_memo_claims(
             })
             cleaned = re.sub(pat, replacement, cleaned, flags=re.IGNORECASE)
 
+    # 1a. Foreign statutes cited as if they applied in Pakistan (Indian Evidence Act, IPC,
+    #     Indian CrPC 1973...). Section numbers differ between the regimes, so the act is not
+    #     silently swapped: the first mention is annotated with the Pakistani equivalent.
+    foreign_acts = [
+        (r"\b(?:Indian\s+)?Evidence\s+Act,?\s*(?:of\s+)?1872\b|\bIndian\s+Evidence\s+Act\b",
+         "the Evidence Act 1872 was repealed in Pakistan; the Qanun-e-Shahadat Order 1984 governs"),
+        (r"\bIndian\s+Penal\s+Code\b|\bIPC\b",
+         "Pakistan applies the Pakistan Penal Code 1860 (PPC), whose section numbers can differ"),
+        (r"\bCode\s+of\s+Criminal\s+Procedure,?\s*1973\b|\bBharatiya\b",
+         "Pakistan applies the Code of Criminal Procedure 1898 (Cr.P.C.)"),
+    ]
+    for pat, note_text in foreign_acts:
+        m = re.search(pat, cleaned, re.IGNORECASE)
+        if m:
+            note = f" [Note: {note_text}.]"
+            if cleaned[m.end():m.end() + len(note)] != note:
+                cleaned = cleaned[:m.end()] + note + cleaned[m.end():]
+            violations.append({
+                "type": "FOREIGN_STATUTORY_REGIME_LEAKAGE",
+                "matched": m.group(0),
+                "description": f"Cited {m.group(0)}; {note_text}."
+            })
+
     # 1b. Bail and procedural statute hallucination patterns
     procedural_patterns = [
         (

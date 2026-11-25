@@ -2815,9 +2815,14 @@ async def process_query_job_legal_ai(
         execute_stage6_verification_and_rendering
     )
 
+    try:
+        _planned_provisions = list(getattr(legal_query_plan, "provisions", None) or getattr(legal_query_plan, "statutory_provisions", None) or [])
+    except Exception:
+        _planned_provisions = []
     bounded_evidence_pack, statute_intent = build_evidence_pack_for_query(
         effective_user_query,
-        precedent_cards=precedent_cards
+        precedent_cards=precedent_cards,
+        planned_provisions=_planned_provisions,
     )
     is_structured_mode = bool(bounded_evidence_pack.items)
 

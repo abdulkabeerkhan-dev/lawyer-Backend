@@ -604,7 +604,8 @@ def analyze_statute_query_intent(query_text: str) -> StatuteQueryIntent:
 
 def retrieve_statute_provisions(
     intent: StatuteQueryIntent,
-    max_results: int = 7
+    max_results: int = 7,
+    planned_provisions: Optional[List[str]] = None,
 ) -> List[LegalUnitRecord]:
     """
     Layer 4: High-Precision Statute Retrieval.
@@ -629,6 +630,20 @@ def retrieve_statute_provisions(
     store = get_unified_statute_store()
     results: List[LegalUnitRecord] = []
     seen_cids = set()
+
+    # Governing provisions first: those the question names, those the planner chose,
+    # then the governing provisions of recognised topics (legal_ai/query_engine/named_provisions.py).
+    # Without this, named provisions such as "Article 199" never reached the pack and
+    # generic search filled it with unrelated statutes.
+    try:
+        from legal_ai.query_engine.named_provisions import anchored_ids
+        for cid in anchored_ids(intent.query_text, planned_provisions,
+                                lambda c: store.get_by_canonical_id(c) is not None):
+            if len(results) >= max_results:
+                break
+            _fetch_and_add(cid, store, seen_cids, results)
+    except Exception as _anchor_err:
+        print(f"[StatuteRouter] provision anchoring failed: {_anchor_err}", flush=True)
 
     # Topic-specific priority anchors (ensures exact canonical records for benchmark queries)
     # Query 1: Money Lent Limitation
@@ -806,8 +821,16 @@ def retrieve_statute_provisions(
     if len(results) < max_results:
         try:
             from legal_ai.retrieval.statute_search import search_statutes_local_fallback
-            fb_hits = search_statutes_local_fallback(intent.query_text, top_k=max_results - len(results))
+            from legal_ai.query_engine.named_provisions import act_of
+            chosen_acts = {act_of(c) for c in seen_cids}
+            fb_hits = search_statutes_local_fallback(intent.query_text, top_k=(max_results - len(results)) * (3 if chosen_acts else 1))
             for h in fb_hits:
+                if len(results) >= max_results:
+                    break
+                # Once the governing acts are known, loose text matches from unrelated acts
+                # (graveyards, SME authority...) only crowd out the law that matters.
+                if chosen_acts and act_of(h["canonical_id"]) not in chosen_acts:
+                    continue
                 _fetch_and_add(h["canonical_id"], store, seen_cids, results)
         except Exception:
             pass
@@ -828,7 +851,8 @@ def _fetch_and_add(cid: str, store: Any, seen: Set[str], res_list: List[LegalUni
 def build_evidence_pack_for_query(
     query_text: str,
     precedent_cards: Optional[List[Dict[str, Any]]] = None,
-    max_statutes: int = 12
+    max_statutes: int = 12,
+    planned_provisions: Optional[List[str]] = None,
 ) -> Tuple[BoundedEvidencePack, StatuteQueryIntent]:
     """
     Layers 3, 4, 5 Orchestrator:
@@ -836,7 +860,7 @@ def build_evidence_pack_for_query(
     and automatically pulls linked caveats (e.g. Punjab Loans Limitation Act, 1904).
     """
     intent = analyze_statute_query_intent(query_text)
-    statute_units = retrieve_statute_provisions(intent, max_results=max_statutes)
+    statute_units = retrieve_statute_provisions(intent, max_results=max_statutes, planned_provisions=planned_provisions)
 
     pack = BoundedEvidencePack()
     for u in statute_units:
