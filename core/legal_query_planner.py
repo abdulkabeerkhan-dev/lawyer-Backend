@@ -1539,8 +1539,10 @@ def create_deterministic_fallback_plan(query: str) -> StructuredLegalQueryPlan:
         legacy_matter_type.append("constitutional")
         is_cross_domain_relevant = False
         allowed_domains_filter = ["constitutional"]
-        procedural_remedy = "Constitutional Petition under Article 199 / 184(3)"
-        competent_forum = "High Court / Supreme Court of Pakistan"
+        # Art. 184 was omitted by the Constitution (Twenty-seventh Amendment) Act, 2025; public-importance
+        # fundamental-rights jurisdiction is now with the Federal Constitutional Court under Art. 175E(3).
+        procedural_remedy = "Constitutional Petition under Article 199 (High Court) / Article 175E(3) (Federal Constitutional Court)"
+        competent_forum = "High Court / Federal Constitutional Court"
 
     elif is_sec12_2:
         primary_domain = "civil"

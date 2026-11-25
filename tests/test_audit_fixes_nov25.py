@@ -221,3 +221,22 @@ def test_peca_offences_follow_the_facts(q, want, never):
         assert w in provs, (q, provs)
     for n in never:
         assert n not in provs, (q, provs)
+
+
+def test_article_184_follows_the_27th_amendment():
+    """Constitution (Twenty-seventh Amendment) Act, 2025: Art. 184 omitted; Art. 175E governs."""
+    from legal_ai.query_engine import named_provisions as npv
+    ids = npv.provisions_named_in("Can I file a petition under Article 184(3)?", lambda c: True)
+    assert "CONST_1973_ART_175E" in ids
+    assert "CONST_1973_ART_175E" in npv.provisions_for_topics("suo motu notice on a question of public importance", lambda c: True)
+    from legal_ai.verification.doctrinal_rules import PATTERN_RULES, rule_matches_sentence
+    rule = {r["id"]: r for r in PATTERN_RULES}["ART_184_3_OMITTED_2025"]
+    assert rule_matches_sentence(rule, "The Supreme Court may exercise original jurisdiction under Article 184(3).", matter_type="constitutional")
+    assert not rule_matches_sentence(rule, "Former Article 184(3), omitted by the 27th Amendment, is now Article 175E(3) before the Federal Constitutional Court.", matter_type="constitutional")
+    rows = json.load(open(os.path.join(ROOT, "data/statutes_v3_staging/CONST_1973.json"), encoding="utf-8"))
+    by = {r["canonical_id"]: r for r in rows}
+    assert by["CONST_1973_ART_184"]["in_force"] is False
+    assert "Federal Constitutional Court" in by["CONST_1973_ART_175E"]["text"]
+    assert "Article 175F" in json.dumps([r for r in rows if r["canonical_id"] == "CONST_1973_ART_185"] or
+                                        [r for f in [os.path.join(ROOT, "data/statutes_v3_staging/statutes_v2_legacy.json")]
+                                         for r in json.load(open(f, encoding="utf-8")) if r["canonical_id"] == "CONST_1973_ART_185"])
