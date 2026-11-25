@@ -111,7 +111,7 @@ TOPIC_PROVISIONS: List[Tuple[str, List[str]]] = [
      ["LIMITATION_1908_ART_120", "LIMITATION_1908_ART_144"]),
     (r"minority\s+shareholder|oppress(?:ion|ive)\s+(?:and|or)\s+mismanagement", ["COMPANIES_2017_SEC_286"]),
     (r"\bwrit\b|constitutional\s+petition|\bmandamus\b|\bcertiorari\b", ["CONST_1973_ART_199"]),
-    (r"suo\s+motu|public\s+importance|public\s+interest\s+litigation", ["CONST_1973_ART_184_3", "CONST_1973_ART_184"]),
+    (r"suo\s+motu|public\s+importance|public\s+interest\s+litigation", ["CONST_1973_ART_175E"]),
     (r"fair\s+trial|due\s+process", ["CONST_1973_ART_10A"]),
     (r"civil\s+servant|terms\s+and\s+conditions\s+of\s+service|service\s+tribunal", ["CONST_1973_ART_212", "SERVICE_TRIBUNALS_1973_SEC_4"]),
     (r"cyber\s+terror", ["PECA_2016_SEC_10"]),
@@ -184,7 +184,17 @@ def provisions_named_in(query: str, exists: Optional[Callable[[str], bool]] = No
             if exists is None or exists(cid):
                 ids.append(cid)
                 break
+    # The Constitution (Twenty-seventh Amendment) Act, 2025 omitted Art. 184 and moved original and
+    # public-importance jurisdiction to the Federal Constitutional Court (Art. 175E). Keep the cited
+    # article, so the answer can say it is omitted, and add the provision that now governs.
+    for old, new in SUCCESSORS.items():
+        if old in ids and new not in ids and (exists is None or exists(new)):
+            ids.insert(ids.index(old) + 1, new)
     return list(dict.fromkeys(ids))
+
+
+SUCCESSORS = {"CONST_1973_ART_184_3": "CONST_1973_ART_175E", "CONST_1973_ART_184": "CONST_1973_ART_175E",
+              "CONST_1973_ART_186": "CONST_1973_ART_175E"}
 
 
 def provisions_for_topics(query: str, exists: Optional[Callable[[str], bool]] = None) -> List[str]:

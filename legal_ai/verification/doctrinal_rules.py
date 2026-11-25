@@ -49,6 +49,18 @@ NEGATION_AND_DISTINCTION_PATTERNS: List[re.Pattern] = [
 ]
 
 PATTERN_RULES: List[Dict[str, Any]] = [
+    {
+        "code": "STATUTE_MISSTATEMENT",
+        "id": "ART_184_3_OMITTED_2025",
+        "severity": "error",
+        "status": "reviewed",
+        "topics": [],
+        "all_of": [r"184\s*\(\s*3\s*\)|article\s+184\b|art\.?\s*184\b"],
+        "any_of": [r"supreme\s+court", r"original\s+jurisdiction", r"suo\s+motu", r"public\s+importance", r"may\s+(?:invoke|file|approach)"],
+        "none_of": [r"omitted", r"twenty[\s-]*seventh|27th", r"federal\s+constitutional\s+court", r"175\s*E", r"repealed|no\s+longer|former|previously|before\s+the\s+amendment"],
+        "message": "Article 184 was omitted by the Constitution (Twenty-seventh Amendment) Act, 2025. Original jurisdiction and the public-importance fundamental-rights jurisdiction (former Art. 184(3)) now lie with the Federal Constitutional Court under Art. 175E, exercisable on an application; pending 184(3) matters stood transferred under Art. 175E(4).",
+        "fix": "Cite Art. 175E(3) and the Federal Constitutional Court; mention Art. 184(3) only as the former provision.",
+    },
     # --- Settled-law errors caught by the Nov 2026 100-question evaluation -------------
     {
         "code": "STATUTE_MISSTATEMENT",
@@ -218,8 +230,8 @@ PATTERN_RULES: List[Dict[str, Any]] = [
             r"private",
             r"civil",
         ],
-        "message": "Art. 184(3) is original jurisdiction on questions of public importance re fundamental rights. Private civil disputes reach the Supreme Court by leave/appeal (Art. 185); interim directions are usually Art. 187.",
-        "fix": "Use Art. 185 for civil appeals; consider Art. 187 for interim orders.",
+        "message": "Art. 184 was omitted by the Constitution (Twenty-seventh Amendment) Act, 2025; public-importance fundamental-rights jurisdiction now lies with the Federal Constitutional Court under Art. 175E(3), on an application. Private civil disputes reach the Supreme Court by leave/appeal (Art. 185); interim directions are usually Art. 187.",
+        "fix": "Cite Art. 175E(3) (Federal Constitutional Court) instead of Art. 184(3); use Art. 185 for civil appeals.",
     },
     {
         "code": "STATUTE_MISSTATEMENT",

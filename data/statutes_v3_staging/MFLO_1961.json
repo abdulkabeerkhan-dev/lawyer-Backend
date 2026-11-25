@@ -259,7 +259,7 @@
     "domain": "family",
     "forum": "Family Court / Arbitration Council",
     "provision_type": "section",
-    "text": "10. Dower.⸺Where no details about the mode of payment of dower are specified in the nikah nama, or the marriage contract, the entire amount of the dower shall be prescribed to be payable on demand.\n\n_________________________________________________________________________________ 1Ins. new sub-section (1A) by the Muslim Family Law (Second Amendment) Act, 2021 (XXIX of 2021), s. 2.\n2Subs. by the Muslim Family Law (Second Amendment) Ordinance, 1961 (XXX of 1961), s. 2 for “(2)”.\n3Subs. by F.A.O., 1975, Art., 2 and Sch., for certain words.",
+    "text": "10. Dower.⸺Where no details about the mode of payment of dower are specified in the nikah nama, or the marriage contract, the entire amount of the dower shall be prescribed to be payable on demand.",
     "raw_text": "10. Dower.⸺Where no details about the mode of payment of dower are specified in the \nnikah nama, or the marriage contract, the entire amount of the dower shall be prescribed to \nbe payable on demand. \n \n_________________________________________________________________________________ \n1Ins. new sub-section (1A) by the Muslim Family Law (Second Amendment) Act, 2021 (XXIX of 2021), s. 2. \n2Subs. by the Muslim Family Law (Second Amendment) Ordinance, 1961 (XXX of 1961), s. 2 for “(2)”. \n3Subs. by F.A.O., 1975, Art., 2 and Sch., for certain words. \n\n \nPage 7 of 7",
     "amendment_notes": [],
     "former_labels": [],
@@ -272,7 +272,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "10. Dower.⸺Where no details about the mode of payment of dower are specified in the nikah nama, or the marriage contract, the entire amount of the dower shall be prescribed to be payable on demand.\n\n_________________________________________________________________________________ 1Ins. new sub-section (1A) by the Muslim Family Law (Second Amendment) Act, 2021 (XXIX of 2021), s. 2.\n2Subs. by the Muslim Family Law (Second Amendment) Ordinance, 1961 (XXX of 1961), s. 2 for “(2)”.\n3Subs. by F.A.O., 1975, Art., 2 and Sch., for certain words.",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "MFLO_1961_SEC_11",
@@ -340,19 +342,22 @@
     "domain": "family",
     "forum": "Family Court / Arbitration Council",
     "provision_type": "section",
-    "text": "13. Amendment of the Dissolution of Muslim Marriages Act, 1939 (VIII of 1939). Omitted by the Federal Laws (Revision and declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and Sch., II.\n\n__________________\n\n1Subs. by A.O., 1964, Art. 2 and Sch., for “Provincial Government”.\n2Subs. by F.A.O., 1975, Art., 2 and Table, for “Central Government”.",
+    "text": "13. [Amendment of the Dissolution of Muslim Marriages Act, 1939 (VIII of 1939)]. Omitted by the Federal Laws (Revision and declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and Sch., II.",
     "raw_text": "13. [Amendment of the Dissolution of Muslim Marriages Act, 1939 (VIII of 1939)]. Omitted \nby the Federal Laws (Revision and declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and Sch., II. \n  \n \n__________________ \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n1Subs. by A.O., 1964, Art. 2 and Sch., for “Provincial Government”. \n2Subs. by F.A.O., 1975, Art., 2 and Table, for “Central Government”.",
     "amendment_notes": [],
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "13. Amendment of the Dissolution of Muslim Marriages Act, 1939 (VIII of 1939). Omitted by the Federal Laws (Revision and declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and Sch., II.\n\n__________________\n\n1Subs. by A.O., 1964, Art. 2 and Sch., for “Provincial Government”.\n2Subs. by F.A.O., 1975, Art., 2 and Table, for “Central Government”.",
+    "status": "omitted",
+    "text_source": "pakistancode_pdf_2026-11-19"
   }
 ]

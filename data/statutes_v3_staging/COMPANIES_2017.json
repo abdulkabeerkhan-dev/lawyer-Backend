@@ -909,7 +909,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "23. * *\n\n*\n\n*\n\n*\n\n*\n\n*",
+    "text": "[23. * * * * * * *]",
     "raw_text": "1[23. *  \n* \n \n* \n \n* \n \n* \n \n* \n \n*]",
     "amendment_notes": [],
     "former_labels": [],
@@ -917,14 +917,17 @@
       "COMPANIES_1984 (s.509(1))"
     ],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "23. * *\n\n*\n\n*\n\n*\n\n*\n\n*",
+    "status": "omitted",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_24",
@@ -1346,7 +1349,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "(1) Subject to the provisions of this Act and to the conditions contained in its memorandum, a company may, by special resolution, alter or add to its articles.\n(2) Any alteration or addition so made shall be as valid as if originally contained in the articles, and be subject in like manner to alteration by special resolution.\n(3) A copy of the articles as altered shall, within thirty days from the passing of the resolution, be filed with the registrar.",
+    "text": "38. Alteration of articles.—(1) Subject to the provisions of this Act and to the conditions contained in its memorandum, a company may, by special resolution, alter its articles and any alteration so made shall be as valid as if originally contained in the articles and be subject in like manner to alteration by special resolution:\nProvided that, where such alteration affects the substantive rights or liabilities of members or of a class of members, it shall be carried out only if a majority of at least three-fourths of the members or of the class of members affected by such alteration, as the case may be, exercise the option through vote personally or through proxy vote for such alteration.\n(2) A copy of the articles of association as altered shall, within thirty days from the date of passing of the resolution, be filed by the company with the registrar and he shall register the same and thenceforth the articles so filed shall be the articles of the company.",
     "raw_text": "38.  \nAlteration of articles.—(1) Subject to the provisions of this Act and to the conditions \ncontained in its memorandum, a company may, by special resolution, alter its articles and any alteration \nso made shall be as valid as if originally contained in the articles and be subject in like manner to alteration \nby special resolution: \n \nProvided that, where such alteration affects the substantive rights or liabilities of members or of a \nclass of members, it shall be carried out only if a majority of at least three-fourths of the members or of the \nclass of members affected by such alteration, as the case may be, exercise the option through vote \npersonally or through proxy vote for such alteration. \n \n(2)  \nA copy of the articles of association as altered shall, within thirty days from the date of \npassing of the resolution, be filed by the company with the registrar and he shall register the same and \nthenceforth the articles so filed shall be the articles of the company.",
     "amendment_notes": [],
     "former_labels": [],
@@ -1361,8 +1364,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "audit_2026-11-25:subsections:v2"
+    "text_as_of": "2026-11-19",
+    "text_source": "pakistancode_pdf_2026-11-19",
+    "text_previous": "(1) Subject to the provisions of this Act and to the conditions contained in its memorandum, a company may, by special resolution, alter or add to its articles.\n(2) Any alteration or addition so made shall be as valid as if originally contained in the articles, and be subject in like manner to alteration by special resolution.\n(3) A copy of the articles as altered shall, within thirty days from the passing of the resolution, be filed with the registrar."
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_39",
@@ -1869,7 +1873,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "56.\nAuthentication of documents and proceedings.—Save as expressly provided in this Act, a document or proceeding requiring authentication by a company may be signed either by an officer or a representative authorized by the board.\n\nPROSPECTUS, ALLOTMENT, ISSUE AND TRANSFER OF SHARES AND OTHER SECURITIES",
+    "text": "56. Authentication of documents and proceedings.—Save as expressly provided in this Act, a document or proceeding requiring authentication by a company may be signed either by an officer or a representative authorized by the board.",
     "raw_text": "56.  \nAuthentication of documents and proceedings.—Save as expressly provided in this \nAct, a document or proceeding requiring authentication by a company may be signed either by an \nofficer or a representative authorized by the board. \n \nPART V \n \nPROSPECTUS, ALLOTMENT, ISSUE AND TRANSFER OF SHARES AND OTHER \nSECURITIES",
     "amendment_notes": [],
     "former_labels": [],
@@ -1884,7 +1888,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "56.\nAuthentication of documents and proceedings.—Save as expressly provided in this Act, a document or proceeding requiring authentication by a company may be signed either by an officer or a representative authorized by the board.\n\nPROSPECTUS, ALLOTMENT, ISSUE AND TRANSFER OF SHARES AND OTHER SECURITIES",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_57",
@@ -5073,7 +5079,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "163. Removal of directors.—A company may by resolution in general meeting remove a director appointed under sections 157, 161 or section 162 or elected in the manner provided for in section",
+    "text": "163. Removal of directors.—A company may by resolution in general meeting remove a director appointed under sections 157, 161 or section 162 or elected in the manner provided for in section 159:\nProvided that a resolution for removing a director shall not be deemed to have been passed if the number of votes cast against it is equal to, or exceeds—\n(a) the total number of votes for the time being computed in the manner laid down in sub-section (5) of section 159 divided by the number of directors for the time being, if the resolution relates to removal of a director appointed under sections 157, 161 or section 162 or where the directors were elected unopposed; or\n(b) the minimum number of votes that were cast for the election of a director at the immediately preceding election of directors, if the resolution relates to removal of a director elected in the manner provided in sub-section (5) of section 159.",
     "raw_text": "163.  Removal of directors.—A company may by resolution in general meeting remove a \ndirector appointed under sections 157, 161 or section 162 or elected in the manner provided for in section",
     "amendment_notes": [],
     "former_labels": [
@@ -5090,7 +5096,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "163. Removal of directors.—A company may by resolution in general meeting remove a director appointed under sections 157, 161 or section 162 or elected in the manner provided for in section",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_164",
@@ -5307,7 +5315,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "171. Vacation of office by the directors.—(1) A director shall ipso facto cease to hold office if—\n\n(a) he becomes ineligible to be appointed as a director on any one or more of the grounds enumerated in section 153;\n\n(b) he absents himself from three consecutive meetings of the board without seeking leave of absence;\n\n(c) he or any firm of which he is a partner or any private company of which he is a director—\n\n(i) without the sanction of the company in general meeting accepts or holds any office of profit under the company other than that of chief executive or a legal or technical adviser; or\n\n(ii) accepts a loan or guarantee from the company in contravention of section",
+    "text": "171. Vacation of office by the directors.—(1) A director shall ipso facto cease to hold office if—\n(a) he becomes ineligible to be appointed as a director on any one or more of the grounds enumerated in section 153;\n(b) he absents himself from three consecutive meetings of the board without seeking leave of absence;\n(c) he or any firm of which he is a partner or any private company of which he is a director—\n(i) without the sanction of the company in general meeting accepts or holds any office of profit under the company other than that of chief executive or a legal or technical adviser; or\n(ii) accepts a loan or guarantee from the company in contravention of section\n182.\n(2) Nothing contained in sub-section (l) shall be deemed to preclude a company from providing by its articles that the office of director shall be vacated on any grounds additional to those specified in that sub-section.",
     "raw_text": "171.  Vacation of office by the directors.—(1) A director shall ipso facto cease to hold office \nif— \n \n(a)  \nhe becomes ineligible to be appointed as a director on any one or more of the \ngrounds enumerated in section 153; \n \n(b)  \nhe absents himself from three consecutive meetings of the board without seeking \nleave of absence; \n \n(c)  \nhe or any firm of which he is a partner or any private company of which he is \na director— \n \n(i) \nwithout the sanction of the company in general meeting accepts or holds \nany office of profit under the company other than that of chief executive \nor a legal or technical adviser; or \n \n(ii)  \naccepts a loan or guarantee from the company in contravention of section",
     "amendment_notes": [],
     "former_labels": [],
@@ -5322,7 +5330,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "171. Vacation of office by the directors.—(1) A director shall ipso facto cease to hold office if—\n\n(a) he becomes ineligible to be appointed as a director on any one or more of the grounds enumerated in section 153;\n\n(b) he absents himself from three consecutive meetings of the board without seeking leave of absence;\n\n(c) he or any firm of which he is a partner or any private company of which he is a director—\n\n(i) without the sanction of the company in general meeting accepts or holds any office of profit under the company other than that of chief executive or a legal or technical adviser; or\n\n(ii) accepts a loan or guarantee from the company in contravention of section",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_172",
@@ -7138,7 +7148,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "234. * *\n\n*\n\n*\n\n*\n\n*\n\n*",
+    "text": "[234. * * * * * * *]",
     "raw_text": "1[234.  * \n* \n \n* \n \n* \n \n* \n \n* \n \n*]",
     "amendment_notes": [],
     "former_labels": [],
@@ -7146,14 +7156,17 @@
       "COMPANIES_1984 (s.509(1))"
     ],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "234. * *\n\n*\n\n*\n\n*\n\n*\n\n*",
+    "status": "omitted",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_235",
@@ -7401,7 +7414,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "243. Directors not to withhold declared dividend.—(1) When a dividend has been declared, it shall not be lawful for the directors of the company to withhold or defer its payment and the chief executive of the company shall be responsible to make the payment in the manner provided in section",
+    "text": "243. Directors not to withhold declared dividend.—(1) When a dividend has been declared, it shall not be lawful for the directors of the company to withhold or defer its payment and the chief executive of the company shall be responsible to make the payment in the manner provided in section\n242.\nExplanation.—Dividend shall be deemed to have been declared on the date of the general meeting in case of a dividend declared or approved in the general meeting and on the date of commencement of closing of share transfer for purposes of determination of entitlement of dividend in the case of an interim dividend and where register of members is not closed for such purpose, on the date on which such dividend is approved by the board.\n(2) Where a dividend has been declared by a company but is not paid within the period specified under section 242, the chief executive of the company shall be punishable with imprisonment for a term which may extend to two years and with fine which may extend to five million rupees:\nProvided that no offence shall be deemed to have been committed within the meaning of the foregoing provisions in the following cases, namely—\n(a) where the dividend could not be paid by reason of the operation of any law;\n(b) where a shareholder has given directions to the company regarding the payment of the dividend and those directions cannot be complied with;\n(c) where there is a dispute regarding the right to receive the dividend;\n(d) where the dividend has been lawfully adjusted by the company against any sum due to it from the shareholder; or\n(e) where, for any other reason, the failure to pay the dividend or to post the warrant within the period aforesaid was not due to any default on the part of the company; and the Commission has, on an application of the company on the specified form made within forty- five days from the date of declaration of the dividend, and after providing an opportunity to the shareholder or person who may seem to be entitled to receive the dividend of making representation against the proposed action, permitted the company to withhold or defer payment as may be ordered by the Commission.\n(3) Notwithstanding anything contained in sub-section (2), a company may withhold the payment of dividend of a member where the member has not provided the complete information or documents as specified by the Commission.\n(4) Chief executive convicted under sub-section (2) shall from the day of the conviction cease to hold the office of chief executive of the company and shall not, for a period of five years from that day, be eligible to be the chief executive or a director of that company or any other company.",
     "raw_text": "243.  Directors not to withhold declared dividend.—(1) When a dividend has been declared, \nit shall not be lawful for the directors of the company to withhold or defer its payment and the chief \nexecutive of the company shall be responsible to make the payment in the manner provided in section",
     "amendment_notes": [],
     "former_labels": [],
@@ -7416,7 +7429,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "243. Directors not to withhold declared dividend.—(1) When a dividend has been declared, it shall not be lawful for the directors of the company to withhold or defer its payment and the chief executive of the company shall be responsible to make the payment in the manner provided in section",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_244",
@@ -8097,7 +8112,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "267. No right to compensation for loss of office.—No person shall be entitled to or be paid any compensation or damages for the loss of office by reason of an order issued under section 264.\n\nPOWERS OF COURT HEARING APPLICATION",
+    "text": "267. No right to compensation for loss of office.—No person shall be entitled to or be paid any compensation or damages for the loss of office by reason of an order issued under section 264.",
     "raw_text": "267.  No right to compensation for loss of office.—No person shall be entitled to or be paid \nany compensation or damages for the loss of office by reason of an order issued under section 264. \n \n \nPOWERS OF COURT HEARING APPLICATION",
     "amendment_notes": [],
     "former_labels": [],
@@ -8112,7 +8127,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "267. No right to compensation for loss of office.—No person shall be entitled to or be paid any compensation or damages for the loss of office by reason of an order issued under section 264.\n\nPOWERS OF COURT HEARING APPLICATION",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_268",
@@ -8329,7 +8346,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "275. Application of sections 254 to 274 to liquidators and foreign companies.—The provisions of sections 254 to 274 shall apply mutatis mutandis to companies in the course of winding up, their liquidators and foreign companies.\n\n_______________\n\nMEDIATION, ARBITRATION, ARRANGEMENTS AND RECONSTRUCTION",
+    "text": "275. Application of sections 254 to 274 to liquidators and foreign companies.—The provisions of sections 254 to 274 shall apply mutatis mutandis to companies in the course of winding up, their liquidators and foreign companies.",
     "raw_text": "275.  Application of sections 254 to 274 to liquidators and foreign companies.—The \nprovisions of sections 254 to 274 shall apply mutatis mutandis to companies in the course of winding \nup, their liquidators and foreign companies. \n \n_______________ \n \n \n \n\n \nPage 187 of 401 \n \nPART VIII \n \nMEDIATION, ARBITRATION, ARRANGEMENTS AND RECONSTRUCTION",
     "amendment_notes": [],
     "former_labels": [],
@@ -8344,7 +8361,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "275. Application of sections 254 to 274 to liquidators and foreign companies.—The provisions of sections 254 to 274 shall apply mutatis mutandis to companies in the course of winding up, their liquidators and foreign companies.\n\n_______________\n\nMEDIATION, ARBITRATION, ARRANGEMENTS AND RECONSTRUCTION",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_276",
@@ -8677,7 +8696,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "(1) Without prejudice to the generality of the powers of the Court under section 286, any order under that section may provide for: (a) the regulation of the conduct of the company's affairs in future; (b) the purchase of the shares or interests of any members of the company by other members or by the company; (c) in the case of a purchase of its shares by the company, the consequent reduction of its share capital; (d) the termination, setting aside or modification of any agreement, howsoever arrived at, between the company and any of its directors, chief executive or other officers; (e) the termination, setting aside or modification of any agreement between the company and any person with respect to management; (f) the setting aside of any fraudulent transfer, delivery of goods, payment, execution or other act relating to property made or done by or against the company within three months before the date of the application; and (g) any other matter for which in the opinion of the Court it is just and equitable that provision should be made.",
+    "text": "287. Powers of Court under section 286.—Without prejudice to the generality of the powers of the Court under section 286, an order under that section may provide for—\n[(a) the termination, setting aside or modification of any agreement or award compensation, however arrived including but not limited to between the company or any other company or any director, including the chief executive or any other officer, wherein the Court concludes that such agreement suffers from conflict of interest on the part of any director or the Board or any such agreement or contract is prejudicial to the interest of members upon such terms and conditions as may, in the opinion of the Court, be just and equitable in all the circumstances;]\n(b) setting aside of any transfer, delivery of goods, payment, execution or other transactions not relating to property made or done by or against the company within ninety days before the date of the application which would, if made or done by or against an individual, be deemed in his insolvency to be a fraudulent preference; and\n(c) any other matter, including a change in management, for which in the opinion of the Court it is just and equitable that provision should be made.",
     "raw_text": "287.  Powers of Court under section 286.—Without prejudice to the generality of the powers \nof the Court under section 286, an order under that section may provide for— \n \n1[(a)  the termination, setting aside or modification of any agreement or award \ncompensation, however arrived including but not limited to between the company \nor any other company or any director, including the chief executive or any other \nofficer, wherein the Court concludes that such agreement suffers from conflict of \ninterest on the part of any director or the Board or any such agreement or contract \nis prejudicial to the interest of members upon such terms and conditions as may, \nin the opinion of the Court, be just and equitable in all the circumstances;] \n \n(b)  \nsetting aside of any transfer, delivery of goods, payment, execution or other \ntransactions not relating to property made or done by or against the company within \nninety days before the date of the application which would, if made or done by or \nagainst an individual, be deemed in his insolvency to be a fraudulent preference; \nand \n \n1Subs. by Act No. XXXVII of 2021, s.21 \n \n \n\n \nPage 197 of 401 \n \n(c)  \nany other matter, including a change in management, for which in the opinion of \nthe Court it is just and equitable that provision should be made.",
     "amendment_notes": [],
     "former_labels": [],
@@ -8692,8 +8711,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "audit_2026-11-25:subsections:v2"
+    "text_as_of": "2026-11-19",
+    "text_source": "pakistancode_pdf_2026-11-19",
+    "text_previous": "(1) Without prejudice to the generality of the powers of the Court under section 286, any order under that section may provide for: (a) the regulation of the conduct of the company's affairs in future; (b) the purchase of the shares or interests of any members of the company by other members or by the company; (c) in the case of a purchase of its shares by the company, the consequent reduction of its share capital; (d) the termination, setting aside or modification of any agreement, howsoever arrived at, between the company and any of its directors, chief executive or other officers; (e) the termination, setting aside or modification of any agreement between the company and any person with respect to management; (f) the setting aside of any fraudulent transfer, delivery of goods, payment, execution or other act relating to property made or done by or against the company within three months before the date of the application; and (g) any other matter for which in the opinion of the Court it is just and equitable that provision should be made."
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_288",
@@ -9171,7 +9191,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "(1) An application to the Court for the winding up of a company shall be by petition presented, subject to the provisions of this section, either by the company, or by any creditor or creditors, or by any contributory or contributories, or by the registrar or by the Commission.",
+    "text": "304. Provisions as to applications for winding up.—An application to the Court for the winding up of a company shall be by petition presented, subject to the provisions of this section, either by the company, or by any creditor or creditors (including any contingent or prospective creditor or creditors), or by any contributory or contributories, or by all or any of the aforesaid parties, together or separately or by the registrar, or by the Commission or by a person authorised by the Commission in that behalf:\nProvided that—\n(a) a contributory shall not be entitled to present a petition for winding up a company unless__\n(i) either the number of members is reduced, in the case of a private company, below two, or, in the case of public company, below three; and\n(ii) the shares in respect of which he is a contributory or some of them either were originally allotted to him or have been held by him, and registered in his name, for at least one hundred and eighty days during the eighteen months before the commencement of the winding up, or have or devolved on him through the death of a former holder;\n(b) the registrar shall not be entitled to present a petition for the winding up of a company unless the previous sanction of the Commission has been obtained to the presentation of the petition:\nProvided that no such sanction shall be given unless the company has first been afforded an opportunity of making a representation and of being heard;\n(c) the Commission or a person authorised by the Commission in that behalf shall not be entitled to present a petition for the winding up of a company unless an investigation into the affairs of the company has revealed that it was formed for any fraudulent or unlawful purpose or that it is carrying on a business not authorised by its memorandum or that its business is being conducted in a manner oppressive to any of its members or persons concerned in the formation of the company or that its management has been guilty of fraud, mis-feasance or other misconduct towards the company or towards any of its members; and such petition shall not be presented or authorised to be presented by the Commission unless the company has been afforded an opportunity of making a representation and of being heard:\nProvided that if sole business of the company is the licensed activity and that licence is revoked, no investigation into the affairs of the company shall be required to present the petition for winding up of the company;\n(d) the Court shall not give a hearing to a petition for winding up a company by a contingent or prospective creditor until such security for costs has been given as the Court thinks reasonable and until a prima facie case for winding up has been established to the satisfaction of the Court;\n(e) the Court shall not give a hearing to a petition for winding up a company by the company until the company has furnished with its petition, in the prescribed manner, the particulars of its assets and liabilities and business operations and the suits or proceedings pending against it.",
     "raw_text": "304.  Provisions as to applications for winding up.—An application to the Court for the \nwinding up of a company shall be by petition presented, subject to the provisions of this section, either \nby the company, or by any creditor or creditors (including any contingent or prospective creditor or \ncreditors), or by any contributory or contributories, or by all or any of the aforesaid parties, together or \n\n \nPage 207 of 401 \n \nseparately or by the registrar, or by the Commission or by a person authorised by the Commission in that \nbehalf: \n \nProvided that— \n \n(a)  \na contributory shall not be entitled to present a petition for winding up a \ncompany unless__ \n \n(i)  \neither the number of members is reduced, in the case of a private \ncompany, below two, or, in the case of public company, below three; and \n \n(ii)  \nthe shares in respect of which he is a contributory or some of them either \nwere originally allotted to him or have been held by him, and registered in \nhis name, for at least one hundred and eighty days during the eighteen \nmonths before the commencement of the winding up, or have or devolved \non him through the death of a former holder; \n \n(b)  \nthe registrar shall not be entitled to present a petition for the winding up of a \ncompany unless the previous sanction of the Commission has been obtained to the \npresentation of the petition: \n \nProvided that no such sanction shall be given unless the company has first \nbeen afforded an opportunity of making a representation and of being heard; \n \n(c)  \nthe Commission or a person authorised by the Commission in that behalf shall not \nbe entitled to present a petition for the winding up of a company unless an \ninvestigation into the affairs of the company has revealed that it was formed for \nany fraudulent or unlawful purpose or that it is carrying on a business not \nauthorised by its memorandum or that its business is being conducted in a manner \noppressive to any of its members or persons concerned in the formation of the \ncompany or that its management has been guilty of fraud, mis-feasance or other \nmisconduct towards the company or towards any of its members; and such \npetition shall not be presented or authorised to be presented by the Commission \nunless the company has been afforded an opportunity of making a representation \nand of being heard: \n \nProvided that if sole business of the company is the licensed activity and \nthat licence is revoked, no investigation into the affairs of the company shall be \nrequired to present the petition for winding up of the company; \n \n(d)  \nthe Court shall not give a hearing to a petition for winding up a company by \na contingent or prospective creditor until such security for costs has been given as \nthe Court thinks reasonable and until a prima facie case for winding up has been \nestablished to the satisfaction of the Court; \n \n\n \nPage 208 of 401 \n \n(e)  \nthe Court shall not give a hearing to a petition for winding up a company by the \ncompany until the company has furnished with its petition, in the prescribed \nmanner, the particulars of its assets and liabilities and business operations and the \nsuits or proceedings pending against it.",
     "amendment_notes": [],
     "former_labels": [],
@@ -9186,8 +9206,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "audit_2026-11-25:subsections:v2"
+    "text_as_of": "2026-11-19",
+    "text_source": "pakistancode_pdf_2026-11-19",
+    "text_previous": "(1) An application to the Court for the winding up of a company shall be by petition presented, subject to the provisions of this section, either by the company, or by any creditor or creditors, or by any contributory or contributories, or by the registrar or by the Commission."
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_305",
@@ -9230,7 +9251,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "306. Commencement of winding up by Court.—A winding up of a company by the Court shall be deemed to commence at the time of the presentation of the petition for the winding up.\n\nPOWERS OF COURT HEARING APPLICATION",
+    "text": "306. Commencement of winding up by Court.—A winding up of a company by the Court shall be deemed to commence at the time of the presentation of the petition for the winding up.",
     "raw_text": "306.  Commencement of winding up by Court.—A winding up of a company by the Court \nshall be deemed to commence at the time of the presentation of the petition for the winding up. \n \nPOWERS OF COURT HEARING APPLICATION",
     "amendment_notes": [],
     "former_labels": [],
@@ -9245,7 +9266,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "306. Commencement of winding up by Court.—A winding up of a company by the Court shall be deemed to commence at the time of the presentation of the petition for the winding up.\n\nPOWERS OF COURT HEARING APPLICATION",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_307",
@@ -10769,7 +10792,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "359. Final meeting and dissolution.__(1) As soon as the affairs of a company are fully wound up, the liquidator shall__\n\n(a) prepare final accounts of the company, get the same audited; and also prepare a report of the winding up, showing that the property and assets of the company have been disposed of and its debts fully discharged and such other particulars; as may be specified; and\n\n(b) call a general meeting of the company for the purpose of laying the report and accounts before it, and giving any explanation therefor.\n\n(2) A copy of the report and accounts together with a copy of the auditor’s report and notice of meeting shall be sent by post or courier or through electronic mode to each contributory of the company at least twenty-one days before the meeting required to be held under this section.\n\n(3) The notice of the meeting specifying the time, place and object of the meeting shall also be published at least twenty-one days before the date of the meeting in the manner specified in section",
+    "text": "359. Final meeting and dissolution.__(1) As soon as the affairs of a company are fully wound up, the liquidator shall__\n(a) prepare final accounts of the company, get the same audited; and also prepare a report of the winding up, showing that the property and assets of the company have been disposed of and its debts fully discharged and such other particulars; as may be specified; and\n(b) call a general meeting of the company for the purpose of laying the report and accounts before it, and giving any explanation therefor.\n(2) A copy of the report and accounts together with a copy of the auditor’s report and notice of meeting shall be sent by post or courier or through electronic mode to each contributory of the company at least twenty-one days before the meeting required to be held under this section.\n(3) The notice of the meeting specifying the time, place and object of the meeting shall also be published at least twenty-one days before the date of the meeting in the manner specified in section\n350.\n(4) Within one week after the meeting, the liquidator shall file with the registrar his final report in the specified form.\n(5) If a quorum is not present at the meeting, the liquidator shall in lieu of the return referred to in sub-section (4), make a return that the meeting was duly summoned and that no quorum was present there at, and upon such a return being made within one week after the date fixed for the meeting along with a copy of his report and account in the specified manner, the provision of sub-section (4) as to the making of the return shall be deemed to have been complied with.\n(6) The registrar, on receiving the report and account and either the return mentioned in sub- section (4) or the return mentioned in sub-section (5), shall, after such scrutiny as he may deem fit, register them, and on the expiration of ninety days from such registration, the company shall be deemed to be dissolved:\nProvided that, if on his scrutiny the registrar considers that the affairs of the company or the liquidation proceedings have been conducted in a manner prejudicial to its interest or the interests of its creditors and members or that any actionable irregularity has been committed, he may take action in accordance with the provisions of this Act:\nProvided further that the Court may on the application of the liquidator or of any other person who appears to the Court to be interested, make an order deferring the date at which the dissolution of the company is to take effect, for such time as the Court thinks fit.\n(7) It shall be the duty of the person on whose application an order of the Court under the foregoing proviso is made, within fourteen days after the making of the order, to deliver to the registrar a certified copy of the order for registration, and, if that person fails so to do, he shall be liable to a daily penalty of level 1 on the standard scale.\n(8) If the liquidator fails to comply with any requirements of this section, he shall be liable to a penalty of level 1 on the standard scale.",
     "raw_text": "359.  Final meeting and dissolution.__(1) As soon as the affairs of a company are fully wound \nup, the liquidator shall__ \n \n(a)  \nprepare final accounts of the company, get the same audited; and also prepare a \nreport of the winding up, showing that the property and assets of the company have \nbeen disposed of and its debts fully discharged and such other particulars; as may \nbe specified; and \n \n(b)  \ncall a general meeting of the company for the purpose of laying the report and \naccounts before it, and giving any explanation therefor. \n \n(2)  \nA copy of the report and accounts together with a copy of the auditor’s report and notice \nof meeting shall be sent by post or courier or through electronic mode to each contributory of the company \nat least twenty-one days before the meeting required to be held under this section. \n \n(3)  \nThe notice of the meeting specifying the time, place and object of the meeting shall also \nbe published at least twenty-one days before the date of the meeting in the manner specified in section",
     "amendment_notes": [],
     "former_labels": [],
@@ -10784,7 +10807,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "359. Final meeting and dissolution.__(1) As soon as the affairs of a company are fully wound up, the liquidator shall__\n\n(a) prepare final accounts of the company, get the same audited; and also prepare a report of the winding up, showing that the property and assets of the company have been disposed of and its debts fully discharged and such other particulars; as may be specified; and\n\n(b) call a general meeting of the company for the purpose of laying the report and accounts before it, and giving any explanation therefor.\n\n(2) A copy of the report and accounts together with a copy of the auditor’s report and notice of meeting shall be sent by post or courier or through electronic mode to each contributory of the company at least twenty-one days before the meeting required to be held under this section.\n\n(3) The notice of the meeting specifying the time, place and object of the meeting shall also be published at least twenty-one days before the date of the meeting in the manner specified in section",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_360",
@@ -11059,7 +11084,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "369. Final meeting and dissolution.___(1) As soon as the affairs of a company are fully wound up, the liquidator shall—\n\n(a) prepare final accounts of the company, get the same audited; and also prepare a report of the winding up, showing that the property and assets of the company have been disposed of and its debts fully discharged and such other particulars; as may be specified;\n\n(b) summon and hold general meeting of the company and a meeting of the creditors within a period of sixty days from the close of its financial year in the manner provided under section 132; and\n\n(c) lay before the meetings mentioned in clause (a), audited accounts consisting of statement of financial position and the receipt and payment accounts, auditors’ report and the liquidator’s report on the acts, dealings and the conduct of the company’s winding up during the preceding period from the date of winding up.\n\n(2) A copy of the report and accounts together with a copy of the auditor’s report and notice of meeting shall be sent by post or courier or through electronic mode to each contributory of the company at least twenty-one days before the meeting required to be held under this section.\n\n(3) The notice of the meeting specifying the time, place and object of the meeting shall also be published at least twenty-one days before the date of the meeting in the manner specified in section",
+    "text": "369. Final meeting and dissolution.___(1) As soon as the affairs of a company are fully wound up, the liquidator shall—\n(a) prepare final accounts of the company, get the same audited; and also prepare a report of the winding up, showing that the property and assets of the company have been disposed of and its debts fully discharged and such other particulars; as may be specified;\n(b) summon and hold general meeting of the company and a meeting of the creditors within a period of sixty days from the close of its financial year in the manner provided under section 132; and\n(c) lay before the meetings mentioned in clause (a), audited accounts consisting of statement of financial position and the receipt and payment accounts, auditors’ report and the liquidator’s report on the acts, dealings and the conduct of the company’s winding up during the preceding period from the date of winding up.\n(2) A copy of the report and accounts together with a copy of the auditor’s report and notice of meeting shall be sent by post or courier or through electronic mode to each contributory of the company at least twenty-one days before the meeting required to be held under this section.\n(3) The notice of the meeting specifying the time, place and object of the meeting shall also be published at least twenty-one days before the date of the meeting in the manner specified in section\n350.\n(4) Within one week after the meeting, the liquidator shall file with the registrar his final report in the specified form.\n(5) If a quorum (which for the purpose of this section shall be two persons) is not present at either of such meetings, the liquidator shall in lieu of the return referred to in sub-section (4), make a return that the meeting was duly summoned and that no quorum was present there at, and upon such a return being made within one week after the date fixed for the meeting along with a copy of his report and account in the specified manner, the provision of sub-section (4) as to the making of the return shall be deemed to have been complied with.\n(6) The registrar, on receiving the report and account and either the return mentioned in sub- section (4) or the return mentioned in sub-section (5), shall, after such scrutiny as he may deem fit, register them, and on the expiration of ninety days from such registration, the company shall be deemed to be dissolved:\nProvided that, if on his scrutiny the registrar considers that the affairs of the company or the liquidation proceedings have been conducted in a manner prejudicial to its interest or the interests of its creditors and members or that any actionable irregularity has been committed, he may take action in accordance with the provisions of this Act:\nProvided further that the Court may on the application of the liquidator or of any other person who appears to the Court to be interested, make an order deferring the date at which the dissolution of the company is to take effect, for such time as the Court thinks fit.\n(7) It shall be the duty of the person on whose application an order of the Court under the foregoing proviso is made, within fourteen days after the making of the order, to deliver to the registrar a certified copy of the order for registration, and, if that person fails so to do, he shall be liable to a daily penalty of level 1 on the standard scale.\n(8) If the liquidator fails to comply with any requirements of this section, he shall be liable to a penalty of level 1 on the standard scale.",
     "raw_text": "369.  Final meeting and dissolution.___(1) As soon as the affairs of a company are fully wound \nup, the liquidator shall— \n \n(a)  \nprepare final accounts of the company, get the same audited; and also prepare a \nreport of the winding up, showing that the property and assets of the company have \nbeen disposed of and its debts fully discharged and such other particulars; as may \nbe specified; \n \n(b)  \nsummon and hold general meeting of the company and a meeting of the creditors \nwithin a period of sixty days from the close of its financial year in the manner \nprovided under section 132; and \n \n(c)  \nlay before the meetings mentioned in clause (a), audited accounts consisting of \nstatement of financial position and the receipt and payment accounts, auditors’  \nreport and the liquidator’s report on the acts, dealings and the conduct of the \ncompany’s winding up during the preceding period from the date of winding up. \n \n(2)  \nA copy of the report and accounts together with a copy of the auditor’s report and notice \nof meeting shall be sent by post or courier or through electronic mode to each contributory of the company \nat least twenty-one days before the meeting required to be held under this section. \n \n(3)  \nThe notice of the meeting specifying the time, place and object of the meeting shall also \nbe published at least twenty-one days before the date of the meeting in the manner specified in section",
     "amendment_notes": [],
     "former_labels": [],
@@ -11074,7 +11099,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "369. Final meeting and dissolution.___(1) As soon as the affairs of a company are fully wound up, the liquidator shall—\n\n(a) prepare final accounts of the company, get the same audited; and also prepare a report of the winding up, showing that the property and assets of the company have been disposed of and its debts fully discharged and such other particulars; as may be specified;\n\n(b) summon and hold general meeting of the company and a meeting of the creditors within a period of sixty days from the close of its financial year in the manner provided under section 132; and\n\n(c) lay before the meetings mentioned in clause (a), audited accounts consisting of statement of financial position and the receipt and payment accounts, auditors’ report and the liquidator’s report on the acts, dealings and the conduct of the company’s winding up during the preceding period from the date of winding up.\n\n(2) A copy of the report and accounts together with a copy of the auditor’s report and notice of meeting shall be sent by post or courier or through electronic mode to each contributory of the company at least twenty-one days before the meeting required to be held under this section.\n\n(3) The notice of the meeting specifying the time, place and object of the meeting shall also be published at least twenty-one days before the date of the meeting in the manner specified in section",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_370",
@@ -12915,7 +12942,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "433. Provisions of this part cumulative.—The provisions of this Part with respect to unregistered companies shall be in addition to, and not in derogation of, any provisions hereinbefore, in this Act contained with respect to winding up of companies by the Court and the Court or official liquidator may exercise any powers or do any act in the cases of unregistered companies which might be exercised or done by it or him in winding up companies formed and registered under this Act; but an unregistered company shall not, except in the event of its being wound up, be deemed to be a company under this Act, and then only to the extent provided by this Part.\n\nCOMPANIES ESTABLISHED OUTSIDE PAKISTAN PROVISIONS AS TO ESTABLISHMENT OF PLACES OF BUSINESS IN PAKISTAN",
+    "text": "433. Provisions of this part cumulative.—The provisions of this Part with respect to unregistered companies shall be in addition to, and not in derogation of, any provisions hereinbefore, in this Act contained with respect to winding up of companies by the Court and the Court or official liquidator may exercise any powers or do any act in the cases of unregistered companies which might be exercised or done by it or him in winding up companies formed and registered under this Act; but an unregistered company shall not, except in the event of its being wound up, be deemed to be a company under this Act, and then only to the extent provided by this Part.",
     "raw_text": "433.  Provisions of this part cumulative.—The provisions of this Part with respect to \nunregistered companies shall be in addition to, and not in derogation of, any provisions hereinbefore, in \nthis Act contained with respect to winding up of companies by the Court and the Court or official \nliquidator may exercise any powers or do any act in the cases of unregistered companies which might \nbe exercised or done by it or him in winding up companies formed and registered under this Act; but an \nunregistered company shall not, except in the event of its being wound up, be deemed to be a company \nunder this Act, and then only to the extent provided by this Part. \n \nPART XII \nCOMPANIES ESTABLISHED OUTSIDE PAKISTAN  \nPROVISIONS AS TO ESTABLISHMENT OF PLACES OF BUSINESS IN PAKISTAN",
     "amendment_notes": [],
     "former_labels": [],
@@ -12930,7 +12957,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "433. Provisions of this part cumulative.—The provisions of this Part with respect to unregistered companies shall be in addition to, and not in derogation of, any provisions hereinbefore, in this Act contained with respect to winding up of companies by the Court and the Court or official liquidator may exercise any powers or do any act in the cases of unregistered companies which might be exercised or done by it or him in winding up companies formed and registered under this Act; but an unregistered company shall not, except in the event of its being wound up, be deemed to be a company under this Act, and then only to the extent provided by this Part.\n\nCOMPANIES ESTABLISHED OUTSIDE PAKISTAN PROVISIONS AS TO ESTABLISHMENT OF PLACES OF BUSINESS IN PAKISTAN",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_434",
@@ -13526,7 +13555,7 @@
     "domain": "corporate",
     "forum": "Company Bench of High Court / SECP",
     "provision_type": "section",
-    "text": "454. Free Zone Company.—(1) A company incorporated for the purpose of carrying on business in the export processing zone or an area notified by the Federal Government as free zone, shall be eligible to such exemptions from the requirements of this Act as may be notified in terms of section",
+    "text": "454. Free Zone Company.—(1) A company incorporated for the purpose of carrying on business in the export processing zone or an area notified by the Federal Government as free zone, shall be eligible to such exemptions from the requirements of this Act as may be notified in terms of section\n459.\n(2) The Commission may, for the protection of foreign investors and to secure foreign investment, restrict the disclosure of information maintained by the registrar regarding promoters, shareholders and directors of the company incorporated under sub-section (1), who are foreign nationals unless such disclosure of information is authorized by the company in writing:\nProvided that the restriction of non-disclosure contained in this section shall not apply to the revenue authorities collecting tax, duties and levies or requirement or obligation under international law, treaty or commitment of the Government.\n(3) A company formed for the purposes stated in sub-section (1) may be dispensed with the words “Private Limited” or “Limited” as the case may be, and called as the “Free Zone Company” having the parenthesis and alphabets “FZC” at the end of its name.\n(4) A Free Zone Company shall pay the annual renewal fee as specified in the Seventh Schedule.",
     "raw_text": "454.  Free Zone Company.—(1) A company incorporated for the purpose of carrying on \nbusiness in the export processing zone or an area notified by the Federal Government as free zone, shall \nbe eligible to such exemptions from the requirements of this Act as may be notified in terms of section",
     "amendment_notes": [],
     "former_labels": [],
@@ -13541,7 +13570,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "454. Free Zone Company.—(1) A company incorporated for the purpose of carrying on business in the export processing zone or an area notified by the Federal Government as free zone, shall be eligible to such exemptions from the requirements of this Act as may be notified in terms of section",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "COMPANIES_2017_SEC_455",

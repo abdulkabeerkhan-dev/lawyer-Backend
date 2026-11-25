@@ -230,7 +230,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "9. Promises, express and implied. In so far as the proposal or acceptance of any promise is made in words, the promise is said to be express. In so far as such proposal or acceptance is made otherwise than in words, the promise is said to be implied.\n\n_______\n\nCHAPTER II OF CONTRACTS, VOIDABLE CONTRACTS AND VOID AGREEMENTS",
+    "text": "9. Promises, express and implied. In so far as the proposal or acceptance of any promise is made in words, the promise is said to be express. In so far as such proposal or acceptance is made otherwise than in words, the promise is said to be implied.",
     "raw_text": "9. Promises, express and implied. In so far as the proposal or acceptance of any promise is \nmade in words, the promise is said to be express. In so far as such proposal or acceptance is made \notherwise than in words, the promise is said to be implied. \n \n \n \n \n \n \n_______ \n \nCHAPTER II \nOF CONTRACTS, VOIDABLE CONTRACTS AND VOID AGREEMENTS",
     "amendment_notes": [],
     "former_labels": [],
@@ -243,7 +243,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "9. Promises, express and implied. In so far as the proposal or acceptance of any promise is made in words, the promise is said to be express. In so far as such proposal or acceptance is made otherwise than in words, the promise is said to be implied.\n\n_______\n\nCHAPTER II OF CONTRACTS, VOIDABLE CONTRACTS AND VOID AGREEMENTS",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_10",
@@ -414,12 +416,12 @@
     "act_name": "Contract Act, 1872",
     "section": "16",
     "primary_num": "16",
-    "heading": "\"Undue influence\" defined",
+    "heading": "“Undue influence” defined",
     "title": "“Undue influence” defined",
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "16. \"Undue influence\" defined .—(1) A contract is said to be induced by \"undue in - fluence\" where the relations subsisting between the parties are such that one of the parties is in a position to dominate the will of the other and uses that position to obtain an unfair advantage over the other. \n\n (2) In particular and without prejudice to the generality of the foregoing principle, a person is deemed to be in a position to dominate the will of another___ \n\n(a) where he holds a real or apparent authority over the other or where he stands in a fiduciary relation to the other: or \n\n (b) where he makes a contract with a person whose mental capacity is temporarily or permanently affected by reason of age, illness, or mental or bodily distress. \n\n (3) Where a person who is in a position to dominate the will of another, enters into a contract with him, and the transaction appears, on the face of it or on the evidence adduced, to be un- conscionable, the burden of proving that such contract was not induced by undue influence shall lie upon the person in a position to dominate the will of the other. Nothing in this sub-section shall affect the provisions of section 111 of the Evidence Act,.",
+    "text": "16. “Undue influence” defined.—(1) A contract is said to be induced by “undue in- fluence” where the relations subsisting between the parties are such that one of the parties is in a position to dominate the will of the other and uses that position to obtain an unfair advantage over the other.\n(2) In particular and without prejudice to the generality of the foregoing principle, a person is deemed to be in a position to dominate the will of another___\n(a) where he holds a real or apparent authority over the other or where he stands in a fiduciary relation to the other: or\n(b) where he makes a contract with a person whose mental capacity is temporarily or permanently affected by reason of age, illness, or mental or bodily distress.\n(3) Where a person who is in a position to dominate the will of another, enters into a contract with him, and the transaction appears, on the face of it or on the evidence adduced, to be un- conscionable, the burden of proving that such contract was not induced by undue influence shall lie upon the person in a position to dominate the will of the other. Nothing in this sub-section shall affect the provisions of section 111 of the Evidence Act,\n1872. (I of 1872).]\nIllustrations\n(a) A having advanced money to his son, B, during his minority, upon B’s coming of age obtains, by misuse of parental influence, a bond from B for a greater amount than the sum due in respect of the advance. A employs undue influence.\n(b) A, a man enfeebled by disease or age, is induced, by B’s influence over him as his medical attendant, to agree to pay B an unreasonable sum for his professional services. B employs undue influence.\n(c) A, being in debt to B, the money-lender of his village, contracts a fresh loan on terms which appear to be unconscionable. It lies on B to prove that the contract was not induced by undue influence.\n(d) A applies to a banker for a loan at a time when there is stringency in the money market. The banker declines to make the loan except at an unusually high rate of interest. A accepts the loan on these terms. This is a transaction in the ordinary course of business, and the contract is not induced by undue influence.",
     "raw_text": "2[16. “Undue influence” defined.—(1) A contract is said to be induced by “undue in-\nfluence” where the relations subsisting between the parties are such that one of the parties is in a \nposition to dominate the will of the other and uses that position to obtain an unfair advantage over \nthe other. \n \n \n(2) In particular and without prejudice to the generality of the foregoing principle, a person is \ndeemed to be in a position to dominate the will of another___ \n \n \n(a)  \nwhere he holds a real or apparent authority over the other or where he stands \nin a fiduciary relation to the other: or \n \n \n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), S. 3 and 2nd Sch. \n \n2Subs. by Act No. VI of 1899, s. 2. \n\n \n \nPage 16 of 65 \n \n (b)  \nwhere he makes a contract with a person whose mental capacity is temporarily \nor permanently affected by reason of age, illness, or mental or bodily distress. \n \n  \n(3) Where a person who is in a position to dominate the will of another, enters into a contract \nwith him, and the transaction appears, on the face of it or on the evidence adduced, to be un-\nconscionable, the burden of proving that such contract was not induced by undue influence shall lie \nupon the person in a position to dominate the will of the other. \n \n \nNothing in this sub-section shall affect the provisions of section 111 of the Evidence Act,",
     "amendment_notes": [],
     "former_labels": [],
@@ -432,8 +434,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "audit_2026-11-25:archive"
+    "text_as_of": "2026-11-19",
+    "text_source": "pakistancode_pdf_2026-11-19",
+    "text_previous": "16. \"Undue influence\" defined .—(1) A contract is said to be induced by \"undue in - fluence\" where the relations subsisting between the parties are such that one of the parties is in a position to dominate the will of the other and uses that position to obtain an unfair advantage over the other. \n\n (2) In particular and without prejudice to the generality of the foregoing principle, a person is deemed to be in a position to dominate the will of another___ \n\n(a) where he holds a real or apparent authority over the other or where he stands in a fiduciary relation to the other: or \n\n (b) where he makes a contract with a person whose mental capacity is temporarily or permanently affected by reason of age, illness, or mental or bodily distress. \n\n (3) Where a person who is in a position to dominate the will of another, enters into a contract with him, and the transaction appears, on the face of it or on the evidence adduced, to be un- conscionable, the burden of proving that such contract was not induced by undue influence shall lie upon the person in a position to dominate the will of the other. Nothing in this sub-section shall affect the provisions of section 111 of the Evidence Act,."
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_17",
@@ -829,7 +832,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "30. Agreements by way of wager void. Agreements by way of wager are void ; and no suit shall be brought for recovering anything alleged to be won on any wager, or entrusted to any person to abide the result of any game or other uncertain event on which any wager is made.\n\nException in favour of certain prizes for horse-racing. This section shall not be deemed to render unlawful a subscription, or contribution, or agreement to subscribe or contribute, made or entered into for or toward any plate, prize or sum of money, of the value or amount of five hundred rupees or upwards, to be awarded to the winner or winners of any horse race.\n\n1Repealed by the Specific Relief Act, 1877 (I of 1877).\n\n2Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (XXI of 1960), s. 3 and 2nd Sch. (with effect from the 14th October, 1955).\n\nSection 294A of the Pakistan Penal Code not affected. Nothing in this section shall be deemed to legalize any transaction connected with horse-racing, to which the provisions of section 294A of the Pakistan Penal Code (XLV of 1860) apply.",
+    "text": "30. Agreements by way of wager void. Agreements by way of wager are void ; and no suit shall be brought for recovering anything alleged to be won on any wager, or entrusted to any person to abide the result of any game or other uncertain event on which any wager is made. Exception in favour of certain prizes for horse-racing. This section shall not be deemed to render unlawful a subscription, or contribution, or agreement to subscribe or contribute, made or entered into for or toward any plate, prize or sum of money, of the value or amount of five hundred rupees or upwards, to be awarded to the winner or winners of any horse race. Section 294A of the Pakistan Penal Code not affected. Nothing in this section shall be deemed to legalize any transaction connected with horse-racing, to which the provisions of section 294A of the Pakistan Penal Code (XLV of 1860) apply.",
     "raw_text": "30. Agreements by way of wager void. Agreements by way of wager are void ; and no suit \nshall be brought for recovering anything alleged to be won on any wager, or entrusted to any person \nto abide the result of any game or other uncertain event on which any wager is made. \n \n \nException in favour of certain prizes for horse-racing. This section shall not be deemed to \nrender unlawful a subscription, or contribution, or agreement to subscribe or contribute, made or \nentered into for or toward any plate, prize or sum of money, of the value or amount of five hundred \nrupees or upwards, to be awarded to the winner or winners of any horse race. \n \n \n \n1Repealed by the Specific Relief Act, 1877 (I of 1877).  \n \n2Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (XXI of 1960), s. 3 and 2nd Sch. (with effect from the 14th October, 1955). \n \n\n \n \nPage 24 of 65 \n \n \nSection 294A of the Pakistan Penal Code not affected. Nothing in this section shall be \ndeemed to legalize any transaction connected with horse-racing, to which the provisions of section \n294A of the Pakistan Penal Code (XLV of 1860) apply.",
     "amendment_notes": [],
     "former_labels": [],
@@ -842,7 +845,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "30. Agreements by way of wager void. Agreements by way of wager are void ; and no suit shall be brought for recovering anything alleged to be won on any wager, or entrusted to any person to abide the result of any game or other uncertain event on which any wager is made.\n\nException in favour of certain prizes for horse-racing. This section shall not be deemed to render unlawful a subscription, or contribution, or agreement to subscribe or contribute, made or entered into for or toward any plate, prize or sum of money, of the value or amount of five hundred rupees or upwards, to be awarded to the winner or winners of any horse race.\n\n1Repealed by the Specific Relief Act, 1877 (I of 1877).\n\n2Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (XXI of 1960), s. 3 and 2nd Sch. (with effect from the 14th October, 1955).\n\nSection 294A of the Pakistan Penal Code not affected. Nothing in this section shall be deemed to legalize any transaction connected with horse-racing, to which the provisions of section 294A of the Pakistan Penal Code (XLV of 1860) apply.",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_30A",
@@ -1072,7 +1077,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "36. Agreement contingent on impossible events void. Contingent agreements to do or not to do anything, if an impossible event happens, are void, whether the impossibility of the event is known or not to the parties to the agreement at the time when it is made. \n\nIllustrations \n\n(a) A agrees to pay B 1,000 rupees if two straight lines should enclose a space. The agreement is void. \n\n(b) A agrees to pay B 1,000 rupees if B will marry A's daughter C. C was dead at the time of the agreement. The agreement is void. _________ CHAPTER IV OF THE PERFORMANCE OF CONTRACTS Contracts which must be performed.",
+    "text": "36. Agreement contingent on impossible events void. Contingent agreements to do or not to do anything, if an impossible event happens, are void, whether the impossibility of the event is known or not to the parties to the agreement at the time when it is made.\nIllustrations\n(a) A agrees to pay B 1,000 rupees if two straight lines should enclose a space. The agreement is void.\n(b) A agrees to pay B 1,000 rupees if B will marry A’s daughter C. C was dead at the time of the agreement. The agreement is void.",
     "raw_text": "36. Agreement contingent on impossible events void. Contingent agreements to do or not \nto do anything, if an impossible event happens, are void, whether the impossibility of the event is \nknown or not to the parties to the agreement at the time when it is made. \n \nIllustrations \n \n(a)  \nA agrees to pay B 1,000 rupees if two straight lines should enclose a space. \nThe agreement is void. \n \n(b)  \nA agrees to pay B 1,000 rupees if B will marry A’s daughter C. C was dead at \nthe time of the agreement. The agreement is void. \n_________ \n \nCHAPTER IV \nOF THE PERFORMANCE OF CONTRACTS \nContracts which must be performed",
     "amendment_notes": [],
     "former_labels": [],
@@ -1085,8 +1090,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "audit_2026-11-25:archive"
+    "text_as_of": "2026-11-19",
+    "text_source": "pakistancode_pdf_2026-11-19",
+    "text_previous": "36. Agreement contingent on impossible events void. Contingent agreements to do or not to do anything, if an impossible event happens, are void, whether the impossibility of the event is known or not to the parties to the agreement at the time when it is made. \n\nIllustrations \n\n(a) A agrees to pay B 1,000 rupees if two straight lines should enclose a space. The agreement is void. \n\n(b) A agrees to pay B 1,000 rupees if B will marry A's daughter C. C was dead at the time of the agreement. The agreement is void. _________ CHAPTER IV OF THE PERFORMANCE OF CONTRACTS Contracts which must be performed."
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_37",
@@ -1996,7 +2002,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "70. Obligation of person enjoying benefit of non-gratuitous act. Where a person lawfully does anything for another person, or delivers anything to him, not intending to do so gratuitously, and such other person enjoys the benefit thereof, the latter is bound to make compensation to the former in respect of, or to restore, the thing so done or delivered.\n\n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and 2nd Sch.\n\nIllustrations\n\n(a) A, a tradesman, leaves goods at B’s house by mistake. B treats the goods as his own. He is bound to pay A for them.\n\n(b) A saves B’s property from fire. A is not entitled to compensation from B, if the circumstances show that he intended to act gratuitously.",
+    "text": "70. Obligation of person enjoying benefit of non-gratuitous act. Where a person lawfully does anything for another person, or delivers anything to him, not intending to do so gratuitously, and such other person enjoys the benefit thereof, the latter is bound to make compensation to the former in respect of, or to restore, the thing so done or delivered.\nIllustrations\n(a) A, a tradesman, leaves goods at B’s house by mistake. B treats the goods as his own. He is bound to pay A for them.\n(b) A saves B’s property from fire. A is not entitled to compensation from B, if the circumstances show that he intended to act gratuitously.",
     "raw_text": "70. Obligation of person enjoying benefit of non-gratuitous act. Where a person lawfully \ndoes anything for another person, or delivers anything to him, not intending to do so gratuitously, \nand such other person enjoys the benefit thereof, the latter is bound to make compensation to the \nformer in respect of, or to restore, the thing so done or delivered. \n \n \n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and 2nd Sch. \n \n\n \n \nPage 37 of 65 \n \nIllustrations \n \n(a)  \nA, a tradesman, leaves goods at B’s house by mistake. B treats the goods as \nhis own. He is bound to pay A for them. \n \n(b)  \nA saves B’s property from fire. A is not entitled to compensation from B, if \nthe circumstances show that he intended to act gratuitously.",
     "amendment_notes": [],
     "former_labels": [],
@@ -2009,7 +2015,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "70. Obligation of person enjoying benefit of non-gratuitous act. Where a person lawfully does anything for another person, or delivers anything to him, not intending to do so gratuitously, and such other person enjoys the benefit thereof, the latter is bound to make compensation to the former in respect of, or to restore, the thing so done or delivered.\n\n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and 2nd Sch.\n\nIllustrations\n\n(a) A, a tradesman, leaves goods at B’s house by mistake. B treats the goods as his own. He is bound to pay A for them.\n\n(b) A saves B’s property from fire. A is not entitled to compensation from B, if the circumstances show that he intended to act gratuitously.",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_71",
@@ -2105,7 +2113,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "74. Compensation for breach of contract where penalty stipulated for. When a contract has been broken, if a sum is named in the contract as the amount to be paid in case of such breach, or if the contract contains any other stipulation by way of penalty, the party complaining of the breach is entitled, whether or not actual damage or loss is proved to have been caused thereby, to receive from the party who has broken the contract reasonable compensation not exceeding the amount so named or, as the case may be, the penalty stipulated for.\n\nExplanation.—A stipulation for increased interest from the date of default may be a stipulation by way of penalty.\n\nException.—When any person enters into any bail-bond, recognizance or other instrument of the same nature or under the provisions of any law, or under the orders of the Federal Government or of any Provincial Government, gives any bond for the performance of any public duty or act in which the public are interested, he shall be liable, upon breach of the condition of any such instrument, to pay the whole sum mentioned therein.\n\n1Subs. by the the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and 2nd Sch.\n2Subs. by Act No. VI of 1899, s. 4.\n3Subs. by the Federal Adaptation of Laws Order, 1975(P. O. No. 4 of 1975), Art.2 and Table.\n4Subs. by A. O., 1937.\n\nExplanation.—A person who enters into a contract with Government does not necessarily thereby undertake any public duty, or promise to do an act in which the public are interested.\n\nIllustrations\n\n(a) A contracts with B to pay B Rs. 1,000, if he fails to pay B Rs. 500 on a given day. A fails to pay B Rs. 500 on that day. B is entitled to recover from A such compensation, not exceeding Rs. 1, 000, as the Court considers reasonable.\n\n(b) A contracts with B that, if A practises as a surgeon within Peshawar, he will pay B Rs. 5,000. A practises as a surgeon in Peshawar. B is entitled to such compensation, not exceeding Rs. 5,000 as the Court considers reasonable.\n\n(c) A gives a recognizance binding him in a penalty of Rs. 500 to appear in Court on a certain day. He forfeits his recognizance. He is liable to pay the whole penalty.\n\n(d) A gives B a bond for the repayment of Rs. 1,000 with interest at 12 per cent, at the end of six months, with a stipulation that in case of default, interest shall be payable at the rate of 75 per cent. from the date of default. This is a stipulation by way of penalty, and B is only entitled to recover from A such compensation as the Court considers reasonable.\n\n(e) A, who owes money to B, a money-lender, undertakes to repay him by delivering to him 10 maunds of grain on a certain date, and stipulates that, in the event of his not delivering the stipulated amount by the stipulated date, he shall be liable to deliver 20 maunds. This is a stipulation by way of penalty, and B is only entitled to reasonable compensation in case of breach.\n\n(f) A undertake to repay B a loan of Rs. 1,000 by five equal monthly installments with a stipulation that, in default of payment of any installment, the whole shall become due. This stipulation is not by way of penalty, and the contract may be enforced according to its terms.\n\n(g) A borrows Rs. 100 from B and gives him a bond for Rs. 200 payable by five yearly instalments of Rs. 40, with a stipulation that, in default of payment of any instalment, the whole shall become due. This a stipulation by way of penalty.",
+    "text": "74. Compensation for breach of contract where penalty stipulated for. [When a contract has been broken, if a sum is named in the contract as the amount to be paid in case of such breach, or if the contract contains any other stipulation by way of penalty, the party complaining of the breach is entitled, whether or not actual damage or loss is proved to have been caused thereby, to receive from the party who has broken the contract reasonable compensation not exceeding the amount so named or, as the case may be, the penalty stipulated for.\nExplanation.—A stipulation for increased interest from the date of default may be a stipulation by way of penalty.] Exception.—When any person enters into any bail-bond, recognizance or other instrument of the same nature, or, under the provisions of any law, or under the orders of the [Federal Government] or of any [Provincial Government], gives any bond for the performance of any public duty or act in which the public are interested, he shall be liable, upon breach of the condition of any such instrument, to pay the whole sum mentioned therein.\nExplanation.—A person who enters into a contract with Government does not necessarily thereby undertake any public duty, or promise to do an act in which the public are interested.\nIllustrations\n(a) A contracts with B to pay B Rs. 1,000, if he fails to pay B Rs. 500 on a given day. A fails to pay B Rs. 500 on that day. B is entitled to recover from A such compensation, not exceeding Rs. 1, 000, as the Court considers reasonable.\n(b) A contracts with B that, if A practises as a surgeon within [Peshawar], he will pay B Rs. 5,000. A practises as a surgeon in [Peshawar]. B is entitled to such compensation, not exceeding Rs. 5,000 as the Court considers reasonable.\n(c) A gives a recognizance binding him in a penalty of Rs. 500 to appear in Court on a certain day. He forfeits his recognizance. He is liable to pay the whole penalty.\n[(d) A gives B a bond for the repayment of Rs. 1,000 with interest at 12 per cent, at the end of six months, with a stipulation that in case of default, interest shall be payable at the rate of 75 per cent. from the date of default. This is a stipulation by way of penalty, and B is only entitled to recover from A such compensation as the Court considers reasonable.\n(e) A, who owes money to B, a money-lender, undertakes to repay him by delivering to him 10 maunds of grain on a certain date, and stipulates that, in the event of his not delivering the stipulated amount by the stipulated date, he shall be liable to deliver 20 maunds. This is a stipulation by way of penalty, and B is only entitled to reasonable compensation in case of breach.\n(f) A undertake to repay B a loan of Rs. 1,000 by five equal monthly installments with a stipulation that, in default of payment of any installment, the whole shall become due. This stipulation is not by way of penalty, and the contract may be enforced according to its terms.\n(g) A borrows Rs. 100 from B and gives him a bond for Rs. 200 payable by five yearly instalments of Rs. 40, with a stipulation that, in default of payment of any instalment, the whole shall become due. This a stipulation by way of penalty.]",
     "raw_text": "74. Compensation for breach of contract where penalty stipulated for. 2[When a contract \nhas been broken, if a sum is named in the contract as the amount to be paid in case of such breach, or \nif the contract contains any other stipulation by way of penalty, the party complaining of the breach \nis entitled, whether or not actual damage or loss is proved to have been caused thereby, to receive \nfrom the party who has broken the contract reasonable compensation not exceeding the amount so \nnamed or, as the case may be, the penalty stipulated for. \n \n \nExplanation.—A stipulation for increased interest from the date of default may be a \nstipulation by way of penalty.] \n \nException.—When any person enters into any bail-bond, recognizance or other instrument of the \nsame nature, or, under the provisions of any law, or under the orders of the 3[Federal Government] or \nof any 4[Provincial Government], gives any bond for the performance of any public duty or act in \nwhich the public are interested, he shall be liable, upon breach of the condition of any such \ninstrument, to pay the whole sum mentioned therein. \n \n \n \n1Subs. by the the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and 2nd Sch.  \n2Subs. by Act No. VI of 1899, s. 4.  \n3Subs. by the Federal Adaptation of Laws Order, 1975(P. O. No. 4 of 1975), Art.2 and Table. \n4Subs. by A. O., 1937. \n \n\n \n \nPage 41 of 65 \n \n \nExplanation.—A person who enters into a contract with Government does not necessarily \nthereby undertake any public duty, or promise to do an act in which the public are interested. \n \nIllustrations \n \n(a)  \nA contracts with B to pay B Rs. 1,000, if he fails to pay B Rs. 500 on a given \nday. A fails to pay B Rs. 500 on that day. B is entitled to recover from A such \ncompensation, not exceeding Rs. 1, 000, as the Court considers reasonable. \n \n(b)  \nA contracts with B that, if A practises as a surgeon within 1[Peshawar], he will \npay B Rs. 5,000. A practises as a surgeon in 1[Peshawar]. B is entitled to such \ncompensation, not exceeding Rs. 5,000 as the Court considers reasonable. \n \n(c)  \nA gives a recognizance binding him in a penalty of Rs. 500 to appear in Court \non a certain day. He forfeits his recognizance. He is liable to pay the whole \npenalty. \n \n2[(d)  A gives B a bond for the repayment of Rs. 1,000 with interest at 12 per cent, at \nthe end of six months, with a stipulation that in case of default, interest shall \nbe payable at the rate of 75 per cent. from the date of default. This is a \nstipulation by way of penalty, and B is only entitled to recover from A such \ncompensation as the Court considers reasonable. \n \n(e)  \nA, who owes money to B, a money-lender, undertakes to repay him by \ndelivering to him 10 maunds of grain on a certain date, and stipulates that, in \nthe event of his not delivering the stipulated amount by the stipulated date, he \nshall be liable to deliver 20 maunds. This is a stipulation by way of penalty, \nand B is only entitled to reasonable compensation in case of breach. \n \n(f)  \nA undertake to repay B a loan of Rs. 1,000 by five equal monthly installments \nwith a stipulation that, in default of payment of any installment, the whole \nshall become due. This stipulation is not by way of penalty, and the contract \nmay be enforced according to its terms. \n \n(g)  \nA borrows Rs. 100 from B and gives him a bond for Rs. 200 payable by five \nyearly instalments of Rs. 40, with a stipulation that, in default of payment of \nany instalment, the whole shall become due. This a stipulation by way of \npenalty.]",
     "amendment_notes": [],
     "former_labels": [],
@@ -2118,7 +2126,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "74. Compensation for breach of contract where penalty stipulated for. When a contract has been broken, if a sum is named in the contract as the amount to be paid in case of such breach, or if the contract contains any other stipulation by way of penalty, the party complaining of the breach is entitled, whether or not actual damage or loss is proved to have been caused thereby, to receive from the party who has broken the contract reasonable compensation not exceeding the amount so named or, as the case may be, the penalty stipulated for.\n\nExplanation.—A stipulation for increased interest from the date of default may be a stipulation by way of penalty.\n\nException.—When any person enters into any bail-bond, recognizance or other instrument of the same nature or under the provisions of any law, or under the orders of the Federal Government or of any Provincial Government, gives any bond for the performance of any public duty or act in which the public are interested, he shall be liable, upon breach of the condition of any such instrument, to pay the whole sum mentioned therein.\n\n1Subs. by the the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and 2nd Sch.\n2Subs. by Act No. VI of 1899, s. 4.\n3Subs. by the Federal Adaptation of Laws Order, 1975(P. O. No. 4 of 1975), Art.2 and Table.\n4Subs. by A. O., 1937.\n\nExplanation.—A person who enters into a contract with Government does not necessarily thereby undertake any public duty, or promise to do an act in which the public are interested.\n\nIllustrations\n\n(a) A contracts with B to pay B Rs. 1,000, if he fails to pay B Rs. 500 on a given day. A fails to pay B Rs. 500 on that day. B is entitled to recover from A such compensation, not exceeding Rs. 1, 000, as the Court considers reasonable.\n\n(b) A contracts with B that, if A practises as a surgeon within Peshawar, he will pay B Rs. 5,000. A practises as a surgeon in Peshawar. B is entitled to such compensation, not exceeding Rs. 5,000 as the Court considers reasonable.\n\n(c) A gives a recognizance binding him in a penalty of Rs. 500 to appear in Court on a certain day. He forfeits his recognizance. He is liable to pay the whole penalty.\n\n(d) A gives B a bond for the repayment of Rs. 1,000 with interest at 12 per cent, at the end of six months, with a stipulation that in case of default, interest shall be payable at the rate of 75 per cent. from the date of default. This is a stipulation by way of penalty, and B is only entitled to recover from A such compensation as the Court considers reasonable.\n\n(e) A, who owes money to B, a money-lender, undertakes to repay him by delivering to him 10 maunds of grain on a certain date, and stipulates that, in the event of his not delivering the stipulated amount by the stipulated date, he shall be liable to deliver 20 maunds. This is a stipulation by way of penalty, and B is only entitled to reasonable compensation in case of breach.\n\n(f) A undertake to repay B a loan of Rs. 1,000 by five equal monthly installments with a stipulation that, in default of payment of any installment, the whole shall become due. This stipulation is not by way of penalty, and the contract may be enforced according to its terms.\n\n(g) A borrows Rs. 100 from B and gives him a bond for Rs. 200 payable by five yearly instalments of Rs. 40, with a stipulation that, in default of payment of any instalment, the whole shall become due. This a stipulation by way of penalty.",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_75",
@@ -2132,7 +2142,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "75. Party rightfully rescinding contract entitled to compensation. A person who rightly rescinds a contract is entitled to compensation for any damage which he has sustained through the non-fulfilment of the contract.\n\nIllustration\n\nA, a singer, contracts with B, the manager of a theatre, to sing at his theatre for two nights in every week during the next two months, and B engages to pay her 100 rupees for each night’s performance. On the sixth night, A willfully absents herself from the theatre, and B, in consequence, rescinds the contract. B is entitled to claim compensation for the damage which he has sustained through the non-fulfilment of the contract.\n\n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and 2nd Sch.\n\n2Ins. by Act No. VI of 1899, s. 4.\n\nCHAPTER VII\n\n* * * * * * * ___________\n\nCHAPTER VIII OF INDEMNITY AND GUARANTEE",
+    "text": "75. Party rightfully rescinding contract entitled to compensation. A person who rightly rescinds a contract is entitled to compensation for any damage which he has sustained through the non-fulfilment of the contract.\nIllustration A, a singer, contracts with B, the manager of a theatre, to sing at his theatre for two nights in every week during the next two months, and B engages to pay her 100 rupees for each night’s performance. On the sixth night, A willfully absents herself from the theatre, and B, in consequence, rescinds the contract. B is entitled to claim compensation for the damage which he has sustained through the non-fulfilment of the contract.",
     "raw_text": "75. Party rightfully rescinding contract entitled to compensation. A person who rightly \nrescinds a contract is entitled to compensation for any damage which he has sustained through the \nnon-fulfilment of the contract. \n \nIllustration \n \n \nA, a singer, contracts with B, the manager of a theatre, to sing at his theatre for two nights in \nevery week during the next two months, and B engages to pay her 100 rupees for each night’s \nperformance. On the sixth night, A willfully absents herself from the theatre, and B, in consequence, \nrescinds the contract. B is entitled to claim compensation for the damage which he has sustained \nthrough the non-fulfilment of the contract. \n \n \n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and 2nd Sch.  \n \n2Ins. by Act No. VI of 1899, s. 4.  \n\n \n \nPage 42 of 65 \n \nCHAPTER VII \n \n \n 1[* \n* \n* \n* \n* \n* \n*] \n___________ \n \nCHAPTER VIII \nOF INDEMNITY AND GUARANTEE",
     "amendment_notes": [],
     "former_labels": [],
@@ -2145,7 +2155,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "75. Party rightfully rescinding contract entitled to compensation. A person who rightly rescinds a contract is entitled to compensation for any damage which he has sustained through the non-fulfilment of the contract.\n\nIllustration\n\nA, a singer, contracts with B, the manager of a theatre, to sing at his theatre for two nights in every week during the next two months, and B engages to pay her 100 rupees for each night’s performance. On the sixth night, A willfully absents herself from the theatre, and B, in consequence, rescinds the contract. B is entitled to claim compensation for the damage which he has sustained through the non-fulfilment of the contract.\n\n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and 2nd Sch.\n\n2Ins. by Act No. VI of 1899, s. 4.\n\nCHAPTER VII\n\n* * * * * * * ___________\n\nCHAPTER VIII OF INDEMNITY AND GUARANTEE",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_124",
@@ -2289,12 +2301,12 @@
     "act_name": "Contract Act, 1872",
     "section": "129",
     "primary_num": "129",
-    "heading": "\"Continuing guarantee\"",
+    "heading": "“Continuing guarantee”",
     "title": "“Continuing guarantee”",
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "129. \"Continuing guarantee\". A guarantee which extends to a series of transactions is called a \"continuing guarantee\". \n\nIllustrations \n\n(a) A, in consideration that B will employ C in collecting the rent of B's zamindari, promises B to be responsible, to the amount of 5,000 rupees, for the due collection and payment by C of those rents. This is a continuing guarantee. \n\n(b) A guarantees payment to B, a tea-dealer, to the amount of £ 100, for any tea he may from time to time supply to C. B supplies C with tea to above the value of £ 100, and C pays B for it. Afterwards B supplies C with tea to the value of £.",
+    "text": "129. “Continuing guarantee”. A guarantee which extends to a series of transactions is called a “continuing guarantee”.\nIllustrations\n(a) A, in consideration that B will employ C in collecting the rent of B’s zamindari, promises B to be responsible, to the amount of 5,000 rupees, for the due collection and payment by C of those rents. This is a continuing guarantee.\n(b) A guarantees payment to B, a tea-dealer, to the amount of £ 100, for any tea he may from time to time supply to C. B supplies C with tea to above the value of £ 100, and C pays B for it. Afterwards B supplies C with tea to the value of £\n200. C fails to pay. The guarantee given by A was a continuing guarantee, and he is accordingly liable to B to the extent of £100.\n(c) A guarantees payment to B of the price of five sacks of flour to be delivered by B to C and to be paid for in a month. B delivers five sacks to C. C pays for them. Afterwards B delivers four sacks to C, which C does not pay for. The guarantee given by A was not a continuing guarantee, and accordingly he is not liable for the price of the four sacks.",
     "raw_text": "129. “Continuing guarantee”. A guarantee which extends to a series of transactions is \ncalled a “continuing guarantee”. \n \nIllustrations \n \n(a)  \nA, in consideration that B will employ C in collecting the rent of B’s \nzamindari, promises B to be responsible, to the amount of 5,000 rupees, for \nthe due collection and payment by C of those rents. This is a continuing \nguarantee. \n \n(b)  \nA guarantees payment to B, a tea-dealer, to the amount of £ 100, for any tea he \nmay from time to time supply to C. B supplies C with tea to above the value of \n£ 100, and C pays B for it. Afterwards B supplies C with tea to the value of £",
     "amendment_notes": [],
     "former_labels": [],
@@ -2307,8 +2319,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date",
-    "text_source": "audit_2026-11-25:archive"
+    "text_as_of": "2026-11-19",
+    "text_source": "pakistancode_pdf_2026-11-19",
+    "text_previous": "129. \"Continuing guarantee\". A guarantee which extends to a series of transactions is called a \"continuing guarantee\". \n\nIllustrations \n\n(a) A, in consideration that B will employ C in collecting the rent of B's zamindari, promises B to be responsible, to the amount of 5,000 rupees, for the due collection and payment by C of those rents. This is a continuing guarantee. \n\n(b) A guarantees payment to B, a tea-dealer, to the amount of £ 100, for any tea he may from time to time supply to C. B supplies C with tea to above the value of £ 100, and C pays B for it. Afterwards B supplies C with tea to the value of £."
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_200",
@@ -2317,12 +2330,12 @@
     "act_name": "Contract Act, 1872",
     "section": "200",
     "primary_num": "200",
-    "heading": "C fails to pay",
+    "heading": "Ratification of unauthorized act cannot injure third person",
     "title": "C fails to pay",
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "200. C fails to pay. The guarantee given by A was a continuing guarantee, and he is accordingly liable to B to the extent of £100.\n\n(c) A guarantees payment to B of the price of five sacks of flour to be delivered by B to C and to be paid for in a month. B delivers five sacks to C. C pays for them. Afterwards B delivers four sacks to C, which C does not pay for. The guarantee given by A was not a continuing guarantee, and accordingly he is not liable for the price of the four sacks.",
+    "text": "200. Ratification of unauthorized act cannot injure third person. An act done by one person on behalf of another, without such other person’s authority, which, if done with authority, would have the effect of subjecting a third person to damages, or of terminating any right or interest of a third person, cannot, by ratification, be made to have such effect.\nIllustrations\n(a) A, not being authorized thereto by B, demands, on behalf of B, the delivery of a chattel, the property of B, from C, who is in possession of it. This demand cannot be ratified by B, so as to make C liable for damages for his refusal to deliver.\n(b) A holds a lease from B, terminable on three months’ notice. C, an unauthorized person, gives notice of termination to A. The notice cannot be ratified by B, so as to be binding on A. Revocation of Authority",
     "raw_text": "200. C fails to pay. The guarantee given by A was a continuing guarantee, and \nhe is accordingly liable to B to the extent of £100. \n \n(c)  \nA guarantees payment to B of the price of five sacks of flour to be delivered \nby B to C and to be paid for in a month. B delivers five sacks to C. C pays for \nthem. Afterwards B delivers four sacks to C, which C does not pay for. The \nguarantee given by A was not a continuing guarantee, and accordingly he is \nnot liable for the price of the four sacks.",
     "amendment_notes": [],
     "former_labels": [],
@@ -2335,7 +2348,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "200. C fails to pay. The guarantee given by A was a continuing guarantee, and he is accordingly liable to B to the extent of £100.\n\n(c) A guarantees payment to B of the price of five sacks of flour to be delivered by B to C and to be paid for in a month. B delivers five sacks to C. C pays for them. Afterwards B delivers four sacks to C, which C does not pay for. The guarantee given by A was not a continuing guarantee, and accordingly he is not liable for the price of the four sacks.",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_130",
@@ -2619,7 +2634,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "140. Rights of surety on payment or performance. Where a guaranteed debt has become due, or default of the principal debtor to perform a guaranteed duty has taken place, the surety, upon payment or performance of all that he is liable for, is invested with all the rights which the creditor had against the principal debtor.",
+    "text": "140. Rights of surety on payment or performance. Where a guaranteed debt has become due, or default of the principal debtor to perform a guaranteed duty has taken place, the surety, upon payment or performance of all that he is liable for, is invested with all the rights which the creditor had against the principal debtor.\n141. Surety’s right to benefit of creditor’s securities. A surety is entitled to the benefit of every security which the creditor has against the principal debtor at the time when the contract of suretyship is entered into, whether the surety knows of the existence of such security or not; and, if the creditor loses, or, without the consent of the surety, parts with such security, the surety is discharged to the extent of the value of the security.\nIllustrations\n(a) C advances to B, his tenant, 2,000 rupees on the guarantee of A. C has also, a further security for the 2,000 rupees by a mortgage of B’s furniture. C cancels the mortgage. B becomes insolvent, and C sues A on his guarantee. A is discharged from liability to the amount of the value of the furniture.\n(b) C, a creditor, whose advance to B is secured by a decree, receives also a guarantee for that advance from A. C afterwards takes B’s goods in execution under the decree, and then, without the knowledge of A, withdraws the execu- tion. A is discharged.\n(c) A, as surety for B, makes a bond jointly with B to C, to secure a loan from C to B. Afterwards, C obtains from B a further security for the same debt. Subsequently, C gives up the further security. A is not discharged.",
     "raw_text": "140. Rights of surety on payment or performance. Where a guaranteed debt has become \ndue, or default of the principal debtor to perform a guaranteed duty has taken place, the surety, upon \npayment or performance of all that he is liable for, is invested with all the rights which the creditor \nhad against the principal debtor.",
     "amendment_notes": [],
     "former_labels": [],
@@ -2632,7 +2647,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "140. Rights of surety on payment or performance. Where a guaranteed debt has become due, or default of the principal debtor to perform a guaranteed duty has taken place, the surety, upon payment or performance of all that he is liable for, is invested with all the rights which the creditor had against the principal debtor.",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_141",
@@ -3106,7 +3123,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "158. Repayment by bailor of necessary expenses. Where, by the conditions of the bailment, the goods are to be kept or to be carried, or to have work done upon them by the bailee for the bailor, and the bailee is to receive no remuneration, the bailor shall repay to the bailee the necessary expenses incurred by him for the purpose of the bailment.\n\n1Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (XXI of 1960), s.3 and 2nd Sch., (with effect from the 14th October, 1955).",
+    "text": "158. Repayment by bailor of necessary expenses. Where, by the conditions of the bailment, the goods are to be kept or to be carried, or to have work done upon them by the bailee for the bailor, and the bailee is to receive no remuneration, the bailor shall repay to the bailee the necessary expenses incurred by him for the purpose of the bailment.",
     "raw_text": "158. Repayment by bailor of necessary expenses. Where, by the conditions of the bailment, \nthe goods are to be kept or to be carried, or to have work done upon them by the bailee for the bailor, \nand the bailee is to receive no remuneration, the bailor shall repay to the bailee the necessary expenses \nincurred by him for the purpose of the bailment. \n \n \n \n \n1Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (XXI of 1960), s.3 and 2nd Sch., (with effect from the 14th October, 1955). \n\n \n \nPage 51 of 65",
     "amendment_notes": [],
     "former_labels": [],
@@ -3119,7 +3136,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "158. Repayment by bailor of necessary expenses. Where, by the conditions of the bailment, the goods are to be kept or to be carried, or to have work done upon them by the bailee for the bailor, and the bailee is to receive no remuneration, the bailor shall repay to the bailee the necessary expenses incurred by him for the purpose of the bailment.\n\n1Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (XXI of 1960), s.3 and 2nd Sch., (with effect from the 14th October, 1955).",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_159",
@@ -3754,7 +3773,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "181. Apportionment of relief or compensation obtained by such suits. Whatever is obtained by way of relief or compensation in any such suit shall, as between the bailor and the bailee, be dealt with according to their respective interests.\n\n1Subs. by Act No. IV of 1930, s. 2.\n\nCHAPTER X AGENCY\n\nAppointment and Authority of Agents",
+    "text": "181. Apportionment of relief or compensation obtained by such suits. Whatever is obtained by way of relief or compensation in any such suit shall, as between the bailor and the bailee, be dealt with according to their respective interests.",
     "raw_text": "181. Apportionment of relief or compensation obtained by such suits. Whatever is \nobtained by way of relief or compensation in any such suit shall, as between the bailor and the bailee, \nbe dealt with according to their respective interests. \n \n \n \n \n1Subs. by Act No. IV of 1930, s. 2. \n \n \n \n \n \n\n \n \nPage 54 of 65 \n \nCHAPTER X \nAGENCY \n \nAppointment and Authority of Agents",
     "amendment_notes": [],
     "former_labels": [],
@@ -3767,7 +3786,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "181. Apportionment of relief or compensation obtained by such suits. Whatever is obtained by way of relief or compensation in any such suit shall, as between the bailor and the bailee, be dealt with according to their respective interests.\n\n1Subs. by Act No. IV of 1930, s. 2.\n\nCHAPTER X AGENCY\n\nAppointment and Authority of Agents",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_182",
@@ -3943,7 +3964,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "188. Extent of agent’s authority. An agent having an authority to do an act has authority to do every lawful thing which is necessary in order to do such act.\n\nAn agent having an authority to carry on a business has authority to do every lawful thing necessary for the purpose, or usually done in the course of conducting such business.\n\nIllustrations\n\n(a) A is employed by B, residing in London, to recover at Karachi a debt due to B. A may adopt any legal process necessary for the purpose of recovering the debt, and may give a valid discharge for the same.\n\n(b) A constitutes B his agent to carry on his business of a ship-builder. B may purchase timber and other materials, and hire workmen, for the purposes of carrying on the business.\n\n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and 2nd Sch.\n2Subs. by the Central Laws (Statute Reform) Ordinance, 1960, s. 3 and 2nd Sch. (with effect from the 14th October, 1955).",
+    "text": "188. Extent of agent’s authority. An agent having an authority to do an act has authority to do every lawful thing which is necessary in order to do such act. An agent having an authority to carry on a business has authority to do every lawful thing necessary for the purpose, or usually done in the course of conducting such business.\nIllustrations\n(a) A is employed by B, residing in London, to recover at [Karachi] a debt due to B. A may adopt any legal process necessary for the purpose of recovering the debt, and may give a valid discharge for the same.\n(b) A constitutes B his agent to carry on his business of a ship-builder. B may purchase timber and other materials, and hire workmen, for the purposes of carrying on the business.",
     "raw_text": "188. Extent of agent’s authority. An agent having an authority to do an act has authority to \ndo every lawful thing which is necessary in order to do such act. \n \n \nAn agent having an authority to carry on a business has authority to do every lawful thing \nnecessary for the purpose, or usually done in the course of conducting such business. \n \nIllustrations \n \n(a)  \nA is employed by B, residing in London, to recover at 2[Karachi] a debt due to \nB. A may adopt any legal process necessary for the purpose of recovering the \ndebt, and may give a valid discharge for the same. \n \n(b)  \nA constitutes B his agent to carry on his business of a ship-builder. B may \npurchase timber and other materials, and hire workmen, for the purposes of \ncarrying on the business. \n \n \n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and 2nd Sch. \n2Subs. by the Central Laws (Statute Reform) Ordinance, 1960, s. 3 and 2nd Sch. (with effect from the 14th October, 1955). \n\n \n \nPage 55 of 65",
     "amendment_notes": [],
     "former_labels": [],
@@ -3956,7 +3977,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "188. Extent of agent’s authority. An agent having an authority to do an act has authority to do every lawful thing which is necessary in order to do such act.\n\nAn agent having an authority to carry on a business has authority to do every lawful thing necessary for the purpose, or usually done in the course of conducting such business.\n\nIllustrations\n\n(a) A is employed by B, residing in London, to recover at Karachi a debt due to B. A may adopt any legal process necessary for the purpose of recovering the debt, and may give a valid discharge for the same.\n\n(b) A constitutes B his agent to carry on his business of a ship-builder. B may purchase timber and other materials, and hire workmen, for the purposes of carrying on the business.\n\n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s. 3 and 2nd Sch.\n2Subs. by the Central Laws (Statute Reform) Ordinance, 1960, s. 3 and 2nd Sch. (with effect from the 14th October, 1955).",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_189",
@@ -4485,7 +4508,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "209. Agent’s duty on termination of agency by principal’s death or insanity. When an agency is terminated by the principal dying or becoming of unsound mind, the agent is bound to take, on behalf of the representatives of his late principal, all reasonable steps for the protection and preservation of the interests entrusted to him.\n\n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s.3 and 2nd Sch.\n2Subs. by the Central Laws (Statute Reform) Ordinance, 1960, s. 3 and 2nd Sch. (w. e. f. the 14th October, 1955).",
+    "text": "209. Agent’s duty on termination of agency by principal’s death or insanity. When an agency is terminated by the principal dying or becoming of unsound mind, the agent is bound to take, on behalf of the representatives of his late principal, all reasonable steps for the protection and preservation of the interests entrusted to him.",
     "raw_text": "209. Agent’s duty on termination of agency by principal’s death or insanity. When an \nagency is terminated by the principal dying or becoming of unsound mind, the agent is bound to \ntake, on behalf of the representatives of his late principal, all reasonable steps for the protection and \npreservation of the interests entrusted to him. \n \n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s.3 and 2nd Sch. \n2Subs. by the Central Laws (Statute Reform) Ordinance, 1960, s. 3 and 2nd Sch. (w. e. f. the 14th October, 1955). \n\n \n \nPage 59 of 65",
     "amendment_notes": [],
     "former_labels": [],
@@ -4498,7 +4521,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "209. Agent’s duty on termination of agency by principal’s death or insanity. When an agency is terminated by the principal dying or becoming of unsound mind, the agent is bound to take, on behalf of the representatives of his late principal, all reasonable steps for the protection and preservation of the interests entrusted to him.\n\n1Subs. by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s.3 and 2nd Sch.\n2Subs. by the Central Laws (Statute Reform) Ordinance, 1960, s. 3 and 2nd Sch. (w. e. f. the 14th October, 1955).",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_210",
@@ -4674,7 +4699,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "216. Principal’s right to benefit gained by agent dealing on his own account in business of agency. If an agent, without the knowledge of his principal, deals in the business of the agency on his own account instead of on account of his principal, the principal is entitled to claim from the agent any benefit which may have resulted to him from the transaction.\n\nIllustration\n\nA directs B, his agent, to buy a certain house for him. B tells A it cannot be bought, and buys the house for himself. A may, on discovering that B has bought the house, compel him to sell it to A at the price he gave for it.\n\n1Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (XXI of 1960), s. 3 and 2nd Sch. (w.e.f. 14-10-1955).",
+    "text": "216. Principal’s right to benefit gained by agent dealing on his own account in business of agency. If an agent, without the knowledge of his principal, deals in the business of the agency on his own account instead of on account of his principal, the principal is entitled to claim from the agent any benefit which may have resulted to him from the transaction.\nIllustration A directs B, his agent, to buy a certain house for him. B tells A it cannot be bought, and buys the house for himself. A may, on discovering that B has bought the house, compel him to sell it to A at the price he gave for it.",
     "raw_text": "216. Principal’s right to benefit gained by agent dealing on his own account in business \nof agency. If an agent, without the knowledge of his principal, deals in the business of the agency on \nhis own account instead of on account of his principal, the principal is entitled to claim from the \nagent any benefit which may have resulted to him from the transaction. \n \nIllustration \n \n \nA directs B, his agent, to buy a certain house for him. B tells A it cannot be bought, and buys \nthe house for himself. A may, on discovering that B has bought the house, compel him to sell it to A \nat the price he gave for it. \n \n \n \n \n1Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (XXI of 1960), s. 3 and 2nd Sch. (w.e.f. 14-10-1955). \n\n \n \nPage 61 of 65",
     "amendment_notes": [],
     "former_labels": [],
@@ -4687,7 +4712,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "216. Principal’s right to benefit gained by agent dealing on his own account in business of agency. If an agent, without the knowledge of his principal, deals in the business of the agency on his own account instead of on account of his principal, the principal is entitled to claim from the agent any benefit which may have resulted to him from the transaction.\n\nIllustration\n\nA directs B, his agent, to buy a certain house for him. B tells A it cannot be bought, and buys the house for himself. A may, on discovering that B has bought the house, compel him to sell it to A at the price he gave for it.\n\n1Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (XXI of 1960), s. 3 and 2nd Sch. (w.e.f. 14-10-1955).",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_217",
@@ -4917,7 +4944,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "225. Compensation to agent for injury caused by principal’s neglect. The principal must make compensation to his agent in respect of injury caused to such agent by the principal’s neglect or want of skill.\n\nIllustration\n\nA employs B as a bricklayer in building a house, and puts up the scaffolding himself. The scaffolding is unskillfully put up, and B is in consequence hurt. A must make compensation to B.\n\n1Subs. by the Central Laws (Statue Reform) Ordinance, 1960 (XXI of 1960), s. 3 and 2nd Sch. (w. e. f. the 14th October 1955).\n\nEffect of agency on contract with third persons",
+    "text": "225. Compensation to agent for injury caused by principal’s neglect. The principal must make compensation to his agent in respect of injury caused to such agent by the principal’s neglect or want of skill.\nIllustration A employs B as a bricklayer in building a house, and puts up the scaffolding himself. The scaffolding is unskillfully put up, and B is in consequence hurt. A must make compensation to B. Effect of agency on contract with third persons",
     "raw_text": "225. Compensation to agent for injury caused by principal’s neglect. The principal must \nmake compensation to his agent in respect of injury caused to such agent by the principal’s neglect \nor want of skill. \n \nIllustration \n \n \nA employs B as a bricklayer in building a house, and puts up the scaffolding himself. The \nscaffolding is unskillfully put up, and B is in consequence hurt. A must make compensation to B. \n \n1Subs. by the Central Laws (Statue Reform) Ordinance, 1960 (XXI of 1960), s. 3 and 2nd Sch. (w. e. f. the 14th October 1955). \n \n\n \n \nPage 63 of 65 \n \nEffect of agency on contract with third persons",
     "amendment_notes": [],
     "former_labels": [],
@@ -4930,7 +4957,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "225. Compensation to agent for injury caused by principal’s neglect. The principal must make compensation to his agent in respect of injury caused to such agent by the principal’s neglect or want of skill.\n\nIllustration\n\nA employs B as a bricklayer in building a house, and puts up the scaffolding himself. The scaffolding is unskillfully put up, and B is in consequence hurt. A must make compensation to B.\n\n1Subs. by the Central Laws (Statue Reform) Ordinance, 1960 (XXI of 1960), s. 3 and 2nd Sch. (w. e. f. the 14th October 1955).\n\nEffect of agency on contract with third persons",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CONTRACT_1872_SEC_226",

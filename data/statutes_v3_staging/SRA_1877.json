@@ -175,7 +175,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "7. Relief not granted to enforce penal law. Specific relief cannot be granted for the mere purpose of enforcing a penal law.\nOf Specific Relief CHAPTER I OF RECOVERING POSSESSION OF PROPERTY\n(a) Possession of Immoveable Property",
+    "text": "7. Relief not granted to enforce penal law. Specific relief cannot be granted for the mere purpose of enforcing a penal law.",
     "raw_text": "7. Relief not granted to enforce penal law. Specific relief cannot be granted for the mere \npurpose of enforcing a penal law. \nPART II \nOf Specific Relief \nCHAPTER I \nOF RECOVERING POSSESSION OF PROPERTY \n(a) Possession of Immoveable Property",
     "amendment_notes": [],
     "former_labels": [],
@@ -188,7 +188,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "7. Relief not granted to enforce penal law. Specific relief cannot be granted for the mere purpose of enforcing a penal law.\nOf Specific Relief CHAPTER I OF RECOVERING POSSESSION OF PROPERTY\n(a) Possession of Immoveable Property",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "SRA_1877_SEC_8",
@@ -224,12 +226,12 @@
     "act_name": "Specific Relief Act, 1877",
     "section": "39",
     "primary_num": "39",
-    "heading": "Suit by person dispossessed of immoveable property",
+    "heading": "When cancellation may be ordered",
     "title": "Suit by person dispossessed of immoveable property",
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "39. Suit by person dispossessed of immoveable property. If any person is dispossessed without his consent of immoveable property otherwise than in due course of law, he or any person claiming through him may, by suit 4* * * recover possession thereof, notwithstanding any other title that may be set up in such suit.\n\n1See now the Registration Act, 1908 (16 of 1908).\n2See now the Code of Civil Procedure, 1908 (Act 5 of 1908).\n3But see as to tenancies in the Punjab, the Punjab Tenancy Act, 1887 (16 of 1887), s. 51.\nMarch, 1891).\n\nNothing in this section shall bar any person from suing to establish his title to such property and to recover possession thereof.\n\nNo suit under this section shall be brought against the Federal Government or any Provincial Government.\n\nNo appeal shall lie from any order or decree passed in any suit instituted under this section, nor shall any review of any such order or decree be allowed.\n(b) Possession of Moveble Property",
+    "text": "39. When cancellation may be ordered. Any person against whom a written instrument is void or voidable, who has reasonable apprehension that such instrument, if left outstanding, may cause him serious injury, may sue to have it adjudged void or voidable; and the Court may, in its discretion, so adjudge it and order it to be delivered up and cancelled. If the instrument has been registered under the Indian Registration Act2, the Court shall also send a copy of its decree to the officer in whose office the instrument has been so registered; and such officer shall note on the copy of the instrument contained in his books the fact of its cancellation.\nIllustrations\n(a) A, the owner of a ship by fraudulently representing her to be seaworthy, induces B, an underwriter, to insure her. B may obtain the cancellation of the policy.\n(b) A conveys land to B, who bequeaths it to C and dies. Thereupon D gets possession of the land and produces a forged instrument stating that the conveyance was made to B in trust for him. C may obtain the cancellation of the forged instrument.\n(c) A, representing that the tenants on his land were all at will, sells it to B, and conveys it to him by an instrument, dated the 1st January 1877. Soon after that day, A fraudulently grants to C a lease of part of the lands, dated the 1st October, 1876, and procures the lease to be registered under the Indian Registration Act.3 B may obtain the cancellation of this lease.\n(d) A agrees to sell and deliver a ship to B, to be paid for by B’s acceptances of four bills of exchange, for sums amounting to Rs, 30,000 to be drawn by A on B. The bills are drawn and accepted, but the ship is not delivered according to the agreement. A sues B on one of the bills, B may obtain the cancellation of all the bills.",
     "raw_text": "39. Suit by person dispossessed of immoveable property. If any person is dispossessed \nwithout his consent of immoveable property otherwise than in due course of law, he or any person \nclaiming through him may, by suit 4* * * recover possession thereof, notwithstanding any other title \nthat may be set up in such suit. \n \n \n \n \n \n1See now the Registration Act, 1908 (16 of 1908). \n2See now the Code of Civil Procedure, 1908 (Act 5 of 1908). \n3But see as to tenancies in the Punjab, the Punjab Tenancy Act, 1887 (16 of 1887), s. 51. \n4The words “instituted within six months from the date of the dispossession” rep. by the Repealing and Amending Act, 1891 (12 of 1891) (w.e.f. 21st \nMarch, 1891). \n\nPage 8 of 35 \n \n \n \nNothing in this section shall bar any person from suing to establish his title to such property \nand to recover possession thereof. \n \nNo suit under this section shall be brought against 1[the 2[Federal Government] or any \nProvincial Government]. \n \nNo appeal shall lie from any order or decree passed in any suit instituted under this section, \nnor shall any review of any such order or decree be allowed. \n(b) Possession of Moveble Property",
     "amendment_notes": [
       "4The words “instituted within six months from the date of the dispossession” rep. by the Repealing and Amending Act, 1891 (12 of 1891) (w.e.f. 21st"
@@ -246,7 +248,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "39. Suit by person dispossessed of immoveable property. If any person is dispossessed without his consent of immoveable property otherwise than in due course of law, he or any person claiming through him may, by suit 4* * * recover possession thereof, notwithstanding any other title that may be set up in such suit.\n\n1See now the Registration Act, 1908 (16 of 1908).\n2See now the Code of Civil Procedure, 1908 (Act 5 of 1908).\n3But see as to tenancies in the Punjab, the Punjab Tenancy Act, 1887 (16 of 1887), s. 51.\nMarch, 1891).\n\nNothing in this section shall bar any person from suing to establish his title to such property and to recover possession thereof.\n\nNo suit under this section shall be brought against the Federal Government or any Provincial Government.\n\nNo appeal shall lie from any order or decree passed in any suit instituted under this section, nor shall any review of any such order or decree be allowed.\n(b) Possession of Moveble Property",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "SRA_1877_SEC_10",
@@ -260,7 +264,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "10. Recovery of specific moveable property. A person entitled to the possession of specific moveable property may recover the same in the manner prescribed by the Code of Civil Procedure3.\n\nExplanation 1.__ A trustee may sue under this section for the possession of property to the beneficial interest in which the person for whom he is trustee is entitled.\n\nExplanation 2.__ A special or temporary right to the present possession of property is sufficient to support a suit under this section.\nIllustrations\n(a) A bequeaths land to B for his life, with remainder to C. A dies. B enters on the land, but C, without B’s consent, obtains possession of the title deeds. B may recover them from C.\n(b) A pledges certain Jewels to B to secure a loan. B disposes of them before he is entitled to do so. A, without having paid or tendered the amount of the loan, sues B for possession of the jewels. The suit should be dismissed, as A is not entitled to their possession, whatever right he may have to secure their safe custody.\n(c) A receives a letter addressed to him by B. B gets back the letter without A’s consent. A has such a property therein as entitles him to recover it from B.\n(d) A deposit books and papers for safe custody with B. B loses them and C finds them, but refuses to deliver them to B when demanded. B may recover them from C, subject to C’s right, if any, under section 168 of the Contract Act, 1872 (IX of 1872).\n(e) A, a warehouse-keeper, is charged with the delivery of certain goods to Z, which B takes out of A’s possession. A may sue B for the goods.\n\n1The original words “the Government” were first subs. by A. O., 1937 (w.e.f. 1st April, 1937) and then amended by A. O., 1949 (w.e.f. 28th March, 1949) to read as above.\n2Subs. by F. A. O., 1975, Art. 2, for “Central Government” (w.e.f. 28th July, 1975).\n3See now the Code of Civil Procedure, 1908 (Act 5 of 1908).",
+    "text": "10. Recovery of specific moveable property. A person entitled to the possession of specific moveable property may recover the same in the manner prescribed by the Code of Civil Procedure3.\nExplanation 1.__ A trustee may sue under this section for the possession of property to the beneficial interest in which the person for whom he is trustee is entitled.\nExplanation 2.__ A special or temporary right to the present possession of property is sufficient to support a suit under this section.\nIllustrations\n(a) A bequeaths land to B for his life, with remainder to C. A dies. B enters on the land, but C, without B’s consent, obtains possession of the title deeds. B may recover them from C.\n(b) A pledges certain Jewels to B to secure a loan. B disposes of them before he is entitled to do so. A, without having paid or tendered the amount of the loan, sues B for possession of the jewels. The suit should be dismissed, as A is not entitled to their possession, whatever right he may have to secure their safe custody.\n(c) A receives a letter addressed to him by B. B gets back the letter without A’s consent. A has such a property therein as entitles him to recover it from B.\n(d) A deposit books and papers for safe custody with B. B loses them and C finds them, but refuses to deliver them to B when demanded. B may recover them from C, subject to C’s right, if any, under section 168 of the Contract Act, 1872 (IX of 1872).\n(e) A, a warehouse-keeper, is charged with the delivery of certain goods to Z, which B takes out of A’s possession. A may sue B for the goods.",
     "raw_text": "10. Recovery of specific moveable property. A person entitled to the possession of specific \nmoveable property may recover the same in the manner prescribed by the Code of Civil Procedure3. \n \nExplanation 1.__ A trustee may sue under this section for the possession of property to the \nbeneficial interest in which the person for whom he is trustee is entitled. \n \nExplanation 2.__ A special or temporary right to the present possession of property is \nsufficient to support a suit under this section. \nIllustrations \n(a) \nA bequeaths land to B for his life, with remainder to C. A dies. B enters on the \nland, but C, without B’s consent, obtains possession of the title deeds. B may \nrecover them from C. \n(b) \nA pledges certain Jewels to B to secure a loan. B disposes of them before he is \nentitled to do so. A, without having paid or tendered the amount of the loan, \nsues B for possession of the jewels. The suit should be dismissed, as A is not \nentitled to their possession, whatever right he may have to secure their safe \ncustody. \n(c) \nA receives a letter addressed to him by B. B gets back the letter without A’s \nconsent. A has such a property therein as entitles him to recover it from B. \n(d) \nA deposit books and papers for safe custody with B. B loses them and C finds \nthem, but refuses to deliver them to B when demanded. B may recover them \nfrom C, subject to C’s right, if any, under section 168 of the Contract Act, \n1872 (IX of 1872). \n(e) \nA, a warehouse-keeper, is charged with the delivery of certain goods to Z, \nwhich B takes out of A’s possession. A may sue B for the goods. \n \n \n \n1The original words “the Government” were first subs. by A. O., 1937 (w.e.f. 1st April, 1937) and then amended by A. O., 1949 (w.e.f. 28th March, \n1949) to read as above. \n2Subs. by F. A. O., 1975, Art. 2, for “Central Government” (w.e.f. 28th July, 1975). \n3See now the Code of Civil Procedure, 1908 (Act 5 of 1908). \n\nPage 9 of 35",
     "amendment_notes": [],
     "former_labels": [],
@@ -273,7 +277,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "10. Recovery of specific moveable property. A person entitled to the possession of specific moveable property may recover the same in the manner prescribed by the Code of Civil Procedure3.\n\nExplanation 1.__ A trustee may sue under this section for the possession of property to the beneficial interest in which the person for whom he is trustee is entitled.\n\nExplanation 2.__ A special or temporary right to the present possession of property is sufficient to support a suit under this section.\nIllustrations\n(a) A bequeaths land to B for his life, with remainder to C. A dies. B enters on the land, but C, without B’s consent, obtains possession of the title deeds. B may recover them from C.\n(b) A pledges certain Jewels to B to secure a loan. B disposes of them before he is entitled to do so. A, without having paid or tendered the amount of the loan, sues B for possession of the jewels. The suit should be dismissed, as A is not entitled to their possession, whatever right he may have to secure their safe custody.\n(c) A receives a letter addressed to him by B. B gets back the letter without A’s consent. A has such a property therein as entitles him to recover it from B.\n(d) A deposit books and papers for safe custody with B. B loses them and C finds them, but refuses to deliver them to B when demanded. B may recover them from C, subject to C’s right, if any, under section 168 of the Contract Act, 1872 (IX of 1872).\n(e) A, a warehouse-keeper, is charged with the delivery of certain goods to Z, which B takes out of A’s possession. A may sue B for the goods.\n\n1The original words “the Government” were first subs. by A. O., 1937 (w.e.f. 1st April, 1937) and then amended by A. O., 1949 (w.e.f. 28th March, 1949) to read as above.\n2Subs. by F. A. O., 1975, Art. 2, for “Central Government” (w.e.f. 28th July, 1975).\n3See now the Code of Civil Procedure, 1908 (Act 5 of 1908).",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "SRA_1877_SEC_11",
@@ -853,12 +859,12 @@
     "act_name": "Specific Relief Act, 1877",
     "section": "30",
     "primary_num": "30",
-    "heading": "Application of preceding sections to awards and testamentary directions to execute settlements",
+    "heading": "Application of preceding sections to awards and testamentary directions to execute",
     "title": "Application of preceding sections to awards and testamentary directions to execute",
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "30. Application of preceding sections to awards and testamentary directions to execute settlements. The provisions of this Chapter as to contracts shall, mutatis mutandis, apply to awards and to directions in a will or codicil to execute a particular settlement.\n___________ CHAPTER III OF THE RECTIFICATION OF INSTRUMENT",
+    "text": "30. Application of preceding sections to awards and testamentary directions to execute settlements. The provisions of this Chapter as to contracts shall, mutatis mutandis, apply to awards and to directions in a will or codicil to execute a particular settlement.",
     "raw_text": "30. Application of preceding sections to awards and testamentary directions to execute \nsettlements. The provisions of this Chapter as to contracts shall, mutatis mutandis, apply to awards \nand to directions in a will or codicil to execute a particular settlement. \n___________ \nCHAPTER III \nOF THE RECTIFICATION OF INSTRUMENT",
     "amendment_notes": [],
     "former_labels": [],
@@ -871,7 +877,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "30. Application of preceding sections to awards and testamentary directions to execute settlements. The provisions of this Chapter as to contracts shall, mutatis mutandis, apply to awards and to directions in a will or codicil to execute a particular settlement.\n___________ CHAPTER III OF THE RECTIFICATION OF INSTRUMENT",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "SRA_1877_SEC_31",
@@ -1076,7 +1084,7 @@
     "domain": "civil",
     "forum": "Civil Court",
     "provision_type": "section",
-    "text": "38. Court may require party rescinding to do equity. On adjudging the rescission of a contract, the Court may require the party to whom such relief is granted to make any compensation to the other which justice may require.\n___________ CHAPTER V OF THE CANCELLATION OF INSTRUMENTS",
+    "text": "38. Court may require party rescinding to do equity. On adjudging the rescission of a contract, the Court may require the party to whom such relief is granted to make any compensation to the other which justice may require.",
     "raw_text": "38. Court may require party rescinding to do equity. On adjudging the rescission of a \ncontract, the Court may require the party to whom such relief is granted to make any compensation \nto the other which justice may require. \n___________ \nCHAPTER V \nOF THE CANCELLATION OF INSTRUMENTS",
     "amendment_notes": [],
     "former_labels": [],
@@ -1089,7 +1097,9 @@
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "2026-11-19",
+    "text_previous": "38. Court may require party rescinding to do equity. On adjudging the rescission of a contract, the Court may require the party to whom such relief is granted to make any compensation to the other which justice may require.\n___________ CHAPTER V OF THE CANCELLATION OF INSTRUMENTS",
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "SRA_1877_SEC_40",

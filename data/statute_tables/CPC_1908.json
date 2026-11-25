@@ -49,7 +49,7 @@
     "primary_num": "3",
     "secondary_num": null,
     "title": "Subordination of Courts",
-    "text": "3. Subordination of Courts. For the purposes of this Code, the hierarchy and sub-ordination of Civil Courts shall be the same as prescribed in the West Pakistan Civil Courts Ordinance, 1962 (W.P. Ordinance No. II of 1962). 1Subs. by the Federal Laws (Revision and Declaration) Ordinance, No. XVII of 1981, s.3 and Second Sch., for sub-clause (b). The words in crotchets Civil Service of Pakistan which were amended by Ordinance 21 of 1960, s. 3 and 2nd sch. and Adaptation Order, 1949. 2Subs. by the Amending Act No. XXXV of 1934, s.2 and Sch.",
+    "text": "3. Subordination of Courts. For the purposes of this Code, the hierarchy and sub-ordination of Civil Courts shall be the same as prescribed in the West Pakistan Civil Courts Ordinance, 1962\n(W.P. Ordinance No. II of 1962).]",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -60,7 +60,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_4",
@@ -133,7 +133,7 @@
     "primary_num": "7",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "7. [Provincial Small Cause Courts.] [Omitted.]",
+    "text": "7. [* * * * * *",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -144,7 +144,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive",
+    "text_source": "pakistancode_pdf_2026-11-19",
     "in_force": false
   },
   {
@@ -383,7 +383,7 @@
     "primary_num": "19",
     "secondary_num": null,
     "title": "Suits for compensation for wrongs to person or moveables",
-    "text": "19. Suits for compensation for wrongs to person or moveables. Where a suit is for compensation for wrong done to the person or to moveable property, if the wrong was done within the local limits of the Jurisdiction of one Court and the defendant resides, or carries on business, or personally works for gain, within the local limits of the Jurisdiction of another Court, the suit may be instituted at the option of the plaintiff in either of the said Courts. 1Ins. by the Code of Civil Procedure (Amdt.) Ordinance, No. XLIV of 1962, s.6. 2Subs. by the Central Laws (Statute Reform) ordinance, No. XXI of 1960, s.3 and 2nd Sch. (with effect from the 14th October, 1955).\n\nIllustrations\n(a) A, residing in Karachi, beats B in Quetta. B may sue A either in Quetta or Karachi.\n(b) A, residing in Karachi publishes in Quetta statements defamatory of B. B may sue A either in Quetta or in Karachi.",
+    "text": "19. Suits for compensation for wrongs to person or moveables. Where a suit is for compensation for wrong done to the person or to moveable property, if the wrong was done within the local limits of the Jurisdiction of one Court and the defendant resides, or carries on business, or personally works for gain, within the local limits of the Jurisdiction of another Court, the suit may be instituted at the option of the plaintiff in either of the said Courts.\nIllustrations\n(a) A, residing in [Karachi], beats B in [Quetta]. B may sue A either in [Quetta] or\n[Karachi].\n(b) A, residing in [Karachi] publishes in [Quetta] statements defamatory of B. B may sue A either in [Quetta] or in [Karachi].",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -394,7 +394,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_20",
@@ -509,7 +509,7 @@
     "primary_num": "24A",
     "secondary_num": null,
     "title": "Appearance of parties on transfer of suit, etc",
-    "text": "24A. Appreance of parties on transfer of suits, etc.__ (1) Where any suit is transferred under section 22, or any suit, appeal or other proceeding is transferred or withdrawn under subsection (1) of section 24 on the application of a party, the Court ordering the transfer or withdrawal shall fix a date for the appearance of the parties before itself, if the suit, appeal or other proceeding is to be tried or disposed of by itself, or before the Court to which the case is so transferred. \n\n(2) Where any suit, appeal or other proceeding is transferred from one Court to another, otherwise than on the application of a party, the parties thereto shall appear before the Court from which the suit, appeal or other proceedings is to be transferred, on t he day already fixed for their appearance before that Court, and such Court shall then communicate the order of transfer to such parties and direct them to appear before the Court to which the suit, appeal or other proceeding is to be transferred, ei ther on the same day, or on such earliest day as may be reasonable having regard to the distance at which the other Court is located.",
+    "text": "[24A. Appreance of parties on transfer of suits, etc.__ (1) Where any suit is transferred under section 22, or any suit, appeal or other proceeding is transferred or withdrawn under sub-section (1) of section 24 on the application of a party, the Court ordering the transfer or withdrawal shall fix a date for the appearance of the parties before itself, if the suit, appeal or other proceeding is to be tried or disposed of by itself, or before the Court to which the case is so transferred.\n(2) Where any suit, appeal or other proceeding is transferred from one Court to another, otherwise than on the application of a party, the parties thereto shall appear before the Court from which the suit, appeal or other proceedings is to be transferred, on the day already fixed for their appearance before that Court, and such Court shall then communicate the order of transfer to such parties and direct them to appear before the Court to which the suit, appeal or other proceeding is to be transferred, either on the same day, or on such earliest day as may be reasonable having regard to the distance at which the other Court is located.]\n125. [Power of Provincial Government to transfer suits.] Omitted by the Central Laws (Statue Reform) Ordinance, 1960 (XXI of 1960), s.3 and 2nd Sch. (with effect from the 14th October, 1955). INSTITUTION OF SUITS",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -520,7 +520,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_25",
@@ -552,7 +552,7 @@
     "primary_num": "26",
     "secondary_num": null,
     "title": "Institution of suit",
-    "text": "26. Institution of suit.__ Every suit shall be instituted by presentation of a plaint or in such other manner as may be prescribed. 26A-26D. * * * * * * * SUMMONS AND DISCOVERY",
+    "text": "26. Institution of suit.__ Every suit shall be instituted by presentation of a plaint or in such other manner as may be prescribed.]\n[26A-26D. * * * * * * *]",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -563,7 +563,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_27",
@@ -615,7 +615,7 @@
     "primary_num": "29",
     "secondary_num": null,
     "title": "Service of foreign summonses",
-    "text": "29. Service of foreign summonses. Summonses and other processes issued by any Civil",
+    "text": "29. Service of foreign summonses. Summonses [and other processes] issued by any Civil\n1S. 25 was amended by Adaptation Order, 1937. 2Subs. and Omitted by Act No. XIX of 2023, s.3. 3Provisions of s.29 have been applied to__\n(i)the Civil Courts in the Federation of Malaya in so far as the Chief Commissioner’s Province of Baluchistan and the Capital of the Federation are concerned, see Gaz. of P., 1949, Pt.I, P.258 and ibid., Pt.II A, P. 68\n(ii)all Civil and Revenue Courts of India; and service by any Civil or Revenue Court of India of any summons issued under the Code of Civil Procedure, 1908, by a Court of the Province of Sind shall be deemed to be valid, see Sind Government Gazette, Extraordinary, dated 3rd July, 1952. Pt. I, P. 437.\n(iii)all Civil and Revenue Courts in India and Service by such Courts of any summons issued under the said Code by a Court in the N.W.F.P, Baluchistan or Karachi shall be deemed to be valid service, see N.W.F.P Government Gazette, 1952, Pt. I, P. 248 and Gaz., of P. 1952, Pt. I, P. 119 and ibid., Pt. VI, p. 126.\n(iv)all Civil and Revenue Courts in India; and that service by such Courts of any summons issued under the said Code by a Court in Khairpur State shall be deemed to be valid service, see Khairpur State Gazette, Ext., 1952, dated the 18th September, 1952.\n(v)all Civil and Revenue Courts in India; and service by such Courts of any summons issued under the said Code by a Court in the Bahawalpur State shall be deemed to be valid service, see Bahawalpur Govt. Gazette, dated the 2nd October, 1952.\n(vi)all Civil and Revenue Courts of India; and service by any civil or Revenue Court in India, within whose jurisdiction the person to be served resides of any summons issued by a Court under the said Code shall be deemend to be valid service, see Punjab Gazette, Ext., 1951, dated the 1st September, 1951, p. 1743.\n(vii)all Civil and Revenue Courts in the Union of Burma, in respect of Baluchistan; and service by such Courts of any summons issued under the said Code by a Court in Baluchistan shall be deemed to be valid service see Gaz. of P., Ext., 1954, p. 1873.\n(viii)all Civil and Revenue Courts in the Union of Burma, in respect of Karachi; and service by such Courts of any summons issued under the said Code by a Court in Karachi shall be deemed to be valid service, see Gaz. of p., Extra., 1954, p. 1997.\n(ix)all Civil and Revenue Courts of the Union of Burma; and service by such Courts of Summonss issued under the said Code by A Court in East Bengal shall be deemed to be valid service, see Dacca Gazette, Ext., dated 18th October, 1954, Pt. I, p. 3053.\n(x)all Civil and Revenue Courts of the Union of Burma; and service by such Courts of any summons issued under the said Code by a Court in the N.W.F.P, shall be deemed to be valid service, see N.W.F.P, Gazette, 1954, Pt. I, p. 523.\n(xi)all Civil and Revenue Courts of the Union of Burma; and service by such Courts of any summons issued under the said Code by a Court in the Province of Punjab, shall be deemed to be valid service, see Gaz. of Punjab, 1954, Pt. I, p. 843.\n(xii)all Civil and Revenue Courts of the Union of Burma; and service by such Courts of any summons issued under the said Code by a Court in the Province of Sind, shall be deemed to be valid service, w.e.f. 18th October, 1954, see Gaz. of Sind, 1954, pt I, p. 940.\n(xiii)all Civil and Revenue Courts in the Federal Republic of Germany; and service by such Courts of summons issued under the said Code by a Court in Baluchistan shall be deemed to be valid service, see Gaz. of P. 1955, Pt. I, p. 126.\n(xiv)the summonses issued by any Civil or Revenue Courts in Pakistan may be sent to the Courts in the Union of Burma and served as if they had been issued by such Courts, see Gaz of 1955, P.I, p. 143.\n(xv)service by any Court situated in Pakistan, of any summons issued by a Court of the Union of Burma shall be deemed to be valid service, see Gaz. of P., 1955, Pt. I, p. 143.\n(xvi)all Civil and Revenue Courts in the Federal Republic of Germany an services by such Courts of any summons issued under the said Code by a Court in Karachi, shall be deemed to be valid service, with effect on and from the 1st June, 1955, see Gaz. Of P., 1955, Pt. VI, p. 102.\n(xvii)all Civil and Revenue Courts in the Federal Republic of Germany; and service by such Courts of any summons issued under the said Code by a Court in the Province of East Bengal shall be deemed to be valid service see Dacca Gazette, 1955, Pt. I, p. 1051.\n(xviii)all Civil Courts in Switzerland and the service by such Courts of any summons issued under the Code (C.Pr.C.) by a Court in the Province of W. Pakistan shall be deemed to be valid service, see W.P. Gaz., 1959, Ext. p. 843. or Revenue Court situate [outside [Pakistan]] may be sent to the Courts [in [Pakistan]] and served as if they [were summonses] issued by such Courts:\n[Provided that the Courts issuing such summonses [or processes] have been established or continued by the authority of the [Federal Government] [* * *] or that the Provincial Government\n[of the Province in which such summonses or processes are] to be served has by notification in the official Gazette declared the provisions of this section to apply to [such Courts].]",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -626,7 +626,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_30",
@@ -699,7 +699,7 @@
     "primary_num": "33",
     "secondary_num": null,
     "title": "Judgment and decree",
-    "text": "33. Judgment and decree. The Court, after the case has been heard, shall pronounce judgment, and on such judgment [...] a decree shall follow.",
+    "text": "33. Judgment and decree. The Court, after the case has been heard, shall pronounce judgment, and on such judgment [* * *] a decree shall follow.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -710,7 +710,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_34",
@@ -741,7 +741,7 @@
     "primary_num": "34A",
     "secondary_num": null,
     "title": "Interest on public dues",
-    "text": "34A. Interest on public dues.__ (1) Where the Court is of opinion that a suit was instituted with intent to avoid the payment of any public dues payable by the plaintiff or on his behalf, the Court may, while dismissing such suit, make an order for payment of interest on such public dues at the rate of two per cent, above the prevailing bank rate.\n(2) Where the court is of opinion that the recovery of any public dues from the plaintiff was unjustified, the Court may, while disposing of the suit, make an order for payment of interest on the amount recovered at the rate of two per cent, above the prevailing bank rate.\nExplanation.__ In this section,__\n(a) “bank rate” means the bank rate determined and made public under the provisions of the State Bank of Pakistan Act, 1956 (XXXIII of 1956) ; and\n(b) “public dues” includes the dues of any bank owned by the Federal Government or of any corporation or undertaking owned or controlled by the Federal Government or a Provincial Government or of any local authority.",
+    "text": "34A. Interest on public dues.__ (1) Where the Court is of opinion that a suit was instituted with intent to avoid the payment of any public dues payable by the plaintiff or on his behalf, the Court may, while dismissing such suit, make an order for payment of interest on such public dues at the rate of two per cent, above the prevailing bank rate.\n(2) Where the court is of opinion that the recovery of any public dues from the plaintiff was unjustified, the Court may, while disposing of the suit, make an order for payment of interest on the amount recovered at the rate of two per cent, above the prevailing bank rate.\nExplanation.__ In this section,__\n(a) “bank rate” means the bank rate determined and made public under the provisions of the State Bank of Pakistan Act, 1956 (XXXIII of 1956) ; and\n(b) “public dues” includes the dues of any bank owned by the Federal Government or of any corporation or undertaking owned or controlled by the Federal Government or a Provincial Government or of any local authority.]\n[34B. Interest, etc. on dues of banking company.__ Where and in so far as a decree is for payment of money due to a banking company in repayment of a loan advanced by it, the Court shall, in the decree, provide for interest or return, as the case may be, on the judgment debt from the date of decree till payment__\n(a) in the case of interest-bearing loans, for interest at the contracted rate or at the rate of two per cent above the bank rate, whichever is the higher ;\n(b) in the case of loans given on the basis of mark-up in price, lease, hire-purchase or service charges, for the contracted rate of mark-up, rental, hire or service charges, as the case may be, or at the latest rate of the banking company for similar loans, whichever is the higher ; and\n(c) in the case of loans given on the basis of participation in profit and loss, for return at such rate, not being less than the annual rate of profit for the preceding six months paid by the banking company on term deposits of six months accepted by it on the basis of participation in profit and loss, as the court may consider just and reasonable in the circumstances of the case, keeping in view 1New section 34A was ins. by the Code of Civil Procedure (Amdt.) Ordinance, No. X of 1980) s.3. the profit-sharing agreement entered into between the banking company and the judgement debtor when the loan was contracted.\nExplanation.__ In this section in clause (a), “bank rate” has the same meaning as in section\n34A.]. COSTS",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -752,7 +752,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_34B",
@@ -1014,7 +1014,7 @@
     "primary_num": "43",
     "secondary_num": null,
     "title": "Execution of decrees passed by British Courts in places to which this Part does not extend or",
-    "text": "43. Execution of decrees passed by British Courts in places to which this Part does not extend or in foreign territory. Any decree passed by a Civil Court established in any area in Pakistan to which the provisions relating to execution do not extend, * * * may, if it cannot be executed within the jurisdiction of the Court by which it was passed, be executed in manner herein provided within the jurisdiction of any Court in Pakistan.",
+    "text": "43. Execution of decrees passed by British Courts in places to which this Part does not extend or in foreign territory. Any decree passed by a Civil Court established in any [area in Pakistan] to which the provisions relating to execution do not extend, [* * *] may, if it cannot be executed within the jurisdiction of the Court by which it was passed, be executed in manner herein provided within the jurisdiction of any Court in [Pakistan].\n644. [Omitted]\n1S. 42 renumbered as sub-section (1) of that section by the Code of civil Procedure (Amdt.) Ordinance, No. XLIV of 1962, s. 10. 2Sub-section (2) added ibid. 3Amended by Adaptation Order, 1949 and the Central Laws (Statute Refrom) Ordinance, No. XXI of 1960, s.3 and 2nd Sch. (with effect from the 14th October, 1955).\n[44A. Execution of decrees passed by Courts in the United Kingdom and other reciprocating territory.__ (1) Where a certified copy of a decree of any of the superior Courts of the United Kingdom or any reciprocating territory has been filed in a District Court, the decree may be executed in [Pakistan] as if it had been passed by the District Court.\n(2) Together with the certified copy of the decree shall be filed a certificate from such superior Court stating the extent, if any, to which the decree has been satisfied or adjusted and such certificate shall, for the purposes of proceedings under this section, be conclusive proof of the extent of such satisfaction or adjustment.\n(3) The provisions of section 47 shall as from the filing of the certified copy of the decree apply to the proceedings of a District Court executing a decree under this section, and the District Court shall refuse execution of any such decree, if it is shown to the satisfaction of the Court that the decree falls within any of the exceptions specified in clauses (a) to (f) of section 13.\nExplanation 1.__ “Superior Courts”, with reference to the United Kingdom, means the High Court in England, the Court of Session in Scotland, the High Court in Northern Ireland the Court of Chancery of the Country Palatine of Lancaster and the Court of Chancery of the County Palatine of Durham.\nExplanation 2.__ “Reciprocating territory” means [the United Kingdom and such other country or territory as] the [Federal Government] may, from time to time, by notification in the [official Gazette], declare6 to be reciprocating territory for the purposes of this section; and \"superior Courts\", with reference to any such territory, means such Courts as may be specified in the said notification.\nExplanation 3.__ “Decree”, with reference to a superior Court, means any decree or judgment of such Court under which a sum of money is payable, not being a sum payable in respect of taxes or other charges of a like nature or in respect of a fine or other penalty, and\n(a) with reference to superior Courts in the United Kingdom, includes Judgments given and decrees made in any Court in appeals against such decrees or Judgments, but\n(b) in no case includes an arbitration award, even if such award is enforceable as a decree or Judgment.]\n1S. 44A ins. by the Code of Civil Procedure (Amdt.) Act No. VIII of 1937. s. 2. 2Subs. by the Central Laws (Statute Reform) Ordinance, No. XXI of 1960, s. 3 and 2nd Sch. (w. e. f the 14th October, 1955). 3Subs. by the Civil and Criminal Procedure Codes (Amdt.) Ordinance, No. LXVII 1962, s. 3. 4Subs. by Federal Adaptation Order, 1975, Art. 2 and Table. 5Subs. by Adaptation Order, 1937. 6The Central Govt. has declared Fiji to be a reciprocating territory and the Supreme Court of Fiji to be a Superior Court of the territory for the purposes of this section, see Gaz. of P., 1949, Pt. I, p. 275. Certain Courts of Pakistan have been declared to be superior Courts for the purpose of Part I of the Foreign Judgments (Reciprocal Enforcement) Act, 1933 (23 Geo. 5, ch, 13), see Gaz. of P., 1953, Pt. I , pp. 143-44 The Central Government has declared the Colony of Singapore to be a reciprocating territory, and the Supreme Court of Singapore to be a superior Court of the territory for the purpose of this section. see Gaz. of P. 1954, Pt. I, p. 106. Certain Courts in Pakistan have been declared to be superior Court for the purpose of section 5 of the Reciprocal Enforcement of Judgment Ordinance of Singapore, see Gaz. of P., 1954, Pt. I, p. 296. The Central Government has declared the Australian Capital Territory to be a reciprocating territory, and the Supreme Court of Australian Capital Territory to be a superior Court of the territory for the purposes of this section, see Gaz. of P., 1957, Pt. I, p. 174. The Central Government has declared “New Zealand including the Cook Islands (including Nive) and the Trust Territory of Western Samao” to be a reciprocating territory, and the Supreme Court of New Zealand to be a superior Court of that territory, for the purposes of this section (with effect from 7th August, 1958), see Gaz. of 1958 Pt. I, p. 455. The Central Government has declared the Northern Territory of Australia to be reciprocating territory, and the Supreme Court of the said territory to be a superior Court of the territory for the purposes of this section, see Gaz. of P., 1959, Pt. I, p. 425.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -1025,7 +1025,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_44",
@@ -1078,7 +1078,7 @@
     "primary_num": "45",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "45. Provisions as to agricultural produce under attachment.__ (1) Where agricultural produce is attached, the Court shall make such arrangements for the custody thereof as it may deem sufficient and, for the purpose of enabling the Court to make such arrangements, every application for the attachment of a growing crop shall specify the time at which it is likely to be fit to be cut or gathered.\n(2) Subject to such conditions as may be imposed by the Court in this behalf either in the order of attachment or in any subsequent order, the judgment-debtor may tend, cut, gather and store the produce and to any other act necessary for maturing or preserving it; and if the judgment­debtor fails to do all or any of such acts, the decree-holder may, with the permission of the Court and subject to the like conditions, do all or any of them either by himself or by any person appointed by him in this behalf, and the costs incurred by the decree-holder shall be recoverable from the judgment-debtor as if they were included in, or formed part of, the decree.\n(3) Agricultural produce attached as a growing crop shall not be deemed to have ceased to be under attachment or to require re-attachment merely because it has been severed from the soil.\n(4) Where an order for the attachment of a growing crop has been made at a considerable time before the crop is likely to be fit to be cut or gathered, the Court may suspend the execution of the order for such time as it thinks fit, and may, in its discretion make a further order prohibiting the removal of the crop pending the execution of the order of attachment.\n(5) A growing crop which from its nature does not admit of being stored shall not be attached under this rule at any time less than twenty days before the time at which it is likely to be fit to be cut or gathered.",
+    "text": "45. [Omitted]",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -1089,7 +1089,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging",
+    "text_source": "pakistancode_pdf_2026-11-19",
     "in_force": false
   },
   {
@@ -1142,7 +1142,7 @@
     "primary_num": "48",
     "secondary_num": null,
     "title": "Execution barred in certain cases",
-    "text": "48. Attachment of salary or allowances of public officer or servant of railway company or local authority.__ (1) Where the property to be attached is the salary or allowance of a servant of the State or of a servant of a company or local authority, the Court, whether the judgment-debtor or the disbursing officer is or is not within the local limits of the Court's jurisdiction, may order that the amount shall, subject to the provisions of section 60, be withheld from such salary or allowances either in one payment or by monthly instalments as the Court may direct; and, upon notice of the order to such officer as the appropriate Government may by notification in the official Gazette appoint in this behalf,__\n(a) where such salary or allowances are to be disbursed within the local limits to which this Code for the time being extends, the officer or other person whose duty it is to disburse the same shall withhold and remit to the Court the amount due under the order, or the monthly installments, as the case may be; 1The original words “public officer” were first subs. by the Code of Civil Procedure (Amdt.) Act, 1943, (5 of 1943) s.3, and then amended by A.O. , 1961, Art. 2 and Sch. (with effect from the 23rd March, 1956), to read as above. 2Subs. by the Repealing and Amending Act, 1942 (25 of 1942), s. 3 and Second Sch., for “the Central Governemnt or the Provincial Governemnt may by notification in their official Gazette” which had been subs., by A.O., 1937, for “the Govt. may by notification in the Gazette of India or in the local official Gazette, as the case may be.” 3Subs. by the Code of Civil Procedure (Amdt.) Act, 1939 (26 of 1939), s.2, for certain words.\n\n(b) where such salary or allowances are to be disbursed beyond the said limits, the officer or other person within those limits whose duty it is to instruct the disbursing authority regarding the amount of the salary or allowances to be disbursed shall remit to the Court the amount due under the order, or the monthly installments, as the case may be, and shall direct the disbursing authority to reduce the aggregate of the amounts from time to time be disbursed by the aggregate of the amounts from time to time remitted to the Court.\n(2) Where the attachable proportion of such salary or allowances is already being withheld and remitted to a Court in pursuance of a previous and unsatisfied order of attachment, the officer appointed by the appropriate Government in this behalf shall forthwith return the subsequent order to the Court issuing it with a full statement of all the particulars of the existing attachment.\n(3) Every order made under this rule, unless it is returned in accordance with the provisions of sub- rule (2), shall, without further notice or other process, bind the appropriate Government or the railway company or local authority, as the case may be, while the judgment debtor is within the local limits to which this Code for the time being extends and while he is beyond those limits if he is in receipt of any salary or allowances payable out of the revenues of the Federal Government or a Provincial Government or the funds of a railway company carrying on business in any part of Pakistan or local authority in Pakistan; and the appropriate Government or the railway company or local authority, as the case may be, shall be liable for any sum paid in contravention of this rule.\nExplanation.__ In this rule “appropriate Government” means__\n(i) as respects any person in the service of the Federal Government, or any servant 8* * * of a cantonment authority or of the port authority of a major port, the Federal Government ; * * * * * * *\n(iii) as respects any other Servant of the State or a servant of any railway or local authority, the Provincial Government.",
+    "text": "48. Execution barred in certain cases.__ (1) Where an application to execute a decree not being a decree granting an injunction has been made, no order for the execution of the same decree shall be made upon any fresh application presented after the expiration of [six years] from__\n(a) the date of the decree sought to be executed, or,\n(b) where the decree or any subsequent order directs any payment of money or the delivery of any property to be made at a certain date or at recurring periods, the date of the default in making the payment or delivery in respect of which the applicant seeks to execute the decree.\n(2) Nothing in this section shall be deemed__\n(a) to preclude the Court from ordering the execution of a decree upon an application presented after the expiration of the said term of [six years], where the judgment-debtor has, by fraud or force, prevented the execution of the decree at some time within [six years] immediately before the date of the application ;or\n(b) to limit or otherwise affect the operation of article [183 of the First Schedule to the Limitation Act, 1908 (IX of 1908).]",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -1153,7 +1153,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_49",
@@ -1353,7 +1353,7 @@
     "primary_num": "58",
     "secondary_num": null,
     "title": "Release from detention",
-    "text": "58. Release from detention.__ Every person detained in prison in execution of a decree shall be released from such detention, before the expiry of the period of detention, if__\n(a) the amount mentioned in the warrant for his detention is paid to the officer in charge of the prison ; or\n(b) the decree against him is otherwise fully satisfied ; or\n(c) the person on whose application he has been detained so requests: 1Subs. by Adaptation Order, 1937. 2Subs., omitted and amended by Ordinance, X of 1980, ss. 5, 6, 8. 3Amended by Adaptation Order, 1937.\n\nProvided that he shall not be released from such detention without the order of the Court.",
+    "text": "58. Release from detention.__ Every person detained in prison in execution of a decree shall be released from such detention, before the expiry of the period of detention, if__\n(a) the amount mentioned in the warrant for his detention is paid to the officer in charge of the prison ; or\n(b) the decree against him is otherwise fully satisfied ; or\n(c) the person on whose application he has been detained so requests:\nProvided that he shall not be released from such detention without the order of the Court.]\n159. [Release on ground of illness.] Omitted by the Code of Civil Procedure (Amdt.) Ordinance, 1980 (X of 1980), s. 9.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -1364,7 +1364,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_59",
@@ -1501,7 +1501,7 @@
     "primary_num": "65",
     "secondary_num": null,
     "title": "Purchaser’s title",
-    "text": "65. Purchaser's title. Where immoveable property is sold in execution of a decree and such sale has become absolute, the property shall be deemed to have vested in the purchaser from the time when the property is sold and not from the time when the sale becomes absolute. 1Subs. by Adaptation Order, 1937. 2Rep. by Act No. XXXVIII of 1920, s. 2 and Sch. Pt. I. 3Subs. by Adaptation Order, 1937.",
+    "text": "65. Purchaser's title. Where immoveable property is sold in execution of a decree and such sale has become absolute, the property shall be deemed to have vested in the purchaser from the time when the property is sold and not from the time when the sale becomes absolute.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -1512,7 +1512,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_66",
@@ -1732,7 +1732,7 @@
     "primary_num": "75A",
     "secondary_num": null,
     "title": "[Omitted]",
-    "text": "75A. * * * * * * * 1The original words “the Government” were first subs. by Adaptation Order, 1937, and then amended by A.O., 1961, Art. 2 (w. e. f 23rd March, 1956). 2Subs. by the Code of Civil Procedure (Amdt.) Ordinance, 1980 (X of 1980), s. 10.",
+    "text": "[75A. * * * * * * *]",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -1743,7 +1743,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging",
+    "text_source": "pakistancode_pdf_2026-11-19",
     "in_force": false
   },
   {
@@ -1817,7 +1817,7 @@
     "primary_num": "79",
     "secondary_num": null,
     "title": "Suits by or against the Government",
-    "text": "79. Suits by or against the Government.__ * * * In a Suit by or against the Government the authority to be named as plaintiff or defendant, as the case may be, shall be__\n(a) in the case of a suit by or against the Federal Government, Pakistan;\n(b) in the case of a suit by or against a Provincial Government, the Province ; and * * * * * * * 1Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (XXI of 1960), s. 3 and 2nd Sch. (w. e. f the 14th October, 1955). 2Ins. by the Code of Civil Procedure (Amdt.) Act, 1932 (X of 1932), section 2. March, 1956) to read as above. 9Subs. by Adaptation Order, 1937, for the original s.79. 12The original words “the Governor­General in Council before the establishment of the Federation of India, and thereafter, the Federation” have successively been amended by Adaptation Order, 1949, Act 26 of 1951, s.3 and 2nd Sch. and the Code of Civil Procedure (Amdt.) Ordinance, 1962 (XLIV of 1962), s. 14.",
+    "text": "79. Suits by or against the Government.__ [* * *] In a Suit by or against the [Government] the authority to be named as plaintiff or defendant, as the case may be, shall be__\n(a) in the case of a suit by or against the [Federal Government], [Pakistan];\n(b) in the case of a suit by or against a Provincial Government, the Province ; and\n[* * * * * * *] 1Subs. by the Central Laws (Statute Reform) Ordinance, 1960 (XXI of 1960), s. 3 and 2nd Sch. (w. e. f the 14th October, 1955). 2Ins. by the Code of Civil Procedure (Amdt.) Act, 1932 (X of 1932), section 2. 3Omitted by the Central Laws (Adaptation) Order, 1961 (P.O No.1 of 1961), Art. 2 and Sch. (w. e. f the 23rd march, 1956).). 4Subs. by Adaptation Order, 1937. 5Subs. by F.A.O. 1975, Art. 2 and Table. 6The words “or of the Crown Representative” omitted by Adaptation Order, 1949. 7Clause (b) as amended by A.O., 1949 and Act 10 of 1932, s.2, has been omitted by the Federal Laws (Revision and Declaration) Ordinance, 1981 (XXVII of 1981), s.3 and Second Sch., 8The original words “the Government” were first subs. by Adaptation Order, 1937, and then amended by Adaptation Order, 1961, Art. 2 (w. e. f the 23rd March, 1956) to read as above. 9Subs. by Adaptation Order, 1937, for the original s.79. 10The words and figures “Subject to the provisions of sections 179 and 185 of the Government of India Act, 1935,” omitted by the Federal Laws\n(Revision and Declaration) Act, 1951, (XXVII of 1951), s.3 and 2nd Sch. 11Subs. by Adaptation Order, 1961, Art. 2. (w. e. f the 23rd March, 1956). 12The original words “the Governor­General in Council before the establishment of the Federation of India, and thereafter, the Federation” have successively been amended by Adaptation Order, 1949, Act 26 of 1951, s.3 and 2nd Sch. and the Code of Civil Procedure (Amdt.) Ordinance, 1962\n(XLIV of 1962), s. 14. 13Cl. (c) omitted by Adaptation Order, 1949.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -1828,7 +1828,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_80",
@@ -1901,7 +1901,7 @@
     "primary_num": "83",
     "secondary_num": null,
     "title": "When aliens may sue",
-    "text": "83. When aliens may sue.__ (1) Alien enemies residing in Pakistan with the permission of the Federal Government, and alien friends, may sue in the Courts in the Provinces, as if they were citizens of Pakistan.\n(2) No alien enemy residing in Pakistan without such permission, or residing in a foreign country, shall sue in any of such Courts. 1The original s. 80 has successively been amended by A.O., 1937, the Code of Civil Procedure (Amdt.) Act, 1948 (VII of 1948), s. 2, Adaptation Order, 1949, Adaptation Order, 1961, Art. 2 (w. e. f. the 23rd March, 1956) and Ord. 44 of 1962, s.15. to read as above. 2Subs. by F.A.O., 1975, Art. 2 and Table. 3Subs. by F.A.O. 1975, Art. 2 and Sch. (with effect form the 14th August, 1973). 4Amended by A.O., 1961, Art. 2 (with effect from the 23rd march, 1956). 5Subs. by A.O., 1937. 6Subs. by the Code of civil Procedure (Amdt.) Ordinance, 1960 (22 of 1960), s.2, for “SUITS BY ALIENS AND BY OR AGAINST FOREIGN RULERS AND RULERS OF ACCEDING STATES” as amended by A.O., 1937 and the Federal Laws (Revision and Declaration) Act, 1951 (26 of 1951), s.4 and 3rd Sch. 7Subs. by A.O., 1949. 8Subs. by F.A.O., 1975, Art. 2 and Table. 9Subs. by A.O., 1949. 10Subs. by A.O., 1961, Art. 2 and Sch., (with effect from the 23rd March, 1956).\n\nExplanation.__ Every person residing in a foreign country the Government of which is at war with , or engaged in military operations against, Pakistan, and carrying on business in that country without a license in that behalf under the hand * * * of a Secretary to the Federal Government shall, for the purpose of sub-section (2), be deemed to be an alien enemy residing in a foreign country.",
+    "text": "83. When aliens may sue.__ (1) Alien enemies residing [in Pakistan] with the permission of the [Federal Government], and alien friends, may sue in the Courts [in the Provinces], as if they were [citizens of Pakistan].\n(2) No alien enemy residing [in Pakistan] without such permission, or residing in a foreign country, shall sue in any of such Courts.\nExplanation.__ Every person residing in a foreign country the Government of which is at war with [, or engaged in military operations against,] [Pakistan], and carrying on business in that country without a license in that behalf under the hand [* * *] of a Secretary to the [Federal Government] shall, for the purpose of sub-section (2), be deemed to be an alien enemy residing in a foreign country.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -1912,7 +1912,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_84",
@@ -1986,7 +1986,7 @@
     "primary_num": "86A",
     "secondary_num": null,
     "title": "Suits against diplomatic agents",
-    "text": "86A. Suits against diplomatic agents.__ (1) No proceeding in any Court shall lie against a diplomatic agent except in a case relating to__ 1Ins. by the code of Civil Procedure (Amdt.) Act, 1965 (19 of 1965), s.2. 2Subs. by A.O., 1949.\n\n(a) any private immoveable property situated in Pakistan held by him in his private capacity and not on behalf of the sending State for the purpose of the mission ;\n(b) a succession in which the diplomatic agent is involved as executor, administrator, heir or legatee as a private person and not on behalf of the sending State;\n(c) any professional or commercial activity exercised by the diplomatic agent in Pakistan outside his official functions.\n(2) No measures of execution shall be taken in respect of a diplomatic agent except in cases which come under clauses (a), (b) and (c) of sub-section (1) and in which such measures can be taken without infringing the inviolability of his person or of his residence.\n(3) The initiation of any proceedings in a Court by a diplomatic agent shall preclude him from invoking immunity from jurisdiction under this section in respect of any counter-claim directly connected with the principal claim.\n(4) The immunity of a diplomatic agent under sub-section (1) or sub-section (2) may be waived by the sending State; and any such waiver shall be express.\n(5) Waiver of immunity in respect of any proceedings shall not be held to imply waiver of immunity in respect of any measure of execution for which a separate waiver shall be necessary.\n(6) In this section, 'diplomatic agent' in relation to a State means the head of the mission in Pakistan of that State and includes a member of the staff of that mission having diplomatic rank.",
+    "text": "86A. Suits against diplomatic agents.__ (1) No proceeding in any Court shall lie against a diplomatic agent except in a case relating to__ 1Ins. by the code of Civil Procedure (Amdt.) Act, 1965 (19 of 1965), s.2. 2Subs. by A.O., 1949. 3The words “of one of His Majesty’s Secretaries of State or” omitted, ibid. 4Subs. by F.A.O., 1975, Art. 2 and Table. 5Subs. by A.O., 1949. 6The words “His majesty or by” omitted by A.O., 1961, Art. 2 and Sch. (with effect from the 23rd March, 1956). 7Subs. by F.A.O., 1975, Art.2 and Table. 8Subs. and shall be deemed to have been so subs. on the 14th day of October, 1955, by the Code of Civil Procedure (Amdt.) Ordinance, 1960 (22 of 1960), s.3, for the existing sub-section (1), as amended by A.O., 1949 and the Central laws (Statute Reform) Ordinance, 1960 (21 of 1960), s.3 and 2nd Sch. 9The Explanation which had been ins. by A.O., 1937, omitted by A.O. 1949.\n(a) any private immoveable property situated in Pakistan held by him in his private capacity and not on behalf of the sending State for the purpose of the mission ;\n(b) a succession in which the diplomatic agent is involved as executor, administrator, heir or legatee as a private person and not on behalf of the sending State;\n(c) any professional or commercial activity exercised by the diplomatic agent in Pakistan outside his official functions.\n(2) No measures of execution shall be taken in respect of a diplomatic agent except in cases which come under clauses (a), (b) and (c) of sub-section (1) and in which such measures can be taken without infringing the inviolability of his person or of his residence.\n(3) The initiation of any proceedings in a Court by a diplomatic agent shall preclude him from invoking immunity from jurisdiction under this section in respect of any counter-claim directly connected with the principal claim.\n(4) The immunity of a diplomatic agent under sub-section (1) or sub-section (2) may be waived by the sending State; and any such waiver shall be express.\n(5) Waiver of immunity in respect of any proceedings shall not be held to imply waiver of immunity in respect of any measure of execution for which a separate waiver shall be necessary.\n(6) In this section, 'diplomatic agent' in relation to a State means the head of the mission in Pakistan of that State and includes a member of the staff of that mission having diplomatic rank.]\n187. [Style of Rulers as Parties to suits.] Repealed by the State Immunity Ordinance, 1981 (VI of 1981), s. 19.\n[* * *]\n387A. [Application of sections 85 and 86 to Rulers of Acceding States, etc.] Omitted by the Code of Civil Procedure (Amdt.) Act, 1972 (II of 1972), s.2.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -1997,7 +1997,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_87",
@@ -2115,7 +2115,7 @@
     "primary_num": "90",
     "secondary_num": null,
     "title": "Power to state case for opinion of Court",
-    "text": "90. Power to state case for opinion of Court. Where any persons agree in writing to state a case for the opinion of the Court, then the Court shall try and determine the same in the manner prescribed. SUITS RELATING TO PUBLIC MATTERS",
+    "text": "90. Power to state case for opinion of Court. Where any persons agree in writing to state a case for the opinion of the Court, then the Court shall try and determine the same in the manner prescribed.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -2126,7 +2126,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_91",
@@ -2409,7 +2409,7 @@
     "primary_num": "104",
     "secondary_num": null,
     "title": "Orders from which appeal lies",
-    "text": "104. Orders from which appeal lies.__ (1) An appeal shall lie from the following orders, and save as otherwise expressly provided in the body of this Code or by any law for the time being in force, from no other orders:__ \n[...] \n(f) an order under section 35A; \n(ff) an order under section 47; \n(fff) an order under section 91 or section 92 refusing leave to institute a suit; 1Subs by Act No. XIX of 2023, s.10. \n(g) an order under section 95; \n(h) an order under any of the provisions of this Code imposing a fine or directing the arrest or detention in the civil prison of any person except where such arrest or detention is in execution of a decree; \n(i) any order made under rules from which an appeal is expressly allowed by rules: \nProvided that no appeal shall lie against any order specified in clause (f) save on the ground that no order, or an order for the payment of a less amount, ought to have been made. \n(2) No appeal shall lie from any order passed in appeal under this section.",
+    "text": "104. Orders from which appeal lies.__ (1) An appeal shall lie from the following orders, and save as otherwise expressly provided in the body of this Code or by any law for the time being in force, from no other orders:__\n[* * * * * * *]\n[(f) an order under section 35A;\n(ff) an order under section 47;]\n[(fff) an order under section 91 or section 92 refusing leave to institute a suit;]\n(g) an order under section 95;\n(h) an order under any of the provisions of this Code imposing a fine or directing the arrest or detention in the civil prison of any person except where such arrest or detention is in execution of a decree;\n(i) any order made under rules from which an appeal is expressly allowed by rules:\n[Provided that no appeal shall lie against any order specified in clause [(f)] save on the ground that no order, or an order for the payment of a less amount, ought to have been made.]\n(2) No appeal shall lie from any order passed in appeal under this section.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -2420,7 +2420,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_105",
@@ -2602,7 +2602,7 @@
     "primary_num": "112",
     "secondary_num": null,
     "title": "Savings",
-    "text": "112. Savings.__ (1) Nothing contained in this Code shall be deemed__ \n(a) to affect the powers of the Supreme Court under Article 191 of the Constitution or any other provision thereof ; or \n(b) to interfere with any rules made by the Supreme Court, and for the time being in force, for the presentation of appeals to that Court, or their conduct before that Court. 1See also the Federal Court (Enlargement of Jurisdiction) Act No. I of 1950, s. 6 and the Privy council (Abolition of Jurisdiction) Act, 1950, s. 9. \n(2) Nothing herein contained applies to any matter of criminal or admiralty or vice-admiralty jurisdiction, or to appeals from orders and decrees of Prize Courts.",
+    "text": "112. Savings.__ [(1) Nothing contained in this Code shall be deemed__\n(a) to affect the powers of the Supreme Court under Article [191 of the Constitution or any other provision thereof] ; or\n(b) to interfere with any rules made by the Supreme Court, and for the time being in force, for the presentation of appeals to that Court, or their conduct before that Court.] 1See also the Federal Court (Enlargement of Jurisdiction) Act No. I of 1950, s. 6 and the Privy council (Abolition of Jurisdiction) Act, 1950, s. 9. 2Subs. by Adaptation Order, 1961, Art. 2 and sch., (with effect from the 23rd March, 1956). 3The original s. 109 has successively been amended by the Central Laws (Statute Reform) Ordinance, No. XXI of 1960, s.3 and 2nd Sch. (with effect from the 14th October, 1955), Adaptation Order, 1961, Art.2 and Sch. (with effect from the 23rd March, 1956), and Federal Adaptation Order, 1975, Art.2 and Sch. (with effect from the 14th August,1973), to read as above. 4Omitted by Federal Adaptation Order, 1975, Art. 2 and Sch. (with effect from the 14th August, 1973). 5Subs. by Adaptation Order, 1961, Art. 2 and Sch., (with effect from the 23rd March, 1956). 6Amended by Adaptation Order, 1937 and Act No. XIII of 1916. Sch., have been Omitted by Adaptation Order, 1961, Art. 2 and Sch. (with effect from the 23rd March, 1956). 7Subs. by Act No. XIX of 2023, s.12. 8Omitted by the Federal Court Act, 1941 (XXI of 1941), s. 2. 9Subs. by Adaptation Order 1961, Art. 2 and Sch. (with effect from the 23rd March, 1956). 10Amended by Adaptation Order, 1964, Art. 2 and Sch. and Federal Adaptation Order, 1975, Art. 2 and Sch. (with effect from the 14th August, 1973).\n(2) Nothing herein contained applies to any matter of criminal or admiralty or vice-admiralty jurisdiction, or to appeals from orders and decrees of Prize Courts.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -2613,7 +2613,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:archive"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_113",
@@ -2811,7 +2811,7 @@
     "primary_num": "122",
     "secondary_num": null,
     "title": "Power of certain High Courts to make rules",
-    "text": "122. Power of certain High Courts to make rules. The High Courts * * * may, from time to time after previous publication, make rules regulating their own procedure and the procedure of the Civil Courts subject to their superintendence, and may by such rules annul, alter or add to all or any of the rules in the First Schedule. from the 14th October, 1955). and Sch. 2 and First Sch.",
+    "text": "122. Power of certain High Courts to make rules. [ The High Courts] [* * *] may, from time to time after previous publication, make rules regulating their own procedure and the procedure of the Civil Courts subject to their superintendence, and may by such rules annul, alter or add to all or any of the rules in the First Schedule. 1Omitted by the Central Laws (Statute Reform) Ordinance, No. XXI of 1960, s.3 and 2nd Sch. (with effect from the 14th October,1955). 2Amended by Adaptation Order., 1937 and Act No. XIII of 1916, Sch., have been omitted by Ordinance No. XXI of 1960. s.3 and 2nd Sch. (with effect from the 14th October, 1955). 3Sub-section (2) omitted by the Presidency-towns Insolvency Act No. III of 1909, s. 127 and Third Sch. 4Subs. by the Central Laws (Statute Reform) ordinance, No. XXI of 1960,s. 3 ad 2nd Sch. (with effect from the 14th October, 1955) and the Government of India Act, 1935’’ as amended by Adaptation Order, 1937, Adaptation Order, 1949 and the Oudh Courts (Supplementary) Act No. XXXII of 1925, s.2 and Sch.",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -2822,7 +2822,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_123",
@@ -3024,7 +3024,7 @@
     "primary_num": "132",
     "secondary_num": null,
     "title": "Exemption of certain women from personal appearance",
-    "text": "132. Exemption of certain women from personal appearance.__ (1) Women who, according to the customs and manners of the country7 ought not to be compelled to appear in public shall be exempt from personal appearance in Court.\n(2) Nothing herein contained shall be deemed to exempt such women from arrest in execution of civil process in any case in which the arrest of women is not prohibited by this Code. 1Ins. by Act No. VII of 2020, s. 16.",
+    "text": "132. Exemption of certain women from personal appearance.__ (1) Women who, according to the customs and manners of the country7 ought not to be compelled to appear in public shall be exempt from personal appearance in Court.\n(2) Nothing herein contained shall be deemed to exempt such women from arrest in execution of civil process in any case in which the arrest of women is not prohibited by this Code. 1Ins. by Act No. VII of 2020, s. 16. 2Omitted by the Federal Laws (Revision and Declaration) Ordinance, No. XVII of 1981, s. 3 and Second Sch. 3Amended by Adaptation Order, 1937 and the Amending Act No. XIII of 1916, Sch., have been omitted by the Central Laws (Statute Reform) Ordinance, No. XXI of 1960, s.3 and 2nd Sch. (with effect from the 14th October, 1955).",
     "missing_reason": null,
     "source_file": "Pakistan Code (pakistancode.gov.pk), Act No. V of 1908; https://pakistancode.gov.pk/pdffiles/administrator6598dabbad120033d4d42d717dcf9755.pdf",
     "source_page": "unspecified",
@@ -3035,7 +3035,7 @@
     "jurisdiction": "federal",
     "effective_from": "2026-09-23",
     "effective_to": null,
-    "text_source": "audit_2026-11-25:staging"
+    "text_source": "pakistancode_pdf_2026-11-19"
   },
   {
     "canonical_id": "CPC_1908_SEC_133",
