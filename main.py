@@ -785,7 +785,9 @@ def _origin_is_allowed(origin: str) -> bool:
         return True
 
     import re
-    if re.match(r"^https://[a-zA-Z0-9_\-.]+\.(up\.railway\.app|railway\.app|vercel\.app|lovable\.app|lovableproject\.com|onrender\.com|netlify\.app)$", origin):
+    # Anyone can host a site on these platforms, so the wildcard is for development only;
+    # production accepts exactly the origins listed in ALLOWED_ORIGINS.
+    if not is_prod and re.match(r"^https://[a-zA-Z0-9_\-.]+\.(up\.railway\.app|railway\.app|vercel\.app|lovable\.app|lovableproject\.com|onrender\.com|netlify\.app)$", origin):
         return True
     if any("lovable.app" in o for o in allowed):
 

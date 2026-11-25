@@ -158,3 +158,14 @@ def test_pld_high_court_key_resolves(monkeypatch):
     monkeypatch.setattr(case_store, "_supabase", lambda: _FakeSB(rows))
     got = case_store.retrieval_statuses(["2024_PLD_LHC_1", "2024_PLD_SC_1"])
     assert got == {"2024_PLD_LHC_1": "quarantined", "2024_PLD_SC_1": ""}
+
+
+def test_production_cors_accepts_only_listed_origins(monkeypatch):
+    import main
+    monkeypatch.setenv("ENVIRONMENT", "production")
+    monkeypatch.setenv("ALLOWED_ORIGINS", "https://section-frontend-production-f959.up.railway.app")
+    assert main._origin_is_allowed("https://section-frontend-production-f959.up.railway.app")
+    for o in ("https://evil.up.railway.app", "https://x.lovable.app", "https://a.vercel.app", "https://b.netlify.app"):
+        assert not main._origin_is_allowed(o), o
+    monkeypatch.setenv("ENVIRONMENT", "development")
+    assert main._origin_is_allowed("https://preview.up.railway.app")
