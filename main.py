@@ -420,6 +420,21 @@ app.include_router(drafting_router)
 
 
 @app.middleware("http")
+async def security_headers_middleware(request: Request, call_next):
+    """Standard protective headers. Judgment PDFs are shown in the frontend's iframe, so framing
+    is allowed for the configured frontend origins only."""
+    response = await call_next(request)
+    origins = " ".join(o.strip() for o in os.environ.get("ALLOWED_ORIGINS", "").split(",") if o.strip().startswith("https://"))
+    hdr = response.headers
+    hdr.setdefault("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
+    hdr.setdefault("X-Content-Type-Options", "nosniff")
+    hdr.setdefault("Referrer-Policy", "no-referrer")
+    hdr.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()")
+    hdr.setdefault("Content-Security-Policy", f"frame-ancestors 'self' {origins}".strip() + "; base-uri 'none'; object-src 'none'")
+    return response
+
+
+@app.middleware("http")
 
 async def block_docs_in_production_middleware(request: Request, call_next):
 
@@ -6751,7 +6766,9 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
 
                 # If Clerk JWKS/Issuer is unconfigured in environment, extract user_id gracefully
 
-                if not os.environ.get("CLERK_ISSUER") and not os.environ.get("CLERK_JWKS_URL"):
+                # Unverified decoding is a local-development convenience only: in production a
+                # missing CLERK_ISSUER/CLERK_JWKS_URL must never turn into "trust any token".
+                if not is_prod and not os.environ.get("CLERK_ISSUER") and not os.environ.get("CLERK_JWKS_URL"):
 
                     try:
 

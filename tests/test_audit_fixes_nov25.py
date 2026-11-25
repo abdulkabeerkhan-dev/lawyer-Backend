@@ -240,3 +240,28 @@ def test_article_184_follows_the_27th_amendment():
     assert "Article 175F" in json.dumps([r for r in rows if r["canonical_id"] == "CONST_1973_ART_185"] or
                                         [r for f in [os.path.join(ROOT, "data/statutes_v3_staging/statutes_v2_legacy.json")]
                                          for r in json.load(open(f, encoding="utf-8")) if r["canonical_id"] == "CONST_1973_ART_185"])
+
+
+def test_backend_sends_security_headers(monkeypatch):
+    from fastapi.testclient import TestClient
+    import main
+    monkeypatch.setenv("ALLOWED_ORIGINS", "https://section-frontend-production-f959.up.railway.app")
+    r = TestClient(main.app).get("/health")
+    h = {k.lower(): v for k, v in r.headers.items()}
+    assert h["x-content-type-options"] == "nosniff"
+    assert "max-age=" in h["strict-transport-security"]
+    assert "frame-ancestors 'self' https://section-frontend-production-f959.up.railway.app" in h["content-security-policy"]
+
+
+def test_production_never_accepts_unsigned_tokens(monkeypatch):
+    import asyncio, jwt as pyjwt
+    import main
+    from fastapi import HTTPException
+    from fastapi.security import HTTPAuthorizationCredentials
+    monkeypatch.setenv("ENVIRONMENT", "production")
+    monkeypatch.delenv("CLERK_ISSUER", raising=False)
+    monkeypatch.delenv("CLERK_JWKS_URL", raising=False)
+    forged = pyjwt.encode({"sub": "user_victim", "iss": "https://clerk.attacker.com"}, "x" * 32, algorithm="HS256")
+    with pytest.raises(HTTPException) as e:
+        asyncio.run(main.verify_clerk_session(HTTPAuthorizationCredentials(scheme="Bearer", credentials=forged)))
+    assert e.value.status_code in (401, 403)
