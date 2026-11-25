@@ -50,7 +50,7 @@ def extract_named_statute_canonical_ids(query_text: str) -> List[str]:
     # 1. Whole-statute direct mappings
     statute_canonical_map = {
         ("peca 2016", "peca", "prevention of electronic crimes act"): [
-            "PECA_2016_SEC_20", "PECA_2016_SEC_21", "PECA_2016_SEC_10", "PECA_2016_SEC_3", "PECA_2016_SEC_16"
+            "PECA_2016_SEC_20", "PECA_2016_SEC_21", "PECA_2016_SEC_24", "PECA_2016_SEC_14", "PECA_2016_SEC_16", "PECA_2016_SEC_3"
         ],
         ("fio 2001", "fio", "financial institutions ordinance", "financial institutions (recovery", "willful default", "wilful default", "willful defaulter", "wilful defaulter"): [
             "FIO_2001_SEC_2", "FIO_2001_SEC_20", "FIO_2001_SEC_9", "FIO_2001_SEC_10", "FIO_2001_SEC_22"
@@ -750,30 +750,52 @@ def extract_legal_issues_from_fact_pattern(
     # 8. PECA CYBERCRIME DETERMINISTIC BRANCH & IP DECOMPOSITION
     # =========================================================================
     if (is_peca_signal or "cybercrime" in active_domains) and primary_domain not in ("family", "rent"):
-        # Sub-issue 1: Specific PECA Section Alleged (Dignity, Modesty, Fraud)
+        # Sub-issue 1: the PECA offences the facts point to. Section numbers follow the
+        # statute: s.10 is cyber terrorism (never a default), s.14 electronic fraud,
+        # s.24 cyber stalking, s.21 modesty, s.16 identity information.
+        _peca_map = [
+            (["dignity", "defam", "false information", "reputation", "intimidat"], "20", "offences against dignity"),
+            (["modesty", "obscen", "sexually explicit", "intimate", "nude", "morph", "blackmail"], "21", "offences against modesty"),
+            (["stalk", "follow", "harass", "repeated", "unwanted contact"], "24", "cyber stalking"),
+            (["bully", "cyberbully"], "24A", "cyberbullying"),
+            (["identity", "fake account", "impersonat", "fake profile", "fake id"], "16", "unauthorized use of identity information"),
+            (["unauthorized access", "unauthorised access", "hack", "account access", "password"], "3", "unauthorized access"),
+            (["fraud", "deceiv", "dishonest", "scam", "phishing", "money transfer"], "14", "electronic fraud"),
+            (["forg", "fabricat", "fake document", "tamper"], "13", "electronic forgery"),
+            (["spoof"], "26", "spoofing"),
+            (["hate speech", "sectarian", "religious hatred"], "11", "hate speech"),
+            (["terror", "coerce the government", "intimidate the public"], "10", "cyber terrorism"),
+        ]
+        _peca_hits = [(sec, label) for kws, sec, label in _peca_map if any(k in q_low for k in kws)]
+        _named = re.findall(r"(?:section|s\.)\s*(\d+[a-z]?)\s*(?:of\s+)?(?:the\s+)?peca", q_low)
+        for _n in _named:
+            if _n.upper() not in [h[0] for h in _peca_hits]:
+                _peca_hits.append((_n.upper(), f"section {_n.upper()}"))
+        if not _peca_hits:
+            _peca_hits = [("20", "offences against dignity"), ("21", "offences against modesty")]
+        _peca_secs = list(dict.fromkeys(h[0] for h in _peca_hits))
         issues.append(LegalSubIssue(
             issue_id="issue_peca_specific_section_alleged",
-            heading="Specific PECA Section Alleged: Dignity, Modesty & Electronic Fraud (Sections 20, 21, 10 PECA 2016)",
-            description="Identification of the specific substantive cybercrime offences alleged under PECA 2016: offences against dignity of natural person (Section 20), cyberstalking and modesty (Section 21), and electronic fraud / cyber-terrorism (Section 10).",
+            heading="Specific PECA Offence Alleged (" + ", ".join(f"Section {x}" for x in _peca_secs) + " PECA 2016)",
+            description="Identification of the substantive cybercrime offences the facts disclose under PECA 2016: "
+                        + "; ".join(f"Section {sec} ({label})" for sec, label in dict((h[0], h[1]) for h in _peca_hits).items()) + ".",
             controlling_statutes=["Prevention of Electronic Crimes Act, 2016"],
-            controlling_provisions=["PECA_2016_SEC_20", "PECA_2016_SEC_21", "PECA_2016_SEC_10"] + (["PECA_2016_SEC_3"] if any(k in q_low for k in ["unauthorized access", "hacking"]) else []),
+            controlling_provisions=[f"PECA_2016_SEC_{x}" for x in _peca_secs],
             search_queries=[
-                "Section 20 Section 21 Section 10 PECA 2016 cybercrime dignity cyberstalking electronic fraud",
-                "Section 20 PECA online defamation false information"
+                " ".join(f"Section {x}" for x in _peca_secs) + " PECA 2016 " + " ".join(dict.fromkeys(h[1] for h in _peca_hits)),
             ],
-            factual_anchors=["PECA 2016", "online defamation", "cyberstalking", "electronic fraud"]
+            factual_anchors=["PECA 2016"] + list(dict.fromkeys(h[1] for h in _peca_hits))
         ))
-
         # Sub-issue 2: Punishment & Prohibitory Clause Applicability
         issues.append(LegalSubIssue(
             issue_id="issue_peca_punishment_prohibitory_clause",
             heading="Punishment & Prohibitory Clause Applicability (Section 497 CrPC & Section 43 PECA 2016)",
             description="Examination of the maximum statutory punishment under the alleged PECA sections, determining whether offences fall outside the prohibitory clause of Section 497 CrPC (punishable with less than 10 years) and are bailable under Section 43 PECA 2016.",
             controlling_statutes=["Code of Criminal Procedure, 1898", "Prevention of Electronic Crimes Act, 2016"],
-            controlling_provisions=["CRPC_1898_SEC_498", "CRPC_1898_SEC_497", "PECA_2016_SEC_20"],
+            controlling_provisions=["CRPC_1898_SEC_498", "CRPC_1898_SEC_497", "PECA_2016_SEC_43"],
             search_queries=[
                 "Section 43 PECA bailable non-bailable offences prohibitory clause Section 497 CrPC",
-                "punishment under Section 20 Section 21 PECA 2016"
+                "punishment under " + " ".join(f"Section {x}" for x in _peca_secs) + " PECA 2016"
             ],
             factual_anchors=["prohibitory clause", "punishment under PECA", "Section 43 PECA"]
         ))

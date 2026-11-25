@@ -204,3 +204,20 @@ def test_no_omitted_record_claims_to_be_in_force():
                 st = r.get("status") if isinstance(r, dict) else None
                 if isinstance(st, str) and st.lower() in ("omitted", "repealed"):
                     assert r.get("in_force") is False, (f, r.get("canonical_id"))
+
+
+@pytest.mark.parametrize("q,want,never", [
+    ("Someone keeps cyberstalking and harassing my sister online", ["PECA_2016_SEC_24"], ["PECA_2016_SEC_10"]),
+    ("A fake account impersonating me was created on Facebook under PECA", ["PECA_2016_SEC_16"], ["PECA_2016_SEC_10"]),
+    ("I was scammed by a phishing link, a cybercrime under PECA", ["PECA_2016_SEC_14"], ["PECA_2016_SEC_10"]),
+    ("Posts threatening to terrorise the public and coerce the government, PECA offence", ["PECA_2016_SEC_10"], []),
+])
+def test_peca_offences_follow_the_facts(q, want, never):
+    from core.legal_issue_extractor import extract_legal_issues_from_fact_pattern
+    r = extract_legal_issues_from_fact_pattern(q, planner_domain="cybercrime")
+    issues = r.issues
+    provs = [p for i in issues for p in (getattr(i, "controlling_provisions", None) or [])]
+    for w in want:
+        assert w in provs, (q, provs)
+    for n in never:
+        assert n not in provs, (q, provs)

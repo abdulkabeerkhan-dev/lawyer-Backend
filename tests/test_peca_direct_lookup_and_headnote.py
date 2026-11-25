@@ -17,7 +17,10 @@ def test_fix1_named_statute_canonical_ids_direct_lookup():
     peca_cids = extract_named_statute_canonical_ids("What is the offence under PECA 2016?")
     assert "PECA_2016_SEC_20" in peca_cids
     assert "PECA_2016_SEC_21" in peca_cids
-    assert "PECA_2016_SEC_10" in peca_cids
+    # s.10 is cyber terrorism and must not be a default for a generic PECA question;
+    # cyber stalking (s.24) is one of the provisions actually invoked most often.
+    assert "PECA_2016_SEC_24" in peca_cids
+    assert "PECA_2016_SEC_10" not in peca_cids
 
     fio_cids = extract_named_statute_canonical_ids("Bank filed suit under FIO 2001 for recovery.")
     assert "FIO_2001_SEC_9" in fio_cids
