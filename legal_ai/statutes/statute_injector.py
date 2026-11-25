@@ -70,8 +70,8 @@ class StatuteInjector:
             for ufile in self.unified_dir.glob("*.json"):
                 act_code = ufile.stem
                 try:
-                    with open(ufile, "r", encoding="utf-8") as f:
-                        data = json.load(f)
+                    from core.unified_statute_store import take_statute_file
+                    data = take_statute_file(ufile, "injector")  # parse shared with UnifiedStatuteStore
                     if isinstance(data, dict):
                         records = data.get("records") or data.get("sections") or data.get("provisions") or list(data.values())
                     elif isinstance(data, list):

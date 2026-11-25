@@ -120,6 +120,45 @@ def verify_reviewed_tier(canonical_id: str, content_hash: str) -> bool:
     except Exception:
         return False
 
+# ---------------------------------------------------------------------------
+# Shared parse of the statute JSON files.
+# UnifiedStatuteStore and StatuteInjector both index every statute file. Parsing
+# each file once and letting each consumer take shallow copies of the records keeps
+# the large text strings in memory once (~150 MB saved on a 1 GB container), while
+# each consumer's own edits to its records stay separate, exactly as before.
+_STATUTE_PARSE_CACHE: Dict[str, Any] = {}
+_STATUTE_PARSE_TAKEN: Dict[str, set] = {}
+_STATUTE_PARSE_CONSUMERS = {"store", "injector"}
+_STATUTE_PARSE_LOCK = __import__("threading").Lock()
+
+
+def take_statute_file(path: str, consumer: str) -> Any:
+    """Parsed JSON of one statute file, with every top-level record dict shallow-copied
+    for `consumer`. The shared parse is dropped once both consumers have taken it."""
+    key = os.path.abspath(str(path))
+    with _STATUTE_PARSE_LOCK:
+        data = _STATUTE_PARSE_CACHE.get(key)
+        if data is None:
+            with open(key, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            _STATUTE_PARSE_CACHE[key] = data
+        taken = _STATUTE_PARSE_TAKEN.setdefault(key, set())
+        taken.add(consumer)
+        if taken >= _STATUTE_PARSE_CONSUMERS:
+            _STATUTE_PARSE_CACHE.pop(key, None)
+            _STATUTE_PARSE_TAKEN.pop(key, None)
+    return _copy_records(data)
+
+
+def _copy_records(data: Any) -> Any:
+    if isinstance(data, list):
+        return [dict(r) if isinstance(r, dict) else r for r in data]
+    if isinstance(data, dict):
+        return {k: _copy_records(v) if isinstance(v, (list, dict)) else v for k, v in data.items()}
+    return data
+
+
+
 class UnifiedStatuteStore:
     _instance = None
 
@@ -152,8 +191,8 @@ class UnifiedStatuteStore:
             act_code = fname.replace(".json", "")
             fpath = os.path.join(target_dir, fname)
             try:
-                with open(fpath, "r", encoding="utf-8") as f:
-                    provisions = json.load(f)
+                if True:  # parse is shared with StatuteInjector (see take_statute_file)
+                    provisions = take_statute_file(fpath, "store")
                     if isinstance(provisions, dict):
                         for k in ["sections", "provisions", "data"]:
                             if k in provisions and isinstance(provisions[k], list):
