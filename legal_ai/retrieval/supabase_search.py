@@ -333,7 +333,7 @@ async def search_supabase_judgments(
                 def _query_fulltext():
                     res = sb.table("full_judgments").select(
                         "id, case_id, case_title, neutral_citation, court_name, decision_date, full_text"
-                    ).limit(4).text_search("full_text", ft_ts).execute()
+                    ).limit(4).text_search("fts_headnote", ft_ts, options={"config": "english"}).execute()  # full_text lives in R2 now; search the indexed headnote vector
                     return res.data or []
 
                 ft_records = safe_supabase_query(_query_fulltext, retries=1)
