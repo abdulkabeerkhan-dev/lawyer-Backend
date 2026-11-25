@@ -287,3 +287,26 @@ def test_lookup_matches_real_citation_not_serial_case_id(monkeypatch):
     assert case_store.get_case_by_identifier("2003_PLD_LHC_102")["case_title"] == "LAHORE CASE"
     got = case_store.get_cases_batch(["1978 SCMR 81", "1978_SCMR_402", "1999 SCMR 1"])
     assert [g["id"] for g in got] == ["x1", "x2"]
+
+
+def _real_pdf(text):
+    import pymupdf
+    doc = pymupdf.open()
+    doc.new_page().insert_text((72, 72), text)
+    return doc.tobytes()
+
+
+def test_shared_series_pdf_is_checked_against_the_case(monkeypatch):
+    good = _real_pdf("2003 PLD 102 MUHAMMAD AJMAL VS THE STATE - SUPREME-COURT")
+    monkeypatch.setattr("legal_ai.storage.r2_text_store.r2_configured", lambda: True)
+    monkeypatch.setattr("legal_ai.storage.r2_text_store._signed_get", lambda key, timeout_s: _zip({102: good}))
+    monkeypatch.setattr(case_store, "get_case_by_identifier",
+                        lambda cid: {"case_title": "MUHAMMAD AJMAL v. THE STATE"})
+    assert case_store.get_case_pdf_bytes("2003_PLD_SC_102") == good
+    case_store._bundle_cache.clear()
+    monkeypatch.setattr(case_store, "get_case_by_identifier",
+                        lambda cid: {"case_title": "ZAHOOR ELAHI v. FEDERATION OF PAKISTAN"})
+    assert case_store.get_case_pdf_bytes("2003_PLD_LAH_102") is None  # PDF is a different judgment
+    case_store._bundle_cache.clear()
+    monkeypatch.setattr(case_store, "get_case_by_identifier", lambda cid: None)
+    assert case_store.get_case_pdf_bytes("2003_PLD_102") == good  # unknown title: don't block

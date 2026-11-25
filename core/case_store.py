@@ -326,12 +326,12 @@ def get_case_pdf_bytes(
     except (TypeError, ValueError):
         page = None
     if not (journal and year and page) and case_id:
-        m1 = re.search(r'\b(19\d\d|20\d\d)[_\s]+([a-zA-Z\(\)]+)[_\s]+(\d+)\b', case_id)
-        m2 = None if m1 else re.search(r'\b([a-zA-Z\(\)]+)[_\s]+(19\d\d|20\d\d)[_\s]+(\d+)\b', case_id)
-        if m1:
-            year, journal, page = int(m1.group(1)), m1.group(2).upper(), int(m1.group(3))
-        elif m2:
-            journal, year, page = m2.group(1).upper(), int(m2.group(2)), int(m2.group(3))
+        # Handles every citation/key form, including Zilliz keys with a court code
+        # (2003_PLD_SC_102), which the old year_journal_page pattern could not parse.
+        from legal_ai.verification.citation_keys import citation_key
+        ck = citation_key(case_id)
+        if ck:
+            year, journal, page = int(ck[0]), ck[1], int(ck[2])
     if not (journal and year and page):
         return None
     try:
@@ -350,7 +350,40 @@ def get_case_pdf_bytes(
     except Exception as err:
         logger.warning(f"[CaseStore] PDF fetch failed for {journal} {year} {page}: {err}")
         return None
-    return data if data and data.startswith(b"%PDF") else None
+    if not (data and data.startswith(b"%PDF")):
+        return None
+    if journal in _SHARED_SERIES_JOURNALS and not _pdf_matches_case(data, case_id or f"{year}_{journal}_{page}"):
+        logger.warning(f"[CaseStore] PDF {journal} {year} {page} does not match the requested case; not served")
+        return None
+    return data
+
+
+# PLD and YLR number each court's series separately, but the PDF archive is keyed only by
+# journal/year/page, so one PDF can stand for several judgments (4,694 such PDFs).
+_SHARED_SERIES_JOURNALS = {"PLD", "YLR"}
+_TITLE_STOP = {"THE", "AND", "VS", "VERSUS", "STATE", "OTHERS", "OTHER", "THROUGH", "GOVERNMENT", "PAKISTAN",
+               "MST", "MUHAMMAD", "MOHAMMAD", "SECRETARY", "PROVINCE", "FEDERATION", "LTD", "LIMITED", "ANOTHER", "AHMAD",
+               "AHMED", "KHAN", "ALI", "SHAH", "CHAIRMAN", "COMMISSIONER", "PUNJAB", "SINDH"}
+
+
+def _pdf_matches_case(pdf: bytes, case_id: str) -> bool:
+    """True when the PDF's first page names a distinctive party of the requested case.
+    Unknown title or unreadable PDF -> True (do not block on missing information)."""
+    try:
+        rec = get_case_by_identifier(case_id)
+        title = str((rec or {}).get("case_title") or "")
+        words = {w for w in re.findall(r"[A-Z][A-Z]{3,}", title.upper()) if w not in _TITLE_STOP}
+        if not words:
+            return True
+        import pymupdf
+        doc = pymupdf.open(stream=pdf, filetype="pdf")
+        head = doc[0].get_text().upper() if doc.page_count else ""
+        if not head.strip():
+            return True
+        return any(w in head for w in words)
+    except Exception as err:
+        logger.warning(f"[CaseStore] PDF/case match check skipped: {err}")
+        return True
 
 
 # ------------------------------------------------------------------ legacy statutes
