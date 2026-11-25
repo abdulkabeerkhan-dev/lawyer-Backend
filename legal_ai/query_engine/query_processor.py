@@ -1886,7 +1886,7 @@ async def process_query_job_legal_ai(
             opt_lines.append(f"- **{label}**{statute_info}{forum_info}")
         
         clarification_msg = (
-            f"### \xe2\x9a\xa0\xef\xb8\x8f Clarification Required Before Research\n\n"
+            f"### \u26a0\ufe0f Clarification Required Before Research\n\n"
             f"{q_heading}\n\n"
             f"To ensure statutory accuracy and avoid citing inapplicable precedent, please specify the remedy or forum you are pursuing:\n\n"
             + "\n".join(opt_lines)
@@ -2815,9 +2815,14 @@ async def process_query_job_legal_ai(
         execute_stage6_verification_and_rendering
     )
 
+    try:
+        _planned_provisions = list(getattr(legal_query_plan, "provisions", None) or getattr(legal_query_plan, "statutory_provisions", None) or [])
+    except Exception:
+        _planned_provisions = []
     bounded_evidence_pack, statute_intent = build_evidence_pack_for_query(
         effective_user_query,
-        precedent_cards=precedent_cards
+        precedent_cards=precedent_cards,
+        planned_provisions=_planned_provisions,
     )
     is_structured_mode = bool(bounded_evidence_pack.items)
 
