@@ -107,3 +107,37 @@ def test_zilliz_keys_resolve_to_supabase_status(monkeypatch):
     assert got["2007_PLD_SC_87"] == ""
     assert got["1978_SCMR_SC_31"] is None  # never borrow another case's status
     assert got["2001_YLR_LHC_9"] is None
+
+
+def test_era_toggle_filters_candidates():
+    from legal_ai.ranking.era_filter import apply_request_filters
+    cands = [
+        {"case_id": "2021_SCMR_SC_14", "citation": "2021 SCMR 14", "court_code": "SC"},
+        {"case_id": "2015_PLD_LHC_9", "citation": "PLD 2015 Lah 9", "court_code": "LHC"},
+        {"case_id": "2022_PLD_AJKSC_3", "metadata": {"citation": "PLD 2022 AJ&K SC 3",
+                                                     "court_name": "Supreme Court of Azad Jammu & Kashmir"}},
+        {"case_id": "2019_YLR_LHC_77", "year": 2019, "court_code": "LHC"},
+    ]
+    keep, t = apply_request_filters(cands, {"era": "modern", "min_year": 2018})
+    assert [c["case_id"] for c in keep] == ["2021_SCMR_SC_14", "2022_PLD_AJKSC_3", "2019_YLR_LHC_77"]
+    keep, _ = apply_request_filters(cands, {"era": "apex", "court_filter": "Supreme Court of Pakistan"})
+    assert [c["case_id"] for c in keep] == ["2021_SCMR_SC_14"]
+    keep, t = apply_request_filters(cands, {"era": "all"})
+    assert keep == cands and t == {}
+
+
+def test_relevance_filter_drops_cases_blocked_in_supabase(monkeypatch):
+    from legal_ai.verification import case_status
+    monkeypatch.setattr(case_status, "_lookup", lambda keys: {k: ("quarantined" if k == "2005_CLC_SHC_1241" else "") for k in keys})
+    case_status._cache.clear()
+    from legal_ai.ranking.relevance_filter import filter_candidate_quality_before_ranking
+    cands = [{"case_id": "2005_CLC_SHC_1241", "title": "A v B", "text": "x " * 400},
+             {"case_id": "2006_CLC_SHC_7", "title": "C v D", "text": "y " * 400}]
+    kept, counts = filter_candidate_quality_before_ranking(raw_candidates=cands, query_plan=None)
+    ids = [c["case_id"] for c in kept]
+    assert "2005_CLC_SHC_1241" not in ids
+    assert counts.get("trust_gate_exclusion") == 1
+    # a failed lookup admits the case rather than blocking the query
+    monkeypatch.setattr(case_status, "_lookup", lambda keys: (_ for _ in ()).throw(RuntimeError("db down")))
+    case_status._cache.clear()
+    assert case_status.blocked(["2005_CLC_SHC_1241"]) == set()
