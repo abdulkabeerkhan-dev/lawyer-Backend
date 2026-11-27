@@ -15217,46 +15217,64 @@ def check_access_request_rate_limit(request: Request, max_requests: int = 5, win
 
 
 
-@app.post("/request-access")
+_EMAIL_RE = re.compile(r"^[A-Za-z0-9._%+'-]{1,64}@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,24}$")
 
-async def register_access_request(request_payload: AccessRegistration, request: Request):
 
-    check_access_request_rate_limit(request)
-
-    if not supabase: raise HTTPException(status_code=503, detail="Database service is currently offline.")
-
+def send_clerk_invitation(email: str, full_name: str = "", firm_name: str = "") -> str:
+    """Send a Clerk sign-up invitation. Returns 'invited', 'already' (invited before or already a
+    user) or 'failed'. Never raises: a failure leaves the request pending for a retry."""
+    key = os.environ.get("CLERK_SECRET_KEY", "").strip()
+    if not key:
+        return "failed"
+    site = os.environ.get("PUBLIC_SITE_URL", "https://sectionai.net").rstrip("/")
+    body = {"email_address": email, "redirect_url": f"{site}/accept-invitation", "notify": True,
+            "ignore_existing": True, "public_metadata": {"full_name": full_name[:120], "firm_name": firm_name[:160]}}
     try:
-
-        duplicate_check = supabase.table("access_requests").select("id").eq("email", request_payload.email).execute()
-
-        if duplicate_check.data and len(duplicate_check.data) > 0:
-
-            return {"status": "duplicate", "message": "An invitation request for this email address is already under review."}
-
-            
-
-        supabase.table("access_requests").insert({
-
-            "full_name": request_payload.full_name,
-
-            "firm_name": request_payload.firm_name,
-
-            "email": request_payload.email,
-
-            "status": "pending"
-
-        }).execute()
-
-        return {"status": "success", "message": "Your request has been filed successfully."}
-
-    except HTTPException:
-
-        raise
-
+        r = httpx.post("https://api.clerk.com/v1/invitations", json=body, timeout=15,
+                       headers={"Authorization": f"Bearer {key}"})
+        if r.status_code in (200, 201):
+            return "invited"
+        codes = set()
+        if r.headers.get("content-type", "").startswith("application/json"):
+            codes = {e.get("code") for e in (r.json().get("errors") or [])}
+        if codes & {"duplicate_record", "form_identifier_exists", "identifier_already_exists"}:
+            return "already"
+        print(f"⚠️ Clerk invitation failed ({r.status_code}): {sorted(c for c in codes if c)}", file=sys.stderr, flush=True)
     except Exception as e:
+        print(f"⚠️ Clerk invitation error: {type(e).__name__}", file=sys.stderr, flush=True)
+    return "failed"
 
+
+@app.post("/request-access")
+async def register_access_request(request_payload: AccessRegistration, request: Request):
+    """Every access request is invited straight away (owner's choice, Nov 2026): the request is
+    stored, Clerk emails a sign-up invitation, and the request is marked 'invited'. If Clerk is
+    unreachable the request stays 'pending' and the next submission retries."""
+    check_access_request_rate_limit(request)
+    if not supabase: raise HTTPException(status_code=503, detail="Database service is currently offline.")
+    email = (request_payload.email or "").strip().lower()
+    if not _EMAIL_RE.match(email):
+        raise HTTPException(status_code=422, detail="Please enter a valid email address.")
+    full_name = (request_payload.full_name or "").strip()[:120]
+    firm_name = (request_payload.firm_name or "").strip()[:160]
+    try:
+        existing = supabase.table("access_requests").select("id, status").eq("email", email).execute()
+        if existing.data:
+            if str(existing.data[0].get("status")) == "invited":
+                return {"status": "duplicate", "message": "An invitation has already been sent to this email address. Please check your inbox."}
+        else:
+            supabase.table("access_requests").insert({
+                "full_name": full_name, "firm_name": firm_name, "email": email, "status": "pending"
+            }).execute()
+        outcome = await asyncio.to_thread(send_clerk_invitation, email, full_name, firm_name)
+        if outcome in ("invited", "already"):
+            supabase.table("access_requests").update({"status": "invited"}).eq("email", email).execute()
+            return {"status": "success", "message": "Check your inbox: we have emailed you an invitation to create your Section account."}
+        return {"status": "success", "message": "Your request has been received. Your invitation email is on its way shortly."}
+    except HTTPException:
+        raise
+    except Exception as e:
         if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
-
         raise HTTPException(status_code=500, detail="Failed to register access request.")
 
 @app.get("/request-status/{email:path}")
@@ -15414,7 +15432,11 @@ async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_i
 
                 status_val = access_check.data[0].get("status")
 
-                if status_val == "admin_approved":
+                # Admin rights come only from the explicit ADMIN_EMAILS list. "admin_approved" is also
+                # what the admin panel sets when it adds an associate, so on its own it must not make the
+                # new account an administrator.
+                admin_emails = {e.strip().lower() for e in os.environ.get("ADMIN_EMAILS", "").split(",") if e.strip()}
+                if status_val == "admin_approved" and str(payload.email or "").strip().lower() in admin_emails:
 
                     assigned_role = "admin"
 
