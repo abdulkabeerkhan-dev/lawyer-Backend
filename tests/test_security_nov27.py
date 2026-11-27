@@ -237,3 +237,13 @@ def test_pdf_links_have_no_secret_written_in_the_code(monkeypatch):
 def test_anonymous_pdf_callers_are_rate_limited_per_ip():
     src = open(os.path.join(ROOT, "main.py"), encoding="utf-8").read()
     assert '"browser_user", "dev_bypass_user")' in src and 'rate_limit_id = "ip:" + (get_real_client_ip(request)' in src
+
+
+def test_statute_search_falls_back_instead_of_crashing(monkeypatch):
+    """When Zilliz is unreachable the local store answers; a typo here used to raise NameError,
+    so every statute lookup silently returned nothing during a Zilliz outage."""
+    from legal_ai.retrieval import statute_search
+    monkeypatch.setattr(statute_search, "get_zilliz_client", lambda: None)
+    hits = asyncio.run(statute_search.search_statutes_hybrid("punishment for cheating dishonestly inducing delivery", top_k=5))
+    assert hits and any(h.get("canonical_id") == "PPC_1860_SEC_420" for h in hits)
+    assert asyncio.run(statute_search.search_statutes_hybrid("cheating", top_k=3, act_codes=["PPC_1860"])) is not None

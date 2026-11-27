@@ -236,7 +236,8 @@ async def search_statutes_hybrid(
             logger.warning(f"[StatuteSearch] Zilliz search failed, using local store fallback: {e}")
 
     # Fallback: Local search via UnifiedStatuteStore
-    return search_statutes_local_fallback(norm_query, top_k=top_k, act_code=act_code)
+    first_act = act_codes[0] if isinstance(act_codes, list) and act_codes else (act_codes or None)
+    return search_statutes_local_fallback(norm_query, top_k=top_k, act_code=first_act)
 
 
 def search_statutes_local_fallback(
