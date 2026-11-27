@@ -265,3 +265,43 @@ def test_production_never_accepts_unsigned_tokens(monkeypatch):
     with pytest.raises(HTTPException) as e:
         asyncio.run(main.verify_clerk_session(HTTPAuthorizationCredentials(scheme="Bearer", credentials=forged)))
     assert e.value.status_code in (401, 403)
+
+
+def test_access_request_sends_clerk_invitation(monkeypatch):
+    import main
+    sent = []
+
+    class R:
+        def __init__(self, data=None): self.data = data or []
+
+    class T:
+        def __init__(self, store): self.store, self.op, self.payload, self.flt = store, None, None, None
+        def select(self, *_): self.op = "select"; return self
+        def insert(self, row): self.op, self.payload = "insert", row; return self
+        def update(self, row): self.op, self.payload = "update", row; return self
+        def eq(self, k, v): self.flt = (k, v); return self
+        def execute(self):
+            if self.op == "select":
+                return R([r for r in self.store if r.get(self.flt[0]) == self.flt[1]])
+            if self.op == "insert":
+                self.store.append(dict(self.payload)); return R([self.payload])
+            for r in self.store:
+                if r.get(self.flt[0]) == self.flt[1]: r.update(self.payload)
+            return R()
+
+    store = []
+
+    class SB:
+        def table(self, name): return T(store)
+
+    monkeypatch.setattr(main, "supabase", SB())
+    monkeypatch.setattr(main, "check_access_request_rate_limit", lambda r: None)
+    monkeypatch.setattr(main, "send_clerk_invitation", lambda e, n="", f="": sent.append(e) or "invited")
+    from fastapi.testclient import TestClient
+    c = TestClient(main.app)
+    r = c.post("/request-access", json={"full_name": "A B", "firm_name": "F", "email": "New.Lawyer@Example.com"})
+    assert r.status_code == 200 and sent == ["new.lawyer@example.com"]
+    assert store[0]["status"] == "invited"
+    r2 = c.post("/request-access", json={"full_name": "A B", "firm_name": "F", "email": "new.lawyer@example.com"})
+    assert r2.json()["status"] == "duplicate" and len(sent) == 1
+    assert c.post("/request-access", json={"full_name": "x", "firm_name": "y", "email": "not-an-email"}).status_code == 422
