@@ -12,6 +12,7 @@ Resolves and delivers working PDFs for 100% of judgment cards:
 """
 
 import os
+import secrets
 import re
 import time
 import json
@@ -94,13 +95,22 @@ def extract_journal_and_year(citation: str, case_id: str = "") -> tuple:
     return journal, year, page
 
 
+_EPHEMERAL_PDF_SECRET = secrets.token_hex(32)
+
+
+def _pdf_signing_secret() -> str:
+    """PDF_SIGNING_SECRET (or SECRET_KEY). Without one, a random per-process secret is used, so
+    links stop working after a restart but can never be forged from a value written in the code."""
+    return os.environ.get("PDF_SIGNING_SECRET") or os.environ.get("SECRET_KEY") or _EPHEMERAL_PDF_SECRET
+
+
 def create_hmac_pdf_token(case_id: str, user_id: str = "anonymous", expires_in: int = 86400, secret: str = "") -> str:
     """
     Creates a secure cryptographically bound HMAC-SHA256 signature containing
     case_id, user_id, and unix expiration timestamp.
     """
     if not secret:
-        secret = os.environ.get("PDF_SIGNING_SECRET") or os.environ.get("SECRET_KEY") or "section_ai_pdf_signing_secret_prod_secure"
+        secret = _pdf_signing_secret()
     exp = int(time.time()) + expires_in
     payload = f"{case_id}|{user_id}|{exp}"
     sig = hmac.new(secret.encode('utf-8'), payload.encode('utf-8'), hashlib.sha256).hexdigest()
@@ -124,7 +134,7 @@ def verify_hmac_pdf_token(token: str, case_id: str, secret: str = "") -> bool:
     if time.time() > exp:
         return False  # Expired
     if not secret:
-        secret = os.environ.get("PDF_SIGNING_SECRET") or os.environ.get("SECRET_KEY") or "section_ai_pdf_signing_secret_prod_secure"
+        secret = _pdf_signing_secret()
     expected_payload = f"{case_id}|{user_id}|{exp}"
     expected_sig = hmac.new(secret.encode('utf-8'), expected_payload.encode('utf-8'), hashlib.sha256).hexdigest()
     return hmac.compare_digest(sig, expected_sig)

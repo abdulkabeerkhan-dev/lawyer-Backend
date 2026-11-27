@@ -18,7 +18,7 @@ import urllib.parse
 
 from datetime import datetime, timezone, timedelta
 
-from typing import List, Dict, Any, Optional, cast, Set, Tuple, Union
+from typing import List, Dict, Any, Optional, cast, Set, Tuple, Union, Literal
 
 from collections import defaultdict, deque
 
@@ -417,6 +417,24 @@ app.include_router(judgments_router)
 app.include_router(auth_router)
 app.include_router(drafting_router)
 
+
+
+MAX_REQUEST_BYTES = int(os.environ.get("MAX_REQUEST_BYTES", str(120 * 1024 * 1024)))
+
+
+@app.middleware("http")
+async def request_size_limit_middleware(request: Request, call_next):
+    """Refuse oversized bodies before they are read (uploads are capped at 25 MB per file in the
+    app; base64 adds a third, so the default leaves room for several files)."""
+    length = request.headers.get("content-length")
+    if length is not None:
+        try:
+            too_big = int(length) > MAX_REQUEST_BYTES
+        except ValueError:
+            return JSONResponse(status_code=400, content={"detail": "Invalid Content-Length header."})
+        if too_big:
+            return JSONResponse(status_code=413, content={"detail": "Request is too large."})
+    return await call_next(request)
 
 
 @app.middleware("http")
@@ -6798,7 +6816,7 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
 
                         "algorithms": ["RS256"],
 
-                        "leeway": 300,
+                        "leeway": 10,
 
                         "options": {
 
@@ -6842,24 +6860,16 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
 
                     # Mandate 1: Verify authorized party (if configured in production)
 
-                    expected_party = os.environ.get("CLERK_AUTHORIZED_PARTY", "").strip()
-
-                    if expected_party:
-
-                        azp = payload.get("azp")
-
+                    # Comma-separated list, e.g. "https://sectionai.net,https://www.sectionai.net"
+                    expected_parties = {p.strip().rstrip("/") for p in os.environ.get("CLERK_AUTHORIZED_PARTY", "").split(",") if p.strip()}
+                    if expected_parties:
+                        azp = str(payload.get("azp") or "").rstrip("/")
                         aud = payload.get("aud")
-
                         aud_list = aud if isinstance(aud, list) else ([aud] if aud else [])
-
-                        if azp != expected_party and expected_party not in aud_list:
-
+                        if azp not in expected_parties and not expected_parties & {str(a).rstrip("/") for a in aud_list}:
                             raise HTTPException(
-
                                 status_code=status.HTTP_401_UNAUTHORIZED,
-
-                                detail=f"Access Denied: Token authorized party or audience mismatch. Expected '{expected_party}'."
-
+                                detail="Access Denied: Token authorized party or audience mismatch."
                             )
 
 
@@ -6923,13 +6933,75 @@ async def verify_clerk_session(credentials: Optional[HTTPAuthorizationCredential
                 status_code=status.HTTP_403_FORBIDDEN, 
 
                 detail=f"Access Denied: Prototype access is restricted to authorized testers ({user_id} not authorized)."
-
             )
-
-
-
+    if await asyncio.to_thread(is_user_deactivated, user_id):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access Denied: This account has been deactivated.")
     return user_id
+def internal_error(e: Exception) -> HTTPException:
+    """Log the real error server-side; the client only gets a generic message."""
+    print(f"⚠️ Internal error: {type(e).__name__}: {str(e)[:300]}", file=sys.stderr, flush=True)
+    return HTTPException(status_code=500, detail="Something went wrong on our side. Please try again.")
 
+
+_DEACTIVATED_CACHE: Dict[str, Tuple[float, bool]] = {}
+_DEACTIVATED_TTL = 60.0
+
+
+def is_user_deactivated(user_id: str) -> bool:
+    """True when an administrator set this account to 'inactive'. Cached for a minute per user.
+    A database outage does not lock everyone out: the last known answer (or False) is used."""
+    if not user_id or user_id == "mock_clerk_user_id_dev_run" or not supabase:
+        return False
+    now = time.time()
+    hit = _DEACTIVATED_CACHE.get(user_id)
+    if hit and now - hit[0] < _DEACTIVATED_TTL:
+        return hit[1]
+    try:
+        res = supabase.table("users").select("status").eq("id", user_id).limit(1).execute()
+        flag = bool(res.data) and str(res.data[0].get("status") or "").lower() == "inactive"
+    except Exception:
+        return hit[1] if hit else False
+    _DEACTIVATED_CACHE[user_id] = (now, flag)
+    return flag
+
+
+def clerk_backend_request(method: str, path: str, body: Optional[dict] = None) -> Optional[dict]:
+    """Call the Clerk Backend API with the server's secret key. Returns the JSON body, or None."""
+    key = os.environ.get("CLERK_SECRET_KEY", "").strip()
+    if not key:
+        return None
+    try:
+        r = httpx.request(method, "https://api.clerk.com/v1" + path, json=body, timeout=10,
+                          headers={"Authorization": f"Bearer {key}"})
+        if r.status_code >= 400:
+            print(f"⚠️ Clerk {method} /{path.split('/')[1]} failed ({r.status_code})", file=sys.stderr, flush=True)
+            return None
+        return r.json()
+    except Exception as e:
+        print(f"⚠️ Clerk API error: {type(e).__name__}", file=sys.stderr, flush=True)
+        return None
+
+
+_VERIFIED_EMAIL_CACHE: Dict[str, Tuple[float, str]] = {}
+
+
+def clerk_verified_email(user_id: str) -> str:
+    """The account's primary email as verified by Clerk, lower-cased ('' if unknown).
+    Never trust an email sent by the browser: anyone could claim someone else's address."""
+    if not user_id or not user_id.startswith("user_"):
+        return ""
+    hit = _VERIFIED_EMAIL_CACHE.get(user_id)
+    if hit and time.time() - hit[0] < 300:
+        return hit[1]
+    u = clerk_backend_request("GET", f"/users/{user_id}") or {}
+    primary = u.get("primary_email_address_id")
+    email = ""
+    for e in u.get("email_addresses") or []:
+        if e.get("id") == primary and (e.get("verification") or {}).get("status") == "verified":
+            email = str(e.get("email_address") or "").strip().lower()
+    if email:
+        _VERIFIED_EMAIL_CACHE[user_id] = (time.time(), email)
+    return email
 
 
 async def verify_admin_role(authenticated_user_id: str = Depends(verify_clerk_session)) -> str:
@@ -6969,10 +7041,8 @@ async def verify_admin_role(authenticated_user_id: str = Depends(verify_clerk_se
 # DATA TRANSPORT MODELS
 
 class UserSyncPayload(BaseModel):
-
-    email: str
-
-    full_name: str
+    email: Optional[str] = None   # ignored: the verified email is read from Clerk
+    full_name: str = Field(default="", max_length=200)
 
 
 
@@ -7008,8 +7078,7 @@ class AssociateCreatePayload(BaseModel):
 
 
 class AssociateStatusPayload(BaseModel):
-
-    status: str
+    status: Literal["active", "inactive"]
 
 
 
@@ -14545,8 +14614,9 @@ async def _authorize_pdf_access(
 
     # Sliding-window burst rate limiting
     rate_limit_id = caller_identifier
-    if not rate_limit_id or rate_limit_id in ("anonymous", "user", "hmac_pdf_client"):
-        rate_limit_id = getattr(getattr(request, "client", None), "host", "unknown_ip") or "unknown_ip"
+    if not rate_limit_id or rate_limit_id in ("anonymous", "user", "hmac_pdf_client", "browser_user", "dev_bypass_user"):
+        # Unauthenticated callers are limited per client IP, never in one bucket shared by everyone.
+        rate_limit_id = "ip:" + (get_real_client_ip(request) or "unknown_ip")
     check_burst_rate_limit(rate_limit_id, action="pdf stream")
 
     return caller_identifier
@@ -15359,116 +15429,65 @@ async def handle_backend_login(payload: LoginPayload):
 
 
 @app.post("/users/sync")
-
 async def sync_clerk_user_profile(payload: UserSyncPayload, authenticated_user_id: str = Depends(verify_clerk_session)):
-
-    if not supabase: 
-
-        return {"status": "offline", "user": {"id": authenticated_user_id, "email": payload.email, "full_name": payload.full_name, "role": "associate"}}
-
+    # The email always comes from Clerk (verified), never from the request body: a client-sent
+    # email would let any signed-in user claim another person's profile row or admin rights.
+    full_name = (payload.full_name or "").strip()[:120]
+    verified_email = await asyncio.to_thread(clerk_verified_email, authenticated_user_id)
+    fallback_user = {"id": authenticated_user_id, "email": verified_email, "full_name": full_name, "role": "associate"}
+    if not supabase:
+        return {"status": "offline", "user": fallback_user}
     try:
-
         profile_query = safe_supabase_query(lambda: supabase.table("users").select("*").eq("id", authenticated_user_id).execute())
-
         if profile_query.data and len(profile_query.data) > 0:
-
             existing_user = profile_query.data[0]
-
-            if existing_user.get("full_name") != payload.full_name or existing_user.get("email") != payload.email:
-
-                updated_profile = safe_supabase_query(lambda: supabase.table("users").update({
-
-                    "full_name": payload.full_name,
-
-                    "email": payload.email
-
-                }).eq("id", authenticated_user_id).execute())
-
+            changes = {}
+            if full_name and existing_user.get("full_name") != full_name:
+                changes["full_name"] = full_name
+            if verified_email and existing_user.get("email") != verified_email:
+                changes["email"] = verified_email
+            if changes:
+                updated_profile = safe_supabase_query(lambda: supabase.table("users").update(changes).eq("id", authenticated_user_id).execute())
                 res_data = updated_profile.data[0] if (updated_profile.data and len(updated_profile.data) > 0) else existing_user
-
                 return {"status": "updated", "user": res_data}
-
             return {"status": "exists", "user": existing_user}
-
-            
-
-        email_query = safe_supabase_query(lambda: supabase.table("users").select("*").eq("email", payload.email).execute())
-
+        if not verified_email:
+            # Without a verified email nothing can be matched or granted; try again on the next sign-in.
+            return {"status": "fallback", "user": fallback_user}
+        email_query = safe_supabase_query(lambda: supabase.table("users").select("*").eq("email", verified_email).execute())
         if email_query.data and len(email_query.data) > 0:
-
             legacy_user = email_query.data[0]
-
-            legacy_role = legacy_user.get("role", "associate")
-
             try:
-
                 upd = safe_supabase_query(lambda: supabase.table("users").update({
-
                     "id": authenticated_user_id,
-
-                    "full_name": payload.full_name,
-
-                    "role": legacy_role
-
-                }).eq("email", payload.email).execute())
-
+                    "full_name": full_name or legacy_user.get("full_name"),
+                    "role": legacy_user.get("role", "associate")
+                }).eq("email", verified_email).execute())
                 if upd.data and len(upd.data) > 0:
-
                     return {"status": "updated", "user": upd.data[0]}
-
             except Exception:
-
                 pass
-
-
-
         assigned_role = "associate"
-
         try:
-
-            access_check = safe_supabase_query(lambda: supabase.table("access_requests").select("status").eq("email", payload.email).execute())
-
+            access_check = safe_supabase_query(lambda: supabase.table("access_requests").select("status").eq("email", verified_email).execute())
             if access_check.data and len(access_check.data) > 0:
-
                 status_val = access_check.data[0].get("status")
-
                 # Admin rights come only from the explicit ADMIN_EMAILS list. "admin_approved" is also
                 # what the admin panel sets when it adds an associate, so on its own it must not make the
                 # new account an administrator.
                 admin_emails = {e.strip().lower() for e in os.environ.get("ADMIN_EMAILS", "").split(",") if e.strip()}
-                if status_val == "admin_approved" and str(payload.email or "").strip().lower() in admin_emails:
-
+                if status_val == "admin_approved" and verified_email in admin_emails:
                     assigned_role = "admin"
-
         except Exception:
-
             pass
-
-
-
-        new_row = {
-
-            "id": authenticated_user_id,
-
-            "email": payload.email,
-
-            "full_name": payload.full_name,
-
-            "role": assigned_role
-
-        }
-
+        new_row = {"id": authenticated_user_id, "email": verified_email, "full_name": full_name, "role": assigned_role}
         inserted_profile = safe_supabase_query(lambda: supabase.table("users").upsert(new_row).execute())
-
         user_res = inserted_profile.data[0] if (inserted_profile.data and len(inserted_profile.data) > 0) else new_row
-
         return {"status": "created", "user": user_res}
-
     except Exception as e:
+        print(f"⚠️ User sync notice: {type(e).__name__}", file=sys.stderr)
+        return {"status": "fallback", "user": fallback_user}
 
-        print(f"⚠️ User sync notice: {e}", file=sys.stderr)
-
-        return {"status": "fallback", "user": {"id": authenticated_user_id, "email": payload.email, "full_name": payload.full_name, "role": "associate"}}
 
 
 
@@ -15548,7 +15567,7 @@ async def update_user_profile(payload: ProfileUpdatePayload, authenticated_user_
 
         if os.environ.get("SENTRY_DSN"): sentry_sdk.capture_exception(e)
 
-        raise HTTPException(status_code=500, detail=str(e))
+        raise internal_error(e)
 
 
 
@@ -16753,7 +16772,7 @@ async def list_associates(admin_id: str = Depends(verify_admin_role)):
 
     except Exception as e:
 
-        raise HTTPException(status_code=500, detail=str(e))
+        raise internal_error(e)
 
 
 
@@ -16787,50 +16806,49 @@ async def create_associate(payload: AssociateCreatePayload, admin_id: str = Depe
 
     except Exception as e:
 
-        raise HTTPException(status_code=500, detail=str(e))
+        raise internal_error(e)
 
 
 
 @app.post("/admin/associates/{associate_id}/status")
-
 async def set_associate_status(associate_id: str, payload: AssociateStatusPayload, admin_id: str = Depends(verify_admin_role)):
-
+    if associate_id == admin_id:
+        raise HTTPException(status_code=400, detail="You cannot change the status of your own account.")
     try:
-
-        res = supabase.table("users").update({"role": payload.status, "status": payload.status}).eq("id", associate_id).execute()
-
+        # Only the status changes; the role (associate/admin) is never set from this endpoint.
+        res = supabase.table("users").update({"status": payload.status}).eq("id", associate_id).execute()
         if not res.data:
-
             res = supabase.table("access_requests").update({"status": payload.status}).eq("id", associate_id).execute()
-
         if not res.data:
-
             raise HTTPException(status_code=404, detail="Target associate not found.")
-
-        return {"status": "success", "data": res.data[0] if isinstance(res.data, list) else res.data}
-
+    except HTTPException:
+        raise
     except Exception as e:
-
-        raise HTTPException(status_code=500, detail=str(e))
-
+        print(f"⚠️ set_associate_status failed: {type(e).__name__}", file=sys.stderr)
+        raise HTTPException(status_code=500, detail="Could not update the associate.")
+    _DEACTIVATED_CACHE.pop(associate_id, None)
+    if associate_id.startswith("user_"):
+        # A Clerk ban also ends the person's open sessions straight away.
+        await asyncio.to_thread(clerk_backend_request, "POST",
+                                f"/users/{associate_id}/{'ban' if payload.status == 'inactive' else 'unban'}")
+    return {"status": "success", "data": res.data[0] if isinstance(res.data, list) else res.data}
 
 
 @app.delete("/admin/associates/{associate_id}")
-
 async def delete_associate(associate_id: str, admin_id: str = Depends(verify_admin_role)):
-
+    if associate_id == admin_id:
+        raise HTTPException(status_code=400, detail="You cannot remove your own account.")
     try:
-
         supabase.table("users").delete().eq("id", associate_id).execute()
-
         supabase.table("access_requests").delete().eq("id", associate_id).execute()
-
-        return {"status": "success", "message": f"Associate '{associate_id}' removed."}
-
     except Exception as e:
-
-        raise HTTPException(status_code=500, detail=str(e))
-
+        print(f"⚠️ delete_associate failed: {type(e).__name__}", file=sys.stderr)
+        raise HTTPException(status_code=500, detail="Could not remove the associate.")
+    _DEACTIVATED_CACHE.pop(associate_id, None)
+    if associate_id.startswith("user_"):
+        # Without this the Clerk account stays valid and the next sign-in recreates the profile.
+        await asyncio.to_thread(clerk_backend_request, "POST", f"/users/{associate_id}/ban")
+    return {"status": "success", "message": "Associate removed."}
 
 
 @app.get("/admin/activity")
@@ -17045,7 +17063,7 @@ async def list_associates_usage(
 
     except Exception as e:
 
-        raise HTTPException(status_code=500, detail=str(e))
+        raise internal_error(e)
 
 
 
@@ -17091,7 +17109,7 @@ async def export_training_data(admin_id: str = Depends(verify_admin_role)):
 
     except Exception as e:
 
-        raise HTTPException(status_code=500, detail=str(e))
+        raise internal_error(e)
 
 
 
