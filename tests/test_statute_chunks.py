@@ -94,3 +94,12 @@ def test_claude_usage_is_logged(capsys):
     assert instrument_usage(c) is c
     asyncio.run(c.messages.create(model="claude-x"))
     assert "[claude-usage] model=claude-x in=1200 out=300" in capsys.readouterr().err
+
+
+def test_model_compat_for_claude_5_models(monkeypatch):
+    from legal_ai.config import apply_model_compat
+    monkeypatch.setenv("CLAUDE_EFFORT", "medium")
+    new = apply_model_compat({"model": "claude-sonnet-5-5", "temperature": 0.0, "max_tokens": 10})
+    assert "temperature" not in new and new["extra_body"]["output_config"] == {"effort": "medium"}
+    old = apply_model_compat({"model": "claude-haiku-4-5-20251001", "temperature": 0.0})
+    assert old["temperature"] == 0.0 and "extra_body" not in old
