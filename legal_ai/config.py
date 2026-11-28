@@ -182,22 +182,28 @@ def get_zilliz_client():
 
 
 # --- Anthropic Client Management ---
+def log_usage(resp, model=None):
+    """One "[claude-usage] ..." line per Messages response, so spend can be read from the logs."""
+    usage = getattr(resp, "usage", None)
+    if usage is None:
+        return
+    print(f"[claude-usage] model={getattr(resp, 'model', None) or model} "
+          f"in={getattr(usage, 'input_tokens', 0) or 0} out={getattr(usage, 'output_tokens', 0) or 0} "
+          f"cache_read={getattr(usage, 'cache_read_input_tokens', 0) or 0} "
+          f"cache_write={getattr(usage, 'cache_creation_input_tokens', 0) or 0}",
+          file=sys.stderr, flush=True)
+
+
 def instrument_usage(client):
-    """Log the token usage of every Messages call ("[claude-usage] ...") so spend per question
-    can be read from the service logs. Returns the same client."""
+    """Log the token usage of every non-streaming Messages call made with this client (streaming
+    calls log through log_usage on their final message). Returns the same client."""
     if client is None or getattr(client, "_usage_instrumented", False):
         return client
     original = client.messages.create
 
     async def create(*args, **kwargs):
         resp = await original(*args, **kwargs)
-        usage = getattr(resp, "usage", None)
-        if usage is not None:
-            print(f"[claude-usage] model={getattr(resp, 'model', kwargs.get('model'))} "
-                  f"in={getattr(usage, 'input_tokens', 0) or 0} out={getattr(usage, 'output_tokens', 0) or 0} "
-                  f"cache_read={getattr(usage, 'cache_read_input_tokens', 0) or 0} "
-                  f"cache_write={getattr(usage, 'cache_creation_input_tokens', 0) or 0}",
-                  file=sys.stderr, flush=True)
+        log_usage(resp, kwargs.get("model"))
         return resp
 
     client.messages.create = create
@@ -272,7 +278,9 @@ async def safe_create_anthropic_message(**kwargs):
                             await stream_cb(text_delta)
                         else:
                             stream_cb(text_delta)
-                    return await stream.get_final_message()
+                    final = await stream.get_final_message()
+                    log_usage(final, call_kwargs.get("model"))
+                    return final
             return await asyncio.wait_for(_run_stream(), timeout=anthropic_timeout)
         return await asyncio.wait_for(client.messages.create(**call_kwargs), timeout=anthropic_timeout)
     except Exception as e:
