@@ -11,6 +11,8 @@ Orchestrates:
   Income Tax Calculation -> ITO 2001 out of coverage; Case Law Precedents -> Case law not yet available)
 """
 
+import logging
+import os
 import re
 import hashlib
 from typing import Dict, List, Any, Optional, Set, Tuple
@@ -20,6 +22,8 @@ from legal_ai.statutes.legal_unit_record import LegalUnitRecord
 from legal_ai.evidence.bounded_evidence_pack import BoundedEvidencePack
 from core.unified_statute_store import get_unified_statute_store
 from core.statute_quote_policy import is_quote_verified, display_text, verification_label
+
+logger = logging.getLogger(__name__)
 
 
 CONCEPTUAL_FACTUAL_PATTERNS = [
@@ -848,6 +852,48 @@ def _fetch_and_add(cid: str, store: Any, seen: Set[str], res_list: List[LegalUni
     return False
 
 
+_STATUTE_ID_RE = re.compile(r"^[A-Z][A-Z_ ]*\b(?:1[89]|20)\d\d[ _]+(?:SEC|ART|ORD|R|RULE|SCH)\b", re.I)
+PRECEDENT_HEADNOTE_CHARS = 1500
+PRECEDENT_HOLDING_CHARS = 1200
+
+
+def _precedent_texts(cards: List[Dict[str, Any]]) -> Dict[str, Dict[str, str]]:
+    """citation -> assembled {headnote, ratio_decidendi} from the judgments index, so the answer
+    model sees what a case held and not only the ~300-character passage that matched the search.
+    Never raises; an empty result keeps the old behaviour."""
+    try:
+        from legal_ai.storage.text_hydration import citation_key, court_code, fetch_case_texts
+        wanted = {}
+        for card in cards:
+            cit = (card.get("citation") or card.get("neutral_citation") or card.get("case_id") or "").strip()
+            key = citation_key(cit)
+            if key:
+                wanted[cit] = (key, court_code(card.get("court") or card.get("court_name")))
+        if not wanted:
+            return {}
+        texts = fetch_case_texts(list(set(wanted.values())),
+                                 timeout_s=float(os.environ.get("PRECEDENT_TEXT_TIMEOUT", "4")))
+        return {cit: texts[k] for cit, k in wanted.items() if k in texts}
+    except Exception as e:
+        logger.warning(f"[EvidencePack] precedent text fetch failed: {e}")
+        return {}
+
+
+def _precedent_ratio(passage: str, texts: Optional[Dict[str, str]]) -> str:
+    if not texts:
+        return passage
+    parts = []
+    headnote = (texts.get("headnote") or "").strip()
+    holding = (texts.get("ratio_decidendi") or "").strip()
+    if headnote:
+        parts.append("HEADNOTE: " + headnote[:PRECEDENT_HEADNOTE_CHARS])
+    if holding:
+        parts.append("HOLDING: " + holding[:PRECEDENT_HOLDING_CHARS])
+    if passage and passage not in headnote:
+        parts.append("PASSAGE MATCHING THE QUERY: " + passage)
+    return "\n\n".join(parts) or passage
+
+
 def build_evidence_pack_for_query(
     query_text: str,
     precedent_cards: Optional[List[Dict[str, Any]]] = None,
@@ -868,7 +914,11 @@ def build_evidence_pack_for_query(
 
     # Attach precedents only if query is not out of coverage for case law
     if not (intent.is_out_of_coverage and "precedent" in intent.out_of_coverage_reason.lower()):
-        for card in (precedent_cards or []):
+        # statute IDs (e.g. "CPC 1908 SEC 151") sometimes arrive as cards; they are not judgments
+        real_cards = [c for c in (precedent_cards or [])
+                      if not _STATUTE_ID_RE.match((c.get("citation") or c.get("neutral_citation") or c.get("case_id") or "").strip())]
+        case_texts = _precedent_texts(real_cards)
+        for card in real_cards:
             cit = (card.get("citation") or card.get("neutral_citation") or card.get("case_id") or "").strip()
             ratio = (
                 card.get("ratio_decidendi")
@@ -880,6 +930,7 @@ def build_evidence_pack_for_query(
                 or card.get("legal_issue")
                 or str(card.get("text") or card.get("full_text") or "")[:500]
             ).strip()
+            ratio = _precedent_ratio(ratio, case_texts.get(cit))
             if cit and ratio:
                 clean_year = None
                 raw_year = card.get("year") or card.get("date")

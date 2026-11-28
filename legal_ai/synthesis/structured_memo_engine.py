@@ -79,7 +79,7 @@ def build_structured_memo_prompts(
                 f"- Governing Limitation Provision: {lim_res.get('article', 'Article 113')}, First Schedule, Limitation Act, 1908.\n"
                 f"- Prescribed Limitation Period: {lim_res.get('prescribed_period', '3 years')}.\n"
                 f"- Date Fixed for Performance: {lim_res.get('trigger_date')}.\n"
-                f"- Statutory Expiry Date: {lim_res.get('expiry_date')} (15 September 2024).\n"
+                f"- Statutory Expiry Date: {lim_res.get('expiry_date')}.\n"
                 f"- Current Date / Reference: {lim_res.get('as_of_date')}.\n"
                 f"- Statutory Bar Status: {lim_res.get('verdict_status')} ({lim_res.get('years_diff', 0)} years overdue).\n"
                 f"- Mandatory Dismissal: Section 3 Limitation Act, 1908 bars the suit even if limitation is not pleaded as defence.\n"
@@ -92,16 +92,24 @@ def build_structured_memo_prompts(
     except Exception as e:
         logger.warning(f"Error computing limitation in structured prompt: {e}")
 
+    # The limitation / specific-performance points apply only when the limitation engine found a
+    # dated matter in the query; sending them with every question pulled unrelated law into answers.
+    steps = [
+        "Synthesize the research memorandum with a mandatory 2-4 sentence executive summary in 'answer' summarizing the overall position directly upfront.",
+        "Answer the advocate's actual question; leave out law the question does not raise.",
+        "Ground every claim strictly in the Evidence Pack using [E1], [E2], etc.",
+    ]
+    if lim_instruction:
+        steps += [
+            "Address BOTH limitation on specific performance and alternative remedies.",
+            "Include 'time as essence' under Section 55 Contract Act, 1872 in open_questions[] whenever a completion date is specified.",
+        ]
+    steps.append("Output ONLY the valid JSON object conforming to the required schema.")
     user_prompt = (
         f"ADVOCATE LEGAL QUERY:\n{user_query.strip()}\n\n"
         f"{pack_content}"
         f"{lim_instruction}\n\n"
-        "INSTRUCTIONS:\n"
-        "1. Synthesize the research memorandum with a mandatory 2-4 sentence executive summary in 'answer' summarizing the overall position directly upfront.\n"
-        "2. Ground every claim strictly in the Evidence Pack using [E1], [E2], etc.\n"
-        "3. Address BOTH limitation on specific performance and alternative remedies.\n"
-        "4. Include 'time as essence' under Section 55 Contract Act, 1872 in open_questions[] whenever a completion date is specified.\n"
-        "5. Output ONLY the valid JSON object conforming to the required schema."
+        "INSTRUCTIONS:\n" + "\n".join(f"{i}. {t}" for i, t in enumerate(steps, 1))
     )
 
     return STRUCTURED_MEMO_SYSTEM_PROMPT, user_prompt

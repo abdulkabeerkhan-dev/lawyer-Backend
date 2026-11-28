@@ -668,8 +668,11 @@ CANONICAL ID LOOKUP REFERENCE TABLE:
 5. Banking Recovery:
    - Financial Institutions (Recovery of Finances) Ordinance, 2001: FIO_2001_SEC_2, FIO_2001_SEC_9, FIO_2001_SEC_10, FIO_2001_SEC_11, FIO_2001_SEC_14, FIO_2001_SEC_15, FIO_2001_SEC_19, FIO_2001_SEC_22
 6. Constitutional Law:
-   - Constitution of Pakistan, 1973: CONST_1973_ART_4, CONST_1973_ART_9, CONST_1973_ART_10, CONST_1973_ART_10A, CONST_1973_ART_14, CONST_1973_ART_18, CONST_1973_ART_23, CONST_1973_ART_24, CONST_1973_ART_25, CONST_1973_ART_184, CONST_1973_ART_185, CONST_1973_ART_187, CONST_1973_ART_189, CONST_1973_ART_199, CONST_1973_ART_201, CONST_1973_ART_212
+   - Constitution of Pakistan, 1973: CONST_1973_ART_4, CONST_1973_ART_9, CONST_1973_ART_10, CONST_1973_ART_10A, CONST_1973_ART_14, CONST_1973_ART_18, CONST_1973_ART_23, CONST_1973_ART_24, CONST_1973_ART_25, CONST_1973_ART_185, CONST_1973_ART_187, CONST_1973_ART_189, CONST_1973_ART_199, CONST_1973_ART_201, CONST_1973_ART_212
 
+Keep the plan compact (it feeds retrieval, it is not the answer): at most 3 issues; each
+description under 40 words; at most 3 search_queries and 3 factual_anchors per issue; at most
+4 search_lanes; no text outside the JSON.
 Output ONLY valid JSON matching this schema:
 {
   "primary_domain": "family",
@@ -2776,7 +2779,7 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
                 ai_client_fn(
                     system=PLANNER_SYSTEM_PROMPT,
                     messages=[{"role": "user", "content": user_msg}],
-                    max_tokens=4096
+                    max_tokens=6000
                 ),
                 timeout=45.0
             )
@@ -2932,7 +2935,9 @@ async def analyze_legal_query(query: str, ai_client_fn=None) -> StructuredLegalQ
                 log_planner_audit_event(query, path_taken="llm_planner", plan=plan)
                 return plan
             else:
-                fallback_reason = "ai_client_no_json_returned"
+                usage = getattr(resp, "usage", None)
+                fallback_reason = (f"ai_client_no_json_returned stop_reason={getattr(resp, 'stop_reason', None)} "
+                                   f"out_tokens={getattr(usage, 'output_tokens', None)} chars={len(raw_text)}")
         except asyncio.TimeoutError:
             fallback_reason = "ai_client_timeout"
             import sys
