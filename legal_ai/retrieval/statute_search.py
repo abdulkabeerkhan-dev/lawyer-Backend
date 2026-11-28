@@ -28,6 +28,24 @@ from core.unified_statute_store import get_unified_statute_store
 logger = logging.getLogger(__name__)
 
 STATUTES_COLLECTION = os.environ.get("ZILLIZ_STATUTES_COLLECTION", "statutes_v3")
+# Long provisions are also indexed as ~1,200-character pieces (scripts/zilliz/build_statute_chunks.py)
+# so their key point is not diluted in one embedding. Empty value turns the chunk lane off.
+STATUTE_CHUNKS_COLLECTION = os.environ.get("ZILLIZ_STATUTE_CHUNKS_COLLECTION", "statutes_v3_chunks")
+_RRF_K = 60
+
+
+CHUNK_RESERVED_SLOTS = 3
+
+
+def fuse_provision_and_chunk_ranks(provision_ids: List[str], chunk_parent_ids: List[str], top_k: int) -> List[str]:
+    """Keep the whole-provision ranking and give the last CHUNK_RESERVED_SLOTS places to provisions
+    that only the chunk lane found (each chunk stands for its parent provision).
+    Summing both rankings was tried and measured worse: long provisions got two votes and pushed
+    out short, correct ones. On the 69-question statute set this rule moved "every expected section
+    in the top 10" from 54% to 58% (4 gained, 1 lost)."""
+    main = list(dict.fromkeys(c for c in provision_ids if c))
+    new = [c for c in dict.fromkeys(chunk_parent_ids) if c and c not in main][:CHUNK_RESERVED_SLOTS]
+    return main[:max(top_k - len(new), 0)] + new
 
 # Load citation alias mappings from report if present
 _ALIAS_MAP: Dict[str, str] = {}
@@ -197,7 +215,41 @@ async def search_statutes_hybrid(
                         filter=filter_expr,
                         output_fields=output_fields
                     )
-                return raw_res[0] if raw_res else []
+                main_hits = list(raw_res[0]) if raw_res else []
+                if query_vector is None or not STATUTE_CHUNKS_COLLECTION:
+                    return main_hits
+                try:
+                    chunk_res = client.hybrid_search(
+                        collection_name=STATUTE_CHUNKS_COLLECTION,
+                        reqs=[
+                            AnnSearchRequest(data=[query_vector], anns_field="dense", param={"metric_type": "COSINE"},
+                                             limit=top_k * 2, expr=filter_expr),
+                            AnnSearchRequest(data=[norm_query], anns_field="sparse", param={"metric_type": "BM25"},
+                                             limit=top_k * 2, expr=filter_expr),
+                        ],
+                        ranker=RRFRanker(k=_RRF_K),
+                        limit=top_k * 2,
+                        output_fields=["parent_id"],
+                    )
+                except Exception as chunk_err:
+                    logger.warning(f"[StatuteSearch] chunk lane unavailable: {chunk_err}")
+                    return main_hits
+                chunk_parents = [str((h.get("entity") or {}).get("parent_id") or "") for h in (chunk_res[0] if chunk_res else [])]
+                by_id = {str((h.get("entity") or {}).get("canonical_id") or ""): h for h in main_hits}
+                fused = fuse_provision_and_chunk_ranks(list(by_id), chunk_parents, top_k)
+                missing = [cid for cid in fused if cid not in by_id]
+                if missing:
+                    for ent in client.query(collection_name=STATUTES_COLLECTION,
+                                            filter="canonical_id in " + json.dumps(missing),
+                                            output_fields=output_fields):
+                        by_id[str(ent.get("canonical_id"))] = {"entity": ent, "distance": 0.0}
+                out = []
+                for rank, cid in enumerate(fused):
+                    if cid in by_id:
+                        h = dict(by_id[cid])
+                        h["distance"] = 1.0 / (_RRF_K + rank + 1)
+                        out.append(h)
+                return out
 
             loop = asyncio.get_running_loop()
             hits = await asyncio.wait_for(
