@@ -305,3 +305,11 @@ def test_access_request_sends_clerk_invitation(monkeypatch):
     r2 = c.post("/request-access", json={"full_name": "A B", "firm_name": "F", "email": "new.lawyer@example.com"})
     assert r2.json()["status"] == "duplicate" and len(sent) == 1
     assert c.post("/request-access", json={"full_name": "x", "firm_name": "y", "email": "not-an-email"}).status_code == 422
+
+
+def test_core_codes_are_not_labelled_under_review():
+    """The PPC, CrPC and CPC names carried "(Under Review)" from the source file names, and users
+    saw it on every answer citing them."""
+    for code in ("PPC_1860", "CRPC_1898", "CPC_1908"):
+        rows = json.load(open(os.path.join(ROOT, f"data/statutes_v3_staging/{code}.json"), encoding="utf-8"))
+        assert rows and not any("Under Review" in (r.get("act_name") or "") + (r.get("text") or "") for r in rows), code
