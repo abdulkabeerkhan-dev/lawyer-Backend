@@ -15,6 +15,8 @@ checks in each task pass.
    (Python 3.11, same as production).
 5. After changing any statute record, re-embed that record in Zilliz `statutes_v3`
    (model `voyage-4-large`, input_type `document`, text = `"{act_name}\nSection {section}: {heading}\n\n{text}"`).
+   Long provisions (over 1,500 characters) also live in `statutes_v3_chunks`: after editing them run
+   `python scripts/zilliz/build_statute_chunks.py --ids changed_ids.json` so no stale piece remains.
 
 ## Task 1 — Punjab statutes (highest value)
 Source: `D:\punjab_code_pdfs\`. Biggest gaps today:
