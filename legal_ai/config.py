@@ -26,6 +26,8 @@ IS_PRODUCTION: bool = _env_val not in ("development", "dev", "test")
 
 # --- Model & Synthesis Settings ---
 CLAUDE_MODEL: str = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
+# Model that writes the final answer (planner and reviewer keep CLAUDE_MODEL).
+CLAUDE_SYNTHESIS_MODEL: str = os.environ.get("CLAUDE_SYNTHESIS_MODEL", "").strip() or CLAUDE_MODEL
 ANTHROPIC_FALLBACK_MODEL: str = os.environ.get("ANTHROPIC_FALLBACK_MODEL", "").strip()
 MAX_SYNTHESIS_TOKENS: int = int(os.environ.get("MAX_SYNTHESIS_TOKENS", "8192"))
 
