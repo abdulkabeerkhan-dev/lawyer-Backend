@@ -92,3 +92,22 @@ def test_headnote_drops_party_line_and_citation_lists():
     assert _clean_headnote(kept) == kept      # one citation inside the reasoning stays
     assert _clean_headnote("person under Art. 199.\n\n1994 SCMR 2232,\nConstitution of Pakistan---Art. 199") == \
         "person under Art. 199.\n\nConstitution of Pakistan---Art. 199"
+
+
+def test_semantic_statutes_keep_clustered_acts_only(monkeypatch):
+    import asyncio
+    from legal_ai.retrieval import statute_search
+    from legal_ai.query_engine import statute_router as sr
+
+    async def fake(query, top_k=8):
+        return [{"canonical_id": c, "act_code": c.rsplit("_SEC_", 1)[0]} for c in
+                ["LPBC_1973_SEC_41", "MARITIME_1994_SEC_20", "LPBC_1973_SEC_43", "LPBC_1973_SEC_42", "LPBC_1973_SEC_54", "LPBC_1973_SEC_9"]]
+    monkeypatch.setattr(statute_search, "search_statutes_hybrid", fake)
+    ids = asyncio.run(sr.semantic_statute_ids("professional misconduct of an advocate"))
+    assert ids == ["LPBC_1973_SEC_41", "LPBC_1973_SEC_43", "LPBC_1973_SEC_42", "LPBC_1973_SEC_54"]
+
+
+def test_merge_puts_semantic_after_planner_top_three():
+    from legal_ai.query_engine.statute_router import merge_planned_with_semantic
+    assert merge_planned_with_semantic(["A", "B", "C", "D"], ["X", "B", "Y"]) == ["A", "B", "C", "X", "Y", "D"]
+    assert merge_planned_with_semantic(["CPC_1908_SEC_9", "CPC_1908_SEC_151"], ["X"]) == ["X"]

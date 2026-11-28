@@ -2829,6 +2829,11 @@ async def process_query_job_legal_ai(
         _planned_provisions = list(getattr(legal_query_plan, "provisions", None) or getattr(legal_query_plan, "statutory_provisions", None) or [])
     except Exception:
         _planned_provisions = []
+    try:
+        from legal_ai.query_engine.statute_router import semantic_statute_ids, merge_planned_with_semantic
+        _planned_provisions = merge_planned_with_semantic(_planned_provisions, await semantic_statute_ids(effective_user_query))
+    except Exception as _sem_err:
+        logger.warning(f"semantic statute ids skipped: {_sem_err}")
     bounded_evidence_pack, statute_intent = build_evidence_pack_for_query(
         effective_user_query,
         precedent_cards=precedent_cards,

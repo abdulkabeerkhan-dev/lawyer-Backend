@@ -960,6 +960,36 @@ def _precedent_ratio(passage: str, texts: Optional[Dict[str, str]]) -> str:
     return "\n\n".join(parts) or passage
 
 
+async def semantic_statute_ids(query: str, top_k: int = 8, keep: int = 4, timeout_s: float = 6.0) -> List[str]:
+    """Statute provisions the semantic index (statutes_v3 + chunks) ranks highest for the question.
+    The evidence pack otherwise only sees provisions named in the question, chosen by the planner
+    or tied to a few hard-coded topics, so e.g. 'professional misconduct of advocates' never
+    reached s.41 of the Legal Practitioners and Bar Councils Act. Only acts that occur at least
+    twice in the top results are kept: one-off hits from unrelated acts are usually noise."""
+    try:
+        import asyncio
+        from collections import Counter
+        from legal_ai.retrieval.statute_search import search_statutes_hybrid
+        hits = await asyncio.wait_for(search_statutes_hybrid(query, top_k=top_k), timeout=timeout_s)
+    except Exception as e:
+        logger.warning(f"[EvidencePack] semantic statute search failed: {e}")
+        return []
+    acts = Counter(str(h.get("act_code") or "") for h in hits)
+    out = [str(h.get("canonical_id")) for h in hits if h.get("canonical_id") and acts[str(h.get("act_code") or "")] >= 2]
+    return out[:keep]
+
+
+def merge_planned_with_semantic(planned: List[str], semantic: List[str], after: int = 3) -> List[str]:
+    """Planner's top choices first, then the semantic hits, then the rest of the planner's list.
+    A planner list that is only the generic CPC 9/151 fallback is replaced by the semantic hits."""
+    from legal_ai.query_engine.named_provisions import useful_planned
+    if planned and not useful_planned(planned):
+        planned = []
+    head = list(planned[:after])
+    sem = [c for c in semantic if c not in planned]
+    return head + sem + [c for c in planned[after:] if c not in sem]
+
+
 def build_evidence_pack_for_query(
     query_text: str,
     precedent_cards: Optional[List[Dict[str, Any]]] = None,

@@ -407,14 +407,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "NATURALIZATION_1926_SEC_14B",
@@ -488,13 +489,14 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   }
 ]
