@@ -940,6 +940,7 @@ def _clean_headnote(text: str) -> str:
     citation inside a sentence stays: it is part of the reasoning."""
     t = _TITLE_LINE_RE.sub("", (text or "").lstrip(), count=1)
     t = _CIT_RUN_RE.sub("", t)
+    t = re.sub(rf"(?m)^\s*{_ONE_CIT}\s*[,;.]?\s*$", "", t)      # a citation alone on its line
     t = re.sub(r"[ \t]+\n", "\n", t)
     return re.sub(r"\n{3,}", "\n\n", t).strip()
 

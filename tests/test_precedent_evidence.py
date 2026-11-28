@@ -90,3 +90,5 @@ def test_headnote_drops_party_line_and_citation_lists():
     assert _clean_headnote(raw) == "Bail---Further inquiry---Bail allowed."
     kept = "In Hyderabad Electric v. Mushtaq Ali Brohi (2010 PSC 1392), this Court held X."
     assert _clean_headnote(kept) == kept      # one citation inside the reasoning stays
+    assert _clean_headnote("person under Art. 199.\n\n1994 SCMR 2232,\nConstitution of Pakistan---Art. 199") == \
+        "person under Art. 199.\n\nConstitution of Pakistan---Art. 199"
