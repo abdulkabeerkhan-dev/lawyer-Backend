@@ -927,12 +927,29 @@ def _precedent_texts(cards: List[Dict[str, Any]]) -> Dict[str, Dict[str, str]]:
         return {}
 
 
+_J = r"(?:PLD|SCMR|CLC|YLR|P\.?\s?Cr\.?\s?L\.?\s?J|PCRLJ|MLD|CLD|PTD|PLC\s?\(CS\)|PLC|NLR|PLJ|SBLR|GBLR|KLR|CLR|PSC|PCTLR)"
+_ONE_CIT = rf"(?:{_J}\s+(?:19|20)\d\d(?:\s+[A-Z][A-Za-z]*\.?)?(?:\s+[A-Za-z]+)?\s+\d{{1,5}}|(?:19|20)\d\d\s+{_J}(?:\s+[A-Z][A-Za-z]*\.?)?\s+\d{{1,5}}|NLR\s+(?:19|20)\d\d\s+[A-Za-z]+\s+\d{{1,5}})"
+_CIT_RUN_RE = re.compile(rf"(?:{_ONE_CIT}\s*[,;]\s*)+{_ONE_CIT}\s*[,;.]?")
+_TITLE_LINE_RE = re.compile(r"^[^\n]{0,160}\bVS?\.?\b[^\n]{0,160}\n", re.I)
+
+
+def _clean_headnote(text: str) -> str:
+    """Reporter headnotes open with the party names and lists of every case referred to
+    ("1985 CLC 2111, 1986 MLD 2001, ..."). Those cases are not in the database, and the answer
+    cards repeat this text verbatim, so drop the title line and runs of 2+ citations. A single
+    citation inside a sentence stays: it is part of the reasoning."""
+    t = _TITLE_LINE_RE.sub("", (text or "").lstrip(), count=1)
+    t = _CIT_RUN_RE.sub("", t)
+    t = re.sub(r"[ \t]+\n", "\n", t)
+    return re.sub(r"\n{3,}", "\n\n", t).strip()
+
+
 def _precedent_ratio(passage: str, texts: Optional[Dict[str, str]]) -> str:
     if not texts:
         return passage
     parts = []
-    headnote = (texts.get("headnote") or "").strip()
-    holding = (texts.get("ratio_decidendi") or "").strip()
+    headnote = _clean_headnote(texts.get("headnote") or "")
+    holding = _clean_headnote(texts.get("ratio_decidendi") or "")
     if headnote:
         parts.append("HEADNOTE: " + headnote[:PRECEDENT_HEADNOTE_CHARS])
     if holding:
