@@ -316,14 +316,16 @@ async def plan_statute_query(query: str) -> Dict[str, Any]:
     )
 
     try:
-        response = await client.messages.create(
+        from legal_ai.config import apply_model_compat
+        response = await client.messages.create(**apply_model_compat(dict(
             model=CLAUDE_MODEL,
             max_tokens=400,
             temperature=0.0,
             system=system_prompt,
             messages=[{"role": "user", "content": f"Analyze query: {query}"}]
-        )
-        raw_text = response.content[0].text.strip()
+        )))
+        # thinking models put a thinking block first; read the text blocks only
+        raw_text = "".join(getattr(b, "text", "") for b in response.content if getattr(b, "type", None) == "text").strip()
         # Clean json backticks if any
         raw_text = re.sub(r'^```json\s*', '', raw_text)
         raw_text = re.sub(r'^```\s*', '', raw_text)

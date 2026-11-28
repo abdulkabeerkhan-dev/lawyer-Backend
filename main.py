@@ -2295,6 +2295,8 @@ async def safe_create_anthropic_message(**kwargs):
     # Newer Anthropic models / thinking modes reject temperature or extra_body temperature
     if "temperature" in call_kwargs:
         call_kwargs.pop("temperature", None)
+    from legal_ai.config import apply_model_compat
+    apply_model_compat(call_kwargs)
 
 
 

@@ -182,6 +182,27 @@ def get_zilliz_client():
 
 
 # --- Anthropic Client Management ---
+_NEW_MODEL_RE = re.compile(r"claude-(?:(?:sonnet|opus|haiku)-5|fable|mythos)")
+
+
+def is_new_generation_model(model: str) -> bool:
+    """Claude 5-family models reject non-default temperature and think by default."""
+    return bool(_NEW_MODEL_RE.search(str(model or "")))
+
+
+def apply_model_compat(call_kwargs: dict) -> dict:
+    """Adjust request kwargs for the target model: 5-family models reject `temperature`, and
+    CLAUDE_EFFORT (low|medium|high) sets their effort so answers stay within the timeouts."""
+    if is_new_generation_model(call_kwargs.get("model")):
+        call_kwargs.pop("temperature", None)
+        effort = os.environ.get("CLAUDE_EFFORT", "").strip().lower()
+        if effort in ("low", "medium", "high", "xhigh", "max"):
+            extra_body = dict(call_kwargs.get("extra_body") or {})
+            extra_body.setdefault("output_config", {"effort": effort})
+            call_kwargs["extra_body"] = extra_body
+    return call_kwargs
+
+
 def log_usage(resp, model=None):
     """One "[claude-usage] ..." line per Messages response, so spend can be read from the logs."""
     usage = getattr(resp, "usage", None)
@@ -261,6 +282,7 @@ async def safe_create_anthropic_message(**kwargs):
     if "max_tokens" not in call_kwargs:
         call_kwargs["max_tokens"] = MAX_SYNTHESIS_TOKENS
 
+    apply_model_compat(call_kwargs)
     if "temperature" in call_kwargs:
         temp_val = call_kwargs.pop("temperature")
         extra_body = dict(call_kwargs.get("extra_body") or {})
