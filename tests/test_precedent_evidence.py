@@ -82,3 +82,11 @@ def test_pack_tells_the_model_not_to_cite_cases_inside_headnotes():
     pack = BoundedEvidencePack()
     pack.add_case_precedent(citation="2000 SCMR 1647", case_title="A v B", court="SC", ratio="HEADNOTE: relying on 1985 SCMR 1949")
     assert "do not cite them as authorities of their own" in pack.format_pack_for_llm()
+
+
+def test_headnote_drops_party_line_and_citation_lists():
+    from legal_ai.query_engine.statute_router import _clean_headnote
+    raw = "ZAHID REHMAN VS State\n1994 SCMR 1327, 1997 SCMR 1307, 2003 SCMR 1419\nBail---Further inquiry---Bail allowed."
+    assert _clean_headnote(raw) == "Bail---Further inquiry---Bail allowed."
+    kept = "In Hyderabad Electric v. Mushtaq Ali Brohi (2010 PSC 1392), this Court held X."
+    assert _clean_headnote(kept) == kept      # one citation inside the reasoning stays
