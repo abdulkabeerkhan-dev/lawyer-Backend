@@ -72,3 +72,25 @@ def test_search_returns_parent_of_matching_chunk(monkeypatch):
 
 def test_search_works_without_the_chunk_collection(monkeypatch):
     assert _run(monkeypatch, _Client(chunk_fail=True)) == ["A", "B"]
+
+
+def test_claude_usage_is_logged(capsys):
+    from legal_ai.config import instrument_usage
+
+    class Usage:
+        input_tokens, output_tokens, cache_read_input_tokens, cache_creation_input_tokens = 1200, 300, 0, 0
+
+    class Resp:
+        model, usage = "claude-x", Usage()
+
+    class Messages:
+        async def create(self, **kw):
+            return Resp()
+
+    class Client:
+        messages = Messages()
+
+    c = instrument_usage(Client())
+    assert instrument_usage(c) is c
+    asyncio.run(c.messages.create(model="claude-x"))
+    assert "[claude-usage] model=claude-x in=1200 out=300" in capsys.readouterr().err
