@@ -2244,7 +2244,8 @@ if ANTHROPIC_API_KEY:
 
             anthropic_headers["anthropic-workspace-id"] = ANTHROPIC_WORKSPACE_ID
 
-        raw_client = AsyncAnthropic(api_key=ANTHROPIC_API_KEY, default_headers=anthropic_headers if anthropic_headers else None)
+        from legal_ai.config import instrument_usage
+        raw_client = instrument_usage(AsyncAnthropic(api_key=ANTHROPIC_API_KEY, default_headers=anthropic_headers if anthropic_headers else None))
 
         enable_langsmith = os.environ.get("ENABLE_LANGSMITH_TRACING", "").strip().lower() in ("true", "1", "yes")
         if enable_langsmith:
@@ -2333,7 +2334,8 @@ async def safe_create_anthropic_message(**kwargs):
             )
             try:
                 from anthropic import AsyncAnthropic
-                recov_client_no_hdr = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
+                from legal_ai.config import instrument_usage
+                recov_client_no_hdr = instrument_usage(AsyncAnthropic(api_key=ANTHROPIC_API_KEY))
                 return await recov_client_no_hdr.messages.create(**call_kwargs)
             except Exception as recov_err:
                 print(f"⚠️ Direct retry without workspace header also failed: {recov_err}", file=sys.stderr, flush=True)

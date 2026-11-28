@@ -182,6 +182,29 @@ def get_zilliz_client():
 
 
 # --- Anthropic Client Management ---
+def instrument_usage(client):
+    """Log the token usage of every Messages call ("[claude-usage] ...") so spend per question
+    can be read from the service logs. Returns the same client."""
+    if client is None or getattr(client, "_usage_instrumented", False):
+        return client
+    original = client.messages.create
+
+    async def create(*args, **kwargs):
+        resp = await original(*args, **kwargs)
+        usage = getattr(resp, "usage", None)
+        if usage is not None:
+            print(f"[claude-usage] model={getattr(resp, 'model', kwargs.get('model'))} "
+                  f"in={getattr(usage, 'input_tokens', 0) or 0} out={getattr(usage, 'output_tokens', 0) or 0} "
+                  f"cache_read={getattr(usage, 'cache_read_input_tokens', 0) or 0} "
+                  f"cache_write={getattr(usage, 'cache_creation_input_tokens', 0) or 0}",
+                  file=sys.stderr, flush=True)
+        return resp
+
+    client.messages.create = create
+    client._usage_instrumented = True
+    return client
+
+
 def get_anthropic_client():
     """Returns singleton AsyncAnthropic client with optional LangSmith tracing wrapper."""
     global _async_anthropic_client
@@ -191,10 +214,10 @@ def get_anthropic_client():
             anthropic_headers = {}
             if ANTHROPIC_WORKSPACE_ID:
                 anthropic_headers["anthropic-workspace-id"] = ANTHROPIC_WORKSPACE_ID
-            raw_client = AsyncAnthropic(
+            raw_client = instrument_usage(AsyncAnthropic(
                 api_key=ANTHROPIC_API_KEY,
                 default_headers=anthropic_headers if anthropic_headers else None
-            )
+            ))
             enable_langsmith = os.environ.get("LANGSMITH_CAPTURE_PROMPTS", "false").lower() in ("true", "1", "yes")
             if enable_langsmith:
                 try:
@@ -276,7 +299,7 @@ async def safe_create_anthropic_message(**kwargs):
             )
             try:
                 from anthropic import AsyncAnthropic
-                recov_client_no_hdr = AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
+                recov_client_no_hdr = instrument_usage(AsyncAnthropic(api_key=ANTHROPIC_API_KEY))
                 return await recov_client_no_hdr.messages.create(**call_kwargs)
             except Exception as recov_err:
                 print(f"⚠️ [legal_ai.config] Direct retry without workspace header also failed: {recov_err}", file=sys.stderr, flush=True)
