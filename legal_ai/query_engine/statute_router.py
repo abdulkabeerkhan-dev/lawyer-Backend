@@ -13,6 +13,7 @@ Orchestrates:
 
 import logging
 import os
+from collections import OrderedDict
 import re
 import hashlib
 from typing import Dict, List, Any, Optional, Set, Tuple
@@ -857,12 +858,60 @@ PRECEDENT_HEADNOTE_CHARS = 1500
 PRECEDENT_HOLDING_CHARS = 1200
 
 
+_PRECEDENT_CACHE: "OrderedDict[str, Dict[str, str]]" = OrderedDict()
+_PRECEDENT_CACHE_MAX = 256
+_PRECEDENT_SECTIONS = ("headnote", "holding", "ratio")
+
+
+def _fetch_headnotes(keys: List[Tuple[str, Optional[str]]], timeout_s: float) -> Dict[Tuple[str, Optional[str]], Dict[str, str]]:
+    """(citation key, court code) -> {"headnote", "ratio_decidendi"}, trimmed to what the prompt uses.
+    Reads only the headnote / holding / ratio chunks of each case (never the whole judgment, which
+    can run to 100k+ characters) and caches the trimmed strings, so memory stays small."""
+    from legal_ai.config import get_zilliz_client, ZILLIZ_COLLECTION
+    from legal_ai.retrieval.zilliz_search import is_zilliz_circuit_open
+    from legal_ai.storage.text_hydration import _pick_case, _chunk_sort_key, strip_header
+
+    out, todo = {}, []
+    for k in dict.fromkeys(keys):
+        ck = f"{k[0]}|{k[1] or ''}"
+        if ck in _PRECEDENT_CACHE:
+            _PRECEDENT_CACHE.move_to_end(ck)
+            if _PRECEDENT_CACHE[ck]:
+                out[k] = _PRECEDENT_CACHE[ck]
+        else:
+            todo.append(k)
+    client = get_zilliz_client() if todo and not is_zilliz_circuit_open() else None
+    if client is None:
+        return out
+    cits = sorted({c for c, _ in todo})
+    flt = ("citation in [" + ",".join('"%s"' % c.replace('"', "") for c in cits) + "] and section in ["
+           + ",".join('"%s"' % x for x in _PRECEDENT_SECTIONS) + "]")
+    chunks = client.query(collection_name=ZILLIZ_COLLECTION, filter=flt, limit=60 * len(cits), timeout=timeout_s,
+                          output_fields=["chunk_id", "case_key", "citation", "court_code", "section", "text"]) or []
+    by_cit: Dict[str, Dict[str, List[Dict[str, Any]]]] = {}
+    for ch in chunks:
+        by_cit.setdefault(str(ch.get("citation")), {}).setdefault(str(ch.get("case_key")), []).append(ch)
+    for k in todo:
+        picked = _pick_case(by_cit.get(k[0], {}), k[1]) or []
+        picked = sorted(picked, key=_chunk_sort_key)
+        head = "\n\n".join(strip_header(c.get("text") or "") for c in picked if c.get("section") == "headnote")
+        hold = "\n\n".join(strip_header(c.get("text") or "") for c in picked if c.get("section") in ("holding", "ratio"))
+        texts = {"headnote": head[:PRECEDENT_HEADNOTE_CHARS], "ratio_decidendi": hold[:PRECEDENT_HOLDING_CHARS]} if (head or hold) else {}
+        ck = f"{k[0]}|{k[1] or ''}"
+        _PRECEDENT_CACHE[ck] = texts
+        while len(_PRECEDENT_CACHE) > _PRECEDENT_CACHE_MAX:
+            _PRECEDENT_CACHE.popitem(last=False)
+        if texts:
+            out[k] = texts
+    return out
+
+
 def _precedent_texts(cards: List[Dict[str, Any]]) -> Dict[str, Dict[str, str]]:
-    """citation -> assembled {headnote, ratio_decidendi} from the judgments index, so the answer
-    model sees what a case held and not only the ~300-character passage that matched the search.
+    """citation -> {headnote, ratio_decidendi} from the judgments index, so the answer model sees
+    what a case held and not only the ~300-character passage that matched the search.
     Never raises; an empty result keeps the old behaviour."""
     try:
-        from legal_ai.storage.text_hydration import citation_key, court_code, fetch_case_texts
+        from legal_ai.storage.text_hydration import citation_key, court_code
         wanted = {}
         for card in cards:
             cit = (card.get("citation") or card.get("neutral_citation") or card.get("case_id") or "").strip()
@@ -871,8 +920,7 @@ def _precedent_texts(cards: List[Dict[str, Any]]) -> Dict[str, Dict[str, str]]:
                 wanted[cit] = (key, court_code(card.get("court") or card.get("court_name")))
         if not wanted:
             return {}
-        texts = fetch_case_texts(list(set(wanted.values())),
-                                 timeout_s=float(os.environ.get("PRECEDENT_TEXT_TIMEOUT", "4")))
+        texts = _fetch_headnotes(list(wanted.values()), float(os.environ.get("PRECEDENT_TEXT_TIMEOUT", "4")))
         return {cit: texts[k] for cit, k in wanted.items() if k in texts}
     except Exception as e:
         logger.warning(f"[EvidencePack] precedent text fetch failed: {e}")

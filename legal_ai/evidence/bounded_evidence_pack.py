@@ -230,6 +230,9 @@ class BoundedEvidencePack:
                     lines.append("")
 
         lines.append("### JUDICIAL PRECEDENTS ON RECORD:")
+        if case_items:
+            lines.append("(A headnote may mention other cases, e.g. 'relying on 1985 SCMR 1949'. Those cases are NOT in "
+                         "this pack: do not cite them as authorities of their own; cite the [E#] whose headnote mentions them.)")
         if not case_items:
             lines.append("No judicial precedents admitted for this query.")
         else:

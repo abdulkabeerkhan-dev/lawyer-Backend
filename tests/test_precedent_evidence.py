@@ -14,7 +14,6 @@ def _cards():
 
 
 def test_headnote_and_holding_are_added(monkeypatch):
-    from legal_ai.storage import text_hydration
     from legal_ai.query_engine import statute_router as sr
     seen = {}
 
@@ -22,7 +21,7 @@ def test_headnote_and_holding_are_added(monkeypatch):
         seen["wanted"] = wanted
         return {("2000 SCMR 1647", "SC"): {"headnote": "Benami---Four tests: source of consideration, possession...",
                                              "ratio_decidendi": "Held, the burden lies on the person alleging benami."}}
-    monkeypatch.setattr(text_hydration, "fetch_case_texts", fake_fetch)
+    monkeypatch.setattr(sr, "_fetch_headnotes", fake_fetch)
     pack, _ = sr.build_evidence_pack_for_query("benami transaction ingredients", precedent_cards=_cards())
     cases = [it for it in pack.items.values() if it.item_type == "judicial_precedent"]
     assert [c.citation for c in cases] == ["2000 SCMR 1647"]          # statute id is not a judgment
@@ -33,12 +32,11 @@ def test_headnote_and_holding_are_added(monkeypatch):
 
 
 def test_falls_back_to_the_passage_when_texts_are_unavailable(monkeypatch):
-    from legal_ai.storage import text_hydration
     from legal_ai.query_engine import statute_router as sr
 
     def boom(wanted, timeout_s=5.0):
         raise RuntimeError("zilliz down")
-    monkeypatch.setattr(text_hydration, "fetch_case_texts", boom)
+    monkeypatch.setattr(sr, "_fetch_headnotes", boom)
     pack, _ = sr.build_evidence_pack_for_query("benami", precedent_cards=_cards()[:1])
     case = next(it for it in pack.items.values() if it.item_type == "judicial_precedent")
     assert case.ratio.startswith("10. Before parting")
@@ -52,3 +50,35 @@ def test_limitation_instructions_only_for_dated_matters(monkeypatch):
     _, user = sme.build_structured_memo_prompts(BoundedEvidencePack(), "Is cheating under s.420 PPC bailable?")
     assert "specific performance" not in user and "Section 55 Contract Act" not in user
     assert "15 September 2024" not in open(sme.__file__, encoding="utf-8").read()
+
+
+def test_headnote_fetch_reads_only_summary_sections_and_caches_trimmed(monkeypatch):
+    import legal_ai.config as cfg
+    import legal_ai.retrieval.zilliz_search as zs
+    from legal_ai.query_engine import statute_router as sr
+    calls = []
+
+    class Client:
+        def query(self, collection_name, filter, limit, timeout, output_fields):
+            calls.append(filter)
+            return [{"chunk_id": "a#1", "case_key": "k", "citation": "2000 SCMR 1647", "court_code": "SC",
+                     "section": "headnote", "text": "H" * 5000},
+                    {"chunk_id": "a#2", "case_key": "k", "citation": "2000 SCMR 1647", "court_code": "SC",
+                     "section": "holding", "text": "R" * 5000}]
+    monkeypatch.setattr(cfg, "get_zilliz_client", lambda: Client())
+    monkeypatch.setattr(zs, "is_zilliz_circuit_open", lambda: False)
+    sr._PRECEDENT_CACHE.clear()
+    out = sr._fetch_headnotes([("2000 SCMR 1647", "SC")], 1.0)
+    t = out[("2000 SCMR 1647", "SC")]
+    assert len(t["headnote"]) == sr.PRECEDENT_HEADNOTE_CHARS and len(t["ratio_decidendi"]) == sr.PRECEDENT_HOLDING_CHARS
+    assert 'section in ["headnote","holding","ratio"]' in calls[0]
+    sr._fetch_headnotes([("2000 SCMR 1647", "SC")], 1.0)
+    assert len(calls) == 1                                   # second call served from the cache
+    sr._PRECEDENT_CACHE.clear()
+
+
+def test_pack_tells_the_model_not_to_cite_cases_inside_headnotes():
+    from legal_ai.evidence.bounded_evidence_pack import BoundedEvidencePack
+    pack = BoundedEvidencePack()
+    pack.add_case_precedent(citation="2000 SCMR 1647", case_title="A v B", court="SC", ratio="HEADNOTE: relying on 1985 SCMR 1949")
+    assert "do not cite them as authorities of their own" in pack.format_pack_for_llm()
