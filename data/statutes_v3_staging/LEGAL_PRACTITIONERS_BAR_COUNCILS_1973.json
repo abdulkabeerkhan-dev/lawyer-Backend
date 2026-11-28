@@ -1972,14 +1972,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "LEGAL_PRACTITIONERS_BAR_COUNCILS_1973_SEC_59B",
@@ -2143,14 +2144,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "LEGAL_PRACTITIONERS_BAR_COUNCILS_1973_SEC_65",
@@ -2170,14 +2172,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "LEGAL_PRACTITIONERS_BAR_COUNCILS_1973_SEC_66",
@@ -2197,14 +2200,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "LEGAL_PRACTITIONERS_BAR_COUNCILS_1973_SEC_67",

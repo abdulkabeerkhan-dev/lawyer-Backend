@@ -9164,14 +9164,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "CONST_1973_SCH_ENTRY_7_16",
@@ -9191,14 +9192,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "CONST_1973_SCH_ENTRY_8",
@@ -9218,14 +9220,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "CONST_1973_SCH_ENTRY_9",
@@ -10803,14 +10806,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "CONST_1973_SCH_ENTRY_22_109",
@@ -11019,14 +11023,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "CONST_1973_SCH_ENTRY_37",
@@ -11073,14 +11078,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "CONST_1973_SCH_ENTRY_40",
@@ -11100,14 +11106,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "CONST_1973_SCH_ENTRY_41",
@@ -11208,14 +11215,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "CONST_1973_SCH_ENTRY_46",
@@ -11235,14 +11243,15 @@
     "former_labels": [],
     "supersedes": [],
     "superseded_by": null,
-    "in_force": true,
-    "omitted": false,
+    "in_force": false,
+    "omitted": true,
     "historical": false,
     "source": "pakistan_code",
     "source_format": "txt",
     "jurisdiction": "federal",
     "tier": "ingested_unreviewed",
-    "text_as_of": "current amended text as of the Pakistan Code scrape date"
+    "text_as_of": "current amended text as of the Pakistan Code scrape date",
+    "status": "omitted"
   },
   {
     "canonical_id": "CONST_1973_SCH_ENTRY_48",

@@ -313,3 +313,13 @@ def test_core_codes_are_not_labelled_under_review():
     for code in ("PPC_1860", "CRPC_1898", "CPC_1908"):
         rows = json.load(open(os.path.join(ROOT, f"data/statutes_v3_staging/{code}.json"), encoding="utf-8"))
         assert rows and not any("Under Review" in (r.get("act_name") or "") + (r.get("text") or "") for r in rows), code
+
+
+def test_star_only_provisions_are_marked_omitted():
+    """A provision whose whole text is '* * *' was omitted by amendment; it must not be served as law in force."""
+    import glob
+    pat = re.compile(r'^\W*\d+[A-Z]{0,3}\W*\s*(?:\d{0,2}\[)?\s*(?:\*\s*){3,}\]?\W*$')
+    bad = [r["canonical_id"] for f in glob.glob(os.path.join(ROOT, "data/statutes_v3_staging/*.json"))
+           for r in json.load(open(f, encoding="utf-8"))
+           if pat.match((r.get("text") or "").strip()) and r.get("in_force", True) and not r.get("omitted")]
+    assert bad == []
