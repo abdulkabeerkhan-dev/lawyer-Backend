@@ -523,6 +523,7 @@ def health_check():
         ),
 
         "model": CLAUDE_MODEL,
+        "answer_model": CLAUDE_SYNTHESIS_MODEL,
 
         "version": "2.5.1-search-optimized",
 
@@ -927,6 +928,7 @@ SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
 
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
+CLAUDE_SYNTHESIS_MODEL = os.environ.get("CLAUDE_SYNTHESIS_MODEL", "").strip() or CLAUDE_MODEL
 
 # Dev auth bypass is strictly disabled in production and defaults to false in dev
 
@@ -12477,7 +12479,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
             claude_message = await safe_create_anthropic_message(
 
-                model=CLAUDE_MODEL,
+                model=CLAUDE_SYNTHESIS_MODEL,
 
                 max_tokens=synthesis_max_tokens,
 
@@ -12846,7 +12848,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
             claude_message_ref = await safe_create_anthropic_message(
 
-                model=CLAUDE_MODEL, max_tokens=synthesis_max_tokens, max_output_tokens=synthesis_max_tokens, system=combined_system_prompt, messages=reflection_messages
+                model=CLAUDE_SYNTHESIS_MODEL, max_tokens=synthesis_max_tokens, max_output_tokens=synthesis_max_tokens, system=combined_system_prompt, messages=reflection_messages
 
             )
 
@@ -12976,7 +12978,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
 
                         claude_message_gate = await safe_create_anthropic_message(
 
-                            model=CLAUDE_MODEL, max_tokens=synthesis_max_tokens, max_output_tokens=synthesis_max_tokens, system=combined_system_prompt, messages=gate_messages
+                            model=CLAUDE_SYNTHESIS_MODEL, max_tokens=synthesis_max_tokens, max_output_tokens=synthesis_max_tokens, system=combined_system_prompt, messages=gate_messages
 
                         )
 
@@ -13704,7 +13706,7 @@ This authority ({c_cit}) is indexed as 'headnote_only' (editorial headnote summa
             constraint_prompt = f"CRITICAL REQUIREMENT: Your prior answer failed ground-truth verification ({cat_label}). You must quote only verbatim text from verified statutory context and cite only verified authorities."
             try:
                 regen_resp = await safe_create_anthropic_message(
-                    model=CLAUDE_MODEL,
+                    model=CLAUDE_SYNTHESIS_MODEL,
                     max_tokens=4000,
                     system="You are a legal research assistant in Pakistan. Strictly quote law verbatim.",
                     messages=[

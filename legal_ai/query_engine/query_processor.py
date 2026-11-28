@@ -174,6 +174,7 @@ from legal_ai.config import (
 
 
     CLAUDE_MODEL,
+    CLAUDE_SYNTHESIS_MODEL,
 
 
 
@@ -4325,7 +4326,7 @@ async def process_query_job_legal_ai(
         claude_message = None
     try:
         claude_message = await safe_create_anthropic_message(
-            model=CLAUDE_MODEL,
+            model=CLAUDE_SYNTHESIS_MODEL,
             max_tokens=synthesis_max_tokens,
             max_output_tokens=synthesis_max_tokens,
             system=system_prompt,
@@ -5814,7 +5815,7 @@ async def process_query_job_legal_ai(
         try:
             regen_content = user_synthesis_content + "\n\n" + feedback_constraints
             regen_message = await safe_create_anthropic_message(
-                model=CLAUDE_MODEL,
+                model=CLAUDE_SYNTHESIS_MODEL,
                 max_tokens=synthesis_max_tokens,
                 system=system_prompt,
                 messages=[{'role': 'user', 'content': regen_content}]

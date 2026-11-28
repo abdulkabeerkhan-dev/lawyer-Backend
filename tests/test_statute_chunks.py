@@ -103,3 +103,12 @@ def test_model_compat_for_claude_5_models(monkeypatch):
     assert "temperature" not in new and new["extra_body"]["output_config"] == {"effort": "medium"}
     old = apply_model_compat({"model": "claude-haiku-4-5-20251001", "temperature": 0.0})
     assert old["temperature"] == 0.0 and "extra_body" not in old
+
+
+def test_answer_calls_use_the_synthesis_model():
+    """CLAUDE_SYNTHESIS_MODEL writes the answer; the planner and the reviewer keep CLAUDE_MODEL."""
+    root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    qp = open(os.path.join(root, "legal_ai/query_engine/query_processor.py"), encoding="utf-8").read()
+    main = open(os.path.join(root, "main.py"), encoding="utf-8").read()
+    assert qp.count("model=CLAUDE_SYNTHESIS_MODEL") == 2 and main.count("model=CLAUDE_SYNTHESIS_MODEL") == 4
+    assert "safe_create_anthropic_message(model=CLAUDE_MODEL, **kwargs)" in qp      # planner unchanged
